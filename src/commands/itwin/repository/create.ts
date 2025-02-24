@@ -4,7 +4,6 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { RepositoryClass, RepositorySubClass } from "@itwin/itwins-client";
-
 import { Flags } from "@oclif/core";
 
 import BaseCommand from "../../../extensions/base-command.js";
