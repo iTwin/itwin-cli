@@ -30,7 +30,7 @@ Check your user details to verify authentication:
 itp user me
 ```
 
-For a step-by-step guide on getting started with an iTwin, see the **[Quickstart](https://crispy-robot-7klqklm.pages.github.io/#/quickstart)**. For a complete list of commands and usage examples, visit the **[iTwin CLI Manual](https://crispy-robot-7klqklm.pages.github.io/#/)**.
+For a step-by-step guide on getting started with an iTwin, see the **[Quickstart](https://cuddly-engine-j746ov3.pages.github.io/#/quickstart)**. For a complete list of commands and usage examples, visit the **[iTwin CLI Manual](https://cuddly-engine-j746ov3.pages.github.io/#/)**.
 
 ---
 
