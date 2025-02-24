@@ -1,0 +1,84 @@
+/*---------------------------------------------------------------------------------------------
+* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+* See LICENSE.md in the project root for license terms and full copyright notice.
+*--------------------------------------------------------------------------------------------*/
+
+import { ITwin, ITwinClass, ITwinSubClass } from "@itwin/itwins-client";
+
+import { Flags } from "@oclif/core";
+
+import BaseCommand from "../../extensions/base-command.js";
+
+export default class UpdateCommand extends BaseCommand {
+    static description = 'Update an iTwin';
+  
+    static flags = {
+      class: Flags.string({
+        description: 'The Class of your iTwin.',
+        options: ["Account", "Thing", "Endeavor"],
+        required: false,
+      }),
+      "display-name": Flags.string({
+        description: "The iTwin's display name.",
+        required: false,
+      }),
+      "geographic-location": Flags.string({
+        description: 'Optional location, typically an address or city.',
+        required: false
+      }),
+      "iana-time-zone": Flags.string({
+        description: 'Optional IANA time zone ID.',
+        required: false,
+      }),
+      id: Flags.string({
+        description: 'The ID of the iTwin to be updated.',
+        required: true,
+      }),
+      number: Flags.string({
+        description: 'Unique identifier for the iTwin.',
+        required: false,
+      }),
+      status: Flags.string({
+        description: 'Status of the iTwin. Defaults to Active.',
+        options: ['Active', 'Inactive', 'Trial'],
+        required: false,
+      }),
+      "sub-class": Flags.string({
+        description: 'The subClass of your iTwin.',
+        options: ["Account", "Portfolio", "Asset", "Program", "Project", "WorkPackage"],
+        required: false,
+      }),
+      type: Flags.string({
+        description: "Defines the iTwin's Type.",
+        required: false,
+      }),
+    };
+  
+    async run() {
+      const { flags } = await this.parse(UpdateCommand);
+  
+      const iTwinUpdate : ITwin = {
+        class: flags.class as ITwinClass,
+        displayName: flags["display-name"],
+        geographicLocation: flags["geographic-location"],
+        ianaTimeZone: flags["iana-time-zone"],
+        number: flags.number,
+        status: flags.status,
+        subClass: flags["sub-class"] as ITwinSubClass,
+        type: flags.type,
+      };
+  
+      const accessToken = await this.getAccessToken();
+      const client = this.getITwinAccessClient();
+  
+      const response = await client.updateiTwin(accessToken, flags.id, iTwinUpdate);
+
+      if(response.error)
+      {
+        this.error(JSON.stringify(response.error, null, 2));
+      }
+  
+      return this.logAndReturnResult(response.data);
+    }
+  }
+  

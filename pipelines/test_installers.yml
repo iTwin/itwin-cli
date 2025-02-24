@@ -1,0 +1,76 @@
+parameters:
+  - name: installer_prefix
+    type: string
+    default: ''
+
+jobs:
+- job: Win_installers_test
+  displayName: 'Test installers on Windows'
+  pool:
+    vmImage: 'windows-latest'
+  steps:
+    - checkout: self
+      displayName: 'Checkout code'
+    - task: DownloadPipelineArtifact@2
+      displayName: 'Download windows artifacts'
+      inputs:
+        artifactName: signed-win-installer
+        targetPath: '$(Pipeline.Workspace)/signed-win-installer'
+    - task: PowerShell@2
+      displayName: 'Run installer and test CLI accessibility'
+      inputs:
+        targetType: 'filePath'
+        filePath: '$(Pipeline.Workspace)/s/pipelines/scripts/install-and-test-installer.ps1'
+        arguments: '-filepath $(Pipeline.Workspace)/signed-win-installer/itp-*-x64.exe -installLocation $(Pipeline.Workspace)\itp-installation'
+        workingDirectory: '$(Pipeline.Workspace)/s/pipelines/scripts'
+
+- job: Mac_installers_test
+  displayName: 'Test installers on macOS'
+  pool:
+    vmImage: 'macOS-latest'
+  steps:
+    - checkout: self
+      displayName: 'Checkout code'
+    - task: DownloadPipelineArtifact@2
+      displayName: 'Download macOS artifacts'
+      inputs:
+        artifactName: signed-macos-installer
+        targetPath: '$(Pipeline.Workspace)/macos-installer'
+    - script: |
+        sudo installer -pkg $(Pipeline.Workspace)/macos-installer/itp-v*-${{ parameters.installer_prefix }}-x64.pkg -target /
+      displayName: 'Install package using macOS terminal'
+    - script: |
+        version_output=$(itp --version)
+        if [[ $version_output == itp/* ]]; then
+          echo "Version output is correct: $version_output"
+        else
+          echo "Unexpected version output: $version_output"
+          exit 1
+        fi
+      displayName: 'Check itp version'
+
+- job: Debian_installers_test
+  displayName: 'Test installers on Debian'
+  pool:
+    vmImage: 'ubuntu-latest'
+  steps:
+    - checkout: self
+      displayName: 'Checkout code'
+    - task: DownloadPipelineArtifact@2
+      displayName: 'Download Debian artifacts'
+      inputs:
+        artifactName: deb-installer
+        targetPath: '$(Pipeline.Workspace)/1/debian-installer'
+    - script: |
+        deb_file=$(find $(Pipeline.Workspace)/1/debian-installer -name 'itp_*_amd64.deb')
+        sudo dpkg -i $deb_file
+      displayName: 'Install package using dpkg'
+    - script: |
+        version_output=$(itp --version)
+        if [[ $version_output == itp/* ]]; then
+          echo "Version output is correct: $version_output"
+        else
+          echo "Unexpected version output: $version_output"
+          exit 1
+        fi
+      displayName: 'Check itp version'

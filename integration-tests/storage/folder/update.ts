@@ -1,0 +1,49 @@
+/*---------------------------------------------------------------------------------------------
+* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+* See LICENSE.md in the project root for license terms and full copyright notice.
+*--------------------------------------------------------------------------------------------*/
+
+import { runCommand } from '@oclif/test';
+import { expect } from 'chai';
+
+import { 
+  createFolder, 
+  createITwin, 
+  deleteFolder, 
+  deleteITwin, 
+  getRootFolderId 
+} from '../../utils/helpers';
+
+const tests = () => describe('update', () => {
+  let rootFolderId: string;
+  let testFolderId: string;
+  let testITwinId: string;
+
+  before(async () => {
+    const testITwin = await createITwin('IntegrationTestITwin', 'Thing', 'Asset');
+    testITwinId = testITwin.id;
+    rootFolderId = await getRootFolderId(testITwinId);
+    const testFolder = await createFolder(rootFolderId, 'IntegrationTestFolder', 'Test description');
+    testFolderId = testFolder.id;
+  });
+
+  after(async () => {
+    await deleteFolder(testFolderId);
+    await deleteITwin(testITwinId);
+  });
+
+  it('should update the folder', async () => {
+    const updatedDisplayName = 'UpdatedIntegrationTestFolder';
+    const updatedDescription = 'Updated test description';
+
+    const { stdout } = await runCommand(`storage folder update --folder-id ${testFolderId} --display-name ${updatedDisplayName} --description "${updatedDescription}"`);
+    const updatedFolder = JSON.parse(stdout);
+
+    expect(updatedFolder).to.have.property('id', testFolderId);
+    expect(updatedFolder).to.have.property('displayName', updatedDisplayName);
+    expect(updatedFolder).to.have.property('description', updatedDescription);
+    expect(updatedFolder).to.have.property('parentFolderId', rootFolderId);
+  });
+});
+
+export default tests;

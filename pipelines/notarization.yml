@@ -1,0 +1,54 @@
+parameters:
+  - name: appleId
+    type: string
+    default: ''
+  - name: password
+    type: string
+    default: ''
+  - name: teamId
+    type: string
+    default: ''
+  - name: installer_prefix
+    type: string
+    default: ''
+  - name: package_version
+    type: string
+    default: ''
+  - name: cpuVersions
+    type: object
+    default:
+      - arm64
+      - x64
+
+steps:
+  - task: DownloadPipelineArtifact@2
+    inputs:
+      artifact: 'macos-installer'
+      path: '$(Pipeline.Workspace)/macos-installer'
+
+  - ${{ each cpuVersion in parameters.cpuVersions }}:
+    - script: |
+        pkg=$(Pipeline.Workspace)/macos-installer/itp-v${{ parameters.package_version }}-${{ parameters.installer_prefix }}-${{ cpuVersion }}.pkg
+        echo "Package path: $pkg"
+        if [ -f "$pkg" ]; then
+          echo "Package found: $pkg"
+        else
+          echo "Package not found: $pkg"
+          exit 1
+        fi
+      displayName: 'Check if pkg file exists for ${{ cpuVersion }}'
+
+    - script: |
+        pkg=$(Pipeline.Workspace)/macos-installer/itp-v${{ parameters.package_version }}-${{ parameters.installer_prefix }}-${{ cpuVersion }}.pkg
+        xcrun notarytool submit "$pkg" --apple-id "${{ parameters.appleId }}" --password "${{ parameters.password }}" --team-id "${{ parameters.teamId }}" --wait
+      displayName: 'Notarize pkg file for ${{ cpuVersion }}'
+
+    - script: |
+        pkg=$(Pipeline.Workspace)/macos-installer/itp-v${{ parameters.package_version }}-${{ parameters.installer_prefix }}-${{ cpuVersion }}.pkg
+        xcrun stapler staple "$pkg"
+      displayName: 'Staple pkg file for ${{ cpuVersion }}'
+
+  - task: PublishPipelineArtifact@1
+    inputs:
+      targetPath: '$(Pipeline.Workspace)/macos-installer'
+      artifact: 'signed-macos-installer'

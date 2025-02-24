@@ -1,0 +1,27 @@
+parameters:
+  - name: displayName
+    type: string
+    default: ''
+  - name: gh_release_tag
+    type: string
+    default: ''
+  - name: artifact_name
+    type: string
+    default: ''
+
+steps:
+  - task: DownloadPipelineArtifact@2
+    inputs:
+      artifactName: ${{ parameters.artifact_name }}
+      targetPath: '$(Pipeline.Workspace)/${{ parameters.artifact_name }}'
+    displayName: 'Download artifacts'
+  - task: GitHubRelease@1
+    displayName: ${{ parameters.displayName }}
+    inputs:
+      gitHubConnection: itwin-cli
+      repositoryName: '$(Build.Repository.Name)'
+      action: edit
+      target: main
+      tag: ${{ parameters.gh_release_tag }}
+      assets: '$(Pipeline.Workspace)/${{ parameters.artifact_name }}/*'
+      assetUploadMode: replace

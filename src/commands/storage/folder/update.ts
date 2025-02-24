@@ -1,0 +1,31 @@
+/*---------------------------------------------------------------------------------------------
+* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+* See LICENSE.md in the project root for license terms and full copyright notice.
+*--------------------------------------------------------------------------------------------*/
+
+import { Flags } from "@oclif/core";
+
+import BaseCommand from "../../../extensions/base-command.js";
+
+export default class UpdateFolder extends BaseCommand {
+    static description = "Update the metadata of a folder in an iTwin's storage, such as its display name or description.";
+  
+    static flags = {
+      description: Flags.string({ description: "A description for the folder." }),
+      "display-name": Flags.string({ description: "The new display name for the folder." }),
+      "folder-id": Flags.string({ description: "The ID of the folder to be updated.", required: true }),
+    };
+  
+    async run() {
+      const { flags } = await this.parse(UpdateFolder);
+  
+      const client = await this.getStorageApiClient();
+      const response = await client.updateFolder(flags["folder-id"], {
+        description: flags.description,
+        displayName: flags["display-name"],
+      });
+  
+      return this.logAndReturnResult(response.folder);
+    }
+  }
+  
