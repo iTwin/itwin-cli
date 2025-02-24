@@ -1,0 +1,34 @@
+/*---------------------------------------------------------------------------------------------
+* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+* See LICENSE.md in the project root for license terms and full copyright notice.
+*--------------------------------------------------------------------------------------------*/
+
+import { Flags } from "@oclif/core";
+
+import BaseCommand from "../../../extensions/base-command.js";
+
+export default class InfoRole extends BaseCommand {
+    static description = 'Retrieve details about a specific role in an iTwin.';
+  
+    static flags = {
+      "itwin-id": Flags.string({
+        description: 'The ID of the iTwin where the role exists.',
+        required: true,
+      }),
+      "role-id": Flags.string({
+        description: 'The ID of the role to retrieve information about.',
+        required: true,
+      }),
+    };
+  
+    async run() {
+      const { flags } = await this.parse(InfoRole);
+  
+      const client = await this.getAccessControlApiClient();
+  
+      const response = await client.getiTwinRole(flags["itwin-id"], flags["role-id"]);
+  
+      return this.logAndReturnResult(response.role);
+    }
+  }
+  

@@ -1,0 +1,26 @@
+/*---------------------------------------------------------------------------------------------
+* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+* See LICENSE.md in the project root for license terms and full copyright notice.
+*--------------------------------------------------------------------------------------------*/
+
+import { Flags } from "@oclif/core";
+
+import BaseCommand from "../../../extensions/base-command.js";
+
+export default class FileUpdateComplete extends BaseCommand {
+    static description = 'Complete update of a file.';
+  
+    static flags = {
+      "file-id": Flags.string({ description: 'The file id.', required: true }),
+    };
+  
+    async run() {
+      const { flags } = await this.parse(FileUpdateComplete);
+  
+      const client = await this.getStorageApiClient();
+      const response = await client.completeFileUpload(flags["file-id"]);
+  
+      return this.logAndReturnResult(response.file);
+    }
+  }
+  

@@ -1,0 +1,9 @@
+{
+  "extends": ["oclif", "oclif-typescript", "prettier"],
+  "rules": {},
+  "overrides": [
+    {
+      "files":[ "src/**/*.js" ]
+    }
+  ]
+}

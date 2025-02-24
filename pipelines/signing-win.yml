@@ -1,0 +1,50 @@
+parameters:
+  - name: package_version
+    type: string
+    default: ''
+  - name: installer_prefix
+    type: string
+    default: ''
+  - name: cpuVersions
+    type: object
+    default:
+      - arm64
+      - x64
+      - x86
+
+jobs:
+- job: Signing_win
+  displayName: 'Signing Windows executables'
+  dependsOn: Packaging_win
+  pool:
+    vmImage: 'windows-latest'
+
+  steps:
+  - task: DownloadPipelineArtifact@2
+    inputs:
+      artifactName: 'win-installer'
+      targetPath: '$(Pipeline.Workspace)/win-installer'
+    displayName: 'Download artifacts'
+  - task: NuGetAuthenticate@1
+    displayName: 'Nuget authenticate'
+  - task: DotNetCoreCLI@2
+    displayName: 'Install SignToolClient'
+    inputs:
+      command: 'custom'
+      custom: 'tool'
+      arguments: 'install --global SignToolClient --add-source https://pkgs.dev.azure.com/bentleycs/_packaging/Packages/nuget/v3/index.json'
+  - ${{ each cpuVersion in parameters.cpuVersions }}:
+    - task: PowerShell@2
+      displayName: 'Sign exe file for cpu (${{ cpuVersion }})'
+      inputs:
+        targetType: 'inline'
+        script: |
+          $v = "${{ parameters['package_version'] }}"
+          $newFileName = "itp-v$v-${{ parameters.installer_prefix }}-${{ cpuVersion }}.exe"
+          Write-Host "Signing file: $newFileName"
+          signtoolclient sign --service-url https://signingservice.bentley.com --BsiToken $(SigningServiceToken) "$(Pipeline.Workspace)/win-installer/$newFileName"
+  - task: PublishPipelineArtifact@1
+    inputs:
+      targetPath: '$(Pipeline.Workspace)/win-installer'
+      artifactName: 'signed-win-installer'
+    displayName: 'Upload signed artifacts'

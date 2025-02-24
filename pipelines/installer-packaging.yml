@@ -1,0 +1,40 @@
+parameters:
+  - name: target
+    type: string
+    default: ''
+  - name : artifact_glob
+    type: string
+    default: ''
+  - name: linux_machine
+    type: boolean
+    default: false
+  - name: buildSourceVersion
+    type: string
+    default: ''
+  - name: additional_args
+    type: string
+    default: ''
+
+steps:
+  - ${{ if parameters.linux_machine }}:
+    - script: sudo apt update
+      displayName: 'Update apt'
+    - script: sudo apt install nsis p7zip-full p7zip-rar -y
+      displayName: 'Install dependencies'
+  - checkout: self
+    displayName: 'Checkout code'
+  - task: UseNode@1
+    inputs:
+      version: '20.16.0'
+    displayName: 'Setup Node.js'
+  - script: npm ci
+    displayName: 'Install npm dependencies'
+  - script: npm run build
+    displayName: 'Build project'
+  - script: npx --yes oclif pack ${{ parameters.target }} -r . ${{ parameters.additional_args }}
+    displayName: 'Package installer'
+  - task: PublishPipelineArtifact@1
+    displayName: 'Upload artifacts'
+    inputs:
+      targetPath: ${{ parameters.artifact_glob }}
+      artifactName: '${{ parameters.target }}-installer'

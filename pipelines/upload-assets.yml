@@ -1,0 +1,22 @@
+jobs:
+- job: assetUpload
+  displayName: 'Upload installers to GitHub release'  
+  pool:
+    vmImage: 'ubuntu-latest'
+  condition: and(succeeded(), eq(variables['Build.Reason'], 'IndividualCI'), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
+  steps:
+    - template: github-asset-upload.yml
+      parameters:
+        displayName: 'Windows asset upload'
+        gh_release_tag: ${{ variables['Build.SourceBranchName'] }}
+        artifact_name: 'signed-win-installer'
+    - template: github-asset-upload.yml
+      parameters:
+        displayName: 'Debian asset upload'
+        gh_release_tag: ${{ variables['Build.SourceBranchName'] }}
+        artifact_name: 'deb-installer'
+    - template: github-asset-upload.yml
+      parameters:
+        displayName: 'MacOs asset upload'
+        gh_release_tag: ${{ variables['Build.SourceBranchName'] }}
+        artifact_name: 'signed-macos-installer'

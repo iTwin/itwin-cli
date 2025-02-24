@@ -1,0 +1,89 @@
+{
+  "name": "itp",
+  "description": "Work seamlessly with the iTwin Platform",
+  "version": "0.0.2",
+  "author": "Bentley systems, Incorporated",
+  "bin": {
+    "itp": "./bin/run.js"
+  },
+  "bugs": "https://github.com/iTwin/itwin-cli/issues",
+  "dependencies": {
+    "@itwin/imodels-client-management": "^5.9.0",
+    "@itwin/itwins-client": "^1.6.1",
+    "@itwin/node-cli-authorization": "^2.0.3",
+    "@itwin/object-storage-core": "^2.2.5",
+    "@itwin/service-authorization": "^1.2.2",
+    "@oclif/core": "^4",
+    "@oclif/plugin-help": "^6",
+    "@oclif/plugin-plugins": "^5",
+    "@opentelemetry/api": "^1.9.0",
+    "console-table-printer": "^2.12.1",
+    "dotenv": "^16.4.5",
+    "fs-extra": "^8.1.0",
+    "jwt-decode": "^4.0.0",
+    "open": "^10.1.0"
+  },
+  "devDependencies": {
+    "@oclif/prettier-config": "^0.2.1",
+    "@oclif/test": "^4",
+    "@types/chai": "^4",
+    "@types/mocha": "^10",
+    "@types/node": "^18.19.64",
+    "chai": "^4",
+    "eslint": "^8",
+    "eslint-config-oclif": "^5",
+    "eslint-config-oclif-typescript": "^3",
+    "eslint-config-prettier": "^9",
+    "mocha": "^10",
+    "oclif": "^4",
+    "shx": "^0.3.3",
+    "ts-node": "^10",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=20.16.0"
+  },
+  "files": [
+    "/bin",
+    "/dist",
+    "/oclif.manifest.json"
+  ],
+  "homepage": "https://github.com/iTwin/itwin-cli",
+  "keywords": [
+    "oclif"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "type": "module",
+  "oclif": {
+    "bin": "itp",
+    "dirname": "itp",
+    "commands": "./dist/commands",
+    "plugins": [
+      "@oclif/plugin-help",
+      "@oclif/plugin-plugins"
+    ],
+    "macos": {
+      "identifier": "com.itwin.cli",
+      "sign": "\"Developer ID Installer: Bentley Systems, Incorporated (Y3C3TQ4LZ8)\""
+    },
+    "topicSeparator": " ",
+    "topics": {
+      "hello": {
+        "description": "Say hello to the world and others"
+      }
+    }
+  },
+  "repository": "iTwin/itwin-cli",
+  "scripts": {
+    "clean": "shx rm -rf dist",
+    "build": "npm run clean && tsc -b",
+    "lint": "eslint . --ext .ts",
+    "postpack": "shx rm -f oclif.manifest.json",
+    "posttest": "npm run lint",
+    "prepack": "oclif manifest && oclif readme",
+    "test": "mocha --forbid-only \"integration-tests/**/*.test.ts\"",
+    "version": "oclif readme && git add README.md"
+  },
+  "types": "dist/index.d.ts"
+}

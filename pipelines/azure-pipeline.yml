@@ -1,0 +1,113 @@
+trigger:
+  tags:
+    include:
+    - '*'
+
+pr:
+  drafts: false
+  branches:
+    include:
+      - main
+
+variables:
+  - name: installer-prefix
+    value: $[substring(variables['Build.SourceVersion'], 0, 7)]
+
+stages:
+- stage: Initialize
+  jobs:
+    - job: SetVariables
+      pool:
+        vmImage: 'ubuntu-latest'
+      steps:
+        - bash: | # Grab the package version
+            v=`node -p "const p = require('./package.json'); p.version;"`
+            echo "##vso[task.setvariable variable=package-version;isOutput=true]$v"
+            echo "Package version: $v"
+          name: GetPackageVersion
+
+- stage: Windows_packaging_stage
+  dependsOn: Initialize
+  displayName: 'Packaging for Windows'
+  variables:
+    package-version: $[ stageDependencies.Initialize.SetVariables.outputs['GetPackageVersion.package-version'] ]
+
+  jobs:
+    - job: Packaging_win
+      pool:
+        vmImage: 'ubuntu-latest'
+      steps:
+        - template: installer-packaging.yml
+          parameters:
+            target: 'win'
+            artifact_glob: './dist/win32/'
+            linux_machine: true
+            additional_args: '--defender-exclusion=unchecked'
+    - template: signing-win.yml
+      parameters:
+        package_version: $(package-version)
+        installer_prefix: $(installer-prefix)
+
+- stage: MacOs_packaging_stage
+  dependsOn: Initialize
+  displayName: 'Packaging for MacOS'
+  variables:
+    package-version: $[ stageDependencies.Initialize.SetVariables.outputs['GetPackageVersion.package-version'] ]
+  jobs:
+    - job: Packaging_macos
+      pool:
+        name: "Release Services MacOS Build"
+        demands:
+          - Agent.Name -equals PrgMac07-A
+      steps:
+        - template: installer-packaging.yml
+          parameters:
+            target: 'macos'
+            artifact_glob: './dist/macos/'
+            linux_machine: false
+    - job: Notarization_macos
+      dependsOn: Packaging_macos
+      pool:
+        name: "Release Services MacOS Build"
+        demands:
+          - Agent.Name -equals PrgMac07-A
+      steps:
+        - template: notarization.yml
+          parameters:
+            appleId: $(Notorize ITP CLI ID)
+            password: $(Notarize Electron iTwin Platform Command Line)
+            teamId: $(Notorize ITP CLI Team ID)
+            installer_prefix: $(installer-prefix)
+            package_version: $(package-version)
+
+- stage: Debian_packaging_stage
+  dependsOn: Initialize
+  displayName: 'Packaging for Debian'
+  jobs:
+    - job: Packaging_deb
+      pool:
+        vmImage: 'ubuntu-latest'
+      steps:
+        - template: installer-packaging.yml
+          parameters:
+            target: 'deb'
+            artifact_glob: './dist/deb/'
+            linux_machine: true    
+
+- stage: Test_installers_stage
+  displayName: 'Test installers'
+  dependsOn: 
+    - MacOs_packaging_stage
+    - Debian_packaging_stage
+    - Windows_packaging_stage
+  jobs:
+    - template: test_installers.yml
+      parameters:
+        installer_prefix: $(installer-prefix)
+
+- stage: Asset_upload_stage
+  displayName: 'Upload installers to GitHub release'
+  dependsOn: Test_installers_stage
+  condition: and(succeeded(), eq(variables['Build.Reason'], 'IndividualCI'), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
+  jobs:
+    - template: upload-assets.yml

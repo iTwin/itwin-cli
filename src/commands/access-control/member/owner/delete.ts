@@ -1,0 +1,34 @@
+/*---------------------------------------------------------------------------------------------
+* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+* See LICENSE.md in the project root for license terms and full copyright notice.
+*--------------------------------------------------------------------------------------------*/
+
+import { Flags } from "@oclif/core";
+
+import BaseCommand from "../../../../extensions/base-command.js";
+
+export default class DeleteOwner extends BaseCommand {
+    static description = 'Remove an owner from an iTwin by their member ID.';
+  
+    static flags = {
+      "itwin-id": Flags.string({
+        description: 'The ID of the iTwin from which the owner will be removed.',
+        required: true,
+      }),
+      "member-id": Flags.string({
+        description: 'The ID of the owner to be removed.',
+        required: true,
+      }),
+    };
+  
+    async run() {
+      const { flags } = await this.parse(DeleteOwner);
+  
+      const client = await this.getAccessControlMemberClient();
+  
+      await client.deleteOwner(flags["itwin-id"], flags["member-id"]);
+  
+      return this.logAndReturnResult({ result: 'deleted' });
+    }
+  }
+  
