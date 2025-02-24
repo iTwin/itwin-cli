@@ -4,7 +4,6 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { Changeset } from "@itwin/imodels-client-management";
-
 import { Flags } from "@oclif/core";
 
 import BaseCommand from "../../../extensions/base-command.js";
