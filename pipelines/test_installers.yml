@@ -49,11 +49,11 @@ jobs:
         fi
       displayName: 'Check itp version'
     - script: |
-        version_output=$(itp itwin --help)
-        if [[ $version_output == Create an iTwin* ]]; then
-          echo "Help output is correct: $version_output"
+        itwin_help=$(itp itwin --help)
+        if [[ $itwin_help == "Create an iTwin"* ]]; then
+          echo "Help output is correct: $itwin_help"
         else
-          echo "Unexpected help output: $version_output"
+          echo "Unexpected help output: $itwin_help"
           exit 1
         fi
       displayName: 'Check itwin help output'
@@ -84,11 +84,11 @@ jobs:
         fi
       displayName: 'Check itp version'
     - script: |
-        version_output=$(itp itwin --help)
-        if [[ $version_output == Create an iTwin* ]]; then
-          echo "Help output is correct: $version_output"
+        itwin_help=$(itp itwin --help)
+        if [[ $itwin_help == "Create an iTwin"* ]]; then
+          echo "Help output is correct: $itwin_help"
         else
-          echo "Unexpected help output: $version_output"
+          echo "Unexpected help output: $itwin_help"
           exit 1
         fi
       displayName: 'Check itwin help output'
