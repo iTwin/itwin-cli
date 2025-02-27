@@ -31,7 +31,7 @@ steps:
     displayName: 'Install npm dependencies'
   - script: npm run build
     displayName: 'Build project'
-  - script: npx --yes oclif pack ${{ parameters.target }} -r . ${{ parameters.additional_args }}
+  - script: npx --yes oclif pack ${{ parameters.target }} -r .
     displayName: 'Package installer'
   - task: PublishPipelineArtifact@1
     displayName: 'Upload artifacts'
