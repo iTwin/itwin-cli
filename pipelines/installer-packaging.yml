@@ -33,6 +33,9 @@ steps:
     displayName: 'Build project'
   - script: npx --yes oclif pack ${{ parameters.target }} -r .
     displayName: 'Package installer'
+  - script: |
+      ls
+    displayName: 'Display all directories'
   - task: PublishPipelineArtifact@1
     displayName: 'Upload artifacts'
     inputs:

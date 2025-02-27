@@ -37,7 +37,13 @@ jobs:
         artifactName: signed-macos-installer
         targetPath: '$(Pipeline.Workspace)/signed-macos-installer'
     - script: |
-        sudo installer -pkg $(Pipeline.Workspace)/signed-macos-installer/itp-v*-${{ parameters.installer_prefix }}-x64.pkg -target ./itp-installation
+        ls $(Pipeline.Workspace)/signed-macos-installer
+      displayName: 'Show folder content'
+    - script: |
+        ls /
+      displayName: 'Show folder content'
+    - script: |
+        sudo installer -pkg $(Pipeline.Workspace)/signed-macos-installer/itp-v*-${{ parameters.installer_prefix }}-x64.pkg -target /
       displayName: 'Install package using macOS terminal'
     - script: |
         version_output=$(itp --version)
