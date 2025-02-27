@@ -21,6 +21,10 @@ parameters:
       - x64
 
 steps:
+  - script: |
+      rm -rf $(Pipeline.Workspace)/macos-installer/*
+    displayName: 'Clean macos-installer directory'
+
   - task: DownloadPipelineArtifact@2
     inputs:
       artifact: 'macos-installer'
