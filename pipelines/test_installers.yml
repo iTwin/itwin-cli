@@ -21,7 +21,7 @@ jobs:
       inputs:
         targetType: 'filePath'
         filePath: '$(Pipeline.Workspace)/s/pipelines/scripts/install-and-test-installer.ps1'
-        arguments: '-filepath $(Pipeline.Workspace)/signed-win-installer/itp-*-x64.exe -installLocation $(Pipeline.Workspace)\itp-installation'
+        arguments: '-filepath $(Pipeline.Workspace)/signed-win-installer/itp-*-x64-win.exe -installLocation $(Pipeline.Workspace)\itp-installation'
         workingDirectory: '$(Pipeline.Workspace)/s/pipelines/scripts'
 
 - job: Mac_installers_test
@@ -37,7 +37,7 @@ jobs:
         artifactName: signed-macos-installer
         targetPath: '$(Pipeline.Workspace)/macos-installer'
     - script: |
-        sudo installer -pkg $(Pipeline.Workspace)/macos-installer/itp-v*-${{ parameters.installer_prefix }}-x64.pkg -target /
+        sudo installer -pkg $(Pipeline.Workspace)/macos-installer/itp-v*-${{ parameters.installer_prefix }}-x64-macos.pkg -target /
       displayName: 'Install package using macOS terminal'
     - script: |
         version_output=$(itp --version)
@@ -71,7 +71,7 @@ jobs:
         artifactName: deb-installer
         targetPath: '$(Pipeline.Workspace)/1/debian-installer'
     - script: |
-        deb_file=$(find $(Pipeline.Workspace)/1/debian-installer -name 'itp_*_amd64.deb')
+        deb_file=$(find $(Pipeline.Workspace)/1/debian-installer -name 'itp_*_amd64-deb.deb')
         sudo dpkg -i $deb_file
       displayName: 'Install package using dpkg'
     - script: |
