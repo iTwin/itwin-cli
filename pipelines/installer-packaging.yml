@@ -33,6 +33,14 @@ steps:
     displayName: 'Build project'
   - script: npx --yes oclif pack ${{ parameters.target }} -r . ${{ parameters.additional_args }}
     displayName: 'Package installer'
+  - script: |
+      find ${{ parameters.artifact_glob }} -type f ! -name 'itp*' -delete
+    displayName: 'Remove non-itp files in artifact_glob directory'
+  - script: |
+      for file in ${{ parameters.artifact_glob }}/itp*; do
+        mv "$file" "${file%.*}-${{ parameters.target }}.${file##*.}"
+      done
+    displayName: 'Add target prefix to files in artifact_glob directory'
   - task: PublishPipelineArtifact@1
     displayName: 'Upload artifacts'
     inputs:
