@@ -40,7 +40,7 @@ jobs:
         targetType: 'inline'
         script: |
           $v = "${{ parameters['package_version'] }}"
-          $newFileName = "itp-v$v-${{ parameters.installer_prefix }}-${{ cpuVersion }}.exe"
+          $newFileName = "itp-v$v-${{ parameters.installer_prefix }}-${{ cpuVersion }}-win.exe"
           Write-Host "Signing file: $newFileName"
           signtoolclient sign --service-url https://signingservice.bentley.com --BsiToken $(SigningServiceToken) "$(Pipeline.Workspace)/win-installer/$newFileName"
   - task: PublishPipelineArtifact@1
