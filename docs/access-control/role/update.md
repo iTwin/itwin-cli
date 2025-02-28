@@ -22,7 +22,7 @@ Update the details of an existing role in an iTwin.
 
 - **`--permissions`**  
   A list of permissions to assign to the role.  
-  **Type:** `array` **Required:** No
+  **Type:** `array` **Required:** No **Multiple:** Yes
 
 ## Examples
 
@@ -31,7 +31,7 @@ Update the details of an existing role in an iTwin.
 itp access-control role update --itwin-id "ad0ba809-9241-48ad-9eb0-c8038c1a1d51" --role-id "role1-id" --display-name "Lead Engineer" --description "Oversees engineering tasks"
 
 # Example 2: Update role permissions along with the name
-itp access-control role update --itwin-id "ad0ba809-9241-48ad-9eb0-c8038c1a1d51" --role-id "role1-id" --display-name "Admin Role" --permissions '["Permission1", "Permission2", "Permission3"]'
+itp access-control role update --itwin-id "ad0ba809-9241-48ad-9eb0-c8038c1a1d51" --role-id "role1-id" --display-name "Admin Role" --permissions "Permission1" --permissions "Permission2" --permissions "Permission3"
 ```
 
 ## API Reference
