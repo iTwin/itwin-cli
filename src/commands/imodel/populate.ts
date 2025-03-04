@@ -11,6 +11,7 @@ import fs from "node:fs"
 import path from "node:path"
 
 import BaseCommand from "../../extensions/base-command.js"
+import { authorizationInformation } from "../../services/authorization-client/authorization-type.js"
 import { fileUpload } from "../../services/storage-client/models/file-upload.js"
 import { itemsWithFolderLink } from "../../services/storage-client/models/items-with-folder-link.js"
 import { authInfo } from "../../services/synchronizationClient/models/connection-auth.js"
@@ -20,7 +21,6 @@ import { sourceFile } from "../../services/synchronizationClient/models/source-f
 import { StorageConnection } from "../../services/synchronizationClient/models/storage-connection.js"
 import { storageConnectionListResponse } from "../../services/synchronizationClient/models/storage-connection-response.js"
 import { storageRun } from "../../services/synchronizationClient/models/storage-run.js"
-import { authorizationInformation } from "../../services/authorization-client/authorization-type.js"
 
 export default class PopulateIModel extends BaseCommand {    
   static description = 'Synchronize design files into an iModel.'
