@@ -7,3 +7,11 @@ export enum authorizationType {
     Interactive = "Interactive",
     Service = "Service"
 }
+
+export type authorizationInformation = {
+    apiUrl: string;
+    authorizationType: authorizationType;
+    clientId: string;
+    expirationDate?: Date;
+    issuerUrl: string;
+}
