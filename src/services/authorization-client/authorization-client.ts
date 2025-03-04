@@ -12,7 +12,7 @@ import path from "node:path";
 
 import { configuration } from "../../extensions/configuration.js";
 import { authTokenInfo } from "./auth-token-info.js";
-import { authorizationType } from "./authorization-type.js";
+import { authorizationInformation, authorizationType } from "./authorization-type.js";
 
 export class AuthorizationClient {
   private readonly cliConfiguration: Config;
@@ -35,6 +35,18 @@ export class AuthorizationClient {
       return newTokenInfo.authToken;
     }
     
+    info() : authorizationInformation {
+      const existingTokenInfo = this.getExistingAuthTokenInfo();
+
+      return {
+        apiUrl : this.environmentConfiguration.apiUrl,
+        authorizationType: existingTokenInfo?.authenticationType ?? authorizationType.Interactive,
+        clientId: this.environmentConfiguration.clientId,
+        expirationDate: existingTokenInfo?.expirationDate,
+        issuerUrl: this.environmentConfiguration.issuerUrl
+      }
+    }
+
     async login(clientId?: string, clientSecret?: string) : Promise<authTokenInfo> {
       let authType: authorizationType;
       let usedToken : string;
