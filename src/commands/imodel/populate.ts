@@ -5,27 +5,22 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
+import { IModel } from "@itwin/imodels-client-management"
 import { Flags } from "@oclif/core"
 import fs from "node:fs"
 import path from "node:path"
 
 import BaseCommand from "../../extensions/base-command.js"
+import { authorizationInformation } from "../../services/authorization-client/authorization-type.js"
 import { fileUpload } from "../../services/storage-client/models/file-upload.js"
+import { itemsWithFolderLink } from "../../services/storage-client/models/items-with-folder-link.js"
+import { authInfo } from "../../services/synchronizationClient/models/connection-auth.js"
 import { connectorType } from "../../services/synchronizationClient/models/connector-type.js"
 import { executionState } from "../../services/synchronizationClient/models/execution-state.js"
-import FileCreate from "../storage/file/create.js"
-import FileUpdateComplete from "../storage/file/update-complete.js"
-import UpdateContent from "../storage/file/update-content.js"
-import FileUpload from "../storage/file/upload.js"
-import GetRootFolder from "../storage/root-folder.js"
-import ConnectionAuth from "./connection/auth.js"
-import CreateConnection from "./connection/create.js"
-import ConnectionInfo from "./connection/info.js"
-import ListConnections from "./connection/list.js"
-import CreateConnectionRun from "./connection/run/create.js"
-import ConnectionRunInfo from "./connection/run/info.js"
-import ListSourceFiles from "./connection/sourcefile/list.js"
-import { IModelInfo } from "./info.js"
+import { sourceFile } from "../../services/synchronizationClient/models/source-file.js"
+import { StorageConnection } from "../../services/synchronizationClient/models/storage-connection.js"
+import { storageConnectionListResponse } from "../../services/synchronizationClient/models/storage-connection-response.js"
+import { storageRun } from "../../services/synchronizationClient/models/storage-run.js"
 
 export default class PopulateIModel extends BaseCommand {    
   static description = 'Synchronize design files into an iModel.'
@@ -72,104 +67,66 @@ export default class PopulateIModel extends BaseCommand {
   }
 
   async run() {
-    const {flags} = await this.parse(PopulateIModel);
-    const accessToken = await this.getAccessToken();
+    const { flags } = await this.parse(PopulateIModel);
 
-    const filesAndConnectorToImport = this.checkAndGetFilesWithConnectors(flags.files, flags["connector-types"])
+    const filesAndConnectorToImport = this.checkAndGetFilesWithConnectors(flags.files, flags["connector-types"]);
+    this.log(`Synchronizing files into iModel with ID: ${flags.id}`);
+    const iModel = await this.runCommand<IModel>('imodel:info', ['--id', flags.id]);
 
-    const iModel = await IModelInfo.run(['--access-token', accessToken, '--id', flags.id], this.config);
-
-    const topFolders = await GetRootFolder.run(['--access-token', accessToken, '--itwin-id', iModel.iTwinId], this.config);
+    this.log(`Fetching root folder for iTwin: ${iModel.iTwinId}`);
+    const topFolders = await this.runCommand<itemsWithFolderLink>('storage:root-folder', ['--itwin-id', iModel.iTwinId]);
     const rootFolderId = topFolders?._links?.folder?.href?.split('/').pop();
-    if(rootFolderId === undefined)
-    {
+    if (rootFolderId === undefined) {
       this.error(`Unable to get root folder for iTwin: ${iModel.iTwinId}`);
     }
 
-    for(const [, fileInfo] of filesAndConnectorToImport.entries()) {
+    const summary = [];
+
+    for (const [, fileInfo] of filesAndConnectorToImport.entries()) {
+      this.log(`Processing file: ${fileInfo.fileName}`);
       const fileExists = topFolders.items?.find(entry => entry.type === 'file' && entry.displayName === fileInfo.fileName);
-      let fileId : string | undefined;
-      let connectionId: string | undefined;
-      if(fileExists?.id)
-      {
-        fileId = fileExists.id;
-        const updateFile = await UpdateContent.run(['--access-token', accessToken, '--file-id', fileId], this.config);
-        if(updateFile._links?.uploadUrl?.href === undefined || updateFile._links.completeUrl?.href === undefined)
-        {
-            this.error('No upload url was provided when creating content update for a file');
-        }
-      
-        await FileUpload.run(['--access-token', accessToken, '--upload-url', updateFile._links.uploadUrl.href, '--file-path', fileInfo.fullFilePath], this.config);
-      }
-      else
-      {
-        const newFile : fileUpload = await FileCreate.run(['--access-token', accessToken, '--folder-id', rootFolderId, '--display-name', fileInfo.fileName], this.config);
-        if(newFile._links?.uploadUrl?.href === undefined || newFile._links?.completeUrl?.href === undefined)
-        {
-          this.error('No upload url was provided when creating a file');
-        }
+      let fileId: string | undefined;
 
-        await FileUpload.run(['--access-token', accessToken, '--upload-url', newFile._links.uploadUrl.href, '--file-path', fileInfo.fullFilePath], this.config);
-
-        fileId = newFile._links.completeUrl.href.split('/')[5];
+      if (fileExists?.id) {
+        this.log(`Updating existing file: '${fileInfo.fileName}' with ID: ${fileExists.id}`);
+        fileId = await this.updateExistingFile(fileExists.id, fileInfo.fullFilePath);
+      } else {
+        this.log(`Creating new file: ${fileInfo.fileName}`);
+        fileId = await this.createNewFile(rootFolderId, fileInfo.fileName, fileInfo.fullFilePath);
       }
 
-      await FileUpdateComplete.run(['--access-token', accessToken, '--file-id', fileId], this.config);
+      this.log(`Completing file upload for file ID: ${fileId}`);
+      await this.runCommand('storage:file:update-complete', ['--file-id', fileId]);
 
-      const existingConnections = await ListConnections.run(['--access-token', accessToken, '--imodel-id', iModel.id], this.config);
-      
-      const connectionAuth = await ConnectionAuth.run(['--access-token', accessToken], this.config);
-      if(connectionAuth.isUserAuthorized === undefined)
-      {
+      this.log(`Checking existing connections for iModel ID: ${iModel.id}`);
+      const existingConnections = await this.runCommand<storageConnectionListResponse>('imodel:connection:list', ['--imodel-id', iModel.id]);
+      const connectionAuth = await this.runCommand<authInfo>('imodel:connection:auth', []);
+      if (connectionAuth.isUserAuthorized === undefined) {
         this.error('User is not authenticated for connection run');
       }
 
-      for( let i = 0; i < existingConnections.connections.length; i++) {
-        const connection = existingConnections.connections[i];
-        const connectionSourceFiles = await ListSourceFiles.run(['--access-token', accessToken, '--connection-id', connection.id], this.config);
-        const fileExist = connectionSourceFiles.find(file => file.storageFileId === fileId);
-        if(fileExist)
-        {
-          connectionId = connection.id;
-          await CreateConnectionRun.run(['--access-token', accessToken, '--connection-id', connection.id], this.config);
-          break;
-        }
-      }
+      const connectionId = await this.findOrCreateConnection(existingConnections.connections, fileId, fileInfo.connectorType, iModel.id);
 
-      if(!connectionId)
-      {
-        const createdStorageConnection = await CreateConnection.run(['--access-token', accessToken, '--imodel-id' ,iModel.id, '--connector-type', fileInfo.connectorType, '--file-id' ,fileId], this.config);
-    
-        if(createdStorageConnection?.id === undefined)
-        {
-          this.error("Storage connection id was not present");
-        }
-        
-        await CreateConnectionRun.run(['--access-token', accessToken, '--connection-id', createdStorageConnection.id], this.config);
+      this.log(`Running synchronization for connection ID: ${connectionId}`);
+      await this.runSynchronization(connectionId);
 
-        connectionId = createdStorageConnection.id;
-      }
-
-      const storageConnection = await ConnectionInfo.run(['--access-token', accessToken, '--connection-id', connectionId], this.config);
-      if(!storageConnection?._links?.lastRun?.href)
-      {
-        this.error(`No last run link available for storage connection: ${connectionId}`);
-      }
-
-      const runId = storageConnection?._links?.lastRun?.href.split("/")[8];
-      
-      let storageConnectionRun = await ConnectionRunInfo.run(['--access-token', accessToken, '--connection-id', connectionId, '--connection-run-id', runId], this.config);
-      while(storageConnectionRun?.state !== executionState.COMPLETED)
-      {
-        await new Promise(resolve => {setTimeout(resolve, 10_000)});
-        storageConnectionRun = await ConnectionRunInfo.run(['--access-token', accessToken, '--connection-id', connectionId, '--connection-run-id', runId], this.config);
-      }
+      summary.push({
+        connectionId,
+        connectorType: fileInfo.connectorType,
+        fileId,
+        fileName: fileInfo.fileName,
+      });
     }
-    
 
-    return this.logAndReturnResult(iModel);
+    this.log('Synchronization process completed');
+    return {
+      iModelId: iModel.id,
+      iTwinId: iModel.iTwinId,
+      rootFolderId,
+      summary,
+    };
   }
-  
+
   private checkAndGetFilesWithConnectors(files: string[], connectorTypes: string[] | undefined) : NewFileInfo[] {
     const resultArray = new Array<NewFileInfo>;
   
@@ -201,6 +158,65 @@ export default class PopulateIModel extends BaseCommand {
     }
     
     return resultArray;
+  }
+
+  private async createNewFile(rootFolderId: string, fileName: string, filePath: string): Promise<string> {
+    const newFile = await this.runCommand<fileUpload>('storage:file:create', ['--folder-id', rootFolderId, '--display-name', fileName]);
+    if (newFile._links?.uploadUrl?.href === undefined || newFile._links?.completeUrl?.href === undefined) {
+      this.error('No upload url was provided when creating a file');
+    }
+
+    await this.runCommand('storage:file:upload', ['--upload-url', newFile._links.uploadUrl.href, '--file-path', filePath]);
+    return newFile._links.completeUrl.href.split('/')[5];
+  }
+
+  private async findOrCreateConnection(existingConnections: StorageConnection[], fileId: string, connectorType: connectorType, iModelId: string): Promise<string> {
+    for (const connection of existingConnections) {
+      const connectionSourceFiles = await this.runCommand<sourceFile[]>('imodel:connection:sourcefile:list', ['--connection-id', connection.id]);
+      const fileExist = connectionSourceFiles.find(file => file.storageFileId === fileId);
+      if (fileExist) {
+        this.log(`File: ${fileId} already exists in connection: ${connection.id}`);
+        await this.runCommand('imodel:connection:run:create', ['--connection-id', connection.id]);
+        return connection.id;
+      }
+    }
+
+    const authInfo = await this.runCommand<authorizationInformation>('auth:info', []);
+
+    this.log(`Creating new connection for file: ${fileId}`);
+    const createdStorageConnection = await this.runCommand<StorageConnection>('imodel:connection:create', ['--imodel-id', iModelId, '--connector-type', connectorType, '--file-id', fileId, '--authentication-type', authInfo.authorizationType]);
+    if (createdStorageConnection?.id === undefined) {
+      this.error("Storage connection id was not present");
+    }
+
+    this.log(`Running connection for connection ID: ${createdStorageConnection.id}`);
+    await this.runCommand('imodel:connection:run:create', ['--connection-id', createdStorageConnection.id]);
+    return createdStorageConnection.id;
+  }
+
+  private async runSynchronization(connectionId: string): Promise<void> {
+    const storageConnection = await this.runCommand<StorageConnection>('imodel:connection:info', ['--connection-id', connectionId]);
+    if (!storageConnection?._links?.lastRun?.href) {
+      this.error(`No last run link available for storage connection: ${connectionId}`);
+    }
+
+    const runId = storageConnection?._links?.lastRun?.href.split("/")[8];
+    let storageConnectionRun;
+    do {
+      storageConnectionRun = await this.runCommand<storageRun>('imodel:connection:run:info', ['--connection-id', connectionId, '--connection-run-id', runId]);
+      await new Promise(resolve => { setTimeout(resolve, 10_000) });
+      this.log(`Waiting for synchronization to complete for run ID: ${runId} with state: ${storageConnectionRun?.state}`);
+    } while (storageConnectionRun?.state !== executionState.COMPLETED);
+  }
+
+  private async updateExistingFile(fileId: string, filePath: string): Promise<string> {
+    const updateFile = await this.runCommand<fileUpload>('storage:file:update-content', ['--file-id', fileId]);
+    if (updateFile._links?.uploadUrl?.href === undefined || updateFile._links.completeUrl?.href === undefined) {
+      this.error('No upload url was provided when creating content update for a file');
+    }
+
+    await this.runCommand('storage:file:upload', ['--upload-url', updateFile._links.uploadUrl.href, '--file-path', filePath]);
+    return fileId;
   }
 }
 

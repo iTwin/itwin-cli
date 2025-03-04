@@ -23,19 +23,21 @@ import { configuration } from './configuration.js';
 
 export default abstract class BaseCommand extends Command {
   static baseFlags = {
-    "access-token": Flags.string({
-        description: 'Access token that will be used for api calls',
-        hidden: true
-    }),
     json: Flags.boolean({
       description: 'Pretty format the JSON command response and suppress all loging.',
+      required: false
+    }),
+    silent: Flags.boolean({
+      char: 's',
+      description: 'Suppress all logging.',
+      hidden: true,
       required: false
     }),
     table: Flags.boolean({
       char: 't',
       description: 'Output the command response in a human-readable table format.',
       required: false
-    })
+    }),
   }
 
   static enableJsonFlag = true;
@@ -53,13 +55,7 @@ export default abstract class BaseCommand extends Command {
     return new AccessControlMemberClient(url, await token);
   }
 
-  protected async getAccessToken(): Promise<string> {
-    const indexOfAccessToken = this.argv.indexOf('--access-token');
-    if(indexOfAccessToken !== -1 && indexOfAccessToken + 1 < this.argv.length)
-    {
-      return this.argv[indexOfAccessToken + 1];
-    }
-    
+  protected async getAccessToken(): Promise<string> {    
     const client = this.getAuthorizationClient();
 
     const token = await client.getTokenAsync();
@@ -162,7 +158,11 @@ export default abstract class BaseCommand extends Command {
   }
 
   protected logAndReturnResult<T>(result: T) : T  {
-    if(this.argv.includes('--table') || this.argv.includes('-t')) {
+    if(this.argv.includes('--silent') || this.argv.includes('-s')) {
+      return result;
+    } 
+    
+    if (this.argv.includes('--table') || this.argv.includes('-t')) {
       this.logTable(result);
     } else {
       this.log(JSON.stringify(result, null, 0));
@@ -188,5 +188,10 @@ export default abstract class BaseCommand extends Command {
         for (const column of table.table.columns) column.alignment = "left";
         this.log(table.render());
       }
+  }
+
+  protected async runCommand<T>(command: string, args: string[]) : Promise<T> {
+    const mergedArgs = [...args, '--silent'];
+    return this.config.runCommand<T>(command, mergedArgs);
   }
 }
