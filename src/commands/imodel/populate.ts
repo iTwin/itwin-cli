@@ -182,9 +182,10 @@ export default class PopulateIModel extends BaseCommand {
     }
 
     const authInfo = await this.runCommand<authorizationInformation>('auth:info', []);
+    const authType = authInfo.authorizationType === 'Service' ? 'Service' : 'User';
 
     this.log(`Creating new connection for file: ${fileId}`);
-    const createdStorageConnection = await this.runCommand<StorageConnection>('imodel:connection:create', ['--imodel-id', iModelId, '--connector-type', connectorType, '--file-id', fileId, '--authentication-type', authInfo.authorizationType]);
+    const createdStorageConnection = await this.runCommand<StorageConnection>('imodel:connection:create', ['--imodel-id', iModelId, '--connector-type', connectorType, '--file-id', fileId, '--authentication-type', authType]);
     if (createdStorageConnection?.id === undefined) {
       this.error("Storage connection id was not present");
     }
