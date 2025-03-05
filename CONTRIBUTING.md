@@ -81,6 +81,12 @@ git push origin [your-username]/your-feature-name
 
 ---
 
+## **Contributing plugins**
+
+In detail information about plugins and available contribution [here](./PLUGINS.md)
+
+---
+
 ## **Contributor License Agreement (CLA)**
 A [Contributor License Agreement](https://gist.github.com/imodeljs-admin/9a071844d3a8d420092b5cf360e978ca) with Bentley must be signed before contributions can be accepted. Upon opening a pull request, you will be prompted to use [cla-assistant](https://cla-assistant.io/) for one-time acceptance.
 
