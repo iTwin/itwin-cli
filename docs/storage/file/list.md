@@ -19,7 +19,7 @@ List files in a folder of an iTwin's storage. Optionally, include subfolders in 
 itp storage file list --folder-id "b1a2c3d4-5678-90ab-cdef-1234567890ab"
 
 # Example 2: List files and include subfolders in the result
-itp storage file list --folder-id "b1a2c3d4-5678-90ab-cdef-1234567890ab" --include-folders true
+itp storage file list --folder-id "b1a2c3d4-5678-90ab-cdef-1234567890ab" --include-folders
 ```
 
 ## API Reference
