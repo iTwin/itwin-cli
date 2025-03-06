@@ -10,7 +10,7 @@ List files in a folder of an iTwin's storage. Optionally, include subfolders in 
 
 - **`--include-folders`**  
   Whether to include subfolders in the result.  
-  **Type:** `boolean` **Required:** No
+  **Type:** `flag` **Required:** No
 
 ## Examples
 
