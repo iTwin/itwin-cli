@@ -63,9 +63,8 @@ This script requires the `jq` command-line tool to process JSON responses. Make 
 ```bash
 #!/bin/bash
 
-# iTwin and iModel IDs
-ITWIN_ID="cea7a915-7b36-4ceb-aaf1-19529821b329"
-IMODEL_ID="5c5d9d4c-1d17-466b-bebb-9db773ab487c"
+# iTwin ID
+ITWIN_ID="your-itwin-id"
 
 # List all repositories in the iTwin
 echo "Listing Repositories:"
@@ -122,59 +121,115 @@ itp access-control member owner list --itwin-id $ITWIN_ID --json | jq .
 
 #### Windows Solution
 
-```batch
-@echo off
+```ps1
+# Using PowerShell
 
-:: iTwin and iModel IDs
-set ITWIN_ID=your-itwin-id
-set IMODEL_ID="your-imodel-id"
+# iTwin
+$ITWIN_ID="your-itwin-id"
 
-:: List all repositories in the iTwin
-echo Listing Repositories:
-itp itwin repository list --itwin-id %ITWIN_ID% --json | jq .
+# List all repositories in the iTwin
+Write-Output "Listing Repositories:"
+$repositories = itp itwin repository list --itwin-id $ITWIN_ID --json | ConvertFrom-Json
+if ($repositories) {
+    $repositories | ConvertTo-Json -Depth 10 | Write-Output
+} else {
+    Write-Output "No repositories found."
+}
 
-:: List all iModels in the iTwin
-echo Listing iModels:
-for /f "delims=" %%A in ('itp imodel list --itwin-id %ITWIN_ID% --json ^| jq -r ".[].id"') do (
-  set IMODEL_ID=%%A
-  echo Tracking progress for iModel ID: %IMODEL_ID%
-  
-  :: List all connections in the iModel
-  echo Listing Connections:
-  itp imodel connection list --imodel-id %IMODEL_ID% --json | jq .
-  
-  :: Loop through connections and list files
-  for /f "delims=" %%B in ('itp imodel connection list --imodel-id %IMODEL_ID% --json ^| jq -r ".connections[].id"') do (
-    set CONNECTION_ID=%%B
-    echo Files for Connection ID: %CONNECTION_ID%
-    
-    :: List files in this connection
-    RESPONSE=$(itp imodel connection sourcefile list --connection-id %CONNECTION_ID% --json)
-    
-    :: Check if there are files in the response
-    if not "%RESPONSE%"=="" (
-      echo "%RESPONSE%" | jq -r '.[] | "\(.lastKnownFileName) (ID: \(.id))"'
-    ) else (
-      echo No files found for Connection ID: %CONNECTION_ID%
-    )
-  )
-  
-  :: List named versions in the iModel
-  echo Listing Named Versions:
-  itp imodel named-version list --imodel-id %IMODEL_ID% --json | jq .
-)
+# List all iModels in the iTwin
+Write-Output "Listing iModels:"
+$imodelsJson = itp imodel list --itwin-id $ITWIN_ID --json
+$imodels = $imodelsJson | ConvertFrom-Json
 
-:: List all users in the iTwin
-echo Listing Users:
-itp access-control member user list --itwin-id %ITWIN_ID% --json | jq .
+if ($imodels) {
+    Write-Output "Full JSON Response:"
+    $imodelsJson | Write-Output  # Print raw JSON output
+   
+    $IMODEL_IDS = $imodels.id
+} else {
+    Write-Output "No iModels found."
+    exit
+}
 
-:: List all groups in the iTwin
-echo Listing Groups:
-itp access-control member group list --itwin-id %ITWIN_ID% --json | jq .
+# Process each iModel
+foreach ($IMODEL_ID in $IMODEL_IDS) {
+    Write-Output "Tracking progress for iModel ID: $IMODEL_ID"
 
-:: List all owners in the iTwin
-echo Listing Owners:
-itp access-control member owner list --itwin-id %ITWIN_ID% --json | jq .
+    # List all connections in the iModel
+    Write-Output "Listing Connections:"
+    $connectionsJson = itp imodel connection list --imodel-id $IMODEL_ID --json
+    $connectionsResponse = $connectionsJson | ConvertFrom-Json
+
+    if ($connectionsResponse -and $connectionsResponse.connections) {
+        Write-Output "Full JSON Response:"
+        $connectionsJson | Write-Output  # Print raw JSON output
+    } else {
+        Write-Output "No connections found for iModel ID: $IMODEL_ID"
+        continue
+    }
+
+    # Loop through connections and list files
+    foreach ($CONNECTION in $connectionsResponse.connections) {
+        $CONNECTION_ID = $CONNECTION.id
+        Write-Output "Files for Connection ID: $CONNECTION_ID"
+
+        # List files in this connection
+        $filesJson = itp imodel connection sourcefile list --connection-id $CONNECTION_ID --json
+        $files = $filesJson | ConvertFrom-Json
+
+        if ($files -and $files.Count -gt 0) {
+            Write-Output "Full JSON Response:"
+            $filesJson | Write-Output  # Print raw JSON output
+        } else {
+            Write-Output "No files found for Connection ID: $CONNECTION_ID"
+        }
+    }
+
+    # List named versions in the iModel
+    Write-Output "Listing Named Versions:"
+    $namedVersionsJson = itp imodel named-version list --imodel-id $IMODEL_ID --json
+    $namedVersions = $namedVersionsJson | ConvertFrom-Json
+
+    if ($namedVersions) {
+        Write-Output "Full JSON Response:"
+        $namedVersionsJson | Write-Output  # Print raw JSON output
+    } else {
+        Write-Output "No named versions found for iModel ID: $IMODEL_ID"
+    }
+}
+
+# List all users in the iTwin
+Write-Output "Listing Users:"
+$usersJson = itp access-control member user list --itwin-id $ITWIN_ID --json
+$users = $usersJson | ConvertFrom-Json
+if ($users) {
+    Write-Output "Full JSON Response:"
+    $usersJson | Write-Output  # Print raw JSON output
+} else {
+    Write-Output "No users found."
+}
+
+# List all groups in the iTwin
+Write-Output "Listing Groups:"
+$groupsJson = itp access-control member group list --itwin-id $ITWIN_ID --json
+$groups = $groupsJson | ConvertFrom-Json
+if ($groups) {
+    Write-Output "Full JSON Response:"
+    $groupsJson | Write-Output  # Print raw JSON output
+} else {
+    Write-Output "No groups found."
+}
+
+# List all owners in the iTwin
+Write-Output "Listing Owners:"
+$ownersJson = itp access-control member owner list --itwin-id $ITWIN_ID --json
+$owners = $ownersJson | ConvertFrom-Json
+if ($owners) {
+    Write-Output "Full JSON Response:"
+    $ownersJson | Write-Output  # Print raw JSON output
+} else {
+    Write-Output "No owners found."
+}
 ```
 
 ## Expected Outcome
@@ -183,7 +238,7 @@ This script will give you a full snapshot of your project's current state, inclu
 
 - A complete list of repositories and iModels.
 - Detailed information on all connections and synchronized files.
-- A list of all changesets and named versions for the iModel.
+- A list of all the named versions for the iModels.
 - All users, groups, and owners involved in the iTwin.
 
 ## Next Steps

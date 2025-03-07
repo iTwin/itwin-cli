@@ -14,7 +14,7 @@ Create a new role for an iTwin. To assign permissions after creation, use `itp a
 
 - **`--description`**  
   A description of the role.  
-  **Type:** `string` **Required:** No
+  **Type:** `string` **Required:** Yes
 
 ## Examples
 
