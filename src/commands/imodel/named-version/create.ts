@@ -13,7 +13,7 @@ export default class CreateNamedVersion extends BaseCommand {
     static flags = {
       "changeset-id": Flags.string({
         description: 'The ID of the changeset for the named version.',
-        required: true,
+        required: false,
       }),
       description: Flags.string({
         description: 'A description for the named version.',
