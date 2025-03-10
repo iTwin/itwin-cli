@@ -12,11 +12,6 @@ export default class UpdateCommand extends BaseCommand {
     static description = 'Update an iTwin';
   
     static flags = {
-      class: Flags.string({
-        description: 'The Class of your iTwin.',
-        options: ["Account", "Thing", "Endeavor"],
-        required: false,
-      }),
       "display-name": Flags.string({
         description: "The iTwin's display name.",
         required: false,
@@ -42,11 +37,6 @@ export default class UpdateCommand extends BaseCommand {
         options: ['Active', 'Inactive', 'Trial'],
         required: false,
       }),
-      "sub-class": Flags.string({
-        description: 'The subClass of your iTwin.',
-        options: ["Account", "Portfolio", "Asset", "Program", "Project", "WorkPackage"],
-        required: false,
-      }),
       type: Flags.string({
         description: "Defines the iTwin's Type.",
         required: false,
@@ -57,13 +47,11 @@ export default class UpdateCommand extends BaseCommand {
       const { flags } = await this.parse(UpdateCommand);
   
       const iTwinUpdate : ITwin = {
-        class: flags.class as ITwinClass,
         displayName: flags["display-name"],
         geographicLocation: flags["geographic-location"],
         ianaTimeZone: flags["iana-time-zone"],
         number: flags.number,
         status: flags.status,
-        subClass: flags["sub-class"] as ITwinSubClass,
         type: flags.type,
       };
   
