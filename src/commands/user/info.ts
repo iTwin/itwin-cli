@@ -11,9 +11,10 @@ export default class UserInfo extends BaseCommand {
     static description = "Retrieve information about specific users based on their user IDs.";
   
     static flags = {
-      "user-ids": Flags.string({ 
-        description: "A comma-separated list of user IDs to retrieve information for.", 
-        required: true,
+      "user-id": Flags.string({ 
+        description: "User IDs to retrieve information for.", 
+        multiple: true,
+        required: true
       }),
     };
   
@@ -21,8 +22,7 @@ export default class UserInfo extends BaseCommand {
       const { flags } = await this.parse(UserInfo);
   
       const client = await this.getUserApiClient();
-      const users = flags["user-ids"].split(',');
-      const response = await client.getUsers(users);
+      const response = await client.getUsers(flags["user-id"]);
   
       return this.logAndReturnResult(response.users);
     }
