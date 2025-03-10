@@ -8,12 +8,12 @@ Synchronize design files into an iModel.
   The ID of the iModel to populate.  
   **Type:** `string` **Required:** Yes
 
-- **`--files`**  
-  A list of source files to synchronize into the iModel. Separate multiple files with a space.  
+- **`--file`**  
+  A list of source files to synchronize into the iModel.
   **Type:** `string`  **Required:** Yes **Multiple:** Yes
 
-- **`--connector-types`**  
-  A list of connectors to prioritize for synchronization. Separate multiple connectors with a space.  
+- **`--connector`**  
+  Specify connectors to prioritize for synchronization. This flag can be provided multiple times. If only one connector is specified, it will be used for all files. If multiple connectors are specified, each connector will be used for the corresponding file in the files list (first connector for the first file, second connector for the second file, and so on). 
   **Type:** `string` **Required:** No  **Multiple:** Yes
   **Valid Values:** `"SHELLEDWCSV"`, `"CIVIL"`, `"MSTN"`, `"OBD"`, `"PROSTRUCTURES"`, `"AUTOPLANT"`, `"AVEVAPID"`, `"CIVIL3D"`, `"DWG"`, `"IFC"`, `"GEOSPATIAL"`, `"OPENTOWER"`, `"REVIT"`, `"SPPID"`, `"SPXREVIEW"`, `"AVEVADIAGRAMS"`, `"NWD"`, `"INTELLIPID"`, `"PSEXCEL"`
 
@@ -21,16 +21,16 @@ Synchronize design files into an iModel.
 
 ```bash
 # Example 1: Synchronizing DWG Files
-itp imodel populate --id "b1a2c3d4-5678-90ab-cdef-1234567890ab" --files "file1.dwg" --connector-types "DWG" --files "file2.dwg" --connector-types "DWG"
+itp imodel populate --id "b1a2c3d4-5678-90ab-cdef-1234567890ab" --file "file1.dwg" --connector "DWG" --file "file2.dwg" --connector "DWG"
 
 # Example 2: Synchronizing DGN Files
-itp imodel populate --id "c2d3e4f5-6789-01ab-cdef-2345678901bc" --files "site1.dgn" --connector-types "CIVIL" --files "structure2.dgn" --connector-types "CIVIL"
+itp imodel populate --id "c2d3e4f5-6789-01ab-cdef-2345678901bc" --file "site1.dgn" --connector "CIVIL" --file "structure2.dgn" --connector "CIVIL"
 
 # Example 3: Synchronizing CSV and IFC Files
-itp imodel populate --id "d3e4f5g6-7890-12ab-cdef-3456789012cd" --files "data1.csv" --files "data2.csv" --files "model.ifc"
+itp imodel populate --id "d3e4f5g6-7890-12ab-cdef-3456789012cd" --file "data1.csv" --file "data2.csv" --file "model.ifc"
 
 # Example: Synchronizing Revit and DGN Files
-itp imodel populate --id "i9j0k1l2-3456-78ab-cdef-9012345678ij" --files "model.rvt" --files "design.dgn"
+itp imodel populate --id "i9j0k1l2-3456-78ab-cdef-9012345678ij" --file "model.rvt" --file "design.dgn"
 ```
 
 ## Workflow Reference
