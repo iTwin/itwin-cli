@@ -3,7 +3,7 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { ITwin, ITwinClass, ITwinSubClass } from "@itwin/itwins-client";
+import { ITwin } from "@itwin/itwins-client";
 import { Flags } from "@oclif/core";
 
 import BaseCommand from "../../extensions/base-command.js";
