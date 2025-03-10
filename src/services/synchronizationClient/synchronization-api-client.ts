@@ -102,7 +102,7 @@ export class SynchronizationApiClient {
         });
     }
 
-    getStorageConnections(iModelId: string): Promise<storageConnectionListResponse> {
+    getStorageConnections(iModelId: string, top?: number, skip?: number): Promise<storageConnectionListResponse> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `synchronization/imodels/storageconnections`,
             method: 'GET',
@@ -110,7 +110,16 @@ export class SynchronizationApiClient {
                 {
                     key: 'imodelId',
                     value: iModelId
+                },
+                {
+                    key: '$top',
+                    value: top
+                },
+                {
+                    key: '$skip',
+                    value: skip
                 }
+
             ]
         });
     }
