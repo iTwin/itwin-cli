@@ -9,7 +9,7 @@ import { Flags } from "@oclif/core";
 import BaseCommand from "../../extensions/base-command.js";
 
 export default class ListIModels extends BaseCommand {
-    static description = 'Query iModels in an iTwin';
+    static description = 'Retrieve a list of iModels';
   
     static flags = {
       "itwin-id": Flags.string({

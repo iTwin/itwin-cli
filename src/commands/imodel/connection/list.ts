@@ -11,7 +11,18 @@ export default class ListConnections extends BaseCommand {
     static description = 'List all storage connections for a specific iModel.';
   
     static flags = {
-      "imodel-id": Flags.string({ description: 'The ID of the iModel whose storage connections you want to list.', required: true }),
+      "imodel-id": Flags.string({ 
+        description: 'The ID of the iModel whose storage connections you want to list.', 
+        required: true 
+      }),
+      skip: Flags.integer({ 
+        description: 'The number of changesets to skip.', 
+        required: false 
+      }),
+      top: Flags.integer({ 
+        description: 'The maximum number of changesets to return.', 
+        required: false 
+      }),
     };
   
     async run() {
@@ -19,9 +30,8 @@ export default class ListConnections extends BaseCommand {
   
       const client = await this.getSynchronizationClient();
   
-      const response = await client.getStorageConnections(flags["imodel-id"]);
+      const response = await client.getStorageConnections(flags["imodel-id"], flags.skip, flags.top);
   
       return this.logAndReturnResult(response);
     }
   }
-  

@@ -14,14 +14,14 @@ export default class ListRepositories extends BaseCommand {
       class: Flags.string({
         description: 'Specify a particular class of repositories to retrieve.',
         options: ["iModels", "RealityData", "Storage", "Forms", "Issues", "SensorData", "GeographicInformationSystem", "Construction", "Subsurface"],
-        required: false,
+        required: false
       }),
       "itwin-id": Flags.string({
         description: 'The ID of the iTwin whose repositories should be retrieved.',
         required: true,
       }),
       "sub-class": Flags.string({
-        description: 'Specify a subClass of repositories. Only applicable for "GeographicInformationSystem" class.',
+        description: 'Specify a subClass of repositories. Only applicable for GeographicInformationSystem class.',
         options: ["WebMapService", "WebMapTileService", "MapServer"],
         required: false
       }),
@@ -35,7 +35,7 @@ export default class ListRepositories extends BaseCommand {
       
       const response = await client.queryRepositoriesAsync(accessToken, flags["itwin-id"], {
         class: flags.class,
-        subClass: flags["sub-class"],
+        subClass: flags["sub-class"]
       });
 
       if(response.error)
