@@ -23,7 +23,7 @@ export class ChangedElementsApiClient {
 
     async getComparison(iTwinId: string, iModelId: string, startChangesetId: string, endChangesetId: string) : Promise<changesetComparisonResponse> {
         return this.iTwinPlatformApiClient.sendRequest({
-            apiPath: 'changedelements/changesets',
+            apiPath: 'changedelements/comparison',
             method: 'GET',
             query: [
                 {
