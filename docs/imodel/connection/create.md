@@ -9,7 +9,7 @@ Create a storage connection that describes files from storage to synchronize wit
   **Type:** `string` **Required:** Yes
 
 - **`--file-id`**  
-  A list of source files to synchronize.  
+  The ID of the storage file to synchronize
   **Type:** `array` **Required:** Yes **Multiple:** Yes
 
 - **`--connector-type`**

@@ -45,12 +45,12 @@ export default class CreateConnection extends BaseCommand {
       required: false,
     }),
     "file-id": Flags.string({ 
-      description: 'This is the id of the file in the storage connection.', 
+      description: 'The ID of the storage file to synchronize', 
       multiple: true,
       required: true
     }),
     "imodel-id": Flags.string({ 
-      description: 'The id of the iModel.', 
+      description: 'The ID of the iModel.', 
       required: true 
     }),
   };
