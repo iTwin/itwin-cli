@@ -32,7 +32,7 @@ const tests = () => describe('populate', () => {
   });
 
   it('should populate the iModel with the uploaded file', async () => {
-    const result = await runCommand(`imodel populate --id ${testIModelId} --file "${testFilePath}" --connector "SPPID"`);
+    const result = await runCommand(`imodel populate --id ${testIModelId} --file "${testFilePath}" --connector-type "SPPID"`);
     expect(result.result).to.have.property('id', testIModelId);
   });
 

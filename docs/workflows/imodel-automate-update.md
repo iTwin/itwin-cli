@@ -37,7 +37,7 @@ itp imodel create --itwin-id "your-itwin-id" --name "Building Design" --descript
 
 **Step 3: Populate the iModel with initial design data**
 ```bash
-itp imodel populate --id "your-imodel-id" --file "initial-design.dwg" --connector "DWG"
+itp imodel populate --id "your-imodel-id" --file "initial-design.dwg" --connector-type "DWG"
 ```
 
 **Step 4: Monitor file system events**

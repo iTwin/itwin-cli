@@ -42,12 +42,12 @@ itp imodel create --itwin-id "your-itwin-id" --display-name "Building Design" --
 
 **Step 3: Populate the iModel with design data (first round)**
 ```bash
-itp imodel populate --id "your-imodel-id" --file "file1.dwg file2.dwg" --connector "DWG"
+itp imodel populate --id "your-imodel-id" --file "file1.dwg file2.dwg" --connector-type "DWG"
 ```
 
 **Step 4: Populate the iModel with design data (second round)**
 ```bash
-itp imodel populate --id "your-imodel-id" --file "file3.dwg file4.dwg" --connector "DWG"
+itp imodel populate --id "your-imodel-id" --file "file3.dwg file4.dwg" --connector-type "DWG"
 ```
 
 **Step 5: List the changesets**
