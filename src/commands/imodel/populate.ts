@@ -188,7 +188,7 @@ export default class PopulateIModel extends BaseCommand {
       const fileExist = connectionSourceFiles.find(f => f.storageFileId === file.fileId);
       if (!fileExist) {
         this.log(`Adding file: ${file.fileId} to default connection: ${defaultConnection.id}`);
-        await this.runCommand('imodel:connection:sourcefile:add', ['--connection-id', defaultConnection.id, '--file-id', file.fileId]);
+        await this.runCommand('imodel:connection:sourcefile:add', ['--connection-id', defaultConnection.id, '--connector-type', file.connectorType, '--storage-file-id', file.fileId]);
       }
     }
 
