@@ -80,6 +80,7 @@ export default class PopulateIModel extends BaseCommand {
     }
 
     const summary = [];
+    const fileIds = [];
 
     for (const [, fileInfo] of filesAndConnectorToImport.entries()) {
       this.log(`Processing file: ${fileInfo.fileName}`);
@@ -97,25 +98,25 @@ export default class PopulateIModel extends BaseCommand {
       this.log(`Completing file upload for file ID: ${fileId}`);
       await this.runCommand('storage:file:update-complete', ['--file-id', fileId]);
 
-      this.log(`Checking existing connections for iModel ID: ${iModel.id}`);
-      const existingConnections = await this.runCommand<storageConnectionListResponse>('imodel:connection:list', ['--imodel-id', iModel.id]);
-      const connectionAuth = await this.runCommand<authInfo>('imodel:connection:auth', []);
-      if (connectionAuth.isUserAuthorized === undefined) {
-        this.error('User is not authenticated for connection run');
-      }
-
-      const connectionId = await this.findOrCreateConnection(existingConnections.connections, fileId, fileInfo.connectorType, iModel.id);
-
-      this.log(`Running synchronization for connection ID: ${connectionId}`);
-      await this.runSynchronization(connectionId);
-
-      summary.push({
-        connectionId,
-        connectorType: fileInfo.connectorType,
-        fileId,
-        fileName: fileInfo.fileName,
-      });
+      fileIds.push({ connectorType: fileInfo.connectorType, fileId, fileName: fileInfo.fileName });
     }
+
+    this.log(`Checking existing connections for iModel ID: ${iModel.id}`);
+    const existingConnections = await this.runCommand<storageConnectionListResponse>('imodel:connection:list', ['--imodel-id', iModel.id]);
+    const connectionAuth = await this.runCommand<authInfo>('imodel:connection:auth', []);
+    if (connectionAuth.isUserAuthorized === undefined) {
+      this.error('User is not authenticated for connection run');
+    }
+
+    const connectionId = await this.findOrCreateDefaultConnection(existingConnections.connections, fileIds, iModel.id);
+
+    this.log(`Running synchronization for connection ID: ${connectionId}`);
+    await this.runSynchronization(connectionId);
+
+    summary.push({
+      connectionId,
+      files: fileIds,
+    });
 
     this.log('Synchronization process completed');
     return {
@@ -169,29 +170,31 @@ export default class PopulateIModel extends BaseCommand {
     return newFile._links.completeUrl.href.split('/')[5];
   }
 
-  private async findOrCreateConnection(existingConnections: StorageConnection[], fileId: string, connectorType: connectorType, iModelId: string): Promise<string> {
-    for (const connection of existingConnections) {
-      const connectionSourceFiles = await this.runCommand<sourceFile[]>('imodel:connection:sourcefile:list', ['--connection-id', connection.id]);
-      const fileExist = connectionSourceFiles.find(file => file.storageFileId === fileId);
-      if (fileExist) {
-        this.log(`File: ${fileId} already exists in connection: ${connection.id}`);
-        await this.runCommand('imodel:connection:run:create', ['--connection-id', connection.id]);
-        return connection.id;
+  private async findOrCreateDefaultConnection(existingConnections: StorageConnection[], fileIds: { connectorType: connectorType, fileId: string, fileName: string }[], iModelId: string): Promise<string> {
+    let defaultConnection = existingConnections.find(connection => connection.displayName === 'Default iTwinCLI Connection');
+    if (!defaultConnection) {
+      const authInfo = await this.runCommand<authorizationInformation>('auth:info', []);
+      const authType = authInfo.authorizationType === 'Service' ? 'Service' : 'User';
+
+      this.log(`Creating new default connection`);
+      defaultConnection = await this.runCommand<StorageConnection>('imodel:connection:create', ['--imodel-id', iModelId, '--connector-type', fileIds[0].connectorType, '--file-id', fileIds[0].fileId, '--authentication-type', authType, '--display-name', 'Default iTwinCLI Connection']);
+      if (defaultConnection?.id === undefined) {
+        this.error("Storage connection id was not present");
       }
     }
 
-    const authInfo = await this.runCommand<authorizationInformation>('auth:info', []);
-    const authType = authInfo.authorizationType === 'Service' ? 'Service' : 'User';
-
-    this.log(`Creating new connection for file: ${fileId}`);
-    const createdStorageConnection = await this.runCommand<StorageConnection>('imodel:connection:create', ['--imodel-id', iModelId, '--connector-type', connectorType, '--file-id', fileId, '--authentication-type', authType]);
-    if (createdStorageConnection?.id === undefined) {
-      this.error("Storage connection id was not present");
+    for (const file of fileIds) {
+      const connectionSourceFiles = await this.runCommand<sourceFile[]>('imodel:connection:sourcefile:list', ['--connection-id', defaultConnection.id]);
+      const fileExist = connectionSourceFiles.find(f => f.storageFileId === file.fileId);
+      if (!fileExist) {
+        this.log(`Adding file: ${file.fileId} to default connection: ${defaultConnection.id}`);
+        await this.runCommand('imodel:connection:sourcefile:add', ['--connection-id', defaultConnection.id, '--file-id', file.fileId]);
+      }
     }
 
-    this.log(`Running connection for connection ID: ${createdStorageConnection.id}`);
-    await this.runCommand('imodel:connection:run:create', ['--connection-id', createdStorageConnection.id]);
-    return createdStorageConnection.id;
+    this.log(`Running connection for connection ID: ${defaultConnection.id}`);
+    await this.runCommand('imodel:connection:run:create', ['--connection-id', defaultConnection.id]);
+    return defaultConnection.id;
   }
 
   private async runSynchronization(connectionId: string): Promise<void> {
@@ -219,8 +222,6 @@ export default class PopulateIModel extends BaseCommand {
     return fileId;
   }
 }
-
-
 
 interface NewFileInfo {
   connectorType: connectorType;
