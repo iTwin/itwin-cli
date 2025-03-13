@@ -8,7 +8,7 @@ import { Flags } from "@oclif/core";
 import BaseCommand from "../../extensions/base-command.js";
 
 export class IModelInfo extends BaseCommand {
-  static description = 'Query iModels in an iTwin';
+  static description = 'Retrieve metadata for the specified Model';
 
   static flags = {
     id: Flags.string({ 
