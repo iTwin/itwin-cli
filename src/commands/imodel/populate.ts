@@ -30,9 +30,9 @@ export default class PopulateIModel extends BaseCommand {
   ]
 
   static flags = {
-    "connector-types": Flags.string({ 
+    "connector-type": Flags.string({ 
         char: 'c',
-        description: 'A list of connectors to prioritize for synchronization. Separate multiple connectors with a space.', 
+        description: 'Specify connectors to prioritize for synchronization. This flag can be provided multiple times. If only one connector is specified, it will be used for all files. If multiple connectors are specified, each connector will be used for the corresponding file in the files list (first connector for the first file, second connector for the second file, and so on).', 
         multiple: true,
         options: [
             'AUTOPLANT',
@@ -53,23 +53,22 @@ export default class PopulateIModel extends BaseCommand {
         required: false,
         type: "option"
       }),
-    files: Flags.file({ 
+    file: Flags.file({ 
         char: 'f', 
-        description: 'A list of source files to synchronize into the iModel. Separate multiple files with a space.', 
+        description: 'Specify a list of source files to synchronize into the iModel.', 
         multiple: true,
         required: true
       }),
     id: Flags.string({ 
         description: 'The ID of the iModel to populate.', 
         required: true,
-
     }),
   }
 
   async run() {
     const { flags } = await this.parse(PopulateIModel);
 
-    const filesAndConnectorToImport = this.checkAndGetFilesWithConnectors(flags.files, flags["connector-types"]);
+    const filesAndConnectorToImport = this.checkAndGetFilesWithConnectors(flags.file, flags["connector-type"]);
     this.log(`Synchronizing files into iModel with ID: ${flags.id}`);
     const iModel = await this.runCommand<IModel>('imodel:info', ['--id', flags.id]);
 
