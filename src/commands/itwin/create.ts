@@ -53,7 +53,7 @@ export default class CreateITwin extends BaseCommand {
         required: false,
       }),
       type: Flags.string({
-        description: "Defines the iTwin's Type.",
+        description: "An open ended property to better define your iTwin's Type.",
         required: false,
       }),
     };
