@@ -50,7 +50,7 @@ export default class CreateITwin extends BaseCommand {
       "sub-class": Flags.string({
         description: 'The subClass of your iTwin.',
         options: ["Account", "Portfolio", "Asset", "Program", "Project", "WorkPackage"],
-        required: false,
+        required: true,
       }),
       type: Flags.string({
         description: "An open ended property to better define your iTwin's Type.",
