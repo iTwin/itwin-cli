@@ -18,7 +18,7 @@ export class AccessControlMemberClient {
     }
 
     async addGroupMember(iTwinId: string, groups: GroupMembersRequest): Promise<GroupMembersResponse> {
-        return this.iTwinPlatformApiClient.sendRequestWithBody({
+        return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `accesscontrol/itwins/${iTwinId}/members/groups`,
             body: groups,
             method: 'POST'
@@ -26,7 +26,7 @@ export class AccessControlMemberClient {
     }
 
     async addOwner(iTwinId: string, email: string): Promise<ownerResponse> {
-        return this.iTwinPlatformApiClient.sendRequestWithBody({
+        return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `accesscontrol/itwins/${iTwinId}/members/owners`,
             body: {
                 email
@@ -36,7 +36,7 @@ export class AccessControlMemberClient {
     }
 
     async addUserMembers(iTwinId: string, members: listOfMembers): Promise<membersResponse> {
-        return this.iTwinPlatformApiClient.sendRequestWithBody({
+        return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `accesscontrol/itwins/${iTwinId}/members/users`,
             body: members,
             method: 'POST'
@@ -90,7 +90,7 @@ export class AccessControlMemberClient {
             }
         ];
 
-        return this.iTwinPlatformApiClient.sendRequest<invitationsResponse>({
+        return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `accesscontrol/itwins/${iTwinId}/members/invitations`,
             method: 'GET',
             query
@@ -119,7 +119,7 @@ export class AccessControlMemberClient {
     }
 
     async updateGroupMember(iTwinId: string, groupId: string, roleIds: string[]): Promise<GroupMemberResponse> {
-        return this.iTwinPlatformApiClient.sendRequestWithBody({
+        return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `accesscontrol/itwins/${iTwinId}/members/groups/${groupId}`,
             body: {
                 roleIds
@@ -129,7 +129,7 @@ export class AccessControlMemberClient {
     }
 
     async updateUserMember(iTwinId: string, memberId: string, roleIds: string[]): Promise<memberResponse> {
-        return this.iTwinPlatformApiClient.sendRequestWithBody({
+        return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `accesscontrol/itwins/${iTwinId}/members/users/${memberId}`,
             body: {
                 roleIds

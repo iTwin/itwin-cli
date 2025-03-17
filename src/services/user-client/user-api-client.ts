@@ -14,28 +14,28 @@ export class UserApiClient {
     }
 
     async getMe() : Promise<UserResponse> {
-        return this.iTwinPlatformApiClient.sendRequest<UserResponse>({
+        return this.iTwinPlatformApiClient.sendRequest({
             apiPath: 'users/me',
             method: 'GET'
         })
     }
 
-    async getUsers(userIDs: string[]) {
-        return this.iTwinPlatformApiClient.sendRequestWithBody<UsersResponse, string[]>({
+    async getUsers(userIDs: string[]) : Promise<UsersResponse> {
+        return this.iTwinPlatformApiClient.sendRequest({
             apiPath: 'users/getbyidlist',
             body: userIDs,
             method: 'POST'
         })
     }
 
-    async searchUsers(search: string) {
+    async searchUsers(search: string) : Promise<UsersResponse> {
         const query : Query[] = [];
         query.push({
             key: "$search",
             value: search
         });
 
-        return this.iTwinPlatformApiClient.sendRequestWithBody<UsersResponse, string[]>({
+        return this.iTwinPlatformApiClient.sendRequest({
             apiPath: 'users/',
             method: 'GET',
             query
