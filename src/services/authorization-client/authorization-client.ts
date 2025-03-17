@@ -77,7 +77,7 @@ export class AuthorizationClient {
           clientId,
           expiryBuffer: 10 * 60,
           issuerUrl,
-          redirectUri: "http://localhost:3000/signin-callback",
+          redirectUri: "http://localhost:3301/signin-callback",
           scope: "itwin-platform"
         });
 
@@ -112,7 +112,7 @@ export class AuthorizationClient {
           clientId,
           expiryBuffer: 10 * 60,
           issuerUrl,
-          redirectUri: "http://localhost:3000/signin-callback",
+          redirectUri: "http://localhost:3301/signin-callback",
           scope: "itwin-platform"
         });
     
