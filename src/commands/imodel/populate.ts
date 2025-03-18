@@ -157,8 +157,9 @@ export default class PopulateIModel extends BaseCommand {
       }
 
       let connector = getConnectorTypeFromFileExtension(extension);
-      if(connectorTypes && connectorTypes?.length < index)
-      {
+      if(connectorTypes && connectorTypes.length === 1) {
+        connector = connectorType[connectorTypes[0] as keyof typeof connectorType];
+      } else if(connectorTypes && connectorTypes.length > index) {
         connector = connectorType[connectorTypes[index] as keyof typeof connectorType];
       }
 
