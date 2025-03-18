@@ -4,6 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { Flags } from "@oclif/core";
+import open from 'open';
 import { deflate } from "pako";
 
 import BaseCommand from "../../../extensions/base-command.js";
@@ -19,6 +20,10 @@ export default class CesiumSandcastle extends BaseCommand {
       "imodel-id": Flags.string({ 
         description: "iModel id to be viewed in Cesium Sandcastle.", 
         required: true
+      }),
+      "open": Flags.boolean({
+        description: "Open the URL in the browser.",
+        required: false,
       }),
     };
   
@@ -246,8 +251,14 @@ Sandcastle.addDefaultToolbarButton("Obtain and Attach Tileset", function () {
         this.jsData(flags["imodel-id"], flags["changeset-id"], token),
         this.htmlData(),
       ];
-  
-      return this.logAndReturnResult({ url: `https://sandcastle.cesium.com/#c=${this.makeCompressedBase64String(data)}`});
+
+      const url = `https://sandcastle.cesium.com/#c=${this.makeCompressedBase64String(data)}`;
+
+      if (flags.open) {
+        open(url);
+      }
+
+      return this.logAndReturnResult({ url });
     }
 }
 
