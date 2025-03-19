@@ -3,7 +3,7 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { Flags } from "@oclif/core";
+import { Command, Flags } from "@oclif/core";
 
 import BaseCommand from "../../../../extensions/base-command.js";
 import { addMember } from "../../../../services/access-control-client/models/members.js";
@@ -11,6 +11,13 @@ import { addMember } from "../../../../services/access-control-client/models/mem
 export default class AddUserMembers extends BaseCommand {
     static description = 'Add one or more user members to an iTwin.';
   
+    static examples: Command.Example[] = [
+     {
+      command: 'itp access-control member user add --itwin-id "ad0ba809-9241-48ad-9eb0-c8038c1a1d51" --members \'[{"email": "user1@example.com", "roleIds": ["5abbfcef-0eab-472a-b5f5-5c5a43df34b1", "83ee0d80-dea3-495a-b6c0-7bb102ebbcc3"]}, {"email": "user2@example.com", "roleIds": ["5abbfcef-0eab-472a-b5f5-5c5a43df34b1"]}]\',',
+      description: 'Add one or more user members to an iTwin.'
+     } 
+    ];
+
     static flags = {
       "itwin-id": Flags.string({
         description: 'The ID of the iTwin to which the users will be added.',
@@ -35,4 +42,3 @@ export default class AddUserMembers extends BaseCommand {
       return this.logAndReturnResult(response);
     }
   }
-  
