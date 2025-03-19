@@ -14,7 +14,7 @@ export class ChangedElementsApiClient {
     }
 
     async changeTracking(request: changeTrackingRequest) : Promise<void> {
-        await this.iTwinPlatformApiClient.sendRequestWithBodyNoResponse({
+        await this.iTwinPlatformApiClient.sendRequestNoResponse({
             apiPath: 'changedelements/tracking',
             body: request,
             method: 'PUT'
@@ -46,7 +46,7 @@ export class ChangedElementsApiClient {
         });
     }
 
-    async getTracking(iModelId: string, iTwinId: string) : Promise<trackingResponse> {
+    getTracking(iModelId: string, iTwinId: string) : Promise<trackingResponse> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: 'changedelements/tracking',
             method: 'GET',
@@ -63,7 +63,7 @@ export class ChangedElementsApiClient {
         });
     }
 
-    async listChangesets(iModelId: string, iTwinId: string, top?: number, skip?: number) : Promise<changesetsResponse> {
+    listChangesets(iModelId: string, iTwinId: string, top?: number, skip?: number) : Promise<changesetsResponse> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: 'changedelements/changesets',
             method: 'GET',
