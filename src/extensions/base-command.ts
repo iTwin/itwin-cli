@@ -94,7 +94,7 @@ export default abstract class BaseCommand extends Command {
 
     let config : configuration = {
       apiUrl: 'https://api.bentley.com',
-      clientId: 'native-Ekf20w7jmbRcKjEyK9cHbnWU1',
+      clientId: 'native-QJi5VlgxoujsCRwcGHMUtLGMZ',
       clientSecret: undefined,
       issuerUrl: 'https://ims.bentley.com/'
     };
