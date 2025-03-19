@@ -4,14 +4,14 @@ Retrieve metadata for the specified iTwin.
 
 ## Options
 
-- **`--id`**  
+- **`--itwin-id`**  
   The ID of the iTwin to retrieve information about.  
   **Type:** `string` **Required:** Yes
 
 ## Examples
 
 ```bash
-itp itwin info --id "b1a2c3d4-5678-90ab-cdef-1234567890ab"
+itp itwin info --itwin-id "b1a2c3d4-5678-90ab-cdef-1234567890ab"
 ```
 
 ## API Reference

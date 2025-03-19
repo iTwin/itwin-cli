@@ -37,7 +37,7 @@ itp imodel create --itwin-id "your-itwin-id" --name "New Infrastructure Project"
 
 **Step 2: Refine the iModel by expanding the extents**
 ```bash
-itp imodel update --id "your-imodel-id" --extent '{
+itp imodel update --imodel-id "your-imodel-id" --extent '{
   "southWest": {
     "latitude": 34.052235,
     "longitude": -118.243683

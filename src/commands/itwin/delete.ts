@@ -11,7 +11,7 @@ export default class DeleteITwin extends BaseCommand {
     static description = 'Delete an iTwin';
   
     static flags = {
-      id: Flags.string({
+      "itwin-id": Flags.string({
         description: 'iTwin id.',
         required: true,
       }),
@@ -23,7 +23,7 @@ export default class DeleteITwin extends BaseCommand {
       const accessToken = await this.getAccessToken();
       const client = this.getITwinAccessClient();
   
-      const response = await client.deleteiTwin(accessToken, flags.id)
+      const response = await client.deleteiTwin(accessToken, flags["itwin-id"])
       if(response.error)
       {
         this.error(JSON.stringify(response.error, null, 2));

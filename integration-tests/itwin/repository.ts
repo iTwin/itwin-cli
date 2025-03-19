@@ -44,7 +44,7 @@ const tests = () => describe('repository', () => {
   });
 
   it('should delete the iTwin repository', async () => {
-    const { stdout } = await runCommand(`itwin repository delete --id ${testRepositoryId}`);
+    const { stdout } = await runCommand(`itwin repository delete --itwin-id ${testRepositoryId}`);
     const result = JSON.parse(stdout);
     
     expect(result).to.have.property('result', 'deleted');
