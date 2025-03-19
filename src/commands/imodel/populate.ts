@@ -115,7 +115,7 @@ export default class PopulateIModel extends BaseCommand {
     const connectionId = await this.findOrCreateDefaultConnection(existingConnections.connections, fileIds, iModel.id);
 
     this.log(`Running synchronization for connection ID: ${connectionId}`);
-    const runId = await this.runSynchronization(connectionId, flags["no-wait"]);
+    const runId = await this.runSynchronization(connectionId, !flags["no-wait"]);
 
     summary.push({
       connectionId,
@@ -125,7 +125,7 @@ export default class PopulateIModel extends BaseCommand {
 
     if(flags["no-wait"]) {
       this.log("Synchronization process started. Use the following command to check the status of the synchronization process:");
-      this.log(`imodel connection run info --connection-id ${connectionId}, --connection-run-id ${runId}`);
+      this.log(`itp imodel connection run info --connection-id ${connectionId} --connection-run-id ${runId}`);
     }
     else {
       this.log('Synchronization process completed');
