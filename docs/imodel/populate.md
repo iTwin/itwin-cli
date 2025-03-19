@@ -4,7 +4,7 @@ Synchronize design files into an iModel.
 
 ## Options
 
-- **`--id`**  
+- **`--imodel-id`**  
   The ID of the iModel to populate.  
   **Type:** `string` **Required:** Yes
 
@@ -21,16 +21,16 @@ Synchronize design files into an iModel.
 
 ```bash
 # Example 1: Synchronizing DWG Files
-itp imodel populate --id "b1a2c3d4-5678-90ab-cdef-1234567890ab" --file "file1.dwg" --connector-type "DWG" --file "file2.dwg" --connector-type "DWG"
+itp imodel populate --imodel-id "b1a2c3d4-5678-90ab-cdef-1234567890ab" --file "file1.dwg" --connector-type "DWG" --file "file2.dwg" --connector-type "DWG"
 
 # Example 2: Synchronizing DGN Files
-itp imodel populate --id "c2d3e4f5-6789-01ab-cdef-2345678901bc" --file "site1.dgn" --connector-type "CIVIL" --file "structure2.dgn" --connector-type "CIVIL"
+itp imodel populate --imodel-id "c2d3e4f5-6789-01ab-cdef-2345678901bc" --file "site1.dgn" --connector-type "CIVIL" --file "structure2.dgn" --connector-type "CIVIL"
 
 # Example 3: Synchronizing CSV and IFC Files
-itp imodel populate --id "d3e4f5g6-7890-12ab-cdef-3456789012cd" --file "data1.csv" --file "data2.csv" --file "model.ifc"
+itp imodel populate --imodel-id "d3e4f5g6-7890-12ab-cdef-3456789012cd" --file "data1.csv" --file "data2.csv" --file "model.ifc"
 
 # Example: Synchronizing Revit and DGN Files
-itp imodel populate --id "i9j0k1l2-3456-78ab-cdef-9012345678ij" --file "model.rvt" --file "design.dgn"
+itp imodel populate --imodel-id "i9j0k1l2-3456-78ab-cdef-9012345678ij" --file "model.rvt" --file "design.dgn"
 ```
 
 ## Workflow Reference

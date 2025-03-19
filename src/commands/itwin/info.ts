@@ -11,7 +11,7 @@ export default class ITwinInfo extends BaseCommand {
     static description = 'Retrieve metadata for the specified iTwin.';
   
     static flags = {
-      id: Flags.string({
+      "itwin-id": Flags.string({
         description: 'The ID of the iTwin to retrieve information about.',
         required: true,
       }),
@@ -23,7 +23,7 @@ export default class ITwinInfo extends BaseCommand {
       const accessToken = await this.getAccessToken();
       const client = this.getITwinAccessClient();
   
-      const response = await client.getAsync(accessToken, flags.id, 'representation');
+      const response = await client.getAsync(accessToken, flags["itwin-id"], 'representation');
 
       if(response.error)
       {

@@ -26,7 +26,7 @@ const tests = () => describe('update', () => {
 
   it('should update the iModel', async () => {
     const updatedName = 'UpdatedIntegrationTestIModel';
-    const { stdout } = await runCommand(`imodel update --id ${testIModelId} --name ${updatedName}`);
+    const { stdout } = await runCommand(`imodel update --imodel-id ${testIModelId} --name ${updatedName}`);
     const updatedITwin = JSON.parse(stdout);
 
     expect(updatedITwin).to.have.property('id', testIModelId);

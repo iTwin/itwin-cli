@@ -24,7 +24,7 @@ const tests = () => describe('info', () => {
   });
 
   it('should get the iTwin info', async () => {
-    const { stdout } = await runCommand(`itwin info --id ${testITwinId}`);
+    const { stdout } = await runCommand(`itwin info --itwin-id ${testITwinId}`);
     const iTwinInfo = JSON.parse(stdout);
 
     expect(iTwinInfo).to.have.property('id', testITwinId);

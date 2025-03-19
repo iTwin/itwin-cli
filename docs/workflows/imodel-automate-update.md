@@ -37,7 +37,7 @@ itp imodel create --itwin-id "your-itwin-id" --name "Building Design" --descript
 
 **Step 3: Populate the iModel with initial design data**
 ```bash
-itp imodel populate --id "your-imodel-id" --file "initial-design.dwg" --connector-type "DWG"
+itp imodel populate --imodel-id "your-imodel-id" --file "initial-design.dwg" --connector-type "DWG"
 ```
 
 **Step 4: Monitor file system events**
@@ -71,7 +71,7 @@ while read -r directory events filename; do
     echo "File $filename deleted, skipping iModel update."
   else
     echo "Detected change in $filename, updating iModel..."
-    itp imodel populate --id "$IMODEL_ID" --file "$WATCH_DIR/$filename"
+    itp imodel populate --imodel-id "$IMODEL_ID" --file "$WATCH_DIR/$filename"
   fi
 done
 ```
@@ -95,7 +95,7 @@ $action = {
         Write-Host "File $file deleted, skipping iModel update."
     } else {
         Write-Host "Detected change in $file, updating iModel..."
-        itp imodel populate --id $iModelId --file $file
+        itp imodel populate --imodel-id $iModelId --file $file
     }
 }
 

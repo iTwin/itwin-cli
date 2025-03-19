@@ -59,7 +59,7 @@ export default class PopulateIModel extends BaseCommand {
         multiple: true,
         required: true
       }),
-    id: Flags.string({ 
+    "imodel-id": Flags.string({ 
         description: 'The ID of the iModel to populate.', 
         required: true,
     }),
@@ -69,8 +69,8 @@ export default class PopulateIModel extends BaseCommand {
     const { flags } = await this.parse(PopulateIModel);
 
     const filesAndConnectorToImport = this.checkAndGetFilesWithConnectors(flags.file, flags["connector-type"]);
-    this.log(`Synchronizing files into iModel with ID: ${flags.id}`);
-    const iModel = await this.runCommand<IModel>('imodel:info', ['--id', flags.id]);
+    this.log(`Synchronizing files into iModel with ID: ${flags["imodel-id"]}`);
+    const iModel = await this.runCommand<IModel>('imodel:info', ['--imodel-id', flags["imodel-id"]]);
 
     this.log(`Fetching root folder for iTwin: ${iModel.iTwinId}`);
     const topFolders = await this.runCommand<itemsWithFolderLink>('storage:root-folder', ['--itwin-id', iModel.iTwinId]);

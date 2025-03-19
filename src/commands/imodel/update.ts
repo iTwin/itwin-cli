@@ -20,7 +20,7 @@ export default class UpdateCommand extends BaseCommand {
         description: 'The new maximum rectangular area on Earth that encloses the iModel, defined by its southwest and northeast corners.',
         required: false,
       }),
-      id: Flags.string({
+      "imodel-id": Flags.string({
         description: 'The ID of the iModel to update.',
         required: true,
       }),
@@ -44,12 +44,12 @@ export default class UpdateCommand extends BaseCommand {
   
       const iModelInfo = await client.iModels.getSingle({
         authorization,
-        iModelId: flags.id
+        iModelId: flags["imodel-id"]
       });
 
       const iModel = await client.iModels.update({
         authorization,
-        iModelId: flags.id,
+        iModelId: flags["imodel-id"],
         iModelProperties: {
             description: flags.description,
             extent,
