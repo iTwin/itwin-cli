@@ -77,13 +77,13 @@ export async function deleteFolder(folderId: string) {
 }
 
 export async function deleteITwin(id: string) {
-    const result = await runCommand(`itwin delete --id ${id}`);
+    const result = await runCommand(`itwin delete --itwin-id ${id}`);
     const deleteResult = JSON.parse(result.stdout);
     expect(deleteResult).to.have.property('result', 'deleted');
 }
 
 export async function deleteIModel(id: string) {
-    const result = await runCommand(`imodel delete --id ${id}`);
+    const result = await runCommand(`imodel delete --imodel-id ${id}`);
     const deleteResult = JSON.parse(result.stdout);
     expect(deleteResult).to.have.property('result', 'deleted');
 }

@@ -27,17 +27,17 @@ itp itwin create --class "Thing" --sub-class "Asset" --display-name "New Bridge 
 
 **Step 2: Update the iTwin’s geographic location**
 ```bash
-itp itwin update --id "your-itwin-id" --geographic-location "San Francisco, CA"
+itp itwin update --itwin-id "your-itwin-id" --geographic-location "San Francisco, CA"
 ```
 
 **Step 3: Update the iTwin’s type and status**
 ```bash
-itp itwin update --id "your-itwin-id" --type "Green field project" --status "Active"
+itp itwin update --itwin-id "your-itwin-id" --type "Green field project" --status "Active"
 ```
 
 **Step 4: Update the iTwin’s time zone**
 ```bash
-itp itwin update --id "your-itwin-id" --iana-time-zone "America/Los_Angeles"
+itp itwin update --itwin-id "your-itwin-id" --iana-time-zone "America/Los_Angeles"
 ```
 
 ## Expected Outcome

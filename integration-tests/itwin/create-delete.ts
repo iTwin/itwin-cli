@@ -27,7 +27,7 @@ const tests = () => describe('create + delete', () => {
   it('should delete the iTwin', async () => {
     await deleteITwin(testITwinId);
 
-    const result = await runCommand(`itwin info --id ${testITwinId}`);
+    const result = await runCommand(`itwin info --itwin-id ${testITwinId}`);
     expect(result.error).to.be.not.undefined;
     expect(result.error!.message).to.include('iTwinNotFound');
   });
