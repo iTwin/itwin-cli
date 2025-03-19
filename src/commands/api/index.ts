@@ -17,7 +17,7 @@ export default class ApiRequest extends BaseCommand {
             required: false,
         }),
         "empty-response": Flags.boolean({
-            description: "The request do not contain response body.",
+            description: "The request does not contain a response body.",
             required: false,
         }),
         header: Flags.string({

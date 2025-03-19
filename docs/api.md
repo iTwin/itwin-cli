@@ -39,7 +39,7 @@ Send HTTP request to iTwin Platform API.
 # Example 1: Sending a GET request
 itp api --method GET --path "users/me"
 
-# Example 3: Sending a request with headers and query parameters
+# Example 2: Sending a request with headers and query parameters
 itp api --method GET --path "itwins/favorite" --query "subClass:Account" --query "$top:10" --header "Prefer: return=minimal"
 
 # Example 3: Sending a delete request without response body
