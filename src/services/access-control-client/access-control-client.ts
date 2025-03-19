@@ -16,16 +16,16 @@ export class AccessControlClient {
         this.iTwinPlatformApiClient = new ITwinPlatformApiClient(apiUrl, authToken, this.apiVersionHeader);
     }
 
-    async createGroup(iTwinId: string, group: group): Promise<GroupResponse> {
-        return this.iTwinPlatformApiClient.sendRequestWithBody<GroupResponse, group>({
+    createGroup(iTwinId: string, group: group): Promise<GroupResponse> {
+        return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `accesscontrol/itwins/${iTwinId}/groups`,
             body: group,
             method: 'POST'
         });
     }
 
-    async createiTwinRole(iTwinId: string, role: Role): Promise<RoleResponse> {
-        return this.iTwinPlatformApiClient.sendRequestWithBody<RoleResponse, Role>({
+    createiTwinRole(iTwinId: string, role: Role): Promise<RoleResponse> {
+        return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `accesscontrol/itwins/${iTwinId}/roles`,
             body: role,
             method: 'POST'
@@ -46,58 +46,58 @@ export class AccessControlClient {
         });
     }
 
-    async getAllAvailableiTwinPermissions(): Promise<permissions> {
-        return this.iTwinPlatformApiClient.sendRequest<permissions>({
+    getAllAvailableiTwinPermissions(): Promise<permissions> {
+        return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `accesscontrol/itwins/permissions`,
             method: 'GET'
         });
     }
 
-    async getAlliTwinPermissions(iTwinId: string): Promise<permissions> {
-        return this.iTwinPlatformApiClient.sendRequest<permissions>({
+    getAlliTwinPermissions(iTwinId: string): Promise<permissions> {
+        return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `accesscontrol/itwins/${iTwinId}/permissions`,
             method: 'GET'
         });
     }
 
-    async getGroup(iTwinId: string, groupId: string): Promise<GroupResponse> {
-        return this.iTwinPlatformApiClient.sendRequest<GroupResponse>({
+    getGroup(iTwinId: string, groupId: string): Promise<GroupResponse> {
+        return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `accesscontrol/itwins/${iTwinId}/groups/${groupId}`,
             method: 'GET'
         });
     }
 
-    async getGroups(iTwinId: string): Promise<GroupsResponse> {
-        return this.iTwinPlatformApiClient.sendRequest<GroupsResponse>({
+    getGroups(iTwinId: string): Promise<GroupsResponse> {
+        return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `accesscontrol/itwins/${iTwinId}/groups`,
             method: 'GET'
         });
     }
 
-    async getiTwinRole(iTwinId: string, roleId: string): Promise<RoleResponse> {
-        return this.iTwinPlatformApiClient.sendRequest<RoleResponse>({
+    getiTwinRole(iTwinId: string, roleId: string): Promise<RoleResponse> {
+        return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `accesscontrol/itwins/${iTwinId}/roles/${roleId}`,
             method: 'GET'
         });
     }
 
-    async getiTwinRoles(iTwinId: string): Promise<RolesResponse> {
-        return this.iTwinPlatformApiClient.sendRequest<RolesResponse>({
+    getiTwinRoles(iTwinId: string): Promise<RolesResponse> {
+        return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `accesscontrol/itwins/${iTwinId}/roles`,
             method: 'GET'
         });
     }
 
-    async updateGroup(iTwinId: string, groupId: string, group: groupUpdate): Promise<GroupResponse> {
-        return this.iTwinPlatformApiClient.sendRequestWithBody<GroupResponse, groupUpdate>({
+    updateGroup(iTwinId: string, groupId: string, group: groupUpdate): Promise<GroupResponse> {
+        return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `accesscontrol/itwins/${iTwinId}/groups/${groupId}`,
             body: group,
             method: 'PATCH'
         });
     }
 
-    async updateiTwinRole(iTwinId: string, roleId: string, role: Role): Promise<RoleResponse> {
-        return this.iTwinPlatformApiClient.sendRequestWithBody<RoleResponse, Role>({
+    updateiTwinRole(iTwinId: string, roleId: string, role: Role): Promise<RoleResponse> {
+        return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `accesscontrol/itwins/${iTwinId}/roles/${roleId}`,
             body: role,
             method: 'PATCH'
