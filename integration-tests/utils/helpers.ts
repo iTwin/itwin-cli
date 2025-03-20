@@ -27,7 +27,7 @@ export async function createFile(folderId: string, displayName: string, filePath
     const fileId = completeUrl.split('/').at(-2);
 
     // 2. Upload file
-    const uploadResult = await runCommand(`storage file upload --upload-url ${uploadUrl} --file-path ${filePath}`);
+    const uploadResult = await runCommand(`storage file upload --upload-url "${uploadUrl}" --file-path ${filePath}`);
     const uploadedFile = JSON.parse(uploadResult.stdout);
 
     expect(uploadedFile).to.have.property('result', 'uploaded');
