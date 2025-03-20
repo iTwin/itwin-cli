@@ -57,7 +57,7 @@ const tests = () => {
     });
 
     it('Should list groups', async () => {
-        const newGroup = await runCommand<group>(`access-control group create --itwin-id ${iTwinId} --name "Test2" --description "Description2"`);
+        const newGroup = await runCommand<group>(`access-control group create --itwin-id ${iTwinId} --name Test2 --description Description2`);
         expect(newGroup.result).is.not.undefined;
         expect(newGroup.result!.id).is.not.undefined;
         expect(newGroup.result!.name).to.be.equal("Test2");
@@ -71,7 +71,7 @@ const tests = () => {
     });
 
     it('Should delete group', async () => {
-        const newGroup = await runCommand<group>(`access-control group create --itwin-id ${iTwinId} --name "Test3" --description "Description3"`);
+        const newGroup = await runCommand<group>(`access-control group create --itwin-id ${iTwinId} --name Test3 --description Description3`);
         expect(newGroup.result).is.not.undefined;
         expect(newGroup.result!.id).is.not.undefined;
 

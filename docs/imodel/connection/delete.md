@@ -11,7 +11,7 @@ Delete a storage connection of an iModel.
 ## Examples
 
 ```bash
-itp imodel connection delete --connection-id "bf4d8b36-25d7-4b72-b38b-12c1f0325f42"
+itp imodel connection delete --connection-id bf4d8b36-25d7-4b72-b38b-12c1f0325f42
 ```
 
 ## API Reference

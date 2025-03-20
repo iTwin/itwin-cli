@@ -11,7 +11,7 @@ Retrieve the top-level folders and files in an iTwin's storage.
 ## Examples
 
 ```bash
-itp storage root-folder --itwin-id "ad0ba809-9241-48ad-9eb0-c8038c1a1d51"
+itp storage root-folder --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51
 ```
 
 ## API Reference

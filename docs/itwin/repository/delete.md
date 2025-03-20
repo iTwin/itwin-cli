@@ -15,7 +15,7 @@ Delete a specified repository from an iTwin.
 ## Examples
 
 ```bash
-itp itwin repository delete --itwin-id "ad0ba809-9241-48ad-9eb0-c8038c1a1d51" --repository-id "bf4d8b36-25d7-4b72-b38b-12c1f0325f42"
+itp itwin repository delete --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --repository-id bf4d8b36-25d7-4b72-b38b-12c1f0325f42
 ```
 
 ## API Reference

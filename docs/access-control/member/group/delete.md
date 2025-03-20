@@ -15,7 +15,7 @@ Remove a group from an iTwin.
 ## Examples
 
 ```bash
-itp access-control member group delete --itwin-id "ad0ba809-9241-48ad-9eb0-c8038c1a1d51" --group-id "group1-id"
+itp access-control member group delete --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --group-id group1-id
 ```
 
 ## API Reference

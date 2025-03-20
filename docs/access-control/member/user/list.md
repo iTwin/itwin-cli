@@ -11,7 +11,7 @@ List all user members of an iTwin.
 ## Examples
 
 ```bash
-itp access-control member user list --itwin-id "ad0ba809-9241-48ad-9eb0-c8038c1a1d51"
+itp access-control member user list --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51
 ```
 
 ## API Reference

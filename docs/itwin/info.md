@@ -11,7 +11,7 @@ Retrieve metadata for the specified iTwin.
 ## Examples
 
 ```bash
-itp itwin info --itwin-id "b1a2c3d4-5678-90ab-cdef-1234567890ab"
+itp itwin info --itwin-id b1a2c3d4-5678-90ab-cdef-1234567890ab
 ```
 
 ## API Reference

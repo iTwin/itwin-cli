@@ -12,7 +12,7 @@ Retrieve information about specific users based on their user IDs.
 
 ```bash
 # Example: Retrieve information about specific users by their user IDs
-itp user info --user-id "user1-id" --user-id "user2-id" --user-id "user3-id"
+itp user info --user-id user1-id --user-id user2-id --user-id user3-id
 ```
 
 ## API Reference

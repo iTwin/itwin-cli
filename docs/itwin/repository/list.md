@@ -22,13 +22,13 @@ Retrieve a list of repositories for a specified iTwin.
 
 ```bash
 # Example 1: Listing all repositories for an iTwin
-itp itwin repository list --itwin-id "ad0ba809-9241-48ad-9eb0-c8038c1a1d51"
+itp itwin repository list --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51
 
 # Example 2: Filtering repositories by class
-itp itwin repository list --itwin-id "ad0ba809-9241-48ad-9eb0-c8038c1a1d51" --class "iModels"
+itp itwin repository list --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --class iModels
 
 # Example 3: Filtering repositories by class and subClass
-itp itwin repository list --itwin-id "ad0ba809-9241-48ad-9eb0-c8038c1a1d51" --class "GeographicInformationSystem" --sub-class "WebMapTileService"
+itp itwin repository list --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --class GeographicInformationSystem --sub-class WebMapTileService
 ```
 
 ## API Reference

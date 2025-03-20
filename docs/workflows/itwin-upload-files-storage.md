@@ -41,37 +41,37 @@ As a user, I want to upload construction-related PDFs, like floor plans, to iTwi
 
 **Step 1: Create an iTwin**
 ```bash
-itp itwin create --class "Thing" --sub-class "Asset" --display-name "New Infrastructure Project" 
+itp itwin create --class Thing --sub-class Asset --display-name "New Infrastructure Project" 
 ```
 
 **Step 2: Get the root folder**
 ```bash
-itp storage root-folder --itwin-id "your-itwin-id"
+itp storage root-folder --itwin-id your-itwin-id
 ```
 
 **Step 3: Create a folder called "floor plans"**
 ```bash
-itp storage folder create --parent-folder-id "root-folder-id" --display-name "Floor Plans"
+itp storage folder create --parent-folder-id root-folder-id --display-name "Floor Plans"
 ```
 
 **Step 4: Create the file record**
 ```bash
-itp storage file create --folder-id "your-folder-id" --display-name "floorplan.pdf"
+itp storage file create --folder-id your-folder-id --display-name floorplan.pdf
 ```
 
 **Step 5: Upload the floorplan.pdf**
 ```bash
-itp storage file upload --upload-url "https://example.com/upload-url" --file-path "/path/to/floorplan.pdf"
+itp storage file upload --upload-url https://example.com/upload-url --file-path /path/to/floorplan.pdf
 ```
 
 **Step 6: Complete the upload**
 ```bash
-itp storage file update-complete --file-id "your-file-id"
+itp storage file update-complete --file-id your-file-id
 ```
 
 **Step 7: Confirm the upload by viewing the folder contents**
 ```bash
-itp storage file list --folder-id "your-folder-id"
+itp storage file list --folder-id your-folder-id
 ```
 
 ## Expected Outcome

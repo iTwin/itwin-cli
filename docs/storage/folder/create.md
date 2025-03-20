@@ -21,10 +21,10 @@ Create a new folder in a specified parent folder in iTwin's storage.
 ```bash
 # Example 1: Create a folder inside the root folder with a description
 # Note: You can retrieve the root folder ID using the 'itp storage root-folder' command.
-itp storage folder create --parent-folder-id "ROOT_FOLDER_ID_HERE" --display-name "Project Documents" --description "Folder for all project-related documents"
+itp storage folder create --parent-folder-id ROOT_FOLDER_ID_HERE --display-name "Project Documents" --description "Folder for all project-related documents"
 
 # Example 2: Create a subfolder inside an existing folder
-itp storage folder create --parent-folder-id "b2c3d4e5-6789-01ab-cdef-2345678901bc" --display-name "Design Files"
+itp storage folder create --parent-folder-id b2c3d4e5-6789-01ab-cdef-2345678901bc --display-name "Design Files"
 ```
 
 ## API Reference

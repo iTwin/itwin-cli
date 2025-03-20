@@ -32,16 +32,16 @@ List all changesets for a specific iModel.
 
 ```bash
 # Example 1: List the first 10 changesets for a specific iModel
-itp imodel changeset list --imodel-id "ad0ba809-9241-48ad-9eb0-c8038c1a1d51" --top 10
+itp imodel changeset list --imodel-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --top 10
 
 # Example 2: Skip the first 5 changesets and return the next 10
-itp imodel changeset list --imodel-id "ad0ba809-9241-48ad-9eb0-c8038c1a1d51" --skip 5 --top 10
+itp imodel changeset list --imodel-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --skip 5 --top 10
 
 # Example 3: List all changesets after a specific index in ascending order
-itp imodel changeset list --imodel-id "ad0ba809-9241-48ad-9eb0-c8038c1a1d51" --after-index 100 --order-by "asc"
+itp imodel changeset list --imodel-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --after-index 100 --order-by asc
 
 # Example 4: List all changesets up to a specific index in descending order
-itp imodel changeset list --imodel-id "ad0ba809-9241-48ad-9eb0-c8038c1a1d51" --last-index 200 --order-by "desc"
+itp imodel changeset list --imodel-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --last-index 200 --order-by desc
 ```
 
 ## API Reference

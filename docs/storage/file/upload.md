@@ -16,10 +16,10 @@ Upload a new file to a specified URL within iTwin storage.
 
 ```bash
 # Example 1: Upload a PDF file to the storage
-itp storage file upload --upload-url "https://example.com/upload-url" --file-path "/path/to/your/file.pdf"
+itp storage file upload --upload-url https://example.com/upload-url --file-path /path/to/your/file.pdf
 
 # Example 2: Upload an image file to the storage
-itp storage file upload --upload-url "https://example.com/image-upload-url" --file-path "/path/to/your/image.jpg"
+itp storage file upload --upload-url https://example.com/image-upload-url --file-path /path/to/your/image.jpg
 ```
 
 ## API Reference

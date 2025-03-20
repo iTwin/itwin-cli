@@ -24,17 +24,17 @@ As a user, I want to compare two versions of an iModel to understand the changes
 Step 1: Enable change tracking for the iModel
 
 ```bash
-itp changed-elements enable --itwin-id "your-itwin-id" --imodel-id "your-imodel-id"
+itp changed-elements enable --itwin-id your-itwin-id --imodel-id your-imodel-id
 ```
 
 Step 2: List available changesets to find versions for comparison
 ```bash
-itp changed-elements changesets --itwin-id "your-itwin-id" --imodel-id "your-imodel-id"
+itp changed-elements changesets --itwin-id your-itwin-id --imodel-id your-imodel-id
 ```
 
 Step 3: Compare two changesets (abc123 and def456)
 ```bash
-itp changed-elements comparison --itwin-id "your-itwin-id" --imodel-id "your-imodel-id" --changeset-id1 "abc123" --changeset-id2 "def456"
+itp changed-elements comparison --itwin-id your-itwin-id --imodel-id your-imodel-id --changeset-id1 abc123 --changeset-id2 def456
 ```
 
 ## Expected Outcome
