@@ -11,9 +11,9 @@ export default class FileCreate extends BaseCommand {
     static description = 'Create a new file in a specified folder in iTwin\'s storage.';
   
     static flags = {
-      description: Flags.string({ description: 'A description for the file.', required: false }),
-      "display-name": Flags.string({ description: 'The display name of the file.', required: true }),
-      "folder-id": Flags.string({ description: 'The ID of the folder where the file will be created.', required: true }),
+      description: Flags.string({ char: 'd', description: 'A description for the file.', required: false }),
+      "display-name": Flags.string({ char: 'n', description: 'The display name of the file.', required: true }),
+      "folder-id": Flags.string({ char: 'f', description: 'The ID of the folder where the file will be created.', required: true }),
     };
   
     async run() {

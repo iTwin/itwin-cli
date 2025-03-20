@@ -11,7 +11,7 @@ export default class FileInfo extends BaseCommand {
     static description = "Retrieve metadata for a specific file in an iTwin's storage.";
   
     static flags = {
-      "file-id": Flags.string({ description: "The ID of the file to retrieve information about.", required: true }),
+      "file-id": Flags.string({ char: 'f', description: "The ID of the file to retrieve information about.", required: true }),
     };
   
     async run() {

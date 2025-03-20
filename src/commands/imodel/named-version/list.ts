@@ -13,10 +13,12 @@ export default class ListNamedVersions extends BaseCommand {
   
     static flags = {
       "imodel-id": Flags.string({
+        char: 'm',
         description: 'The ID of the iModel whose named versions you want to list.',
         required: true,
       }),
       name: Flags.string({
+        char: 'n',
         description: 'Filter named versions by exact name.',
         required: false,
       }),
@@ -29,10 +31,12 @@ export default class ListNamedVersions extends BaseCommand {
         required: false,
       }),
       skip: Flags.integer({
+        char: 's',
         description: 'Skip a number of named versions in the result.',
         required: false,
       }),
       top: Flags.integer({
+        char: 't',
         description: 'Limit the number of named versions returned.',
         required: false,
       }),

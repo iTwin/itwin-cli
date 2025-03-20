@@ -12,10 +12,12 @@ export default class UpdateAccessControlGroup extends BaseCommand {
   
     static flags = {
       description: Flags.string({
+        char: 'd',
         description: 'The updated description of the group.',
         required: false,
       }),
       "group-id": Flags.string({
+        char: 'g',
         description: 'The ID of the group to be updated.',
         required: true,
       }),
@@ -25,6 +27,7 @@ export default class UpdateAccessControlGroup extends BaseCommand {
         required: false,
       }),
       "itwin-id": Flags.string({
+        char: 'i',
         description: 'The ID of the iTwin where the group exists.',
         required: true,
       }),
@@ -34,6 +37,7 @@ export default class UpdateAccessControlGroup extends BaseCommand {
         required: false,
       }),
       name: Flags.string({
+        char: 'n',
         description: 'The updated name of the group.',
         required: false,
       }),

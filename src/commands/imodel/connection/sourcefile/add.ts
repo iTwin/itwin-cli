@@ -13,6 +13,7 @@ export default class CreateConnectionSourceFile extends BaseCommand {
   
     static flags = {
       "connection-id": Flags.string({
+        char: 'c',
         description: 'The ID of the storage connection to which the source file will be added.',
         required: true,
       }),

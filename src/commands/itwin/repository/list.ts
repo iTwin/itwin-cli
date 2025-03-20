@@ -17,6 +17,7 @@ export default class ListRepositories extends BaseCommand {
         required: false
       }),
       "itwin-id": Flags.string({
+        char: 'i',
         description: 'The ID of the iTwin whose repositories should be retrieved.',
         required: true,
       }),

@@ -12,6 +12,7 @@ export default class ITwinInfo extends BaseCommand {
   
     static flags = {
       "itwin-id": Flags.string({
+        char: 'i',
         description: 'The ID of the iTwin to retrieve information about.',
         required: true,
       }),

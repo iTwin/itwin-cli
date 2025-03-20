@@ -13,10 +13,12 @@ export default class ListIModels extends BaseCommand {
   
     static flags = {
       "itwin-id": Flags.string({
+        char: 'i',
         description: 'The ID of the iTwin to list iModels for.',
         required: true,
       }),
       name: Flags.string({
+        char: 'n',
         description: 'Filter iModels by their exact name.',
         required: false,
       }),
@@ -29,6 +31,7 @@ export default class ListIModels extends BaseCommand {
         required: false,
       }),
       skip: Flags.integer({
+        char: 's',
         description: 'Skip a number of items in the result.',
         required: false,
       }),
@@ -38,6 +41,7 @@ export default class ListIModels extends BaseCommand {
         required: false,
       }),
       top: Flags.integer({
+        char: 't',
         description: 'Limit the number of items returned.',
         required: false,
       }),

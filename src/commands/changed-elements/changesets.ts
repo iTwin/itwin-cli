@@ -11,10 +11,10 @@ export default class GetChangesetStatus extends BaseCommand {
     static description = 'Get the processing status of changesets in an iModel to see which are ready for comparison.';
   
     static flags = {
-      "imodel-id": Flags.string({ description: 'The ID of the iModel.', required: true }),
-      "itwin-id": Flags.string({ description: 'The ID of the iTwin.', required: true }),
-      skip: Flags.integer({ description: 'Skip a number of changesets in the result.' }),
-      top: Flags.integer({ description: 'Limit the number of changesets returned.' }),
+      "imodel-id": Flags.string({ char: 'm', description: 'The ID of the iModel.', required: true }),
+      "itwin-id": Flags.string({ char: 'i', description: 'The ID of the iTwin.', required: true }),
+      skip: Flags.integer({ char: 's', description: 'Skip a number of changesets in the result.' }),
+      top: Flags.integer({ char: 't', description: 'Limit the number of changesets returned.' }),
     };
   
     async run() {

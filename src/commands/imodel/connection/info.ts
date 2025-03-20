@@ -11,7 +11,7 @@ export default class ConnectionInfo extends BaseCommand {
     static description = 'Get connector info.';
   
     static flags = {
-      "connection-id": Flags.string({ description: 'The id of the connection.', required: true }),
+      "connection-id": Flags.string({ char: 'c', description: 'The id of the connection.', required: true }),
     };
   
     async run() {

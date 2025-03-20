@@ -13,6 +13,7 @@ export default class UpdateCommand extends BaseCommand {
   
     static flags = {
       description: Flags.string({
+        char: 'd',
         description: 'The new description for the iModel.',
         required: false,
       }),
@@ -21,10 +22,12 @@ export default class UpdateCommand extends BaseCommand {
         required: false,
       }),
       "imodel-id": Flags.string({
+        char: 'm',
         description: 'The ID of the iModel to update.',
         required: true,
       }),
       name: Flags.string({
+        char: 'n',
         description: 'The new name of the iModel.',
         required: false,
       }),

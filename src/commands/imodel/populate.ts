@@ -59,7 +59,8 @@ export default class PopulateIModel extends BaseCommand {
         multiple: true,
         required: true
       }),
-    "imodel-id": Flags.string({ 
+    "imodel-id": Flags.string({
+        char: 'm', 
         description: 'The ID of the iModel to populate.', 
         required: true,
     }),

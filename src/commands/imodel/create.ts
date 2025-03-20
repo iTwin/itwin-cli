@@ -13,6 +13,7 @@ export default class CreateIModel extends BaseCommand {
   
     static flags = {
       description: Flags.string({
+        char: 'd',
         description: 'A description for the iModel.',
         required: false,
       }),
@@ -21,10 +22,12 @@ export default class CreateIModel extends BaseCommand {
         required: false,
       }),
       "itwin-id": Flags.string({
+        char: 'i',
         description: 'The ID of the iTwin where the iModel should be created.',
         required: true,
       }),
       name: Flags.string({
+        char: 'n',
         description: 'The name of the iModel.',
         required: true,
       }),

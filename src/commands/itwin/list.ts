@@ -13,6 +13,7 @@ export default class ListITwins extends BaseCommand {
   
     static flags = {
       "display-name": Flags.string({
+        char: 'n',
         description: 'Find iTwins with the exact display name specified.',
         required: false,
       }),
@@ -37,6 +38,7 @@ export default class ListITwins extends BaseCommand {
         required: false,
       }),
       skip: Flags.integer({
+        char: 's',
         description: 'Skip a number of items in the result.',
         required: false,
       }),
@@ -51,6 +53,7 @@ export default class ListITwins extends BaseCommand {
         required: false
       }),
       top: Flags.integer({
+        char: 't',
         description: 'Limit the number of items returned.',
         required: false,
       }),
