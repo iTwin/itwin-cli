@@ -18,7 +18,7 @@ export class SynchronizationApiClient {
     }
 
     addSourceFile(connectionId: string, sourceFile: sourceFileInfo): Promise<sourceFileResponse> {
-        return this.iTwinPlatformApiClient.sendRequestWithBody({
+        return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `synchronization/imodels/storageconnections/${connectionId}/sourcefiles`,
             body: sourceFile,
             method: "POST"
@@ -32,36 +32,36 @@ export class SynchronizationApiClient {
             query: [
                 {
                     key: 'redirectUrl',
-                    value: 'http://localhost:3000/callback'
+                    value: 'http://localhost:3301/callback'
                 }
             ]
         });
     }
 
     createStorageConnection(connection: storageConnectionCreate): Promise<storageConnectionResponse> {
-        return this.iTwinPlatformApiClient.sendRequestWithBody<storageConnectionResponse, storageConnectionCreate>({
+        return this.iTwinPlatformApiClient.sendRequest({
             apiPath: 'synchronization/imodels/storageconnections',
             body: connection,
             method: 'POST'
         });
     }
 
-    createStorageConnectionRun(connectionId: string) {
-        return this.iTwinPlatformApiClient.sendRequestNoResponse({
+    async createStorageConnectionRun(connectionId: string) {
+        await this.iTwinPlatformApiClient.sendRequestNoResponse({
             apiPath: `synchronization/imodels/storageconnections/${connectionId}/run`,
             method: "POST"
         });
     }
 
-    deleteSourceFile(connectionId: string, sourceFileId: string): Promise<void> {
-        return this.iTwinPlatformApiClient.sendRequestNoResponse({
+    async deleteSourceFile(connectionId: string, sourceFileId: string): Promise<void> {
+        await this.iTwinPlatformApiClient.sendRequestNoResponse({
             apiPath: `synchronization/imodels/storageconnections/${connectionId}/sourcefiles/${sourceFileId}`,
             method: "DELETE",
         });
     }
 
-    deleteStorageConnection(connectionId: string): Promise<void> {
-        return this.iTwinPlatformApiClient.sendRequestNoResponse({
+    async deleteStorageConnection(connectionId: string): Promise<void> {
+        await this.iTwinPlatformApiClient.sendRequestNoResponse({
             apiPath: `synchronization/imodels/storageconnections/${connectionId}`,
             method: "DELETE",
         });
@@ -82,14 +82,14 @@ export class SynchronizationApiClient {
     }
 
     getStorageConnection(connectionId: string): Promise<storageConnectionResponse> {
-        return this.iTwinPlatformApiClient.sendRequestWithBody<storageConnectionResponse, undefined>({
+        return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `synchronization/imodels/storageconnections/${connectionId}`,
             method: 'GET'
         });
     }
 
-    getStorageConnectionRun(connectionId: string, runId: string) {
-        return this.iTwinPlatformApiClient.sendRequestWithBody<storageRunResponse, undefined>({
+    getStorageConnectionRun(connectionId: string, runId: string) : Promise<storageRunResponse> {
+        return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `synchronization/imodels/storageconnections/${connectionId}/runs/${runId}`,
             method: "GET"
         });
@@ -125,7 +125,7 @@ export class SynchronizationApiClient {
     }
 
     updateSourceFile(connectionId: string, sourceFileId: string, update: sourceFileInfo): Promise<sourceFileResponse> {
-        return this.iTwinPlatformApiClient.sendRequestWithBody({
+        return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `synchronization/imodels/storageconnections/${connectionId}/sourcefiles/${sourceFileId}`,
             body: update,
             method: "PUT"
@@ -133,7 +133,7 @@ export class SynchronizationApiClient {
     }
 
     updateStorageConnection(connectionId: string, update: storageConnectionUpdate): Promise<storageConnectionResponse> {
-        return this.iTwinPlatformApiClient.sendRequestWithBody({
+        return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `synchronization/imodels/storageconnections/${connectionId}`,
             body: update,
             method: "PUT"

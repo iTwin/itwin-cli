@@ -6,7 +6,9 @@
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
+import { trackingResponse } from '../../src/services/changed-elements-client/tracking';
 import { createIModel, createITwin, deleteIModel, deleteITwin } from '../utils/helpers';
+import { resultResponse } from '../utils/result-response';
 
 const tests = () => describe('enable + disable + info', () => {
   const testIModelName = 'IntegrationTestIModel';
@@ -25,34 +27,21 @@ const tests = () => describe('enable + disable + info', () => {
     await deleteITwin(testITwinId);
   });
 
-  it('should enable change tracking for the specified iModel', async () => {
-    const { stdout } = await runCommand(`changed-elements enable --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
-    const result = JSON.parse(stdout);
-
-    expect(result).to.have.property('result', 'enabled');
-  });
-
   it('should have enabled change tracking', async () => {
-    const { stdout } = await runCommand(`changed-elements info --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
-    const result = JSON.parse(stdout);
+    const enableResponse = await runCommand<resultResponse>(`changed-elements enable --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
+    expect(enableResponse.result?.result).equals('enabled');    
 
-    expect(result).to.have.property('enabled', true);
+    const infoResponse = await runCommand<trackingResponse>(`changed-elements info --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
+    expect(infoResponse.result?.enabled).to.be.true;
   });
 
   it('should disable change tracking for the specified iModel', async () => {
-    const { stdout } = await runCommand(`changed-elements disable --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
-    const result = JSON.parse(stdout);
+    const disableResponse = await runCommand<resultResponse>(`changed-elements disable --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
+    expect(disableResponse.result?.result).equals('disabled');    
     
-    expect(result).to.have.property('result', 'disabled');
+    const infoResponse = await runCommand<trackingResponse>(`changed-elements info --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
+    expect(infoResponse.result?.enabled).to.be.false;
   });
-
-  it('should have disabled change tracking', async () => {
-    const { stdout } = await runCommand(`changed-elements info --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
-    const result = JSON.parse(stdout);
-    
-    expect(result).to.have.property('enabled', false);
-  });
-
 });
 
 export default tests;

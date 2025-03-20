@@ -59,9 +59,13 @@ export default class PopulateIModel extends BaseCommand {
         multiple: true,
         required: true
       }),
-    id: Flags.string({ 
+    "imodel-id": Flags.string({ 
         description: 'The ID of the iModel to populate.', 
         required: true,
+    }),
+    "no-wait": Flags.boolean({
+        description: 'Do not wait for the synchronization process to complete.',
+        required: false,
     }),
   }
 
@@ -69,8 +73,8 @@ export default class PopulateIModel extends BaseCommand {
     const { flags } = await this.parse(PopulateIModel);
 
     const filesAndConnectorToImport = this.checkAndGetFilesWithConnectors(flags.file, flags["connector-type"]);
-    this.log(`Synchronizing files into iModel with ID: ${flags.id}`);
-    const iModel = await this.runCommand<IModel>('imodel:info', ['--id', flags.id]);
+    this.log(`Synchronizing files into iModel with ID: ${flags["imodel-id"]}`);
+    const iModel = await this.runCommand<IModel>('imodel:info', ['--imodel-id', flags["imodel-id"]]);
 
     this.log(`Fetching root folder for iTwin: ${iModel.iTwinId}`);
     const topFolders = await this.runCommand<itemsWithFolderLink>('storage:root-folder', ['--itwin-id', iModel.iTwinId]);
@@ -111,14 +115,22 @@ export default class PopulateIModel extends BaseCommand {
     const connectionId = await this.findOrCreateDefaultConnection(existingConnections.connections, fileIds, iModel.id);
 
     this.log(`Running synchronization for connection ID: ${connectionId}`);
-    await this.runSynchronization(connectionId);
+    const runId = await this.runSynchronization(connectionId, !flags["no-wait"]);
 
     summary.push({
       connectionId,
       files: fileIds,
+      runId,
     });
 
-    this.log('Synchronization process completed');
+    if(flags["no-wait"]) {
+      this.log("Synchronization process started. Use the following command to check the status of the synchronization process:");
+      this.log(`itp imodel connection run info --connection-id ${connectionId} --connection-run-id ${runId}`);
+    }
+    else {
+      this.log('Synchronization process completed');
+    }
+
     return {
       iModelId: iModel.id,
       iTwinId: iModel.iTwinId,
@@ -145,8 +157,9 @@ export default class PopulateIModel extends BaseCommand {
       }
 
       let connector = getConnectorTypeFromFileExtension(extension);
-      if(connectorTypes && connectorTypes?.length < index)
-      {
+      if(connectorTypes && connectorTypes.length === 1) {
+        connector = connectorType[connectorTypes[0] as keyof typeof connectorType];
+      } else if(connectorTypes && connectorTypes.length > index) {
         connector = connectorType[connectorTypes[index] as keyof typeof connectorType];
       }
 
@@ -197,7 +210,7 @@ export default class PopulateIModel extends BaseCommand {
     return defaultConnection.id;
   }
 
-  private async runSynchronization(connectionId: string): Promise<void> {
+  private async runSynchronization(connectionId: string, waitForCompletion: boolean): Promise<string> {
     const storageConnection = await this.runCommand<StorageConnection>('imodel:connection:info', ['--connection-id', connectionId]);
     if (!storageConnection?._links?.lastRun?.href) {
       this.error(`No last run link available for storage connection: ${connectionId}`);
@@ -209,7 +222,10 @@ export default class PopulateIModel extends BaseCommand {
       storageConnectionRun = await this.runCommand<storageRun>('imodel:connection:run:info', ['--connection-id', connectionId, '--connection-run-id', runId]);
       await new Promise(resolve => { setTimeout(resolve, 10_000) });
       this.log(`Waiting for synchronization to complete for run ID: ${runId} with state: ${storageConnectionRun?.state}`);
-    } while (storageConnectionRun?.state !== executionState.COMPLETED);
+    // eslint-disable-next-line no-unmodified-loop-condition
+    } while (waitForCompletion && storageConnectionRun?.state !== executionState.COMPLETED);
+
+    return runId;
   }
 
   private async updateExistingFile(fileId: string, filePath: string): Promise<string> {

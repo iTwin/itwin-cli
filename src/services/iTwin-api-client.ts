@@ -5,13 +5,10 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-export interface RequestOptions<T> extends RequestOption {
-  body?: T;
-}
-
 export interface RequestOption {
   apiPath: string;
   apiVersionHeader?: string;
+  body?: unknown;
   headers?: Record<string, string>;
   method: 'DELETE' | 'GET' | 'PATCH' | 'POST' | 'PUT';
   query?: Query[];
@@ -33,8 +30,39 @@ export class ITwinPlatformApiClient {
       this.authToken = token;
       this.apiVersionHeader = apiVersionHeader;
   }
+  
+  async sendRequest<T>(options: RequestOption): Promise<T> {
+    const result = await this.request<T>(options);
+    if(!result)
+    {
+      throw new Error("Request returned undefined object");
+    }
 
-  getQueryString(query?: Query[]) : string {
+    return result;
+  }
+
+  async sendRequestNoResponse(options: RequestOption): Promise<void> {
+    await this.request(options);
+  }
+
+  private getHeadersList(headers: Record<string, string> | undefined, apiVersionHeader: string | undefined) {
+    const headersList: Record<string, string> = {
+      'Authorization': this.authToken,
+      'Content-Type': 'application/json',
+      ...headers
+    };
+
+    if (apiVersionHeader) {
+      headersList.Accept = apiVersionHeader;
+    }
+    else if (this.apiVersionHeader) {
+      headersList.Accept = this.apiVersionHeader;
+    }
+
+    return headersList;
+  }
+
+  private getQueryString(query?: Query[]) : string {
     if(!query || query.length === 0) {
       return '';
     }
@@ -46,60 +74,20 @@ export class ITwinPlatformApiClient {
     }
 
     return `?${queryString}`;
+
   }
 
-  async sendRequest<T>(options: RequestOption): Promise<T> {
-    const result = await this.send<T, undefined>({...options}, true);
-    if(!result)
-    {
-      throw new Error("Request returned undefined object");
-    }
 
-    return result;
-  }
-
-  async sendRequestNoResponse(options: RequestOption) : Promise<void> {
-    await this.send(options, false);
-  }
-
-  async sendRequestWithBody<T, T1>(options: RequestOptions<T1>): Promise<T> {
-    const result = await this.send<T, T1>(options, true);
-    if(!result)
-    {
-      throw new Error("Request returned undefined object");
-    }
-
-    return result;
-  }
-
-  async sendRequestWithBodyNoResponse<T>(options: RequestOptions<T>) : Promise<void> {
-    await this.send(options, false);
-  }
-
-  private async  send<T,T1>(options : RequestOptions<T1>, returnContent: boolean) : Promise<T | undefined> {
+  private async request<T>(options: RequestOption): Promise<T | undefined> {
     const { apiPath, apiVersionHeader, body, headers, method, query } = options;
 
     const queryString = this.getQueryString(query);
+    const headersList: Record<string, string> = this.getHeadersList(headers, apiVersionHeader);
 
-    const headersList : Record<string, string> = {
-      'Authorization': this.authToken,
-      'Content-Type': 'application/json',
-      ...headers
-    };
-
-    if(apiVersionHeader)
-    {
-      headersList.Accept = apiVersionHeader;
-    }
-    else if(this.apiVersionHeader)
-    {
-      headersList.Accept = this.apiVersionHeader;
-    }
-
-    const fetchOptions = {
+    const fetchOptions : RequestInit = {
       body: body ? JSON.stringify(body) : undefined,
       headers: headersList,
-      method,
+      method
     };
 
     const response = await fetch(`${this.iTwinPlatformApiBasePath}/${apiPath}${queryString}`, fetchOptions);
@@ -117,11 +105,10 @@ export class ITwinPlatformApiClient {
       }
     }
 
-    if(!returnContent)
-    {
-      return undefined;
+    if(response.headers.get('content-type') === null) {
+      return;
     }
-    
+
     const responseData = await response.json();
     return responseData as T;
   }

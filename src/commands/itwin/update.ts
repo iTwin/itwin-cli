@@ -24,7 +24,7 @@ export default class UpdateCommand extends BaseCommand {
         description: 'Optional IANA time zone ID.',
         required: false,
       }),
-      id: Flags.string({
+      "itwin-id": Flags.string({
         description: 'The ID of the iTwin to be updated.',
         required: true,
       }),
@@ -58,7 +58,7 @@ export default class UpdateCommand extends BaseCommand {
       const accessToken = await this.getAccessToken();
       const client = this.getITwinAccessClient();
   
-      const response = await client.updateiTwin(accessToken, flags.id, iTwinUpdate);
+      const response = await client.updateiTwin(accessToken, flags["itwin-id"], iTwinUpdate);
 
       if(response.error)
       {

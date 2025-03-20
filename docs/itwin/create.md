@@ -22,7 +22,7 @@ Create a new iTwin with specified properties.
   **Type:** `string` **Required:** Yes
 
 - **`--type`**  
-  Open ended property to define your iTwin's type.
+  Open ended property to define your iTwin's type.  
   **Type:** `string` **Required:** No
 
 - **`--number`**  

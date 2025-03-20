@@ -26,7 +26,7 @@ const tests = () => describe('info', () => {
   });
 
   it('should get the iModel info', async () => {
-    const { stdout } = await runCommand(`imodel info --id ${testIModelId}`);
+    const { stdout } = await runCommand(`imodel info --imodel-id ${testIModelId}`);
     const iModelInfo = JSON.parse(stdout);
 
     expect(iModelInfo).to.have.property('id', testIModelId);

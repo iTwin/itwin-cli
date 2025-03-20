@@ -18,7 +18,7 @@ const tests = () => {
     });
 
     after(async () => {
-        const result = await runCommand(`itwin delete --id ${iTwinId}`);
+        const result = await runCommand(`itwin delete --itwin-id ${iTwinId}`);
         expect(result.stdout).to.contain('deleted');
     });
 

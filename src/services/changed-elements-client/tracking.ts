@@ -12,7 +12,7 @@ export type changeTrackingRequest = {
 }
 
 export type trackingResponse = {
-    enable : boolean
+    enabled : boolean
 }
 
 export type changesetsResponse = {

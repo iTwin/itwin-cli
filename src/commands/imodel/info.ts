@@ -11,7 +11,7 @@ export class IModelInfo extends BaseCommand {
   static description = 'Retrieve metadata for the specified Model';
 
   static flags = {
-    id: Flags.string({ 
+    "imodel-id": Flags.string({ 
       description: 'The ID of the iModel to retrieve information for.', 
       required: true 
     }),
@@ -24,7 +24,7 @@ export class IModelInfo extends BaseCommand {
 
     const iModel = await iModelClient.iModels.getSingle({
         authorization: await this.getAuthorizationCallback(),
-        iModelId: flags.id
+        iModelId: flags["imodel-id"]
     })
 
     return this.logAndReturnResult(iModel);
