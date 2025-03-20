@@ -32,7 +32,7 @@ export class SynchronizationApiClient {
             query: [
                 {
                     key: 'redirectUrl',
-                    value: 'http://localhost:3000/callback'
+                    value: 'http://localhost:3301/callback'
                 }
             ]
         });
