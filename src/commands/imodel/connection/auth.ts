@@ -43,8 +43,8 @@ export default class ConnectionAuth extends BaseCommand {
     });
 
     // Provide which port the server is using
-    server.listen(3000, () => {
-      this.debug('Waiting for login callback on http://localhost:3000/callback');
+    server.listen(3301, () => {
+      this.debug('Waiting for login callback on http://localhost:3301/callback');
     });
 
     // Open page where autenticaiton should happen
