@@ -38,7 +38,6 @@ export default class ListITwins extends BaseCommand {
         required: false,
       }),
       skip: Flags.integer({
-        char: 's',
         description: 'Skip a number of items in the result.',
         required: false,
       }),
@@ -53,7 +52,6 @@ export default class ListITwins extends BaseCommand {
         required: false
       }),
       top: Flags.integer({
-        char: 't',
         description: 'Limit the number of items returned.',
         required: false,
       }),

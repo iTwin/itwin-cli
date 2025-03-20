@@ -31,12 +31,10 @@ export default class ListChangesets extends BaseCommand {
         required: false,
       }),
       skip: Flags.integer({
-        char: 's',
         description: 'The number of changesets to skip.',
         required: false,
       }),
       top: Flags.integer({
-        char: 't',
         description: 'The maximum number of changesets to return.',
         required: false,
       }),

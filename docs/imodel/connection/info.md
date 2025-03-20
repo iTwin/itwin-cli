@@ -4,7 +4,7 @@ Retrieve details about a specific storage connection of an iModel.
 
 ## Options
 
-- **`--connection-id`**  
+- **`-c, --connection-id`**  
   The ID of the storage connection to retrieve.  
   **Type:** `string` **Required:** Yes
 

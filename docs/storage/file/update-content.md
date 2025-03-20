@@ -4,7 +4,7 @@ Update the content of an existing file. A URL is returned to upload the file con
 
 ## Options
 
-- **`--file-id`**  
+- **`-f, --file-id`**  
   The ID of the file to update the content for.  
   **Type:** `string` **Required:** Yes
 

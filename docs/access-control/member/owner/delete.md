@@ -4,7 +4,7 @@ Remove an owner from an iTwin by their member ID.
 
 ## Options
 
-- **`--itwin-id`**  
+- **`-i, --itwin-id`**  
   The ID of the iTwin from which the owner will be removed.  
   **Type:** `string` **Required:** Yes
 

@@ -4,7 +4,7 @@ Retrieve details about a specific run of a storage connection.
 
 ## Options
 
-- **`--connection-id`**  
+- **`-c, --connection-id`**  
   The ID of the storage connection associated with the run.  
   **Type:** `string` **Required:** Yes
 

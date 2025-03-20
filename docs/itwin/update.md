@@ -4,11 +4,11 @@ Update the specified iTwin. Only include properties you want to update.
 
 ## Options
 
-- **`--itwin-id`**  
+- **`-i, --itwin-id`**  
   The ID of the iTwin to be updated.  
   **Type:** `string` **Required:** Yes
 
-- **`--display-name`**  
+- **`-n, --display-name`**  
   The iTwin's display name.  
   **Type:** `string **Required:** No
 

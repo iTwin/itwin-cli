@@ -4,7 +4,7 @@ List all source files in a specific storage connection.
 
 ## Options
 
-- **`--connection-id`**  
+- **`-c, --connection-id`**  
   The ID of the storage connection.  
   **Type:** `string` **Required:** Yes
 

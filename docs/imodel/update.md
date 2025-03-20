@@ -4,15 +4,15 @@ Update metadata of an existing iModel.
 
 ## Options
 
-- **`--imodel-id`**  
+- **`-m, --imodel-id`**  
   The ID of the iModel to update.  
   **Type:** `string` **Required:** Yes
 
-- **`--name`**  
+- **`-n, --name`**  
   The new name of the iModel.  
   **Type:** `string` **Required:** No
 
-- **`--description`**  
+- **`-d, --description`**  
   The new description for the iModel.  
   **Type:** `string` **Required:** No
 

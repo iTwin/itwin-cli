@@ -17,12 +17,10 @@ export default class ListConnections extends BaseCommand {
         required: true 
       }),
       skip: Flags.integer({
-        char: 's', 
         description: 'The number of changesets to skip.', 
         required: false 
       }),
       top: Flags.integer({
-        char: 't', 
         description: 'The maximum number of changesets to return.', 
         required: false 
       }),

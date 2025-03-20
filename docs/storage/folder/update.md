@@ -4,15 +4,15 @@ Update the metadata of a folder in an iTwin's storage, such as its display name 
 
 ## Options
 
-- **`--folder-id`**  
+- **`-f, --folder-id`**  
   The ID of the folder to be updated.  
   **Type:** `string` **Required:** Yes
 
-- **`--display-name`**  
+- **`-n, --display-name`**  
   The new display name for the folder.  
   **Type:** `string` **Required:** No
 
-- **`--description`**  
+- **`-d, --description`**  
   A description for the folder.  
   **Type:** `string` **Required:** No
 

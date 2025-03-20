@@ -4,11 +4,11 @@ Create a storage connection that describes files from storage to synchronize wit
 
 ## Options
 
-- **`--imodel-id`**  
+- **`-m, --imodel-id`**  
   The ID of the iModel.  
   **Type:** `string` **Required:** Yes
 
-- **`--file-id`**  
+- **`-f, --file-id`**  
   The ID of the storage file to synchronize
   **Type:** `array` **Required:** Yes **Multiple:** Yes
 
@@ -17,7 +17,7 @@ Create a storage connection that describes files from storage to synchronize wit
   **Type:** `array` **Required:** Yes **Multiple:** Yes
   **Valid Values:** `"AUTOPLANT", "CIVIL", "CIVIL3D", "DWG", "GEOSPATIAL", "IFC", "MSTN", "NWD", "OBD", "OPENTOWER", "REVIT", "SPPID", "SPXREVIEW"`
 
-- **`--display-name`**  
+- **`-n, --display-name`**  
   The display name of the storage connection.  
   **Type:** `string` **Required:** No
 

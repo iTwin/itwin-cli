@@ -31,12 +31,10 @@ export default class ListNamedVersions extends BaseCommand {
         required: false,
       }),
       skip: Flags.integer({
-        char: 's',
         description: 'Skip a number of named versions in the result.',
         required: false,
       }),
       top: Flags.integer({
-        char: 't',
         description: 'Limit the number of named versions returned.',
         required: false,
       }),

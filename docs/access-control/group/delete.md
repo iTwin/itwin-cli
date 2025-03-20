@@ -4,11 +4,11 @@ Delete an existing group from an iTwin.
 
 ## Options
 
-- **`--itwin-id`**  
+- **`-i, --itwin-id`**  
   The ID of the iTwin where the group exists.  
   **Type:** `string` **Required:** Yes
 
-- **`--group-id`**  
+- **`-g, --group-id`**  
   The ID of the group to be deleted.  
   **Type:** `string` **Required:** Yes
 

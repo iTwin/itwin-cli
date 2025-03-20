@@ -4,7 +4,7 @@ Add a source file to an existing storage connection of an iModel.
 
 ## Options
 
-- **`--connection-id`**  
+- **`-c, --connection-id`**  
   The ID of the storage connection to which the source file will be added.  
   **Type:** `string` **Required:** Yes
 

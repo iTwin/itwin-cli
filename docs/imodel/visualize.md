@@ -4,12 +4,12 @@ Launch a browser to visualize an iModel.
 
 ## Options
 
-- **`--itwin-id`**
+- **`-i, --itwin-id`**
   The ID of the iTwin associated with the iModel.  
   **Type:** `string`  
   **Required:** Yes
 
-- **`--imodel-id`**
+- **`-m, --imodel-id`**
   The ID of the iModel to visualize.  
   **Type:** `string`  
   **Required:** Yes

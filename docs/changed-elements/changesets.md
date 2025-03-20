@@ -4,11 +4,11 @@ Get the processing status of changesets in an iModel to see which are ready for 
 
 ## Options
 
-- **`--itwin-id`**  
+- **`-i, --itwin-id`**  
   The ID of the iTwin.  
   **Type:** `string` **Required:** Yes
 
-- **`--imodel-id`**  
+- **`-m, --imodel-id`**  
   The ID of the iModel.  
   **Type:** `string` **Required:** Yes
 

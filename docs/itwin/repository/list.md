@@ -4,7 +4,7 @@ Retrieve a list of repositories for a specified iTwin.
 
 ## Options
 
-- **`--itwin-id`**  
+- **`-i, --itwin-id`**  
   The ID of the iTwin whose repositories should be retrieved.  
   **Type:** `string` **Required:** Yes
 

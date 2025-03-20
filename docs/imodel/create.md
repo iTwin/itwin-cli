@@ -4,15 +4,15 @@ Create an empty iModel within a specified iTwin.
 
 ## Options
 
-- **`--itwin-id`**  
+- **`-i, --itwin-id`**  
   The ID of the iTwin where the iModel should be created.  
   **Type:** `string` **Required:** Yes
 
-- **`--name`**  
+- **`-n, --name`**  
   The name of the iModel.  
   **Type:** `string` **Required:** Yes
 
-- **`--description`**  
+- **`-d, --description`**  
   A description for the iModel.  
   **Type:** `string` **Required:** No
 

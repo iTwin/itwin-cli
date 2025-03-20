@@ -4,19 +4,19 @@ Update the details of an existing group in an iTwin.
 
 ## Options
 
-- **`--itwin-id`**  
+- **`-i, --itwin-id`**  
   The ID of the iTwin where the group exists.  
   **Type:** `string` **Required:** Yes
 
-- **`--group-id`**  
+- **`-g, --group-id`**  
   The ID of the group to be updated.  
   **Type:** `string` **Required:** Yes
 
-- **`--name`**  
+- **`-n, --name`**  
   The updated name of the group.  
   **Type:** `string` **Required:** No
 
-- **`--description`**  
+- **`-d, --description`**  
   The updated description of the group.  
   **Type:** `string` **Required:** No
 

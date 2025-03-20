@@ -4,7 +4,7 @@ List all owners of a specific iTwin.
 
 ## Options
 
-- **`--itwin-id`**  
+- **`-i, --itwin-id`**  
   The ID of the iTwin whose owners you want to list.  
   **Type:** `string` **Required:** Yes
 

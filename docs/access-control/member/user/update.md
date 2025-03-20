@@ -4,7 +4,7 @@ Update the role assignments for a user in an iTwin.
 
 ## Options
 
-- **`--itwin-id`**  
+- **`-i, --itwin-id`**  
   The ID of the iTwin where the user is a member.  
   **Type:** `string` **Required:** Yes
 
