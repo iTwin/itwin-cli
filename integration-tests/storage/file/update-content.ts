@@ -67,7 +67,7 @@ const tests = () => describe('update-content', () => {
   });
 
   it('should complete the file content update', async () => {
-    const { stdout } = await runCommand(`storage file update-complete --file-id ${testFileId}`);
+    const { stdout } = await runCommand(`storage file update-complete -f ${testFileId}`);
     const completedFile = JSON.parse(stdout);
 
     expect(completedFile).to.have.property('id', testFileId);
@@ -76,7 +76,7 @@ const tests = () => describe('update-content', () => {
   });
 
   it('should throw an error when trying to update a non-existent file', async () => {
-    const result = await runCommand('storage file update-content --file-id non-existent-file-id');
+    const result = await runCommand('storage file update-content -f non-existent-file-id');
     expect(result.error).to.be.not.undefined;
     expect(result.error!.message).to.include('FileNotFound');
   });

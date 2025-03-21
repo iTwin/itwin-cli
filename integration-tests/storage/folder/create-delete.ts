@@ -49,7 +49,7 @@ const tests = () => describe('create + delete', () => {
   it('should delete the folder', async () => {
     await deleteFolder(testFolderId);
 
-    const result = await runCommand(`storage folder info --folder-id ${testFolderId}`);
+    const result = await runCommand(`storage folder info -f ${testFolderId}`);
     expect(result.error).to.be.not.undefined;
     expect(result.error!.message).to.include('FolderNotFound');
   });

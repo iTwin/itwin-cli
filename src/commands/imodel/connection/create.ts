@@ -78,6 +78,7 @@ export default class CreateConnection extends BaseCommand {
 
     const response = await client.createStorageConnection({
       authenticationType: flags["authentication-type"] as authenticationType,
+      displayName: flags["display-name"],
       iModelId: flags["imodel-id"],
       sourceFiles
     });

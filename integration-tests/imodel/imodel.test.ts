@@ -4,6 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { loginToCli } from "../utils/helpers";
+import connectionTests from './connection';
 import createDeleteTests from "./create-delete";
 import infoTests from "./info";
 import listTests from "./list";
@@ -18,4 +19,5 @@ describe('iModel Integration Tests', () => {
   infoTests();
   updateTests();
   listTests();
+  connectionTests();
 });
