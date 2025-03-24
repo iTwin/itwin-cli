@@ -26,6 +26,7 @@ export default abstract class BaseCommand extends Command {
     json: Flags.boolean({
       char: 'j',
       description: 'Pretty format the JSON command response and suppress all logging.',
+      helpGroup: 'GLOBAL',
       required: false
     }),
     silent: Flags.boolean({
@@ -37,6 +38,7 @@ export default abstract class BaseCommand extends Command {
     table: Flags.boolean({
       char: 't',
       description: 'Output the command response in a human-readable table format.',
+      helpGroup: 'GLOBAL',
       required: false
     }),
   }
