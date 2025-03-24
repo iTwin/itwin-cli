@@ -13,7 +13,7 @@ export async function loginToCli() {
 
 export async function createFile(folderId: string, displayName: string, filePath: string, description?: string) {
     // 1. Create meta data
-    const createResult = await runCommand(`storage file create --folder-id ${folderId} --display-name "${displayName}" --description "${description}"`);
+    const createResult = await runCommand(`storage file create --folder-id ${folderId} --name "${displayName}" --description "${description}"`);
     const createdFile = JSON.parse(createResult.stdout);
 
     expect(createdFile).to.have.property('_links');
@@ -42,7 +42,7 @@ export async function createFile(folderId: string, displayName: string, filePath
 }
 
 export async function createFolder(parentFolderId: string, displayName: string, description?: string) {
-    const result = await runCommand(`storage folder create --parent-folder-id ${parentFolderId} --display-name "${displayName}" --description "${description}"`);
+    const result = await runCommand(`storage folder create --parent-folder-id ${parentFolderId} --name "${displayName}" --description "${description}"`);
     const createdFolder = JSON.parse(result.stdout);
     expect(createdFolder).to.have.property('type', 'folder');
     expect(createdFolder).to.have.property('displayName', displayName);
@@ -51,7 +51,7 @@ export async function createFolder(parentFolderId: string, displayName: string, 
 }
 
 export async function createITwin(displayName: string, classType: string, subClassType: string) {
-    const result = await runCommand(`itwin create --display-name "${displayName}" --class ${classType} --sub-class ${subClassType}`);
+    const result = await runCommand(`itwin create --name "${displayName}" --class ${classType} --sub-class ${subClassType}`);
     const createdITwin = JSON.parse(result.stdout);
     expect(createdITwin).to.have.property('id');
     return createdITwin;

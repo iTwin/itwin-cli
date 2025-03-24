@@ -37,7 +37,7 @@ const tests = () => describe('create + upload + complete + delete', () => {
   });
 
   it('should create a new file meta data', async () => {
-    const { stdout } = await runCommand(`storage file create --folder-id ${testFolderId} --display-name ${displayName} --description "${description}"`);
+    const { stdout } = await runCommand(`storage file create --folder-id ${testFolderId} --name ${displayName} --description "${description}"`);
     const createdFile = JSON.parse(stdout);
 
     expect(createdFile).to.have.property('_links');

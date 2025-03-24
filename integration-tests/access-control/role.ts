@@ -14,7 +14,7 @@ const tests = () => {
 
     before(async () => {
         const iTwinName = `cli-itwin-integration-test-${new Date().toISOString()}`;
-        const iTwin = await runCommand<ITwin>(`itwin create --class Thing --sub-class Asset --display-name ${iTwinName}`);
+        const iTwin = await runCommand<ITwin>(`itwin create --class Thing --sub-class Asset --name ${iTwinName}`);
         expect(iTwin.result?.id).is.not.undefined;
         iTwinId = iTwin.result!.id!;
     });
@@ -28,7 +28,7 @@ const tests = () => {
         const roleName = "Test Role";
         const roleDescription = "Test Role Description";
 
-        const roleCreate = await runCommand<Role>(`access-control role create --itwin-id ${iTwinId} --display-name "${roleName}" --description "${roleDescription}"`);
+        const roleCreate = await runCommand<Role>(`access-control role create --itwin-id ${iTwinId} --name "${roleName}" --description "${roleDescription}"`);
 
         expect(roleCreate.result).is.not.undefined;
         expect(roleCreate.result!.id).is.not.undefined;
@@ -47,7 +47,7 @@ const tests = () => {
         const updatedRoleDescription = "Updated Role Description";
         const permissions = ["administration_invite_member"];
 
-        const roleUpdate = await runCommand<Role>(`access-control role update --itwin-id ${iTwinId} --role-id ${roleCreate.result!.id} --display-name "${updatedRoleName}" --description "${updatedRoleDescription}" --permissions ${permissions.join(",")}`);
+        const roleUpdate = await runCommand<Role>(`access-control role update --itwin-id ${iTwinId} --role-id ${roleCreate.result!.id} --name "${updatedRoleName}" --description "${updatedRoleDescription}" --permissions ${permissions.join(",")}`);
         expect(roleUpdate.result).is.not.undefined;
         expect(roleUpdate.result!.id).is.not.undefined;
         expect(roleUpdate.result!.displayName).to.be.equal(updatedRoleName);
@@ -57,7 +57,7 @@ const tests = () => {
     });
 
     it('Should list roles', async () => {
-        const newRole = await runCommand<Role>(`access-control role create --itwin-id ${iTwinId} --display-name Test2 --description Description2`);
+        const newRole = await runCommand<Role>(`access-control role create --itwin-id ${iTwinId} --name Test2 --description Description2`);
         expect(newRole.result).is.not.undefined;
         expect(newRole.result!.id).is.not.undefined;
         expect(newRole.result!.displayName).to.be.equal("Test2");
@@ -71,7 +71,7 @@ const tests = () => {
     });
 
     it('Should delete role', async () => {
-        const newRole = await runCommand<Role>(`access-control role create --itwin-id ${iTwinId} --display-name Test3 --description Description3`);
+        const newRole = await runCommand<Role>(`access-control role create --itwin-id ${iTwinId} --name Test3 --description Description3`);
         expect(newRole.result).is.not.undefined;
         expect(newRole.result!.id).is.not.undefined;
 

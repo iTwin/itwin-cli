@@ -43,7 +43,7 @@ itp access-control group update --itwin-id your-itwin-id --group-id your-group-i
 
 Step 3: Create a role
 ```bash
-itp access-control role create --itwin-id your-itwin-id --display-name "Project Manager" --description "Role for project managers"
+itp access-control role create --itwin-id your-itwin-id --name "Project Manager" --description "Role for project managers"
 ```
 
 Step 4: Add permissions to the role

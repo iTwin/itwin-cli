@@ -12,8 +12,8 @@ export default class FileCreate extends BaseCommand {
   
     static flags = {
       description: Flags.string({ char: 'd', description: 'A description for the file.', required: false }),
-      "display-name": Flags.string({ char: 'n', description: 'The display name of the file.', required: true }),
       "folder-id": Flags.string({ char: 'f', description: 'The ID of the folder where the file will be created.', required: true }),
+      name: Flags.string({ char: 'n', description: 'The display name of the file.', required: true }),
     };
   
     async run() {
@@ -21,7 +21,7 @@ export default class FileCreate extends BaseCommand {
   
       const client = await this.getStorageApiClient();
   
-      const response = await client.createFile(flags["folder-id"], flags["display-name"], flags.description);
+      const response = await client.createFile(flags["folder-id"], flags.name, flags.description);
   
       return this.logAndReturnResult(response);
     }

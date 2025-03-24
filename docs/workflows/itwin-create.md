@@ -22,7 +22,7 @@ As a user, I want to quickly create an iTwin, even if I don’t have all the det
 
 **Step 1: Create an iTwin with class and subclass**
 ```bash
-itp itwin create --class Thing --sub-class Asset --display-name "New Bridge Project"
+itp itwin create --class Thing --sub-class Asset --name "New Bridge Project"
 ```
 
 **Step 2: Update the iTwin’s geographic location**

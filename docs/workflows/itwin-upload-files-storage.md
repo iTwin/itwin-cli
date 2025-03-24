@@ -41,7 +41,7 @@ As a user, I want to upload construction-related PDFs, like floor plans, to iTwi
 
 **Step 1: Create an iTwin**
 ```bash
-itp itwin create --class Thing --sub-class Asset --display-name "New Infrastructure Project" 
+itp itwin create --class Thing --sub-class Asset --name "New Infrastructure Project" 
 ```
 
 **Step 2: Get the root folder**
@@ -51,12 +51,12 @@ itp storage root-folder --itwin-id your-itwin-id
 
 **Step 3: Create a folder called "floor plans"**
 ```bash
-itp storage folder create --parent-folder-id root-folder-id --display-name "Floor Plans"
+itp storage folder create --parent-folder-id root-folder-id --name "Floor Plans"
 ```
 
 **Step 4: Create the file record**
 ```bash
-itp storage file create --folder-id your-folder-id --display-name floorplan.pdf
+itp storage file create --folder-id your-folder-id --name floorplan.pdf
 ```
 
 **Step 5: Upload the floorplan.pdf**

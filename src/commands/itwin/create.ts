@@ -22,11 +22,6 @@ export default class CreateITwin extends BaseCommand {
         options: ['East US', 'North Europe', 'West Europe', 'Southeast Asia', 'Australia East', 'UK South', 'Canada Central', 'Central India', 'Japan East'],
         required: false,
       }),
-      "display-name": Flags.string({
-        char: 'n',
-        description: "The iTwin's display name.",
-        required: true,
-      }),
       "geographic-location": Flags.string({
         description: 'Optional location, typically an address or city.',
         required: false
@@ -34,6 +29,11 @@ export default class CreateITwin extends BaseCommand {
       "iana-time-zone": Flags.string({
         description: 'Optional IANA time zone ID.',
         required: false,
+      }),
+      name: Flags.string({
+        char: 'n',
+        description: "The iTwin's display name.",
+        required: true,
       }),
       number: Flags.string({
         description: 'Unique identifier for the iTwin. Defaults to iTwin Id if unspecified.',
@@ -65,7 +65,7 @@ export default class CreateITwin extends BaseCommand {
       const iTwin : ITwin = {
         class: flags.class as ITwinClass,
         dataCenterLocation: flags["data-center-location"],
-        displayName: flags["display-name"],
+        displayName: flags.name,
         geographicLocation: flags["geographic-location"],
         ianaTimeZone: flags["iana-time-zone"],
         number: flags.number,
