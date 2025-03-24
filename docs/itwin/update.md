@@ -37,13 +37,13 @@ Update the specified iTwin. Only include properties you want to update.
 
 ```bash
 # Example 1: Updating iTwin's display name
-itp itwin update --itwin-id "b1a2c3d4-5678-90ab-cdef-1234567890ab" --display-name "Updated Portfolio"
+itp itwin update --itwin-id b1a2c3d4-5678-90ab-cdef-1234567890ab --display-name "Updated Portfolio"
 
 # Example 2: Changing geographic location and time zone
-itp itwin update --itwin-id "b1a2c3d4-5678-90ab-cdef-1234567890ab" --geographic-location "New York, NY" --iana-time-zone "America/New_York"
+itp itwin update --itwin-id b1a2c3d4-5678-90ab-cdef-1234567890ab --geographic-location "New York, NY" --iana-time-zone America/New_York
 
 # Example 3: Setting the iTwin's status to 'Inactive'
-itp itwin update --itwin-id "b1a2c3d4-5678-90ab-cdef-1234567890ab" --status "Inactive"
+itp itwin update --itwin-id b1a2c3d4-5678-90ab-cdef-1234567890ab --status Inactive
 ```
 
 ## API Reference

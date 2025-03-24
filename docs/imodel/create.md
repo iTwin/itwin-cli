@@ -34,10 +34,10 @@ Create an empty iModel within a specified iTwin.
 
 ```bash
 # Example 1: Creating an iModel with minimal options
-itp imodel create --itwin-id "ad0ba809-9241-48ad-9eb0-c8038c1a1d51" --name "Basic iModel"
+itp imodel create --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --name "Basic iModel"
 
 # Example 2: Creating an iModel with all options, including extent and description
-itp imodel create --itwin-id "ad0ba809-9241-48ad-9eb0-c8038c1a1d51" --name "Sun City Renewable-energy Plant" --description "Overall model of wind and solar farms in Sun City" --extent '{
+itp imodel create --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --name "Sun City Renewable-energy Plant" --description "Overall model of wind and solar farms in Sun City" --extent '{
   "southWest": {
     "latitude": 46.13267702834806,
     "longitude": 7.672120009938448

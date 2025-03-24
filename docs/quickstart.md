@@ -19,7 +19,7 @@ itp auth login
 An iTwin represents a **digital twin** that organizes models, repositories, and data sources.
 
 ```bash
-itp itwin create --class "Thing" --sub-class "Asset" --display-name "My First iTwin"
+itp itwin create --class Thing --sub-class Asset --display-name "My First iTwin"
 ```
 
 **Expected Outcome:** The command returns an *iTwin ID*, which you’ll use in the next steps.
@@ -31,7 +31,7 @@ itp itwin create --class "Thing" --sub-class "Asset" --display-name "My First iT
 An iModel stores design data and tracks changes over time. To create one, specify the *iTwin ID* from Step 1.
 
 ```bash
-itp imodel create --itwin-id "your-itwin-id" --name "My First iModel"
+itp imodel create --itwin-id your-itwin-id --name "My First iModel"
 ```
 
 **Expected Outcome:** You receive an *iModel ID* for future operations.
@@ -43,7 +43,7 @@ itp imodel create --itwin-id "your-itwin-id" --name "My First iModel"
 Once your iModel is created, synchronize design files into it using the **populate** command.
 
 ```bash
-itp imodel populate --imodel-id "your-imodel-id" --file "file.dgn"
+itp imodel populate --imodel-id your-imodel-id --file file.dgn
 ```
 
 **Expected Outcome:** Your design data is now available on the iTwin Platform. You can navigate to [My iTwins](https://developer.bentley.com/my-itwins/) on the iTwin Developer Portal to visualize it.

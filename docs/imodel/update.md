@@ -33,7 +33,7 @@ Update metadata of an existing iModel.
 ## Examples
 
 ```bash
-itp imodel update --imodel-id "5e19bee0-3aea-4355-a9f0-c6df9989ee7d" --name "Updated Sun City Renewable-energy Plant" --description "Updated overall model of wind and solar farms in Sun City" --extent '{
+itp imodel update --imodel-id 5e19bee0-3aea-4355-a9f0-c6df9989ee7d --name "Updated Sun City Renewable-energy Plant" --description "Updated overall model of wind and solar farms in Sun City" --extent '{
   "southWest": {
     "latitude": 46.13267702834806,
     "longitude": 7.672120009938448

@@ -57,7 +57,7 @@ const tests = () => {
     });
 
     it('Should list roles', async () => {
-        const newRole = await runCommand<Role>(`access-control role create --itwin-id ${iTwinId} --display-name "Test2" --description "Description2"`);
+        const newRole = await runCommand<Role>(`access-control role create --itwin-id ${iTwinId} --display-name Test2 --description Description2`);
         expect(newRole.result).is.not.undefined;
         expect(newRole.result!.id).is.not.undefined;
         expect(newRole.result!.displayName).to.be.equal("Test2");
@@ -71,7 +71,7 @@ const tests = () => {
     });
 
     it('Should delete role', async () => {
-        const newRole = await runCommand<Role>(`access-control role create --itwin-id ${iTwinId} --display-name "Test3" --description "Description3"`);
+        const newRole = await runCommand<Role>(`access-control role create --itwin-id ${iTwinId} --display-name Test3 --description Description3`);
         expect(newRole.result).is.not.undefined;
         expect(newRole.result!.id).is.not.undefined;
 

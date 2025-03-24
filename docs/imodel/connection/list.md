@@ -20,13 +20,13 @@ List all storage connections of a specific iModel.
 
 ```bash
 # Example 1: Listing all connections for an iModel
-itp imodel connection list --imodel-id "ad0ba809-9241-48ad-9eb0-c8038c1a1d51"
+itp imodel connection list --imodel-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51
 
 # Example 2: Listing the first 5 connections for an iModel
-itp imodel connection list --imodel-id "ad0ba809-9241-48ad-9eb0-c8038c1a1d51" --top 5
+itp imodel connection list --imodel-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --top 5
 
 # Example 3: Listing the 5 connections after the first 15 connections are skipped for an iModel
-itp imodel connection list --imodel-id "ad0ba809-9241-48ad-9eb0-c8038c1a1d51" --top 5 --skip 15
+itp imodel connection list --imodel-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --top 5 --skip 15
 
 ```
 

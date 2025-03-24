@@ -60,7 +60,7 @@ const tests = () => describe('update-content', () => {
   });
 
   it('should upload a new file version', async () => {
-    const { stdout } = await runCommand(`storage file upload --upload-url "${uploadUrl}" --file-path "${filePath}"`);
+    const { stdout } = await runCommand(`storage file upload --upload-url "${uploadUrl}" --file-path ${filePath}`);
     const uploadResult = JSON.parse(stdout);
 
     expect(uploadResult).to.have.property('result', 'uploaded');
