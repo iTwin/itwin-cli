@@ -12,7 +12,7 @@ const tests = () => {
 
     before(async () => {
         const iTwinName = `cli-itwin-integration-test-${new Date().toISOString()}`;
-        const iTwin = await runCommand<ITwin>(`itwin create --class Thing --sub-class Asset --display-name ${iTwinName}`);
+        const iTwin = await runCommand<ITwin>(`itwin create --class Thing --sub-class Asset --name ${iTwinName}`);
         expect(iTwin.result?.id).is.not.undefined;
         iTwinId = iTwin.result!.id!;
     });

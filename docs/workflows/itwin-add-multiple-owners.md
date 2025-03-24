@@ -23,7 +23,7 @@ As a user, I want to add multiple owners to an iTwin so that different team memb
 
 Step 1: Create an iTwin
 ```bash
-itp itwin create --class Thing --sub-class Asset --display-name "New Infrastructure Project" 
+itp itwin create --class Thing --sub-class Asset --name "New Infrastructure Project" 
 ```
 
 Step 2: Add owner 1 to the iTwin

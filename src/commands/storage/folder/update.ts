@@ -12,8 +12,8 @@ export default class UpdateFolder extends BaseCommand {
   
     static flags = {
       description: Flags.string({ char: 'd', description: "A description for the folder." }),
-      "display-name": Flags.string({ char: 'n', description: "The new display name for the folder." }),
       "folder-id": Flags.string({ char: 'f', description: "The ID of the folder to be updated.", required: true }),
+      name: Flags.string({ char: 'n', description: "The new display name for the folder." }),
     };
   
     async run() {
@@ -22,7 +22,7 @@ export default class UpdateFolder extends BaseCommand {
       const client = await this.getStorageApiClient();
       const response = await client.updateFolder(flags["folder-id"], {
         description: flags.description,
-        displayName: flags["display-name"],
+        displayName: flags.name,
       });
   
       return this.logAndReturnResult(response.folder);

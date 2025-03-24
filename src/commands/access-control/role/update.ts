@@ -16,15 +16,15 @@ export default class UpdateRole extends BaseCommand {
         description: 'The updated description of the role.',
         required: false,
       }),
-      "display-name": Flags.string({
-        char: 'n',
-        description: 'The updated name of the role.',
-        required: false,
-      }),
       "itwin-id": Flags.string({
         char: 'i',
         description: 'The ID of the iTwin where the role exists.',
         required: true,
+      }),
+      name: Flags.string({
+        char: 'n',
+        description: 'The updated name of the role.',
+        required: false,
       }),
       permissions: Flags.string({
         description: 'A list of permissions to assign to the role.',
@@ -44,7 +44,7 @@ export default class UpdateRole extends BaseCommand {
   
       const response = await client.updateiTwinRole(flags["itwin-id"], flags["role-id"], {
         description: flags.description,
-        displayName: flags["display-name"],
+        displayName: flags.name,
         permissions: flags.permissions,
       });
   

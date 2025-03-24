@@ -42,7 +42,7 @@ const tests = () => describe('update', () => {
   it('should update the file\'s meta data', async () => {
     const updatedDisplayName = 'Updated Display Name';
     const updatedDescription = 'Updated description';
-    const { stdout } = await runCommand(`storage file update --file-id ${testFileId} --display-name "${updatedDisplayName}" --description "${updatedDescription}"`);
+    const { stdout } = await runCommand(`storage file update --file-id ${testFileId} --name "${updatedDisplayName}" --description "${updatedDescription}"`);
     const fileInfo = JSON.parse(stdout);
 
     expect(fileInfo).to.have.property('id', testFileId);

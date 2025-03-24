@@ -175,7 +175,7 @@ export default class PopulateIModel extends BaseCommand {
   }
 
   private async createNewFile(rootFolderId: string, fileName: string, filePath: string): Promise<string> {
-    const newFile = await this.runCommand<fileUpload>('storage:file:create', ['--folder-id', rootFolderId, '--display-name', fileName]);
+    const newFile = await this.runCommand<fileUpload>('storage:file:create', ['--folder-id', rootFolderId, '--name', fileName]);
     if (newFile._links?.uploadUrl?.href === undefined || newFile._links?.completeUrl?.href === undefined) {
       this.error('No upload url was provided when creating a file');
     }
@@ -191,7 +191,7 @@ export default class PopulateIModel extends BaseCommand {
       const authType = authInfo.authorizationType === 'Service' ? 'Service' : 'User';
 
       this.log(`Creating new default connection`);
-      defaultConnection = await this.runCommand<StorageConnection>('imodel:connection:create', ['--imodel-id', iModelId, '--connector-type', fileIds[0].connectorType, '--file-id', fileIds[0].fileId, '--authentication-type', authType, '--display-name', 'Default iTwinCLI Connection']);
+      defaultConnection = await this.runCommand<StorageConnection>('imodel:connection:create', ['--imodel-id', iModelId, '--connector-type', fileIds[0].connectorType, '--file-id', fileIds[0].fileId, '--authentication-type', authType, '--name', 'Default iTwinCLI Connection']);
       if (defaultConnection?.id === undefined) {
         this.error("Storage connection id was not present");
       }

@@ -12,11 +12,6 @@ export default class ListITwins extends BaseCommand {
     static description = 'List of iTwins';
   
     static flags = {
-      "display-name": Flags.string({
-        char: 'n',
-        description: 'Find iTwins with the exact display name specified.',
-        required: false,
-      }),
       "include-inactive": Flags.boolean({
         description: 'Include Inactive iTwins in the result.',
         required: false
@@ -24,6 +19,11 @@ export default class ListITwins extends BaseCommand {
       "itwin-account-id": Flags.string({
         description: 'Filter by the iTwin Account ID.',
         required: false
+      }),
+      name: Flags.string({
+        char: 'n',
+        description: 'Find iTwins with the exact display name specified.',
+        required: false,
       }),
       number: Flags.string({
         description: 'Find iTwins with the exact number specified.',
@@ -68,7 +68,7 @@ export default class ListITwins extends BaseCommand {
       const client = this.getITwinAccessClient();
   
       const response = await client.queryAsync(accessToken, undefined, {
-        displayName: flags["display-name"],
+        displayName: flags.name,
         iTwinAccountId: flags["itwin-account-id"],
         includeInactive: flags["include-inactive"],
         number: flags.number,

@@ -36,7 +36,7 @@ const tests = () => describe('update', () => {
     const updatedDisplayName = 'UpdatedIntegrationTestFolder';
     const updatedDescription = 'Updated test description';
 
-    const { stdout } = await runCommand(`storage folder update --folder-id ${testFolderId} --display-name ${updatedDisplayName} --description "${updatedDescription}"`);
+    const { stdout } = await runCommand(`storage folder update --folder-id ${testFolderId} --name ${updatedDisplayName} --description "${updatedDescription}"`);
     const updatedFolder = JSON.parse(stdout);
 
     expect(updatedFolder).to.have.property('id', testFolderId);
