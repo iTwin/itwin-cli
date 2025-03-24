@@ -4,7 +4,7 @@ Delete a specified repository from an iTwin.
 
 ## Options
 
-- **`--itwin-id`**  
+- **`-i, --itwin-id`**  
   The ID of the iTwin that the repository belongs to.  
   **Type:** `string` **Required:** Yes
 

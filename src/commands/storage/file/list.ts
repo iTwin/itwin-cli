@@ -11,7 +11,7 @@ export default class ListFiles extends BaseCommand {
     static description = "List files in a folder of an iTwin's storage. Optionally, include subfolders in the result.";
   
     static flags = {
-      "folder-id": Flags.string({ description: "The ID of the folder whose files you want to list.", required: true }),
+      "folder-id": Flags.string({ char: 'f', description: "The ID of the folder whose files you want to list.", required: true }),
       "include-folders": Flags.boolean({ description: "Whether to include subfolders in the result." }),
     };
   

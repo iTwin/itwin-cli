@@ -4,7 +4,7 @@ Synchronize design files into an iModel.
 
 ## Options
 
-- **`--imodel-id`**  
+- **`-m, --imodel-id`**  
   The ID of the iModel to populate.  
   **Type:** `string` **Required:** Yes
 

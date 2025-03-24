@@ -4,7 +4,7 @@ Retrieve metadata for a specific folder in an iTwin's storage.
 
 ## Options
 
-- **`--folder-id`**  
+- **`-f, --folder-id`**  
   The ID of the folder to retrieve information about.  
   **Type:** `string` **Required:** Yes
 

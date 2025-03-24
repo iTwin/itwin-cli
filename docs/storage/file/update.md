@@ -4,15 +4,15 @@ Update the metadata of a file in an iTwin's storage, such as display name or des
 
 ## Options
 
-- **`--file-id`**  
+- **`-f, --file-id`**  
   The ID of the file to be updated.  
   **Type:** `string` **Required:** Yes
 
-- **`--display-name`**  
+- **`-n, --display-name`**  
   The new display name for the file.  
   **Type:** `string` **Required:** No
 
-- **`--description`**  
+- **`-d, --description`**  
   A description for the file.  
   **Type:** `string` **Required:** No
 

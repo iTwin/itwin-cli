@@ -37,7 +37,7 @@ const tests = () => {
     });
 
     it('Should add new member to an iTwin and update the role', async () => {
-        const newRole = await runCommand<Role>(`access-control role create --itwin-id ${iTwinId} --display-name "Test Role" --description "Test Role Description"`);
+        const newRole = await runCommand<Role>(`access-control role create -i ${iTwinId} -n "Test Role" -d "Test Role Description"`);
         expect(newRole.result).is.not.undefined;
         expect(newRole.result!.id).is.not.undefined;
 

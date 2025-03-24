@@ -4,7 +4,7 @@ Add one or more groups as members to an iTwin.
 
 ## Options
 
-- **`--itwin-id`**  
+- **`-i, --itwin-id`**  
   The ID of the iTwin to which the groups will be added.  
   **Type:** `string` **Required:** Yes
 

@@ -4,7 +4,7 @@ Retrieve details about a specific changeset of an iModel.
 
 ## Options
 
-- **`--imodel-id`**  
+- **`-m, --imodel-id`**  
   The ID of the iModel whose changeset you want to retrieve.  
   **Type:** `string` **Required:** Yes
 

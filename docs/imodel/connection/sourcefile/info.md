@@ -4,7 +4,7 @@ Retrieve details about a specific source file in a storage connection of an iMod
 
 ## Options
 
-- **`--connection-id`**  
+- **`-c, --connection-id`**  
   The ID of the storage connection.  
   **Type:** `string` **Required:** Yes
 

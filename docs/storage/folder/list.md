@@ -4,7 +4,7 @@ List folders in a parent folder of an iTwin's storage. Optionally, include files
 
 ## Options
 
-- **`--folder-id`**  
+- **`-f, --folder-id`**  
   The ID of the parent folder whose contents you want to list.  
   **Type:** `string` **Required:** Yes
 

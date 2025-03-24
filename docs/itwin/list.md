@@ -22,7 +22,7 @@ List all iTwins the calling user is a member of.
   Find iTwins with the exact number specified.  
   **Type:** `string` **Required:** No
 
-- **`--display-name`**  
+- **`-n, --display-name`**  
   Find iTwins with the exact display name specified.  
   **Type:** `string` **Required:** No
 

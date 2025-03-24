@@ -4,7 +4,7 @@ Retrieve the top-level folders and files in an iTwin's storage.
 
 ## Options
 
-- **`--itwin-id`**  
+- **`-i, --itwin-id`**  
   The ID of the iTwin whose top-level folders and files you want to retrieve.  
   **Type:** `string` **Required:** Yes
 

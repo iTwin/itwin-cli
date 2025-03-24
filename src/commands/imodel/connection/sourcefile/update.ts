@@ -13,6 +13,7 @@ export default class ConnectionSourceFileUpdate extends BaseCommand {
   
     static flags = {
       "connection-id": Flags.string({
+        char: 'c',
         description: 'The ID of the storage connection.',
         required: true,
       }),

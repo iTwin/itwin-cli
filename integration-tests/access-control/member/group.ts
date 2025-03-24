@@ -25,7 +25,7 @@ const tests = () => {
         expect(group.result?.id).is.not.undefined;
         groupId = group.result!.id!;
 
-        const role = await runCommand<Role>(`access-control role create --itwin-id ${iTwinId} --display-name "Test Role" --description "Test Role Description"`);
+        const role = await runCommand<Role>(`access-control role create -i ${iTwinId} -n "Test Role" -d "Test Role Description"`);
         expect(role.result?.id).is.not.undefined;
         roleId = role.result!.id!;
     });
@@ -57,7 +57,7 @@ const tests = () => {
         expect(resultInfo.result!.id).is.not.undefined;
         expect(resultInfo.result!.id).to.be.equal(groupId);
 
-        const additionalRole = await runCommand<Role>(`access-control role create --itwin-id ${iTwinId} --display-name "One More Test Role" --description "One More Test Role Description"`);
+        const additionalRole = await runCommand<Role>(`access-control role create -i ${iTwinId} -n "One More Test Role" -d "One More Test Role Description"`);
         expect(additionalRole.result).is.not.undefined;
         expect(additionalRole.result!.id).is.not.undefined;
 

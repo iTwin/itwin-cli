@@ -41,15 +41,18 @@ export default class CreateConnection extends BaseCommand {
       required: true
     }),
     "display-name": Flags.string({
+      char: 'n',
       description: 'The display name of the storage connection.',
       required: false,
     }),
-    "file-id": Flags.string({ 
+    "file-id": Flags.string({
+      char: 'f', 
       description: 'The ID of the storage file to synchronize', 
       multiple: true,
       required: true
     }),
-    "imodel-id": Flags.string({ 
+    "imodel-id": Flags.string({
+      char: 'm', 
       description: 'The ID of the iModel.', 
       required: true 
     }),
@@ -75,6 +78,7 @@ export default class CreateConnection extends BaseCommand {
 
     const response = await client.createStorageConnection({
       authenticationType: flags["authentication-type"] as authenticationType,
+      displayName: flags["display-name"],
       iModelId: flags["imodel-id"],
       sourceFiles
     });

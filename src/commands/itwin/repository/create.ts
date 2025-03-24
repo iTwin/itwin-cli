@@ -18,6 +18,7 @@ export default class CreateRepository extends BaseCommand {
         required: true,
       }),
       "itwin-id": Flags.string({
+        char: 'i',
         description: 'The ID of the iTwin to which the repository belongs.',
         required: true,
       }),

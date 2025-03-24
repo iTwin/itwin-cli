@@ -4,7 +4,7 @@ Delete the specified iTwin.
 
 ## Options
 
-- **`--itwin-id`**  
+- **`-i, --itwin-id`**  
   The ID of the iTwin to be deleted.  
   **Type:** `string` **Required:** Yes
 

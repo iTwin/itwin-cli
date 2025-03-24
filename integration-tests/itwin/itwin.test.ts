@@ -7,6 +7,7 @@ import { loginToCli } from "../utils/helpers";
 import createDeleteTests from "./create-delete";
 import infoTests from "./info";
 import listTests from "./list";
+import repositoryTests from "./repository"
 import updateTests from "./update";
 
 describe('iTwin Integration Tests', () => {
@@ -18,4 +19,5 @@ describe('iTwin Integration Tests', () => {
   infoTests();
   updateTests();
   listTests();
+  repositoryTests();
 });

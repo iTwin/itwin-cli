@@ -4,11 +4,11 @@ Disable change tracking for a specified iModel.
 
 ## Options
 
-- **`--itwin-id`**  
+- **`-i, --itwin-id`**  
   The ID of the iTwin associated with the iModel.  
   **Type:** `string` **Required:** Yes
 
-- **`--imodel-id`**  
+- **`-m, --imodel-id`**  
   The ID of the iModel where change tracking should be disabled.  
   **Type:** `string` **Required:** Yes
 

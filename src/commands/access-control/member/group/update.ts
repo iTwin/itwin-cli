@@ -12,10 +12,12 @@ export default class UpdateGroupMember extends BaseCommand {
   
     static flags = {
       "group-id": Flags.string({
+        char: 'g',
         description: 'The ID of the group whose roles will be updated.',
         required: true,
       }),
       "itwin-id": Flags.string({
+        char: 'i',
         description: 'The ID of the iTwin to which the groups will be added.',
         required: true,
       }),

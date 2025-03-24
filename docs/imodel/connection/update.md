@@ -4,11 +4,11 @@ Update an existing storage connection of an iModel.
 
 ## Options
 
-- **`--connection-id`**  
+- **`-c, --connection-id`**  
   The ID of the storage connection to update.  
   **Type:** `string` **Required:** Yes
 
-- **`--display-name`**  
+- **`-n, --display-name`**  
   The new display name for the storage connection.  
   **Type:** `string` **Required:** No
 

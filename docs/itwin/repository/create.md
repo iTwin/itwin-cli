@@ -4,7 +4,7 @@ Create a new repository URI for iTwin data.
 
 ## Options
 
-- **`--itwin-id`**  
+- **`-i, --itwin-id`**  
   The ID of the iTwin to which the repository belongs.  
   **Type:** `string` **Required:** Yes
 

@@ -4,7 +4,7 @@ List all named versions for a specific iModel.
 
 ## Options
 
-- **`--imodel-id`**  
+- **`-m, --imodel-id`**  
   The ID of the iModel whose named versions you want to list.  
   **Type:** `string` **Required:** Yes
 
@@ -24,7 +24,7 @@ List all named versions for a specific iModel.
   Search named versions by name or description.  
   **Type:** `string` **Required:** No
 
-- **`--name`**  
+- **`-n, --name`**  
   Filter named versions by exact name.  
   **Type:** `string` **Required:** No
 

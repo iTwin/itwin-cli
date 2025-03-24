@@ -4,7 +4,7 @@ Retrieve a list of iModels belonging to the specified iTwin.
 
 ## Options
 
-- **`--itwin-id`**  
+- **`-i, --itwin-id`**  
   The ID of the iTwin to list iModels for.  
   **Type:** `string` **Required:** Yes
 
@@ -24,7 +24,7 @@ Retrieve a list of iModels belonging to the specified iTwin.
   Filter iModels by a string in their name or description.  
   **Type:** `string` **Required:** No
 
-- **`--name`**  
+- **`-n, --name`**  
   Filter iModels by their exact name.  
   **Type:** `string` **Required:** No
 

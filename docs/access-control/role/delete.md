@@ -4,7 +4,7 @@ Delete an existing role from an iTwin.
 
 ## Options
 
-- **`--itwin-id`**  
+- **`-i, --itwin-id`**  
   The ID of the iTwin where the role exists.  
   **Type:** `string` **Required:** Yes
 
