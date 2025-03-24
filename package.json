@@ -1,7 +1,7 @@
 {
   "name": "itp",
   "description": "Work seamlessly with the iTwin Platform",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "Bentley systems, Incorporated",
   "bin": {
     "itp": "./bin/run.js"
@@ -21,7 +21,8 @@
     "dotenv": "^16.4.5",
     "fs-extra": "^8.1.0",
     "jwt-decode": "^4.0.0",
-    "open": "^10.1.0"
+    "open": "^10.1.0",
+    "pako": "^2.1.0"
   },
   "devDependencies": {
     "@oclif/prettier-config": "^0.2.1",
@@ -29,6 +30,7 @@
     "@types/chai": "^4",
     "@types/mocha": "^10",
     "@types/node": "^18.19.64",
+    "@types/pako": "^2.0.3",
     "chai": "^4",
     "eslint": "^8",
     "eslint-config-oclif": "^5",
