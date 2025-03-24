@@ -22,7 +22,7 @@ export default class UpdateStorageConnection extends BaseCommand {
         description: 'The ID of the storage connection to update.',
         required: true,
       }),
-      "display-name": Flags.string({
+      name: Flags.string({
         char: 'n',
         description: 'The new display name for the storage connection.',
         required: false,
@@ -36,7 +36,7 @@ export default class UpdateStorageConnection extends BaseCommand {
   
       const response = await client.updateStorageConnection(flags["connection-id"], {
         authenticationType: flags["authentication-type"] as authenticationType,
-        displayName: flags["display-name"],
+        displayName: flags.name,
       });
   
       return this.logAndReturnResult(response.connection);

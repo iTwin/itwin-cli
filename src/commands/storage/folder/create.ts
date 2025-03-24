@@ -12,7 +12,7 @@ export default class CreateFolder extends BaseCommand {
   
     static flags = {
       description: Flags.string({ char: 'd', description: "A description of the folder." }),
-      "display-name": Flags.string({ char: 'n', description: "The display name of the folder to be created.", required: true }),
+      name: Flags.string({ char: 'n', description: "The display name of the folder to be created.", required: true }),
       "parent-folder-id": Flags.string({ description: "The ID of the parent folder where the new folder will be created.", required: true }),
     };
   
@@ -22,7 +22,7 @@ export default class CreateFolder extends BaseCommand {
       const client = await this.getStorageApiClient();
       const response = await client.createFolder(flags["parent-folder-id"], {
         description: flags.description,
-        displayName: flags["display-name"],
+        displayName: flags.name,
       });
   
       return this.logAndReturnResult(response.folder);

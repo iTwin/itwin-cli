@@ -12,7 +12,7 @@ Update the details of an existing role in an iTwin.
   The ID of the role to be updated.  
   **Type:** `string` **Required:** Yes
 
-- **`-n, --display-name`**  
+- **`-n, --name`**  
   The updated name of the role.  
   **Type:** `string` **Required:** No
 
@@ -28,10 +28,10 @@ Update the details of an existing role in an iTwin.
 
 ```bash
 # Example 1: Update role name and description
-itp access-control role update --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --role-id role1-id --display-name "Lead Engineer" --description "Oversees engineering tasks"
+itp access-control role update --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --role-id role1-id --name "Lead Engineer" --description "Oversees engineering tasks"
 
 # Example 2: Update role permissions along with the name
-itp access-control role update --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --role-id role1-id --display-name "Admin Role" --permissions Permission1 --permissions Permission2 --permissions Permission3
+itp access-control role update --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --role-id role1-id --name "Admin Role" --permissions Permission1 --permissions Permission2 --permissions Permission3
 ```
 
 ## API Reference

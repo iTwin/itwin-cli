@@ -22,7 +22,7 @@ List all iTwins the calling user is a member of.
   Find iTwins with the exact number specified.  
   **Type:** `string` **Required:** No
 
-- **`-n, --display-name`**  
+- **`-n, --name`**  
   Find iTwins with the exact display name specified.  
   **Type:** `string` **Required:** No
 
@@ -63,7 +63,7 @@ itp itwin list --sub-class Project --status Active
 itp itwin list --sub-class Program --type Luxury --top 10
 
 # Example 4: Searching by display name and including inactive iTwins
-itp itwin list --sub-class Asset --display-name "Solar Farm" --include-inactive true
+itp itwin list --sub-class Asset --name "Solar Farm" --include-inactive true
 
 # Example 5: Filtering by parent iTwin ID and skipping the first 5 results
 itp itwin list --sub-class WorkPackage --parent-id b1a2c3d4-5678-90ab-cdef-1234567890ab --skip 5

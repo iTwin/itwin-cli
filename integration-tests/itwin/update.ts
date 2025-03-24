@@ -25,7 +25,7 @@ const tests = () => describe('update', () => {
 
   it('should update the iTwin', async () => {
     const updatedDisplayName = 'UpdatedIntegrationTestITwin';
-    const { stdout } = await runCommand(`itwin update --itwin-id ${testITwinId} --display-name ${updatedDisplayName}`);
+    const { stdout } = await runCommand(`itwin update --itwin-id ${testITwinId} --name ${updatedDisplayName}`);
     const updatedITwin = JSON.parse(stdout);
 
     expect(updatedITwin).to.have.property('id', testITwinId);

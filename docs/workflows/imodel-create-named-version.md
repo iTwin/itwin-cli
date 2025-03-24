@@ -32,12 +32,12 @@ As a user, I want to create a named version of an iModel at a specific changeset
 
 **Step 1: Create an iTwin**
 ```bash
-itp itwin create --class Thing --sub-class Asset --display-name "New Infrastructure Project" 
+itp itwin create --class Thing --sub-class Asset --name "New Infrastructure Project" 
 ```
 
 **Step 2: Create an iModel**
 ```bash
-itp imodel create --itwin-id your-itwin-id --display-name "Building Design" --description "iModel for named versions"
+itp imodel create --itwin-id your-itwin-id --name "Building Design" --description "iModel for named versions"
 ```
 
 **Step 3: Populate the iModel with design data (first round)**

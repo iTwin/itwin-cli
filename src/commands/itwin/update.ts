@@ -12,11 +12,6 @@ export default class UpdateCommand extends BaseCommand {
     static description = 'Update an iTwin';
   
     static flags = {
-      "display-name": Flags.string({
-        char: 'n',
-        description: "The iTwin's display name.",
-        required: false,
-      }),
       "geographic-location": Flags.string({
         description: 'Optional location, typically an address or city.',
         required: false
@@ -29,6 +24,11 @@ export default class UpdateCommand extends BaseCommand {
         char: 'i',
         description: 'The ID of the iTwin to be updated.',
         required: true,
+      }),
+      name: Flags.string({
+        char: 'n',
+        description: "The iTwin's display name.",
+        required: false,
       }),
       number: Flags.string({
         description: 'Unique identifier for the iTwin.',
@@ -49,7 +49,7 @@ export default class UpdateCommand extends BaseCommand {
       const { flags } = await this.parse(UpdateCommand);
   
       const iTwinUpdate : ITwin = {
-        displayName: flags["display-name"],
+        displayName: flags.name,
         geographicLocation: flags["geographic-location"],
         ianaTimeZone: flags["iana-time-zone"],
         number: flags.number,

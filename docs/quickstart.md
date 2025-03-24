@@ -19,7 +19,7 @@ itp auth login
 An iTwin represents a **digital twin** that organizes models, repositories, and data sources.
 
 ```bash
-itp itwin create --class Thing --sub-class Asset --display-name "My First iTwin"
+itp itwin create --class Thing --sub-class Asset --name "My First iTwin"
 ```
 
 **Expected Outcome:** The command returns an *iTwin ID*, which you’ll use in the next steps.

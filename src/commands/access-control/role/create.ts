@@ -16,14 +16,14 @@ export default class CreateRole extends BaseCommand {
         description: 'A description of your Role.',
         required: true,
       }),
-      "display-name": Flags.string({
-        char: 'n',
-        description: 'The display name of your Role.',
-        required: true,
-      }),
       "itwin-id": Flags.string({
         char: 'i',
         description: 'The ID of the iTwin to retrieve permissions.',
+        required: true,
+      }),
+      name: Flags.string({
+        char: 'n',
+        description: 'The display name of your Role.',
         required: true,
       }),
     };
@@ -35,7 +35,7 @@ export default class CreateRole extends BaseCommand {
   
       const response = await client.createiTwinRole(flags["itwin-id"], {
         description: flags.description,
-        displayName: flags["display-name"],
+        displayName: flags.name,
       });
   
       return this.logAndReturnResult(response.role);
