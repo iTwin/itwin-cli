@@ -72,7 +72,8 @@
       "hello": {
         "description": "Say hello to the world and others"
       }
-    }
+    },
+    "additionalHelpFlags": ["-h"]
   },
   "repository": "iTwin/itwin-cli",
   "scripts": {

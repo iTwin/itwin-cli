@@ -10,6 +10,10 @@ These options are available across all commands in the CLI.
   Pretty format the JSON command response and supress all logging.
   **Type:** `flag` **Required:** No
 
+- **`-h, --help`**  
+  Show iTwin CLI help.
+  **Type:** `flag` **Required:** No
+
 ## Examples
 
 ```bash
