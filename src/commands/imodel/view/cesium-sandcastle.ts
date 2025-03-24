@@ -19,7 +19,8 @@ export default class CesiumSandcastle extends BaseCommand {
         required: true
       }),
       "imodel-id": Flags.string({ 
-        description: "iModel id to be viewed in Cesium Sandcastle.", 
+        char: "m", 
+        description: "iModel id to be viewed in Cesium Sandcastle.",
         required: true
       }),
       "open": Flags.boolean({
