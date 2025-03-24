@@ -4,7 +4,7 @@ List all user members of an iTwin.
 
 ## Options
 
-- **`--itwin-id`**  
+- **`-i, --itwin-id`**  
   The ID of the iTwin whose user members you want to list.  
   **Type:** `string` **Required:** Yes
 

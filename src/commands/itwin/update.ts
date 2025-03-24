@@ -13,6 +13,7 @@ export default class UpdateCommand extends BaseCommand {
   
     static flags = {
       "display-name": Flags.string({
+        char: 'n',
         description: "The iTwin's display name.",
         required: false,
       }),
@@ -25,6 +26,7 @@ export default class UpdateCommand extends BaseCommand {
         required: false,
       }),
       "itwin-id": Flags.string({
+        char: 'i',
         description: 'The ID of the iTwin to be updated.',
         required: true,
       }),

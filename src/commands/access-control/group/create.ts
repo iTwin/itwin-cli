@@ -12,14 +12,17 @@ export default class CreateAccessControlGroup extends BaseCommand {
   
     static flags = {
       description: Flags.string({
+        char: 'd',
         description: 'A description of the group.',
         required: true,
       }),
       "itwin-id": Flags.string({
+        char: 'i',
         description: 'The ID of the iTwin where the group is being created.',
         required: true,
       }),
       name: Flags.string({
+        char: 'n',
         description: 'The name of the group to be created.',
         required: true,
       }),

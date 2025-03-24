@@ -4,7 +4,7 @@ Delete a storage connection of an iModel.
 
 ## Options
 
-- **`--connection-id`**  
+- **`-c, --connection-id`**  
   The ID of the storage connection to delete.  
   **Type:** `string` **Required:** Yes
 

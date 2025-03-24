@@ -12,6 +12,7 @@ export default class ListOwners extends BaseCommand {
   
     static flags = {
       "itwin-id": Flags.string({
+        char: 'i',
         description: 'The ID of the iTwin whose owners you want to list.',
         required: true,
       }),

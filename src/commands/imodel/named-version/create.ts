@@ -16,14 +16,17 @@ export default class CreateNamedVersion extends BaseCommand {
         required: false,
       }),
       description: Flags.string({
+        char: 'd',
         description: 'A description for the named version.',
         required: false,
       }),
       "imodel-id": Flags.string({
+        char: 'm',
         description: 'The ID of the iModel where the named version will be created.',
         required: true,
       }),
       name: Flags.string({
+        char: 'n',
         description: 'The name of the new named version.',
         required: true,
       }),

@@ -18,10 +18,12 @@ export default class UpdateStorageConnection extends BaseCommand {
         required: false,
       }),
       "connection-id": Flags.string({
+        char: 'c',
         description: 'The ID of the storage connection to update.',
         required: true,
       }),
       "display-name": Flags.string({
+        char: 'n',
         description: 'The new display name for the storage connection.',
         required: false,
       }),

@@ -11,7 +11,7 @@ export default class FolderInfo extends BaseCommand {
     static description = "Retrieve metadata for a specific folder in an iTwin's storage.";
   
     static flags = {
-      "folder-id": Flags.string({ description: "The ID of the folder to retrieve information about.", required: true }),
+      "folder-id": Flags.string({ char: 'f', description: "The ID of the folder to retrieve information about.", required: true }),
     };
   
     async run() {

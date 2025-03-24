@@ -16,6 +16,7 @@ export default class ChangesetInfo extends BaseCommand {
         required: true,
       }),
       "imodel-id": Flags.string({
+        char: 'm',
         description: 'The ID of the iModel whose changeset you want to retrieve.',
         required: true,
       }),

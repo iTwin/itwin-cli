@@ -4,7 +4,7 @@ Retrieve metadata for a specific file in an iTwin's storage.
 
 ## Options
 
-- **`--file-id`**  
+- **`-f, --file-id`**  
   The ID of the file to retrieve information about.  
   **Type:** `string` **Required:** Yes
 

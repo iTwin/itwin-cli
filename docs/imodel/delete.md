@@ -4,7 +4,7 @@ Delete an existing iModel.
 
 ## Options
 
-- **`--imodel-id`**  
+- **`-m, --imodel-id`**  
   The ID of the iModel to delete.  
   **Type:** `string` **Required:** Yes
 

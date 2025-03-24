@@ -4,7 +4,7 @@ List files in a folder of an iTwin's storage. Optionally, include subfolders in 
 
 ## Options
 
-- **`--folder-id`**  
+- **`-f, --folder-id`**  
   The ID of the folder whose files you want to list.  
   **Type:** `string` **Required:** Yes
 

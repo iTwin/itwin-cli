@@ -39,7 +39,7 @@ const tests = () => describe('enable + disable + info', () => {
     const disableResponse = await runCommand<resultResponse>(`changed-elements disable --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
     expect(disableResponse.result?.result).equals('disabled');    
     
-    const infoResponse = await runCommand<trackingResponse>(`changed-elements info --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
+    const infoResponse = await runCommand<trackingResponse>(`changed-elements info -m ${testIModelId} -i ${testITwinId}`);
     expect(infoResponse.result?.enabled).to.be.false;
   });
 });

@@ -4,7 +4,7 @@ Delete a file from an iTwin's storage.
 
 ## Options
 
-- **`--file-id`**  
+- **`-f, --file-id`**  
   The ID of the file to be deleted.  
   **Type:** `string` **Required:** Yes
 

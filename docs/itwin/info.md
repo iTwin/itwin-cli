@@ -4,7 +4,7 @@ Retrieve metadata for the specified iTwin.
 
 ## Options
 
-- **`--itwin-id`**  
+- **`-i, --itwin-id`**  
   The ID of the iTwin to retrieve information about.  
   **Type:** `string` **Required:** Yes
 

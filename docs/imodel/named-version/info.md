@@ -4,7 +4,7 @@ Retrieve details about a specific named version in an iModel.
 
 ## Options
 
-- **`--imodel-id`**  
+- **`-m, --imodel-id`**  
   The ID of the iModel whose named version you want to retrieve.  
   **Type:** `string` **Required:** Yes
 

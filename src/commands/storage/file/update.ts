@@ -11,9 +11,9 @@ export default class UpdateCommand extends BaseCommand {
     static description = "Update the metadata of a file in an iTwin's storage, such as display name or description.";
   
     static flags = {
-      description: Flags.string({ description: "A description for the file." }),
-      "display-name": Flags.string({ description: "The new display name for the file." }),
-      "file-id": Flags.string({ description: "The ID of the file to be updated.", required: true }),
+      description: Flags.string({ char: 'd', description: "A description for the file." }),
+      "display-name": Flags.string({ char: 'n', description: "The new display name for the file." }),
+      "file-id": Flags.string({ char: 'f', description: "The ID of the file to be updated.", required: true }),
     };
   
     async run() {

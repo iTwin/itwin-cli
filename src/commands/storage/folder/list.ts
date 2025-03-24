@@ -11,7 +11,7 @@ export default class ListFolders extends BaseCommand {
     static description = "List folders in a parent folder of an iTwin's storage. Optionally, include files in the result.";
   
     static flags = {
-      "folder-id": Flags.string({ description: "The ID of the parent folder whose contents you want to list.", required: true }),
+      "folder-id": Flags.string({ char: 'f', description: "The ID of the parent folder whose contents you want to list.", required: true }),
       "include-files": Flags.boolean({ description: "Whether to include files in the result." }),
     };
   

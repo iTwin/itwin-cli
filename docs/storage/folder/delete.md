@@ -4,7 +4,7 @@ Delete a folder from an iTwin's storage.
 
 ## Options
 
-- **`--folder-id`**  
+- **`-f, --folder-id`**  
   The ID of the folder to be deleted.  
   **Type:** `string` **Required:** Yes
 

@@ -23,6 +23,7 @@ export default class CreateITwin extends BaseCommand {
         required: false,
       }),
       "display-name": Flags.string({
+        char: 'n',
         description: "The iTwin's display name.",
         required: true,
       }),

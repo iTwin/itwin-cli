@@ -17,7 +17,7 @@ Create a new iTwin with specified properties.
   - For **`Endeavor`**: `"Project"`, `"Program"`, `"WorkPackage"`  
   - For **`Account`**: `"Account"`
 
-- **`--display-name`**  
+- **`-n, --display-name`**  
   The iTwin's display name.  
   **Type:** `string` **Required:** Yes
 

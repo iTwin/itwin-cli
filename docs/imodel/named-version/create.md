@@ -4,11 +4,11 @@ Create a new named version for iModel.
 
 ## Options
 
-- **`--imodel-id`**  
+- **`-m, --imodel-id`**  
   The ID of the iModel where the named version will be created.  
   **Type:** `string` **Required:** Yes
 
-- **`--name`**  
+- **`-n, --name`**  
   The name of the new named version.  
   **Type:** `string` **Required:** Yes
 
@@ -16,7 +16,7 @@ Create a new named version for iModel.
   The ID of the changeset for the named version. Defaults to the latest changeset if not specified.  
   **Type:** `string` **Required:** No
 
-- **`--description`**  
+- **`-d, --description`**  
   A description for the named version.  
   **Type:** `string` **Required:** No
 

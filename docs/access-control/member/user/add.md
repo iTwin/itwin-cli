@@ -4,7 +4,7 @@ Add one or more user members to an iTwin.
 
 ## Options
 
-- **`--itwin-id`**  
+- **`-i, --itwin-id`**  
   The ID of the iTwin to which the users will be added.  
   **Type:** `string` **Required:** Yes
 

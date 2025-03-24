@@ -4,7 +4,7 @@ Retrieve metadata of an iModel.
 
 ## Options
 
-- **`--imodel-id`**  
+- **`-m, --imodel-id`**  
   The ID of the iModel to retrieve information for.  
   **Type:** `string` **Required:** Yes
 

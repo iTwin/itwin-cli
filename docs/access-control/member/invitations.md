@@ -4,7 +4,7 @@ Retrieve the list of pending invitations for an iTwin's members.
 
 ## Options
 
-- **`--itwin-id`**  
+- **`-i, --itwin-id`**  
   The ID of the iTwin whose member invitations you want to retrieve.  
   **Type:** `string` **Required:** Yes
 

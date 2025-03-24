@@ -2,11 +2,11 @@
 
 These options are available across all commands in the CLI.
 
-- **`--table`**  
+- **`-t, --table`**  
   Output the command response in a human-readable table format.  
   **Type:** `flag` **Required:** No
 
-- **`--json`**  
+- **`-j, --json`**  
   Pretty format the JSON command response and supress all logging.
   **Type:** `flag` **Required:** No
 

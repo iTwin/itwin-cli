@@ -4,11 +4,11 @@ Compare changes between two changesets in an iModel.
 
 ## Options
 
-- **`--itwin-id`**  
+- **`-i, --itwin-id`**  
   The ID of the iTwin associated with the iModel.  
   **Type:** `string` **Required:** Yes
 
-- **`--imodel-id`**  
+- **`-m, --imodel-id`**  
   The ID of the iModel to compare changesets for.  
   **Type:** `string` **Required:** Yes
 

@@ -11,7 +11,7 @@ export default class FileUpdateComplete extends BaseCommand {
     static description = 'Complete update of a file.';
   
     static flags = {
-      "file-id": Flags.string({ description: 'The file id.', required: true }),
+      "file-id": Flags.string({ char: 'f', description: 'The file id.', required: true }),
     };
   
     async run() {

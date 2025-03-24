@@ -4,7 +4,7 @@ Remove a source file from a storage connection of an iModel.
 
 ## Options
 
-- **`--connection-id`**  
+- **`-c, --connection-id`**  
   The ID of the storage connection.  
   **Type:** `string` **Required:** Yes
 

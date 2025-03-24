@@ -20,6 +20,7 @@ export default class AddUserMembers extends BaseCommand {
 
     static flags = {
       "itwin-id": Flags.string({
+        char: 'i',
         description: 'The ID of the iTwin to which the users will be added.',
         required: true,
       }),

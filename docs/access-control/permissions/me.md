@@ -4,7 +4,7 @@ Retrieve a list of your permissions on a specified iTwin.
 
 ## Options
 
-- **`--itwin-id`**  
+- **`-i, --itwin-id`**  
   The ID of the iTwin for which the role is being created.  
   **Type:** `string` **Required:** Yes
 

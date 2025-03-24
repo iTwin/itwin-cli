@@ -4,7 +4,7 @@ Complete the file creation or content update process by marking the operation as
 
 ## Options
 
-- **`--file-id`**  
+- **`-f, --file-id`**  
   The ID of the file for which the creation or update is being completed.  
   **Type:** `string` **Required:** Yes
 

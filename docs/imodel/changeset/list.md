@@ -4,7 +4,7 @@ List all changesets for a specific iModel.
 
 ## Options
 
-- **`--imodel-id`**  
+- **`-m, --imodel-id`**  
   The ID of the iModel whose changesets you want to list.  
   **Type:** `string` **Required:** Yes
 

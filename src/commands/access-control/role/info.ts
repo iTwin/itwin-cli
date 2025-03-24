@@ -12,6 +12,7 @@ export default class InfoRole extends BaseCommand {
   
     static flags = {
       "itwin-id": Flags.string({
+        char: 'i',
         description: 'The ID of the iTwin where the role exists.',
         required: true,
       }),

@@ -12,14 +12,17 @@ export default class UpdateRole extends BaseCommand {
   
     static flags = {
       description: Flags.string({
+        char: 'd',
         description: 'The updated description of the role.',
         required: false,
       }),
       "display-name": Flags.string({
+        char: 'n',
         description: 'The updated name of the role.',
         required: false,
       }),
       "itwin-id": Flags.string({
+        char: 'i',
         description: 'The ID of the iTwin where the role exists.',
         required: true,
       }),

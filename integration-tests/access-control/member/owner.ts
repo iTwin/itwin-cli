@@ -28,7 +28,7 @@ const tests = () => {
 
     it('Should add new owner to an iTwin', async () => {
         const emailToAdd = 'itwin.cli.qa-testaccount@be-mailinator.eastus.cloudapp.azure.com';
-        const owner = await runCommand<ownerResponse>(`access-control member owner add --itwin-id ${iTwinId} --email ${emailToAdd}`);
+        const owner = await runCommand<ownerResponse>(`access-control member owner add -i ${iTwinId} --email ${emailToAdd}`);
         expect(owner.result).is.not.undefined;
         expect(owner.result!.member).is.null;
         expect(owner.result!.invitation).is.not.undefined;

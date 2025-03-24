@@ -4,7 +4,7 @@ Run the specified storage connection to synchronize files with an iModel.
 
 ## Options
 
-- **`--connection-id`**  
+- **`-c, --connection-id`**  
   The ID of the storage connection to run.  
   **Type:** `string` **Required:** Yes
 

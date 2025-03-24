@@ -8,11 +8,11 @@ Create a new folder in a specified parent folder in iTwin's storage.
   The ID of the parent folder where the new folder will be created.  
   **Type:** `string` **Required:** Yes
 
-- **`--display-name`**  
+- **`-n, --display-name`**  
   The display name of the folder to be created.  
   **Type:** `string` **Required:** Yes
 
-- **`--description`**  
+- **`-d, --description`**  
   A description of the folder.  
   **Type:** `string` **Required:** No
 

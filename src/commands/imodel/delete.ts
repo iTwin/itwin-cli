@@ -12,6 +12,7 @@ export default class DeleteIModel extends BaseCommand {
 
   static flags = {
     "imodel-id": Flags.string({
+      char: 'm',
       description: 'The ID of the iModel to delete.',
       required: true,
     }),

@@ -4,7 +4,7 @@ List all storage connections of a specific iModel.
 
 ## Options
 
-- **`--imodel-id`**  
+- **`-m, --imodel-id`**  
   The ID of the iModel whose storage connections you want to list.  
   **Type:** `string` **Required:** Yes
 

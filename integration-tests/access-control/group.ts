@@ -77,6 +77,9 @@ const tests = () => {
 
         const deleteGroup = await runCommand(`access-control group delete --itwin-id ${iTwinId} --group-id ${newGroup.result!.id}`);
         expect(deleteGroup.stdout).to.contain('deleted');
+
+        const groupInfo = await runCommand<group>(`access-control group info --itwin-id ${iTwinId} -g ${newGroup.result!.id}`);
+        expect(groupInfo.error?.message).to.contain('GroupNotFound')
     });
 };    
 
