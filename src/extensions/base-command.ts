@@ -23,12 +23,6 @@ import { configuration } from './configuration.js';
 
 export default abstract class BaseCommand extends Command {
   static baseFlags = {
-    help: Flags.help({ 
-      char: 'h', 
-      description: 'Show iTwin CLI help.',
-      helpGroup: 'GLOBAL',
-      required: false
-    }),
     json: Flags.boolean({
       char: 'j',
       description: 'Pretty format the JSON command response and suppress all logging.',
