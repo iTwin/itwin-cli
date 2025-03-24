@@ -4,7 +4,7 @@ Retrieve details about a specific named version in an iModel.
 
 ## Options
 
-- **`--imodel-id`**  
+- **`-m, --imodel-id`**  
   The ID of the iModel whose named version you want to retrieve.  
   **Type:** `string` **Required:** Yes
 
@@ -15,7 +15,7 @@ Retrieve details about a specific named version in an iModel.
 ## Examples
 
 ```bash
-itp imodel named-version info --imodel-id "ad0ba809-9241-48ad-9eb0-c8038c1a1d51" --named-version-id "bf4d8b36-25d7-4b72-b38b-12c1f0325f42"
+itp imodel named-version info --imodel-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --named-version-id bf4d8b36-25d7-4b72-b38b-12c1f0325f42
 ```
 
 ## API Reference

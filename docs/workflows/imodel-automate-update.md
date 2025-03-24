@@ -27,17 +27,17 @@ As a user, I want to automatically update an iModel with the latest design files
 
 **Step 1: Create an iTwin**
 ```bash
-itp itwin create --class "Thing" --sub-class "Asset" --display-name "New Infrastructure Project" 
+itp itwin create --class Thing --sub-class Asset --display-name "New Infrastructure Project" 
 ```
 
 **Step 2: Create an iModel**
 ```bash
-itp imodel create --itwin-id "your-itwin-id" --name "Building Design" --description "iModel for design updates"
+itp imodel create --itwin-id your-itwin-id --name "Building Design" --description "iModel for design updates"
 ```
 
 **Step 3: Populate the iModel with initial design data**
 ```bash
-itp imodel populate --imodel-id "your-imodel-id" --file "initial-design.dwg" --connector-type "DWG"
+itp imodel populate --imodel-id your-imodel-id --file initial-design.dwg --connector-type DWG
 ```
 
 **Step 4: Monitor file system events**

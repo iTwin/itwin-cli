@@ -13,6 +13,7 @@ export default class ListITwins extends BaseCommand {
   
     static flags = {
       "display-name": Flags.string({
+        char: 'n',
         description: 'Find iTwins with the exact display name specified.',
         required: false,
       }),

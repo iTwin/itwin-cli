@@ -11,8 +11,8 @@ export default class ChangedElementsEnable extends BaseCommand {
     static description = "Enable change tracking for a specified iModel.";
   
     static flags = {
-      "imodel-id": Flags.string({ description: "The ID of the iModel where change tracking should be enabled.", required: true }),
-      "itwin-id": Flags.string({ description: "The ID of the iTwin associated with the iModel.", required: true }),
+      "imodel-id": Flags.string({ char: 'm', description: "The ID of the iModel where change tracking should be enabled.", required: true }),
+      "itwin-id": Flags.string({ char: 'i', description: "The ID of the iTwin associated with the iModel.", required: true }),
     };
   
     async run() {

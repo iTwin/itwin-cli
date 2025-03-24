@@ -12,10 +12,12 @@ export default class DeleteAccessControlGroup extends BaseCommand {
   
     static flags = {
       "group-id": Flags.string({
+        char: 'g',
         description: 'The ID of the group to be deleted.',
         required: true,
       }),
       "itwin-id": Flags.string({
+        char: 'i',
         description: 'The ID of the iTwin where the group exists.',
         required: true,
       }),

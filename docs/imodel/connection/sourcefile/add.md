@@ -4,7 +4,7 @@ Add a source file to an existing storage connection of an iModel.
 
 ## Options
 
-- **`--connection-id`**  
+- **`-c, --connection-id`**  
   The ID of the storage connection to which the source file will be added.  
   **Type:** `string` **Required:** Yes
 
@@ -21,7 +21,7 @@ Add a source file to an existing storage connection of an iModel.
 
 ```bash
 # Example 1: Add a source file to a storage connection
-itp imodel connection sourcefile add --connection-id "bf4d8b36-25d7-4b72-b38b-12c1f0325f42" --storage-file-id "t5bDFuN4qUa9ojVw1E5FGtldp8BgSbNCiJ2XMdiT-cA" --connector-type "MSTN"
+itp imodel connection sourcefile add --connection-id bf4d8b36-25d7-4b72-b38b-12c1f0325f42 --storage-file-id t5bDFuN4qUa9ojVw1E5FGtldp8BgSbNCiJ2XMdiT-cA --connector-type MSTN
 ```
 
 ## API Reference

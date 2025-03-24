@@ -11,7 +11,7 @@ export default class CreateConnectionRun extends BaseCommand {
     static description = 'Create a new connector run.';
   
     static flags = {
-      "connection-id": Flags.string({ description: 'The id of the connection.', required: true }),
+      "connection-id": Flags.string({ char: 'c', description: 'The id of the connection.', required: true }),
     };
   
     async run() {

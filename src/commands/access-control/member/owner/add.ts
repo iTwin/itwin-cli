@@ -16,6 +16,7 @@ export default class AddOwner extends BaseCommand {
         required: true,
       }),
       "itwin-id": Flags.string({
+        char: 'i',
         description: 'The ID of the iTwin to which the owner will be added.',
         required: true,
       }),

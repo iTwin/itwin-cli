@@ -12,6 +12,7 @@ export default class GetRootFolder extends BaseCommand {
 
   static flags = {
     "itwin-id": Flags.string({
+      char: 'i',
       description: 'The ID of the iTwin whose top-level folders and files you want to retrieve.',
       required: true,
     }),

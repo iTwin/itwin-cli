@@ -12,7 +12,7 @@ const tests = () => describe('search', () => {
     const testUserId = meResult.id;
     const testUserEmail = meResult.email;
 
-    const { stdout } = await runCommand(`user search --search "${testUserEmail}"`);
+    const { stdout } = await runCommand(`user search --search ${testUserEmail}`);
     const users = JSON.parse(stdout);
 
     expect(users).to.be.an('array').that.is.not.empty;

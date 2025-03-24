@@ -24,6 +24,7 @@ import { configuration } from './configuration.js';
 export default abstract class BaseCommand extends Command {
   static baseFlags = {
     json: Flags.boolean({
+      char: 'j',
       description: 'Pretty format the JSON command response and suppress all logging.',
       required: false
     }),

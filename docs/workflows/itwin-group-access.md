@@ -33,27 +33,27 @@ As a user, I want to create a group of users, assign roles and permissions, and 
 
 Step 1: Create a group
 ```bash
-itp access-control group create --itwin-id "your-itwin-id" --name "Project Team" --description "Primary team"
+itp access-control group create --itwin-id your-itwin-id --name "Project Team" --description "Primary team"
 ```
 
 Step 2: Add members to the group
 ```bash
-itp access-control group update --itwin-id "your-itwin-id" --group-id "your-group-id" --members '["user1@example.com", "user2@example.com"]'
+itp access-control group update --itwin-id your-itwin-id --group-id your-group-id --members '["user1@example.com", "user2@example.com"]'
 ```
 
 Step 3: Create a role
 ```bash
-itp access-control role create --itwin-id "your-itwin-id" --display-name "Project Manager" --description "Role for project managers"
+itp access-control role create --itwin-id your-itwin-id --display-name "Project Manager" --description "Role for project managers"
 ```
 
 Step 4: Add permissions to the role
 ```bash
-itp access-control role update --itwin-id "your-itwin-id" --role-id "your-role-id" --permissions '["Permission1", "Permission2", "Permission3"]'
+itp access-control role update --itwin-id your-itwin-id --role-id your-role-id --permissions '["Permission1", "Permission2", "Permission3"]'
 ```
 
 Step 5: Add the group and role to the iTwin as members
 ```bash
-itp access-control member group add --itwin-id "your-itwin-id" --groups '[{"groupId": "your-group-id", "roleIds": ["your-role-id"]}]'
+itp access-control member group add --itwin-id your-itwin-id --groups '[{"groupId": "your-group-id", "roleIds": ["your-role-id"]}]'
 ```
 
 ## Expected Outcome

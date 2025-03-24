@@ -11,7 +11,8 @@ export class IModelInfo extends BaseCommand {
   static description = 'Retrieve metadata for the specified Model';
 
   static flags = {
-    "imodel-id": Flags.string({ 
+    "imodel-id": Flags.string({
+      char: 'm', 
       description: 'The ID of the iModel to retrieve information for.', 
       required: true 
     }),

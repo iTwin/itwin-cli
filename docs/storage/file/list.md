@@ -4,7 +4,7 @@ List files in a folder of an iTwin's storage. Optionally, include subfolders in 
 
 ## Options
 
-- **`--folder-id`**  
+- **`-f, --folder-id`**  
   The ID of the folder whose files you want to list.  
   **Type:** `string` **Required:** Yes
 
@@ -16,10 +16,10 @@ List files in a folder of an iTwin's storage. Optionally, include subfolders in 
 
 ```bash
 # Example 1: List files in a specific folder
-itp storage file list --folder-id "b1a2c3d4-5678-90ab-cdef-1234567890ab"
+itp storage file list --folder-id b1a2c3d4-5678-90ab-cdef-1234567890ab
 
 # Example 2: List files and include subfolders in the result
-itp storage file list --folder-id "b1a2c3d4-5678-90ab-cdef-1234567890ab" --include-folders true
+itp storage file list --folder-id b1a2c3d4-5678-90ab-cdef-1234567890ab --include-folders true
 ```
 
 ## API Reference

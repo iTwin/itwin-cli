@@ -17,7 +17,7 @@ Authenticate itp with Bentley. This command initiates the login process to obtai
 ```bash
 itp auth login
 
-itp auth login --client-id "native-a1254s86d4a5s4d" 
+itp auth login --client-id native-a1254s86d4a5s4d
 
-itp auth login --client-id "service-a1254s86d4a5s4d" --client-secret "a456a7s89da46s5f4a6f16a5sdf3as2d1f65a4sdf13"  
+itp auth login --client-id service-a1254s86d4a5s4d --client-secret a456a7s89da46s5f4a6f16a5sdf3as2d1f65a4sdf13
 ```

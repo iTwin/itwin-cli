@@ -37,16 +37,16 @@ Send HTTP request to iTwin Platform API.
 
 ```bash
 # Example 1: Sending a GET request
-itp api --method GET --path "users/me"
+itp api --method GET --path users/me
 
 # Example 2: Sending a request with headers and query parameters
-itp api --method GET --path "itwins/favorite" --query "subClass:Account" --query "$top:10" --header "Prefer: return=minimal"
+itp api --method GET --path itwins/favorite --query subClass:Account --query "$top:10" --header "Prefer: return=minimal"
 
 # Example 3: Sending a delete request without response body
-itp api --method DELETE --path "itwins/favorites/dc914a84-e0c9-40e2-9d14-faf5ed84147f" --empty-response
+itp api --method DELETE --path itwins/favorites/dc914a84-e0c9-40e2-9d14-faf5ed84147f --empty-response
 
 # Example 4: Sending a post request
-itp api --method POST --path "itwins/exports" --body '{"outputFormat": "JsonGZip"}'
+itp api --method POST --path itwins/exports --body '{"outputFormat": "JsonGZip"}'
 
 ```
 

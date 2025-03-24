@@ -17,6 +17,7 @@ export default class ListChangesets extends BaseCommand {
         required: false,
       }),
       "imodel-id": Flags.string({
+        char: 'm',
         description: 'The ID of the iModel whose changesets you want to list.',
         required: true,
       }),

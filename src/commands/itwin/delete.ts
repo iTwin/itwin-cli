@@ -12,6 +12,7 @@ export default class DeleteITwin extends BaseCommand {
   
     static flags = {
       "itwin-id": Flags.string({
+        char: 'i',
         description: 'iTwin id.',
         required: true,
       }),

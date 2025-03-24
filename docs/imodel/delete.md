@@ -4,14 +4,14 @@ Delete an existing iModel.
 
 ## Options
 
-- **`--imodel-id`**  
+- **`-m, --imodel-id`**  
   The ID of the iModel to delete.  
   **Type:** `string` **Required:** Yes
 
 ## Examples
 
 ```bash
-itp imodel delete --imodel-id "5e19bee0-3aea-4355-a9f0-c6df9989ee7d"
+itp imodel delete --imodel-id 5e19bee0-3aea-4355-a9f0-c6df9989ee7d
 ```
 
 ## API Reference

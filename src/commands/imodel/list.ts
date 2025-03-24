@@ -13,10 +13,12 @@ export default class ListIModels extends BaseCommand {
   
     static flags = {
       "itwin-id": Flags.string({
+        char: 'i',
         description: 'The ID of the iTwin to list iModels for.',
         required: true,
       }),
       name: Flags.string({
+        char: 'n',
         description: 'Filter iModels by their exact name.',
         required: false,
       }),

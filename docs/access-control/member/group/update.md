@@ -4,11 +4,11 @@ Update the role assignments for a group in an iTwin.
 
 ## Options
 
-- **`--itwin-id`**  
+- **`-i, --itwin-id`**  
   The ID of the iTwin where the group is a member.  
   **Type:** `string` **Required:** Yes
 
-- **`--group-id`**  
+- **`-g, --group-id`**  
   The ID of the group whose roles will be updated.  
   **Type:** `string` **Required:** Yes
 
@@ -19,7 +19,7 @@ Update the role assignments for a group in an iTwin.
 ## Examples
 
 ```bash
-itp access-control member group update --itwin-id "ad0ba809-9241-48ad-9eb0-c8038c1a1d51" --group-id "group1-id" --role-ids "role1-id" --role-ids "role2-id"
+itp access-control member group update --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --group-id group1-id --role-ids role1-id --role-ids role2-id
 ```
 
 ## API Reference

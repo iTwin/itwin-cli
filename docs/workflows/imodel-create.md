@@ -23,7 +23,7 @@ As a user, I want to create an iModel inside a new iTwin, set its geographic ext
 
 **Step 1: Create an iModel with initial extents**
 ```bash
-itp imodel create --itwin-id "your-itwin-id" --name "New Infrastructure Project" --extent '{
+itp imodel create --itwin-id your-itwin-id --name "New Infrastructure Project" --extent '{
   "southWest": {
     "latitude": 34.052235,
     "longitude": -118.243683
@@ -37,7 +37,7 @@ itp imodel create --itwin-id "your-itwin-id" --name "New Infrastructure Project"
 
 **Step 2: Refine the iModel by expanding the extents**
 ```bash
-itp imodel update --imodel-id "your-imodel-id" --extent '{
+itp imodel update --imodel-id your-imodel-id --extent '{
   "southWest": {
     "latitude": 34.052235,
     "longitude": -118.243683

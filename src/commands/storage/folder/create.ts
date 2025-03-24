@@ -11,8 +11,8 @@ export default class CreateFolder extends BaseCommand {
     static description = "Create a new folder in a specified parent folder in iTwin's storage.";
   
     static flags = {
-      description: Flags.string({ description: "A description of the folder." }),
-      "display-name": Flags.string({ description: "The display name of the folder to be created.", required: true }),
+      description: Flags.string({ char: 'd', description: "A description of the folder." }),
+      "display-name": Flags.string({ char: 'n', description: "The display name of the folder to be created.", required: true }),
       "parent-folder-id": Flags.string({ description: "The ID of the parent folder where the new folder will be created.", required: true }),
     };
   

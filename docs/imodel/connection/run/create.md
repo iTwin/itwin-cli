@@ -4,7 +4,7 @@ Run the specified storage connection to synchronize files with an iModel.
 
 ## Options
 
-- **`--connection-id`**  
+- **`-c, --connection-id`**  
   The ID of the storage connection to run.  
   **Type:** `string` **Required:** Yes
 
@@ -12,7 +12,7 @@ Run the specified storage connection to synchronize files with an iModel.
 
 ```bash
 # Example 1: Running a storage connection for an iModel
-itp imodel connection run create --connection-id "bf4d8b36-25d7-4b72-b38b-12c1f0325f42"
+itp imodel connection run create --connection-id bf4d8b36-25d7-4b72-b38b-12c1f0325f42
 ```
 
 ## API Reference

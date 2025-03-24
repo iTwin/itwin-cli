@@ -35,7 +35,7 @@ const tests = () => describe('create + delete', () => {
     const createdIModel = await createIModel(iModelName, testITwinId);
     await deleteIModel(createdIModel.id);
     
-    const result = await runCommand(`imodel info --imodel-id ${createdIModel.id}`);
+    const result = await runCommand(`imodel info -m ${createdIModel.id}`);
     expect(result.error).to.be.not.undefined;
     expect(result.error!.code).to.be.equal('iModelNotFound');
   });

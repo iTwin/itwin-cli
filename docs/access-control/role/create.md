@@ -4,22 +4,22 @@ Create a new role for an iTwin. To assign permissions after creation, use `itp a
 
 ## Options
 
-- **`--itwin-id`**  
+- **`-i, --itwin-id`**  
   The ID of the iTwin for which the role is being created.  
   **Type:** `string` **Required:** Yes
 
-- **`--display-name`**  
+- **`-n, --display-name`**  
   The name of the role to be created.  
   **Type:** `string` **Required:** Yes
 
-- **`--description`**  
+- **`-d, --description`**  
   A description of the role.  
   **Type:** `string` **Required:** No
 
 ## Examples
 
 ```bash
-itp access-control role create --itwin-id "ad0ba809-9241-48ad-9eb0-c8038c1a1d51" --display-name "Project Manager" --description "Manages all aspects of the project"
+itp access-control role create --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --display-name "Project Manager" --description "Manages all aspects of the project"
 ```
 
 ## API Reference

@@ -11,7 +11,7 @@ export default class ConnectionRunsListed extends BaseCommand {
     static description = "List all runs for a specific storage connection of an iModel.";
   
     static flags = {
-      "connection-id": Flags.string({ description: "The ID of the storage connection.", required: true }),
+      "connection-id": Flags.string({ char: 'c', description: "The ID of the storage connection.", required: true }),
     };
   
     async run() {

@@ -12,10 +12,12 @@ export default class InfoGroupMember extends BaseCommand {
   
     static flags = {
       "group-id": Flags.string({
+        char: 'g',
         description: 'The ID of the group to retrieve information about.',
         required: true,
       }),
       "itwin-id": Flags.string({
+        char: 'i',
         description: 'The ID of the iTwin where the group is a member.',
         required: true,
       }),

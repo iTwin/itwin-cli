@@ -4,7 +4,7 @@ Update the content of an existing file. A URL is returned to upload the file con
 
 ## Options
 
-- **`--file-id`**  
+- **`-f, --file-id`**  
   The ID of the file to update the content for.  
   **Type:** `string` **Required:** Yes
 
@@ -12,7 +12,7 @@ Update the content of an existing file. A URL is returned to upload the file con
 
 ```bash
 # Example 1: Get URL to update file content
-itp storage file update-content --file-id "bf4d8b36-25d7-4b72-b38b-12c1f0325f42"
+itp storage file update-content --file-id bf4d8b36-25d7-4b72-b38b-12c1f0325f42
 ```
 
 ## API Reference

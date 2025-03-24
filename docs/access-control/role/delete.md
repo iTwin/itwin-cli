@@ -4,7 +4,7 @@ Delete an existing role from an iTwin.
 
 ## Options
 
-- **`--itwin-id`**  
+- **`-i, --itwin-id`**  
   The ID of the iTwin where the role exists.  
   **Type:** `string` **Required:** Yes
 
@@ -15,7 +15,7 @@ Delete an existing role from an iTwin.
 ## Examples
 
 ```bash
-itp access-control role delete --itwin-id "ad0ba809-9241-48ad-9eb0-c8038c1a1d51" --role-id "role1-id"
+itp access-control role delete --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --role-id role1-id
 ```
 
 ## API Reference

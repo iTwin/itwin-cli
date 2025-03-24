@@ -17,7 +17,7 @@ Create a new iTwin with specified properties.
   - For **`Endeavor`**: `"Project"`, `"Program"`, `"WorkPackage"`  
   - For **`Account`**: `"Account"`
 
-- **`--display-name`**  
+- **`-n, --display-name`**  
   The iTwin's display name.  
   **Type:** `string` **Required:** Yes
 
@@ -55,13 +55,13 @@ Create a new iTwin with specified properties.
 
 ```bash
 # Example 1: Creating an iTwin with the 'Thing' class and 'Asset' subclass
-itp itwin create --class "Thing" --sub-class "Asset" --display-name "Golden Gate Revamp"
+itp itwin create --class Thing --sub-class Asset --display-name "Golden Gate Revamp"
 
 # Example 2: Creating an iTwin with the 'Endeavor' class and 'Project' subclass
-itp itwin create --class "Endeavor" --sub-class "Project" --display-name "Bridge Construction" --geographic-location "San Francisco, CA" --iana-time-zone "America/Los_Angeles"
+itp itwin create --class Endeavor --sub-class Project --display-name "Bridge Construction" --geographic-location "San Francisco, CA" --iana-time-zone America/Los_Angeles
 
 # Example 3: Creating an iTwin with data center location and status set to 'Trial'
-itp itwin create --class "Endeavor" --sub-class "Program" --display-name "Rail Network" --data-center-location "UK South" --status "Trial"
+itp itwin create --class Endeavor --sub-class Program --display-name "Rail Network" --data-center-location "UK South" --status Trial
 ```
 
 ## API Reference
