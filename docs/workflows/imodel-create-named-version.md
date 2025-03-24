@@ -32,37 +32,37 @@ As a user, I want to create a named version of an iModel at a specific changeset
 
 **Step 1: Create an iTwin**
 ```bash
-itp itwin create --class "Thing" --sub-class "Asset" --display-name "New Infrastructure Project" 
+itp itwin create --class Thing --sub-class Asset --display-name "New Infrastructure Project" 
 ```
 
 **Step 2: Create an iModel**
 ```bash
-itp imodel create --itwin-id "your-itwin-id" --display-name "Building Design" --description "iModel for named versions"
+itp imodel create --itwin-id your-itwin-id --display-name "Building Design" --description "iModel for named versions"
 ```
 
 **Step 3: Populate the iModel with design data (first round)**
 ```bash
-itp imodel populate --imodel-id "your-imodel-id" --file "file1.dwg file2.dwg" --connector-type "DWG"
+itp imodel populate --imodel-id your-imodel-id --file "file1.dwg file2.dwg" --connector-type DWG
 ```
 
 **Step 4: Populate the iModel with design data (second round)**
 ```bash
-itp imodel populate --imodel-id "your-imodel-id" --file "file3.dwg file4.dwg" --connector-type "DWG"
+itp imodel populate --imodel-id your-imodel-id --file "file3.dwg file4.dwg" --connector-type DWG
 ```
 
 **Step 5: List the changesets**
 ```bash
-itp imodel changeset list --imodel-id "your-imodel-id"
+itp imodel changeset list --imodel-id your-imodel-id
 ```
 
 **Step 6: Create a named version from a specific changeset**
 ```bash
-itp imodel named-version create --imodel-id "your-imodel-id" --changeset-id "your-changeset-id" --name "Version 1: Initial Design"
+itp imodel named-version create --imodel-id your-imodel-id --changeset-id your-changeset-id --name "Version 1: Initial Design"
 ```
 
 **Step 7: List the named versions**
 ```bash
-itp imodel named-version list --imodel-id "your-imodel-id"
+itp imodel named-version list --imodel-id your-imodel-id
 ```
 
 ## Expected Outcome

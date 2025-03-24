@@ -25,17 +25,17 @@ As a user, I want to populate an iModel with design data.
 
 Step 1: Create an iTwin
 ```bash
-itp itwin create --class "Thing" --sub-class "Asset" --display-name "New Infrastructure Project"
+itp itwin create --class Thing --sub-class Asset --display-name "New Infrastructure Project"
 ```
 
 Step 2: Create an iModel
 ```bash
-itp imodel create --itwin-id "your-itwin-id" --name "Building Design" --description "Design data for the new building"
+itp imodel create --itwin-id your-itwin-id --name "Building Design" --description "Design data for the new building"
 ```
 
 Step 3: Populate the iModel with design data
 ```bash
-itp imodel populate --imodel-id "your-imodel-id" --file "file1.dwg file2.dgn" --connector-type "DWG CIVIL"
+itp imodel populate --imodel-id your-imodel-id --file "file1.dwg file2.dgn" --connector-type "DWG CIVIL"
 ```
 
 ## Expected Outcome

@@ -23,22 +23,22 @@ As a user, I want to add multiple owners to an iTwin so that different team memb
 
 Step 1: Create an iTwin
 ```bash
-itp itwin create --class "Thing" --sub-class "Asset" --display-name "New Infrastructure Project" 
+itp itwin create --class Thing --sub-class Asset --display-name "New Infrastructure Project" 
 ```
 
 Step 2: Add owner 1 to the iTwin
 ```bash
-itp access-control member owner add --itwin-id "your-itwin-id" --email "owner1@example.com"
+itp access-control member owner add --itwin-id your-itwin-id --email owner1@example.com
 ```
 
 Step 3: Add owner 2 to the iTwin
 ```bash
-itp access-control member owner add --itwin-id "your-itwin-id" --email "owner2@example.com"
+itp access-control member owner add --itwin-id your-itwin-id --email owner2@example.com
 ```
 
 Step 4: Add owner 3 to the iTwin
 ```bash
-itp access-control member owner add --itwin-id "your-itwin-id" --email "owner3@example.com"
+itp access-control member owner add --itwin-id your-itwin-id --email owner3@example.com
 ```
 
 ## Expected Outcome

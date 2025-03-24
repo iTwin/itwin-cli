@@ -15,7 +15,7 @@ Search for users based on filter criteria.
 itp user search --search "John Doe"
 
 # Example 2: Search for users by email
-itp user search --search "john.doe@example.com"
+itp user search --search john.doe@example.com
 ```
 
 ## API Reference

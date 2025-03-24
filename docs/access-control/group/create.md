@@ -19,7 +19,7 @@ Create a new group for an iTwin.
 ## Examples
 
 ```bash
-itp access-control group create --itwin-id "ad0ba809-9241-48ad-9eb0-c8038c1a1d51" --name "Engineering Team" --description "Group handling engineering tasks"
+itp access-control group create --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --name "Engineering Team" --description "Group handling engineering tasks"
 ```
 
 ## API Reference
