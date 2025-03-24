@@ -51,13 +51,13 @@ export default class ApiRequest extends BaseCommand {
   
         const mappedHeaders: Record<string, string> = flags.header?.reduce((acc, header) => {
             const [key, value] = header.split(":");
-            acc[key] = value;
+            acc[key] = value.trim();
             return acc;
         }, {} as Record<string, string>) || {};
 
         const query: Query[] | undefined = flags.query?.map((query) => {
             const [key, value] = query.split(":");
-            return { key, value };
+            return { key: key.trim(), value: value.trim() };
         }) || undefined;
 
         const client = await this.getITwinApiClient();
@@ -65,11 +65,11 @@ export default class ApiRequest extends BaseCommand {
         const requestOptions = {
             apiPath: flags.path,
             apiVersionHeader: flags["version-header"],
+            body: flags.body ? JSON.parse(flags.body) : undefined,
             headers: mappedHeaders,
             method: flags.method as "DELETE" | "GET" | "PATCH" | "POST" | "PUT",
             query
         };
-
 
         if (flags["empty-response"]) {
             await client.sendRequestNoResponse(requestOptions);

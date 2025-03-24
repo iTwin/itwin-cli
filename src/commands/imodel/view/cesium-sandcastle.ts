@@ -8,6 +8,7 @@ import open from 'open';
 import { deflate } from "pako";
 
 import BaseCommand from "../../../extensions/base-command.js";
+import { link, links } from "../../../services/general-models/links.js";
 
 export default class CesiumSandcastle extends BaseCommand {
     static description = "Setup iModel and get url to view it in Cesium Sandcastle";
@@ -27,239 +28,152 @@ export default class CesiumSandcastle extends BaseCommand {
       }),
     };
   
-    htmlData() : string {
-        return `<style>
-  @import url(../templates/bucket.css);
-    #toolbar {
-    background: rgba(42, 42, 42, 0.8);
-    padding: 4px;
-    border-radius: 4px;
-  }
+    async createExport(iModelId: string, changesetId: string): Promise<ExportInfo> {
+      const args = [
+        "--method", "POST",
+        "--path", "mesh-export",
+        "--version-header", "application/vnd.bentley.itwin-platform.v1+json",
+        "--body", JSON.stringify({
+            changesetId, 
+            exportType: "CESIUM", 
+            iModelId
+        }),
+      ];
 
-  #toolbar input {
-    vertical-align: middle;
-    padding-top: 2px;
-    padding-bottom: 2px;
-  }
-
-  #toolbar .header {
-    font-weight: bold;
-  }
-</style>
-
-<div id="cesiumContainer" class="fullSize"></div>
-<div id="loadingOverlay"><h1>Loading...</h1></div>
-<div id="toolbar">
-  <table>
-    <tbody>
-      <tr>
-        <td>iModel Id</td>
-        <td>
-          <input type="text" size="30" data-bind="value: imodelId">
-        </td>
-      </tr>
-      <tr>
-        <td>Changeset Id</td>
-        <td>
-          <input type="text" size="30" data-bind="value: changesetId">
-        </td>
-      </tr>
-      <tr>
-        <td>Access Token</td>
-        <td>
-          <input type="text" size="30" data-bind="value: accessToken">
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>`
+      const created = await this.runCommand<ExportCreateResponse>("api", args);
+      return created.export;
     }
 
-    jsData(iModelId: string, changesetId: string, token: string) : string {
-        return `
-async function getExistingExport(iModelId, accessToken, changesetId = undefined) {
-  console.log("Get Existing Export");
-  
-  const headers = {
-    "Authorization": accessToken,
-    "Accept": "application/vnd.bentley.itwin-platform.v1+json",
-    "Content-Type": "application/json",
-    "Prefer": "return=representation"
-  };
-  
-  let url = \`https://api.bentley.com/mesh-export/?iModelId=\${iModelId}\`;
-  if (changesetId) {
-    url += \`&changesetId=\${changesetId}\`;
-  }
-  try {
-    console.log(url);
-    const response = await fetch(url, {headers});
-    const result = await response.json();
-    const existingExport = result.exports.find((exp) => exp.request.exportType === "CESIUM");
-    return existingExport;
-  }
-  catch {
-    return undefined;
-  }
-}
-    
+    async getExports(iModelId: string) : Promise<ExportInfo[]> {
+      const exportArgs = [
+        "--method", "GET", 
+        "--path", "mesh-export/", 
+        "--version-header", "application/vnd.bentley.itwin-platform.v1+json", 
+        "--query", `iModelId: ${iModelId}`, 
+        "--header", "Prefer: return=representation"
+      ];
+      const response = await this.runCommand<ExportResponse>("api", exportArgs);
+      return response.exports;
+    }
 
-async function StartExport(iModelId, accessToken, changesetId = undefined) {
-  console.log("Starting New Export");
- 
-  const requestOptions = {
-      method: "POST",
-      headers: {
-        "Authorization": accessToken,
-        "Accept": "application/vnd.bentley.itwin-platform.v1+json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        iModelId,
-        changesetId,
-        exportType:"CESIUM",
-      }),
-    };
- 
-    // initiate mesh export
-    const response = await fetch(\`https://api.bentley.com/mesh-export/\`, requestOptions);
-    const result = JSON.parse(JSON.stringify(await response.json()));
-    return result.export.id;
-}
- 
-async function GetExport(exportId, accessToken) {
-  const headers = {
-    Authorization: accessToken,
-    Accept: "application/vnd.bentley.itwin-platform.v1+json",
-  };
- 
-  // obtain export for specified export id
-  const url = \`https://api.bentley.com/mesh-export/\${exportId}\`;
-  try {
-    const response = await fetch(url, { headers });
-    const result = JSON.parse(JSON.stringify(await response.json()));
-    return result;
-  } catch (err) {
-    return undefined;
-  }
-}
+    async getOrCreateExport(iModelId: string, changesetId: string): Promise<ExportInfo> {
+      this.log(`Getting existing exports for iModel: ${iModelId} and changeset: ${changesetId}`);
+      let existingExports = await this.getExports(iModelId);
+      const existingExport = existingExports.find((exp) => exp.request.exportType === "CESIUM" && exp.request.changesetId === changesetId);
 
-async function obtainAndAttachTileset(imodelId, accessToken, changesetId = undefined) {
-  let tilesetUrl;
-  const start = Date.now();
-  
-  const existingExport = await getExistingExport(imodelId, accessToken, changesetId);
-  if (existingExport) {
-    tilesetUrl = existingExport._links.mesh.href;
-  }
-  else {
-    console.log("No Existing Export Found");
-    const delay = ms => new Promise(res => setTimeout(res, ms));
-    const exportId = await StartExport(imodelId, accessToken, changesetId);
- 
-    let result = await GetExport(exportId, accessToken);
-    let status = result.export.status;
-    while (status !== "Complete") {
-      await delay(3000);
-      result = await GetExport(exportId, accessToken);
-      status = result.export.status;
-      console.log("Export is " + status);
- 
-      if (Date.now() - start > 300_000) {
-        throw new Error("Export did not complete in time.");
+      if (existingExport !== undefined) {
+        this.log(`Found existing export with id: ${existingExport.id}`);
+        return existingExport;
       }
-    }
-    tilesetUrl = result.export._links.mesh.href;
-  }
 
-  const splitStr = tilesetUrl.split("?");
-  tilesetUrl = splitStr[0] + "/tileset.json?" + splitStr[1];
- 
-  const tileset = await Cesium.Cesium3DTileset.fromUrl(tilesetUrl);
-  viewer.scene.primitives.add(tileset);
-  viewer.zoomTo(tileset);
-  console.log("Finished in " + ((Date.now() - start) / 1000).toString() + " seconds");
-}
-
-async function init() {
-  if ((viewModel.imodelId !== undefined) && (viewModel.accessToken !== undefined)) {
-    obtainAndAttachTileset(viewModel.imodelId, viewModel.accessToken, viewModel.changesetId);
-  }
-  else {
-    console.log("Define iModel Id and Access Token, then click 'Obtain and Attach Tileset'");
-  } 
-}
-
-const viewer = new Cesium.Viewer("cesiumContainer");
-viewer.scene.globe.show = true;
-viewer.scene.debugShowFramesPerSecond = true;
-
-let viewModel = {
-  imodelId: "${iModelId}",
-  accessToken: "${token}",
-  changesetId: "${changesetId}",
-};
-  
-Cesium.knockout.track(viewModel);
-const toolbar = document.getElementById("toolbar");
-Cesium.knockout.applyBindings(viewModel, toolbar);
-
-Cesium.knockout
-  .getObservable(viewModel, "imodelId")
-  .subscribe(function (newValue) {
-    viewModel.imodelId = newValue;
-  });
-  
-  Cesium.knockout
-  .getObservable(viewModel, "changesetId")
-  .subscribe(function (newValue) {
-    viewModel.changesetId = newValue;
-  });
-
-Cesium.knockout
-  .getObservable(viewModel, "accessToken")
-  .subscribe(function (newValue) {
-    viewModel.accessToken = newValue;
-  });
-
-Sandcastle.addDefaultToolbarButton("Obtain and Attach Tileset", function () {
-  if (viewer.scene.primitive) {
-    viewer.scene.primitive.removeAll();
-  }
-  init()
-});
-        `;
-    }
-    
-    makeCompressedBase64String(data: string[]) : string {
-        let jsonString = JSON.stringify(data);
-        jsonString = jsonString.slice(2, 2 + jsonString.length - 4);
-        let base64String = Buffer.from(
-            deflate(jsonString, { raw: true })
-        ).toString('base64');
-        base64String = base64String.replace(/=+$/, ''); // remove padding
-
-        return base64String;
+      this.log(`Creating new export for iModel: ${iModelId} and changeset: ${changesetId}`);
+      let newExport = await this.createExport(iModelId, changesetId);
+      while (newExport.status !== "Complete") {
+        this.log(`Export status is ${newExport.status}. Waiting for export to complete...`);
+        // eslint-disable-next-line no-await-in-loop
+        existingExports = await this.getExports(iModelId);
+        newExport = existingExports.find((exp) => exp.id === newExport.id)!;
+        // eslint-disable-next-line no-await-in-loop
+        await new Promise((resolve) => {setTimeout(resolve, 5000)});
+      }
+      
+      this.log(`Export completed successfully`);
+      return newExport;
     }
 
     async run() {
       const { flags } = await this.parse(CesiumSandcastle);
 
-      const token = await this.getAccessToken();
-
+      const exportInfo : ExportInfo = await this.getOrCreateExport(flags["imodel-id"], flags["changeset-id"]);      
+      
+      this.log(`Extracting tileset URL from export info`);
+      const tilesetUrl : string = extractTileSetUrl(exportInfo);
+      
       const data = [
-        this.jsData(flags["imodel-id"], flags["changeset-id"], token),
-        this.htmlData(),
+        jsData(tilesetUrl),
+        htmlData(),
       ];
 
-      const url = `https://sandcastle.cesium.com/#c=${this.makeCompressedBase64String(data)}`;
+      const url = `https://sandcastle.cesium.com/#c=${makeCompressedBase64String(data)}`;
+      
+      this.log(`Cesium Sandcastle URL:`);
+      this.log(url);
 
       if (flags.open) {
+        this.log(`Opening URL in browser...`);
         open(url);
       }
-
+      
       return this.logAndReturnResult({ url });
     }
 }
 
 
+type ExportResponse = {
+  _links: links
+  exports: ExportInfo[],
+}
+
+type ExportCreateResponse = {
+  export: ExportInfo
+}
+
+type ExportInfo = {
+  _links: {
+    mesh: link
+  },
+  displayName: string,
+  error?: string,
+  id: string,
+  lastModified: Date,
+  request: ExportRequest,
+  status: "Complete" | "InProgress" | "Invalid" | "NotStarted",
+}
+
+type ExportRequest = {
+  changesetId: string,
+  exportType: "3DFT" | "3DTiles" | "CESIUM" | "IMODEL",
+  iModelId: string,
+}
+
+function extractTileSetUrl(exportInfo: ExportInfo): string {
+  if(exportInfo._links.mesh.href === undefined) {
+    throw new Error(`No tileset url found for export info id: ${exportInfo.id}`);
+  }
+
+  const urlParts = exportInfo._links.mesh.href.split("?");
+  return urlParts[0] + "/tileset.json?" + urlParts[1];
+}
+
+function makeCompressedBase64String(data: string[]) : string {
+  let jsonString = JSON.stringify(data);
+  jsonString = jsonString.slice(2, 2 + jsonString.length - 4);
+  let base64String = Buffer.from(
+      deflate(jsonString, { raw: true })
+  ).toString('base64');
+  base64String = base64String.replace(/=+$/, ''); // remove padding
+
+  return base64String;
+}
+
+function htmlData() : string {
+  return `
+<style>
+@import url(../templates/bucket.css);
+</style>
+
+<div id="cesiumContainer" class="fullSize"></div>
+`;
+}
+
+function jsData(tilesetUrl: string) : string {
+  return `
+const viewer = new Cesium.Viewer("cesiumContainer");
+viewer.scene.globe.show = true;
+viewer.scene.debugShowFramesPerSecond = true;
+const tilesetUrl = '${tilesetUrl}'; 
+const tileset = await Cesium.Cesium3DTileset.fromUrl(tilesetUrl);
+viewer.scene.primitives.add(tileset);
+viewer.zoomTo(tileset);
+`;
+}
