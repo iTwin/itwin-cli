@@ -8,7 +8,7 @@ Setup iModel and get URL to view it in Cesium Sandcastle.
   Changeset id to be viewed in Cesium Sandcastle.  
   **Type:** `string` **Required:** Yes
 
-- **`--imodel-id`**  
+- **`-m, --imodel-id`**  
   iModel id to be viewed in Cesium Sandcastle.  
   **Type:** `string` **Required:** Yes
 
