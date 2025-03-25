@@ -9,7 +9,18 @@ import BaseCommand from "../../../extensions/base-command.js";
 
 export default class FileCreate extends BaseCommand {
     static description = 'Create a new file in a specified folder in iTwin\'s storage.';
-  
+
+    static examples = [
+      {
+        command: `<%= config.bin %> <%= command.id %> --folder-id abc12345-6789-4321-abcd-9876543210ef --name design.dwg`,
+        description: 'Example 1: Creating a file with display name only'
+      },
+      {
+        command: `<%= config.bin %> <%= command.id %> --folder-id abc12345-6789-4321-abcd-9876543210ef --name model.ifc --description "Model file for the building design"`,
+        description: 'Example 2: Creating a file with display name and description'
+      }
+    ];
+
     static flags = {
       description: Flags.string({ char: 'd', description: 'A description for the file.', required: false }),
       "folder-id": Flags.string({ char: 'f', description: 'The ID of the folder where the file will be created.', required: true }),

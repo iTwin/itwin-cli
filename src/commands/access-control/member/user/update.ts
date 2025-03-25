@@ -9,7 +9,11 @@ import BaseCommand from "../../../../extensions/base-command.js";
 
 export default class UpdateUserMember extends BaseCommand {
     static description = 'Update the role assignments for a user in an iTwin.';
-  
+
+    static examples = [
+      `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --member-id user1-id --role-ids role1-id --role-ids role2-id`
+    ];
+
     static flags = {
       "itwin-id": Flags.string({
         char: 'i',

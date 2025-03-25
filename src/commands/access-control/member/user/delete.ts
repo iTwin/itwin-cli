@@ -9,6 +9,10 @@ import BaseCommand from "../../../../extensions/base-command.js";
 
 export default class DeleteUserMember extends BaseCommand {
     static description = 'Remove a user from an iTwin.';
+
+    static examples = [
+      `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --member-id user1-id`
+    ];
   
     static flags = {
       "itwin-id": Flags.string({

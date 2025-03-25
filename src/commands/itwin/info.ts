@@ -9,7 +9,11 @@ import BaseCommand from "../../extensions/base-command.js";
 
 export default class ITwinInfo extends BaseCommand {
     static description = 'Retrieve metadata for the specified iTwin.';
-  
+
+    static examples = [
+      `<%= config.bin %> <%= command.id %> --itwin-id b1a2c3d4-5678-90ab-cdef-1234567890ab`
+    ];
+
     static flags = {
       "itwin-id": Flags.string({
         char: 'i',

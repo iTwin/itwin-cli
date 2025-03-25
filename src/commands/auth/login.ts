@@ -14,6 +14,8 @@ export default class Login extends BaseCommand {
 
   static examples = [
     `<%= config.bin %> <%= command.id %>`,
+    `<%= config.bin %> <%= command.id %> --client-id native-a1254s86d4a5s4d`,
+    `<%= config.bin %> <%= command.id %> --client-id service-a1254s86d4a5s4d --client-secret a456a7s89da46s5f4a6f16a5sdf3as2d1f65a4sdf13`,
   ]
 
   static flags = {

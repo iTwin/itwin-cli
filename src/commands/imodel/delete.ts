@@ -10,6 +10,10 @@ import BaseCommand from "../../extensions/base-command.js";
 export default class DeleteIModel extends BaseCommand {
   static description = 'Delete an existing iModel.';
 
+  static examples = [
+    `<%= config.bin %> <%= command.id %> --imodel-id 5e19bee0-3aea-4355-a9f0-c6df9989ee7d`
+  ];
+
   static flags = {
     "imodel-id": Flags.string({
       char: 'm',

@@ -10,7 +10,22 @@ import BaseCommand from "../../extensions/base-command.js";
 
 export default class CreateITwin extends BaseCommand {
     static description = 'Create an iTwin';
-  
+
+    static examples = [
+      {
+        command: `<%= config.bin %> <%= command.id %> --class Thing --sub-class Asset --name "Golden Gate Revamp"`,
+        description: `Example 1: Creating an iTwin with the 'Thing' class and 'Asset' subclass`
+      },
+      {
+        command: `<%= config.bin %> <%= command.id %> --class Endeavor --sub-class Project --name "Bridge Construction" --geographic-location "San Francisco, CA" --iana-time-zone America/Los_Angeles`,
+        description: `Example 2: Creating an iTwin with the 'Endeavor' class and 'Project' subclass`
+      },
+      {
+        command: `<%= config.bin %> <%= command.id %> --class Endeavor --sub-class Program --name "Rail Network" --data-center-location "UK South" --status Trial`,
+        description: `Example 3: Creating an iTwin with data center location and status set to 'Trial'`
+      }
+    ];
+
     static flags = {
       class: Flags.string({
         description: 'The Class of your iTwin.',

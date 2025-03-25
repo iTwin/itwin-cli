@@ -9,7 +9,11 @@ import BaseCommand from "../../../extensions/base-command.js";
 
 export default class NamedVersionInfo extends BaseCommand {
     static description = 'Retrieve details about a specific named version in an iModel.';
-  
+
+    static examples = [
+      `<%= config.bin %> <%= command.id %> --imodel-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --named-version-id bf4d8b36-25d7-4b72-b38b-12c1f0325f42`
+    ];
+
     static flags = {
       "imodel-id": Flags.string({
         char: 'm',

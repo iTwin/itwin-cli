@@ -9,7 +9,11 @@ import BaseCommand from "../../../extensions/base-command.js";
 
 export default class DeleteConnection extends BaseCommand {
     static description = 'Delete a storage connection from an iModel.';
-  
+
+    static examples = [
+      `<%= config.bin %> <%= command.id %> --connection-id bf4d8b36-25d7-4b72-b38b-12c1f0325f42`
+    ];
+
     static flags = {
       "connection-id": Flags.string({
         char: 'c',

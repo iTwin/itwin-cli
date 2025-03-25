@@ -13,6 +13,10 @@ import BaseCommand from "../../../extensions/base-command.js";
 export default class ConnectionAuth extends BaseCommand {
   static description = 'Authenticate connector for user';
 
+  static examples = [
+    `<%= config.bin %> <%= command.id %>`
+  ];
+
   async run() {
     await this.parse(ConnectionAuth);
 

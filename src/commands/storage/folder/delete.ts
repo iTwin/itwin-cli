@@ -9,7 +9,11 @@ import BaseCommand from "../../../extensions/base-command.js";
 
 export default class DeleteFolder extends BaseCommand {
     static description = "Delete a folder from an iTwin's storage.";
-  
+
+    static examples = [
+      `<%= config.bin %> <%= command.id %> --folder-id a1b2c3d4-5678-90ab-cdef-1234567890ab`
+    ];
+
     static flags = {
       "folder-id": Flags.string({ char: 'f', description: "The ID of the folder to be deleted.", required: true }),
     };

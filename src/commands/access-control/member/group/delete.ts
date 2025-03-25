@@ -9,7 +9,11 @@ import BaseCommand from "../../../../extensions/base-command.js";
 
 export default class DeleteGroupMember extends BaseCommand {
     static description = 'Remove a group from an iTwin.';
-  
+
+    static examples = [
+      `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --group-id group1-id`
+    ];  
+    
     static flags = {
       "group-id": Flags.string({
         char: 'g',

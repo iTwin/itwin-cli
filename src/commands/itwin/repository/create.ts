@@ -10,7 +10,22 @@ import BaseCommand from "../../../extensions/base-command.js";
 
 export default class CreateRepository extends BaseCommand {
     static description = 'Create a new repository URI for iTwin data.';
-  
+
+    static examples = [
+      {
+        command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --class GeographicInformationSystem --sub-class WebMapTileService --uri https://example.com/repository1`,
+        description: 'Example 1: Creating a repository with Geographic Information System class'
+      },
+      {
+        command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --class Construction --sub-class Performance --uri https://example.com/repository2`,
+        description: 'Example 2: Creating a repository for Construction class with MapServer subclass'
+      },
+      {
+        command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --class Subsurface --sub-class EvoWorkspace --uri https://example.com/repository3`,
+        description: 'Example 3: Creating a repository for Subsurface class without specifying a subclass'
+      }
+    ];
+
     static flags = {
       class: Flags.string({
         description: 'The class of your iTwin repository.',

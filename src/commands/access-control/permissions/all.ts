@@ -7,6 +7,10 @@ import BaseCommand from "../../../extensions/base-command.js";
 
 export default class ListAllPermissions extends BaseCommand {
     static description = 'List all iTwin permissions.';
+
+    static examples = [
+      `<%= config.bin %> <%= command.id %>`
+    ];
   
     async run() {
       await this.parse(ListAllPermissions);

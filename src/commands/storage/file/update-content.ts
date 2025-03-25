@@ -9,7 +9,14 @@ import BaseCommand from "../../../extensions/base-command.js";
 
 export default class UpdateContent extends BaseCommand {
     static description = 'Update file content.';
-  
+
+    static examples = [
+      {
+        command: `<%= config.bin %> <%= command.id %> --file-id bf4d8b36-25d7-4b72-b38b-12c1f0325f42`,
+        description: 'Example 1: Get URL to update file content'
+      }
+    ];
+
     static flags = {
       "file-id": Flags.string({ char: 'f', description: 'The file id.', required: true }),
     };

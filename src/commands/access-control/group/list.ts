@@ -10,6 +10,10 @@ import BaseCommand from "../../../extensions/base-command.js";
 export default class ListAccessControlGroups extends BaseCommand {
     static description = 'List all groups for a specific iTwin.';
   
+    static examples = [
+      `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51`
+    ];
+    
     static flags = {
       "itwin-id": Flags.string({
         char: 'i',

@@ -9,6 +9,10 @@ import BaseCommand from "../../../../extensions/base-command.js";
 
 export default class InfoUserMember extends BaseCommand {
     static description = 'Retrieve details about a specific user member in an iTwin.';
+
+    static examples = [
+      `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --member-id user1-id`
+    ];
   
     static flags = {
       "itwin-id": Flags.string({

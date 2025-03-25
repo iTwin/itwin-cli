@@ -9,7 +9,22 @@ import BaseCommand from "../../../extensions/base-command.js";
 
 export default class CreateNamedVersion extends BaseCommand {
     static description = 'Create a new named version for a specific changeset in an iModel.';
-  
+
+    static examples = [
+      {
+        command: `<%= config.bin %> <%= command.id %> --imodel-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --changeset-id 2f3b4a8c92d747d5c8a8b2f9cde6742e5d74b3b5 --name "Version 1.0" --description "Initial release"`,
+        description: 'Example 1: Creating a named version with a description'
+      },
+      {
+        command: `<%= config.bin %> <%= command.id %> --imodel-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --name "Version 2.0"`,
+        description: 'Example 2: Creating a named version without specifying changesetId (uses the latest changeset)'
+      },
+      {
+        command: `<%= config.bin %> <%= command.id %> --imodel-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --changeset-id 4b8a5d9e8d534a71b02894f2a2b4e91d --name "Version 3.0"`,
+        description: 'Example 3: Creating a named version without a description'
+      }
+    ];
+
     static flags = {
       "changeset-id": Flags.string({
         description: 'The ID of the changeset for the named version.',

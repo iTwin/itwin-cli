@@ -10,6 +10,10 @@ import BaseCommand from "../../../extensions/base-command.js";
 export default class CreateAccessControlGroup extends BaseCommand {
     static description = 'Create a new group for an iTwin.';
   
+    static examples = [
+      `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --name "Engineering Team" --description "Group handling engineering tasks"`
+    ];
+
     static flags = {
       description: Flags.string({
         char: 'd',

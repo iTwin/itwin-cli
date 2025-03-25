@@ -9,7 +9,11 @@ import BaseCommand from "../../../extensions/base-command.js";
 
 export default class InfoRole extends BaseCommand {
     static description = 'Retrieve details about a specific role in an iTwin.';
-  
+
+    static examples = [
+      `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --role-id role1-id`
+    ];
+
     static flags = {
       "itwin-id": Flags.string({
         char: 'i',

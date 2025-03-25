@@ -9,7 +9,11 @@ import BaseCommand from "../../../extensions/base-command.js";
 
 export default class ChangesetInfo extends BaseCommand {
     static description = 'Retrieve details about a specific changeset of an iModel.';
-  
+
+    static examples = [
+      `<%= config.bin %> <%= command.id %> --imodel-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --changeset-id 2f3b4a8c92d747d5c8a8b2f9cde6742e5d74b3b5`
+    ];
+
     static flags = {
       "changeset-id": Flags.string({
         description: 'The ID of the changeset.',
