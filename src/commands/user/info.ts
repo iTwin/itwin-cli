@@ -9,7 +9,14 @@ import BaseCommand from "../../extensions/base-command.js";
 
 export default class UserInfo extends BaseCommand {
     static description = "Retrieve information about specific users based on their user IDs.";
-  
+
+    static examples = [
+      {
+        command: `<%= config.bin %> <%= command.id %> --user-id user1-id --user-id user2-id --user-id user3-id`,
+        description: 'Example 1: Retrieve information about specific users by their user IDs'
+      }
+    ];
+
     static flags = {
       "user-id": Flags.string({ 
         description: "User IDs to retrieve information for.", 

@@ -10,7 +10,26 @@ import BaseCommand from "../../extensions/base-command.js";
 
 export default class ListIModels extends BaseCommand {
     static description = 'Retrieve a list of iModels';
-  
+
+    static examples = [
+      {
+        command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51`,
+        description: 'Example 1: List all iModels for a specific iTwin'
+      },
+      {
+        command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --top 10 --order-by "name desc"`,
+        description: 'Example 2: List the first 10 iModels, ordered by name in descending order'
+      },
+      {
+        command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --search "Sun City"`,
+        description: 'Example 3: Search for iModels with "Sun City" in their name or description'
+      },
+      {
+        command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --state initialized`,
+        description: 'Example 4: List only initialized iModels'
+      }
+    ];
+
     static flags = {
       "itwin-id": Flags.string({
         char: 'i',

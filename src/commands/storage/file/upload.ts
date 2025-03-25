@@ -10,7 +10,18 @@ import BaseCommand from "../../../extensions/base-command.js";
 
 export default class FileUpload extends BaseCommand {
     static description = 'Upload a new file.';
-  
+
+    static examples = [
+      {
+        command: `<%= config.bin %> <%= command.id %> --upload-url https://example.com/upload-url --file-path /path/to/your/file.pdf`,
+        description: 'Example 1: Upload a PDF file to the storage'
+      },
+      {
+        command: `<%= config.bin %> <%= command.id %> --upload-url https://example.com/image-upload-url --file-path /path/to/your/image.jpg`,
+        description: 'Example 2: Upload an image file to the storage'
+      }
+    ];
+
     static flags = {
       "file-path": Flags.string({ char: 'f', description: 'The path to the file.', required: true }),
       "upload-url": Flags.string({ char: 'u', description: 'The url for the file to be uploaded to.', required: true }),

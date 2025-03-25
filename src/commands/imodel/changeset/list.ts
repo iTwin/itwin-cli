@@ -10,7 +10,26 @@ import BaseCommand from "../../../extensions/base-command.js";
 
 export default class ListChangesets extends BaseCommand {
     static description = 'List all changesets for a specific iModel.';
-  
+
+    static examples = [
+      {
+        command: `<%= config.bin %> <%= command.id %> --imodel-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --top 10`,
+        description: 'Example 1: List the first 10 changesets for a specific iModel'
+      },
+      {
+        command: `<%= config.bin %> <%= command.id %> --imodel-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --skip 5 --top 10`,
+        description: 'Example 2: Skip the first 5 changesets and return the next 10'
+      },
+      {
+        command: `<%= config.bin %> <%= command.id %> --imodel-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --after-index 100 --order-by asc`,
+        description: 'Example 3: List all changesets after a specific index in ascending order'
+      },
+      {
+        command: `<%= config.bin %> <%= command.id %> --imodel-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --last-index 200 --order-by desc`,
+        description: 'Example 4: List all changesets up to a specific index in descending order'
+      }
+    ];
+
     static flags = {
       "after-index": Flags.integer({
         description: 'List changesets after a specific index (exclusive).',

@@ -10,6 +10,13 @@ import BaseCommand from '../../extensions/base-command.js';
 export default class GetRootFolder extends BaseCommand {
   static description = 'Retrieve the top-level folders and files in an iTwin\'s storage.';
 
+	static examples = [
+    {
+      command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51`,
+      description: 'Example 1:'
+    }
+  ];
+
   static flags = {
     "itwin-id": Flags.string({
       char: 'i',

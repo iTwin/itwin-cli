@@ -10,7 +10,18 @@ import { authenticationType } from "../../../services/synchronizationClient/mode
 
 export default class UpdateStorageConnection extends BaseCommand {
     static description = 'Update an existing storage connection for an iModel.';
-  
+
+    static examples = [
+      {
+        command: `<%= config.bin %> <%= command.id %> --connection-id bf4d8b36-25d7-4b72-b38b-12c1f0325f42 --name "Updated Project Files"`,
+        description: 'Example 1: Updating a connection with a new display name'
+      },
+      {
+        command: `<%= config.bin %> <%= command.id %> --connection-id bf4d8b36-25d7-4b72-b38b-12c1f0325f42 --authentication-type Service`,
+        description: 'Example 2: Changing authentication type for a connection'
+      }
+    ];
+
     static flags = {
       "authentication-type": Flags.string({
         description: 'The authorization workflow type.',

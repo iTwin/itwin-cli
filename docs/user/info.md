@@ -11,7 +11,7 @@ Retrieve information about specific users based on their user IDs.
 ## Examples
 
 ```bash
-# Example: Retrieve information about specific users by their user IDs
+# Example 1: Retrieve information about specific users by their user IDs
 itp user info --user-id user1-id --user-id user2-id --user-id user3-id
 ```
 

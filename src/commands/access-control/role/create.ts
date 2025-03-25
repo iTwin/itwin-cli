@@ -9,7 +9,14 @@ import BaseCommand from "../../../extensions/base-command.js";
 
 export default class CreateRole extends BaseCommand {
     static description = 'Create a new role for an iTwin. To assign permissions after creation, use itp access-control role update.';
-  
+
+    static examples = [
+      {
+        command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --name "Project Manager" --description "Manages all aspects of the project"`,
+        description: 'Example 1:'
+      }
+    ];
+
     static flags = {
       description: Flags.string({
         char: 'd',

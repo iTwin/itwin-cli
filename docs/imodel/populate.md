@@ -33,7 +33,7 @@ itp imodel populate --imodel-id c2d3e4f5-6789-01ab-cdef-2345678901bc --file site
 # Example 3: Synchronizing CSV and IFC Files
 itp imodel populate --imodel-id d3e4f5g6-7890-12ab-cdef-3456789012cd --file data1.csv --file data2.csv --file model.ifc
 
-# Example: Synchronizing Revit and DGN Files
+# Example 4: Synchronizing Revit and DGN Files
 itp imodel populate --imodel-id i9j0k1l2-3456-78ab-cdef-9012345678ij --file model.rvt --file design.dgn
 ```
 
