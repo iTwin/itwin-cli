@@ -11,7 +11,10 @@ export default class DeleteFile extends BaseCommand {
     static description = "Delete a file from an iTwin's storage.";
 
     static examples = [
-      `<%= config.bin %> <%= command.id %> --file-id bf4d8b36-25d7-4b72-b38b-12c1f0325f42`
+      {
+        command: `<%= config.bin %> <%= command.id %> --file-id bf4d8b36-25d7-4b72-b38b-12c1f0325f42`,
+        description: 'Example 1:'
+      }
     ];
 
     static flags = {

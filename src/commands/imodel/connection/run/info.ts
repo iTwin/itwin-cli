@@ -11,7 +11,10 @@ export default class ConnectionRunInfo extends BaseCommand {
     static description = 'Get connector run info.';
 
     static examples = [
-      `<%= config.bin %> <%= command.id %> --connection-id abc12345-6789-4321-abcd-9876543210ef --connection-run-id run98765-4321-abcd-1234-567890abcdef`
+      {
+        command: `<%= config.bin %> <%= command.id %> --connection-id abc12345-6789-4321-abcd-9876543210ef --connection-run-id run98765-4321-abcd-1234-567890abcdef`,
+        description: 'Example 1:'
+      }
     ];
 
     static flags = {

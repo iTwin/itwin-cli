@@ -9,9 +9,12 @@ export default class ListAllPermissions extends BaseCommand {
     static description = 'List all iTwin permissions.';
 
     static examples = [
-      `<%= config.bin %> <%= command.id %>`
+      {
+        command: `<%= config.bin %> <%= command.id %>`,
+        description: 'Example 1:'
+      }
     ];
-  
+
     async run() {
       await this.parse(ListAllPermissions);
   

@@ -11,7 +11,10 @@ export default class DeleteRole extends BaseCommand {
     static description = 'Delete an existing role from an iTwin.';
 
     static examples = [
-      `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --role-id role1-id`
+      {
+        command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --role-id role1-id`,
+        description: 'Example 1:'
+      }
     ];
 
     static flags = {

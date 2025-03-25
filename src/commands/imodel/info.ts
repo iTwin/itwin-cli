@@ -10,8 +10,11 @@ import BaseCommand from "../../extensions/base-command.js";
 export class IModelInfo extends BaseCommand {
   static description = 'Retrieve metadata for the specified Model';
 
-  static examples = [
-    `<%= config.bin %> <%= command.id %> --imodel-id 5e19bee0-3aea-4355-a9f0-c6df9989ee7d`
+	static examples = [
+    {
+      command: `<%= config.bin %> <%= command.id %> --imodel-id 5e19bee0-3aea-4355-a9f0-c6df9989ee7d`,
+      description: 'Example 1:'
+    }
   ];
 
   static flags = {

@@ -11,7 +11,10 @@ export default class AccessControlMemberInvitations extends BaseCommand {
     static description = "Retrieve the list of pending invitations for an iTwin's members.";
 
     static examples = [
-      `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51`
+      {
+        command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51`,
+        description: 'Example 1:'
+      }
     ];
 
     static flags = {

@@ -11,9 +11,12 @@ export default class AddOwner extends BaseCommand {
     static description = 'Add a new owner to an iTwin by email.';
 
     static examples = [
-      `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --email john.owner@example.com`
+      {
+        command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --email john.owner@example.com`,
+        description: 'Example 1:'
+      }
     ];
-  
+
     static flags = {
       email: Flags.string({
         description: 'The email address of the new owner.',

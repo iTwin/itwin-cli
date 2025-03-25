@@ -12,7 +12,7 @@ export default class CreateConnectionRun extends BaseCommand {
 
     static examples = [
       {
-        command: '<%= config.bin %> <%= command.id %> --connection-id bf4d8b36-25d7-4b72-b38b-12c1f0325f42',
+        command: `<%= config.bin %> <%= command.id %> --connection-id bf4d8b36-25d7-4b72-b38b-12c1f0325f42`,
         description: 'Example 1: Running a storage connection for an iModel'
       }
     ];

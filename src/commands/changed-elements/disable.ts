@@ -11,7 +11,10 @@ export default class ChangedElementsDisable extends BaseCommand {
     static description = "Disable change tracking for a specified iModel.";
 
     static examples = [
-      `<%= config.bin %> <%= command.id %> --itwin-id 1a2b3c4d-5678-90ab-cdef-1234567890ab --imodel-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51`
+      {
+        command: `<%= config.bin %> <%= command.id %> --itwin-id 1a2b3c4d-5678-90ab-cdef-1234567890ab --imodel-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51`,
+        description: 'Example 1:'
+      }
     ];
 
     static flags = {

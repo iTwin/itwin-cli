@@ -11,7 +11,10 @@ export default class ConnectionSourceFileInfo extends BaseCommand {
     static description = 'Retrieve details about a specific source file in a storage connection of an iModel.';
 
     static examples = [
-      `<%= config.bin %> <%= command.id %> --connection-id bf4d8b36-25d7-4b72-b38b-12c1f0325f42 --source-file-id 297c8ab9-53a3-4fe5-adf8-79b4c1a95cbb`
+      {
+        command: `<%= config.bin %> <%= command.id %> --connection-id bf4d8b36-25d7-4b72-b38b-12c1f0325f42 --source-file-id 297c8ab9-53a3-4fe5-adf8-79b4c1a95cbb`,
+        description: 'Example 1:'
+      }
     ];
 
     static flags = {

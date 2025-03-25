@@ -11,7 +11,10 @@ export default class DeleteFolder extends BaseCommand {
     static description = "Delete a folder from an iTwin's storage.";
 
     static examples = [
-      `<%= config.bin %> <%= command.id %> --folder-id a1b2c3d4-5678-90ab-cdef-1234567890ab`
+      {
+        command: `<%= config.bin %> <%= command.id %> --folder-id a1b2c3d4-5678-90ab-cdef-1234567890ab`,
+        description: 'Example 1:'
+      }
     ];
 
     static flags = {

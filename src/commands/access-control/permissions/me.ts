@@ -10,8 +10,11 @@ import BaseCommand from "../../../extensions/base-command.js";
 export default class MyPermissions extends BaseCommand {
     static description = 'Retrieve a list of your permissions on a specified iTwin.';
 
-    static examples = [
-      `<%= config.bin %> <%= command.id %>`
+	static examples = [
+      {
+        command: `<%= config.bin %> <%= command.id %>`,
+        description: 'Example 1:'
+      }
     ];
 
     static flags = {

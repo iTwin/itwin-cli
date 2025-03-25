@@ -11,9 +11,12 @@ export default class DeleteOwner extends BaseCommand {
     static description = 'Remove an owner from an iTwin by their member ID.';
 
     static examples = [
-      `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --member-id user1-id`
+      {
+        command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --member-id user1-id`,
+        description: 'Example 1:'
+      }
     ];
-  
+
     static flags = {
       "itwin-id": Flags.string({
         char: 'i',
