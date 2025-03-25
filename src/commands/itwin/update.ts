@@ -10,7 +10,22 @@ import BaseCommand from "../../extensions/base-command.js";
 
 export default class UpdateCommand extends BaseCommand {
     static description = 'Update an iTwin';
-  
+
+    static examples = [
+      {
+        command: `<%= config.bin %> <%= command.id %> --itwin-id b1a2c3d4-5678-90ab-cdef-1234567890ab --name "Updated Portfolio"`,
+        description: `Example 1: Updating iTwin's display name`
+      },
+      {
+        command: `<%= config.bin %> <%= command.id %> --itwin-id b1a2c3d4-5678-90ab-cdef-1234567890ab --geographic-location "New York, NY" --iana-time-zone America/New_York`,
+        description: 'Example 2: Changing geographic location and time zone'
+      },
+      {
+        command: `<%= config.bin %> <%= command.id %> --itwin-id b1a2c3d4-5678-90ab-cdef-1234567890ab --status Inactive`,
+        description: `Example 3: Setting the iTwin's status to 'Inactive'`
+      }
+    ];
+
     static flags = {
       "geographic-location": Flags.string({
         description: 'Optional location, typically an address or city.',

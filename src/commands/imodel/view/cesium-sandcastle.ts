@@ -12,7 +12,18 @@ import { link, links } from "../../../services/general-models/links.js";
 
 export default class CesiumSandcastle extends BaseCommand {
     static description = "Setup iModel and get url to view it in Cesium Sandcastle";
-  
+
+    static examples = [
+      {
+        command: `<%= config.bin %> <%= command.id %> --imodel-id "5e19bee0-3aea-4355-a9f0-c6df9989ee7d" --changeset-id "2f3b4a8c92d747d5c8a8b2f9cde6742e5d74b3b5"`,
+        description: 'Example 1: Get a link to a specific changeset of an iModel in Cesium Sandcastle'
+      },
+      {
+        command: `<%= config.bin %> <%= command.id %> --imodel-id "5e19bee0-3aea-4355-a9f0-c6df9989ee7d" --changeset-id "2f3b4a8c92d747d5c8a8b2f9cde6742e5d74b3b5" --open`,
+        description: 'Example 2: Get a link to a specific changeset of an iModel in Cesium Sandcastle and open the URL in the browser'
+      }
+    ];
+
     static flags = {
       "changeset-id": Flags.string({
         description: "Changeset id to be viewed in Cesium Sandcastle.",

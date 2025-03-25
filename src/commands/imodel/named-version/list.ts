@@ -10,7 +10,26 @@ import BaseCommand from "../../../extensions/base-command.js";
 
 export default class ListNamedVersions extends BaseCommand {
     static description = 'List all named versions for a specific iModel.';
-  
+
+    static examples = [
+      {
+        command: `<%= config.bin %> <%= command.id %> --imodel-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --top 10`,
+        description: 'Example 1: List the first 10 named versions for a specific iModel'
+      },
+      {
+        command: `<%= config.bin %> <%= command.id %> --imodel-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --skip 5 --top 10`,
+        description: 'Example 2: Skip the first 5 named versions and return the next set'
+      },
+      {
+        command: `<%= config.bin %> <%= command.id %> --imodel-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --search "Milestone"`,
+        description: `Example 3: Search for named versions containing 'Milestone'`
+      },
+      {
+        command: `<%= config.bin %> <%= command.id %> --imodel-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --name "Version 2.0" --order-by "changesetIndex desc"`,
+        description: 'Example 4: Filter named versions by exact name and sort in descending order by changesetIndex'
+      }
+    ];
+
     static flags = {
       "imodel-id": Flags.string({
         char: 'm',

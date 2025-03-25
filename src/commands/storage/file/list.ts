@@ -9,7 +9,18 @@ import BaseCommand from "../../../extensions/base-command.js";
 
 export default class ListFiles extends BaseCommand {
     static description = "List files in a folder of an iTwin's storage. Optionally, include subfolders in the result.";
-  
+
+    static examples = [
+      {
+        command: `<%= config.bin %> <%= command.id %> --folder-id b1a2c3d4-5678-90ab-cdef-1234567890ab`,
+        description: 'Example 1: List files in a specific folder'
+      },
+      {
+        command: `<%= config.bin %> <%= command.id %> --folder-id b1a2c3d4-5678-90ab-cdef-1234567890ab --include-folders true`,
+        description: 'Example 2: List files and include subfolders in the result'
+      }
+    ];
+
     static flags = {
       "folder-id": Flags.string({ char: 'f', description: "The ID of the folder whose files you want to list.", required: true }),
       "include-folders": Flags.boolean({ description: "Whether to include subfolders in the result." }),

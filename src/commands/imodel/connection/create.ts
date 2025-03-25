@@ -13,6 +13,17 @@ import { storageFileCreate } from "../../../services/synchronizationClient/model
 export default class CreateConnection extends BaseCommand {
   static description = 'Create a new connector.';
 
+	static examples = [
+    {
+      command: `<%= config.bin %> <%= command.id %> --imodel-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --file-id t5bDFuN4qUa9ojVw1E5FGtldp8BgSbNCiJ2XMdiT-cA --connector-type MSTN`,
+      description: 'Example 1: Minimal example with only required options'
+    },
+    {
+      command: `<%= config.bin %> <%= command.id %> --imodel-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --name "Engineering Files" --authentication-type Service --file-id t5bDFuN4qUa9ojVw1E5FGtldp8BgSbNCiJ2XMdiT-cA --connector-type MSTN --file-id g4ec1dc8c4f6173004f9f881914a57c5511a336d --connector-type DWG`,
+      description: 'Example 2: Creating a connection with Service authentication'
+    }
+  ];
+
   static flags = {
     "authentication-type": Flags.string({ 
       description: 'The authorization workflow type.', 

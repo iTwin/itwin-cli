@@ -10,9 +10,12 @@ export default class Logout extends BaseCommand {
 
   static description = 'Log out of the Bentley authentication session. This command clears the current authentication tokens and configuration.'
 
-  static examples = [
-    `<%= config.bin %> <%= command.id %>`,
-  ]
+	static examples = [
+    {
+      command: `<%= config.bin %> <%= command.id %>`,
+      description: 'Example 1:'
+    }
+  ];
 
   static flags = {}
 

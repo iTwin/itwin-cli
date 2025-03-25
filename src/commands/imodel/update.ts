@@ -10,7 +10,14 @@ import BaseCommand from "../../extensions/base-command.js";
 
 export default class UpdateCommand extends BaseCommand {
     static description = 'Update an iModel in an iTwin';
-  
+
+    static examples = [
+      {
+        command: `<%= config.bin %> <%= command.id %> --imodel-id 5e19bee0-3aea-4355-a9f0-c6df9989ee7d --name "Updated Sun City Renewable-energy Plant" --description "Updated overall model of wind and solar farms in Sun City" --extent '{ "southWest": { "latitude": 46.13267702834806, "longitude": 7.672120009938448 }, "northEast": { "latitude": 46.302763954781234, "longitude": 7.835541640797823 }}'`,
+        description: 'Example 1:'
+      }
+    ];
+
     static flags = {
       description: Flags.string({
         char: 'd',

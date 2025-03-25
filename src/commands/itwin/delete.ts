@@ -9,7 +9,14 @@ import BaseCommand from "../../extensions/base-command.js";
 
 export default class DeleteITwin extends BaseCommand {
     static description = 'Delete an iTwin';
-  
+
+    static examples = [
+      {
+        command: `<%= config.bin %> <%= command.id %> --itwin-id b1a2c3d4-5678-90ab-cdef-1234567890ab`,
+        description: 'Example 1:'
+      }
+    ];
+
     static flags = {
       "itwin-id": Flags.string({
         char: 'i',

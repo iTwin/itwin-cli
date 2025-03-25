@@ -10,9 +10,12 @@ export default class Info extends BaseCommand {
 
   static description = 'Display authentication information. This command access current authentication storage and returns cached information about the current auth profile.'
 
-  static examples = [
-    `<%= config.bin %> <%= command.id %>`,
-  ]
+	static examples = [
+    {
+      command: `<%= config.bin %> <%= command.id %>`,
+      description: 'Example 1:'
+    }
+  ];
 
   static flags = {}
 

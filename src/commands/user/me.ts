@@ -10,9 +10,12 @@ export default class Me extends BaseCommand {
 
   static description = 'Retrieve information about the currently authenticated user.'
 
-  static examples = [
-    `<%= config.bin %> <%= command.id %>`,
-  ]
+	static examples = [
+    {
+      command: `<%= config.bin %> <%= command.id %>`,
+      description: 'Example 1:'
+    }
+  ];
 
   static flags = {}
 

@@ -10,7 +10,30 @@ import BaseCommand from "../../extensions/base-command.js";
 
 export default class ListITwins extends BaseCommand {
     static description = 'List of iTwins';
-  
+
+    static examples = [
+      {
+        command: `<%= config.bin %> <%= command.id %>`,
+        description: 'Example 1: Getting all itwins'
+      },
+      {
+        command: `<%= config.bin %> <%= command.id %> --sub-class Project --status Active`,
+        description: 'Example 2: Filtering by subClass and status'
+      },
+      {
+        command: `<%= config.bin %> <%= command.id %> --sub-class Program --type Luxury --top 10`,
+        description: 'Example 3: Limiting the number of returned results and filtering by type'
+      },
+      {
+        command: `<%= config.bin %> <%= command.id %> --sub-class Asset --name "Solar Farm" --include-inactive true`,
+        description: 'Example 4: Searching by display name and including inactive iTwins'
+      },
+      {
+        command: `<%= config.bin %> <%= command.id %> --sub-class WorkPackage --parent-id b1a2c3d4-5678-90ab-cdef-1234567890ab --skip 5`,
+        description: 'Example 5: Filtering by parent iTwin ID and skipping the first 5 results'
+      }
+    ];
+
     static flags = {
       "include-inactive": Flags.boolean({
         description: 'Include Inactive iTwins in the result.',

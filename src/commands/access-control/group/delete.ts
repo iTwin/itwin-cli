@@ -9,7 +9,14 @@ import BaseCommand from "../../../extensions/base-command.js";
 
 export default class DeleteAccessControlGroup extends BaseCommand {
     static description = 'Delete an existing group from an iTwin.';
-  
+
+    static examples = [
+      {
+        command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --group-id bf4d8b36-25d7-4b72-b38b-12c1f0325f42`,
+        description: 'Example 1:'
+      }
+    ];
+
     static flags = {
       "group-id": Flags.string({
         char: 'g',
