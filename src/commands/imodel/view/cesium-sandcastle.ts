@@ -3,20 +3,20 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
+import { Changeset } from "@itwin/imodels-client-management";
 import { Flags } from "@oclif/core";
 import open from 'open';
 import { deflate } from "pako";
 
 import BaseCommand from "../../../extensions/base-command.js";
 import { link, links } from "../../../services/general-models/links.js";
-import { Changeset } from "@itwin/imodels-client-management";
 
 export default class CesiumSandcastle extends BaseCommand {
     static description = "Setup iModel and get url to view it in Cesium Sandcastle";
 
     static examples = [
       {
-        command: `<%= config.bin %> <%= command.id %> --imodel-id 5e19bee0-3aea-4355-a9f0-c6df9989ee7d `,
+        command: `<%= config.bin %> <%= command.id %> --imodel-id 5e19bee0-3aea-4355-a9f0-c6df9989ee7d`,
         description: 'Example 1: Get a link to an iModel in Cesium Sandcastle'
       },
       {

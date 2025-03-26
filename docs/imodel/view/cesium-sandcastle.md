@@ -19,11 +19,14 @@ Setup iModel and get URL to view it in Cesium Sandcastle.
 ## Examples
 
 ```bash
-# Example 1: Get a link to a specific changeset of an iModel in Cesium Sandcastle
-itp imodel view cesium-sandcastle --imodel-id "5e19bee0-3aea-4355-a9f0-c6df9989ee7d" --changeset-id "2f3b4a8c92d747d5c8a8b2f9cde6742e5d74b3b5"
+# Example 1: Get a link to an iModel in Cesium Sandcastle
+itp imodel view cesium-sandcastle --imodel-id 5e19bee0-3aea-4355-a9f0-c6df9989ee7d
 
-# Example 2: Get a link to a specific changeset of an iModel in Cesium Sandcastle and open the URL in the browser
-itp imodel view cesium-sandcastle --imodel-id "5e19bee0-3aea-4355-a9f0-c6df9989ee7d" --changeset-id "2f3b4a8c92d747d5c8a8b2f9cde6742e5d74b3b5" --open
+# Example 2: Get a link to a specific changeset of an iModel in Cesium Sandcastle
+itp imodel view cesium-sandcastle --imodel-id 5e19bee0-3aea-4355-a9f0-c6df9989ee7d --changeset-id 2f3b4a8c92d747d5c8a8b2f9cde6742e5d74b3b5
+
+# Example 3: Get a link to a specific changeset of an iModel in Cesium Sandcastle and open the URL in the browser
+itp imodel view cesium-sandcastle --imodel-id 5e19bee0-3aea-4355-a9f0-c6df9989ee7d --changeset-id 2f3b4a8c92d747d5c8a8b2f9cde6742e5d74b3b5 --open
 ```
 
 ## API Reference
