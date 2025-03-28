@@ -5,3 +5,4 @@ Workflow reference for combined commands (such as `imodel populate`) that combin
 ## Workflows
 
 - [Synchronization](combined-commands/synchronization.md)
+- [Cesium Sandcastle Export](combined-commands/cesium-sandcastle.md)
