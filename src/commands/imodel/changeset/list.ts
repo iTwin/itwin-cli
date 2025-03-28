@@ -3,7 +3,7 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { Changeset, ChangesetOrderByProperty, OrderBy, OrderByOperator } from "@itwin/imodels-client-management";
+import { Changeset, ChangesetOrderByProperty, OrderBy, OrderByOperator, take, toArray } from "@itwin/imodels-client-management";
 import { Flags } from "@oclif/core";
 
 import BaseCommand from "../../../extensions/base-command.js";
@@ -70,23 +70,22 @@ export default class ListChangesets extends BaseCommand {
         property: ChangesetOrderByProperty.Index
       } : undefined;
 
+      const urlParams = {
+        $orderBy: orderBy,
+        $skip: flags.skip,
+        $top: flags.top,
+        afterIndex: flags["after-index"],
+        lastIndex: flags["last-index"]
+      };
+
       const changesetList = client.changesets.getRepresentationList({
           authorization,
           iModelId: flags["imodel-id"],
-          urlParams: {
-              $orderBy: orderBy,
-              $skip: flags.skip,
-              $top: flags.top,
-              afterIndex: flags["after-index"],
-              lastIndex: flags["last-index"]
-          },
+          urlParams
       });
 
-      const result: Changeset[] = [];
-      for await (const changeset of changesetList) {
-        result.push(changeset);
-      }
-  
+      const result : Changeset[] = await (flags.top ? take(changesetList, flags.top) : toArray(changesetList));
+
       return this.logAndReturnResult(result);
     }
   }
