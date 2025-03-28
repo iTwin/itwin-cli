@@ -3,6 +3,7 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
+import { Changeset } from "@itwin/imodels-client-management";
 import { Flags } from "@oclif/core";
 import open from 'open';
 import { deflate } from "pako";
@@ -15,19 +16,23 @@ export default class CesiumSandcastle extends BaseCommand {
 
     static examples = [
       {
-        command: `<%= config.bin %> <%= command.id %> --imodel-id "5e19bee0-3aea-4355-a9f0-c6df9989ee7d" --changeset-id "2f3b4a8c92d747d5c8a8b2f9cde6742e5d74b3b5"`,
-        description: 'Example 1: Get a link to a specific changeset of an iModel in Cesium Sandcastle'
+        command: `<%= config.bin %> <%= command.id %> --imodel-id 5e19bee0-3aea-4355-a9f0-c6df9989ee7d`,
+        description: 'Example 1: Get a link to an iModel in Cesium Sandcastle'
       },
       {
-        command: `<%= config.bin %> <%= command.id %> --imodel-id "5e19bee0-3aea-4355-a9f0-c6df9989ee7d" --changeset-id "2f3b4a8c92d747d5c8a8b2f9cde6742e5d74b3b5" --open`,
-        description: 'Example 2: Get a link to a specific changeset of an iModel in Cesium Sandcastle and open the URL in the browser'
+        command: `<%= config.bin %> <%= command.id %> --imodel-id 5e19bee0-3aea-4355-a9f0-c6df9989ee7d --changeset-id 2f3b4a8c92d747d5c8a8b2f9cde6742e5d74b3b5`,
+        description: 'Example 2: Get a link to a specific changeset of an iModel in Cesium Sandcastle'
+      },
+      {
+        command: `<%= config.bin %> <%= command.id %> --imodel-id 5e19bee0-3aea-4355-a9f0-c6df9989ee7d --changeset-id 2f3b4a8c92d747d5c8a8b2f9cde6742e5d74b3b5 --open`,
+        description: 'Example 3: Get a link to a specific changeset of an iModel in Cesium Sandcastle and open the URL in the browser'
       }
     ];
 
     static flags = {
       "changeset-id": Flags.string({
-        description: "Changeset id to be viewed in Cesium Sandcastle.",
-        required: true
+        description: "Changeset id to be viewed in Cesium Sandcastle. If not provided, the latest changeset will be used.",
+        required: false
       }),
       "imodel-id": Flags.string({ 
         char: "m", 
@@ -96,7 +101,17 @@ export default class CesiumSandcastle extends BaseCommand {
     async run() {
       const { flags } = await this.parse(CesiumSandcastle);
 
-      const exportInfo : ExportInfo = await this.getOrCreateExport(flags["imodel-id"], flags["changeset-id"]);      
+      let changesetId = flags["changeset-id"];
+      if (changesetId === undefined) {
+        const existingChangesets = await this.runCommand<Changeset[]>("imodel:changeset:list", ["-m", flags["imodel-id"], "--top", "1", "--order-by", "desc"]);
+        if (existingChangesets.length === 0) {
+          this.error(`No changesets found for iModel: ${flags["imodel-id"]}`);
+        }
+
+        changesetId = existingChangesets[0].id;
+      }
+
+      const exportInfo : ExportInfo = await this.getOrCreateExport(flags["imodel-id"], changesetId);      
       
       this.log(`Extracting tileset URL from export info`);
       const tilesetUrl : string = extractTileSetUrl(exportInfo);
