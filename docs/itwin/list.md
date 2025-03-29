@@ -48,7 +48,7 @@ List all iTwins the calling user is a member of.
 
 - **`--include-inactive`**  
   Include inactive iTwins in the result.  
-  **Type:** `boolean` **Required:** No
+  **Type:** `flag` **Required:** No
 
 ## Examples
 
@@ -63,7 +63,7 @@ itp itwin list --sub-class Project --status Active
 itp itwin list --sub-class Program --type Luxury --top 10
 
 # Example 4: Searching by display name and including inactive iTwins
-itp itwin list --sub-class Asset --name "Solar Farm" --include-inactive true
+itp itwin list --sub-class Asset --name "Solar Farm" --include-inactive
 
 # Example 5: Filtering by parent iTwin ID and skipping the first 5 results
 itp itwin list --sub-class WorkPackage --parent-id b1a2c3d4-5678-90ab-cdef-1234567890ab --skip 5

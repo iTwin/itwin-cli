@@ -1,21 +1,24 @@
 # global options
 
-These options are available across all commands in the CLI.
+These options are available across all CLI commands:
 
-- **`-t, --table`**  
-  Output the command response in a human-readable table format.  
-  **Type:** `flag` **Required:** No
-
-- **`-j, --json`**  
-  Pretty format the JSON command response and supress all logging.
-  **Type:** `flag` **Required:** No
+- **`-t, --table`** – Output response in a human-readable table.  
+- **`-j, --json`** – Pretty-print JSON output, suppress all logging.  
+- **`-h, --help`** – Show help for the command, including usage and available options.  
 
 ## Examples
 
 ```bash
-# Example 1: Using the --table option
+# Output as a table
 itp itwin list --sub-class Project --table
 
-# Example 2: Using the --json option
+# Output as pretty JSON
 itp itwin list --sub-class Project --json
+
+# Show help for a specific command
+itp itwin list --help
+
+# Show help and subcommands for a base command
+itp --help
+itp itwin --help
 ```
