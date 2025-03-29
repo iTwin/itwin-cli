@@ -9,12 +9,12 @@ Create a storage connection that describes files from storage to synchronize wit
   **Type:** `string` **Required:** Yes
 
 - **`-f, --file-id`**  
-  The ID of the storage file to synchronize
+  The ID of the storage file to synchronize.  
   **Type:** `array` **Required:** Yes **Multiple:** Yes
 
 - **`--connector-type`**
-  The connector type of your file. Each connector will be used for the corresponding file in the files list (first connector for the first file, second connector for the second file, and so on).
-  **Type:** `array` **Required:** Yes **Multiple:** Yes
+  The connector type of your file. Each connector will be used for the corresponding file in the files list (first connector for the first file, second connector for the second file, and so on).  
+  **Type:** `array` **Required:** Yes **Multiple:** Yes  
   **Valid Values:** `"AUTOPLANT", "CIVIL", "CIVIL3D", "DWG", "GEOSPATIAL", "IFC", "MSTN", "NWD", "OBD", "OPENTOWER", "REVIT", "SPPID", "SPXREVIEW"`
 
 - **`-n, --name`**  

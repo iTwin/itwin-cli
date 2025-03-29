@@ -9,16 +9,16 @@ Synchronize design files into an iModel.
   **Type:** `string` **Required:** Yes
 
 - **`--file`**  
-  A list of source files to synchronize into the iModel.
+  A list of source files to synchronize into the iModel.  
   **Type:** `string`  **Required:** Yes **Multiple:** Yes
 
--- **`--no-wait`**
-  Do not wait for the synchronization process to complete.
+- **`--no-wait`**
+  Do not wait for the synchronization process to complete.  
   **Type:** `flag` **Required:** No
 
 - **`--connector-type`**  
-  Specify connectors to prioritize for synchronization. This flag can be provided multiple times. If only one connector is specified, it will be used for all files. If multiple connectors are specified, each connector will be used for the corresponding file in the files list (first connector for the first file, second connector for the second file, and so on). 
-  **Type:** `string` **Required:** No  **Multiple:** Yes
+  Specify connectors to prioritize for synchronization. This flag can be provided multiple times. If only one connector is specified, it will be used for all files. If multiple connectors are specified, each connector will be used for the corresponding file in the files list (first connector for the first file, second connector for the second file, and so on).  
+  **Type:** `string` **Required:** No  **Multiple:** Yes  
   **Valid Values:** `"SHELLEDWCSV"`, `"CIVIL"`, `"MSTN"`, `"OBD"`, `"PROSTRUCTURES"`, `"AUTOPLANT"`, `"AVEVAPID"`, `"CIVIL3D"`, `"DWG"`, `"IFC"`, `"GEOSPATIAL"`, `"OPENTOWER"`, `"REVIT"`, `"SPPID"`, `"SPXREVIEW"`, `"AVEVADIAGRAMS"`, `"NWD"`, `"INTELLIPID"`, `"PSEXCEL"`
 
 ## Examples

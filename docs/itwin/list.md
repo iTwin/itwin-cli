@@ -5,7 +5,7 @@ List all iTwins the calling user is a member of.
 ## Options
 
 - **`--sub-class`**  
-  Filter by the subClass of the iTwin.
+  Filter by the subClass of the iTwin.  
   **Type:** `string` **Required:** No  
   **Valid Values:** `"Account"`, `"Portfolio"`, `"Asset"`, `"Program"`, `"Project"`, `"WorkPackage"`
 
