@@ -20,6 +20,7 @@ export default class UserInfo extends BaseCommand {
     static flags = {
       "user-id": Flags.string({ 
         description: "User IDs to retrieve information for.", 
+        helpValue: '<string>',
         multiple: true,
         required: true
       }),

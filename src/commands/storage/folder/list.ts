@@ -22,8 +22,15 @@ export default class ListFolders extends BaseCommand {
     ];
 
     static flags = {
-      "folder-id": Flags.string({ char: 'f', description: "The ID of the parent folder whose contents you want to list.", required: true }),
-      "include-files": Flags.boolean({ description: "Whether to include files in the result." }),
+      "folder-id": Flags.string({ 
+        char: 'f',
+        description: "The ID of the parent folder whose contents you want to list.",
+        helpValue: '<string>',
+        required: true 
+      }),
+      "include-files": Flags.boolean({ 
+        description: "Whether to include files in the result.",
+      }),
     };
   
     async run() {

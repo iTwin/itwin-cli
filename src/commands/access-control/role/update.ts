@@ -25,25 +25,30 @@ export default class UpdateRole extends BaseCommand {
       description: Flags.string({
         char: 'd',
         description: 'The updated description of the role.',
+        helpValue: '<string>',
         required: false,
       }),
       "itwin-id": Flags.string({
         char: 'i',
         description: 'The ID of the iTwin where the role exists.',
+        helpValue: '<string>',
         required: true,
       }),
       name: Flags.string({
         char: 'n',
         description: 'The updated name of the role.',
+        helpValue: '<string>',
         required: false,
       }),
       permissions: Flags.string({
         description: 'A list of permissions to assign to the role.',
+        helpValue: '<string>',
         multiple: true,
         required: false,
       }),
       "role-id": Flags.string({
         description: 'The ID of the role to be updated.',
+        helpValue: '<string>',
         required: true,
       }),
     };

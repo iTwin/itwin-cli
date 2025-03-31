@@ -34,27 +34,33 @@ export default class ListNamedVersions extends BaseCommand {
       "imodel-id": Flags.string({
         char: 'm',
         description: 'The ID of the iModel whose named versions you want to list.',
+        helpValue: '<string>',
         required: true,
       }),
       name: Flags.string({
         char: 'n',
         description: 'Filter named versions by exact name.',
+        helpValue: '<string>',
         required: false,
       }),
       "order-by": Flags.string({
         description: 'Sort by changesetIndex or createdDateTime, in asc or desc order (ex: "changesetIndex desc").',
+        helpValue: '<string>',
         required: false,
       }),
       search: Flags.string({
         description: 'Search named versions by name or description.',
+        helpValue: '<string>',
         required: false,
       }),
       skip: Flags.integer({
         description: 'Skip a number of named versions in the result.',
+        helpValue: '<integer>',
         required: false,
       }),
       top: Flags.integer({
         description: 'Limit the number of named versions returned.',
+        helpValue: '<integer>',
         required: false,
       }),
     };

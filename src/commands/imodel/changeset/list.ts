@@ -33,28 +33,34 @@ export default class ListChangesets extends BaseCommand {
     static flags = {
       "after-index": Flags.integer({
         description: 'List changesets after a specific index (exclusive).',
+        helpValue: '<integer>',
         required: false,
       }),
       "imodel-id": Flags.string({
         char: 'm',
         description: 'The ID of the iModel whose changesets you want to list.',
+        helpValue: '<string>',
         required: true,
       }),
       "last-index": Flags.integer({
         description: 'List changesets up to a specific index (inclusive).',
+        helpValue: '<integer>',
         required: false,
       }),
       "order-by": Flags.string({
         description: 'Order the changesets by their index. Can be asc for ascending or desc for descending order.',
+        helpValue: '<string>',
         options: ["asc", "desc"],
         required: false,
       }),
       skip: Flags.integer({
         description: 'The number of changesets to skip.',
+        helpValue: '<integer>',
         required: false,
       }),
       top: Flags.integer({
         description: 'The maximum number of changesets to return.',
+        helpValue: '<integer>',
         required: false,
       }),
     };

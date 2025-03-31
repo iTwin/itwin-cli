@@ -20,6 +20,8 @@ export default class Me extends BaseCommand {
   static flags = {}
 
   async run() {
+    const t = this.config.commands;
+    console.log(t);
     const userApiClient = await this.getUserApiClient()
     const userInfo = await userApiClient.getMe();
 

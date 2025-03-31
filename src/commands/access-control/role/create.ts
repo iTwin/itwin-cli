@@ -21,16 +21,19 @@ export default class CreateRole extends BaseCommand {
       description: Flags.string({
         char: 'd',
         description: 'A description of your Role.',
+        helpValue: '<string>',
         required: true,
       }),
       "itwin-id": Flags.string({
         char: 'i',
         description: 'The ID of the iTwin to retrieve permissions.',
+        helpValue: '<string>',
         required: true,
       }),
       name: Flags.string({
         char: 'n',
         description: 'The display name of your Role.',
+        helpValue: '<string>',
         required: true,
       }),
     };

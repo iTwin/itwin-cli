@@ -29,47 +29,57 @@ export default class CreateITwin extends BaseCommand {
     static flags = {
       class: Flags.string({
         description: 'The Class of your iTwin.',
+        helpValue: '<string>',
         options: ["Account", "Thing", "Endeavor"],
         required: true,
       }),
       "data-center-location": Flags.string({
         description: 'Data center for iTwin data. Defaults to East US.',
+        helpValue: '<string>',
         options: ['East US', 'North Europe', 'West Europe', 'Southeast Asia', 'Australia East', 'UK South', 'Canada Central', 'Central India', 'Japan East'],
         required: false,
       }),
       "geographic-location": Flags.string({
         description: 'Optional location, typically an address or city.',
+        helpValue: '<string>',
         required: false
       }),
       "iana-time-zone": Flags.string({
         description: 'Optional IANA time zone ID.',
+        helpValue: '<string>',
         required: false,
       }),
       name: Flags.string({
         char: 'n',
         description: "The iTwin's display name.",
+        helpValue: '<string>',
         required: true,
       }),
       number: Flags.string({
         description: 'Unique identifier for the iTwin. Defaults to iTwin Id if unspecified.',
+        helpValue: '<string>',
         required: false,
       }),
       "parent-id": Flags.string({
         description: "Optional parent iTwin Id. Defaults to user's Account iTwin.",
+        helpValue: '<string>',
         required: false,
       }),
       status: Flags.string({
         description: 'Status of the iTwin. Defaults to Active.',
+        helpValue: '<string>',
         options: ['Active', 'Inactive', 'Trial'],
         required: false,
       }),
       "sub-class": Flags.string({
         description: 'The subClass of your iTwin.',
+        helpValue: '<string>',
         options: ["Account", "Portfolio", "Asset", "Program", "Project", "WorkPackage"],
         required: true,
       }),
       type: Flags.string({
         description: "An open ended property to better define your iTwin's Type.",
+        helpValue: '<string>',
         required: false,
       }),
     };

@@ -22,9 +22,22 @@ export default class UpdateFolder extends BaseCommand {
     ];
 
     static flags = {
-      description: Flags.string({ char: 'd', description: "A description for the folder." }),
-      "folder-id": Flags.string({ char: 'f', description: "The ID of the folder to be updated.", required: true }),
-      name: Flags.string({ char: 'n', description: "The new display name for the folder." }),
+      description: Flags.string({ 
+        char: 'd', 
+        description: "A description for the folder.",
+        helpValue: '<string>',
+      }),
+      "folder-id": Flags.string({ 
+        char: 'f', 
+        description: "The ID of the folder to be updated.", 
+        helpValue: '<string>',
+        required: true 
+      }),
+      name: Flags.string({ 
+        char: 'n', 
+        description: "The new display name for the folder.",
+        helpValue: '<string>',
+      }),
     };
   
     async run() {

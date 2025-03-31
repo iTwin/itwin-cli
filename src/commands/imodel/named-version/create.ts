@@ -28,21 +28,25 @@ export default class CreateNamedVersion extends BaseCommand {
     static flags = {
       "changeset-id": Flags.string({
         description: 'The ID of the changeset for the named version.',
+        helpValue: '<string>',
         required: false,
       }),
       description: Flags.string({
         char: 'd',
         description: 'A description for the named version.',
+        helpValue: '<string>',
         required: false,
       }),
       "imodel-id": Flags.string({
         char: 'm',
         description: 'The ID of the iModel where the named version will be created.',
+        helpValue: '<string>',
         required: true,
       }),
       name: Flags.string({
         char: 'n',
         description: 'The name of the new named version.',
+        helpValue: '<string>',
         required: true,
       }),
     };

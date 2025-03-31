@@ -23,9 +23,22 @@ export default class CreateFolder extends BaseCommand {
     ];
 
     static flags = {
-      description: Flags.string({ char: 'd', description: "A description of the folder." }),
-      name: Flags.string({ char: 'n', description: "The display name of the folder to be created.", required: true }),
-      "parent-folder-id": Flags.string({ description: "The ID of the parent folder where the new folder will be created.", required: true }),
+      description: Flags.string({ 
+        char: 'd', 
+        description: "A description of the folder.",
+        helpValue: '<string>'
+      }),
+      name: Flags.string({ 
+        char: 'n', 
+        description: "The display name of the folder to be created.", 
+        helpValue: '<string>',
+        required: true 
+      }),
+      "parent-folder-id": Flags.string({ 
+        description: "The ID of the parent folder where the new folder will be created.", 
+        helpValue: '<string>',
+        required: true 
+      }),
     };
   
     async run() {

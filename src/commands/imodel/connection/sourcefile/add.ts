@@ -22,10 +22,12 @@ export default class CreateConnectionSourceFile extends BaseCommand {
       "connection-id": Flags.string({
         char: 'c',
         description: 'The ID of the storage connection to which the source file will be added.',
+        helpValue: '<string>',
         required: true,
       }),
       "connector-type": Flags.string({
         description: 'The connector type for synchronization.',
+        helpValue: '<string>',
         options: [
           'AUTOPLANT', 'CIVIL', 'CIVIL3D', 'DWG', 'IFC', 'MSTN', 'REVIT', 
           'OPENROADS', 'SPX', 'XER', 'PRIMAVERA', 'SYNCHRO', 'MICROSTATION'
@@ -34,6 +36,7 @@ export default class CreateConnectionSourceFile extends BaseCommand {
       }),
       "storage-file-id": Flags.string({
         description: 'The storage file ID.',
+        helpValue: '<string>',
         required: true,
       }),
     };

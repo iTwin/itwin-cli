@@ -21,6 +21,7 @@ export default class AccessControlMemberInvitations extends BaseCommand {
       "itwin-id": Flags.string({
         char: 'i',
         description: "The ID of the iTwin whose member invitations you want to retrieve.",
+        helpValue: '<string>',
         required: true,
       }),
     };

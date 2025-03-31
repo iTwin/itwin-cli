@@ -20,11 +20,13 @@ export default class AddOwner extends BaseCommand {
     static flags = {
       email: Flags.string({
         description: 'The email address of the new owner.',
+        helpValue: '<string>',
         required: true,
       }),
       "itwin-id": Flags.string({
         char: 'i',
         description: 'The ID of the iTwin to which the owner will be added.',
+        helpValue: '<string>',
         required: true,
       }),
     };

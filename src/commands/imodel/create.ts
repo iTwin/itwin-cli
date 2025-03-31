@@ -26,20 +26,24 @@ export default class CreateIModel extends BaseCommand {
       description: Flags.string({
         char: 'd',
         description: 'A description for the iModel.',
+        helpValue: '<string>',
         required: false,
       }),
       extent: Flags.string({
         description: 'The maximum rectangular area on Earth that encloses the iModel, defined by its southwest and northeast corners.',
+        helpValue: '<string>',
         required: false,
       }),
       "itwin-id": Flags.string({
         char: 'i',
         description: 'The ID of the iTwin where the iModel should be created.',
+        helpValue: '<string>',
         required: true,
       }),
       name: Flags.string({
         char: 'n',
         description: 'The name of the iModel.',
+        helpValue: '<string>',
         required: true,
       }),
     };
