@@ -27,11 +27,13 @@ export default class CreateConnection extends BaseCommand {
   static flags = {
     "authentication-type": Flags.string({ 
       description: 'The authorization workflow type.', 
+      helpValue: '<string>',
       options: ['User', 'Service'], 
       required: false 
     }),
     "connector-type": Flags.string({ 
       description: 'The connector type of your file. Each connector will be used for the corresponding file in the files list (first connector for the first file, second connector for the second file, and so on).', 
+      helpValue: '<string>',
       multiple: true,
       options: [
         'AUTOPLANT',
@@ -54,17 +56,20 @@ export default class CreateConnection extends BaseCommand {
     "file-id": Flags.string({ 
       char: 'f',
       description: 'The ID of the storage file to synchronize', 
+      helpValue: '<string>',
       multiple: true,
       required: true
     }),
     "imodel-id": Flags.string({
       char: 'm', 
       description: 'The ID of the iModel.', 
+      helpValue: '<string>',
       required: true 
     }),
     name: Flags.string({
       char: 'n',
       description: 'The display name of the storage connection.',
+      helpValue: '<string>',
       required: false,
     }),
   };

@@ -29,33 +29,40 @@ export default class UpdateCommand extends BaseCommand {
     static flags = {
       "geographic-location": Flags.string({
         description: 'Optional location, typically an address or city.',
+        helpValue: '<string>',
         required: false
       }),
       "iana-time-zone": Flags.string({
         description: 'Optional IANA time zone ID.',
+        helpValue: '<string>',
         required: false,
       }),
       "itwin-id": Flags.string({
         char: 'i',
         description: 'The ID of the iTwin to be updated.',
+        helpValue: '<string>',
         required: true,
       }),
       name: Flags.string({
         char: 'n',
         description: "The iTwin's display name.",
+        helpValue: '<string>',
         required: false,
       }),
       number: Flags.string({
         description: 'Unique identifier for the iTwin.',
+        helpValue: '<string>',
         required: false,
       }),
       status: Flags.string({
         description: 'Status of the iTwin. Defaults to Active.',
+        helpValue: '<string>',
         options: ['Active', 'Inactive', 'Trial'],
         required: false,
       }),
       type: Flags.string({
         description: "Defines the iTwin's Type.",
+        helpValue: '<string>',
         required: false,
       }),
     };

@@ -22,20 +22,24 @@ export default class UpdateCommand extends BaseCommand {
       description: Flags.string({
         char: 'd',
         description: 'The new description for the iModel.',
+        helpValue: '<string>',
         required: false,
       }),
       extent: Flags.string({
         description: 'The new maximum rectangular area on Earth that encloses the iModel, defined by its southwest and northeast corners.',
+        helpValue: '<string>',
         required: false,
       }),
       "imodel-id": Flags.string({
         char: 'm',
         description: 'The ID of the iModel to update.',
+        helpValue: '<string>',
         required: true,
       }),
       name: Flags.string({
         char: 'n',
         description: 'The new name of the iModel.',
+        helpValue: '<string>',
         required: false,
       }),
     };

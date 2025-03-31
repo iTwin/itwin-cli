@@ -23,8 +23,18 @@ export default class FileUpload extends BaseCommand {
     ];
 
     static flags = {
-      "file-path": Flags.string({ char: 'f', description: 'The path to the file.', required: true }),
-      "upload-url": Flags.string({ char: 'u', description: 'The url for the file to be uploaded to.', required: true }),
+      "file-path": Flags.string({ 
+        char: 'f', 
+        description: 'The path to the file.', 
+        helpValue: '<string>',
+        required: true 
+      }),
+      "upload-url": Flags.string({ 
+        char: 'u', 
+        description: 'The url for the file to be uploaded to.', 
+        helpValue: '<string>',
+        required: true 
+      }),
     };
   
     async run() {

@@ -21,6 +21,7 @@ export default class ListRoles extends BaseCommand {
       "itwin-id": Flags.string({
         char: 'i',
         description: 'The ID of the iTwin whose roles you want to list.',
+        helpValue: '<string>',
         required: true,
       }),
     };

@@ -21,10 +21,12 @@ export default class DeleteUserMember extends BaseCommand {
       "itwin-id": Flags.string({
         char: 'i',
         description: 'The ID of the iTwin where the user is a member.',
+        helpValue: '<string>',
         required: true,
       }),
       "member-id": Flags.string({
         description: 'The ID of the user to remove from the iTwin.',
+        helpValue: '<string>',
         required: true,
       }),
     };

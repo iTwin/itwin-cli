@@ -18,8 +18,17 @@ export default class ChangedElementsInfo extends BaseCommand {
     ];
 
     static flags = {
-      "imodel-id": Flags.string({ char: 'm', description: "The ID of the iModel to retrieve tracking information for.", required: true }),
-      "itwin-id": Flags.string({ char: 'i', description: "The ID of the iTwin associated with the iModel.", required: true }),
+      "imodel-id": Flags.string({ 
+        char: 'm', 
+        description: "The ID of the iModel to retrieve tracking information for.", 
+        helpValue: '<string>',
+        required: true }),
+      "itwin-id": Flags.string({ 
+        char: 'i', 
+        description: "The ID of the iTwin associated with the iModel.", 
+        helpValue: '<string>',
+        required: true 
+      }),
     };
   
     async run() {

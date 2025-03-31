@@ -26,7 +26,12 @@ export default class ConnectionRunsListed extends BaseCommand {
     ];
 
     static flags = {
-      "connection-id": Flags.string({ char: 'c', description: "The ID of the storage connection.", required: true }),
+      "connection-id": Flags.string({ 
+        char: 'c', 
+        description: "The ID of the storage connection.", 
+        helpValue: '<string>',
+        required: true 
+      }),
     };
   
     async run() {

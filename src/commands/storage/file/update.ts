@@ -22,9 +22,22 @@ export default class UpdateCommand extends BaseCommand {
     ];
 
     static flags = {
-      description: Flags.string({ char: 'd', description: "A description for the file." }),
-      "file-id": Flags.string({ char: 'f', description: "The ID of the file to be updated.", required: true }),
-      name: Flags.string({ char: 'n', description: "The new display name for the file." }),
+      description: Flags.string({ 
+        char: 'd', 
+        description: "A description for the file." ,
+        helpValue: '<string>',
+      }),
+      "file-id": Flags.string({ 
+        char: 'f', 
+        description: "The ID of the file to be updated.", 
+        helpValue: '<string>',
+        required: true 
+      }),
+      name: Flags.string({ 
+        char: 'n', 
+        description: "The new display name for the file.",
+        helpValue: '<string>',
+      }),
     };
   
     async run() {

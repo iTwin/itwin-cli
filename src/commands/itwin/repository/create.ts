@@ -29,21 +29,24 @@ export default class CreateRepository extends BaseCommand {
     static flags = {
       class: Flags.string({
         description: 'The class of your iTwin repository.',
+        helpValue: '<string>',
         options: ['GeographicInformationSystem', 'Construction', 'Subsurface'],
         required: true,
       }),
       "itwin-id": Flags.string({
         char: 'i',
         description: 'The ID of the iTwin to which the repository belongs.',
+        helpValue: '<string>',
         required: true,
       }),
       "sub-class": Flags.string({
         description: 'The subClass of your repository.',
+        helpValue: '<string>',
         options: ['WebMapService', 'WebMapTileService', 'MapServer', 'Performance', 'EvoWorkspace'],
-        required: false,
       }),
       uri: Flags.string({
         description: 'The URI to the custom repository.',
+        helpValue: '<string>',
         required: true,
       }),
     };

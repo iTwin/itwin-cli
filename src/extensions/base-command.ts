@@ -27,7 +27,7 @@ export default abstract class BaseCommand extends Command {
       char: 'j',
       description: 'Pretty format the JSON command response and suppress all logging.',
       helpGroup: 'GLOBAL',
-      required: false
+      required: false,
     }),
     silent: Flags.boolean({
       char: 's',

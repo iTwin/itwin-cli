@@ -41,45 +41,55 @@ export default class ListITwins extends BaseCommand {
       }),
       "itwin-account-id": Flags.string({
         description: 'Filter by the iTwin Account ID.',
+        helpValue: '<string>',
         required: false
       }),
       name: Flags.string({
         char: 'n',
         description: 'Find iTwins with the exact display name specified.',
+        helpValue: '<string>',
         required: false,
       }),
       number: Flags.string({
         description: 'Find iTwins with the exact number specified.',
+        helpValue: '<string>',
         required: false,
       }),
       "parent-id": Flags.string({
         description: 'Filter by the parent iTwin ID.',
+        helpValue: '<string>',
         required: false
       }),
       search: Flags.string({
         description: 'Search iTwins by a string in the number or display name.',
+        helpValue: '<string>',
         required: false,
       }),
       skip: Flags.integer({
         description: 'Skip a number of items in the result.',
+        helpValue: '<integer>',
         required: false,
       }),
       status: Flags.string({
         description: 'Filter by the status of the iTwin.',
+        helpValue: '<string>',
         options: ['Active', 'Inactive', 'Trial'],
         required: false
       }),
       "sub-class": Flags.string({
         description: 'Filter by a specific iTwin subClass.',
+        helpValue: '<string>',
         options: Object.values(ITwinSubClass),
         required: false
       }),
       top: Flags.integer({
         description: 'Limit the number of items returned.',
+        helpValue: '<integer>',
         required: false,
       }),
       type: Flags.string({
         description: "Filter by the iTwin's Type.",
+        helpValue: '<string>',
         required: false,
       }),
     };

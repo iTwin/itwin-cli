@@ -18,7 +18,12 @@ export default class FileInfo extends BaseCommand {
     ];
 
     static flags = {
-      "file-id": Flags.string({ char: 'f', description: "The ID of the file to retrieve information about.", required: true }),
+      "file-id": Flags.string({ 
+        char: 'f', 
+        description: "The ID of the file to retrieve information about.", 
+        helpValue: '<string>',
+        required: true 
+      }),
     };
   
     async run() {

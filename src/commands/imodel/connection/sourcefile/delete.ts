@@ -21,10 +21,12 @@ export default class ConnectionSourceFileDelete extends BaseCommand {
       "connection-id": Flags.string({
         char: 'c',
         description: 'The ID of the storage connection.',
+        helpValue: '<string>',
         required: true,
       }),
       "source-file-id": Flags.string({
         description: 'The source file ID to delete.',
+        helpValue: '<string>',
         required: true,
       }),
     };

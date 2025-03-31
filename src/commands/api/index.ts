@@ -14,35 +14,36 @@ export default class ApiRequest extends BaseCommand {
     static flags = {
         body: Flags.string({
             description: "The body to include in the request. It must be serialized JSON.",
-            required: false,
+            helpValue: '<string>',
         }),
         "empty-response": Flags.boolean({
-            description: "The request does not contain a response body.",
-            required: false,
+            description: "The request does not contain a response body."
         }),
         header: Flags.string({
             description: "Headers to include in the request. Use the format 'HeaderName: value'.",
             flag: "h",
+            helpValue: '<string>',
             multiple: true,
-            required: false,
         }),
         method: Flags.string({
             description: "The method of the request.",
+            helpValue: '<string>',
             options: ["GET", "POST", "PUT", "DELETE", "PATCH"],
             required: true,
         }),
         path: Flags.string({
             description: "The path of the request.",
+            helpValue: '<string>',
             required: true,
         }),
         query: Flags.string({
             description: "Query parameters to include in the request. Use the format 'QueryKey:value'.",
+            helpValue: '<string>',
             multiple: true,
-            required: false,
         }),
         "version-header": Flags.string({
             description: "The version header to include in the request.",
-            required: false,
+            helpValue: '<string>',
         }),
     };
   

@@ -21,6 +21,7 @@ export default class ListGroupMembers extends BaseCommand {
       "itwin-id": Flags.string({
         char: 'i',
         description: 'The ID of the iTwin whose group members you want to list.',
+        helpValue: '<string>',
         required: true,
       }),
     };

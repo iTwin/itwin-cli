@@ -21,11 +21,13 @@ export default class AccessControlGroupInfo extends BaseCommand {
       "group-id": Flags.string({
         char: 'g',
         description: 'The ID of the group to retrieve information about.',
+        helpValue: '<string>',
         required: true,
       }),
       "itwin-id": Flags.string({
         char: 'i',
         description: 'The ID of the iTwin where the group exists.',
+        helpValue: '<string>',
         required: true,
       }),
     };
@@ -40,4 +42,3 @@ export default class AccessControlGroupInfo extends BaseCommand {
       return this.logAndReturnResult(response.group);
     }
   }
-  

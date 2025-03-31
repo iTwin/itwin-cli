@@ -25,17 +25,20 @@ export default class UpdateStorageConnection extends BaseCommand {
     static flags = {
       "authentication-type": Flags.string({
         description: 'The authorization workflow type.',
+        helpValue: '<string>',
         options: ['User', 'Service'],
         required: false,
       }),
       "connection-id": Flags.string({
         char: 'c',
         description: 'The ID of the storage connection to update.',
+        helpValue: '<string>',
         required: true,
       }),
       name: Flags.string({
         char: 'n',
         description: 'The new display name for the storage connection.',
+        helpValue: '<string>',
         required: false,
       }),
     };

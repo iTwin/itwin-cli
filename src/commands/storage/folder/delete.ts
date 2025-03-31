@@ -18,7 +18,12 @@ export default class DeleteFolder extends BaseCommand {
     ];
 
     static flags = {
-      "folder-id": Flags.string({ char: 'f', description: "The ID of the folder to be deleted.", required: true }),
+      "folder-id": Flags.string({ 
+        char: 'f', 
+        description: "The ID of the folder to be deleted.", 
+        helpValue: '<string>',
+        required: true 
+      }),
     };
   
     async run() {

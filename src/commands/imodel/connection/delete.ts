@@ -21,6 +21,7 @@ export default class DeleteConnection extends BaseCommand {
       "connection-id": Flags.string({
         char: 'c',
         description: 'The ID of the storage connection to delete.',
+        helpValue: '<string>',
         required: true,
       }),
     };

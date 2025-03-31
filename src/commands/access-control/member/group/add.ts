@@ -21,11 +21,13 @@ export default class AddGroupMembers extends BaseCommand {
     static flags = {
       groups: Flags.string({
         description: 'A list of groups to add, each with a groupId and roleIds.',
-        required: true,
+        helpValue: '<string>',
+        required: true
       }),
       "itwin-id": Flags.string({
         char: 'i',
         description: 'The ID of the iTwin to which the groups will be added.',
+        helpValue: '<string>',
         required: true,
       }),
     };

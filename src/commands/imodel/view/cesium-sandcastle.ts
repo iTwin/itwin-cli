@@ -32,11 +32,13 @@ export default class CesiumSandcastle extends BaseCommand {
     static flags = {
       "changeset-id": Flags.string({
         description: "Changeset id to be viewed in Cesium Sandcastle. If not provided, the latest changeset will be used.",
+        helpValue: '<string>',
         required: false
       }),
       "imodel-id": Flags.string({ 
         char: "m", 
         description: "iModel id to be viewed in Cesium Sandcastle.",
+        helpValue: '<string>',
         required: true
       }),
       "open": Flags.boolean({

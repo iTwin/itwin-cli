@@ -21,10 +21,12 @@ export default class DeleteRepository extends BaseCommand {
       "itwin-id": Flags.string({
         char: 'i',
         description: 'The ID of the iTwin to which the repository belongs.',
+        helpValue: '<string>',
         required: true,
       }),
       "repository-id": Flags.string({
         description: 'The ID of the repository to delete.',
+        helpValue: '<string>',
         required: true,
       }),
     };

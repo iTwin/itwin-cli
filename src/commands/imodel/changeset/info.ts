@@ -20,11 +20,13 @@ export default class ChangesetInfo extends BaseCommand {
     static flags = {
       "changeset-id": Flags.string({
         description: 'The ID of the changeset.',
+        helpValue: '<string>',
         required: true,
       }),
       "imodel-id": Flags.string({
         char: 'm',
         description: 'The ID of the iModel whose changeset you want to retrieve.',
+        helpValue: '<string>',
         required: true,
       }),
     };

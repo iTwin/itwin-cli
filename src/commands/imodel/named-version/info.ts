@@ -21,10 +21,12 @@ export default class NamedVersionInfo extends BaseCommand {
       "imodel-id": Flags.string({
         char: 'm',
         description: 'The ID of the iModel whose named version you want to retrieve.',
+        helpValue: '<string>',
         required: true,
       }),
       "named-version-id": Flags.string({
         description: 'The ID of the named version.',
+        helpValue: '<string>',
         required: true,
       }),
     };

@@ -21,14 +21,17 @@ export default class GetRootFolder extends BaseCommand {
     "itwin-id": Flags.string({
       char: 'i',
       description: 'The ID of the iTwin whose top-level folders and files you want to retrieve.',
+      helpValue: '<string>',
       required: true,
     }),
     skip: Flags.integer({
       description: 'The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result.',
+      helpValue: '<integer>',
       required: false,
     }),
     top: Flags.integer({
       description: 'The top system query option requests the number of items in the queried collection to be included in the result.',
+      helpValue: '<integer>',
       required: false,
     }),
   };

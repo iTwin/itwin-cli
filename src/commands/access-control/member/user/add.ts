@@ -22,10 +22,12 @@ export default class AddUserMembers extends BaseCommand {
       "itwin-id": Flags.string({
         char: 'i',
         description: 'The ID of the iTwin to which the users will be added.',
+        helpValue: '<string>',
         required: true,
       }),
       members: Flags.string({
         description: 'A list of members to add, each with an email and a list of role IDs.',
+        helpValue: '<string>',
         required: true,
       }),
     };

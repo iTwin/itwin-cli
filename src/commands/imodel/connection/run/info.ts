@@ -18,8 +18,16 @@ export default class ConnectionRunInfo extends BaseCommand {
     ];
 
     static flags = {
-      "connection-id": Flags.string({ char: 'c', description: 'The id of the connection.', required: true }),
-      "connection-run-id": Flags.string({ description: 'The id of the connection run.', required: true }),
+      "connection-id": Flags.string({ 
+        char: 'c', 
+        description: 'The id of the connection.', 
+        helpValue: '<string>',
+        required: true 
+      }),
+      "connection-run-id": Flags.string({ 
+        description: 'The id of the connection run.', 
+        helpValue: '<string>',
+        required: true }),
     };
   
     async run() {

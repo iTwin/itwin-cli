@@ -18,7 +18,12 @@ export default class UpdateContent extends BaseCommand {
     ];
 
     static flags = {
-      "file-id": Flags.string({ char: 'f', description: 'The file id.', required: true }),
+      "file-id": Flags.string({ 
+        char: 'f', 
+        description: 'The file id.', 
+        helpValue: '<string>',
+        required: true 
+      }),
     };
   
     async run() {
