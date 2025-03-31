@@ -13,7 +13,7 @@ Update the specified iTwin. Only include properties you want to update.
   **Type:** `string **Required:** No
 
 - **`--type`**  
-  Open ended property to define your iTwin's type.
+  Open ended property to define your iTwin's type.  
   **Type:** `string` **Required:** No
 
 - **`--number`**  

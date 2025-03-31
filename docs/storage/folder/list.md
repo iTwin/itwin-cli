@@ -10,7 +10,7 @@ List folders in a parent folder of an iTwin's storage. Optionally, include files
 
 - **`--include-files`**  
   Whether to include files in the result.  
-  **Type:** `boolean` **Required:** No
+  **Type:** `flag` **Required:** No
 
 ## Examples
 
@@ -19,7 +19,7 @@ List folders in a parent folder of an iTwin's storage. Optionally, include files
 itp storage folder list --folder-id a1b2c3d4-5678-90ab-cdef-1234567890ab
 
 # Example 2: List all folders and files in a parent folder
-itp storage folder list --folder-id a1b2c3d4-5678-90ab-cdef-1234567890ab --include-files true
+itp storage folder list --folder-id a1b2c3d4-5678-90ab-cdef-1234567890ab --include-files
 ```
 
 ## API Reference
