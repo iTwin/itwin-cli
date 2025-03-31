@@ -21,6 +21,7 @@ export default class ListAccessControlGroups extends BaseCommand {
       "itwin-id": Flags.string({
         char: 'i',
         description: 'The ID of the iTwin whose groups you want to list.',
+        helpValue: '<string>',
         required: true,
       }),
     };
@@ -35,4 +36,3 @@ export default class ListAccessControlGroups extends BaseCommand {
       return this.logAndReturnResult(response.groups);
     }
   }
-  

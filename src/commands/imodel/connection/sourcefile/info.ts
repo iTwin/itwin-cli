@@ -21,10 +21,12 @@ export default class ConnectionSourceFileInfo extends BaseCommand {
       "connection-id": Flags.string({
         char: 'c',
         description: 'The ID of the storage connection.',
+        helpValue: '<string>',
         required: true,
       }),
       "source-file-id": Flags.string({
         description: 'The ID of the source file to retrieve.',
+        helpValue: '<string>',
         required: true,
       }),
     };

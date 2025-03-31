@@ -34,32 +34,39 @@ export default class ListIModels extends BaseCommand {
       "itwin-id": Flags.string({
         char: 'i',
         description: 'The ID of the iTwin to list iModels for.',
+        helpValue: '<string>',
         required: true,
       }),
       name: Flags.string({
         char: 'n',
         description: 'Filter iModels by their exact name.',
+        helpValue: '<string>',
         required: false,
       }),
       "order-by": Flags.string({
         description: "Order the results by 'name' or 'createdDateTime'. Use 'asc' for ascending or 'desc' for descending order.",
+        helpValue: '<string>',
         required: false,
       }),
       search: Flags.string({
         description: 'Filter iModels by a string in their name or description.',
+        helpValue: '<string>',
         required: false,
       }),
       skip: Flags.integer({
         description: 'Skip a number of items in the result.',
+        helpValue: '<integer>',
         required: false,
       }),
       state: Flags.string({
         description: 'Filter iModels by their state.',
+        helpValue: '<string>',
         options: ['initialized', 'notInitialized'],
         required: false,
       }),
       top: Flags.integer({
         description: 'Limit the number of items returned.',
+        helpValue: '<integer>',
         required: false,
       }),
     };

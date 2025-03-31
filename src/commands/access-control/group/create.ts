@@ -21,16 +21,19 @@ export default class CreateAccessControlGroup extends BaseCommand {
       description: Flags.string({
         char: 'd',
         description: 'A description of the group.',
+        helpValue: '<string>',
         required: true,
       }),
       "itwin-id": Flags.string({
         char: 'i',
         description: 'The ID of the iTwin where the group is being created.',
+        helpValue: '<string>',
         required: true,
       }),
       name: Flags.string({
         char: 'n',
         description: 'The name of the group to be created.',
+        helpValue: '<string>',
         required: true,
       }),
     };
@@ -48,4 +51,3 @@ export default class CreateAccessControlGroup extends BaseCommand {
       return this.logAndReturnResult(response.group);
     }
   }
-  

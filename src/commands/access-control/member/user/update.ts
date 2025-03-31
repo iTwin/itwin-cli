@@ -21,14 +21,17 @@ export default class UpdateUserMember extends BaseCommand {
       "itwin-id": Flags.string({
         char: 'i',
         description: 'The ID of the iTwin where the user is a member.',
+        helpValue: '<string>',
         required: true,
       }),
       "member-id": Flags.string({
         description: 'The ID of the user whose roles will be updated.',
+        helpValue: '<string>',
         required: true,
       }),
       "role-ids": Flags.string({
         description: 'A list of role IDs to assign to the user.',
+        helpValue: '<string>',
         multiple: true,
         required: true,
       }),

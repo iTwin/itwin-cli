@@ -21,6 +21,7 @@ export default class DeleteFile extends BaseCommand {
       "file-id": Flags.string({
         char: 'f',
         description: 'The ID of the file to be deleted.',
+        helpValue: '<string>',
         required: true,
       }),
     };

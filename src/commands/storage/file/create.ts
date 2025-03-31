@@ -22,9 +22,24 @@ export default class FileCreate extends BaseCommand {
     ];
 
     static flags = {
-      description: Flags.string({ char: 'd', description: 'A description for the file.', required: false }),
-      "folder-id": Flags.string({ char: 'f', description: 'The ID of the folder where the file will be created.', required: true }),
-      name: Flags.string({ char: 'n', description: 'The display name of the file.', required: true }),
+      description: Flags.string({ 
+        char: 'd', 
+        description: 'A description for the file.', 
+        helpValue: '<string>',
+        required: false 
+      }),
+      "folder-id": Flags.string({ 
+        char: 'f', 
+        description: 'The ID of the folder where the file will be created.', 
+        helpValue: '<string>',
+        required: true 
+      }),
+      name: Flags.string({ 
+        char: 'n', 
+        description: 'The display name of the file.', 
+        helpValue: '<string>',
+        required: true 
+      }),
     };
   
     async run() {

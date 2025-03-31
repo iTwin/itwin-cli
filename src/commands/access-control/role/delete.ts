@@ -21,10 +21,12 @@ export default class DeleteRole extends BaseCommand {
       "itwin-id": Flags.string({
         char: 'i',
         description: 'The ID of the iTwin where the role exists.',
+        helpValue: '<string>',
         required: true,
       }),
       "role-id": Flags.string({
         description: 'The ID of the role to be deleted.',
+        helpValue: '<string>',
         required: true,
       }),
     };

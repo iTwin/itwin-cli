@@ -21,6 +21,7 @@ export default class ListUserMembers extends BaseCommand {
       "itwin-id": Flags.string({
         char: 'i',
         description: 'The ID of the iTwin whose user members you want to list.',
+        helpValue: '<string>',
         required: true,
       }),
     };

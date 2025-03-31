@@ -21,6 +21,7 @@ export default class MyPermissions extends BaseCommand {
       "itwin-id": Flags.string({
         char: 'i',
         description: 'The ID of the iTwin for which the role is being created.',
+        helpValue: '<string>',
         required: true,
       }),
     };

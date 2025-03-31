@@ -21,10 +21,12 @@ export default class DeleteOwner extends BaseCommand {
       "itwin-id": Flags.string({
         char: 'i',
         description: 'The ID of the iTwin from which the owner will be removed.',
+        helpValue: '<string>',
         required: true,
       }),
       "member-id": Flags.string({
         description: 'The ID of the owner to be removed.',
+        helpValue: '<string>',
         required: true,
       }),
     };

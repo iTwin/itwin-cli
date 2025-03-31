@@ -22,10 +22,28 @@ export default class ChangedElementsComparison extends BaseCommand {
     ];
 
     static flags = {
-      "changeset-id1": Flags.string({ description: 'The ID of the first changeset to compare.', required: true }),
-      "changeset-id2": Flags.string({ description: 'The ID of the second changeset to compare.', required: true }),
-      "imodel-id": Flags.string({ char: 'm', description: 'The ID of the iModel to compare changesets for.', required: true }),
-      "itwin-id": Flags.string({ char: 'i',description: 'The ID of the iTwin associated with the iModel.', required: true})
+      "changeset-id1": Flags.string({ 
+        description: 'The ID of the first changeset to compare.',
+        helpValue: '<string>',
+        required: true 
+      }),
+      "changeset-id2": Flags.string({ 
+        description: 'The ID of the second changeset to compare.',
+        helpValue: '<string>',
+        required: true 
+      }),
+      "imodel-id": Flags.string({ 
+        char: 'm', 
+        description: 'The ID of the iModel to compare changesets for.', 
+        helpValue: '<string>',
+        required: true 
+      }),
+      "itwin-id": Flags.string({ 
+        char: 'i',
+        description: 'The ID of the iTwin associated with the iModel.', 
+        helpValue: '<string>',
+        required: true
+      })
     };
   
     async run() {

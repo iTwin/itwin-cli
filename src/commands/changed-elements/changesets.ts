@@ -26,10 +26,26 @@ export default class GetChangesetStatus extends BaseCommand {
     ];
 
     static flags = {
-      "imodel-id": Flags.string({ char: 'm', description: 'The ID of the iModel.', required: true }),
-      "itwin-id": Flags.string({ char: 'i', description: 'The ID of the iTwin.', required: true }),
-      skip: Flags.integer({ description: 'Skip a number of changesets in the result.' }),
-      top: Flags.integer({ description: 'Limit the number of changesets returned.' }),
+      "imodel-id": Flags.string({ 
+        char: 'm', 
+        description: 'The ID of the iModel.', 
+        helpValue: '<string>',
+        required: true 
+      }),
+      "itwin-id": Flags.string({ 
+        char: 'i', 
+        description: 'The ID of the iTwin.', 
+        helpValue: '<string>',
+        required: true 
+      }),
+      skip: Flags.integer({ 
+        description: 'Skip a number of changesets in the result.',
+        helpValue: '<string>'
+      }),
+      top: Flags.integer({ 
+        description: 'Limit the number of changesets returned.',
+        helpValue: '<string>'
+      }),
     };
   
     async run() {

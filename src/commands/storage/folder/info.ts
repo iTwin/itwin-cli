@@ -18,7 +18,12 @@ export default class FolderInfo extends BaseCommand {
     ];
 
     static flags = {
-      "folder-id": Flags.string({ char: 'f', description: "The ID of the folder to retrieve information about.", required: true }),
+      "folder-id": Flags.string({ 
+        char: 'f', 
+        description: "The ID of the folder to retrieve information about.", 
+        helpValue: '<string>',
+        required: true 
+      }),
     };
   
     async run() {

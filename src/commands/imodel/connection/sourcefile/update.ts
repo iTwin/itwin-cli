@@ -22,10 +22,12 @@ export default class ConnectionSourceFileUpdate extends BaseCommand {
       "connection-id": Flags.string({
         char: 'c',
         description: 'The ID of the storage connection.',
+        helpValue: '<string>',
         required: true,
       }),
       "connector-type": Flags.string({
         description: 'The connector type for synchronization.',
+        helpValue: '<string>',
         options: [
           'AUTOPLANT', 'CIVIL', 'CIVIL3D', 'DWG', 'IFC', 'MSTN', 'REVIT'
         ],
@@ -33,6 +35,7 @@ export default class ConnectionSourceFileUpdate extends BaseCommand {
       }),
       "source-file-id": Flags.string({
         description: 'The source file ID to update.',
+        helpValue: '<string>',
         required: true,
       }),
     };

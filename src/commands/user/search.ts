@@ -22,7 +22,11 @@ export default class UserSearch extends BaseCommand {
     ];
 
     static flags = {
-      search: Flags.string({ description: "A string to search for users by name, email, or other attributes.", required: true }),
+      search: Flags.string({ 
+        description: "A string to search for users by name, email, or other attributes.", 
+        helpValue: '<string>',
+        required: true 
+      }),
     };
   
     async run() {

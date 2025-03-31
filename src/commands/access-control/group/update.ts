@@ -25,32 +25,34 @@ export default class UpdateAccessControlGroup extends BaseCommand {
       description: Flags.string({
         char: 'd',
         description: 'The updated description of the group.',
-        required: false,
+        helpValue: '<string>',
       }),
       "group-id": Flags.string({
         char: 'g',
         description: 'The ID of the group to be updated.',
+        helpValue: '<string>',
         required: true,
       }),
       "ims-groups": Flags.string({
         description: 'A list of IMS Groups to be linked to the group.',
+        helpValue: '<string>',
         multiple: true,
-        required: false,
       }),
       "itwin-id": Flags.string({
         char: 'i',
         description: 'The ID of the iTwin where the group exists.',
+        helpValue: '<string>',
         required: true,
       }),
       members: Flags.string({
         description: 'A list of members (emails) to be assigned to the group.',
+        helpValue: '<string>',
         multiple: true,
-        required: false,
       }),
       name: Flags.string({
         char: 'n',
         description: 'The updated name of the group.',
-        required: false,
+        helpValue: '<string>',
       }),
     };
   
@@ -69,4 +71,3 @@ export default class UpdateAccessControlGroup extends BaseCommand {
       return this.logAndReturnResult(response.group);
     }
   }
-  

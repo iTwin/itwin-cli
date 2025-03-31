@@ -29,14 +29,17 @@ export default class ListConnections extends BaseCommand {
       "imodel-id": Flags.string({
         char: 'm', 
         description: 'The ID of the iModel whose storage connections you want to list.', 
+        helpValue: '<string>',
         required: true 
       }),
       skip: Flags.integer({
         description: 'The number of changesets to skip.', 
+        helpValue: '<integer>',
         required: false 
       }),
       top: Flags.integer({
         description: 'The maximum number of changesets to return.', 
+        helpValue: '<integer>',
         required: false 
       }),
     };

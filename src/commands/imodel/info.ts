@@ -21,6 +21,7 @@ export class IModelInfo extends BaseCommand {
     "imodel-id": Flags.string({
       char: 'm', 
       description: 'The ID of the iModel to retrieve information for.', 
+      helpValue: '<string>',
       required: true 
     }),
   };

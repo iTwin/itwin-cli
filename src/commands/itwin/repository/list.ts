@@ -28,16 +28,19 @@ export default class ListRepositories extends BaseCommand {
     static flags = {
       class: Flags.string({
         description: 'Specify a particular class of repositories to retrieve.',
+        helpValue: '<string>',
         options: ["iModels", "RealityData", "Storage", "Forms", "Issues", "SensorData", "GeographicInformationSystem", "Construction", "Subsurface"],
         required: false
       }),
       "itwin-id": Flags.string({
         char: 'i',
         description: 'The ID of the iTwin whose repositories should be retrieved.',
+        helpValue: '<string>',
         required: true,
       }),
       "sub-class": Flags.string({
         description: 'Specify a subClass of repositories. Only applicable for GeographicInformationSystem class.',
+        helpValue: '<string>',
         options: ["WebMapService", "WebMapTileService", "MapServer"],
         required: false
       }),

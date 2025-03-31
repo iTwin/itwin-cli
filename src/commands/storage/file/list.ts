@@ -22,8 +22,15 @@ export default class ListFiles extends BaseCommand {
     ];
 
     static flags = {
-      "folder-id": Flags.string({ char: 'f', description: "The ID of the folder whose files you want to list.", required: true }),
-      "include-folders": Flags.boolean({ description: "Whether to include subfolders in the result." }),
+      "folder-id": Flags.string({ 
+        char: 'f', 
+        description: "The ID of the folder whose files you want to list.", 
+        helpValue: '<string>',
+        required: true 
+      }),
+      "include-folders": Flags.boolean({ 
+        description: "Whether to include subfolders in the result."
+      }),
     };
   
     async run() {
