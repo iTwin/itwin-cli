@@ -16,7 +16,7 @@ export default class UpdateAccessControlGroup extends BaseCommand {
         description: 'Example 1: Update group name and description'
       },
       {
-        command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --group-id bf4d8b36-25d7-4b72-b38b-12c1f0325f42 --members john.doe@example.com --members jane.doe@example.com --imsGroups "Sample IMS Group" --imsGroups "Sample IMS Group"`,
+        command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --group-id bf4d8b36-25d7-4b72-b38b-12c1f0325f42 --member john.doe@example.com --member jane.doe@example.com --ims-group "Sample IMS Group" --ims-group "Sample IMS Group"`,
         description: 'Example 2: Update group members and IMS groups'
       }
     ];
@@ -33,7 +33,7 @@ export default class UpdateAccessControlGroup extends BaseCommand {
         helpValue: '<string>',
         required: true,
       }),
-      "ims-groups": Flags.string({
+      "ims-group": Flags.string({
         description: 'A list of IMS Groups to be linked to the group.',
         helpValue: '<string>',
         multiple: true,
@@ -44,7 +44,7 @@ export default class UpdateAccessControlGroup extends BaseCommand {
         helpValue: '<string>',
         required: true,
       }),
-      members: Flags.string({
+      member: Flags.string({
         description: 'A list of members (emails) to be assigned to the group.',
         helpValue: '<string>',
         multiple: true,
@@ -63,8 +63,8 @@ export default class UpdateAccessControlGroup extends BaseCommand {
   
       const response = await client.updateGroup(flags["itwin-id"], flags["group-id"], {
         description: flags.description,
-        imsGroups: flags["ims-groups"],
-        members: flags.members,
+        imsGroups: flags["ims-group"],
+        members: flags.member,
         name: flags.name,
       });
   

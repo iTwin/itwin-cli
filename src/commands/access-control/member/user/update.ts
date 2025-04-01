@@ -12,7 +12,7 @@ export default class UpdateUserMember extends BaseCommand {
 
     static examples = [
       {
-        command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --member-id user1-id --role-ids role1-id --role-ids role2-id`,
+        command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --member-id user1-id --role-id role1-id --role-id role2-id`,
         description: 'Example 1:'
       }
     ];
@@ -29,7 +29,7 @@ export default class UpdateUserMember extends BaseCommand {
         helpValue: '<string>',
         required: true,
       }),
-      "role-ids": Flags.string({
+      "role-id": Flags.string({
         description: 'A list of role IDs to assign to the user.',
         helpValue: '<string>',
         multiple: true,
@@ -42,7 +42,7 @@ export default class UpdateUserMember extends BaseCommand {
   
       const client = await this.getAccessControlMemberClient();
   
-      const response = await client.updateUserMember(flags["itwin-id"], flags["member-id"], flags["role-ids"]);
+      const response = await client.updateUserMember(flags["itwin-id"], flags["member-id"], flags["role-id"]);
   
       return this.logAndReturnResult(response.member);
     }
