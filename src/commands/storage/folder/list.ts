@@ -16,7 +16,7 @@ export default class ListFolders extends BaseCommand {
         description: 'Example 1: List all folders in a parent folder'
       },
       {
-        command: `<%= config.bin %> <%= command.id %> --folder-id a1b2c3d4-5678-90ab-cdef-1234567890ab --include-files true`,
+        command: `<%= config.bin %> <%= command.id %> --folder-id a1b2c3d4-5678-90ab-cdef-1234567890ab --include-files`,
         description: 'Example 2: List all folders and files in a parent folder'
       }
     ];
