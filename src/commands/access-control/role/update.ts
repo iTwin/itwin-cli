@@ -16,7 +16,7 @@ export default class UpdateRole extends BaseCommand {
         description: 'Example 1: Update role name and description'
       },
       {
-        command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --role-id role1-id --name "Admin Role" --permissions Permission1 --permissions Permission2 --permissions Permission3`,
+        command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --role-id role1-id --name "Admin Role" --permission Permission1 --permission Permission2 --permission Permission3`,
         description: 'Example 2: Update role permissions along with the name'
       }
     ];
@@ -40,7 +40,7 @@ export default class UpdateRole extends BaseCommand {
         helpValue: '<string>',
         required: false,
       }),
-      permissions: Flags.string({
+      permission: Flags.string({
         description: 'A list of permissions to assign to the role.',
         helpValue: '<string>',
         multiple: true,
@@ -61,7 +61,7 @@ export default class UpdateRole extends BaseCommand {
       const response = await client.updateiTwinRole(flags["itwin-id"], flags["role-id"], {
         description: flags.description,
         displayName: flags.name,
-        permissions: flags.permissions,
+        permissions: flags.permission,
       });
   
       return this.logAndReturnResult(response.role);
