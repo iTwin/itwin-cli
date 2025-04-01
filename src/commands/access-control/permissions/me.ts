@@ -12,7 +12,7 @@ export default class MyPermissions extends BaseCommand {
 
 	static examples = [
       {
-        command: `<%= config.bin %> <%= command.id %>`,
+        command: `<%= config.bin %> <%= command.id %> --itwin-id e9a0d55a-65aa-42bd-9aa3-fd1c68d5e7b5`,
         description: 'Example 1:'
       }
     ];
