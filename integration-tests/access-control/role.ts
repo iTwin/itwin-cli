@@ -47,7 +47,7 @@ const tests = () => {
         const updatedRoleDescription = "Updated Role Description";
         const permissions = ["administration_invite_member"];
 
-        const roleUpdate = await runCommand<Role>(`access-control role update --itwin-id ${iTwinId} --role-id ${roleCreate.result!.id} --name "${updatedRoleName}" --description "${updatedRoleDescription}" --permissions ${permissions.join(",")}`);
+        const roleUpdate = await runCommand<Role>(`access-control role update --itwin-id ${iTwinId} --role-id ${roleCreate.result!.id} --name "${updatedRoleName}" --description "${updatedRoleDescription}" --permission ${permissions[0]}`);
         expect(roleUpdate.result).is.not.undefined;
         expect(roleUpdate.result!.id).is.not.undefined;
         expect(roleUpdate.result!.displayName).to.be.equal(updatedRoleName);

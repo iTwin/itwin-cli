@@ -46,7 +46,7 @@ const tests = () => {
         expect(usersInfo.result!.length).to.be.equal(1);
         expect(usersInfo.result![0].roles.length).to.be.equal(1);
 
-        const updateMemberResult = await runCommand<member>(`access-control member user update --itwin-id ${iTwinId} --member-id ${usersInfo.result![0].id} --role-ids ${usersInfo.result![0].roles[0].id} --role-ids ${newRole.result!.id}`);
+        const updateMemberResult = await runCommand<member>(`access-control member user update --itwin-id ${iTwinId} --member-id ${usersInfo.result![0].id} --role-id ${usersInfo.result![0].roles[0].id} --role-id ${newRole.result!.id}`);
         expect(updateMemberResult.result).is.not.undefined;
         expect(updateMemberResult.result!.roles.length).to.be.equal(2);
         expect(updateMemberResult.result!.roles.some(role => role.id === newRole.result!.id)).to.be.true;
