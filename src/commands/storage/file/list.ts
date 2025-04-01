@@ -16,7 +16,7 @@ export default class ListFiles extends BaseCommand {
         description: 'Example 1: List files in a specific folder'
       },
       {
-        command: `<%= config.bin %> <%= command.id %> --folder-id b1a2c3d4-5678-90ab-cdef-1234567890ab --include-folders true`,
+        command: `<%= config.bin %> <%= command.id %> --folder-id b1a2c3d4-5678-90ab-cdef-1234567890ab --include-folders`,
         description: 'Example 2: List files and include subfolders in the result'
       }
     ];
