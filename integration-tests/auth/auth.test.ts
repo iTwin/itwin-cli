@@ -6,11 +6,21 @@
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
+import { authorizationInformation } from "../../src/services/authorization-client/authorization-type";
 import { loginToCli } from '../utils/helpers';
 
 describe('Authentication Integration Tests', () => {
   it('should log in successfully using service authentication', async () => {
     await loginToCli();
+  });
+
+  it('should return auth info', async () => {
+    const result = await runCommand<authorizationInformation>('auth info');
+    expect(result.result).to.be.not.undefined;
+    expect(result.result!.apiUrl).to.be.equal(process.env.ITP_API_URL);
+    expect(result.result!.authorizationType).to.be.not.undefined;
+    expect(result.result!.clientId).to.be.equal(process.env.ITP_SERVICE_CLIENT_ID);
+    expect(result.result!.issuerUrl).to.be.equal(process.env.ITP_ISSUER_URL);
   });
 
   it('should fail with incorrect credentials', async () => {
