@@ -15,6 +15,8 @@ export default class ReadmeGenerator extends BaseCommand {
         }),
     }
 
+    static hidden = true;
+
     generateCommandMarkdown(command: Command.Loadable, flags: [string, Command.Flag.Cached][]): string {            
         const options = flags.length > 0
             ? 
