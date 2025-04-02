@@ -17,6 +17,18 @@
                 "--itwin-id",
                 "<itwin-id>"
             ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch readme",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}\\bin\\run",
+            "args": [
+                "readme"
+            ]
         }
     ]
 }

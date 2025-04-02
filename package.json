@@ -71,15 +71,87 @@
     },
     "topicSeparator": " ",
     "topics": {
-      "hello": {
-        "description": "Say hello to the world and others"
+      "auth": {
+        "description": "Authenticate itp with Bentley."
+      },
+      "itwin": {
+        "description": "Work with iTwins."
+      },
+      "itwin repository": {
+        "description": "Work with iTwin repositories."
+      },
+      "imodel": {
+        "description": "Work with iModels of an iTwin."
+      },
+      "imodel view": {
+        "description": "Work with views for an iModel."
+      },
+      "imodel changeset": {
+        "description": "Work with changesets of an iModel."
+      },
+      "imodel namedversion": {
+        "description": "Work with named versions of an iModel."
+      },
+      "imodel connection": {
+        "description": "Work with iModel connections."
+      },
+      "imodel connection run": {
+        "description": "Work with iModel connection runs."
+      },
+      "imodel connection sourcefile": {
+        "description": "Work with iModel connection source files."
+      },
+      "access-control": {
+        "description": "Manage iTwin access control."
+      },
+      "access-control permissions": {
+        "description": "Get permission information."
+      },
+      "access-control role": {
+        "description": "Manage iTwin access control roles."
+      },
+      "access-control group": {
+        "description": "Manage iTwin access control groups."
+      },
+      "access-control member": {
+        "description": "Manage members that can access an iTwin."
+      },
+      "access-control member owner": {
+        "description": "Manage access control for iTwin owners."
+      },
+      "access-control member group": {
+        "description": "Manage groups that can access an iTwin."
+      },
+      "access-control member user": {
+        "description": "Manage users that can access an iTwin."
+      },
+      "storage": {
+        "description": "Interact with the storage repository of an iTwin."
+      },
+      "storage folder": {
+        "description": "Interact with folders inside a storage repository."
+      },
+      "storage file": {
+        "description": "Interact with files inside a storage repository."
+      },
+      "user": {
+        "description": "Access user information."
+      },
+      "changed-elements": {
+        "description": "Compare two changesets of an iModel."
+      },
+      "workflows": {
+        "description": "Workflow reference for combined commands."
+      },
+      "combined-commands": {
+        "description": "Workflow reference for combined commands."
       }
     },
     "additionalHelpFlags": ["-h"]
   },
   "repository": "iTwin/itwin-cli",
   "scripts": {
-    "clean": "shx rm -rf dist",
+    "clean": "shx rm -rf dist tsconfig.tsbuildinfo",
     "build": "npm run clean && tsc -b",
     "lint": "eslint . --ext .ts",
     "postpack": "shx rm -f oclif.manifest.json",
