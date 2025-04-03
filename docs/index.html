@@ -22,6 +22,11 @@
       autoHeader: true,
       onlyCover: false,
       routerMode: 'hash',
+      copyCode: {
+        buttonText: 'Copy',
+        errorText: 'Error',
+        successText: 'Copied!'
+      },
       plugins: [
         function(hook) {
           hook.doneEach(function() {
@@ -43,5 +48,6 @@
     };
   </script>
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
 </body>
 </html>
