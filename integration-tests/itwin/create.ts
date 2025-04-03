@@ -7,15 +7,13 @@ import { ITwin } from "@itwin/itwins-client";
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
-import { deleteITwin } from "../utils/helpers";
-
 const tests = () => describe('create', () => {
   let testITwinId: string;
   let testITwinId2: string;
   let testITwinChildId: string;
-  const testITwinName1 = 'IntegrationTestITwin';
-  const testITwinName2 = 'OtherIntegrationTestITwin';
-  const testChildITwinName = 'IntegrationTestITwinChild';
+  const testITwinName1 = `IntegrationTestITwin_${new Date().toISOString()}`;
+  const testITwinName2 = `OtherIntegrationTestITwin_${new Date().toISOString()}`;
+  const testChildITwinName = `IntegrationTestITwinChild_${new Date().toISOString()}`;
   const testClass = 'Thing';
   const testSubClass = 'Asset';
   const testGeographicLocation= 'San Francisco, CA'
@@ -26,9 +24,9 @@ const tests = () => describe('create', () => {
   const testNumber = Math.random().toString(36).slice(2)
 
   after(async () => {
-    await deleteITwin(testITwinChildId);
-    await deleteITwin(testITwinId);
-    await deleteITwin(testITwinId2)
+    await runCommand(`itwin delete --itwin-id ${testITwinChildId}`);
+    await runCommand(`itwin delete --itwin-id ${testITwinId}`);
+    await runCommand(`itwin delete --itwin-id ${testITwinId2}`);
   })
 
   it('should create a new iTwin', async () => {
