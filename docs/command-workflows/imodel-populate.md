@@ -1,14 +1,16 @@
-# Synchronization
+# iModel Populate
 
-Synchronization is the process of reading data from design files and writing into an iModel. This is accomplished by using connectors to facilitate data migration. The design files must first be uploaded to the iTwin Storage before running synchronization.
+The iModel populate command lets you add design data to an iTwin using synchronization. Synchronization involves reading data from design files and writing it into an iModel within your iTwin. This process is handled by specialized connectors that support data migration from various design formats.
+
+Before synchronization can begin, the design files must be uploaded to iTwin Storage.
 
 **Workflow steps:**
 
 1. [Get root folder](https://developer.bentley.com/apis/storage/operations/get-top-level-folders-and-files-by-project/) of iTwin Storage.
-2. [Create file](https://developer.bentley.com/apis/storage/operations/create-file/) metadata in root folder using folder ID. Capture file ID.
+2. [Create file](https://developer.bentley.com/apis/storage/operations/create-file/) metadata in root folder using folder ID. Capture file ID(s).
 3. [Upload](https://developer.bentley.com/apis/storage/operations/update-file-content/) actual file data into the file.
 4. [Complete upload](https://developer.bentley.com/apis/storage/operations/complete-file-creation/) of file. Confirmation step.
-5. [Create a storage connection](https://developer.bentley.com/apis/synchronization/operations/create-storage-connection/). Add file (using file ID from step 2).
+5. [Create a storage connection](https://developer.bentley.com/apis/synchronization/operations/create-storage-connection/). Create a *Default iTwinCLI Connection* and add file (using file ID from step 2).
 6. [Run storage connection](https://developer.bentley.com/apis/synchronization/operations/run-storage-connection/).
 7. [Get storage connection](https://developer.bentley.com/apis/synchronization/operations/get-storage-connection-run/) run recursively until final status is obtained.
 8. Print final synchronization status.
@@ -64,8 +66,8 @@ export function getConnectorTypeFromFileExtension(extension: string): string[] |
 }
 ```
 
-For file types with multiple connector options, maybe we pick the most generic connectors? (MSTN and DWG).
+For file types with multiple connector options, pick the most generic connectors (such as MSTN and DWG).
 
-## Code Sample
+## References
 
-https://github.com/iTwin/course-synchronization-apis-storage-sample
+[Code Sample](https://github.com/iTwin/course-synchronization-apis-storage-sample)

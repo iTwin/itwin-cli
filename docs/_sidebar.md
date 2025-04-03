@@ -1,6 +1,9 @@
 * [iTwin CLI Manual](/)
 * [Quickstart](/quickstart.md)
 * [Workflows](workflows/overview.md)
+
+<hr style="margin: 1em 5em 1em 1em; opacity: 0.1;">
+
 * [itp](itp.md)
 * [options](options.md)
 * [auth](auth/overview.md)
@@ -50,6 +53,9 @@
     * [group](access-control/member/group/overview.md)
     * [owner](access-control/member/owner/overview.md)
     * [user](access-control/member/user/overview.md)
-* [combined commands](combined-commands/overview.md)
-  * [synchronization](combined-commands/synchronization.md)
-  * [cesium sandcastle](combined-commands/cesium-sandcastle.md)
+
+<hr style="margin: 1em 5em 1em 1em; opacity: 0.1;">
+
+* [Command Workflows](command-workflows/overview.md)
+  * [iModel Populate](command-workflows/imodel-populate.md)
+  * [Cesium Sandcastle Export](command-workflows/cesium-sandcastle.md)
