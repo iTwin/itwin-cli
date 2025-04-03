@@ -52,3 +52,4 @@
     * [user](access-control/member/user/overview.md)
 * [combined commands](combined-commands/overview.md)
   * [synchronization](combined-commands/synchronization.md)
+  * [cesium sandcastle](combined-commands/cesium-sandcastle.md)
