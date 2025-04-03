@@ -17,7 +17,7 @@ const tests = () => describe('update', () => {
 
   before(async () => {
     const testITwin = await createITwin(name, classType, subClass);
-    testITwinId = testITwin.id;
+    testITwinId = testITwin.id as string;
   });
 
   after(async () => {

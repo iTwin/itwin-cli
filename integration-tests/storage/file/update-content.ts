@@ -29,16 +29,16 @@ const tests = () => describe('update-content', () => {
   before(async () => {
     // Create an iTwin to get the root folder
     const testITwin = await createITwin('IntegrationTestITwin', 'Thing', 'Asset');
-    testITwinId = testITwin.id;
+    testITwinId = testITwin.id as string;
     rootFolderId = await getRootFolderId(testITwinId);
     
     // Create a folder inside the root folder
     const testFolder = await createFolder(rootFolderId, 'IntegrationTestFolder', 'Test description');
-    testFolderId = testFolder.id;
+    testFolderId = testFolder.id as string;
     
     // Create a test file inside the folder
     const createdFile = await createFile(testFolderId, displayName, filePath, description);
-    testFileId = createdFile.id;
+    testFileId = createdFile.id as string;
   });
 
   after(async () => {

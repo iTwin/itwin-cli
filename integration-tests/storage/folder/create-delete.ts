@@ -23,7 +23,7 @@ const tests = () => describe('create + delete', () => {
 
   before(async () => {
     const testITwin = await createITwin(name, classType, subClass);
-    testITwinId = testITwin.id;
+    testITwinId = testITwin.id as string;
   });
 
   after(async () => {
@@ -43,7 +43,7 @@ const tests = () => describe('create + delete', () => {
     expect(createdFolder).to.have.property('description', description);
     expect(createdFolder).to.have.property('parentFolderId', rootFolderId);
 
-    testFolderId = createdFolder.id;
+    testFolderId = createdFolder.id as string;
   });
 
   it('should delete the folder', async () => {

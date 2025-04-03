@@ -4,8 +4,10 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { loginToCli } from "../utils/helpers";
-import createListDeleteTests from "./create-list-delete";
+import createTests from "./create";
+import deleteTests from './delete';
 import infoTests from "./info";
+import listTests from "./list";
 import repositoryTests from "./repository"
 import updateTests from "./update";
 
@@ -14,8 +16,10 @@ describe('iTwin Integration Tests', () => {
     await loginToCli();
   });
 
-  createListDeleteTests();
+  createTests();
+  listTests();
   infoTests();
   updateTests();
+  deleteTests();
   repositoryTests();
 });

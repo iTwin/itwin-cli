@@ -3,74 +3,68 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
+import { ITwin } from '@itwin/itwins-client';
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
+import { fileTyped } from '../../src/services/storage-client/models/file-typed.js';
+import { folderTyped } from "../../src/services/storage-client/models/folder-typed.js";
 import { itemsWithFolderLink } from "../../src/services/storage-client/models/items-with-folder-link.js";
-import { createFile, createFolder, createITwin, deleteFile, deleteFolder, deleteITwin, getRootFolderId } from '../utils/helpers';
+import { createFile, createFolder, createITwin, deleteITwin, getRootFolderId } from '../utils/helpers';
 
 const tests = () => describe('root-folder', () => {
   const name = 'IntegrationTestITwin';
-  const classType = 'Thing';
-  const subClass = 'Asset';
-    const testFileName = 'test.zip';
-  const testFilePath = 'integration-tests/test.zip';
-  let testITwinId: string;
+  let testITwin: ITwin;
   let rootFolderId: string;
-  let testFolderId: string;
-  let testFileId: string;
+  let testFolder: folderTyped;
+  let testFile: fileTyped;
 
   before(async () => {
-    const testITwin = await createITwin(name, classType, subClass);
-    testITwinId = testITwin.id;
-    rootFolderId = await getRootFolderId(testITwinId);
-    const testFolder = await createFolder(rootFolderId, 'IntegrationTestFolder', 'Test description');
-    testFolderId = testFolder.id;
-    const testFile = await createFile(rootFolderId, testFileName, testFilePath);
-    testFileId = testFile.id;
+    testITwin = await createITwin(name, 'Thing', 'Asset');
+    rootFolderId = await getRootFolderId(testITwin.id as string) as string;
+    testFolder = await createFolder(rootFolderId, 'IntegrationTestFolder', 'Test description');
+    testFile = await createFile(rootFolderId, 'test.zip', 'integration-tests/test.zip');
   });
 
   after(async () => {
-    await deleteFolder(testFolderId);
-    await deleteFile(testFileId);
-    await deleteITwin(testITwinId);
+    await deleteITwin(testITwin.id as string);
   });
 
   it('should get the root folder with all items', async () => {
-    const { stdout } = await runCommand(`storage root-folder --itwin-id ${testITwinId}`);
-    const rootFolder: itemsWithFolderLink = JSON.parse(stdout);
+    const { result: rootFolder } = await runCommand<itemsWithFolderLink>(`storage root-folder --itwin-id ${testITwin.id}`);
 
+    expect(rootFolder).to.not.be.undefined;
     expect(rootFolder).to.have.property('items');
-    expect(rootFolder.items).to.be.an('array');
-    expect(rootFolder.items!.length).to.be.equal(2);
-    expect(rootFolder.items![0].displayName).to.be.equal("IntegrationTestFolder");
-    expect(rootFolder.items![1].displayName).to.be.equal("test.zip");
+    expect(rootFolder!.items).to.be.an('array');
+    expect(rootFolder!.items!.length).to.be.equal(2);
+    expect(rootFolder!.items![0].displayName).to.be.equal(testFolder.displayName);
+    expect(rootFolder!.items![1].displayName).to.be.equal(testFile.displayName);
     expect(rootFolder).to.have.property('_links');
-    expect(rootFolder._links).to.have.property('folder');
-    expect(rootFolder._links!.folder).to.have.property('href');
-    expect(rootFolder._links!.folder!.href).to.be.a('string');
+    expect(rootFolder!._links).to.have.property('folder');
+    expect(rootFolder!._links!.folder).to.have.property('href');
+    expect(rootFolder!._links!.folder!.href).to.be.a('string');
 
     // check helper function
-    const rootFolderId = await getRootFolderId(testITwinId);
-    expect(rootFolder._links!.folder!.href).to.contain(rootFolderId);
+    const rootFolderId = await getRootFolderId(testITwin.id as string);
+    expect(rootFolder!._links!.folder!.href).to.contain(rootFolderId);
   });
 
   it('should get the root folder with 2nd item only', async () => {
-    const { stdout } = await runCommand<itemsWithFolderLink>(`storage root-folder --itwin-id ${testITwinId} --top 1 --skip 1`);
-    const rootFolder = JSON.parse(stdout);
+    const { result: rootFolder } = await runCommand<itemsWithFolderLink>(`storage root-folder --itwin-id ${testITwin.id} --top 1 --skip 1`);
 
+    expect(rootFolder).to.not.be.undefined;
     expect(rootFolder).to.have.property('items');
-    expect(rootFolder.items).to.be.an('array');
-    expect(rootFolder.items!.length).to.be.equal(1);
-    expect(rootFolder.items![0].displayName).to.be.equal("test.zip");
+    expect(rootFolder!.items).to.be.an('array');
+    expect(rootFolder!.items!.length).to.be.equal(1);
+    expect(rootFolder!.items![0].displayName).to.be.equal(testFile.displayName);
     expect(rootFolder).to.have.property('_links');
-    expect(rootFolder._links).to.have.property('folder');
-    expect(rootFolder._links.folder).to.have.property('href');
-    expect(rootFolder._links.folder.href).to.be.a('string');
+    expect(rootFolder!._links).to.have.property('folder');
+    expect(rootFolder!._links!.folder).to.have.property('href');
+    expect(rootFolder!._links!.folder!.href).to.be.a('string');
 
     // check helper function
-    const rootFolderId = await getRootFolderId(testITwinId);
-    expect(rootFolder._links.folder.href).to.contain(rootFolderId);
+    const rootFolderId = await getRootFolderId(testITwin.id as string);
+    expect(rootFolder!._links!.folder!.href).to.contain(rootFolderId);
   });
 
 });
