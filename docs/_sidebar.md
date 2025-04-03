@@ -1,5 +1,5 @@
 * [iTwin CLI Manual](/)
-* [Quickstart](/quickstart.md)
+* [Quickstart](quickstart.md)
 * [Workflows](workflows/overview.md)
 
 <hr style="margin: 1em 5em 1em 1em; opacity: 0.1;">
@@ -7,6 +7,7 @@
 * [itp](itp.md)
 * [options](options.md)
 * [auth](auth/overview.md)
+  * [info](auth/info.md) 
   * [login](auth/login.md)
   * [logout](auth/logout.md)
 * [api](api.md)

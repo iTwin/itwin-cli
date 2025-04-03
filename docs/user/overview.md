@@ -4,6 +4,6 @@ Access user information.
 
 ## Available Commands
 
-- [itp user me](user/me.md)
-- [itp user info](user/info.md)
-- [itp user search](user/search.md)
+- [itp user me](me.md)
+- [itp user info](info.md)
+- [itp user search](search.md)

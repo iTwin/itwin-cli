@@ -4,5 +4,5 @@ Get permission information.
 
 ## Available Commands
 
-- [itp access-control permissions me](access-control/permissions/me.md)
-- [itp access-control permissions all](access-control/permissions/all.md)
+- [itp access-control permissions me](me.md)
+- [itp access-control permissions all](all.md)

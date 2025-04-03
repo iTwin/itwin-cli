@@ -4,13 +4,13 @@ Work with iModels of an iTwin.
 
 ## Available Commands
 
-- [itp imodel create](imodel/create.md)
-- [itp imodel populate](imodel/populate.md)
-- [itp imodel update](imodel/update.md)
-- [itp imodel delete](imodel/delete.md)
-- [itp imodel info](imodel/info.md)
-- [itp imodel list](imodel/list.md)
-- [itp imodel view](imodel/view/overview.md)
-- [itp imodel changeset](imodel/changeset/overview.md)
-- [itp imodel namedversion](imodel/named-version/overview.md)
-- [itp imodel connection](imodel/connection/overview.md)
+- [itp imodel create](create.md)
+- [itp imodel populate](populate.md)
+- [itp imodel update](update.md)
+- [itp imodel delete](delete.md)
+- [itp imodel info](info.md)
+- [itp imodel list](list.md)
+- [itp imodel view](view/overview.md)
+- [itp imodel changeset](changeset/overview.md)
+- [itp imodel namedversion](named-version/overview.md)
+- [itp imodel connection](connection/overview.md)
