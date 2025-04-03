@@ -55,10 +55,20 @@
 [data-theme="dark"] .markdown-section h2,
 [data-theme="dark"] .markdown-section h3,
 [data-theme="dark"] .markdown-section h4,
+[data-theme="dark"] .markdown-section h5,
+[data-theme="dark"] .markdown-section h6,
 [data-theme="dark"] .markdown-section h1 span,
 [data-theme="dark"] .markdown-section h2 span,
+[data-theme="dark"] .markdown-section h3 span,
+[data-theme="dark"] .markdown-section h4 span,
+[data-theme="dark"] .markdown-section h5 span,
+[data-theme="dark"] .markdown-section h6 span,
 [data-theme="dark"] .markdown-section h1 a,
-[data-theme="dark"] .markdown-section h2 a {
+[data-theme="dark"] .markdown-section h2 a,
+[data-theme="dark"] .markdown-section h3 a,
+[data-theme="dark"] .markdown-section h4 a,
+[data-theme="dark"] .markdown-section h5 a,
+[data-theme="dark"] .markdown-section h6 a {
   color: #ffffff !important;
   opacity: 1 !important;
   font-weight: 600 !important;
@@ -66,14 +76,19 @@
 
 /* Specific override for command titles */
 [data-theme="dark"] .markdown-section h1:first-of-type,
-[data-theme="dark"] .markdown-section h2:first-of-type {
+[data-theme="dark"] .markdown-section h2:first-of-type,
+[data-theme="dark"] .markdown-section h3:first-of-type {
   color: #ffffff !important;
   opacity: 1 !important;
 }
 
 /* Ensure all heading content is bright */
 [data-theme="dark"] .markdown-section h1 *,
-[data-theme="dark"] .markdown-section h2 * {
+[data-theme="dark"] .markdown-section h2 *,
+[data-theme="dark"] .markdown-section h3 *,
+[data-theme="dark"] .markdown-section h4 *,
+[data-theme="dark"] .markdown-section h5 *,
+[data-theme="dark"] .markdown-section h6 * {
   color: #ffffff !important;
   opacity: 1 !important;
   background: none !important;
@@ -116,4 +131,18 @@
 /* Keep Vue theme's green color for links */
 [data-theme="dark"] .markdown-section a:not(h1 *, h2 *) {
   color: #42b983;
-} 
+}
+
+/* Image switching for dark/light modes */
+[data-theme="light"] img[data-theme-mode="dark"] {
+  display: none;
+}
+
+[data-theme="dark"] img[data-theme-mode="light"] {
+  display: none;
+}
+
+/* If no theme-mode is specified, image shows in both modes */
+img:not([data-theme-mode]) {
+  display: block;
+}
