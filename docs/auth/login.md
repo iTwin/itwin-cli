@@ -9,7 +9,7 @@ Authenticate iTwin CLI with Bentley. This command initiates the login process an
 
 | Workflow | Use Case | Required Flags | Behavior |
 |----------|----------|----------------|----------|
-| **Native** | Local development, user sessions | _None_ | Prompts browser login |
+| **Native** | Local development, user sessions | None | Prompts browser login |
 | **Service** | CI/CD pipelines, headless automation | `--client-id`, `--client-secret` | Uses client credentials flow |
 
 - For details on these auth flows, see the [authentication docs](https://developer.bentley.com/apis/authentication/).  

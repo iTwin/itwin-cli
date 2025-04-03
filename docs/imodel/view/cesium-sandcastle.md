@@ -1,5 +1,7 @@
 # itp imodel view cesium-sandcastle
 
+> 🔬 This command is currently in Technical Preview.
+
 Setup iModel and get URL to view it in Cesium Sandcastle.
 
 ## Options
