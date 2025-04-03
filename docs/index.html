@@ -7,16 +7,40 @@
   <meta name="description" content="Description">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  <link rel="stylesheet" href="theme.css">
 </head>
 <body>
+  <button class="dark-mode-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">🌙</button>
   <div id="app"></div>
   <script>
+    // Dark mode toggle
+    function toggleTheme() {
+      const theme = document.documentElement.getAttribute('data-theme');
+      const newTheme = theme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      
+      // Update button icon
+      const button = document.querySelector('.dark-mode-toggle');
+      button.innerHTML = newTheme === 'dark' ? '☀️' : '🌙';
+    }
+
+    // Initialize theme
+    (function() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        const button = document.querySelector('.dark-mode-toggle');
+        button.innerHTML = savedTheme === 'dark' ? '☀️' : '🌙';
+      }
+    })();
+
     window.$docsify = {
       loadSidebar: '_sidebar.md',
       alias: {
         '/.*/_sidebar.md': '/_sidebar.md'
       },
-      name: 'iTwin CLI Manual',
+      name: false,
       nameLink: '/',
       repo: '',
       autoHeader: true,
