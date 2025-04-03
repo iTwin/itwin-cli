@@ -1,6 +1,6 @@
 # itp api
 
-Send HTTP request to iTwin Platform API.
+Make direct HTTP requests to any iTwin Platform API endpoint. Useful for custom operations or accessing APIs without dedicated commands.
 
 ## Options
 
@@ -9,7 +9,7 @@ Send HTTP request to iTwin Platform API.
   **Type:** `string` **Required:** No
 
 - **`--empty-response`**  
-  The request does not contain a response body.  
+  Indicates the request will not return a response body.  
   **Type:** `flag` **Required:** No
 
 - **`--header`**  
@@ -17,20 +17,20 @@ Send HTTP request to iTwin Platform API.
   **Type:** `string` **Required:** No **Multiple:** Yes
 
 - **`--method`**  
-  The method of the request.  
+  HTTP method for the request.  
   **Type:** `string` **Required:** Yes  
   **Valid Values:** `"GET"`, `"POST"`, `"PUT"`, `"DELETE"`, `"PATCH"`
 
 - **`--path`**  
-  The path of the request.  
+  API endpoint path to send the request to.  
   **Type:** `string` **Required:** Yes
 
 - **`--query`**  
-  Query parameters to include in the request. Use the format 'QueryKey:value'.  
+  URL query parameters for the request. Use format 'QueryKey:value'.  
   **Type:** `string` **Required:** No **Multiple:** Yes
 
 - **`--version-header`**  
-  The version header to include in the request.  
+  API version header for versioned endpoints.  
   **Type:** `string` **Required:** No
 
 ## Examples
