@@ -2,24 +2,76 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Document</title>
+  <title>iTwin CLI Manual</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="description" content="Description">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
-
+  <link rel="stylesheet" href="theme.css">
 </head>
 <body>
+  <button class="dark-mode-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">🌙</button>
   <div id="app"></div>
   <script>
-    window.$docsify = {
-      loadSidebar: true,
-      name: '',
-      repo: '',
-      sidebar: '_sidebar.md'
+    // Dark mode toggle
+    function toggleTheme() {
+      const theme = document.documentElement.getAttribute('data-theme');
+      const newTheme = theme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      
+      // Update button icon
+      const button = document.querySelector('.dark-mode-toggle');
+      button.innerHTML = newTheme === 'dark' ? '☀️' : '🌙';
     }
+
+    // Initialize theme
+    (function() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        const button = document.querySelector('.dark-mode-toggle');
+        button.innerHTML = savedTheme === 'dark' ? '☀️' : '🌙';
+      }
+    })();
+
+    window.$docsify = {
+      loadSidebar: '_sidebar.md',
+      alias: {
+        '/.*/_sidebar.md': '/_sidebar.md'
+      },
+      name: false,
+      nameLink: '/',
+      repo: '',
+      autoHeader: true,
+      onlyCover: false,
+      routerMode: 'hash',
+      copyCode: {
+        buttonText: 'Copy',
+        errorText: 'Error',
+        successText: 'Copied!'
+      },
+      plugins: [
+        function(hook) {
+          hook.doneEach(function() {
+            setTimeout(function() {
+              var mainContent = document.querySelector('.markdown-section');
+              if (mainContent) {
+                var h1 = mainContent.querySelector('h1');
+                if (h1) {
+                  var title = h1.textContent.trim();
+                  document.title = title + ' - iTwin CLI Manual';
+                } else {
+                  document.title = 'iTwin CLI Manual';
+                }
+              }
+            }, 100);
+          });
+        }
+      ]
+    };
   </script>
-  <!-- Docsify v4 -->
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
 </body>
 </html>
