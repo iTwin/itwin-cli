@@ -7,8 +7,6 @@ import { ITwin } from "@itwin/itwins-client";
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
-import { deleteITwin } from "../utils/helpers";
-
 const tests = () => describe('list', () => {
   let testITwin1: ITwin;
   let testITwin1Child: ITwin;
@@ -24,9 +22,9 @@ const tests = () => describe('list', () => {
   });
 
   after(async () => {
-    await deleteITwin(testITwin1Child.id!);
-    await deleteITwin(testITwin1.id!);
-    await deleteITwin(testITwin2.id!)
+    await runCommand(`itwin delete --itwin-id ${testITwin1Child.id}`);
+    await runCommand(`itwin delete --itwin-id ${testITwin1.id}`);
+    await runCommand(`itwin delete --itwin-id ${testITwin2.id}`);
   })
 
   it('should fail when provided bad subClass', async () => {
