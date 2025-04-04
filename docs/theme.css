@@ -1,0 +1,154 @@
+/* Dark mode toggle button */
+.dark-mode-toggle {
+  position: fixed;
+  right: 1rem;
+  top: 1rem;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 1px solid #eee;
+  background: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  z-index: 100;
+}
+
+.dark-mode-toggle:hover {
+  transform: scale(1.1);
+}
+
+/* Minimal dark theme - only colors */
+[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+[data-theme="dark"] body {
+  background-color: #0f172a;
+  color: #e2e8f0;
+}
+
+[data-theme="dark"] .sidebar {
+  background-color: #0f172a;
+  border-right-color: #1e293b;
+}
+
+[data-theme="dark"] .sidebar ul li a {
+  color: #e2e8f0;
+}
+
+/* Keep Vue theme's green highlight in sidebar */
+[data-theme="dark"] .sidebar ul li.active > a {
+  color: #42b983 !important;
+  border-right: 2px solid #42b983;
+}
+
+[data-theme="dark"] .markdown-section {
+  color: #e2e8f0;
+}
+
+/* Force all headings to be bright */
+[data-theme="dark"] .markdown-section h1,
+[data-theme="dark"] .markdown-section h2,
+[data-theme="dark"] .markdown-section h3,
+[data-theme="dark"] .markdown-section h4,
+[data-theme="dark"] .markdown-section h5,
+[data-theme="dark"] .markdown-section h6,
+[data-theme="dark"] .markdown-section h1 span,
+[data-theme="dark"] .markdown-section h2 span,
+[data-theme="dark"] .markdown-section h3 span,
+[data-theme="dark"] .markdown-section h4 span,
+[data-theme="dark"] .markdown-section h5 span,
+[data-theme="dark"] .markdown-section h6 span,
+[data-theme="dark"] .markdown-section h1 a,
+[data-theme="dark"] .markdown-section h2 a,
+[data-theme="dark"] .markdown-section h3 a,
+[data-theme="dark"] .markdown-section h4 a,
+[data-theme="dark"] .markdown-section h5 a,
+[data-theme="dark"] .markdown-section h6 a {
+  color: #ffffff !important;
+  opacity: 1 !important;
+  font-weight: 600 !important;
+}
+
+/* Specific override for command titles */
+[data-theme="dark"] .markdown-section h1:first-of-type,
+[data-theme="dark"] .markdown-section h2:first-of-type,
+[data-theme="dark"] .markdown-section h3:first-of-type {
+  color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+/* Ensure all heading content is bright */
+[data-theme="dark"] .markdown-section h1 *,
+[data-theme="dark"] .markdown-section h2 *,
+[data-theme="dark"] .markdown-section h3 *,
+[data-theme="dark"] .markdown-section h4 *,
+[data-theme="dark"] .markdown-section h5 *,
+[data-theme="dark"] .markdown-section h6 * {
+  color: #ffffff !important;
+  opacity: 1 !important;
+  background: none !important;
+}
+
+/* Code blocks and inline code styling */
+[data-theme="dark"] .markdown-section pre,
+[data-theme="dark"] .markdown-section pre > code {
+  background-color: #1e293b;
+  color: #f8fafc;
+}
+
+/* Orange color for inline code */
+[data-theme="dark"] .markdown-section code:not(pre *) {
+  color: #e96900;
+  background-color: #1e293b;
+}
+
+/* Simplified table style - single color */
+[data-theme="dark"] .markdown-section tr {
+  background-color: #1e293b;
+  border-top: 1px solid #2d3748;
+}
+
+[data-theme="dark"] .markdown-section th,
+[data-theme="dark"] .markdown-section td {
+  border: 1px solid #2d3748;
+}
+
+[data-theme="dark"] .markdown-section strong {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .dark-mode-toggle {
+  background: #1e293b;
+  border-color: #2d3748;
+  color: #e2e8f0;
+}
+
+/* Keep Vue theme's green color for links */
+[data-theme="dark"] .markdown-section a:not(h1 *, h2 *) {
+  color: #42b983;
+}
+
+/* Image switching for dark/light modes */
+[data-theme="light"] img[data-theme-mode="dark"] {
+  display: none;
+}
+
+[data-theme="dark"] img[data-theme-mode="light"] {
+  display: none;
+}
+
+/* If no theme-mode is specified, image shows in both modes */
+img:not([data-theme-mode]) {
+  display: block;
+}
+
+/* Subtle white separators in dark mode */
+[data-theme="dark"] .sidebar hr {
+  border-color: rgba(255, 255, 255);
+  background-color: rgba(255, 255, 255);
+}

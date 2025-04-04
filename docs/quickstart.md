@@ -12,7 +12,7 @@ Before using the CLI, you must log in to authenticate your session.
 itp auth login
 ```
 
-**Expected Outcome:** A browser window opens for authentication. Once logged in, your session is ready for authorized interaction with the iTwin Platform.
+**Result:** A browser window opens for authentication. Once logged in, your session is ready for authorized interaction with the iTwin Platform.
 
 ### Step 1: Create an iTwin
 
@@ -22,19 +22,21 @@ An iTwin represents a **digital twin** that organizes models, repositories, and 
 itp itwin create --class Thing --sub-class Asset --name "My First iTwin"
 ```
 
-**Expected Outcome:** The command returns an *iTwin ID*, which you’ll use in the next steps.
+**Result:** The command returns an *iTwin ID*, which you'll use in the next steps.
 
 ---
 
 ### Step 2: Create an iModel
 
-An iModel stores design data and tracks changes over time. To create one, specify the *iTwin ID* from Step 1.
+An iModel stores design data and tracks changes over time. To create one, specify the *iTwin ID* from Step 1. 
+
+> Need a design file? Feel free to use the examples provided in the [iTwin CLI repository](https://github.com/iTwin/itwin-cli/tree/main/examples/datasets).
 
 ```bash
 itp imodel create --itwin-id your-itwin-id --name "My First iModel"
 ```
 
-**Expected Outcome:** You receive an *iModel ID* for future operations.
+**Result:** You receive an *iModel ID* for future operations.
 
 ---
 
@@ -46,7 +48,7 @@ Once your iModel is created, synchronize design files into it using the **popula
 itp imodel populate --imodel-id your-imodel-id --file file.dgn
 ```
 
-**Expected Outcome:** Your design data is now available on the iTwin Platform. You can navigate to [My iTwins](https://developer.bentley.com/my-itwins/) on the iTwin Developer Portal to visualize it.
+**Result:** Your design data is now available on the iTwin Platform. You can navigate to [My iTwins](https://developer.bentley.com/my-itwins/) on the iTwin Developer Portal to visualize it.
 
 ---
 
@@ -61,4 +63,4 @@ itp imodel populate --imodel-id your-imodel-id --file file.dgn
 
 ---
 
-🎉 **Congratulations!** You’ve successfully created an iTwin, set up an iModel, and populated it with data. Now you’re ready to dive deeper into automation and integration!
+🎉 **Congratulations!** You've successfully created an iTwin, set up an iModel, and populated it with data. Now you're ready to dive deeper into automation and integration!

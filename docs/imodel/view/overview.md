@@ -1,6 +1,6 @@
 # itp imodel view
 
-Work with views for an iModel.
+View an iModel.
 
 ## Available Commands
 

@@ -9,7 +9,7 @@ import BaseCommand from "../../extensions/base-command.js";
 import { Query } from "../../services/iTwin-api-client.js";
 
 export default class ApiRequest extends BaseCommand {
-    static description = "Send HTTP request to iTwin Platform API.";
+    static description = "Make direct HTTP requests to any iTwin Platform API endpoint. Useful for custom operations or accessing APIs without dedicated commands.";
   
     static flags = {
         body: Flags.string({
@@ -17,7 +17,7 @@ export default class ApiRequest extends BaseCommand {
             helpValue: '<string>',
         }),
         "empty-response": Flags.boolean({
-            description: "The request does not contain a response body."
+            description: "Indicates the request will not return a response body."
         }),
         header: Flags.string({
             description: "Headers to include in the request. Use the format 'HeaderName: value'.",
@@ -26,13 +26,13 @@ export default class ApiRequest extends BaseCommand {
             multiple: true,
         }),
         method: Flags.string({
-            description: "The method of the request.",
+            description: "HTTP method for the request.",
             helpValue: '<string>',
             options: ["GET", "POST", "PUT", "DELETE", "PATCH"],
             required: true,
         }),
         path: Flags.string({
-            description: "The path of the request.",
+            description: "API endpoint path to send the request to.",
             helpValue: '<string>',
             required: true,
         }),
@@ -42,7 +42,7 @@ export default class ApiRequest extends BaseCommand {
             multiple: true,
         }),
         "version-header": Flags.string({
-            description: "The version header to include in the request.",
+            description: "API version header for versioned endpoints.",
             helpValue: '<string>',
         }),
     };
