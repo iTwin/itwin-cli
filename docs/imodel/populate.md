@@ -39,4 +39,4 @@ itp imodel populate --imodel-id i9j0k1l2-3456-78ab-cdef-9012345678ij --file mode
 
 ## Workflow Reference
 
-- [iModel Populate](/command-workflows/imodel-populate)
+- [iModel Populate](/docs/command-workflows/imodel-populate)

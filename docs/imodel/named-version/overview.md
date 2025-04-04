@@ -4,6 +4,6 @@ Work with named versions of an iModel.
 
 ## Available Commands
 
-- [itp imodel named-version create](imodel/named-version/create.md)
-- [itp imodel named-version info](imodel/named-version/info.md)
-- [itp imodel named-version list](imodel/named-version/list.md)
+- [itp imodel named-version create](create.md)
+- [itp imodel named-version info](info.md)
+- [itp imodel named-version list](list.md)

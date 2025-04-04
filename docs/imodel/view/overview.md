@@ -4,4 +4,4 @@ View an iModel.
 
 ## Available Commands
 
-- [itp imodel view cesium-sandcastle](imodel/view/cesium-sandcastle.md)
+- [itp imodel view cesium-sandcastle](cesium-sandcastle.md)

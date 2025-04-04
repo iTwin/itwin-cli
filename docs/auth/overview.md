@@ -4,5 +4,6 @@ Authenticate itp with [Bentley](http://ims.bentley.com).
 
 ## Available Commands
 
-- [itp auth login](auth/login.md)
-- [itp auth logout](auth/logout.md)
+- [itp auth info](info.md)
+- [itp auth login](login.md)
+- [itp auth logout](logout.md)

@@ -33,4 +33,4 @@ itp imodel view cesium-sandcastle --imodel-id 5e19bee0-3aea-4355-a9f0-c6df9989ee
 
 ## Workflow Reference
 
-[Cesium Sandcastle](/command-workflows/cesium-sandcastle)
+[Cesium Sandcastle](/docs/command-workflows/cesium-sandcastle)
