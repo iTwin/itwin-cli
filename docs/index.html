@@ -38,13 +38,15 @@
     window.$docsify = {
       loadSidebar: '_sidebar.md',
       alias: {
-        '/.*/_sidebar.md': '/_sidebar.md'
+        '/docs/(.*)': '/$1',
+        '/.*/_sidebar.md': '/_sidebar.md',
       },
       name: false,
       nameLink: '/',
       repo: '',
       autoHeader: true,
       onlyCover: false,
+      relativePath: true,
       routerMode: 'hash',
       copyCode: {
         buttonText: 'Copy',
