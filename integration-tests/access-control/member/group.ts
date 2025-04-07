@@ -61,7 +61,7 @@ const tests = () => {
         expect(additionalRole.result).is.not.undefined;
         expect(additionalRole.result!.id).is.not.undefined;
 
-        const resultUpdate = await runCommand<GroupMemberInfo>(`access-control member group update --itwin-id ${iTwinId} --group-id ${groupId} --role-ids ${roleId} --role-ids ${additionalRole.result!.id}`);
+        const resultUpdate = await runCommand<GroupMemberInfo>(`access-control member group update --itwin-id ${iTwinId} --group-id ${groupId} --role-id ${roleId} --role-id ${additionalRole.result!.id}`);
         expect(resultUpdate.result).is.not.undefined;
         expect(resultUpdate.result!.id).is.not.undefined;
         expect(resultUpdate.result!.id).to.be.equal(groupId);

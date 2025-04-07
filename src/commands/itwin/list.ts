@@ -25,7 +25,7 @@ export default class ListITwins extends BaseCommand {
         description: 'Example 3: Limiting the number of returned results and filtering by type'
       },
       {
-        command: `<%= config.bin %> <%= command.id %> --sub-class Asset --name "Solar Farm" --include-inactive true`,
+        command: `<%= config.bin %> <%= command.id %> --sub-class Asset --name "Solar Farm" --include-inactive`,
         description: 'Example 4: Searching by display name and including inactive iTwins'
       },
       {
@@ -84,7 +84,7 @@ export default class ListITwins extends BaseCommand {
       }),
       top: Flags.integer({
         description: 'Limit the number of items returned.',
-        helpValue: '<integer>',
+        helpValue: '<integer      >',
         required: false,
       }),
       type: Flags.string({

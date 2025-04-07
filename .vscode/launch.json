@@ -29,6 +29,40 @@
             "args": [
                 "readme"
             ]
+        },
+        {
+            "name": "Debug All Tests",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/mocha",
+            "args": [
+                "--forbid-only",
+                "--timeout",
+                "999999",
+                "integration-tests/**/api.test.ts"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        },
+        {
+            "name": "Debug Active Test",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/mocha",
+            "args": [
+                "--forbid-only",
+                "--timeout",
+                "999999",
+                "${file}"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
         }
     ]
 }

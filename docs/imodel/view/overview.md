@@ -1,7 +1,7 @@
 # itp imodel view
 
-Work with views for an iModel.
+View an iModel.
 
 ## Available Commands
 
-- [itp imodel view cesium-sandcastle](imodel/view/cesium-sandcastle.md)
+- [itp imodel view cesium-sandcastle](cesium-sandcastle.md)

@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { ITwinPlatformApiClient } from "../iTwin-api-client.js";
-import { fileResponse, filesRepsonse, itemsRepsonse } from "./models/file-response.js";
+import { fileResponse, filesResponse, itemsResponse } from "./models/file-response.js";
 import { fileUpload } from "./models/file-upload.js";
 import { folderInfo, folderResponse, foldersResponse } from "./models/folder-typed.js";
 import { itemsWithFolderLink } from "./models/items-with-folder-link.js";
@@ -63,14 +63,14 @@ export class StorageApiClient {
         });
     }
 
-    getFiles(folderId: string): Promise<filesRepsonse> {
+    getFiles(folderId: string): Promise<filesResponse> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `storage/folders/${folderId}/files`,
             method: "GET",
         });
     }
 
-    getFilesAndFolders(folderId: string): Promise<itemsRepsonse> {
+    getFilesAndFolders(folderId: string): Promise<itemsResponse> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `storage/folders/${folderId}/list`,
             method: "GET",

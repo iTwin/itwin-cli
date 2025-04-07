@@ -4,9 +4,9 @@ Work with iTwins.
 
 ## Available Commands
 
-- [itp itwin create](itwin/create.md)
-- [itp itwin update](itwin/update.md)
-- [itp itwin delete](itwin/delete.md)
-- [itp itwin info](itwin/info.md)
-- [itp itwin list](itwin/list.md)
-- [itp itwin repository](itwin/repository/overview.md)
+- [itp itwin create](create.md)
+- [itp itwin update](update.md)
+- [itp itwin delete](delete.md)
+- [itp itwin info](info.md)
+- [itp itwin list](list.md)
+- [itp itwin repository](repository/overview.md)

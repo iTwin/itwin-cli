@@ -47,7 +47,7 @@ const tests = () => {
         const updatedGroupDescription = "Updated Group Description";
         const memberEmail = "itwin.cli.qa-testaccount@be-mailinator.eastus.cloudapp.azure.com";
 
-        const groupUpdate = await runCommand<group>(`access-control group update --itwin-id ${iTwinId} --group-id ${groupCreate.result!.id} --name "${updatedGroupName}" --description "${updatedGroupDescription}" --members ${memberEmail}`);
+        const groupUpdate = await runCommand<group>(`access-control group update --itwin-id ${iTwinId} --group-id ${groupCreate.result!.id} --name "${updatedGroupName}" --description "${updatedGroupDescription}" --member ${memberEmail}`);
         expect(groupUpdate.result).is.not.undefined;
         expect(groupUpdate.result!.id).is.not.undefined;
         expect(groupUpdate.result!.name).to.be.equal(updatedGroupName);

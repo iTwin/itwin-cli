@@ -30,7 +30,7 @@ export default class UpdateGroupMember extends BaseCommand {
         helpValue: '<string>',
         required: true,
       }),
-      "role-ids": Flags.string({
+      "role-id": Flags.string({
         description: 'A list of role IDs to assign to the group.',
         helpValue: '<string>',
         multiple: true,
@@ -43,7 +43,7 @@ export default class UpdateGroupMember extends BaseCommand {
   
       const client = await this.getAccessControlMemberClient();
   
-      const response = await client.updateGroupMember(flags["itwin-id"], flags["group-id"], flags["role-ids"]);
+      const response = await client.updateGroupMember(flags["itwin-id"], flags["group-id"], flags["role-id"]);
   
       return this.logAndReturnResult(response.member);
     }
