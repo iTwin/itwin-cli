@@ -18,7 +18,7 @@ if ($version -like "itp/* win32-x64 node-v20.16.0") {
 }
 
 $help = & itp itwin --help
-if ($help -like "Create an iTwin*") {
+if ($help -like "Work with iTwins.*") {
     Write-Output "Help output check passed"
 } else {
     Write-Error "Unexpected help output: $help"
