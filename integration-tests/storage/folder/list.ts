@@ -26,12 +26,12 @@ const tests = () => describe('list', () => {
 
   before(async () => {
     const testITwin = await createITwin('IntegrationTestITwin', 'Thing', 'Asset');
-    testITwinId = testITwin.id;
+    testITwinId = testITwin.id as string;
     rootFolderId = await getRootFolderId(testITwinId);
     const testFolder = await createFolder(rootFolderId, 'IntegrationTestFolder', 'Test description');
-    testFolderId = testFolder.id;
+    testFolderId = testFolder.id as string;
     const testFile = await createFile(rootFolderId, testFileName, testFilePath);
-    testFileId = testFile.id;
+    testFileId = testFile.id as string;
   });
 
   after(async () => {

@@ -10,11 +10,11 @@ export type fileResponse = {
     file?: fileTyped;
 };
 
-export type filesRepsonse = {
+export type filesResponse = {
     files: fileTyped[];
 }
 
-export type itemsRepsonse = {
+export type itemsResponse = {
     _links: links
     items: fileTyped[];
 }

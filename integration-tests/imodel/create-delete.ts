@@ -14,7 +14,7 @@ const tests = () => describe('create + delete', () => {
 
   before(async () => {
     const testITwin = await createITwin('IntegrationTestITwin', 'Thing', 'Asset');
-    testITwinId = testITwin.id;
+    testITwinId = testITwin.id as string;
   });
 
   after(async () => {
