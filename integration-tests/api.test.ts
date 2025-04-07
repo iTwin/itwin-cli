@@ -4,6 +4,7 @@ import { runCommand } from "@oclif/test";
 import { expect } from "chai";
 
 import { User } from "../src/services/user-client/models/user.js";
+import exp from "constants";
 
 describe("API Integration Tests", () => {
     let iTwin: ITwin;
@@ -96,5 +97,15 @@ describe("API Integration Tests", () => {
         expect(minimalApiResponseJSON.iModels[0]).to.have.property("displayName", iModel.displayName);
         expect(minimalApiResponseJSON.iModels[0]).to.have.property("createdDateTime");
         expect(minimalApiResponseJSON.iModels[0]).to.have.property("iTwinId", iModel.iTwinId);
+    });
+
+    it('should handle version header correctly (Echo V1)', async () => {
+        const apiResponse = await runCommand(`api --method GET --path echo/context --version-header application/vnd.bentley.itwin-platform.v1+json`);
+        expect(apiResponse.error).to.be.undefined;
+        const apiResponseJSON = JSON.parse(apiResponse.stdout);
+
+        expect(apiResponseJSON).to.have.property("api").that.is.an("object").and.not.undefined;
+        expect(apiResponseJSON.api).to.have.property("version").that.is.an("string").and.not.undefined;
+        expect(apiResponseJSON.api.version).to.equal("v1");
     });
 });
