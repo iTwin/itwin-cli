@@ -4,7 +4,6 @@ import { runCommand } from "@oclif/test";
 import { expect } from "chai";
 
 import { User } from "../src/services/user-client/models/user.js";
-import exp from "constants";
 
 describe("API Integration Tests", () => {
     let iTwin: ITwin;
