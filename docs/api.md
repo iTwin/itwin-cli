@@ -48,6 +48,9 @@ itp api --method DELETE --path itwins/favorites/dc914a84-e0c9-40e2-9d14-faf5ed84
 # Example 4: Sending a post request
 itp api --method POST --path itwins/exports --body '{"outputFormat": "JsonGZip"}'
 
+# Example 5: Sending a post request (Windows PowerShell)
+itp api --method POST --path users/getbyidlist --body "[\`"b644de17-f07e-4b43-8c33-ad2b1bacee3b\`"]"
+
 ```
 
 ## APIs Docs Reference
