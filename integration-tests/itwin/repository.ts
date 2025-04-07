@@ -17,7 +17,7 @@ const tests = () => describe('repository', () => {
 
   before(async () => {
     const testITwin = await createITwin('IntegrationTestITwin', 'Thing', 'Asset');
-    testITwinId = testITwin.id;
+    testITwinId = testITwin.id as string;
   });
 
   after(async () => {

@@ -20,12 +20,12 @@ const tests = () => describe('connection', () => {
 
   before(async () => {
     const testITwin = await createITwin('IntegrationTestITwin', 'Thing', 'Asset');
-    testITwinId = testITwin.id;
+    testITwinId = testITwin.id as string;
     const testIModel = await createIModel(testIModelName, testITwinId);
     testIModelId = testIModel.id;
     rootFolderId = await getRootFolderId(testITwinId);
     const testFile = await createFile(rootFolderId, testFileName, testFilePath);
-    testFileId = testFile.id;
+    testFileId = testFile.id as string;
   });
 
   after(async () => {
