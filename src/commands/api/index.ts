@@ -57,8 +57,16 @@ export default class ApiRequest extends BaseCommand {
         }, {} as Record<string, string>) || {};
 
         const query: Query[] | undefined = flags.query?.map((query) => {
-            const [key, value] = query.split(":");
-            return { key: key.trim(), value: value.trim() };
+            const indexOfColon = query.indexOf(":");
+            if (indexOfColon === -1) {
+                this.error(`Invalid query format: ${query}. Expected format is 'key:value'.`);
+            }
+            
+            // Split the query string into key and value
+            const key = query.slice(0, indexOfColon).trim();
+            const value = query.slice(indexOfColon + 1).trim();
+
+            return { key, value };
         }) || undefined;
 
         const client = await this.getITwinApiClient();
