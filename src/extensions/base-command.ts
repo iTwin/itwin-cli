@@ -17,6 +17,7 @@ import { AccessControlClient } from '../services/access-control-client/access-co
 import { AccessControlMemberClient } from '../services/access-control-client/access-control-member-client.js';
 import { AuthorizationClient } from '../services/authorization-client/authorization-client.js';
 import { ChangedElementsApiClient } from '../services/changed-elements-client/changed-elements-api-client.js';
+import { UserContext } from '../services/general-models/user-context.js';
 import { ITwinPlatformApiClient } from '../services/iTwin-api-client.js';
 import { StorageApiClient } from '../services/storage-client/storage-api-client.js';
 import { SynchronizationApiClient } from '../services/synchronizationClient/synchronization-api-client.js';
