@@ -4,8 +4,8 @@ import path from "node:path";
 
 import BaseCommand from "../extensions/base-command.js";
 
-export default class ReadmeGenerator extends BaseCommand {
-    static description = "Generate a README.md file for the project.";
+export default class DocsGenerator extends BaseCommand {
+    static description = "Generate command and overview markdown files for the CLI.";
 
     static flags = {
         "output-dir": Flags.string({
@@ -59,7 +59,7 @@ export default class ReadmeGenerator extends BaseCommand {
         return `# itp ${commandName}\n\n${command.description || ""}\n\n## Options\n\n${options}\n\n## Examples\n\n\`\`\`bash${examplesText}\n\`\`\`\n\n## API Reference\n\n[${apiReferenceName}](${apiReference})`;
     }
     
-    async generateReadme(config: Config, basePath: string) {
+    async generateDocs(config: Config, basePath: string) {
         const filteredCommands = config.commands.filter(c => !c.id.includes("help") && !c.id.includes("plugins") && !c.hidden);
         if(!filteredCommands) {
             return;
@@ -79,7 +79,7 @@ export default class ReadmeGenerator extends BaseCommand {
     }
 
     async run() {
-        const {flags} = await this.parse(ReadmeGenerator);
+        const {flags} = await this.parse(DocsGenerator);
 
         const config = await Config.load(
             {
@@ -89,12 +89,12 @@ export default class ReadmeGenerator extends BaseCommand {
             }
         );
 
-        this.generateReadme(config, flags["output-dir"] ?? `${config.root}/docs`);
+        this.generateDocs(config, flags["output-dir"] ?? `${config.root}/docs`);
     }
     
     writeToFile(filePath: string, markdown: string) {
         const finalPath = `${filePath}.md`;
-        console.log(`Writing to file: ${finalPath}`);
+        console.log(`Writing to directory: ${finalPath}`);
         console.log(markdown);
 
         const dirName = path.dirname(finalPath);
