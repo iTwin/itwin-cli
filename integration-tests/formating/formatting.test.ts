@@ -11,7 +11,7 @@ describe('Command formatting tests', async () => {
             userPlugins: false,
         });
 
-        allCommands = config.commands.filter(command => !command.id.startsWith("plugins") && !command.id.startsWith("help"))
+        allCommands = config.commands.filter(command => !command.id.startsWith("plugins") && !command.id.startsWith("help") && !command.hidden)
                                      .map((command) => 
                                      ({
                                          cmd: command,

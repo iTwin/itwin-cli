@@ -19,6 +19,18 @@
             ]
         },
         {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch docs generator",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}\\bin\\run",
+            "args": [
+                "docs-generator"
+            ]
+        },
+        {
             "name": "Debug All Tests",
             "skipFiles": [
                 "<node_internals>/**"

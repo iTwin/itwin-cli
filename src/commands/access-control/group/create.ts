@@ -5,9 +5,15 @@
 
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 
 export default class CreateAccessControlGroup extends BaseCommand {
+    static apiReference : apiReference = {
+        link: "https://developer.bentley.com/apis/access-control-v2/operations/create-itwin-group/",
+        name: "Create iTwin Group",
+    }
+
     static description = 'Create a new group for an iTwin.';
   
     static examples = [
