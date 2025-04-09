@@ -1,6 +1,6 @@
 # iTwin 101
 
-**A developer-friendly introduction to Bentley's iTwin Platform.**
+**A friendly introduction to Bentley's iTwin Platform.**
 
 The infrastructure industry has undergone a major shift — from static design files to **cloud-connected systems** that reflect how assets behave in real time.
 
