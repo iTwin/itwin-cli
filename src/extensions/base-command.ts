@@ -5,7 +5,7 @@
 
 import { Authorization, AuthorizationCallback, IModelsClient } from '@itwin/imodels-client-management';
 import { ITwinsAccessClient } from '@itwin/itwins-client';
-import { Command, Config, Flags } from '@oclif/core';
+import { Command, Flags } from '@oclif/core';
 import { Input, ParserOutput } from '@oclif/core/interfaces';
 import { Table } from 'console-table-printer';
 import 'dotenv/config';
@@ -21,7 +21,6 @@ import { ITwinPlatformApiClient } from '../services/iTwin-api-client.js';
 import { StorageApiClient } from '../services/storage-client/storage-api-client.js';
 import { SynchronizationApiClient } from '../services/synchronizationClient/synchronization-api-client.js';
 import { UserApiClient } from '../services/user-client/user-api-client.js';
-import { UserContext } from '../services/general-models/user-context.js';
 import { configuration } from './configuration.js';
 
 export default abstract class BaseCommand extends Command {
