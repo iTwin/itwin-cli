@@ -1,12 +1,16 @@
 # iTwin 101
 
-**A developer-fiendly introduction to Bentley's iTwin Platform.**
+**A developer-friendly introduction to Bentley's iTwin Platform.**
 
-The infrastructure industry is rapidly evolving—moving from traditional CAD workflows to dynamic, cloud-connected systems that reflect physical assets in real time. This shift is powered by the rise of digital twins: virtual representations of infrastructure that go beyond static design to provide a live, comprehensive view of how things are built, how they behave, and how they change.
+The infrastructure industry has undergone a major shift — from static design files to **cloud-connected systems** that reflect how assets behave in real time.
 
-Bentley Systems, a long-standing leader in infrastructure software, has developed the **iTwin Platform** to empower developers, engineers, and organizations to build and manage digital twins at scale. While Bentley’s flagship products, like **MicroStation**, have supported infrastructure design for decades, the iTwin Platform introduces a new, cloud-first approach to project collaboration, data integration, and asset management.
+This shift is driven by the rise of **digital twins**: living models that combine infrastructure design with data from numerous cloud sources for a complete view of the asset. For example, a dam reporting structural health and energy output, or a smart building tracking occupancy, lighting, and air quality. It’s no longer just about designing — it’s about how an asset lives and performs in the real world.
 
-With Bentley's recent acquisition of **Cesium**, the iTwin Platform has gained exciting new capabilities in high-performance, geospatial visualization. The **iTwin CLI** includes features that make it easy to integrate and visualize iTwins in Cesium Sandcastle as part of broader digital twin workflows.
+**Bentley Systems**, a long-standing leader in infrastructure software, created the **iTwin Platform** to support this evolution. While desktop tools like **MicroStation** and **AutoCAD** have supported infrastructure design for decades, the iTwin Platform brings this data into the cloud — where teams can visualize entire assets, integrate live data, and build connected solutions across industries.
+
+Following Bentley’s acquisition of **Cesium**, high-performance 3D geospatial visualization is now a built-in part of the iTwin ecosystem. **Cesium** is an open platform for streaming large-scale 3D data, and its developer sandbox, **Sandcastle**, makes it easy to prototype and interact with infrastructure in a global context.
+
+The **iTwin CLI** ties it all together — letting you manage iTwins, bring design data into the cloud, and visualize your models in Cesium Sandcastle — all from the command line.
 
 ---
 
@@ -36,7 +40,7 @@ An **iModel** is a specialized cloud repository for 3D design data. It acts as a
 > Have a Revit file for a building? Add it to the iModel.  
 > Got utility designs from MicroStation? Add them too.
 
-The iModel isn’t just a storage format—it acts like **Git for infrastructure**. Designers "synchronize" their changes, which are stored as **changesets**. This allows for collaborative workflows, version tracking, and change comparison.
+The iModel isn’t just a storage format—it acts like **Git for infrastructure**. Designers "synchronize" their changes, which are stored as **changesets**. This allows for collaborative workflows, version tracking, and comparison of changes between versions.
 
 #### 🌎 Reality Data: Contextual Visualization
 
@@ -53,15 +57,15 @@ Digital twins aren’t just static snapshots. By integrating sensor or IoT data,
 
 This makes the iTwin a true operational tool, not just a design archive.
 
-#### 📚 External Data: Extendable by Design
+#### 📚 External Data: Extendable by Nature
 
-Need to connect to a custom database, web API, or document store? The iTwin is designed to consume and present external data as part of its interface. Through widgets, charts, or overlays, the twin can be tailored to meet specific business needs.
+Need to connect to a custom database, web API, or document store? The iTwin is designed to consume and present external data as part of its interface. Through widgets, charts, or overlays, the twin can be tailored to meet specific business or project needs.
 
 ---
 
 ### ⚙️ The Role of the iTwin CLI
 
-The **iTwin CLI** is a command-line tool that lets developers and technical users interact with the iTwin Platform programmatically. It simplifies many common tasks:
+The **iTwin CLI** is a command-line tool that lets developers and technical users interact with the iTwin Platform through simple text commands. It simplifies many common tasks:
 
 - ✍️ **Create and manage iTwins**
 - 🛡️ **Set up access control and user roles**
@@ -69,7 +73,7 @@ The **iTwin CLI** is a command-line tool that lets developers and technical user
 - 📂 **Create iModels and populate them with design files**
 - 📰 **Track and compare changes with changesets**
 - 🔢 **Create named versions to mark project milestones**
-- ⇄ **Synchronize data into the iModel**
+- ⇄ **Synchronize design data into the iModel**
 - 🌍 **Visualize the iTwin in Cesium Sandcastle**
 
 It serves as a lightweight, scriptable gateway into a powerful ecosystem.
@@ -84,9 +88,9 @@ Think of the iModel like Git. Multiple designers can work in parallel and synchr
 - 🕓 Inspect previous states
 - ⚖️ Compare two versions to highlight changed elements
 
-You can also create **named versions** at key milestones: design freeze, regulatory submission, final approval, etc.
+You can also create **named versions** at key milestones: design freezes, review submissions, final approvals, etc.
 
-This not only supports tracking and review, but also enables advanced automation and visualization possibilities.
+This not only supports tracking and review, but also enables advanced visualization and automation possibilities.
 
 ---
 
