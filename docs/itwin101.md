@@ -127,7 +127,7 @@ Design data becomes globally interactive. Combined with reality meshes and IoT d
 
 The iTwin CLI makes it easy to build, manage, and explore digital twins using the iTwin Platform. For anyone interested in geospatial technology and digital twin workflows, it opens a new path to work with infrastructure data at scale, integrate diverse data sources, and publish them to a geospatially rich, interactive viewer.
 
-Whether you’re just exploring or already building, the iTwin CLI is your entry point into the next-generation platform for digital infrastructure.
+Whether you’re just exploring or already building, the iTwin CLI is your entry point into the next-generation platform for the infrastructure digital twin.
 
 ---
 
