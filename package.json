@@ -13,7 +13,7 @@
     "@itwin/node-cli-authorization": "^2.0.3",
     "@itwin/object-storage-core": "^2.2.5",
     "@itwin/service-authorization": "^1.2.2",
-    "@oclif/core": "^4.2.8",
+    "@oclif/core": "^4.2.10",
     "@oclif/plugin-help": "^6",
     "@oclif/plugin-plugins": "^5",
     "@opentelemetry/api": "^1.9.0",
@@ -75,11 +75,13 @@
         "description": "Say hello to the world and others"
       }
     },
-    "additionalHelpFlags": ["-h"]
+    "additionalHelpFlags": [
+      "-h"
+    ]
   },
   "repository": "iTwin/itwin-cli",
   "scripts": {
-    "clean": "shx rm -rf dist",
+    "clean": "shx rm -rf dist tsconfig.tsbuildinfo",
     "build": "npm run clean && tsc -b",
     "lint": "eslint . --ext .ts",
     "postpack": "shx rm -f oclif.manifest.json",
