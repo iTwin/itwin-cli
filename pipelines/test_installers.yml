@@ -50,7 +50,7 @@ jobs:
       displayName: 'Check itp version'
     - script: |
         itwin_help=$(itp itwin --help)
-        if [[ $itwin_help == "Create an iTwin"* ]]; then
+        if [[ $itwin_help == "Work with iTwins."* ]]; then
           echo "Help output is correct: $itwin_help"
         else
           echo "Unexpected help output: $itwin_help"
@@ -85,7 +85,7 @@ jobs:
       displayName: 'Check itp version'
     - script: |
         itwin_help=$(itp itwin --help)
-        if [[ $itwin_help == "Create an iTwin"* ]]; then
+        if [[ $itwin_help == "Work with iTwins."* ]]; then
           echo "Help output is correct: $itwin_help"
         else
           echo "Unexpected help output: $itwin_help"
