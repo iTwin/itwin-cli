@@ -259,7 +259,7 @@ export default abstract class BaseCommand extends Command {
     return this.config.runCommand<T>(command, mergedArgs);
   }
 
-  protected async setContext(iTwinId: string | undefined, iModelId: string | undefined) {
+  protected async setContext(iTwinId: string, iModelId: string | undefined) {
     const contextPath = this.config.cacheDir + '/context.json';
     
     const context: UserContext = {
