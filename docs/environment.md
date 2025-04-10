@@ -1,6 +1,6 @@
 # Environment
 
-To reduce repetition and simplify usage, the CLI provides flexible ways to define your commonly used `iTwin` and `iModel` IDs. Once set, you can run most commands without manually passing these IDs every time.
+To reduce repetition and simplify usage, the CLI provides flexible ways to define your commonly used `iTwin` and `iModel` IDs. Once set, you can run commands without manually passing these IDs every time.
 
 The CLI supports two mechanisms for this:
 
@@ -16,11 +16,18 @@ Either approach can help streamline your workflow.
 You can define your default IDs directly in the terminal environment:
 
 ```bash
+// For macOS, Linux, WSL, Git Bash
 export ITP_ITWIN_ID=b1a2c3d4-5678-90ab-cdef-1234567890ab
 export ITP_IMODEL_ID=ad0ba809-9241-48ad-9eb0-c8038c1a1d51
 ```
 
-These values will be automatically picked up in commands unless overridden by `context` or flags.
+```powershell
+// For PowerShell (Windows)
+$env:ITP_ITWIN_ID = "b1a2c3d4-5678-90ab-cdef-1234567890ab"
+$env:ITP_IMODEL_ID = "ad0ba809-9241-48ad-9eb0-c8038c1a1d51"
+```
+
+These values will be automatically picked up in commands unless overridden by context or flags.
 
 ---
 
@@ -109,4 +116,4 @@ itp imodel named-version create   --changeset-id 2f3b4a8c92d747d5c8a8b2f9cde6742
 - Passing `--itwin-id` or `--imodel-id` directly in a command will always override other sources.
 - Values set via `itp context` are stored locally and persist across sessions.
 - Environment variables (`ITP_ITWIN_ID`, `ITP_IMODEL_ID`) are ideal for scripting and temporary sessions.
-- If no IDs are recieved from any method, the CLI will return a **missing option** error.
+- If no IDs are received from any method, the CLI will return a **missing option** error.
