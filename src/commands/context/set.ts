@@ -39,7 +39,7 @@ export default class SetContext extends BaseCommand {
         if(iModelId) {
             const iModel = await this.runCommand<IModel>("imodel:info", ["--imodel-id", iModelId]); 
             if(iTwinId && iModel.iTwinId !== flags["itwin-id"]) {
-                this.error("The iModel ID does not match the iTwin ID.");
+                this.error(`The iModel ID ${iModelId} does not belong to the specified iTwin ID ${iTwinId}.`);
             }
 
             iTwinId = iModel.iTwinId;

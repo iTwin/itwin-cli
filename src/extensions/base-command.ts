@@ -138,7 +138,7 @@ export default abstract class BaseCommand extends Command {
     return config;
   }
 
-  protected getContext() {
+  protected getContext() : UserContext | undefined {
     const contextPath = this.config.cacheDir + '/context.json';
     if (!fs.existsSync(contextPath)) {
       return;
@@ -147,6 +147,10 @@ export default abstract class BaseCommand extends Command {
     try {
       const contextFile = fs.readFileSync(contextPath, 'utf8');
       const context = JSON.parse(contextFile) as UserContext;
+      
+      if(!context.iModelId && !context.iTwinId) {
+        return undefined;
+      }
 
       return context;
     }
