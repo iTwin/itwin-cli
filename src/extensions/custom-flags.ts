@@ -7,19 +7,18 @@ export class CustomFlags {
         description: config.description,
         env: 'ITP_IMODEL_ID',
         helpValue: '<string>',
-        required: config.required ?? true,
+        required: true
     });
 
     static iTwinIDFlag = (config : CustomFlagConfig) => Flags.string({ 
-        char: 'i', 
-        description: config.description,
-        env: 'ITP_ITWIN_ID', 
-        helpValue: '<string>',
-        required: config.required ?? true 
-      });
+            char: 'i', 
+            description: config.description,
+            env: 'ITP_ITWIN_ID', 
+            helpValue: '<string>',
+            required: true
+          })
 }
 
 export type CustomFlagConfig = {
     description: string;
-    required?: boolean;
 };
