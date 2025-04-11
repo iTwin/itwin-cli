@@ -7,15 +7,16 @@ import { ITwin } from "@itwin/itwins-client";
 import { runCommand } from "@oclif/test";
 import { expect } from "chai";
 
-import { member } from "../../../src/services/access-control-client/models/members";
+import { member, membersResponse } from "../../../src/services/access-control-client/models/members";
 import { Role } from "../../../src/services/access-control-client/models/role";
 import { User } from "../../../src/services/user-client/models/user";
+import { fetchEmailsAndGetInvitationToken } from "../../utils/helpers";
 
 const tests = () => {
     let iTwinId: string;
+    const iTwinName: string = `cli-itwin-integration-test-${new Date().toISOString()}`;
     
     before(async () => {
-        const iTwinName = `cli-itwin-integration-test-${new Date().toISOString()}`;
         const iTwin = await runCommand<ITwin>(`itwin create --class Thing --sub-class Asset --name ${iTwinName}`);
         expect(iTwin.result?.id).is.not.undefined;
         iTwinId = iTwin.result!.id!;
@@ -26,7 +27,39 @@ const tests = () => {
         expect(result.stdout).to.contain('deleted');
     });
 
-    it('Should dispaly owner info of an iTwin in member info', async () => {
+    it('Should invite an external member to an iTwin, accept sent invitation and remove user member', async () => {
+        const newRole = await runCommand<Role>(`access-control role create -i ${iTwinId} -n "Test Role 1" -d "Test Role Description"`);
+        expect(newRole.result).is.not.undefined;
+        expect(newRole.result!.id).is.not.undefined;
+        
+        const emailToAdd = 'iTwin.CLI.QA.IntegrationTest@bentley.m8r.co';
+
+        const invitedUser = await runCommand<membersResponse>(`access-control member user add --itwin-id ${iTwinId} --members "[{"email": "${emailToAdd}", "roleIds": ["${newRole.result!.id}"]}]"`);
+
+        expect(invitedUser.result).to.not.be.undefined;
+        expect(invitedUser.result!.invitations.length).to.be.equal(1);
+        expect(invitedUser.result!.invitations[0].email.toLowerCase()).to.be.equal(emailToAdd.toLowerCase());
+        expect(invitedUser.result!.invitations[0].roles.length).to.be.equal(1);
+        expect(invitedUser.result!.invitations[0].roles[0].id).to.be.equal(newRole.result!.id);
+
+        const invitationToken = await fetchEmailsAndGetInvitationToken(emailToAdd.split('@')[0], iTwinName);
+
+        await fetch(`https://qa-connect-rbacportal.bentley.com/AcceptInvitation?invitationToken=${invitationToken}`);
+
+        const usersInfo = await runCommand<member[]>(`access-control member user list --itwin-id ${iTwinId}`);
+        expect(usersInfo.result).is.not.undefined;
+        expect(usersInfo.result!.length).to.be.equal(2);
+        const joinedUser = usersInfo.result?.filter(user => user.email.toLowerCase() === emailToAdd.toLowerCase())[0];
+        expect(joinedUser).to.not.be.undefined;
+        expect(joinedUser?.roles.length).to.be.equal(1);
+        expect(joinedUser?.roles[0].id).to.be.equal(newRole.result!.id);
+
+        const deletionResult = await runCommand<{result: string}>(`access-control member user delete --itwin-id ${iTwinId} --member-id ${joinedUser?.id}`);
+        expect(deletionResult.result).to.not.be.undefined;
+        expect(deletionResult.result!.result).to.be.equal("deleted");
+    });
+
+    it('Should display owner info of an iTwin in member info', async () => {
         const userInfo = await runCommand<User>(`user me`);
         expect(userInfo.result).is.not.undefined;
 
@@ -37,7 +70,7 @@ const tests = () => {
     });
 
     it('Should add new member to an iTwin and update the role', async () => {
-        const newRole = await runCommand<Role>(`access-control role create -i ${iTwinId} -n "Test Role" -d "Test Role Description"`);
+        const newRole = await runCommand<Role>(`access-control role create -i ${iTwinId} -n "Test Role 2" -d "Test Role Description"`);
         expect(newRole.result).is.not.undefined;
         expect(newRole.result!.id).is.not.undefined;
 

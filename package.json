@@ -21,6 +21,7 @@
     "dotenv": "^16.4.5",
     "fs-extra": "^8.1.0",
     "jwt-decode": "^4.0.0",
+    "mailinator-client": "^1.0.5",
     "open": "^10.1.0",
     "pako": "^2.1.0"
   },
@@ -147,7 +148,9 @@
         "description": "Workflow reference for combined commands."
       }
     },
-    "additionalHelpFlags": ["-h"]
+    "additionalHelpFlags": [
+      "-h"
+    ]
   },
   "repository": "iTwin/itwin-cli",
   "scripts": {

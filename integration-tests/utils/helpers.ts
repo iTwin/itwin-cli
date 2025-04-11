@@ -7,6 +7,7 @@ import { IModel } from "@itwin/imodels-client-management"
 import { ITwin } from "@itwin/itwins-client";
 import { runCommand } from "@oclif/test";
 import { expect } from "chai";
+import { GetInboxRequest, GetMessageRequest, MailinatorClient } from 'mailinator-client'
 
 import { fileTyped } from "../../src/services/storage-client/models/file-typed.js";
 import { fileUpload } from "../../src/services/storage-client/models/file-upload.js";
@@ -100,7 +101,43 @@ export async function deleteIModel(id: string): Promise<void> {
 export async function getRootFolderId(iTwinId: string): Promise<string> {
     const { result: topFolders } = await runCommand<itemsWithFolderLink>(`storage root-folder --itwin-id ${iTwinId}`);
     const rootFolderId = topFolders?._links?.folder?.href?.split('/').pop();
-
     expect(rootFolderId).to.not.be.undefined;
     return rootFolderId as string;
+}
+
+/**
+ * Fetches emails from the specified inbox and then finds and returns the invitation token for iTwinName iTwin.
+ * NOTE: This function only works for `@bentley.m8r.co` email addresses and not `@be-mailinator.eastus.cloudapp.azure.com` email addresses.
+ * @param inbox Inbox to fetch the invitation email from.
+ * @param iTwinName Name of the iTwin.
+ * @returns Invitation token for joining the iTwin.
+ */
+export async function fetchEmailsAndGetInvitationToken(inbox: string, iTwinName: string): Promise<string> {
+    await new Promise<void>(resolve => {setTimeout(_ => resolve(), 30 * 1000);});
+
+    expect(process.env.ITP_MAILINATOR_API_KEY).to.not.be.undefined;
+
+    const client = new MailinatorClient(process.env.ITP_MAILINATOR_API_KEY!);
+    const inboxResponse = await client.request(new GetInboxRequest("private", inbox, undefined, 10));
+    expect(inboxResponse.result).to.not.be.null;
+
+    for (let i = 0; i < inboxResponse.result!.msgs.length; i++) {
+        if (inboxResponse.result!.msgs[i].subject !== "You have been invited to collaborate")
+            continue;
+        
+        // eslint-disable-next-line no-await-in-loop
+        const messageResponse = await client.request(new GetMessageRequest("private", inboxResponse.result!.msgs[0].id ));
+        expect(messageResponse.result).to.not.be.null;
+        const messageBody = messageResponse.result!.parts[0].body;
+        if (!messageBody.includes(iTwinName))
+            continue;
+
+        const invitationTokenRegex = /invitationToken=.*?"/;
+        const matches = messageBody.match(invitationTokenRegex);
+        expect(matches).to.not.be.null;
+        expect(matches!.length).to.be.equal(1);
+        return matches![0].slice("invitationToken=".length, -1);
+    }
+
+    throw new Error("Email was not found in inbox.")
 }
