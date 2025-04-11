@@ -6,6 +6,7 @@
 import { Flags } from "@oclif/core";
 
 import BaseCommand from "../../../extensions/base-command.js";
+import { CustomFlags } from "../../../extensions/custom-flags.js";
 import { authenticationType } from "../../../services/synchronizationClient/models/authentication-type.js";
 import { connectorType } from "../../../services/synchronizationClient/models/connector-type.js";
 import { storageFileCreate } from "../../../services/synchronizationClient/models/storage-file-create.js";
@@ -60,11 +61,8 @@ export default class CreateConnection extends BaseCommand {
       multiple: true,
       required: true
     }),
-    "imodel-id": Flags.string({
-      char: 'm', 
-      description: 'The ID of the iModel.', 
-      helpValue: '<string>',
-      required: true 
+    "imodel-id": CustomFlags.iModelIDFlag({
+      description: 'The ID of the iModel.'
     }),
     name: Flags.string({
       char: 'n',

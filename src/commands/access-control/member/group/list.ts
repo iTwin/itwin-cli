@@ -3,9 +3,8 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { Flags } from "@oclif/core";
-
 import BaseCommand from "../../../../extensions/base-command.js";
+import { CustomFlags } from "../../../../extensions/custom-flags.js";
 
 export default class ListGroupMembers extends BaseCommand {
     static description = 'List all group members of an iTwin.';
@@ -18,11 +17,8 @@ export default class ListGroupMembers extends BaseCommand {
     ];
   
     static flags = {
-      "itwin-id": Flags.string({
-        char: 'i',
+      "itwin-id": CustomFlags.iTwinIDFlag({
         description: 'The ID of the iTwin whose group members you want to list.',
-        helpValue: '<string>',
-        required: true,
       }),
     };
   

@@ -6,6 +6,7 @@
 import { Flags } from "@oclif/core";
 
 import BaseCommand from "../../../../extensions/base-command.js";
+import { CustomFlags } from "../../../../extensions/custom-flags.js";
 
 export default class UpdateUserMember extends BaseCommand {
     static description = 'Update the role assignments for a user in an iTwin.';
@@ -18,11 +19,8 @@ export default class UpdateUserMember extends BaseCommand {
     ];
 
     static flags = {
-      "itwin-id": Flags.string({
-        char: 'i',
+      "itwin-id": CustomFlags.iTwinIDFlag({
         description: 'The ID of the iTwin where the user is a member.',
-        helpValue: '<string>',
-        required: true,
       }),
       "member-id": Flags.string({
         description: 'The ID of the user whose roles will be updated.',

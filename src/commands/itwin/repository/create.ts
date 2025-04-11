@@ -7,6 +7,7 @@ import { RepositoryClass, RepositorySubClass } from "@itwin/itwins-client";
 import { Flags } from "@oclif/core";
 
 import BaseCommand from "../../../extensions/base-command.js";
+import { CustomFlags } from "../../../extensions/custom-flags.js";
 
 export default class CreateRepository extends BaseCommand {
     static description = 'Create a new repository URI for iTwin data.';
@@ -33,11 +34,8 @@ export default class CreateRepository extends BaseCommand {
         options: ['GeographicInformationSystem', 'Construction', 'Subsurface'],
         required: true,
       }),
-      "itwin-id": Flags.string({
-        char: 'i',
-        description: 'The ID of the iTwin to which the repository belongs.',
-        helpValue: '<string>',
-        required: true,
+      "itwin-id": CustomFlags.iTwinIDFlag({
+        description: 'The ID of the iTwin to which the repository belongs.'
       }),
       "sub-class": Flags.string({
         description: 'The subClass of your repository.',

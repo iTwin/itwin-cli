@@ -7,6 +7,7 @@ import { ITwin } from "@itwin/itwins-client";
 import { Flags } from "@oclif/core";
 
 import BaseCommand from "../../extensions/base-command.js";
+import { CustomFlags } from "../../extensions/custom-flags.js";
 
 export default class UpdateCommand extends BaseCommand {
     static description = 'Update an iTwin';
@@ -37,11 +38,8 @@ export default class UpdateCommand extends BaseCommand {
         helpValue: '<string>',
         required: false,
       }),
-      "itwin-id": Flags.string({
-        char: 'i',
-        description: 'The ID of the iTwin to be updated.',
-        helpValue: '<string>',
-        required: true,
+      "itwin-id": CustomFlags.iTwinIDFlag({
+        description: 'The ID of the iTwin to be updated.'
       }),
       name: Flags.string({
         char: 'n',

@@ -7,6 +7,7 @@ import { Flags } from "@oclif/core";
 
 import { apiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
+import { CustomFlags } from "../../../extensions/custom-flags.js";
 
 export default class CreateAccessControlGroup extends BaseCommand {
     static apiReference : apiReference = {
@@ -30,11 +31,8 @@ export default class CreateAccessControlGroup extends BaseCommand {
         helpValue: '<string>',
         required: true,
       }),
-      "itwin-id": Flags.string({
-        char: 'i',
-        description: 'The ID of the iTwin where the group is being created.',
-        helpValue: '<string>',
-        required: true,
+      "itwin-id": CustomFlags.iTwinIDFlag({
+        description: 'The ID of the iTwin where the group is being created.'
       }),
       name: Flags.string({
         char: 'n',

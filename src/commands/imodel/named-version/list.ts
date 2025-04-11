@@ -7,6 +7,7 @@ import { NamedVersion, NamedVersionOrderByProperty, OrderBy, OrderByOperator } f
 import { Flags } from "@oclif/core";
 
 import BaseCommand from "../../../extensions/base-command.js";
+import { CustomFlags } from "../../../extensions/custom-flags.js";
 
 export default class ListNamedVersions extends BaseCommand {
     static description = 'List all named versions for a specific iModel.';
@@ -31,11 +32,8 @@ export default class ListNamedVersions extends BaseCommand {
     ];
 
     static flags = {
-      "imodel-id": Flags.string({
-        char: 'm',
-        description: 'The ID of the iModel whose named versions you want to list.',
-        helpValue: '<string>',
-        required: true,
+      "imodel-id": CustomFlags.iModelIDFlag({
+        description: 'The ID of the iModel whose named versions you want to list.'
       }),
       name: Flags.string({
         char: 'n',

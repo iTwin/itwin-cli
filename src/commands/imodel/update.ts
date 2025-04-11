@@ -7,6 +7,7 @@ import { Extent } from "@itwin/imodels-client-management";
 import { Flags } from "@oclif/core";
 
 import BaseCommand from "../../extensions/base-command.js";
+import { CustomFlags } from "../../extensions/custom-flags.js";
 
 export default class UpdateCommand extends BaseCommand {
     static description = 'Update an iModel in an iTwin';
@@ -30,11 +31,8 @@ export default class UpdateCommand extends BaseCommand {
         helpValue: '<string>',
         required: false,
       }),
-      "imodel-id": Flags.string({
-        char: 'm',
-        description: 'The ID of the iModel to update.',
-        helpValue: '<string>',
-        required: true,
+      "imodel-id": CustomFlags.iModelIDFlag({
+        description: 'The ID of the iModel to update.'
       }),
       name: Flags.string({
         char: 'n',

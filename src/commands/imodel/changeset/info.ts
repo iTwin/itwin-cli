@@ -6,6 +6,7 @@
 import { Flags } from "@oclif/core";
 
 import BaseCommand from "../../../extensions/base-command.js";
+import { CustomFlags } from "../../../extensions/custom-flags.js";
 
 export default class ChangesetInfo extends BaseCommand {
     static description = 'Retrieve details about a specific changeset of an iModel.';
@@ -23,11 +24,8 @@ export default class ChangesetInfo extends BaseCommand {
         helpValue: '<string>',
         required: true,
       }),
-      "imodel-id": Flags.string({
-        char: 'm',
-        description: 'The ID of the iModel whose changeset you want to retrieve.',
-        helpValue: '<string>',
-        required: true,
+      "imodel-id": CustomFlags.iModelIDFlag({
+        description: 'The ID of the iModel whose changeset you want to retrieve.'
       }),
     };
   

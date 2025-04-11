@@ -6,6 +6,7 @@
 import { Flags } from "@oclif/core";
 
 import BaseCommand from "../../../extensions/base-command.js";
+import { CustomFlags } from "../../../extensions/custom-flags.js";
 
 export default class CreateNamedVersion extends BaseCommand {
     static description = 'Create a new named version for a specific changeset in an iModel.';
@@ -37,11 +38,8 @@ export default class CreateNamedVersion extends BaseCommand {
         helpValue: '<string>',
         required: false,
       }),
-      "imodel-id": Flags.string({
-        char: 'm',
-        description: 'The ID of the iModel where the named version will be created.',
-        helpValue: '<string>',
-        required: true,
+      "imodel-id": CustomFlags.iModelIDFlag({
+        description: 'The ID of the iModel where the named version will be created.'
       }),
       name: Flags.string({
         char: 'n',

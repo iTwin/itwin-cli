@@ -7,6 +7,7 @@ import { Extent } from "@itwin/imodels-client-management";
 import { Flags } from "@oclif/core";
 
 import BaseCommand from "../../extensions/base-command.js";
+import { CustomFlags } from "../../extensions/custom-flags.js";
 
 export default class CreateIModel extends BaseCommand {
     static description = 'Creates an iModel in an iTwin';
@@ -34,11 +35,8 @@ export default class CreateIModel extends BaseCommand {
         helpValue: '<string>',
         required: false,
       }),
-      "itwin-id": Flags.string({
-        char: 'i',
-        description: 'The ID of the iTwin where the iModel should be created.',
-        helpValue: '<string>',
-        required: true,
+      "itwin-id": CustomFlags.iTwinIDFlag({
+        description: 'The ID of the iTwin where the iModel should be created.'
       }),
       name: Flags.string({
         char: 'n',

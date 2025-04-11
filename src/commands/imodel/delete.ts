@@ -6,6 +6,7 @@
 import { Flags } from "@oclif/core";
 
 import BaseCommand from "../../extensions/base-command.js";
+import { CustomFlags } from "../../extensions/custom-flags.js";
 
 export default class DeleteIModel extends BaseCommand {
   static description = 'Delete an existing iModel.';
@@ -18,11 +19,8 @@ export default class DeleteIModel extends BaseCommand {
   ];
 
   static flags = {
-    "imodel-id": Flags.string({
-      char: 'm',
-      description: 'The ID of the iModel to delete.',
-      helpValue: '<string>',
-      required: true,
+    "imodel-id": CustomFlags.iModelIDFlag({
+      description: 'The ID of the iModel to delete.'
     }),
   };
 
