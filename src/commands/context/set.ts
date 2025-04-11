@@ -5,12 +5,12 @@ import { Flags } from "@oclif/core";
 import BaseCommand from "../../extensions/base-command.js";
 
 export default class SetContext extends BaseCommand {
-    static description = "Create a new context for the current session.";
+    static description = "Set a new cached context.";
 
     static examples = [
         {
             command: `<%= config.bin %> <%= command.id %>`,
-            description: 'Example 1: Create a new context for the current session'
+            description: 'Example 1: Set a new cached context'
         }
     ];
 

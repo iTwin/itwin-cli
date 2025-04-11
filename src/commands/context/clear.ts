@@ -1,12 +1,12 @@
 import BaseCommand from "../../extensions/base-command.js";
 
 export default class ClearContext extends BaseCommand {
-    static description = "Clear the context of the current session.";
-  
+    static description = "Clear the cached context.";
+
     static examples = [
         {            
             command: `<%= config.bin %> <%= command.id %>`,
-            description: 'Example 1: Clear the context of the current session'
+            description: 'Example 1: Clear the cached context'
         }
     ];
   
@@ -14,4 +14,4 @@ export default class ClearContext extends BaseCommand {
         this.clearContext();      
         return this.logAndReturnResult({ result: "Context cleared." });
     }
-  }
+}
