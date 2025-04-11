@@ -42,7 +42,7 @@
                 "--forbid-only",
                 "--timeout",
                 "999999",
-                "integration-tests/**/api.test.ts"
+                "integration-tests/**/*.test.ts"
             ],
             "console": "integratedTerminal",
             "internalConsoleOptions": "neverOpen"
