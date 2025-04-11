@@ -10,7 +10,7 @@ import { expect } from "chai";
 import { member, membersResponse } from "../../../src/services/access-control-client/models/members";
 import { Role } from "../../../src/services/access-control-client/models/role";
 import { User } from "../../../src/services/user-client/models/user";
-import { fetchEmailsAndGetInvitationToken } from "../../utils/helpers";
+import { fetchEmailsAndGetInvitationLink } from "../../utils/helpers";
 
 const tests = () => {
     let iTwinId: string;
@@ -42,9 +42,9 @@ const tests = () => {
         expect(invitedUser.result!.invitations[0].roles.length).to.be.equal(1);
         expect(invitedUser.result!.invitations[0].roles[0].id).to.be.equal(newRole.result!.id);
 
-        const invitationToken = await fetchEmailsAndGetInvitationToken(emailToAdd.split('@')[0], iTwinName);
+        const invitationLink = await fetchEmailsAndGetInvitationLink(emailToAdd.split('@')[0], iTwinName);
 
-        await fetch(`https://qa-connect-rbacportal.bentley.com/AcceptInvitation?invitationToken=${invitationToken}`);
+        await fetch(invitationLink);
 
         const usersInfo = await runCommand<member[]>(`access-control member user list --itwin-id ${iTwinId}`);
         expect(usersInfo.result).is.not.undefined;

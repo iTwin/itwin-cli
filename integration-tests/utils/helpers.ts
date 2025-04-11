@@ -106,13 +106,13 @@ export async function getRootFolderId(iTwinId: string): Promise<string> {
 }
 
 /**
- * Fetches emails from the specified inbox and then finds and returns the invitation token for iTwinName iTwin.
+ * Fetches emails from the specified inbox and then finds and returns the invitation link for iTwinName iTwin.
  * NOTE: This function only works for `@bentley.m8r.co` email addresses and not `@be-mailinator.eastus.cloudapp.azure.com` email addresses.
  * @param inbox Inbox to fetch the invitation email from.
  * @param iTwinName Name of the iTwin.
- * @returns Invitation token for joining the iTwin.
+ * @returns Invitation link for joining the iTwin.
  */
-export async function fetchEmailsAndGetInvitationToken(inbox: string, iTwinName: string): Promise<string> {
+export async function fetchEmailsAndGetInvitationLink(inbox: string, iTwinName: string): Promise<string> {
     await new Promise<void>(resolve => {setTimeout(_ => resolve(), 30 * 1000);});
 
     expect(process.env.ITP_MAILINATOR_API_KEY).to.not.be.undefined;
@@ -132,11 +132,11 @@ export async function fetchEmailsAndGetInvitationToken(inbox: string, iTwinName:
         if (!messageBody.includes(iTwinName))
             continue;
 
-        const invitationTokenRegex = /invitationToken=.*?"/;
+        const invitationTokenRegex = /href=".*?invitationToken.*?"/;
         const matches = messageBody.match(invitationTokenRegex);
         expect(matches).to.not.be.null;
         expect(matches!.length).to.be.equal(1);
-        return matches![0].slice("invitationToken=".length, -1);
+        return matches![0].slice("href=\"".length, -1);
     }
 
     throw new Error("Email was not found in inbox.")
