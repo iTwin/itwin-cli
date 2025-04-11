@@ -49,4 +49,5 @@ jobs:
           ITP_ISSUER_URL: ${{ vars.ITP_ISSUER_URL }}
           ITP_SERVICE_CLIENT_ID: ${{ vars.ITP_SERVICE_CLIENT_ID }}
           ITP_SERVICE_CLIENT_SECRET: ${{ secrets.ITP_SERVICE_CLIENT_SECRET }}
+          ITP_MAILINATOR_API_KEY: ${{ secrets.ITP_MAILINATOR_API_KEY }}
         run: npm run test
