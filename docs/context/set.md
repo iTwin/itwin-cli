@@ -4,11 +4,11 @@ Set a new cached context.
 
 ## Options
 
-- **`--imodel-id`**  
+- **`-m, --imodel-id`**  
   The ID of the iModel to create a context for.  
   **Type:** `string` **Required:** No
 
-- **`--itwin-id`**  
+- **`-i, --itwin-id`**  
   The ID of the iTwin to create a context for.  
   **Type:** `string` **Required:** No
 
