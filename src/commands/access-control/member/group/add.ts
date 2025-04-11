@@ -6,6 +6,7 @@
 import { Flags } from "@oclif/core";
 
 import BaseCommand from "../../../../extensions/base-command.js";
+import { CustomFlags } from "../../../../extensions/custom-flags.js";
 import { GroupMember } from "../../../../services/access-control-client/models/group.js";
 
 export default class AddGroupMembers extends BaseCommand {
@@ -24,11 +25,8 @@ export default class AddGroupMembers extends BaseCommand {
         helpValue: '<string>',
         required: true
       }),
-      "itwin-id": Flags.string({
-        char: 'i',
-        description: 'The ID of the iTwin to which the groups will be added.',
-        helpValue: '<string>',
-        required: true,
+      "itwin-id": CustomFlags.iTwinIDFlag({
+        description: 'The ID of the iTwin to which the groups will be added.'
       }),
     };
   

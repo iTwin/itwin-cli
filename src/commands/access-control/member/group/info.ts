@@ -6,6 +6,7 @@
 import { Flags } from "@oclif/core";
 
 import BaseCommand from "../../../../extensions/base-command.js";
+import { CustomFlags } from "../../../../extensions/custom-flags.js";
 
 export default class InfoGroupMember extends BaseCommand {
     static description = 'Retrieve details about a specific group member in an iTwin.';
@@ -24,11 +25,8 @@ export default class InfoGroupMember extends BaseCommand {
         helpValue: '<string>',
         required: true,
       }),
-      "itwin-id": Flags.string({
-        char: 'i',
-        description: 'The ID of the iTwin where the group is a member.',
-        helpValue: '<string>',
-        required: true,
+      "itwin-id": CustomFlags.iTwinIDFlag({
+        description: 'The ID of the iTwin where the group is a member.'
       }),
     };
   

@@ -3,9 +3,8 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { Flags } from "@oclif/core";
-
 import BaseCommand from "../../extensions/base-command.js";
+import { CustomFlags } from "../../extensions/custom-flags.js";
 
 export default class ChangedElementsInfo extends BaseCommand {
     static description = "Retrieve change tracking information for a specified iModel.";
@@ -18,16 +17,11 @@ export default class ChangedElementsInfo extends BaseCommand {
     ];
 
     static flags = {
-      "imodel-id": Flags.string({ 
-        char: 'm', 
-        description: "The ID of the iModel to retrieve tracking information for.", 
-        helpValue: '<string>',
-        required: true }),
-      "itwin-id": Flags.string({ 
-        char: 'i', 
-        description: "The ID of the iTwin associated with the iModel.", 
-        helpValue: '<string>',
-        required: true 
+      "imodel-id": CustomFlags.iModelIDFlag({  
+        description: "The ID of the iModel to retrieve tracking information for."
+      }),
+      "itwin-id": CustomFlags.iTwinIDFlag({ 
+        description: "The ID of the iTwin associated with the iModel."
       }),
     };
   

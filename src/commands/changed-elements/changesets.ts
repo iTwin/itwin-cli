@@ -6,6 +6,7 @@
 import { Flags } from "@oclif/core";
 
 import BaseCommand from "../../extensions/base-command.js";
+import { CustomFlags } from "../../extensions/custom-flags.js";
 
 export default class GetChangesetStatus extends BaseCommand {
     static description = 'Get the processing status of changesets in an iModel to see which are ready for comparison.';
@@ -26,17 +27,11 @@ export default class GetChangesetStatus extends BaseCommand {
     ];
 
     static flags = {
-      "imodel-id": Flags.string({ 
-        char: 'm', 
-        description: 'The ID of the iModel.', 
-        helpValue: '<string>',
-        required: true 
+      "imodel-id": CustomFlags.iModelIDFlag({
+        description: 'The ID of the iModel.'
       }),
-      "itwin-id": Flags.string({ 
-        char: 'i', 
-        description: 'The ID of the iTwin.', 
-        helpValue: '<string>',
-        required: true 
+      "itwin-id": CustomFlags.iTwinIDFlag({
+        description: 'The ID of the iTwin.' 
       }),
       skip: Flags.integer({ 
         description: 'Skip a number of changesets in the result.',

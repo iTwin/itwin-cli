@@ -6,6 +6,7 @@
 import { Flags } from "@oclif/core";
 
 import BaseCommand from "../../../extensions/base-command.js";
+import { CustomFlags } from "../../../extensions/custom-flags.js";
 
 export default class DeleteRole extends BaseCommand {
     static description = 'Delete an existing role from an iTwin.';
@@ -18,11 +19,8 @@ export default class DeleteRole extends BaseCommand {
     ];
 
     static flags = {
-      "itwin-id": Flags.string({
-        char: 'i',
-        description: 'The ID of the iTwin where the role exists.',
-        helpValue: '<string>',
-        required: true,
+      "itwin-id": CustomFlags.iTwinIDFlag({
+        description: 'The ID of the iTwin where the role exists.'
       }),
       "role-id": Flags.string({
         description: 'The ID of the role to be deleted.',
