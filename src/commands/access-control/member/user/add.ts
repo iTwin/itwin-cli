@@ -6,6 +6,7 @@
 import { Flags } from "@oclif/core";
 
 import BaseCommand from "../../../../extensions/base-command.js";
+import { CustomFlags } from "../../../../extensions/custom-flags.js";
 import { addMember } from "../../../../services/access-control-client/models/members.js";
 
 export default class AddUserMembers extends BaseCommand {
@@ -19,11 +20,8 @@ export default class AddUserMembers extends BaseCommand {
     ];
 
     static flags = {
-      "itwin-id": Flags.string({
-        char: 'i',
-        description: 'The ID of the iTwin to which the users will be added.',
-        helpValue: '<string>',
-        required: true,
+      "itwin-id": CustomFlags.iTwinIDFlag({      
+        description: 'The ID of the iTwin to which the users will be added.'
       }),
       members: Flags.string({
         description: 'A list of members to add, each with an email and a list of role IDs.',

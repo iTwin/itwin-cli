@@ -6,6 +6,7 @@
 import { Flags } from "@oclif/core";
 
 import BaseCommand from "../../../extensions/base-command.js";
+import { CustomFlags } from "../../../extensions/custom-flags.js";
 
 export default class InfoRole extends BaseCommand {
     static description = 'Retrieve details about a specific role in an iTwin.';
@@ -18,11 +19,8 @@ export default class InfoRole extends BaseCommand {
     ];
 
     static flags = {
-      "itwin-id": Flags.string({
-        char: 'i',
+      "itwin-id": CustomFlags.iTwinIDFlag({
         description: 'The ID of the iTwin where the role exists.',
-        helpValue: '<string>',
-        required: true,
       }),
       "role-id": Flags.string({
         description: 'The ID of the role to retrieve information about.',

@@ -9,6 +9,7 @@ import open from 'open';
 import { deflate } from "pako";
 
 import BaseCommand from "../../../extensions/base-command.js";
+import { CustomFlags } from "../../../extensions/custom-flags.js";
 import { link, links } from "../../../services/general-models/links.js";
 
 export default class CesiumSandcastle extends BaseCommand {
@@ -35,11 +36,8 @@ export default class CesiumSandcastle extends BaseCommand {
         helpValue: '<string>',
         required: false
       }),
-      "imodel-id": Flags.string({ 
-        char: "m", 
-        description: "iModel id to be viewed in Cesium Sandcastle.",
-        helpValue: '<string>',
-        required: true
+      "imodel-id": CustomFlags.iModelIDFlag({
+        description: "iModel id to be viewed in Cesium Sandcastle."
       }),
       "open": Flags.boolean({
         description: "Open the URL in the browser.",
