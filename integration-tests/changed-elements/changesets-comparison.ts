@@ -13,8 +13,8 @@ import { createFile, createIModel, createITwin, getRootFolderId } from '../utils
 import { resultResponse } from '../utils/result-response';
 
 const tests = () => describe('changesets + comparison', () => {
-  const testITwinName = 'IntegrationTestITwin_ChangedElements';
-  const testIModelName = 'IntegrationTestIModel_ChangedElements';
+  const testITwinName = 'ITwinCLI_IntegrationTestITwin_ChangedElements';
+  const testIModelName = 'ITwinCLI_IntegrationTestIModel_ChangedElements';
   const testFileName = 'test.zip';
   const testFilePath = 'integration-tests/test.zip';
   let testIModelId: string;
