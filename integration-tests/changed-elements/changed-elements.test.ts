@@ -4,6 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { loginToCli } from "../utils/helpers";
+import changesetsComparisonTests from "./changesets-comparison";
 import enableDisableInfoTests from "./enable-disable-info";
 
 describe('Changed Elements Integration Tests', () => {
@@ -12,5 +13,5 @@ describe('Changed Elements Integration Tests', () => {
   });
 
   enableDisableInfoTests();
-
+  changesetsComparisonTests();
 });
