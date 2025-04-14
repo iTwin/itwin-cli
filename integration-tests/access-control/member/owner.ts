@@ -39,6 +39,8 @@ const tests = () => {
 
         await fetch(invitationLink);
 
+        await new Promise<void>(resolve => {setTimeout(_ => resolve(), 3 * 1000);});
+
         const usersInfo = await runCommand<groupMember[]>(`access-control member owner list --itwin-id ${iTwinId}`);
         expect(usersInfo.result).is.not.undefined;
         expect(usersInfo.result!.length).to.be.equal(2);
