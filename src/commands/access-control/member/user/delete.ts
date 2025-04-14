@@ -6,6 +6,7 @@
 import { Flags } from "@oclif/core";
 
 import BaseCommand from "../../../../extensions/base-command.js";
+import { CustomFlags } from "../../../../extensions/custom-flags.js";
 
 export default class DeleteUserMember extends BaseCommand {
     static description = 'Remove a user from an iTwin.';
@@ -18,11 +19,8 @@ export default class DeleteUserMember extends BaseCommand {
     ];
 
     static flags = {
-      "itwin-id": Flags.string({
-        char: 'i',
-        description: 'The ID of the iTwin where the user is a member.',
-        helpValue: '<string>',
-        required: true,
+      "itwin-id": CustomFlags.iTwinIDFlag({
+        description: 'The ID of the iTwin where the user is a member.'
       }),
       "member-id": Flags.string({
         description: 'The ID of the user to remove from the iTwin.',

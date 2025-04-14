@@ -6,6 +6,7 @@
 import { Flags } from "@oclif/core";
 
 import BaseCommand from "../../../extensions/base-command.js";
+import { CustomFlags } from "../../../extensions/custom-flags.js";
 
 export default class CreateRole extends BaseCommand {
     static description = 'Create a new role for an iTwin. To assign permissions after creation, use itp access-control role update.';
@@ -24,11 +25,8 @@ export default class CreateRole extends BaseCommand {
         helpValue: '<string>',
         required: true,
       }),
-      "itwin-id": Flags.string({
-        char: 'i',
-        description: 'The ID of the iTwin to retrieve permissions.',
-        helpValue: '<string>',
-        required: true,
+      "itwin-id": CustomFlags.iTwinIDFlag({
+        description: 'The ID of the iTwin to retrieve permissions.'
       }),
       name: Flags.string({
         char: 'n',

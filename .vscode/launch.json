@@ -19,6 +19,18 @@
             ]
         },
         {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch docs generator",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}\\bin\\run",
+            "args": [
+                "docs-generator"
+            ]
+        },
+        {
             "name": "Debug All Tests",
             "skipFiles": [
                 "<node_internals>/**"
@@ -30,7 +42,7 @@
                 "--forbid-only",
                 "--timeout",
                 "999999",
-                "integration-tests/**/api.test.ts"
+                "integration-tests/**/*.test.ts"
             ],
             "console": "integratedTerminal",
             "internalConsoleOptions": "neverOpen"

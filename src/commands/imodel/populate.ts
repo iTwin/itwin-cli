@@ -11,6 +11,7 @@ import fs from "node:fs"
 import path from "node:path"
 
 import BaseCommand from "../../extensions/base-command.js"
+import { CustomFlags } from "../../extensions/custom-flags.js"
 import { authorizationInformation } from "../../services/authorization-client/authorization-type.js"
 import { fileUpload } from "../../services/storage-client/models/file-upload.js"
 import { itemsWithFolderLink } from "../../services/storage-client/models/items-with-folder-link.js"
@@ -76,11 +77,8 @@ export default class PopulateIModel extends BaseCommand {
         multiple: true,
         required: true
       }),
-    "imodel-id": Flags.string({
-        char: 'm', 
-        description: 'The ID of the iModel to populate.', 
-        helpValue: '<string>',
-        required: true,
+    "imodel-id": CustomFlags.iModelIDFlag({
+        description: 'The ID of the iModel to populate.'
     }),
     "no-wait": Flags.boolean({
         description: 'Do not wait for the synchronization process to complete.',

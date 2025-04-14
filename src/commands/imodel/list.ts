@@ -7,6 +7,7 @@ import { IModel, IModelOrderByProperty, OrderBy } from "@itwin/imodels-client-ma
 import { Flags } from "@oclif/core";
 
 import BaseCommand from "../../extensions/base-command.js";
+import { CustomFlags } from "../../extensions/custom-flags.js";
 
 export default class ListIModels extends BaseCommand {
     static description = 'Retrieve a list of iModels';
@@ -31,11 +32,8 @@ export default class ListIModels extends BaseCommand {
     ];
 
     static flags = {
-      "itwin-id": Flags.string({
-        char: 'i',
-        description: 'The ID of the iTwin to list iModels for.',
-        helpValue: '<string>',
-        required: true,
+      "itwin-id": CustomFlags.iTwinIDFlag({
+        description: 'The ID of the iTwin to list iModels for.'
       }),
       name: Flags.string({
         char: 'n',

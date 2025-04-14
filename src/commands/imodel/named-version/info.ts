@@ -6,6 +6,7 @@
 import { Flags } from "@oclif/core";
 
 import BaseCommand from "../../../extensions/base-command.js";
+import { CustomFlags } from "../../../extensions/custom-flags.js";
 
 export default class NamedVersionInfo extends BaseCommand {
     static description = 'Retrieve details about a specific named version in an iModel.';
@@ -18,11 +19,8 @@ export default class NamedVersionInfo extends BaseCommand {
     ];
 
     static flags = {
-      "imodel-id": Flags.string({
-        char: 'm',
-        description: 'The ID of the iModel whose named version you want to retrieve.',
-        helpValue: '<string>',
-        required: true,
+      "imodel-id": CustomFlags.iModelIDFlag({
+        description: 'The ID of the iModel whose named version you want to retrieve.'
       }),
       "named-version-id": Flags.string({
         description: 'The ID of the named version.',

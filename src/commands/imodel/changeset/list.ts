@@ -7,6 +7,7 @@ import { Changeset, ChangesetOrderByProperty, OrderBy, OrderByOperator, take, to
 import { Flags } from "@oclif/core";
 
 import BaseCommand from "../../../extensions/base-command.js";
+import { CustomFlags } from "../../../extensions/custom-flags.js";
 
 export default class ListChangesets extends BaseCommand {
     static description = 'List all changesets for a specific iModel.';
@@ -36,11 +37,8 @@ export default class ListChangesets extends BaseCommand {
         helpValue: '<integer>',
         required: false,
       }),
-      "imodel-id": Flags.string({
-        char: 'm',
-        description: 'The ID of the iModel whose changesets you want to list.',
-        helpValue: '<string>',
-        required: true,
+      "imodel-id": CustomFlags.iModelIDFlag({
+        description: 'The ID of the iModel whose changesets you want to list.'
       }),
       "last-index": Flags.integer({
         description: 'List changesets up to a specific index (inclusive).',

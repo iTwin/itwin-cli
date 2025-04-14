@@ -3,9 +3,8 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { Flags } from "@oclif/core";
-
 import BaseCommand from "../../extensions/base-command.js";
+import { CustomFlags } from "../../extensions/custom-flags.js";
 
 export class IModelInfo extends BaseCommand {
   static description = 'Retrieve metadata for the specified Model';
@@ -18,12 +17,8 @@ export class IModelInfo extends BaseCommand {
   ];
 
   static flags = {
-    "imodel-id": Flags.string({
-      char: 'm', 
-      description: 'The ID of the iModel to retrieve information for.', 
-      env: 'ITP_IMODEL_ID',
-      helpValue: '<string>',
-      required: true 
+    "imodel-id": CustomFlags.iModelIDFlag({
+      description: 'The ID of the iModel to retrieve information for.'
     }),
   };
 
