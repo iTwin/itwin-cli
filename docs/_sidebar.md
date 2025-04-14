@@ -1,6 +1,7 @@
 * [iTwin CLI Manual](/docs/)
 * [iTwin 101](/docs/itwin101.md)
 * [Quickstart](/docs/quickstart.md)
+* [Environment](/docs/environment.md)
 * [Workflows](/docs/workflows/overview.md)
 
 <hr style="margin: 1em 5em 1em 1em; opacity: 0.1;">
