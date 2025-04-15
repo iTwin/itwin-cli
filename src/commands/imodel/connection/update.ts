@@ -5,11 +5,17 @@
 
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { authenticationType } from "../../../services/synchronizationClient/models/authentication-type.js";
 
 export default class UpdateStorageConnection extends BaseCommand {
-    static description = 'Update an existing storage connection for an iModel.';
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/synchronization/operations/update-storage-connection/",
+        name: "Update Storage Connection",
+    };
+
+    static description = 'Update an existing storage connection of an iModel.';
 
     static examples = [
       {
@@ -56,4 +62,3 @@ export default class UpdateStorageConnection extends BaseCommand {
       return this.logAndReturnResult(response.connection);
     }
   }
-  

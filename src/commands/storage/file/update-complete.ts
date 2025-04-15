@@ -5,10 +5,16 @@
 
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 
 export default class FileUpdateComplete extends BaseCommand {
-    static description = 'Complete update of a file.';
+    static apiReference : apiReference = {
+        link: 'https://developer.bentley.com/apis/storage/operations/complete-file-creation/',
+        name: 'Complete File Creation',
+    };
+
+    static description = 'Complete the file creation or content update process by marking the operation as done.';
 
     static examples = [
       {
@@ -20,7 +26,7 @@ export default class FileUpdateComplete extends BaseCommand {
     static flags = {
       "file-id": Flags.string({ 
         char: 'f', 
-        description: 'The file id.', 
+        description: 'The ID of the file for which the creation or update is being completed.  ', 
         helpValue: '<string>',
         required: true 
       }),

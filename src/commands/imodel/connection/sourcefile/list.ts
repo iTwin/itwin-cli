@@ -5,10 +5,16 @@
 
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
 
 export default class ListSourceFiles extends BaseCommand {
-    static description = 'Retrieve details about a specific source file in a storage connection of an iModel.';
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/synchronization/operations/get-storage-connection-sourcefiles/",
+        name: "Get Storage Connection SourceFiles",
+    };
+
+    static description = 'List all source files in a specific storage connection.';
 
     static examples = [
       {
@@ -32,15 +38,22 @@ export default class ListSourceFiles extends BaseCommand {
         helpValue: '<string>',
         required: true 
       }),
+      skip: Flags.integer({ 
+        description: 'Skip a number of source files in the result.', 
+        helpValue: '<integer>' 
+      }),
+      top: Flags.integer({ 
+        description: 'Limit the number of source files returned.', 
+        helpValue: '<integer>' 
+      }),
     };
   
     async run() {
       const { flags } = await this.parse(ListSourceFiles);
   
       const client = await this.getSynchronizationClient();
-      const response = await client.getSourceFiles(flags["connection-id"]);
+      const response = await client.getSourceFiles(flags["connection-id"], flags.top, flags.skip);
   
       return this.logAndReturnResult(response.sourceFiles);
     }
   }
-  

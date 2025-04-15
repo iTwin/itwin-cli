@@ -9,7 +9,12 @@ import fs from "node:fs"
 import BaseCommand from "../../../extensions/base-command.js";
 
 export default class FileUpload extends BaseCommand {
-    static description = 'Upload a new file.';
+    static apiReference = {
+        link: 'https://developer.bentley.com/apis/storage/operations/upload-file/',
+        name: 'Upload File',
+    };
+    
+    static description = 'Upload a new file to a specified URL within iTwin storage.';
 
     static examples = [
       {
@@ -25,13 +30,13 @@ export default class FileUpload extends BaseCommand {
     static flags = {
       "file-path": Flags.string({ 
         char: 'f', 
-        description: 'The path to the file.', 
+        description: 'The path to the file you want to upload.', 
         helpValue: '<string>',
         required: true 
       }),
       "upload-url": Flags.string({ 
         char: 'u', 
-        description: 'The url for the file to be uploaded to.', 
+        description: 'The URL where the file should be uploaded.', 
         helpValue: '<string>',
         required: true 
       }),

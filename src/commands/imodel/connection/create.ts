@@ -5,6 +5,7 @@
 
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { CustomFlags } from "../../../extensions/custom-flags.js";
 import { authenticationType } from "../../../services/synchronizationClient/models/authentication-type.js";
@@ -12,7 +13,12 @@ import { connectorType } from "../../../services/synchronizationClient/models/co
 import { storageFileCreate } from "../../../services/synchronizationClient/models/storage-file-create.js";
 
 export default class CreateConnection extends BaseCommand {
-  static description = 'Create a new connector.';
+  static apiReference: apiReference = {
+    link: "https://developer.bentley.com/apis/synchronization/operations/create-storage-connection/",
+    name: "Create Storage Connection",
+  };
+
+  static description = 'Create a storage connection that describes files from storage to synchronize with an iModel.';
 
 	static examples = [
     {

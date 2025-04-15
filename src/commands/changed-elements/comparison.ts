@@ -5,10 +5,16 @@
 
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
 import { CustomFlags } from "../../extensions/custom-flags.js";
 
 export default class ChangedElementsComparison extends BaseCommand {
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/changed-elements/operations/get-comparison/",
+        name: "Get Comparison",
+    };
+
     static description = 'Compare changes between two changesets in an iModel.';
 
     static examples = [
@@ -50,4 +56,3 @@ export default class ChangedElementsComparison extends BaseCommand {
       return this.logAndReturnResult(result.changedElements);
     }
   }
-  

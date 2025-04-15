@@ -9,6 +9,11 @@ import BaseCommand from '../../extensions/base-command.js';
 import { CustomFlags } from '../../extensions/custom-flags.js';
 
 export default class GetRootFolder extends BaseCommand {
+  static apiReference = {
+    link: 'https://developer.bentley.com/apis/storage/operations/get-top-level-folders-and-files-by-project/',
+    name: 'Get Top-Level Folders and Files',
+  };
+
   static description = 'Retrieve the top-level folders and files in an iTwin\'s storage.';
 
 	static examples = [

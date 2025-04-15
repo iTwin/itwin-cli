@@ -8,12 +8,19 @@ import { Flags } from "@oclif/core";
 import open from 'open';
 import { deflate } from "pako";
 
+import { apiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { CustomFlags } from "../../../extensions/custom-flags.js";
 import { link, links } from "../../../services/general-models/links.js";
 
 export default class CesiumSandcastle extends BaseCommand {
-    static description = "Setup iModel and get url to view it in Cesium Sandcastle";
+    static apiReference: apiReference = {
+        link: "/docs/command-workflows/cesium-sandcastle",
+        name: "Cesium Sandcastle",
+        sectionName: "Workflow Reference",
+    };
+
+    static description = "> 🔬 This command is currently in Technical Preview.\nSetup iModel and get URL to view it in Cesium Sandcastle.";
 
     static examples = [
       {

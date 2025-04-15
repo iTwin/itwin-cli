@@ -5,10 +5,16 @@
 
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { CustomFlags } from "../../../extensions/custom-flags.js";
 
 export default class DeleteRole extends BaseCommand {
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/access-control-v2/operations/delete-itwin-role/",
+        name: "Delete iTwin Role",
+    };
+
     static description = 'Delete an existing role from an iTwin.';
 
     static examples = [
@@ -39,4 +45,3 @@ export default class DeleteRole extends BaseCommand {
       return this.logAndReturnResult({ result: 'deleted' });
     }
   }
-  

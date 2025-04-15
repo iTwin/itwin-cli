@@ -5,9 +5,15 @@
 
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
 
 export default class ConnectionSourceFileInfo extends BaseCommand {
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/synchronization/operations/get-storage-connection-sourcefile/",
+        name: "Get Storage Connection SourceFile",
+    };
+
     static description = 'Retrieve details about a specific source file in a storage connection of an iModel.';
 
     static examples = [
@@ -41,4 +47,3 @@ export default class ConnectionSourceFileInfo extends BaseCommand {
       return this.logAndReturnResult(response.sourceFile);
     }
   }
-  

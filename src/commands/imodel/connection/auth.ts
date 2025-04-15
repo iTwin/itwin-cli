@@ -8,10 +8,16 @@
 import http2 from "node:http2";
 import open from 'open';
 
+import { apiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 
 export default class ConnectionAuth extends BaseCommand {
-  static description = 'Authenticate connector for user';
+  static apiReference: apiReference = {
+    link: "https://developer.bentley.com/apis/synchronization/operations/get-authorization-information/",
+    name: "Get Authorization Information",
+  };
+
+  static description = 'Ensures the user has a valid token for long-running connection tasks. This must be called before starting a connection run.';
 
 	static examples = [
     {
