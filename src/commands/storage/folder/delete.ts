@@ -5,9 +5,15 @@
 
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 
 export default class DeleteFolder extends BaseCommand {
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/storage/operations/delete-folder/",
+        name: "Delete Folder",
+    };
+
     static description = "Delete a folder from an iTwin's storage.";
 
     static examples = [
@@ -35,4 +41,3 @@ export default class DeleteFolder extends BaseCommand {
       return this.logAndReturnResult({ result: 'deleted' });
     }
   }
-  

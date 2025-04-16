@@ -5,9 +5,15 @@
 
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 
 export default class DeleteFile extends BaseCommand {
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/storage/operations/delete-file/",
+        name: "Delete File",
+    };
+
     static description = "Delete a file from an iTwin's storage.";
 
     static examples = [
@@ -36,4 +42,3 @@ export default class DeleteFile extends BaseCommand {
       return this.logAndReturnResult({ result: 'deleted' });
     }
   }
-  

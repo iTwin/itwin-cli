@@ -5,11 +5,17 @@
 
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { CustomFlags } from "../../../extensions/custom-flags.js";
 
 export default class CreateNamedVersion extends BaseCommand {
-    static description = 'Create a new named version for a specific changeset in an iModel.';
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/imodels-v2/operations/create-imodel-named-version/",
+        name: "Create Named Version",
+    };
+
+    static description = 'Create a new named version for iModel.';
 
     static examples = [
       {
@@ -28,7 +34,7 @@ export default class CreateNamedVersion extends BaseCommand {
 
     static flags = {
       "changeset-id": Flags.string({
-        description: 'The ID of the changeset for the named version.',
+        description: 'The ID of the changeset for the named version. Defaults to the latest changeset if not specified.',
         helpValue: '<string>',
         required: false,
       }),
@@ -68,4 +74,3 @@ export default class CreateNamedVersion extends BaseCommand {
       return this.logAndReturnResult(createdNameVersion);
     }
   }
-  

@@ -6,10 +6,16 @@
 import { NamedVersion, NamedVersionOrderByProperty, OrderBy, OrderByOperator } from "@itwin/imodels-client-management";
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { CustomFlags } from "../../../extensions/custom-flags.js";
 
 export default class ListNamedVersions extends BaseCommand {
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/imodels-v2/operations/get-imodel-named-versions/",
+        name: "Get Named Versions",
+    };
+
     static description = 'List all named versions for a specific iModel.';
 
     static examples = [
@@ -42,7 +48,7 @@ export default class ListNamedVersions extends BaseCommand {
         required: false,
       }),
       "order-by": Flags.string({
-        description: 'Sort by changesetIndex or createdDateTime, in asc or desc order (ex: "changesetIndex desc").',
+        description: 'Sort by `changesetIndex` or `createdDateTime`, in `asc` or `desc` order.',
         helpValue: '<string>',
         required: false,
       }),

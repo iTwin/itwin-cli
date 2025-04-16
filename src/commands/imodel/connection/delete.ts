@@ -5,10 +5,16 @@
 
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 
 export default class DeleteConnection extends BaseCommand {
-    static description = 'Delete a storage connection from an iModel.';
+    static apiReference: apiReference = {
+      link: "https://developer.bentley.com/apis/synchronization/operations/delete-storage-connection/",
+      name: "Delete Storage Connection",
+    };
+
+    static description = 'Delete a storage connection of an iModel.';
 
     static examples = [
       {

@@ -6,10 +6,16 @@
 import { ITwinSubClass } from "@itwin/itwins-client";
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
 
 export default class ListITwins extends BaseCommand {
-    static description = 'List of iTwins';
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/itwins/operations/get-my-itwins/",
+        name: "List iTwins",
+    };
+
+    static description = 'List all iTwins the calling user is a member of.';
 
     static examples = [
       {
@@ -123,4 +129,3 @@ export default class ListITwins extends BaseCommand {
       return this.logAndReturnResult(response.data);
     }
   }
-  

@@ -5,9 +5,21 @@
 
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 
 export default class ListFiles extends BaseCommand {
+    static apiReference: apiReference[] = [
+      {
+        link: "https://developer.bentley.com/apis/storage/operations/get-files-in-folder/",
+        name: "List Files in Folder",
+      },
+      {
+        link: "https://developer.bentley.com/apis/storage/operations/get-folders-and-files-in-folder/",
+        name: "List Files and Folders in Folder",
+      }
+    ];
+
     static description = "List files in a folder of an iTwin's storage. Optionally, include subfolders in the result.";
 
     static examples = [
@@ -48,4 +60,3 @@ export default class ListFiles extends BaseCommand {
       
     }
   }
-  
