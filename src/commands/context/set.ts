@@ -9,8 +9,16 @@ export default class SetContext extends BaseCommand {
 
     static examples = [
         {
+            command: `<%= config.bin %> <%= command.id %> --itwin-id 12345`,
+            description: 'Example 1: Set a new cached context using an iTwin ID'
+        },
+        {
+            command: `<%= config.bin %> <%= command.id %> --imodel-id 67890`,
+            description: 'Example 2: Set a new cached context using an iModel ID'
+        },
+        {
             command: `<%= config.bin %> <%= command.id %>`,
-            description: 'Example 1: Set a new cached context'
+            description: 'Example 3: Error when neither --itwin-id nor --imodel-id is provided'
         }
     ];
 

@@ -6,11 +6,19 @@
 import { Extent } from "@itwin/imodels-client-management";
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
 import { CustomFlags } from "../../extensions/custom-flags.js";
 
 export default class UpdateCommand extends BaseCommand {
-    static description = 'Update an iModel in an iTwin';
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/imodels-v2/operations/update-imodel/",
+        name: "Update iModel",
+    };
+
+    static customDocs = true;
+
+    static description = 'Update metadata of an existing iModel.';
 
     static examples = [
       {
@@ -72,4 +80,3 @@ export default class UpdateCommand extends BaseCommand {
       return this.logAndReturnResult(iModel);
     }
   }
-  

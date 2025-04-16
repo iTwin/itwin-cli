@@ -5,10 +5,16 @@
 
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
 
 export default class ConnectionRunsListed extends BaseCommand {
-    static description = "List all runs for a specific storage connection of an iModel.";
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/synchronization/operations/get-storage-connection-runs/",
+        name: "Get Storage Connection Runs",
+    };
+
+    static description = "List all runs for a specific storage connection.";
 
     static examples = [
       {
@@ -32,15 +38,22 @@ export default class ConnectionRunsListed extends BaseCommand {
         helpValue: '<string>',
         required: true 
       }),
+      skip: Flags.integer({ 
+        description: "Skip a number of runs in the result.", 
+        helpValue: '<integer>' 
+      }),
+      top: Flags.integer({ 
+        description: "Limit the number of runs returned.", 
+        helpValue: '<integer>' 
+      }),
     };
   
     async run() {
       const { flags } = await this.parse(ConnectionRunsListed);
   
       const client = await this.getSynchronizationClient();
-      const response = await client.getStorageConnectionRuns(flags["connection-id"]);
+      const response = await client.getStorageConnectionRuns(flags["connection-id"], flags.top, flags.skip);
   
       return this.logAndReturnResult(response);
     }
   }
-  

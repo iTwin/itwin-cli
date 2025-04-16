@@ -3,10 +3,16 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
+import { apiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
 import { CustomFlags } from "../../extensions/custom-flags.js";
 
 export default class ChangedElementsEnable extends BaseCommand {
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/changed-elements/operations/enable-change-tracking/",
+        name: "Enable Change Tracking",
+    };
+
     static description = "Enable change tracking for a specified iModel.";
 
     static examples = [
@@ -39,4 +45,3 @@ export default class ChangedElementsEnable extends BaseCommand {
       return this.logAndReturnResult({ result: 'enabled' });
     }
   }
-  

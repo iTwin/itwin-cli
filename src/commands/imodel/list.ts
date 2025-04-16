@@ -6,11 +6,17 @@
 import { IModel, IModelOrderByProperty, OrderBy } from "@itwin/imodels-client-management";
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
 import { CustomFlags } from "../../extensions/custom-flags.js";
 
 export default class ListIModels extends BaseCommand {
-    static description = 'Retrieve a list of iModels';
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/imodels-v2/operations/get-itwin-imodels/",
+        name: "List iModels",
+    };
+
+    static description = 'Retrieve a list of iModels belonging to the specified iTwin.';
 
     static examples = [
       {
@@ -95,4 +101,3 @@ export default class ListIModels extends BaseCommand {
       return this.logAndReturnResult(result);
     }
   }
-  

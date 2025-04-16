@@ -5,10 +5,16 @@
 
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
 import { connectorType } from "../../../../services/synchronizationClient/models/connector-type.js";
 
 export default class ConnectionSourceFileUpdate extends BaseCommand {
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/synchronization/operations/update-storage-connection-sourcefile/",
+        name: "Update Storage Connection SourceFile",
+    };
+
     static description = 'Update an existing source file in a storage connection of an iModel.';
 
     static examples = [
@@ -53,4 +59,3 @@ export default class ConnectionSourceFileUpdate extends BaseCommand {
       return this.logAndReturnResult(response.sourceFile);
     }
   }
-  

@@ -5,10 +5,16 @@
 
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { CustomFlags } from "../../../extensions/custom-flags.js";
 
 export default class DeleteRepository extends BaseCommand {
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/iTwins/operations/delete-repository/",
+        name: "Delete Repository",
+    };
+
     static description = 'Delete a specified repository from an iTwin.';
 
     static examples = [
@@ -20,7 +26,7 @@ export default class DeleteRepository extends BaseCommand {
 
     static flags = {
       "itwin-id": CustomFlags.iTwinIDFlag({
-        description: 'The ID of the iTwin to which the repository belongs.'
+        description: 'The ID of the iTwin that the repository belongs to.'
       }),
       "repository-id": Flags.string({
         description: 'The ID of the repository to delete.',
@@ -44,4 +50,3 @@ export default class DeleteRepository extends BaseCommand {
       return this.logAndReturnResult({ result: 'deleted' });
     }
   }
-  

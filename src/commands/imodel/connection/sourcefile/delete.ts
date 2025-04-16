@@ -5,10 +5,16 @@
 
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
 
 export default class ConnectionSourceFileDelete extends BaseCommand {
-    static description = 'Remove a source file from a storage connection of an iModel.';
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/synchronization/operations/remove-storage-connection-sourcefile/",
+        name: "Remove Storage Connection SourceFile",
+    };
+
+    static description = "Remove a source file from a storage connection of an iModel.";
 
     static examples = [
       {
@@ -40,5 +46,4 @@ export default class ConnectionSourceFileDelete extends BaseCommand {
   
       return this.logAndReturnResult({ result: 'deleted' });
     }
-  }
-  
+}

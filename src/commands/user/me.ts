@@ -3,9 +3,15 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import BaseCommand from "../../extensions/base-command.js"
+import { apiReference } from "../../extensions/api-reference.js"; // Added import
+import BaseCommand from "../../extensions/base-command.js";
 
 export default class Me extends BaseCommand {
+  static apiReference: apiReference = {
+    link: "https://developer.bentley.com/apis/users/operations/me/",
+    name: "User Me",
+  };
+
   static args = {}
 
   static description = 'Retrieve information about the currently authenticated user.'

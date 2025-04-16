@@ -6,10 +6,16 @@
 import { RepositoryClass, RepositorySubClass } from "@itwin/itwins-client";
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { CustomFlags } from "../../../extensions/custom-flags.js";
 
 export default class CreateRepository extends BaseCommand {
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/iTwins/operations/create-repository/",
+        name: "Create Repository",
+    };
+
     static description = 'Create a new repository URI for iTwin data.';
 
     static examples = [
@@ -69,4 +75,3 @@ export default class CreateRepository extends BaseCommand {
       return this.logAndReturnResult(response.data);
     }
   }
-  

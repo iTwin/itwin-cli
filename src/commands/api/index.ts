@@ -3,13 +3,44 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { Flags } from "@oclif/core";
+import { Command, Flags } from "@oclif/core";
 
+import { apiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
 import { Query } from "../../services/iTwin-api-client.js";
 
 export default class ApiRequest extends BaseCommand {
+    static apiReference : apiReference = {
+        link: "https://developer.bentley.com/apis/",
+        name: "ITwin Platform APIs docs",
+        sectionName: "APIs Docs Reference",
+    };
+
     static description = "Make direct HTTP requests to any iTwin Platform API endpoint. Useful for custom operations or accessing APIs without dedicated commands.";
+
+    static examples: Command.Example[] = [
+        {
+            command: "itp api --method GET --path users/me",
+            description: "Example 1: Sending a GET request",
+        },
+        {
+            command: 'itp api --method GET --path itwins/favorite --query subClass:Account --query "$top:10" --header "Prefer: return=minimal"',
+            description: "Example 2: Sending a request with headers and query parameters",
+        },
+        {
+            command: "itp api --method DELETE --path itwins/favorites/dc914a84-e0c9-40e2-9d14-faf5ed84147f --empty-response",
+            description: "Example 3: Sending a delete request without response body",
+        },
+        {
+            command: 'itp api --method POST --path itwins/exports --body \'{"outputFormat": "JsonGZip"}\'',
+            description: "Example 4: Sending a post request",
+        },
+        {
+            // eslint-disable-next-line no-useless-escape
+            command: 'itp api --method POST --path users/getbyidlist --body "[\\`\"b644de17-f07e-4b43-8c33-ad2b1bacee3b\\`\"]"',
+            description: "Example 5: Sending a post request (Windows PowerShell)",
+        },
+    ];
   
     static flags = {
         body: Flags.string({
@@ -37,7 +68,7 @@ export default class ApiRequest extends BaseCommand {
             required: true,
         }),
         query: Flags.string({
-            description: "Query parameters to include in the request. Use the format 'QueryKey:value'.",
+            description: "URL query parameters for the request. Use format 'QueryKey:value'.",
             helpValue: '<string>',
             multiple: true,
         }),
@@ -89,4 +120,3 @@ export default class ApiRequest extends BaseCommand {
         return this.logAndReturnResult(response);
     }
   }
-  

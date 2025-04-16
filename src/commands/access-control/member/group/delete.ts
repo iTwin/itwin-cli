@@ -5,10 +5,16 @@
 
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
 import { CustomFlags } from "../../../../extensions/custom-flags.js";
 
 export default class DeleteGroupMember extends BaseCommand {
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/access-control-v2/operations/remove-itwin-group-member/",
+        name: "Remove iTwin Group Member",
+    };
+
     static description = 'Remove a group from an iTwin.';
 
     static examples = [
@@ -40,4 +46,3 @@ export default class DeleteGroupMember extends BaseCommand {
       return this.logAndReturnResult({ result: 'deleted' });
     }
   }
-  
