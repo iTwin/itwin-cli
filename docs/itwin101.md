@@ -67,14 +67,14 @@ Need to connect to a custom database, web API, or document store? The iTwin is d
 
 The **iTwin CLI** is a command-line tool that lets developers and technical users interact with the iTwin Platform through simple text commands. It simplifies many common tasks:
 
-- ✍️ **Create and manage iTwins**
-- 🛡️ **Set up access control and user roles**
-- 🔍 **Query or inspect metadata**
-- 📂 **Create iModels and populate them with design files**
-- 📰 **Track and compare changes with changesets**
-- 🔢 **Create named versions to mark project milestones**
-- ⇄ **Synchronize design data into the iModel**
-- 🌍 **Visualize the iTwin in Cesium Sandcastle**
+- ✍️ Create and manage iTwins
+- 🛡️ Set up access control and user roles
+- 🔍 Query or inspect metadata
+- 📂 Create iModels and populate them with design files
+- 📰 Track and compare changes with changesets
+- 🔢 Create named versions to mark project milestones
+- ⇄ Synchronize design data into the iModel
+- 🌍 Visualize the iTwin in Cesium Sandcastle
 
 It serves as a lightweight, scriptable gateway into a powerful ecosystem.
 
