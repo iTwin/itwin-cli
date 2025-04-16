@@ -74,10 +74,20 @@ export class SynchronizationApiClient {
         });
     }
 
-    getSourceFiles(connectionId: string): Promise<sourceFilesResponse> {
+    getSourceFiles(connectionId: string, top?: number, skip?: number): Promise<sourceFilesResponse> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `synchronization/imodels/storageconnections/${connectionId}/sourcefiles`,
-            method: "GET"
+            method: "GET",
+            query: [
+                {
+                    key: '$top',
+                    value: top
+                },
+                {
+                    key: '$skip',
+                    value: skip
+                }
+            ]
         });
     }
 
@@ -95,10 +105,20 @@ export class SynchronizationApiClient {
         });
     }
 
-    getStorageConnectionRuns(connectionId: string): Promise<storageRunsResponse> {
+    getStorageConnectionRuns(connectionId: string, top?: number, skip?: number): Promise<storageRunsResponse> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `synchronization/imodels/storageconnections/${connectionId}/runs`,
-            method: "GET"
+            method: "GET",
+            query: [
+                {
+                    key: '$top',
+                    value: top
+                },
+                {
+                    key: '$skip',
+                    value: skip
+                }
+            ]
         });
     }
 

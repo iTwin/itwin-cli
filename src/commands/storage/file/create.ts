@@ -5,9 +5,15 @@
 
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 
 export default class FileCreate extends BaseCommand {
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/storage/operations/create-file/",
+        name: "Create File",
+    };
+
     static description = 'Create a new file in a specified folder in iTwin\'s storage.';
 
     static examples = [
@@ -52,4 +58,3 @@ export default class FileCreate extends BaseCommand {
       return this.logAndReturnResult(response);
     }
   }
-  

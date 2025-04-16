@@ -6,11 +6,17 @@
 import { ITwin } from "@itwin/itwins-client";
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
 import { CustomFlags } from "../../extensions/custom-flags.js";
 
 export default class UpdateCommand extends BaseCommand {
-    static description = 'Update an iTwin';
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/itwins/operations/update-itwin/",
+        name: "Update iTwin",
+    };
+
+    static description = 'Update the specified iTwin. Only include properties you want to update.';
 
     static examples = [
       {
@@ -59,7 +65,7 @@ export default class UpdateCommand extends BaseCommand {
         required: false,
       }),
       type: Flags.string({
-        description: "Defines the iTwin's Type.",
+        description: "Open ended property to define your iTwin's type. ",
         helpValue: '<string>',
         required: false,
       }),
@@ -90,4 +96,3 @@ export default class UpdateCommand extends BaseCommand {
       return this.logAndReturnResult(response.data);
     }
   }
-  

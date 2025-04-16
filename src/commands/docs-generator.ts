@@ -2,6 +2,7 @@ import { Command, Config, Flags } from "@oclif/core";
 import fs from "node:fs";
 import path from "node:path";
 
+import { apiReference } from "../extensions/api-reference.js";
 import BaseCommand from "../extensions/base-command.js";
 
 export default class DocsGenerator extends BaseCommand {
@@ -21,14 +22,32 @@ export default class DocsGenerator extends BaseCommand {
         const options = flags.length > 0
             ? 
                   flags.filter(([_, flag]) => !flag.hidden && flag.helpGroup !== "GLOBAL")
-                  .sort(([_, flag]) => (flag.required ? -1 : 1))
+                  .sort(([nameA, flagA], [nameB, flagB]) => {
+                      if (flagA.required !== flagB.required) {
+                          return flagA.required ? -1 : 1;
+                      }
+
+                      return nameA.localeCompare(nameB);
+                  })
                   .map(([name, flag]) => {
                       const required = flag.required ? "**Required:** Yes" : "**Required:** No";
-                      const typeValue = flag.type === "option" ? flag.helpValue ?? "" : "<flag>";
-                      const type = `**Type:** \`${typeValue}\``;
+                      const multipleProperty = flag.type === "option" && flag.multiple ? "**Multiple:** Yes" : "";
+                      let type = "";
+                      let validValues = "";
+                      if(flag.type === "option") {
+                        type = `**Type:** \`${flag.helpValue?.slice(1, -1)}\``;
+                        if(Array.isArray(flag.options)) {
+                            validValues = `\n  **Valid Values:** \`"${flag.options.join('"`, `"')}"\``;
+                        }
+                      }
+                      else {
+                            type = '**Type:** `flag`';
+                      }
+
                       const description = flag.description ?? "";
                       const flagName = flag.char ? `-${flag.char}, --${name}` : `--${name}`;
-                      return `- **\`${flagName}\`**  \n  ${description}  \n  ${type} ${required}`;
+                      const finalResult = `- **\`${flagName}\`**  \n  ${description}  \n  ${type} ${required} ${multipleProperty} ${validValues}`;
+                      return finalResult.trim();
                   })
                   .join("\n\n")
             : "";
@@ -53,10 +72,41 @@ export default class DocsGenerator extends BaseCommand {
         
         examplesText = examplesText.replaceAll("<%= config.bin %>", "itp").replaceAll("<%= command.id %>", commandName).trimEnd();
 
-        const apiReference = command.apiReference as string;
-        const apiReferenceName = command.apiReferenceName as string;
+        const returnContent : string[] = [];
 
-        return `# itp ${commandName}\n\n${command.description || ""}\n\n## Options\n\n${options}\n\n## Examples\n\n\`\`\`bash${examplesText}\n\`\`\`\n\n## API Reference\n\n[${apiReferenceName}](${apiReference})`;
+        returnContent.push(`# itp ${commandName}`);
+        
+        if(command.description) {
+            returnContent.push(command.description);
+        }
+
+        returnContent.push('## Options');
+        
+        if(options.length > 1) {
+            returnContent.push(options);
+        }
+        else {
+            returnContent.push("(No options required for this command)");
+        }
+
+        returnContent.push('## Examples', 
+                           `\`\`\`bash${examplesText}\n\`\`\``);
+
+        if(command.apiReference) {
+            if(Array.isArray(command.apiReference)) {
+                const apiReferences = command.apiReference as apiReference[]; 
+                returnContent.push(`## ${command.apiReference[0].sectionName ?? 'API Reference'}`);
+                for (const apiRef of apiReferences) {
+                    returnContent.push(`[${apiRef.name}](${apiRef.link})`);
+                }
+            }
+            else {
+                const apiReference = command.apiReference as apiReference;
+                returnContent.push(`## ${apiReference.sectionName ?? 'API Reference'}`, `[${apiReference.name}](${apiReference.link})`);
+            }
+        }
+
+        return returnContent.join("\n\n");
     }
     
     async generateDocs(config: Config, basePath: string) {
@@ -66,6 +116,12 @@ export default class DocsGenerator extends BaseCommand {
         }
 
         for (const command of filteredCommands) {
+            this.log(`Generating docs for command: ${command.id}`);
+            if(command.customDocs) {
+                this.log(`Skipping command ${command.id} as it has custom docs`);
+                continue;
+            }
+
             const markdown: string = this.generateCommandMarkdown(command, Object.entries(command.flags));
             
             const commandDepth = command.id.split(":");
@@ -94,8 +150,7 @@ export default class DocsGenerator extends BaseCommand {
     
     writeToFile(filePath: string, markdown: string) {
         const finalPath = `${filePath}.md`;
-        console.log(`Writing to directory: ${finalPath}`);
-        console.log(markdown);
+        this.log(`Writing to directory: ${finalPath}`);
 
         const dirName = path.dirname(finalPath);
         if (!fs.existsSync(dirName)) {

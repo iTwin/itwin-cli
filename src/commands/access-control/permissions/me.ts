@@ -3,10 +3,16 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
+import { apiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { CustomFlags } from "../../../extensions/custom-flags.js";
 
 export default class MyPermissions extends BaseCommand {
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/access-control-v2/operations/get-iTwin-permissions/",
+        name: "Get My iTwin Permissions",
+    };
+
     static description = 'Retrieve a list of your permissions on a specified iTwin.';
 
 	static examples = [
@@ -32,4 +38,3 @@ export default class MyPermissions extends BaseCommand {
       return this.logAndReturnResult(response.permissions);
     }
   }
-  

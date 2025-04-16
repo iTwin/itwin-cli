@@ -5,16 +5,21 @@
 
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 
 export default class CreateFolder extends BaseCommand {
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/storage/operations/create-folder/",
+        name: "Create Folder",
+    };
+
     static description = "Create a new folder in a specified parent folder in iTwin's storage.";
 
     static examples = [
       {
         command: `<%= config.bin %> <%= command.id %> --parent-folder-id ROOT_FOLDER_ID_HERE --name "Project Documents" --description "Folder for all project-related documents"`,
-        description: `Example 1: Create a folder inside the root folder with a description
-          Note: You can retrieve the root folder ID using the 'itp storage root-folder' command.`
+        description: `Example 1: Create a folder inside the root folder with a description\n#Note: You can retrieve the root folder ID using the 'itp storage root-folder' command.`
       },
       {
         command: `<%= config.bin %> <%= command.id %> --parent-folder-id b2c3d4e5-6789-01ab-cdef-2345678901bc --name "Design Files"`,
@@ -53,4 +58,3 @@ export default class CreateFolder extends BaseCommand {
       return this.logAndReturnResult(response.folder);
     }
   }
-  

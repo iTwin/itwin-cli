@@ -5,9 +5,15 @@
 
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
 
 export default class UserInfo extends BaseCommand {
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/users/operations/get-users-by-id-list/",
+        name: "Get Users by ID List",
+    };
+
     static description = "Retrieve information about specific users based on their user IDs.";
 
     static examples = [
@@ -35,4 +41,3 @@ export default class UserInfo extends BaseCommand {
       return this.logAndReturnResult(response.users);
     }
   }
-  

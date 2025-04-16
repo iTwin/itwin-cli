@@ -10,6 +10,7 @@ import { Flags } from "@oclif/core"
 import fs from "node:fs"
 import path from "node:path"
 
+import { apiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js"
 import { CustomFlags } from "../../extensions/custom-flags.js"
 import { authorizationInformation } from "../../services/authorization-client/authorization-type.js"
@@ -24,6 +25,12 @@ import { storageConnectionListResponse } from "../../services/synchronizationCli
 import { storageRun } from "../../services/synchronizationClient/models/storage-run.js"
 
 export default class PopulateIModel extends BaseCommand {    
+  static apiReference: apiReference = {
+    link: "/docs/command-workflows/imodel-populate",
+    name: "iModel Populate",
+    sectionName: "Workflow Reference"
+  };
+
   static description = 'Synchronize design files into an iModel.'
 
 	static examples = [

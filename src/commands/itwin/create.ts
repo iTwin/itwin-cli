@@ -6,10 +6,18 @@
 import { ITwin, ITwinClass, ITwinSubClass } from "@itwin/itwins-client";
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
 
 export default class CreateITwin extends BaseCommand {
-    static description = 'Create an iTwin';
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/itwins/operations/create-itwin/",
+        name: "Create iTwin",
+    };
+
+    static customDocs = true;
+
+    static description = 'Create a new iTwin with specified properties.';
 
     static examples = [
       {
@@ -112,4 +120,3 @@ export default class CreateITwin extends BaseCommand {
       return this.logAndReturnResult(creatediTwin.data);
     }
   }
-  

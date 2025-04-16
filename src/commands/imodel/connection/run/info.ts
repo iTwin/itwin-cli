@@ -5,10 +5,16 @@
 
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
 
 export default class ConnectionRunInfo extends BaseCommand {
-    static description = 'Get connector run info.';
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/synchronization/operations/get-storage-connection-run/",
+        name: "Get Storage Connection Run",
+    };
+
+    static description = 'Retrieve details about a specific run of a storage connection.';
 
     static examples = [
       {
@@ -20,12 +26,12 @@ export default class ConnectionRunInfo extends BaseCommand {
     static flags = {
       "connection-id": Flags.string({ 
         char: 'c', 
-        description: 'The id of the connection.', 
+        description: 'The ID of the storage connection associated with the run.', 
         helpValue: '<string>',
         required: true 
       }),
       "connection-run-id": Flags.string({ 
-        description: 'The id of the connection run.', 
+        description: 'The ID of the storage connection run.', 
         helpValue: '<string>',
         required: true }),
     };
@@ -40,4 +46,3 @@ export default class ConnectionRunInfo extends BaseCommand {
       return this.logAndReturnResult(response.run);
     }
   }
-  

@@ -5,9 +5,15 @@
 
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 
 export default class FolderInfo extends BaseCommand {
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/storage/operations/get-folder/",
+        name: "Get Folder Info",
+    };
+
     static description = "Retrieve metadata for a specific folder in an iTwin's storage.";
 
     static examples = [
@@ -35,4 +41,3 @@ export default class FolderInfo extends BaseCommand {
       return this.logAndReturnResult(response.folder);
     }
   }
-  

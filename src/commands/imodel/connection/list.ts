@@ -5,11 +5,17 @@
 
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { CustomFlags } from "../../../extensions/custom-flags.js";
 
 export default class ListConnections extends BaseCommand {
-    static description = 'List all storage connections for a specific iModel.';
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/synchronization/operations/get-storage-connections/",
+        name: "Get Storage Connections",
+    };
+
+    static description = 'List all storage connections of a specific iModel.';
 
     static examples = [
       {

@@ -5,9 +5,15 @@
 
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
 
 export default class UserSearch extends BaseCommand {
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/users/operations/get-users/",
+        name: "Search Users",
+    };
+
     static description = "Search for users based on filter criteria.";
 
     static examples = [
@@ -38,4 +44,3 @@ export default class UserSearch extends BaseCommand {
       return this.logAndReturnResult(response.users);
     }
   }
-  

@@ -5,10 +5,16 @@
 
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
 
 export default class CreateConnectionRun extends BaseCommand {
-    static description = 'Create a new connector run.';
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/synchronization/operations/run-storage-connection/",
+        name: "Run Storage Connection",
+    };
+
+    static description = "Run the specified storage connection to synchronize files with an iModel.";
 
     static examples = [
       {
@@ -20,7 +26,7 @@ export default class CreateConnectionRun extends BaseCommand {
     static flags = {
       "connection-id": Flags.string({ 
         char: 'c', 
-        description: 'The id of the connection.', 
+        description: 'The ID of the storage connection to run.', 
         helpValue: '<string>',
         required: true 
       }),
@@ -35,5 +41,5 @@ export default class CreateConnectionRun extends BaseCommand {
   
       return this.logAndReturnResult({ result: 'started' });
     }
-  }
+}
   

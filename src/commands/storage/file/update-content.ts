@@ -5,10 +5,16 @@
 
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 
 export default class UpdateContent extends BaseCommand {
-    static description = 'Update file content.';
+    static apiReference : apiReference = {
+        link: 'https://developer.bentley.com/apis/storage/operations/update-file-content/',
+        name: 'Update File Content',
+    }
+  
+    static description = 'Update the content of an existing file. A URL is returned to upload the file content.';
 
     static examples = [
       {
@@ -20,7 +26,7 @@ export default class UpdateContent extends BaseCommand {
     static flags = {
       "file-id": Flags.string({ 
         char: 'f', 
-        description: 'The file id.', 
+        description: 'The ID of the file to update the content for.', 
         helpValue: '<string>',
         required: true 
       }),

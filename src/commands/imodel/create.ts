@@ -6,11 +6,19 @@
 import { Extent } from "@itwin/imodels-client-management";
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
 import { CustomFlags } from "../../extensions/custom-flags.js";
 
 export default class CreateIModel extends BaseCommand {
-    static description = 'Creates an iModel in an iTwin';
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/imodels-v2/operations/create-imodel/",
+        name: "Create iModel",
+    };
+
+    static customDocs = true;
+
+    static description = 'Create an empty iModel within a specified iTwin.'; // Set to true to use custom documentation
 
     static examples = [
       {
@@ -32,8 +40,8 @@ export default class CreateIModel extends BaseCommand {
       }),
       extent: Flags.string({
         description: 'The maximum rectangular area on Earth that encloses the iModel, defined by its southwest and northeast corners.',
-        helpValue: '<string>',
-        required: false,
+        helpValue: '<object>',
+        required: false
       }),
       "itwin-id": CustomFlags.iTwinIDFlag({
         description: 'The ID of the iTwin where the iModel should be created.'
@@ -67,4 +75,3 @@ export default class CreateIModel extends BaseCommand {
       return this.logAndReturnResult(iModel);
     }
   }
-  
