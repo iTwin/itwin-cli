@@ -8,12 +8,12 @@ List all runs for a specific storage connection.
   The ID of the storage connection.  
   **Type:** `string` **Required:** Yes
 
-- **`--top`**  
-  Limit the number of runs returned.  
-  **Type:** `integer` **Required:** No
-
 - **`--skip`**  
   Skip a number of runs in the result.  
+  **Type:** `integer` **Required:** No
+
+- **`--top`**  
+  Limit the number of runs returned.  
   **Type:** `integer` **Required:** No
 
 ## Examples

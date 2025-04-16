@@ -14,7 +14,7 @@ Update the role assignments for a user in an iTwin.
 
 - **`--role-id`**  
   A list of role IDs to assign to the user.  
-  **Type:** `array` **Required:** Yes **Multiple:** Yes
+  **Type:** `string` **Required:** Yes **Multiple:** Yes
 
 ## Examples
 

@@ -8,12 +8,12 @@ Update the metadata of a file in an iTwin's storage, such as display name or des
   The ID of the file to be updated.  
   **Type:** `string` **Required:** Yes
 
-- **`-n, --name`**  
-  The new display name for the file.  
-  **Type:** `string` **Required:** No
-
 - **`-d, --description`**  
   A description for the file.  
+  **Type:** `string` **Required:** No
+
+- **`-n, --name`**  
+  The new display name for the file.  
   **Type:** `string` **Required:** No
 
 ## Examples

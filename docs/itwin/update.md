@@ -8,18 +8,6 @@ Update the specified iTwin. Only include properties you want to update.
   The ID of the iTwin to be updated.  
   **Type:** `string` **Required:** Yes
 
-- **`-n, --name`**  
-  The iTwin's display name.  
-  **Type:** `string **Required:** No
-
-- **`--type`**  
-  Open ended property to define your iTwin's type.  
-  **Type:** `string` **Required:** No
-
-- **`--number`**  
-  Unique identifier for the iTwin.  
-  **Type:** `string` **Required:** No
-
 - **`--geographic-location`**  
   Optional location, typically an address or city.  
   **Type:** `string` **Required:** No
@@ -28,10 +16,22 @@ Update the specified iTwin. Only include properties you want to update.
   Optional IANA time zone ID.  
   **Type:** `string` **Required:** No
 
+- **`-n, --name`**  
+  The iTwin's display name.  
+  **Type:** `string` **Required:** No
+
+- **`--number`**  
+  Unique identifier for the iTwin.  
+  **Type:** `string` **Required:** No
+
 - **`--status`**  
   Status of the iTwin. Defaults to Active.  
-  **Type:** `iTwinStatus` **Required:** No  
+  **Type:** `string` **Required:** No  
   **Valid Values:** `"Active"`, `"Inactive"`, `"Trial"`
+
+- **`--type`**  
+  Open ended property to define your iTwin's type.   
+  **Type:** `string` **Required:** No
 
 ## Examples
 

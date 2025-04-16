@@ -24,5 +24,6 @@ itp storage file list --folder-id b1a2c3d4-5678-90ab-cdef-1234567890ab --include
 
 ## API Reference
 
-[List Files in Folder](https://developer.bentley.com/apis/storage/operations/get-files-in-folder/)  
-[List Files and Folders](https://developer.bentley.com/apis/storage/operations/get-folders-and-files-in-folder/)
+[List Files in Folder](https://developer.bentley.com/apis/storage/operations/get-files-in-folder/)
+
+[List Files and Folders in Folder](https://developer.bentley.com/apis/storage/operations/get-folders-and-files-in-folder/)

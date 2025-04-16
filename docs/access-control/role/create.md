@@ -4,16 +4,16 @@ Create a new role for an iTwin. To assign permissions after creation, use `itp a
 
 ## Options
 
+- **`-d, --description`**  
+  A description of the role.  
+  **Type:** `string` **Required:** Yes
+
 - **`-i, --itwin-id`**  
   The ID of the iTwin for which the role is being created.  
   **Type:** `string` **Required:** Yes
 
 - **`-n, --name`**  
   The name of the role to be created.  
-  **Type:** `string` **Required:** Yes
-
-- **`-d, --description`**  
-  A description of the role.  
   **Type:** `string` **Required:** Yes
 
 ## Examples

@@ -4,6 +4,15 @@ Make direct HTTP requests to any iTwin Platform API endpoint. Useful for custom 
 
 ## Options
 
+- **`--method`**  
+  HTTP method for the request.  
+  **Type:** `string` **Required:** Yes  
+  **Valid Values:** `"GET"`, `"POST"`, `"PUT"`, `"DELETE"`, `"PATCH"`
+
+- **`--path`**  
+  API endpoint path to send the request to.  
+  **Type:** `string` **Required:** Yes
+
 - **`--body`**  
   The body to include in the request. It must be serialized JSON.  
   **Type:** `string` **Required:** No
@@ -15,15 +24,6 @@ Make direct HTTP requests to any iTwin Platform API endpoint. Useful for custom 
 - **`--header`**  
   Headers to include in the request. Use the format 'HeaderName: value'.  
   **Type:** `string` **Required:** No **Multiple:** Yes
-
-- **`--method`**  
-  HTTP method for the request.  
-  **Type:** `string` **Required:** Yes  
-  **Valid Values:** `"GET"`, `"POST"`, `"PUT"`, `"DELETE"`, `"PATCH"`
-
-- **`--path`**  
-  API endpoint path to send the request to.  
-  **Type:** `string` **Required:** Yes
 
 - **`--query`**  
   URL query parameters for the request. Use format 'QueryKey:value'.  
@@ -50,7 +50,6 @@ itp api --method POST --path itwins/exports --body '{"outputFormat": "JsonGZip"}
 
 # Example 5: Sending a post request (Windows PowerShell)
 itp api --method POST --path users/getbyidlist --body "[\`"b644de17-f07e-4b43-8c33-ad2b1bacee3b\`"]"
-
 ```
 
 ## APIs Docs Reference

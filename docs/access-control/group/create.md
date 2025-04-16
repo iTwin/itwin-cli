@@ -4,16 +4,16 @@ Create a new group for an iTwin.
 
 ## Options
 
+- **`-d, --description`**  
+  A description of the group.  
+  **Type:** `string` **Required:** Yes
+
 - **`-i, --itwin-id`**  
   The ID of the iTwin where the group is being created.  
   **Type:** `string` **Required:** Yes
 
 - **`-n, --name`**  
   The name of the group to be created.  
-  **Type:** `string` **Required:** Yes
-
-- **`-d, --description`**  
-  A description of the group.  
   **Type:** `string` **Required:** Yes
 
 ## Examples

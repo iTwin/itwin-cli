@@ -8,14 +8,14 @@ Update an existing storage connection of an iModel.
   The ID of the storage connection to update.  
   **Type:** `string` **Required:** Yes
 
-- **`-n, --name`**  
-  The new display name for the storage connection.  
-  **Type:** `string` **Required:** No
-
 - **`--authentication-type`**  
   The authorization workflow type.  
   **Type:** `string` **Required:** No  
   **Valid Values:** `"User"`, `"Service"`
+
+- **`-n, --name`**  
+  The new display name for the storage connection.  
+  **Type:** `string` **Required:** No
 
 ## Examples
 

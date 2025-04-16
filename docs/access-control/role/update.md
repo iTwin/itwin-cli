@@ -12,17 +12,17 @@ Update the details of an existing role in an iTwin.
   The ID of the role to be updated.  
   **Type:** `string` **Required:** Yes
 
-- **`-n, --name`**  
-  The updated name of the role.  
-  **Type:** `string` **Required:** No
-
 - **`-d, --description`**  
   The updated description of the role.  
   **Type:** `string` **Required:** No
 
+- **`-n, --name`**  
+  The updated name of the role.  
+  **Type:** `string` **Required:** No
+
 - **`--permission`**  
   A list of permissions to assign to the role.  
-  **Type:** `array` **Required:** No **Multiple:** Yes
+  **Type:** `string` **Required:** No **Multiple:** Yes
 
 ## Examples
 

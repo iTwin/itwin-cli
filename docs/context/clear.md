@@ -2,6 +2,10 @@
 
 Clear the cached context.
 
+## Options
+
+(No options required for this command)
+
 ## Examples
 
 ```bash
