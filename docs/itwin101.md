@@ -23,7 +23,7 @@ A **digital twin** is more than a design model. It’s a cloud-based, real-time 
 - **📈 Sensor Data**: Live IoT data reflecting asset performance, environmental conditions, and more.
 - **📂 External Repositories**: Additional cloud data sources that enrich the digital twin's context.
 
-What makes a digital twin powerful is the way these sources come together in the cloud to form a *living* version of an asset—one that is not only visual but also interactive and analyzable.
+What makes a digital twin powerful is the way these sources come together in the cloud to form a *living* version of an asset — one that is not only visual but also interactive and analyzable.
 
 ---
 
@@ -88,7 +88,7 @@ Think of the iModel like Git. Multiple designers can work in parallel and synchr
 - 🕓 Inspect previous states
 - ⚖️ Compare two versions to highlight changed elements
 
-Named versions allow you to identify and save key milestones, such as design freezes, review submissions, final approvals, etc.
+Changesets can be tagged as **named versions** that allow you to identify and save key milestones, such as design freezes, review submissions, final approvals, etc.
 
 This not only supports tracking and review but also enables advanced visualization and automation possibilities.
 
