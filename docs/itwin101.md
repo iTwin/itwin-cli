@@ -40,7 +40,7 @@ An **iModel** is a specialized cloud repository for 3D design data. It serves as
 > Have a Revit file for a building? Add it to the iModel.  
 > Got utility designs from MicroStation? Add them too.
 
-The iModel is more than just a storage format—it functions like **Git for infrastructure**. Designers *synchronize* their changes, which are stored as **changesets**. This allows for collaborative workflows, version tracking, and comparison of changes between versions.
+The iModel is more than just a storage format — it functions like **Git for infrastructure**. Designers *synchronize* their changes, which are stored as **changesets**. This allows for collaborative workflows, version tracking, and comparison of changes between versions.
 
 #### 🌎 Reality Data: Contextual Visualization
 
