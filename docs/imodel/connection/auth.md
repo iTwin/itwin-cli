@@ -4,7 +4,7 @@ Ensures the user has a valid token for long-running connection tasks. This must 
 
 ## Options
 
-(No options required for this command)
+(This command does not have any options)
 
 ## Examples
 

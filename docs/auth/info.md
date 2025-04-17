@@ -4,7 +4,7 @@ Display authentication information. This command access current authentication s
 
 ## Options
 
-(No options required for this command)
+(This command does not have any options)
 
 ## Examples
 

@@ -4,7 +4,7 @@ Retrieve information about the currently authenticated user.
 
 ## Options
 
-(No options required for this command)
+(This command does not have any options)
 
 ## Examples
 

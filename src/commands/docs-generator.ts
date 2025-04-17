@@ -87,7 +87,7 @@ export default class DocsGenerator extends BaseCommand {
             returnContent.push(options);
         }
         else {
-            returnContent.push("(No options required for this command)");
+            returnContent.push("(This command does not have any options)");
         }
 
         returnContent.push('## Examples', 
