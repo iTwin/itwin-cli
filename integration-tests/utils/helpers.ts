@@ -117,7 +117,7 @@ export async function getRootFolderId(iTwinId: string): Promise<string> {
  * @returns Invitation link for joining the iTwin.
  */
 export async function fetchEmailsAndGetInvitationLink(inbox: string, iTwinName: string): Promise<string> {
-    await new Promise<void>(resolve => {setTimeout(_ => resolve(), 60 * 1000);});
+    await new Promise<void>(resolve => {setTimeout(_ => resolve(), 45 * 1000);});
 
     expect(process.env.ITP_MAILINATOR_API_KEY).to.not.be.undefined;
 
