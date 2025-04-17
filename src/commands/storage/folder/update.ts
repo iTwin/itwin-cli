@@ -5,9 +5,15 @@
 
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 
 export default class UpdateFolder extends BaseCommand {
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/storage/operations/update-folder/",
+        name: "Update Folder",
+    };
+
     static description = "Update the metadata of a folder in an iTwin's storage, such as its display name or description.";
 
     static examples = [
@@ -17,7 +23,7 @@ export default class UpdateFolder extends BaseCommand {
       },
       {
         command: `<%= config.bin %> <%= command.id %> --folder-id b2c3d4e5-6789-01ab-cdef-2345678901bc --name "Updated Design Files" --description "Folder containing updated design documents"`,
-        description: 'Example 2: Update file description and display name'
+        description: 'Example 2: Update folder display name and description'
       }
     ];
 
@@ -51,5 +57,4 @@ export default class UpdateFolder extends BaseCommand {
   
       return this.logAndReturnResult(response.folder);
     }
-  }
-  
+}

@@ -102,7 +102,7 @@ const tests = () => describe('list', () => {
   });
 
   it('should search for itwins by number', async () => {
-    const result = await runCommand(`itwin list --search ${testITwin1.number!.slice(2, 4)}`);
+    const result = await runCommand(`itwin list --search ${testITwin1.number}`);
     const resultArr: ITwin[] = JSON.parse(result.stdout);
 
     expect(resultArr).to.be.an('array').that.is.not.empty;

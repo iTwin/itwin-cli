@@ -6,8 +6,14 @@
 import { Flags } from '@oclif/core';
 
 import BaseCommand from '../../extensions/base-command.js';
+import { CustomFlags } from '../../extensions/custom-flags.js';
 
 export default class GetRootFolder extends BaseCommand {
+  static apiReference = {
+    link: 'https://developer.bentley.com/apis/storage/operations/get-top-level-folders-and-files-by-project/',
+    name: 'Get Top-Level Folders and Files',
+  };
+
   static description = 'Retrieve the top-level folders and files in an iTwin\'s storage.';
 
 	static examples = [
@@ -18,11 +24,8 @@ export default class GetRootFolder extends BaseCommand {
   ];
 
   static flags = {
-    "itwin-id": Flags.string({
-      char: 'i',
-      description: 'The ID of the iTwin whose top-level folders and files you want to retrieve.',
-      helpValue: '<string>',
-      required: true,
+    "itwin-id": CustomFlags.iTwinIDFlag({
+      description: 'The ID of the iTwin whose top-level folders and files you want to retrieve.'
     }),
     skip: Flags.integer({
       description: 'The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result.',

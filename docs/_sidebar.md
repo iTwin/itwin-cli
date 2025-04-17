@@ -1,6 +1,7 @@
 * [iTwin CLI Manual](/docs/)
 * [iTwin 101](/docs/itwin101.md)
 * [Quickstart](/docs/quickstart.md)
+* [Environment](/docs/environment.md)
 * [Workflows](/docs/workflows/overview.md)
 
 <hr style="margin: 1em 5em 1em 1em; opacity: 0.1;">
@@ -11,6 +12,10 @@
   * [info](/docs/auth/info.md) 
   * [login](/docs/auth/login.md)
   * [logout](/docs/auth/logout.md)
+* [context](/docs/context/overview.md)
+  * [set](/docs/context/set.md)
+  * [clear](/docs/context/clear.md)
+  * [info](/docs/context/info.md)
 * [api](/docs/api.md)
 * [itwin](/docs/itwin/overview.md)
   * [create](/docs/itwin/create.md)

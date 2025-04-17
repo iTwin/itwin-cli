@@ -5,9 +5,16 @@
 
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
+import { CustomFlags } from "../../../extensions/custom-flags.js";
 
 export default class UpdateRole extends BaseCommand {
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/access-control-v2/operations/update-itwin-role/",
+        name: "Update iTwin Role",
+    };
+
     static description = 'Update the details of an existing role in an iTwin.';
 
     static examples = [
@@ -28,11 +35,8 @@ export default class UpdateRole extends BaseCommand {
         helpValue: '<string>',
         required: false,
       }),
-      "itwin-id": Flags.string({
-        char: 'i',
-        description: 'The ID of the iTwin where the role exists.',
-        helpValue: '<string>',
-        required: true,
+      "itwin-id": CustomFlags.iTwinIDFlag({
+        description: 'The ID of the iTwin where the role exists.'
       }),
       name: Flags.string({
         char: 'n',
@@ -67,4 +71,3 @@ export default class UpdateRole extends BaseCommand {
       return this.logAndReturnResult(response.role);
     }
   }
-  

@@ -6,9 +6,16 @@
 import { Changeset, ChangesetOrderByProperty, OrderBy, OrderByOperator, take, toArray } from "@itwin/imodels-client-management";
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
+import { CustomFlags } from "../../../extensions/custom-flags.js";
 
 export default class ListChangesets extends BaseCommand {
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/imodels-v2/operations/get-imodel-changesets/",
+        name: "List Changesets",
+    };
+
     static description = 'List all changesets for a specific iModel.';
 
     static examples = [
@@ -36,11 +43,8 @@ export default class ListChangesets extends BaseCommand {
         helpValue: '<integer>',
         required: false,
       }),
-      "imodel-id": Flags.string({
-        char: 'm',
-        description: 'The ID of the iModel whose changesets you want to list.',
-        helpValue: '<string>',
-        required: true,
+      "imodel-id": CustomFlags.iModelIDFlag({
+        description: 'The ID of the iModel whose changesets you want to list.'
       }),
       "last-index": Flags.integer({
         description: 'List changesets up to a specific index (inclusive).',
@@ -95,4 +99,3 @@ export default class ListChangesets extends BaseCommand {
       return this.logAndReturnResult(result);
     }
   }
-  

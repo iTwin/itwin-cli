@@ -5,9 +5,16 @@
 
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
+import { CustomFlags } from "../../../extensions/custom-flags.js";
 
 export default class ChangesetInfo extends BaseCommand {
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/imodels-v2/operations/get-imodel-changeset-details/",
+        name: "Get Changeset Details",
+    };
+
     static description = 'Retrieve details about a specific changeset of an iModel.';
 
     static examples = [
@@ -23,11 +30,8 @@ export default class ChangesetInfo extends BaseCommand {
         helpValue: '<string>',
         required: true,
       }),
-      "imodel-id": Flags.string({
-        char: 'm',
-        description: 'The ID of the iModel whose changeset you want to retrieve.',
-        helpValue: '<string>',
-        required: true,
+      "imodel-id": CustomFlags.iModelIDFlag({
+        description: 'The ID of the iModel whose changeset you want to retrieve.'
       }),
     };
   
@@ -46,4 +50,3 @@ export default class ChangesetInfo extends BaseCommand {
       return this.logAndReturnResult(changesetInfo);
     }
   }
-  

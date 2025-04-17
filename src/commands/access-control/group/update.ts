@@ -5,9 +5,16 @@
 
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
+import { CustomFlags } from "../../../extensions/custom-flags.js";
 
 export default class UpdateAccessControlGroup extends BaseCommand {
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/access-control-v2/operations/update-itwin-group/",
+        name: "Update iTwin Group",
+    };
+
     static description = 'Update the details of an existing group in an iTwin.';
   
     static examples = [
@@ -38,11 +45,8 @@ export default class UpdateAccessControlGroup extends BaseCommand {
         helpValue: '<string>',
         multiple: true,
       }),
-      "itwin-id": Flags.string({
-        char: 'i',
-        description: 'The ID of the iTwin where the group exists.',
-        helpValue: '<string>',
-        required: true,
+      "itwin-id": CustomFlags.iTwinIDFlag({
+        description: 'The ID of the iTwin where the group exists.'
       }),
       member: Flags.string({
         description: 'A list of members (emails) to be assigned to the group.',

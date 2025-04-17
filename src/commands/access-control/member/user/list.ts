@@ -3,12 +3,17 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { Flags } from "@oclif/core";
-
+import { apiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
+import { CustomFlags } from "../../../../extensions/custom-flags.js";
 
 export default class ListUserMembers extends BaseCommand {
-    static description = 'Retrieve details about a specific user member in an iTwin.';
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/access-control-v2/operations/get-itwin-user-members/",
+        name: "Get iTwin User Members",
+    };
+
+    static description = 'List all user members of an iTwin.';
 
     static examples = [
       {
@@ -18,11 +23,8 @@ export default class ListUserMembers extends BaseCommand {
     ];
 
     static flags = {
-      "itwin-id": Flags.string({
-        char: 'i',
-        description: 'The ID of the iTwin whose user members you want to list.',
-        helpValue: '<string>',
-        required: true,
+      "itwin-id": CustomFlags.iTwinIDFlag({
+        description: 'The ID of the iTwin whose user members you want to list.'
       }),
     };
   
@@ -36,4 +38,3 @@ export default class ListUserMembers extends BaseCommand {
       return this.logAndReturnResult(result.members);
     }
   }
-  

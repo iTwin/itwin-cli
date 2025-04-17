@@ -6,15 +6,18 @@
 import { Authorization, AuthorizationCallback, IModelsClient } from '@itwin/imodels-client-management';
 import { ITwinsAccessClient } from '@itwin/itwins-client';
 import { Command, Flags } from '@oclif/core';
+import { Input, ParserOutput } from '@oclif/core/interfaces';
 import { Table } from 'console-table-printer';
 import 'dotenv/config';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 
+import { ArgOutput, FlagOutput } from '../../node_modules/@oclif/core/lib/interfaces/parser.js';
 import { AccessControlClient } from '../services/access-control-client/access-control-client.js';
 import { AccessControlMemberClient } from '../services/access-control-client/access-control-member-client.js';
 import { AuthorizationClient } from '../services/authorization-client/authorization-client.js';
 import { ChangedElementsApiClient } from '../services/changed-elements-client/changed-elements-api-client.js';
+import { UserContext } from '../services/general-models/user-context.js';
 import { ITwinPlatformApiClient } from '../services/iTwin-api-client.js';
 import { StorageApiClient } from '../services/storage-client/storage-api-client.js';
 import { SynchronizationApiClient } from '../services/synchronizationClient/synchronization-api-client.js';
@@ -44,6 +47,15 @@ export default abstract class BaseCommand extends Command {
   }
 
   static enableJsonFlag = true;
+
+  protected async clearContext() {
+    const contextPath = this.config.cacheDir + '/context.json';
+    if (fs.existsSync(contextPath)) {
+      fs.rmSync(contextPath, { force: true });
+    }
+    
+    this.debug(`Cleared context file: ${contextPath}`);
+  }
 
   protected async getAccessControlApiClient() {
     const token = await this.getAccessToken();
@@ -87,7 +99,6 @@ export default abstract class BaseCommand extends Command {
     return config?.apiUrl ?? 'https://api.bentley.com';
   }
 
-
   protected async getChangeElementApiClient() {
     return new ChangedElementsApiClient(await this.getITwinApiClient());
   }
@@ -127,6 +138,27 @@ export default abstract class BaseCommand extends Command {
     return config;
   }
 
+  protected getContext() : UserContext | undefined {
+    const contextPath = this.config.cacheDir + '/context.json';
+    if (!fs.existsSync(contextPath)) {
+      return;
+    }
+
+    try {
+      const contextFile = fs.readFileSync(contextPath, 'utf8');
+      const context = JSON.parse(contextFile) as UserContext;
+      
+      if(!context.iModelId && !context.iTwinId) {
+        return undefined;
+      }
+
+      return context;
+    }
+    catch (error) {
+      this.debug("Error parsing context file:", error);
+    }
+  }
+
   protected getIModelClient() : IModelsClient {
     const baseUrl = `${this.getBaseApiUrl()}/imodels`;
 
@@ -135,6 +167,12 @@ export default abstract class BaseCommand extends Command {
         baseUrl
       }
     });
+  }
+
+  protected getIModelId() : string | undefined {
+    const context = this.getContext();
+
+    return context?.iModelId;
   }
 
   protected getITwinAccessClient(): ITwinsAccessClient {
@@ -146,6 +184,12 @@ export default abstract class BaseCommand extends Command {
     const token = await this.getAccessToken();
     
     return new ITwinPlatformApiClient(this.getBaseApiUrl(), token);
+  }
+
+  protected getITwinId() : string | undefined {
+    const context = this.getContext();
+
+    return context?.iTwinId;
   }
 
   protected async getStorageApiClient() {
@@ -193,8 +237,48 @@ export default abstract class BaseCommand extends Command {
       }
   }
 
+  protected override async parse<F extends FlagOutput, B extends FlagOutput, A extends ArgOutput>(
+    options?: Input<F, B, A>,
+    argv?: string[]
+  ): Promise<ParserOutput<F, B, A>> {
+    if(options?.flags) {
+      const context = this.getContext();
+      
+      if (options.flags['itwin-id'] && !this.argv.includes('--itwin-id') && !this.argv.includes('-i') && context?.iTwinId) {
+        this.argv.push('--itwin-id', context.iTwinId);
+      }
+      
+      if (options.flags['imodel-id'] && !this.argv.includes('--imodel-id') && !this.argv.includes('-m') && context?.iModelId) {
+        this.argv.push('--imodel-id', context.iModelId);
+      }
+    }
+    
+    const parsed = await super.parse(options, argv);
+    
+    return parsed;
+  }
+
   protected async runCommand<T>(command: string, args: string[]) : Promise<T> {
     const mergedArgs = [...args, '--silent'];
     return this.config.runCommand<T>(command, mergedArgs);
+  }
+
+  protected async setContext(iTwinId: string, iModelId?: string) {
+    const contextPath = this.config.cacheDir + '/context.json';
+    
+    const context: UserContext = {
+      iModelId,
+      iTwinId
+    };
+
+    if (!fs.existsSync(this.config.cacheDir)) {
+      fs.mkdirSync(this.config.cacheDir, { recursive: true });
+    }
+
+    fs.writeFileSync(contextPath, JSON.stringify(context, null, 2), 'utf8');
+
+    this.log(`Context set to iTwinId: ${iTwinId}, iModelId: ${iModelId}`);
+
+    return context;
   }
 }

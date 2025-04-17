@@ -1,14 +1,14 @@
 # iTwin 101
 
-**A developer-friendly introduction to Bentley's iTwin Platform.**
+**A friendly introduction to Bentley's iTwin Platform.**
 
 The infrastructure industry has undergone a major shift — from static design files to **cloud-connected systems** that reflect how assets behave in real time.
 
-This shift is driven by the rise of **digital twins**: living models that combine infrastructure design with data from numerous cloud sources for a complete view of the asset. For example, a dam reporting structural health and energy output, or a smart building tracking occupancy, lighting, and air quality. It’s no longer just about designing — it’s about how an asset lives and performs in the real world.
+This shift is driven by the rise of **digital twins**: living models that combine infrastructure data to numerous cloud sources for a complete view of the asset. For example, a dam reporting structural health and energy output, or a smart building tracking occupancy, lighting, and air quality. It’s no longer just about designing infrastructure — it’s about how an asset lives and performs in the real world.
 
-**Bentley Systems**, a long-standing leader in infrastructure software, created the **iTwin Platform** to support this evolution. While desktop tools like **MicroStation** and **AutoCAD** have supported infrastructure design for decades, the iTwin Platform brings this data into the cloud — where teams can visualize entire assets, integrate live data, and build connected solutions across industries.
+**Bentley Systems**, a long-standing leader in infrastructure software, created the **iTwin Platform** to support this evolution. While desktop tools like **MicroStation** and **AutoCAD** have supported infrastructure design for decades, the iTwin Platform brings infrastructure data into the cloud — where teams can visualize entire assets, integrate live data, and build connected solutions across industries.
 
-Following Bentley’s acquisition of **Cesium**, high-performance 3D geospatial visualization is now a built-in part of the iTwin ecosystem. **Cesium** is an open platform for streaming large-scale 3D data, and its developer sandbox, **Sandcastle**, makes it easy to prototype and interact with infrastructure in a global context.
+Following Bentley’s acquisition of **Cesium**, high-performance 3D geo-spatial visualization is now a built-in part of the iTwin ecosystem. **Cesium** is an open platform for streaming large-scale 3D data, and its developer sandbox, **Sandcastle**, makes it easy to prototype and interact with infrastructure in a global context.
 
 The **iTwin CLI** ties it all together — letting you manage iTwins, bring design data into the cloud, and visualize your models in Cesium Sandcastle — all from the command line.
 
@@ -29,7 +29,7 @@ What makes a digital twin powerful is the way these sources come together in the
 
 ### 🪧 Enter the iTwin
 
-The **iTwin** is Bentley’s implementation of a digital twin—a central hub that brings together all the data related to an infrastructure asset. It's built to be open, extensible, and deeply interoperable.
+The **iTwin** is Bentley’s implementation of a digital twin — a central hub that brings together all the data related to an infrastructure asset into the cloud. It's built to be open, extensible, and deeply interoperable.
 
 At its core, an iTwin includes several key components:
 
@@ -127,7 +127,7 @@ Design data becomes globally interactive. Combined with reality meshes and IoT d
 
 The iTwin CLI makes it easy to build, manage, and explore digital twins using the iTwin Platform. For anyone interested in geospatial technology and digital twin workflows, it opens a new path to work with infrastructure data at scale, integrate diverse data sources, and publish them to a geospatially rich, interactive viewer.
 
-Whether you’re just exploring or already building, the iTwin CLI is your entry point into a next-generation platform for digital infrastructure.
+Whether you’re just exploring or already building, the iTwin CLI is your entry point into the next-generation platform for the infrastructure digital twin.
 
 ---
 

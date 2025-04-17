@@ -5,9 +5,15 @@
 
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 
 export default class UpdateCommand extends BaseCommand {
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/storage/operations/update-file/",
+        name: "Update File",
+    };
+
     static description = "Update the metadata of a file in an iTwin's storage, such as display name or description.";
 
     static examples = [
@@ -49,4 +55,3 @@ export default class UpdateCommand extends BaseCommand {
       return this.logAndReturnResult(response.file);
     }
   }
-  

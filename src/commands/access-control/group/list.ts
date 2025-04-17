@@ -3,11 +3,16 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { Flags } from "@oclif/core";
-
+import { apiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
+import { CustomFlags } from "../../../extensions/custom-flags.js";
 
 export default class ListAccessControlGroups extends BaseCommand {
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/access-control-v2/operations/get-itwin-groups/",
+        name: "Get iTwin Groups",
+    };
+
     static description = 'List all groups for a specific iTwin.';
 
     static examples = [
@@ -18,11 +23,8 @@ export default class ListAccessControlGroups extends BaseCommand {
     ];
 
     static flags = {
-      "itwin-id": Flags.string({
-        char: 'i',
-        description: 'The ID of the iTwin whose groups you want to list.',
-        helpValue: '<string>',
-        required: true,
+      "itwin-id": CustomFlags.iTwinIDFlag({
+        description: 'The ID of the iTwin whose groups you want to list.'
       }),
     };
   

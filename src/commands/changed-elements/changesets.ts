@@ -5,9 +5,16 @@
 
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
+import { CustomFlags } from "../../extensions/custom-flags.js";
 
 export default class GetChangesetStatus extends BaseCommand {
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/changed-elements/operations/get-changesets/",
+        name: "Get Changeset Status",
+    };
+
     static description = 'Get the processing status of changesets in an iModel to see which are ready for comparison.';
 
     static examples = [
@@ -26,25 +33,19 @@ export default class GetChangesetStatus extends BaseCommand {
     ];
 
     static flags = {
-      "imodel-id": Flags.string({ 
-        char: 'm', 
-        description: 'The ID of the iModel.', 
-        helpValue: '<string>',
-        required: true 
+      "imodel-id": CustomFlags.iModelIDFlag({
+        description: 'The ID of the iModel.'
       }),
-      "itwin-id": Flags.string({ 
-        char: 'i', 
-        description: 'The ID of the iTwin.', 
-        helpValue: '<string>',
-        required: true 
+      "itwin-id": CustomFlags.iTwinIDFlag({
+        description: 'The ID of the iTwin.' 
       }),
       skip: Flags.integer({ 
         description: 'Skip a number of changesets in the result.',
-        helpValue: '<string>'
+        helpValue: '<integer>'
       }),
       top: Flags.integer({ 
         description: 'Limit the number of changesets returned.',
-        helpValue: '<string>'
+        helpValue: '<integer>'
       }),
     };
   
@@ -57,4 +58,3 @@ export default class GetChangesetStatus extends BaseCommand {
       return this.logAndReturnResult(result.changesetStatus);
     }
   }
-  

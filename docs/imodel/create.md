@@ -30,6 +30,10 @@ Create an empty iModel within a specified iTwin.
     - **`latitude`**: `number`  
     - **`longitude`**: `number`
 
+- **`--save`**
+  Save the iTwin id to the [context](./../environment.md).  
+  **Type:** `flag` **Required:** No
+
 ## Examples
 
 ```bash

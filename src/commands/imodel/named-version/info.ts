@@ -5,9 +5,16 @@
 
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
+import { CustomFlags } from "../../../extensions/custom-flags.js";
 
 export default class NamedVersionInfo extends BaseCommand {
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/imodels-v2/operations/get-imodel-named-version-details/",
+        name: "Get Named Version Details",
+    };
+
     static description = 'Retrieve details about a specific named version in an iModel.';
 
     static examples = [
@@ -18,11 +25,8 @@ export default class NamedVersionInfo extends BaseCommand {
     ];
 
     static flags = {
-      "imodel-id": Flags.string({
-        char: 'm',
-        description: 'The ID of the iModel whose named version you want to retrieve.',
-        helpValue: '<string>',
-        required: true,
+      "imodel-id": CustomFlags.iModelIDFlag({
+        description: 'The ID of the iModel whose named version you want to retrieve.'
       }),
       "named-version-id": Flags.string({
         description: 'The ID of the named version.',
@@ -46,4 +50,3 @@ export default class NamedVersionInfo extends BaseCommand {
       return this.logAndReturnResult(namedVersionInfo);
     }
   }
-  

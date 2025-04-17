@@ -5,10 +5,16 @@
 
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 
 export default class ConnectionInfo extends BaseCommand {
-    static description = 'Get connector info.';
+    static apiReference : apiReference = {
+      link: "https://developer.bentley.com/apis/synchronization/operations/get-storage-connection/",
+      name: "Get Storage Connection",
+    };
+
+    static description = 'Retrieve details about a specific storage connection of an iModel.';
 
     static examples = [
       {
@@ -20,7 +26,7 @@ export default class ConnectionInfo extends BaseCommand {
     static flags = {
       "connection-id": Flags.string({ 
         char: 'c', 
-        description: 'The id of the connection.', 
+        description: 'The ID of the storage connection to retrieve.', 
         helpValue: '<string>',
         required: true 
       }),

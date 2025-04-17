@@ -5,9 +5,16 @@
 
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
+import { CustomFlags } from "../../../extensions/custom-flags.js";
 
 export default class DeleteAccessControlGroup extends BaseCommand {
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/access-control-v2/operations/delete-itwin-group/",
+        name: "Delete iTwin Group",
+    };
+
     static description = 'Delete an existing group from an iTwin.';
 
     static examples = [
@@ -24,11 +31,8 @@ export default class DeleteAccessControlGroup extends BaseCommand {
         helpValue: '<string>',
         required: true,
       }),
-      "itwin-id": Flags.string({
-        char: 'i',
+      "itwin-id": CustomFlags.iTwinIDFlag({
         description: 'The ID of the iTwin where the group exists.',
-        helpValue: '<string>',
-        required: true,
       }),
     };
   

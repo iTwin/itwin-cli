@@ -5,9 +5,16 @@
 
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
+import { CustomFlags } from "../../../extensions/custom-flags.js";
 
 export default class ListRepositories extends BaseCommand {
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/itwins/operations/get-repositories-by-itwin-id/",
+        name: "List Repositories",
+    };
+
     static description = 'Retrieve a list of repositories for a specified iTwin.';
 
     static examples = [
@@ -32,14 +39,11 @@ export default class ListRepositories extends BaseCommand {
         options: ["iModels", "RealityData", "Storage", "Forms", "Issues", "SensorData", "GeographicInformationSystem", "Construction", "Subsurface"],
         required: false
       }),
-      "itwin-id": Flags.string({
-        char: 'i',
-        description: 'The ID of the iTwin whose repositories should be retrieved.',
-        helpValue: '<string>',
-        required: true,
+      "itwin-id": CustomFlags.iTwinIDFlag({
+        description: 'The ID of the iTwin whose repositories should be retrieved.'
       }),
       "sub-class": Flags.string({
-        description: 'Specify a subClass of repositories. Only applicable for GeographicInformationSystem class.',
+        description: 'Specify a subClass of repositories. Only applicable for **`GeographicInformationSystem`** class. ',
         helpValue: '<string>',
         options: ["WebMapService", "WebMapTileService", "MapServer"],
         required: false
@@ -65,4 +69,3 @@ export default class ListRepositories extends BaseCommand {
       return this.logAndReturnResult(response.data);
     }
   }
-  

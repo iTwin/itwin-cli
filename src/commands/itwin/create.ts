@@ -6,10 +6,18 @@
 import { ITwin, ITwinClass, ITwinSubClass } from "@itwin/itwins-client";
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
 
 export default class CreateITwin extends BaseCommand {
-    static description = 'Create an iTwin';
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/itwins/operations/create-itwin/",
+        name: "Create iTwin",
+    };
+
+    static customDocs = true;
+
+    static description = 'Create a new iTwin with specified properties.';
 
     static examples = [
       {
@@ -65,6 +73,10 @@ export default class CreateITwin extends BaseCommand {
         helpValue: '<string>',
         required: false,
       }),
+      save: Flags.boolean({
+        description: 'Save the iTwin id to the context.',
+        required: false,
+      }),
       status: Flags.string({
         description: 'Status of the iTwin. Defaults to Active.',
         helpValue: '<string>',
@@ -108,8 +120,16 @@ export default class CreateITwin extends BaseCommand {
       {
         this.error(JSON.stringify(creatediTwin.error, null, 2));
       }
+
+      if (flags.save) {
+        if(creatediTwin.data?.id === undefined){
+          this.log("iTwin Id not found in response. Cannot save to context.");
+        }
+        else {
+          this.setContext(creatediTwin.data.id);
+        }
+      }
   
       return this.logAndReturnResult(creatediTwin.data);
     }
   }
-  

@@ -3,12 +3,17 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { Flags } from "@oclif/core";
-
+import { apiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
+import { CustomFlags } from "../../extensions/custom-flags.js";
 
 export class IModelInfo extends BaseCommand {
-  static description = 'Retrieve metadata for the specified Model';
+  static apiReference : apiReference = {
+    link: "https://developer.bentley.com/apis/imodels-v2/operations/get-imodel-details/",
+    name: "Get iModel Details",
+  };
+
+  static description = 'Retrieve metadata of an iModel.';
 
 	static examples = [
     {
@@ -18,11 +23,8 @@ export class IModelInfo extends BaseCommand {
   ];
 
   static flags = {
-    "imodel-id": Flags.string({
-      char: 'm', 
-      description: 'The ID of the iModel to retrieve information for.', 
-      helpValue: '<string>',
-      required: true 
+    "imodel-id": CustomFlags.iModelIDFlag({
+      description: 'The ID of the iModel to retrieve information for.'
     }),
   };
 

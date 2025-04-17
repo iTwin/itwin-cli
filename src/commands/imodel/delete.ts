@@ -3,11 +3,16 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { Flags } from "@oclif/core";
-
+import { apiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
+import { CustomFlags } from "../../extensions/custom-flags.js";
 
 export default class DeleteIModel extends BaseCommand {
+  static apiReference : apiReference = {
+    link: "https://developer.bentley.com/apis/imodels-v2/operations/delete-imodel/",
+    name: "Delete iModel",
+  };
+
   static description = 'Delete an existing iModel.';
 
 	static examples = [
@@ -18,11 +23,8 @@ export default class DeleteIModel extends BaseCommand {
   ];
 
   static flags = {
-    "imodel-id": Flags.string({
-      char: 'm',
-      description: 'The ID of the iModel to delete.',
-      helpValue: '<string>',
-      required: true,
+    "imodel-id": CustomFlags.iModelIDFlag({
+      description: 'The ID of the iModel to delete.'
     }),
   };
 

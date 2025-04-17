@@ -5,9 +5,16 @@
 
 import { Flags } from "@oclif/core";
 
+import { apiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
+import { CustomFlags } from "../../../../extensions/custom-flags.js";
 
 export default class DeleteOwner extends BaseCommand {
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/access-control-v2/operations/remove-itwin-owner-member/",
+        name: "Remove iTwin Owner",
+    };
+
     static description = 'Remove an owner from an iTwin by their member ID.';
 
     static examples = [
@@ -18,11 +25,8 @@ export default class DeleteOwner extends BaseCommand {
     ];
 
     static flags = {
-      "itwin-id": Flags.string({
-        char: 'i',
-        description: 'The ID of the iTwin from which the owner will be removed.',
-        helpValue: '<string>',
-        required: true,
+      "itwin-id": CustomFlags.iTwinIDFlag({
+        description: 'The ID of the iTwin from which the owner will be removed.'
       }),
       "member-id": Flags.string({
         description: 'The ID of the owner to be removed.',
@@ -41,4 +45,3 @@ export default class DeleteOwner extends BaseCommand {
       return this.logAndReturnResult({ result: 'deleted' });
     }
   }
-  
