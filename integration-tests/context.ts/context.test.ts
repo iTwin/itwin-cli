@@ -3,7 +3,7 @@ import { ITwin } from "@itwin/itwins-client";
 import { runCommand } from "@oclif/test";
 import { expect } from "chai";
 
-import { loginToCli } from "../utils/helpers";
+import { serviceLoginToCli } from "../utils/helpers";
 
 describe('Context Integration Tests', () => {
     let iTwin: ITwin;
@@ -11,7 +11,7 @@ describe('Context Integration Tests', () => {
     let anotherITwin: ITwin;
     
     before(async () => {
-      await loginToCli();
+      await serviceLoginToCli();
       const name = `IntegrationTestITwin_${new Date().toISOString()}`;
       const iTwinResult = await runCommand<ITwin>(`itwin create --name "${name}" --class Thing --sub-class Asset`);
       expect(iTwinResult.error).to.be.undefined;

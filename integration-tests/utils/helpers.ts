@@ -5,16 +5,20 @@
 
 import { IModel } from "@itwin/imodels-client-management"
 import { ITwin } from "@itwin/itwins-client";
+import { TestBrowserAuthorizationClientConfiguration, TestUserCredentials, getTestAccessToken } from "@itwin/oidc-signin-tool";
 import { runCommand } from "@oclif/test";
 import { expect } from "chai";
+import * as dotenv from 'dotenv';
 import { GetInboxRequest, GetMessageRequest, MailinatorClient } from 'mailinator-client'
+import fs from "node:fs"
+import os from 'node:os'
 
 import { fileTyped } from "../../src/services/storage-client/models/file-typed.js";
 import { fileUpload } from "../../src/services/storage-client/models/file-upload.js";
 import { folderTyped } from "../../src/services/storage-client/models/folder-typed.js";
 import { itemsWithFolderLink } from "../../src/services/storage-client/models/items-with-folder-link.js";
 
-export async function loginToCli() {
+export async function serviceLoginToCli() {
     const result = await runCommand('auth login');
     expect(result.stdout).to.contain('User successfully logged in using Service login');
 }
@@ -113,7 +117,7 @@ export async function getRootFolderId(iTwinId: string): Promise<string> {
  * @returns Invitation link for joining the iTwin.
  */
 export async function fetchEmailsAndGetInvitationLink(inbox: string, iTwinName: string): Promise<string> {
-    await new Promise<void>(resolve => {setTimeout(_ => resolve(), 30 * 1000);});
+    await new Promise<void>(resolve => {setTimeout(_ => resolve(), 60 * 1000);});
 
     expect(process.env.ITP_MAILINATOR_API_KEY).to.not.be.undefined;
 
@@ -126,7 +130,7 @@ export async function fetchEmailsAndGetInvitationLink(inbox: string, iTwinName: 
             continue;
         
         // eslint-disable-next-line no-await-in-loop
-        const messageResponse = await client.request(new GetMessageRequest("private", inboxResponse.result!.msgs[0].id ));
+        const messageResponse = await client.request(new GetMessageRequest("private", inboxResponse.result!.msgs[i].id ));
         expect(messageResponse.result).to.not.be.null;
         const messageBody = messageResponse.result!.parts[0].body;
         if (!messageBody.includes(iTwinName))
@@ -140,4 +144,79 @@ export async function fetchEmailsAndGetInvitationLink(inbox: string, iTwinName: 
     }
 
     throw new Error("Email was not found in inbox.")
+}
+
+export async function nativeLoginToCli() {
+    if(isNativeAuthAccessTokenCached())
+        return;
+
+    const authTokenObject = {
+        authToken: await getNativeAuthAccessToken(),
+        authenticationType: "Interactive",
+        expirationDate: new Date(Date.now() + 1000 * 60 * 59),
+        manuallyWritten: true
+    }
+    
+    fs.writeFileSync(getTokenPathByOS(), JSON.stringify(authTokenObject), 'utf8');
+}
+
+export function nativeLogoutFromCli() {
+    if(isNativeAuthAccessTokenCached()) {
+        fs.rmSync(getTokenPathByOS());
+    }
+}
+
+const getNativeAuthAccessToken = async (): Promise<string> => {
+    dotenv.config({path: '.env'});
+    expect(process.env.ITP_NATIVE_TEST_CLIENT_ID).to.not.be.undefined;
+    expect(process.env.ITP_ISSUER_URL).to.not.be.undefined;
+    const config: TestBrowserAuthorizationClientConfiguration = {
+        authority: process.env.ITP_ISSUER_URL!,
+        clientId: process.env.ITP_NATIVE_TEST_CLIENT_ID!,
+        redirectUri: "http://localhost:3301/signin-callback",
+        scope: "itwin-platform",
+    }
+
+    expect(process.env.ITP_TEST_USER_EMAIL).to.not.be.undefined;
+    expect(process.env.ITP_TEST_USER_PASSWORD).to.not.be.undefined;
+    const user: TestUserCredentials = {
+        email: process.env.ITP_TEST_USER_EMAIL!,
+        password: process.env.ITP_TEST_USER_PASSWORD!
+    }
+
+    const accessToken = await getTestAccessToken(config, user);
+    expect(accessToken).to.not.be.undefined;
+    return accessToken!;
+} 
+
+const isNativeAuthAccessTokenCached = ():boolean => {
+    const tokenPath = getTokenPathByOS();
+    if(fs.existsSync(tokenPath)) {
+        const tokenJson = fs.readFileSync(tokenPath, 'utf8');
+        const tokenObj = JSON.parse(tokenJson);
+        if (tokenObj.manuallyWritten !== undefined && new Date(tokenObj.expirationDate).getTime() > Date.now())
+            return true;
+    }
+
+    return false;
+}
+
+const getTokenPathByOS = () => {
+    switch (os.type()) {
+        case 'Darwin': {
+            return "~/Library/Caches/itp/token.json"
+        }
+
+        case 'Linux': {
+            return "~/.config/itp/token.json"
+        }
+        
+        case 'Windows_NT': {
+            return `${process.env.LOCALAPPDATA}/itp/token.json`
+        }
+
+        default: {
+            throw new Error("Unknown OS");
+        }
+    }
 }

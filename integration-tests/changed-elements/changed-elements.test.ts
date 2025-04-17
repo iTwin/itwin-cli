@@ -3,13 +3,13 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { loginToCli } from "../utils/helpers";
+import { serviceLoginToCli } from "../utils/helpers";
 import changesetsComparisonTests from "./changesets-comparison";
 import enableDisableInfoTests from "./enable-disable-info";
 
 describe('Changed Elements Integration Tests', () => {
   beforeEach(async () => {
-    await loginToCli();
+    await serviceLoginToCli();
   });
 
   enableDisableInfoTests();

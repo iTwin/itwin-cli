@@ -3,17 +3,9 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { serviceLoginToCli } from "../utils/helpers";
-import infoTests from "./info";
-import meTests from "./me"
-import searchTests from "./search";
+import memberTests from './member/member.test'
 
-describe('User Integration Tests', () => {
-  beforeEach(async () => {
-    await serviceLoginToCli();
-  });
-
-  infoTests();
-  meTests();
-  searchTests();
+export default () => describe('access-control', () => {
+    memberTests();
 });
+

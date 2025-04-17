@@ -25,6 +25,7 @@
     "pako": "^2.1.0"
   },
   "devDependencies": {
+    "@itwin/oidc-signin-tool": "^4.4.1",
     "@oclif/prettier-config": "^0.2.1",
     "@oclif/test": "^4",
     "@types/chai": "^4",
