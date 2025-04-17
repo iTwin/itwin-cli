@@ -51,6 +51,10 @@ Create a new iTwin with specified properties.
   Optional parent iTwin Id. Defaults to user's Account iTwin.  
   **Type:** `string` **Required:** No
 
+- **`--save`**
+  Save the iTwin id to the [context](./../environment.md).  
+  **Type:** `flag` **Required:** No
+
 ## Examples
 
 ```bash

@@ -73,6 +73,10 @@ export default class CreateITwin extends BaseCommand {
         helpValue: '<string>',
         required: false,
       }),
+      save: Flags.boolean({
+        description: 'Save the iTwin id to the context.',
+        required: false,
+      }),
       status: Flags.string({
         description: 'Status of the iTwin. Defaults to Active.',
         helpValue: '<string>',
@@ -115,6 +119,15 @@ export default class CreateITwin extends BaseCommand {
       if(creatediTwin.error)
       {
         this.error(JSON.stringify(creatediTwin.error, null, 2));
+      }
+
+      if (flags.save) {
+        if(creatediTwin.data?.id === undefined){
+          this.log("iTwin Id not found in response. Cannot save to context.");
+        }
+        else {
+          this.setContext(creatediTwin.data.id);
+        }
       }
   
       return this.logAndReturnResult(creatediTwin.data);
