@@ -52,6 +52,10 @@ export default class CreateIModel extends BaseCommand {
         helpValue: '<string>',
         required: true,
       }),
+      save: Flags.boolean({
+        description: 'Save the iModel id to the context.',
+        required: false,
+      }),
     };
   
     async run() {
@@ -71,7 +75,9 @@ export default class CreateIModel extends BaseCommand {
           name: flags.name,
         },
       });
-  
+
+      this.setContext(iModel.iTwinId, iModel.id);
+        
       return this.logAndReturnResult(iModel);
     }
   }

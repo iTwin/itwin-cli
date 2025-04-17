@@ -263,7 +263,7 @@ export default abstract class BaseCommand extends Command {
     return this.config.runCommand<T>(command, mergedArgs);
   }
 
-  protected async setContext(iTwinId: string, iModelId: string | undefined) {
+  protected async setContext(iTwinId: string, iModelId?: string) {
     const contextPath = this.config.cacheDir + '/context.json';
     
     const context: UserContext = {
@@ -276,6 +276,8 @@ export default abstract class BaseCommand extends Command {
     }
 
     fs.writeFileSync(contextPath, JSON.stringify(context, null, 2), 'utf8');
+
+    this.log(`Context set to iTwinId: ${iTwinId}, iModelId: ${iModelId}`);
 
     return context;
   }
