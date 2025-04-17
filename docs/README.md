@@ -23,7 +23,7 @@ Whether you're a first-time user or an experienced developer, this CLI provides 
 Getting started with the iTwin CLI is quick and easy. Here's how to install it on your system:
 
 1. **Download the Installer**  
-   Head over to the [iTwin CLI Releases](https://github.com/itwin/itwin-cli/releases) page and grab the latest version for your operating system.
+   Head over to the [iTwin CLI Releases](https://github.com/iTwin/itwin-cli/releases/latest) page and grab the latest version for your operating system.
 
 2. **Run the Installer**  
    The installation process varies depending on your system:
