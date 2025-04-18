@@ -38,7 +38,7 @@ jobs:
         run: npm run build
 
       - name: Run docs-generator
-        run: bin/run.js docs-generator
+        run: ./bin/run.js docs-generator
 
       - name: Check for documentation changes
         run: |
