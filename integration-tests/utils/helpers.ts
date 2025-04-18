@@ -196,6 +196,7 @@ const isNativeAuthAccessTokenCached = ():boolean => {
         const tokenObj = JSON.parse(tokenJson);
         if (tokenObj.manuallyWritten !== undefined && new Date(tokenObj.expirationDate).getTime() > Date.now())
             return true;
+        fs.rmSync(tokenPath);
     }
 
     return false;
@@ -209,8 +210,7 @@ const getTokenPathByOS = () => {
 
         case 'Linux': {
             const configDir = `${os.homedir()}/.config/itp`
-            if(!fs.existsSync(configDir))
-                fs.mkdir(configDir, () => {})
+            expect(fs.existsSync(configDir),"Config dir exists").to.be.true;
             return `${configDir}/token.json`
         }
         
