@@ -8,7 +8,7 @@ import { ITwin } from "@itwin/itwins-client";
 import { TestBrowserAuthorizationClientConfiguration, TestUserCredentials, getTestAccessToken } from "@itwin/oidc-signin-tool";
 import { runCommand } from "@oclif/test";
 import { expect } from "chai";
-// import * as dotenv from 'dotenv';
+import * as dotenv from 'dotenv';
 import { GetInboxRequest, GetMessageRequest, MailinatorClient } from 'mailinator-client'
 import fs from "node:fs"
 import os from 'node:os'
@@ -167,8 +167,9 @@ export function nativeLogoutFromCli() {
 }
 
 const getNativeAuthAccessToken = async (): Promise<string> => {
-    // dotenv.config({path: '.env'});
+    dotenv.config({path: '.env'});
     expect(process.env.ITP_NATIVE_TEST_CLIENT_ID, "ITP_NATIVE_TEST_CLIENT_ID").to.not.be.undefined;
+    expect(process.env.ITP_NATIVE_TEST_CLIENT_ID, "ITP_NATIVE_TEST_CLIENT_ID not match").to.match(/native-/)
     expect(process.env.ITP_ISSUER_URL, "ITP_ISSUER_URL").to.not.be.undefined;
     const config: TestBrowserAuthorizationClientConfiguration = {
         authority: process.env.ITP_ISSUER_URL!,
