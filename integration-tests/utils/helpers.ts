@@ -8,7 +8,7 @@ import { ITwin } from "@itwin/itwins-client";
 import { TestBrowserAuthorizationClientConfiguration, TestUserCredentials, getTestAccessToken } from "@itwin/oidc-signin-tool";
 import { runCommand } from "@oclif/test";
 import { expect } from "chai";
-import * as dotenv from 'dotenv';
+// import * as dotenv from 'dotenv';
 import { GetInboxRequest, GetMessageRequest, MailinatorClient } from 'mailinator-client'
 import fs from "node:fs"
 import os from 'node:os'
