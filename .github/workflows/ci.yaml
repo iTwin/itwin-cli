@@ -37,18 +37,15 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Ensure run.js is executable
-        run: chmod +x ./bin/run.js
-
       - name: Run docs-generator
-        run: ./bin/run.js docs-generator
+        run: npm run docs-generator
 
       - name: Check for documentation changes
         run: |
           if [[ -n $(git status --porcelain docs/) ]]; then
             echo "The following files in the docs directory have been modified:"
             git status --porcelain docs/
-            echo "Please run ./bin/run.js docs-generator command to update the documentation."
+            echo "Please run `npm run docs-generator` locally and commit the changes."
             exit 1
           fi
 

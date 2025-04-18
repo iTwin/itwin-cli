@@ -161,7 +161,8 @@
     "posttest": "npm run lint",
     "prepack": "oclif manifest && oclif readme",
     "test": "mocha --forbid-only \"integration-tests/**/*.test.ts\"",
-    "version": "oclif readme && git add README.md"
+    "version": "oclif readme && git add README.md",
+    "docs-generator": "node ./bin/run.js docs-generator"
   },
   "types": "dist/index.d.ts"
 }
