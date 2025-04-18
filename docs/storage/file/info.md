@@ -16,4 +16,4 @@ itp storage file info --file-id bf4d8b36-25d7-4b72-b38b-12c1f0325f42
 
 ## API Reference
 
-[Get File Info](https://developer.bentley.com/apis/storage/operations/get-file/)
+[Get File](https://developer.bentley.com/apis/storage/operations/get-file/)

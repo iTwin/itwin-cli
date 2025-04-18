@@ -16,4 +16,4 @@ itp itwin info --itwin-id b1a2c3d4-5678-90ab-cdef-1234567890ab
 
 ## API Reference
 
-[Get iTwin Details](https://developer.bentley.com/apis/itwins/operations/get-itwin/)
+[Get iTwin Details](https://developer.bentley.com/apis/iTwins/operations/get-itwin/)

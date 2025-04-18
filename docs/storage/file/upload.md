@@ -4,12 +4,12 @@ Upload a new file to a specified URL within iTwin storage.
 
 ## Options
 
-- **`--upload-url`**  
-  The URL where the file should be uploaded.  
+- **`-f, --file-path`**  
+  The path to the file you want to upload.  
   **Type:** `string` **Required:** Yes
 
-- **`--file-path`**  
-  The path to the file you want to upload.  
+- **`-u, --upload-url`**  
+  The URL where the file should be uploaded.  
   **Type:** `string` **Required:** Yes
 
 ## Examples

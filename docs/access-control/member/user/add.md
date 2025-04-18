@@ -10,16 +10,13 @@ Add one or more user members to an iTwin.
 
 - **`--members`**  
   A list of members to add, each with an email and a list of role IDs.  
-  **Type:** `array` **Required:** Yes
+  **Type:** `string` **Required:** Yes
 
 ## Examples
 
 ```bash
-# Example: Add multiple users to an iTwin with role IDs
-itp access-control member user add --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --members '[
-  {"email": "john.johnson@example.com", "roleIds": ["5abbfcef-0eab-472a-b5f5-5c5a43df34b1", "83ee0d80-dea3-495a-b6c0-7bb102ebbcc3"]},
-  {"email": "maria.miller@example.com", "roleIds": ["5abbfcef-0eab-472a-b5f5-5c5a43df34b1"]}
-]'
+# Example 1: Add multiple users to an iTwin with role IDs
+itp access-control member user add --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --members '[{"email": "user1@example.com", "roleIds": ["5abbfcef-0eab-472a-b5f5-5c5a43df34b1", "83ee0d80-dea3-495a-b6c0-7bb102ebbcc3"]}, {"email": "user2@example.com", "roleIds": ["5abbfcef-0eab-472a-b5f5-5c5a43df34b1"]}]'
 ```
 
 ## API Reference

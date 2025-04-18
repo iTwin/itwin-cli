@@ -8,13 +8,9 @@ Retrieve a list of iModels belonging to the specified iTwin.
   The ID of the iTwin to list iModels for.  
   **Type:** `string` **Required:** Yes
 
-- **`--skip`**  
-  Skip a number of items in the result.  
-  **Type:** `integer` **Required:** No
-
-- **`--top`**  
-  Limit the number of items returned.  
-  **Type:** `integer` **Required:** No
+- **`-n, --name`**  
+  Filter iModels by their exact name.  
+  **Type:** `string` **Required:** No
 
 - **`--order-by`**  
   Order the results by 'name' or 'createdDateTime'. Use 'asc' for ascending or 'desc' for descending order.  
@@ -24,14 +20,18 @@ Retrieve a list of iModels belonging to the specified iTwin.
   Filter iModels by a string in their name or description.  
   **Type:** `string` **Required:** No
 
-- **`-n, --name`**  
-  Filter iModels by their exact name.  
-  **Type:** `string` **Required:** No
+- **`--skip`**  
+  Skip a number of items in the result.  
+  **Type:** `integer` **Required:** No
 
 - **`--state`**  
   Filter iModels by their state.  
   **Type:** `string` **Required:** No  
   **Valid Values:** `"initialized"`, `"notInitialized"`
+
+- **`--top`**  
+  Limit the number of items returned.  
+  **Type:** `integer` **Required:** No
 
 ## Examples
 

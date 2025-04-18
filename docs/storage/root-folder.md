@@ -8,6 +8,14 @@ Retrieve the top-level folders and files in an iTwin's storage.
   The ID of the iTwin whose top-level folders and files you want to retrieve.  
   **Type:** `string` **Required:** Yes
 
+- **`--skip`**  
+  The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result.  
+  **Type:** `integer` **Required:** No
+
+- **`--top`**  
+  The top system query option requests the number of items in the queried collection to be included in the result.  
+  **Type:** `integer` **Required:** No
+
 ## Examples
 
 ```bash

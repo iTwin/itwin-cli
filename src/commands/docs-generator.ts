@@ -56,14 +56,15 @@ export default class DocsGenerator extends BaseCommand {
 
         let examplesText = "";
 
-        if (command.examples){
+        if (command.examples) {
             for (const example of command.examples) {
                 if (typeof example === "string") {
                     examplesText += `\n${example}`;
                 }
-                
-                if(typeof example === "object") {
-                    examplesText += `\n# ${example.description}\n${example.command}\n`;
+
+                if (typeof example === "object") {
+                    // Do not display description for examples where only "Example #<number>:" is present
+                    examplesText += example.description.slice(0, -2) === "Example " ? `\n${example.command}\n` : `\n# ${example.description}\n${example.command}\n`;
                 }
             }
         }
@@ -86,7 +87,7 @@ export default class DocsGenerator extends BaseCommand {
             returnContent.push(options);
         }
         else {
-            returnContent.push("(No options required for this command)");
+            returnContent.push("(This command does not have any options)");
         }
 
         returnContent.push('## Examples', 

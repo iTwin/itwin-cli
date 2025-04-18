@@ -4,20 +4,20 @@ Get the processing status of changesets in an iModel to see which are ready for 
 
 ## Options
 
-- **`-i, --itwin-id`**  
-  The ID of the iTwin.  
-  **Type:** `string` **Required:** Yes
-
 - **`-m, --imodel-id`**  
   The ID of the iModel.  
   **Type:** `string` **Required:** Yes
 
-- **`--top`**  
-  Limit the number of changesets returned.  
-  **Type:** `integer` **Required:** No
+- **`-i, --itwin-id`**  
+  The ID of the iTwin.  
+  **Type:** `string` **Required:** Yes
 
 - **`--skip`**  
   Skip a number of changesets in the result.  
+  **Type:** `integer` **Required:** No
+
+- **`--top`**  
+  Limit the number of changesets returned.  
   **Type:** `integer` **Required:** No
 
 ## Examples

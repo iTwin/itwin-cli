@@ -4,23 +4,23 @@ Create a new repository URI for iTwin data.
 
 ## Options
 
-- **`-i, --itwin-id`**  
-  The ID of the iTwin to which the repository belongs.  
-  **Type:** `string` **Required:** Yes
-
 - **`--class`**  
   The class of your iTwin repository.  
   **Type:** `string` **Required:** Yes  
   **Valid Values:** `"GeographicInformationSystem"`, `"Construction"`, `"Subsurface"`
 
-- **`--sub-class`**  
-  The subClass of your repository.  
-  **Type:** `string` **Required:** Yes  
-  **Valid Values:** `"WebMapService"`, `"WebMapTileService"`, `"MapServer"`, `"Performance"`, `"EvoWorkspace"`
+- **`-i, --itwin-id`**  
+  The ID of the iTwin to which the repository belongs.  
+  **Type:** `string` **Required:** Yes
 
 - **`--uri`**  
   The URI to the custom repository.  
   **Type:** `string` **Required:** Yes
+
+- **`--sub-class`**  
+  The subClass of your repository.  
+  **Type:** `string` **Required:** No  
+  **Valid Values:** `"WebMapService"`, `"WebMapTileService"`, `"MapServer"`, `"Performance"`, `"EvoWorkspace"`
 
 ## Examples
 

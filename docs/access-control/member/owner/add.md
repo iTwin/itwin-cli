@@ -4,12 +4,12 @@ Add a new owner to an iTwin by email.
 
 ## Options
 
-- **`-i, --itwin-id`**  
-  The ID of the iTwin to which the owner will be added.  
-  **Type:** `string` **Required:** Yes
-
 - **`--email`**  
   The email address of the new owner.  
+  **Type:** `string` **Required:** Yes
+
+- **`-i, --itwin-id`**  
+  The ID of the iTwin to which the owner will be added.  
   **Type:** `string` **Required:** Yes
 
 ## Examples

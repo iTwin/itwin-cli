@@ -8,13 +8,9 @@ List all named versions for a specific iModel.
   The ID of the iModel whose named versions you want to list.  
   **Type:** `string` **Required:** Yes
 
-- **`--top`**  
-  Limit the number of named versions returned.  
-  **Type:** `integer` **Required:** No
-
-- **`--skip`**  
-  Skip a number of named versions in the result.  
-  **Type:** `integer` **Required:** No
+- **`-n, --name`**  
+  Filter named versions by exact name.  
+  **Type:** `string` **Required:** No
 
 - **`--order-by`**  
   Sort by `changesetIndex` or `createdDateTime`, in `asc` or `desc` order.  
@@ -24,9 +20,13 @@ List all named versions for a specific iModel.
   Search named versions by name or description.  
   **Type:** `string` **Required:** No
 
-- **`-n, --name`**  
-  Filter named versions by exact name.  
-  **Type:** `string` **Required:** No
+- **`--skip`**  
+  Skip a number of named versions in the result.  
+  **Type:** `integer` **Required:** No
+
+- **`--top`**  
+  Limit the number of named versions returned.  
+  **Type:** `integer` **Required:** No
 
 ## Examples
 

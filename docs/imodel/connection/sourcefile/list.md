@@ -8,12 +8,12 @@ List all source files in a specific storage connection.
   The ID of the storage connection.  
   **Type:** `string` **Required:** Yes
 
-- **`--top`**  
-  Limit the number of source files returned.  
-  **Type:** `integer` **Required:** No
-
 - **`--skip`**  
   Skip a number of source files in the result.  
+  **Type:** `integer` **Required:** No
+
+- **`--top`**  
+  Limit the number of source files returned.  
   **Type:** `integer` **Required:** No
 
 ## Examples

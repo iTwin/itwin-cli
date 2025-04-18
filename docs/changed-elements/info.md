@@ -4,12 +4,12 @@ Retrieve change tracking information for a specified iModel.
 
 ## Options
 
-- **`-i, --itwin-id`**  
-  The ID of the iTwin associated with the iModel.  
-  **Type:** `string` **Required:** Yes
-
 - **`-m, --imodel-id`**  
   The ID of the iModel to retrieve tracking information for.  
+  **Type:** `string` **Required:** Yes
+
+- **`-i, --itwin-id`**  
+  The ID of the iTwin associated with the iModel.  
   **Type:** `string` **Required:** Yes
 
 ## Examples

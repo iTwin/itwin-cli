@@ -4,20 +4,20 @@ Compare changes between two changesets in an iModel.
 
 ## Options
 
-- **`-i, --itwin-id`**  
-  The ID of the iTwin associated with the iModel.  
-  **Type:** `string` **Required:** Yes
-
-- **`-m, --imodel-id`**  
-  The ID of the iModel to compare changesets for.  
-  **Type:** `string` **Required:** Yes
-
 - **`--changeset-id1`**  
   The ID of the first changeset to compare.  
   **Type:** `string` **Required:** Yes
 
 - **`--changeset-id2`**  
   The ID of the second changeset to compare.  
+  **Type:** `string` **Required:** Yes
+
+- **`-m, --imodel-id`**  
+  The ID of the iModel to compare changesets for.  
+  **Type:** `string` **Required:** Yes
+
+- **`-i, --itwin-id`**  
+  The ID of the iTwin associated with the iModel.  
   **Type:** `string` **Required:** Yes
 
 ## Examples
