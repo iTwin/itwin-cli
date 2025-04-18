@@ -45,9 +45,9 @@ jobs:
 
       - name: Check for documentation changes
         run: |
-          if [[ -n $(git status --porcelain) ]]; then
-            echo "The following files have been modified:"
-            git status --porcelain
+          if [[ -n $(git status --porcelain docs/) ]]; then
+            echo "The following files in the docs directory have been modified:"
+            git status --porcelain docs/
             echo "Please run ./bin/run.js docs-generator command to update the documentation."
             exit 1
           fi
