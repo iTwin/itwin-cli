@@ -208,6 +208,8 @@ const getTokenPathByOS = () => {
         }
 
         case 'Linux': {
+            if(!fs.existsSync("~/.config/itp"))
+                fs.mkdir("~/.config/itp", () => {})
             return "~/.config/itp/token.json"
         }
         
