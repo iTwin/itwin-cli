@@ -209,7 +209,7 @@ const getTokenPathByOS = () => {
         }
 
         case 'Linux': {
-            const configDir = `${os.homedir()}/.config/itp`
+            const configDir = `${os.homedir()}/.cache/itp`
             expect(fs.existsSync(configDir),"Config dir exists").to.be.true;
             return `${configDir}/token.json`
         }
