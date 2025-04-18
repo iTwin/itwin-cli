@@ -9,7 +9,7 @@ import BaseCommand from "../../extensions/base-command.js";
 export default class Me extends BaseCommand {
   static apiReference: apiReference = {
     link: "https://developer.bentley.com/apis/users/operations/me/",
-    name: "User Me",
+    name: "User Me <test>",
   };
 
   static args = {}

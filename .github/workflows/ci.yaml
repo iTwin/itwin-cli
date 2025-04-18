@@ -37,6 +37,17 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Run docs-generator
+        run: ./bin/dev docs-generator
+
+      - name: Check for documentation changes
+        run: |
+          if [[ -n $(git status --porcelain) ]]; then
+            echo "The following files have been modified:"
+            git status --porcelain
+            exit 1
+          fi
+
       - name: Audit
         run: npm audit
 
