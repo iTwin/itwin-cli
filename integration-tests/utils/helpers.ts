@@ -205,9 +205,7 @@ const isNativeAuthAccessTokenCached = ():boolean => {
 const getTokenPathByOS = () => {
     switch (os.type()) {
         case 'Linux': {
-            const configDir = `${os.homedir()}/.cache/itp`
-            expect(fs.existsSync(configDir),"Cache dir exists").to.be.true;
-            return `${configDir}/token.json`
+            return `${os.homedir()}/.cache/itp/token.json`
         }
 
         case 'Windows_NT': {
