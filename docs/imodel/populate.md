@@ -4,22 +4,22 @@ Synchronize design files into an iModel.
 
 ## Options
 
+- **`-f, --file`**  
+  Specify a list of source files to synchronize into the iModel.  
+  **Type:** `string` **Required:** Yes **Multiple:** Yes
+
 - **`-m, --imodel-id`**  
   The ID of the iModel to populate.  
   **Type:** `string` **Required:** Yes
 
-- **`--file`**  
-  A list of source files to synchronize into the iModel.  
-  **Type:** `string`  **Required:** Yes **Multiple:** Yes
+- **`-c, --connector-type`**  
+  Specify connectors to prioritize for synchronization. This flag can be provided multiple times. If only one connector is specified, it will be used for all files. If multiple connectors are specified, each connector will be used for the corresponding file in the files list (first connector for the first file, second connector for the second file, and so on).  
+  **Type:** `string` **Required:** No **Multiple:** Yes 
+  **Valid Values:** `"AUTOPLANT"`, `"AVEVAPID"`, `"CIVIL"`, `"CIVIL3D"`, `"DWG"`, `"GEOSPATIAL"`, `"IFC"`, `"MSTN"`, `"NWD"`, `"OBD"`, `"OPENTOWER"`, `"REVIT"`, `"SPPID"`, `"SPXREVIEW"`
 
-- **`--no-wait`**
+- **`--no-wait`**  
   Do not wait for the synchronization process to complete.  
   **Type:** `flag` **Required:** No
-
-- **`--connector-type`**  
-  Specify connectors to prioritize for synchronization. This flag can be provided multiple times. If only one connector is specified, it will be used for all files. If multiple connectors are specified, each connector will be used for the corresponding file in the files list (first connector for the first file, second connector for the second file, and so on).  
-  **Type:** `string` **Required:** No  **Multiple:** Yes  
-  **Valid Values:** `"SHELLEDWCSV"`, `"CIVIL"`, `"MSTN"`, `"OBD"`, `"PROSTRUCTURES"`, `"AUTOPLANT"`, `"AVEVAPID"`, `"CIVIL3D"`, `"DWG"`, `"IFC"`, `"GEOSPATIAL"`, `"OPENTOWER"`, `"REVIT"`, `"SPPID"`, `"SPXREVIEW"`, `"AVEVADIAGRAMS"`, `"NWD"`, `"INTELLIPID"`, `"PSEXCEL"`
 
 ## Examples
 
@@ -39,4 +39,4 @@ itp imodel populate --imodel-id i9j0k1l2-3456-78ab-cdef-9012345678ij --file mode
 
 ## Workflow Reference
 
-- [iModel Populate](/docs/command-workflows/imodel-populate)
+[iModel Populate](/docs/command-workflows/imodel-populate)

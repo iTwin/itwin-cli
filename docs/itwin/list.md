@@ -4,51 +4,51 @@ List all iTwins the calling user is a member of.
 
 ## Options
 
-- **`--sub-class`**  
-  Filter by the subClass of the iTwin.  
-  **Type:** `string` **Required:** No  
-  **Valid Values:** `"Account"`, `"Portfolio"`, `"Asset"`, `"Program"`, `"Project"`, `"WorkPackage"`
+- **`--include-inactive`**  
+  Include Inactive iTwins in the result.  
+  **Type:** `flag` **Required:** No
 
-- **`--status`**  
-  Filter by the status of the iTwin.  
-  **Type:** `string` **Required:** No  
-  **Valid Values:** `"Active"`, `"Inactive"`, `"Trial"`
-
-- **`--type`**  
-  Filter by the iTwin's Type.  
-  **Type:** `string` **Required:** No
-
-- **`--number`**  
-  Find iTwins with the exact number specified.  
+- **`--itwin-account-id`**  
+  Filter by the iTwin Account ID.  
   **Type:** `string` **Required:** No
 
 - **`-n, --name`**  
   Find iTwins with the exact display name specified.  
   **Type:** `string` **Required:** No
 
-- **`--parent-id`**  
-  Filter by the parent iTwin ID.  
+- **`--number`**  
+  Find iTwins with the exact number specified.  
   **Type:** `string` **Required:** No
 
-- **`--itwin-account-id`**  
-  Filter by the iTwin Account ID.  
+- **`--parent-id`**  
+  Filter by the parent iTwin ID.  
   **Type:** `string` **Required:** No
 
 - **`--search`**  
   Search iTwins by a string in the number or display name.  
   **Type:** `string` **Required:** No
 
-- **`--top`**  
-  Limit the number of items returned.  
-  **Type:** `integer` **Required:** No
-
 - **`--skip`**  
   Skip a number of items in the result.  
   **Type:** `integer` **Required:** No
 
-- **`--include-inactive`**  
-  Include inactive iTwins in the result.  
-  **Type:** `flag` **Required:** No
+- **`--status`**  
+  Filter by the status of the iTwin.  
+  **Type:** `string` **Required:** No  
+  **Valid Values:** `"Active"`, `"Inactive"`, `"Trial"`
+
+- **`--sub-class`**  
+  Filter by a specific iTwin subClass.  
+  **Type:** `string` **Required:** No  
+  **Valid Values:** `"Account"`, `"Asset"`, `"Project"`, `"Portfolio"`, `"Program"`, `"WorkPackage"`
+
+- **`--top`**  
+  Limit the number of items returned.  
+  **Type:** `integer      ` **Required:** No
+
+- **`--type`**  
+  Filter by the iTwin's Type.  
+  **Type:** `string` **Required:** No
 
 ## Examples
 

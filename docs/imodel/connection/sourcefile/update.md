@@ -8,14 +8,14 @@ Update an existing source file in a storage connection of an iModel.
   The ID of the storage connection.  
   **Type:** `string` **Required:** Yes
 
-- **`--source-file-id`**  
-  The source file ID to update.  
-  **Type:** `string` **Required:** Yes
-
 - **`--connector-type`**  
   The connector type for synchronization.  
   **Type:** `string` **Required:** Yes  
   **Valid Values:** `"AUTOPLANT"`, `"CIVIL"`, `"CIVIL3D"`, `"DWG"`, `"IFC"`, `"MSTN"`, `"REVIT"`
+
+- **`--source-file-id`**  
+  The source file ID to update.  
+  **Type:** `string` **Required:** Yes
 
 ## Examples
 

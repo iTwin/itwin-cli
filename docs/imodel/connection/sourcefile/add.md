@@ -8,14 +8,14 @@ Add a source file to an existing storage connection of an iModel.
   The ID of the storage connection to which the source file will be added.  
   **Type:** `string` **Required:** Yes
 
-- **`--storage-file-id`**  
-  The storage file ID.  
-  **Type:** `string` **Required:** Yes
-
 - **`--connector-type`**  
   The connector type for synchronization.  
   **Type:** `string` **Required:** Yes  
   **Valid Values:** `"AUTOPLANT"`, `"CIVIL"`, `"CIVIL3D"`, `"DWG"`, `"IFC"`, `"MSTN"`, `"REVIT"`, `"OPENROADS"`, `"SPX"`, `"XER"`, `"PRIMAVERA"`, `"SYNCHRO"`, `"MICROSTATION"`
+
+- **`--storage-file-id`**  
+  The storage file ID.  
+  **Type:** `string` **Required:** Yes
 
 ## Examples
 

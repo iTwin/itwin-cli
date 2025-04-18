@@ -8,12 +8,12 @@ Update the metadata of a folder in an iTwin's storage, such as its display name 
   The ID of the folder to be updated.  
   **Type:** `string` **Required:** Yes
 
-- **`-n, --name`**  
-  The new display name for the folder.  
-  **Type:** `string` **Required:** No
-
 - **`-d, --description`**  
   A description for the folder.  
+  **Type:** `string` **Required:** No
+
+- **`-n, --name`**  
+  The new display name for the folder.  
   **Type:** `string` **Required:** No
 
 ## Examples

@@ -2,6 +2,10 @@
 
 Display the cached context.
 
+## Options
+
+(This command does not have any options)
+
 ## Examples
 
 ```bash

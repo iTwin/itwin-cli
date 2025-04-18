@@ -24,5 +24,6 @@ itp storage folder list --folder-id a1b2c3d4-5678-90ab-cdef-1234567890ab --inclu
 
 ## API Reference
 
-[List Folders in Folder](https://developer.bentley.com/apis/storage/operations/get-folders-in-folder/)  
+[List Folders in Folder](https://developer.bentley.com/apis/storage/operations/get-folders-in-folder/)
+
 [List Folders and Files in Folder](https://developer.bentley.com/apis/storage/operations/get-folders-and-files-in-folder/)

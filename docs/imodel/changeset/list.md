@@ -8,24 +8,25 @@ List all changesets for a specific iModel.
   The ID of the iModel whose changesets you want to list.  
   **Type:** `string` **Required:** Yes
 
-- **`--top`**  
-  The maximum number of changesets to return.  
-  **Type:** `integer` **Required:** No
-
-- **`--skip`**  
-  The number of changesets to skip.  
-  **Type:** `integer` **Required:** No
-
-- **`--order-by`**  
-  Order the changesets by their index. Can be `asc` for ascending or `desc` for descending order.  
-  **Type:** `string` **Required:** No
-
 - **`--after-index`**  
   List changesets after a specific index (exclusive).  
   **Type:** `integer` **Required:** No
 
 - **`--last-index`**  
   List changesets up to a specific index (inclusive).  
+  **Type:** `integer` **Required:** No
+
+- **`--order-by`**  
+  Order the changesets by their index. Can be asc for ascending or desc for descending order.  
+  **Type:** `string` **Required:** No  
+  **Valid Values:** `"asc"`, `"desc"`
+
+- **`--skip`**  
+  The number of changesets to skip.  
+  **Type:** `integer` **Required:** No
+
+- **`--top`**  
+  The maximum number of changesets to return.  
   **Type:** `integer` **Required:** No
 
 ## Examples

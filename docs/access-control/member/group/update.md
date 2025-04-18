@@ -4,17 +4,17 @@ Update the role assignments for a group in an iTwin.
 
 ## Options
 
-- **`-i, --itwin-id`**  
-  The ID of the iTwin where the group is a member.  
-  **Type:** `string` **Required:** Yes
-
 - **`-g, --group-id`**  
   The ID of the group whose roles will be updated.  
   **Type:** `string` **Required:** Yes
 
+- **`-i, --itwin-id`**  
+  The ID of the iTwin to which the groups will be added.  
+  **Type:** `string` **Required:** Yes
+
 - **`--role-id`**  
   A list of role IDs to assign to the group.  
-  **Type:** `array` **Required:** Yes **Multiple:** Yes
+  **Type:** `string` **Required:** Yes **Multiple:** Yes
 
 ## Examples
 
