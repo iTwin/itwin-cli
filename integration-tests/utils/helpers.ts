@@ -168,8 +168,8 @@ export function nativeLogoutFromCli() {
 
 const getNativeAuthAccessToken = async (): Promise<string> => {
     dotenv.config({path: '.env'});
-    expect(process.env.ITP_NATIVE_TEST_CLIENT_ID).to.not.be.undefined;
-    expect(process.env.ITP_ISSUER_URL).to.not.be.undefined;
+    expect(process.env.ITP_NATIVE_TEST_CLIENT_ID, "ITP_NATIVE_TEST_CLIENT_ID").to.not.be.undefined;
+    expect(process.env.ITP_ISSUER_URL, "ITP_ISSUER_URL").to.not.be.undefined;
     const config: TestBrowserAuthorizationClientConfiguration = {
         authority: process.env.ITP_ISSUER_URL!,
         clientId: process.env.ITP_NATIVE_TEST_CLIENT_ID!,
@@ -177,15 +177,15 @@ const getNativeAuthAccessToken = async (): Promise<string> => {
         scope: "itwin-platform",
     }
 
-    expect(process.env.ITP_TEST_USER_EMAIL).to.not.be.undefined;
-    expect(process.env.ITP_TEST_USER_PASSWORD).to.not.be.undefined;
+    expect(process.env.ITP_TEST_USER_EMAIL, "ITP_TEST_USER_EMAIL").to.not.be.undefined;
+    expect(process.env.ITP_TEST_USER_PASSWORD, "ITP_TEST_USER_PASSWORD").to.not.be.undefined;
     const user: TestUserCredentials = {
         email: process.env.ITP_TEST_USER_EMAIL!,
         password: process.env.ITP_TEST_USER_PASSWORD!
     }
 
     const accessToken = await getTestAccessToken(config, user);
-    expect(accessToken).to.not.be.undefined;
+    expect(accessToken, "Access token").to.not.be.undefined;
     return accessToken!;
 } 
 

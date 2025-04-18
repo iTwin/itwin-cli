@@ -19,7 +19,7 @@ const tests = () => describe('user', () => {
         await nativeLoginToCli();
 
         const iTwin = await runCommand<ITwin>(`itwin create --class Thing --sub-class Asset --name ${iTwinName}`);
-        expect(iTwin.result?.id).is.not.undefined;
+        expect(iTwin.result?.id, "itwin create result").is.not.undefined;
         iTwinId = iTwin.result!.id!;
     });
 
