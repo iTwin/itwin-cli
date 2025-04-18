@@ -29,7 +29,7 @@ export default () => describe('owner', () => {
     });
 
     it('Should add an internal member to an iTwin and remove owner member', async () => {
-        const emailToAdd = 'iTwin.CLI.QA.IntegrationTest@bentley.m8r.co';
+        const emailToAdd = 'APIM.Basic.QA-developer@bentley.m8r.co';
 
         const invitedUser = await runCommand<ownerResponse>(`access-control member owner add --itwin-id ${iTwinId} --email ${emailToAdd}`);
 

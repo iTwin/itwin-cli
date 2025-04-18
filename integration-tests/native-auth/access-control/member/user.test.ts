@@ -11,7 +11,7 @@ import { member, membersResponse } from "../../../../src/services/access-control
 import { Role } from "../../../../src/services/access-control-client/models/role";
 import { nativeLoginToCli } from "../../../utils/helpers";
 
-export default () => describe('user', () => {
+const tests = () => describe('user', () => {
     let iTwinId: string;
     const iTwinName: string = `cli-itwin-integration-test-${new Date().toISOString()}`;
     
@@ -33,7 +33,7 @@ export default () => describe('user', () => {
         expect(newRole.result).is.not.undefined;
         expect(newRole.result!.id).is.not.undefined;
         
-        const emailToAdd = 'iTwin.CLI.QA.IntegrationTest@bentley.m8r.co';
+        const emailToAdd = 'APIM.Basic.QA-developer@bentley.m8r.co';
 
         const invitedUser = await runCommand<membersResponse>(`access-control member user add --itwin-id ${iTwinId} --members "[{"email": "${emailToAdd}", "roleIds": ["${newRole.result!.id}"]}]"`);
 
@@ -57,3 +57,4 @@ export default () => describe('user', () => {
     });
 });
 
+export default tests;
