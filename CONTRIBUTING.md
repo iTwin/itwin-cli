@@ -63,6 +63,10 @@ git checkout -b johndoe/add-auth-command
 ### **3. Make Your Changes**
 - Follow existing code patterns and structure.
 - Write clear commit messages.
+- **If you add a new command or modify documentation**, run the following command to ensure commands and documentation are synchronized:
+  ```bash
+  npm run docs-generator
+  ```
 
 ### **4. Commit Your Changes**
 ```bash
