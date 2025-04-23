@@ -7,11 +7,11 @@ import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
 import { authorizationInformation } from "../../src/services/authorization-client/authorization-type";
-import { loginToCli } from '../utils/helpers';
+import { serviceLoginToCli } from '../utils/helpers';
 
 describe('Authentication Integration Tests', () => {
   it('should log in successfully using service authentication', async () => {
-    await loginToCli();
+    await serviceLoginToCli();
   });
 
   it('should return auth info', async () => {

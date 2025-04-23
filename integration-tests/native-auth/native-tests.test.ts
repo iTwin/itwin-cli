@@ -3,17 +3,15 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { serviceLoginToCli } from "../utils/helpers";
-import infoTests from "./info";
-import meTests from "./me"
-import searchTests from "./search";
+import { nativeLogoutFromCli } from '../utils/helpers';
+import accessControlTests from './access-control/access-control.test'
 
-describe('User Integration Tests', () => {
-  beforeEach(async () => {
-    await serviceLoginToCli();
-  });
+describe('Native Client Tests', () => {
+    after(async () => {
+        nativeLogoutFromCli();
+    })
 
-  infoTests();
-  meTests();
-  searchTests();
+    accessControlTests();
 });
+
+
