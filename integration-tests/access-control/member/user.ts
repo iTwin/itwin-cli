@@ -46,7 +46,7 @@ const tests = () => {
 
         await fetch(invitationLink);
 
-        await new Promise<void>(resolve => {setTimeout(_ => resolve(), 3 * 1000);});
+        await new Promise<void>(resolve => {setTimeout(_ => resolve(), 30 * 1000);});
 
         const usersInfo = await runCommand<member[]>(`access-control member user list --itwin-id ${iTwinId}`);
         expect(usersInfo.result).is.not.undefined;
@@ -59,7 +59,7 @@ const tests = () => {
         const deletionResult = await runCommand<{result: string}>(`access-control member user delete --itwin-id ${iTwinId} --member-id ${joinedUser?.id}`);
         expect(deletionResult.result).to.not.be.undefined;
         expect(deletionResult.result!.result).to.be.equal("deleted");
-    });
+    }).timeout(120 * 1000);
 
     it('Should display owner info of an iTwin in member info', async () => {
         const userInfo = await runCommand<User>(`user me`);

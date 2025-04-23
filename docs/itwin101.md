@@ -16,14 +16,14 @@ The **iTwin CLI** ties it all together — letting you manage iTwins, bring desi
 
 ### 🎓 What Is a Digital Twin?
 
-A **digital twin** is more than a design model. It’s a cloud-based, real-time digital representation of a physical asset—like a building, bridge, highway, or dam. A digital twin integrates multiple data layers:
+A **digital twin** is more than a design model. It’s a cloud-based, real-time digital representation of a physical asset, such as a building, bridge, highway, or dam. A digital twin integrates multiple data layers:
 
 - **👩‍🔧 Design Data**: CAD and BIM models created using tools like MicroStation, Revit, AutoCAD, etc.
 - **🌍 Reality Data**: Photogrammetry, point clouds, and 3D meshes captured by drones or scanners.
 - **📈 Sensor Data**: Live IoT data reflecting asset performance, environmental conditions, and more.
 - **📂 External Repositories**: Additional cloud data sources that enrich the digital twin's context.
 
-What makes a digital twin powerful is the way these sources come together in the cloud to form a "living" version of an asset — something that's not just visual, but interactive and analyzable.
+What makes a digital twin powerful is the way these sources come together in the cloud to form a *living* version of an asset — one that is not only visual but also interactive and analyzable.
 
 ---
 
@@ -35,31 +35,31 @@ At its core, an iTwin includes several key components:
 
 #### 🧱 iModel: Design Data, Standardized
 
-An **iModel** is a specialized cloud repository for 3D design data. It acts as a **common data environment** that unifies models from various design applications (MicroStation, Revit, Civil3D, etc.) into a single, coherent format.
+An **iModel** is a specialized cloud repository for 3D design data. It serves as a **common data environment** that unifies models from various design applications (MicroStation, Revit, Civil3D, etc.) into a single, coherent format.
 
 > Have a Revit file for a building? Add it to the iModel.  
 > Got utility designs from MicroStation? Add them too.
 
-The iModel isn’t just a storage format — it acts like **Git for infrastructure**. Designers commit  -  or in design words - **synchronize** their changes, which are stored as **changesets**. This allows for collaborative workflows, version tracking, and comparison of changes between versions.
+The iModel is more than just a storage format — it functions like **Git for infrastructure**. Designers *synchronize* their changes, which are stored as **changesets**. This allows for collaborative workflows, version tracking, and comparison of changes between versions.
 
 #### 🌎 Reality Data: Contextual Visualization
 
-Drones, scanners, and photogrammetry can capture detailed environmental data around your asset. This is imported into the iTwin to create photorealistic context and increase the accuracy of asset visualization and project decision-making.
+Drones, scanners, and photogrammetry can capture detailed environmental data around your asset. This data is then imported into the iTwin to create photorealistic context, enhancing the accuracy of both design and decision-making.
 
 #### 📊 Sensor Data: Real-Time Awareness
 
-Digital twins aren’t just static snapshots. By integrating sensor or IoT data, iTwins reflect real-world conditions in real time. Think:
+Digital twins aren’t just static snapshots. By integrating sensor or IoT data, iTwins reflect real-world conditions in real time. Consider:
 
 - Energy usage
 - Equipment performance
 - Occupancy levels
 - Fault detection
 
-This makes the iTwin a true operational tool, not just a design archive.
+This transforms the iTwin into a true operational tool, not just a design archive.
 
 #### 📚 External Data: Extendable by Nature
 
-Need to connect to a custom database, web API, or document store? The iTwin is designed to consume and present external data as part of its interface. Through widgets, charts, or overlays, the twin can be tailored to meet specific business or project needs.
+Need to connect to a custom database, web API, or document store? The iTwin is designed to consume and present external data as part of its interface. Through widgets, charts, or overlays, the iTwin can be tailored to meet specific business or project needs.
 
 ---
 
@@ -67,14 +67,14 @@ Need to connect to a custom database, web API, or document store? The iTwin is d
 
 The **iTwin CLI** is a command-line tool that lets developers and technical users interact with the iTwin Platform through simple text commands. It simplifies many common tasks:
 
-- ✍️ **Create and manage iTwins**
-- 🛡️ **Set up access control and user roles**
-- 🔍 **Query or inspect metadata**
-- 📂 **Create iModels and populate them with design files**
-- 📰 **Track and compare changes with changesets**
-- 🔢 **Create named versions to mark project milestones**
-- ⇄ **Synchronize design data into the iModel**
-- 🌍 **Visualize the iTwin in Cesium Sandcastle**
+- ✍️ Create and manage iTwins
+- 🛡️ Set up access control and user roles
+- 🔍 Query or inspect metadata
+- 📂 Create iModels and populate them with design files
+- 📰 Track and compare changes with changesets
+- 🔢 Create named versions to mark project milestones
+- ⇄ Synchronize design data into the iModel
+- 🌍 Visualize the iTwin in Cesium Sandcastle
 
 It serves as a lightweight, scriptable gateway into a powerful ecosystem.
 
@@ -82,21 +82,21 @@ It serves as a lightweight, scriptable gateway into a powerful ecosystem.
 
 ### 🗂️ iModels and Version Control
 
-Think of the iModel like Git. Multiple designers can work in parallel and synchronize changes when ready. Each sync produces a set of **changesets** that are stored with full history. This allows you to:
+Think of the iModel like Git. Multiple designers can work in parallel and synchronize changes when ready. Each synchronization produces **changesets** that are stored with a full history, allowing you to:
 
 - 📋 See who made which change
 - 🕓 Inspect previous states
 - ⚖️ Compare two versions to highlight changed elements
 
-You can also create **named versions** at key milestones: design freezes, review submissions, final approvals, etc.
+Changesets can be tagged as **named versions** that allow you to identify and save key milestones, such as design freezes, review submissions, final approvals, etc.
 
-This not only supports tracking and review, but also enables advanced visualization and automation possibilities.
+This not only supports tracking and review but also enables advanced visualization and automation possibilities.
 
 ---
 
 ### 🗃️ Storage and Synchronization
 
-iTwins contain a dedicated storage repository where design files and project documents can be centrally managed. This storage acts as a staging area for incoming files before they're synchronized into an iModel.
+iTwins contain a dedicated storage repository where design files and project documents can be centrally managed. This storage acts as a staging area for incoming files before they are synchronized into an iModel.
 
 The iTwin CLI supports using this shared storage to:
 
@@ -110,7 +110,7 @@ Files uploaded into iTwin storage can be selectively synchronized using **connec
 
 ### 🌐 Geospatial Visualization with Cesium
 
-One of the most exciting features of the iTwin CLI is integration with **Cesium Sandcastle**, CesiumJS's interactive 3D globe environment.
+One of the most exciting features of the iTwin CLI is its integration with **Cesium Sandcastle**, CesiumJS's interactive 3D globe environment.
 
 > Push your iTwin to Sandcastle and instantly visualize infrastructure assets in a real-world geospatial context.
 

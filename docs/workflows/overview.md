@@ -1,5 +1,9 @@
 # Workflows
 
+Ready to put the iTwin CLI to work? These guides show you how to handle common tasks like project setup, team management, and automation.
+
+> 💡 The following are a few of the many possibilities.
+
 **Getting Started**
 - [Create and refine an iTwin](itwin-create.md)
 - [Create and refine an iModel](imodel-create.md)
