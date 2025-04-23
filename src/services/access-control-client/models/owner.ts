@@ -12,7 +12,7 @@ export type ownerResponse = {
     member: groupMember,
 }
 
-export type ownerListRepsonse = {
+export type ownerListResponse = {
     _links: links
     members: groupMember[],
 }

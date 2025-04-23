@@ -3,7 +3,7 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { loginToCli } from "../utils/helpers";
+import { serviceLoginToCli } from "../utils/helpers";
 import fileCreateUploadCompleteDeleteTests from "./file/create-upload-complete-delete";
 import fileInfoTests from "./file/info";
 import fileListTests from "./file/list";
@@ -17,7 +17,7 @@ import rootFolderTests from "./root-folder";
 
 describe('Storage Integration Tests', () => {
   beforeEach(async () => {
-    await loginToCli();
+    await serviceLoginToCli();
   });
 
   rootFolderTests();

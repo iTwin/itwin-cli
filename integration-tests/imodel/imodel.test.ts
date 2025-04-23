@@ -3,7 +3,7 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { loginToCli } from "../utils/helpers";
+import { serviceLoginToCli } from "../utils/helpers";
 import connectionTests from './connection';
 import createDeleteTests from "./create-delete";
 import infoTests from "./info";
@@ -12,7 +12,7 @@ import updateTests from "./update";
 
 describe('iModel Integration Tests', () => {
   beforeEach(async () => {
-    await loginToCli();
+    await serviceLoginToCli();
   });
 
   createDeleteTests();

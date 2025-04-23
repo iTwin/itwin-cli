@@ -3,7 +3,7 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { loginToCli } from "../utils/helpers";
+import { serviceLoginToCli } from "../utils/helpers";
 import createTests from "./create";
 import deleteTests from './delete';
 import infoTests from "./info";
@@ -13,7 +13,7 @@ import updateTests from "./update";
 
 describe('iTwin Integration Tests', () => {
   beforeEach(async () => {
-    await loginToCli();
+    await serviceLoginToCli();
   });
 
   createTests();
