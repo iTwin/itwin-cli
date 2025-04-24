@@ -7,13 +7,9 @@ import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
 import { authorizationInformation } from "../../src/services/authorization-client/authorization-type";
-import { serviceLoginToCli } from '../utils/helpers';
+import isMainModule from '../utils/is-main-module';
 
-describe('Authentication Integration Tests', () => {
-  it('should log in successfully using service authentication', async () => {
-    await serviceLoginToCli();
-  });
-
+const tests = () => {
   it('should return auth info', async () => {
     const result = await runCommand<authorizationInformation>('auth info');
     expect(result.result).to.be.not.undefined;
@@ -34,4 +30,10 @@ describe('Authentication Integration Tests', () => {
     
     expect(stdout).to.include('User successfully logged out');
   });
-});
+};
+
+export default tests;
+
+if (isMainModule(import.meta)) {
+  describe('Authentication Integration Tests', () => tests());
+}

@@ -7,17 +7,14 @@ import { ITwin } from "@itwin/itwins-client";
 import { runCommand } from "@oclif/test";
 import { expect } from "chai";
 
-import { groupMember } from "../../../../src/services/access-control-client/models/group-members.js";
-import { ownerResponse } from "../../../../src/services/access-control-client/models/owner.js";
-import { nativeLoginToCli } from "../../../utils/helpers";
+import { groupMember } from "../../../src/services/access-control-client/models/group-members.js";
+import { ownerResponse } from "../../../src/services/access-control-client/models/owner.js";
 
 export default () => describe('owner', () => {
     let iTwinId: string;
     const iTwinName: string = `cli-itwin-integration-test-${new Date().toISOString()}`;
     
     before(async () => {
-        await nativeLoginToCli();
-
         const iTwin = await runCommand<ITwin>(`itwin create --class Thing --sub-class Asset --name ${iTwinName}`);
         expect(iTwin.result?.id).is.not.undefined;
         iTwinId = iTwin.result!.id!;

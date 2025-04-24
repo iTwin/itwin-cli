@@ -3,9 +3,11 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import memberTests from './member/member.test'
+import ownerTests from './owner';
+import userTests from './user'
 
-export default () => describe('access-control', () => {
-    memberTests();
+export default () => describe('member', () => {
+    userTests();
+    ownerTests();
 });
 

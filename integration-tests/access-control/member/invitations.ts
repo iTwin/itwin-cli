@@ -26,17 +26,17 @@ const tests = () => {
     });
 
     it('Should get pending invitations', async () => {
-        const emailToAdd = 'itwin.cli.qa-testaccount@be-mailinator.eastus.cloudapp.azure.com';
+        const emailToAdd = 'APIM.OrgTest.Unassigned.QA@bentley.m8r.co';
         const owner = await runCommand<ownerResponse>(`access-control member owner add --itwin-id ${iTwinId} --email ${emailToAdd}`);
         expect(owner.result).is.not.undefined;
         expect(owner.result!.member).is.null;
         expect(owner.result!.invitation).is.not.undefined;
-        expect(owner.result!.invitation.email).to.equal(emailToAdd);
+        expect(owner.result!.invitation.email.toLowerCase()).to.equal(emailToAdd.toLowerCase());
 
         const invitationResults = await runCommand<invitation[]>(`access-control member invitations --itwin-id ${iTwinId}`);
         expect(invitationResults.result).is.not.undefined;
         expect(invitationResults.result!.length).to.be.greaterThanOrEqual(1);
-        expect(invitationResults.result!.some(invitation => invitation.email === emailToAdd)).to.be.true;
+        expect(invitationResults.result!.some(invitation => invitation.email.toLowerCase() === emailToAdd.toLowerCase())).to.be.true;
     });
 };
 
