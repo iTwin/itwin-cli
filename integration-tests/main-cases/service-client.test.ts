@@ -17,8 +17,8 @@ describe('Service Client Tests', () => {
     accessControlTests();
 
     describe('Authentication Integration Tests', () => {
-        authTests();
         authTestsService();
+        authTests();
     });
 
     changedElementsTests();

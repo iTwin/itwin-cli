@@ -43,5 +43,3 @@ describe('Native Client Tests', async () => {
     storageTests();
     userTests();
 });
-
-
