@@ -160,10 +160,9 @@ export async function nativeLoginToCli() {
     fs.writeFileSync(getTokenPathByOS(), JSON.stringify(authTokenObject), 'utf8');
 }
 
-export function nativeLogoutFromCli() {
-    if(isNativeAuthAccessTokenCached()) {
-        fs.rmSync(getTokenPathByOS());
-    }
+export async function logoutFromCLI() {
+    const result = await runCommand('auth logout');
+    expect(result.stdout).to.contain('User successfully logged out');
 }
 
 const getNativeAuthAccessToken = async (): Promise<string> => {

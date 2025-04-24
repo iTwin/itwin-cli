@@ -4,8 +4,9 @@ import { runCommand } from "@oclif/test";
 import { expect } from "chai";
 
 import { User } from "../src/services/user-client/models/user.js";
+import isMainModule from "./utils/is-main-module.js";
 
-describe("API Integration Tests", () => {
+const tests = () => describe("API Integration Tests", () => {
     let iTwin: ITwin;
     let iModel: IModel;
 
@@ -108,3 +109,9 @@ describe("API Integration Tests", () => {
         expect(apiResponseJSON.api.version).to.equal("v1");
     });
 });
+
+export default tests;
+
+if (isMainModule(import.meta)) {
+    tests();
+}
