@@ -3,15 +3,17 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { nativeLogoutFromCli } from '../utils/helpers';
-import accessControlTests from './access-control/access-control.test'
+import isMainModule from '../utils/is-main-module';
+import groupTests from './group'
+import memberTests from './member/member'
 
-describe('Native Client Tests', () => {
-    after(async () => {
-        nativeLogoutFromCli();
-    })
-
-    accessControlTests();
+const tests = () => describe('Access Control Tests (Native Client)', () => {
+    groupTests();
+    memberTests();
 });
 
+export default tests;
 
+if (isMainModule(import.meta)) {
+    tests();
+}

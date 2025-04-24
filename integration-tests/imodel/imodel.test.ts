@@ -3,21 +3,23 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { serviceLoginToCli } from "../utils/helpers";
+import isMainModule from '../utils/is-main-module';
 import connectionTests from './connection';
 import createDeleteTests from "./create-delete";
 import infoTests from "./info";
 import listTests from "./list";
 import updateTests from "./update";
 
-describe('iModel Integration Tests', () => {
-  beforeEach(async () => {
-    await serviceLoginToCli();
-  });
-
+const tests = () => describe('iModel Integration Tests', () => {
   createDeleteTests();
   infoTests();
   updateTests();
   listTests();
   connectionTests();
 });
+
+export default tests;
+
+if (isMainModule(import.meta)) {
+    tests();
+}

@@ -32,7 +32,7 @@ const tests = () => {
         expect(newRole.result).is.not.undefined;
         expect(newRole.result!.id).is.not.undefined;
         
-        const emailToAdd = 'iTwin.CLI.QA.IntegrationTest@bentley.m8r.co';
+        const emailToAdd = 'APIM.OrgTest.Unassigned.QA@bentley.m8r.co';
 
         const invitedUser = await runCommand<membersResponse>(`access-control member user add --itwin-id ${iTwinId} --members "[{"email": "${emailToAdd}", "roleIds": ["${newRole.result!.id}"]}]"`);
 

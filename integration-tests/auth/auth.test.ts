@@ -6,23 +6,9 @@
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
-import { authorizationInformation } from "../../src/services/authorization-client/authorization-type";
-import { serviceLoginToCli } from '../utils/helpers';
+import isMainModule from '../utils/is-main-module';
 
-describe('Authentication Integration Tests', () => {
-  it('should log in successfully using service authentication', async () => {
-    await serviceLoginToCli();
-  });
-
-  it('should return auth info', async () => {
-    const result = await runCommand<authorizationInformation>('auth info');
-    expect(result.result).to.be.not.undefined;
-    expect(result.result!.apiUrl).to.be.equal(process.env.ITP_API_URL);
-    expect(result.result!.authorizationType).to.be.not.undefined;
-    expect(result.result!.clientId).to.be.equal(process.env.ITP_SERVICE_CLIENT_ID);
-    expect(result.result!.issuerUrl).to.be.equal(process.env.ITP_ISSUER_URL);
-  });
-
+const tests = () => {
   it('should fail with incorrect credentials', async () => {
     const result = await runCommand('auth login --client-id invalid-id --client-secret wrong-secret');
     expect(result.error).to.be.not.undefined;
@@ -34,4 +20,10 @@ describe('Authentication Integration Tests', () => {
     
     expect(stdout).to.include('User successfully logged out');
   });
-});
+};
+
+export default tests;
+
+if (isMainModule(import.meta)) {
+  describe('Authentication Integration Tests', () => tests());
+}
