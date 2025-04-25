@@ -31,9 +31,9 @@ const tests = () => describe('populate', () => {
     const iModelDeleteResult = await runCommand(`imodel delete --imodel-id ${testIModelId}`);
     const iTwinDeleteResult = await runCommand(`itwin delete --itwin-id ${testITwinId}`);
 
-    expect(fileDeleteResult).to.have.property('result', 'deleted');
-    expect(iModelDeleteResult).to.have.property('result', 'deleted');
-    expect(iTwinDeleteResult).to.have.property('result', 'deleted');
+    expect(fileDeleteResult.result).to.have.property('result', 'deleted');
+    expect(iModelDeleteResult.result).to.have.property('result', 'deleted');
+    expect(iTwinDeleteResult.result).to.have.property('result', 'deleted');
   });
 
   it('should populate the iModel with the uploaded file', async () => {
