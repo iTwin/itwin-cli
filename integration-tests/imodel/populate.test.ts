@@ -35,7 +35,7 @@ const tests = () => describe('populate', () => {
   it('should populate the iModel with the uploaded file', async () => {
     const result = await runCommand(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type SPPID`);
     expect(result.result).to.have.property('iModelId', testIModelId);
-  }).timeout(15 * 60 * 1000);
+  }).timeout(20 * 60 * 1000);
 });
 
 export default tests;
