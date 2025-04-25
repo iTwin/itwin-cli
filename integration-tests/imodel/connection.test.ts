@@ -7,6 +7,7 @@ import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
 import { createFile, createIModel, createITwin, deleteFile, deleteIModel, deleteITwin, getRootFolderId } from '../utils/helpers';
+import runSuiteIfMainModule from '../utils/run-suite-if-main-module';
 
 const tests = () => describe('connection', () => {
   const testFileName = 'test.zip';
@@ -65,7 +66,8 @@ const tests = () => describe('connection', () => {
 
     expect(result.result).to.equal('deleted')
   });
-
 });
 
 export default tests;
+
+runSuiteIfMainModule(import.meta, tests);

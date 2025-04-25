@@ -11,7 +11,7 @@ import { group } from "../../src/services/access-control-client/models/group";
 import { nativeLoginToCli } from "../utils/helpers";
 import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
 
-const tests = () => describe('Group', () => {
+const tests = () => describe('group', () => {
     let iTwinId: string;
     let groupId: string;
     const groupName = "Test Group";

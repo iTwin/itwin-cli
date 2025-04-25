@@ -11,6 +11,7 @@ import { expect } from 'chai';
 import { changeset, changesetComparison } from '../../src/services/changed-elements-client/tracking';
 import { createFile, createIModel, createITwin, getRootFolderId } from '../utils/helpers';
 import { resultResponse } from '../utils/result-response';
+import runSuiteIfMainModule from '../utils/run-suite-if-main-module';
 
 const tests = () => describe('changesets + comparison', () => {
   const testITwinName = 'ITwinCLI_IntegrationTestITwin_ChangedElements';
@@ -71,3 +72,5 @@ const tests = () => describe('changesets + comparison', () => {
 });
 
 export default tests;
+
+runSuiteIfMainModule(import.meta, tests);

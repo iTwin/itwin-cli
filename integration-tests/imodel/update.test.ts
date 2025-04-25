@@ -7,6 +7,7 @@ import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
 import { createIModel, createITwin, deleteIModel, deleteITwin } from '../utils/helpers';
+import runSuiteIfMainModule from '../utils/run-suite-if-main-module';
 
 const tests = () => describe('update', () => {
   let testIModelId: string;
@@ -32,7 +33,8 @@ const tests = () => describe('update', () => {
     expect(updatedITwin).to.have.property('id', testIModelId);
     expect(updatedITwin).to.have.property('name', updatedName);
   });
-
 });
 
 export default tests;
+
+runSuiteIfMainModule(import.meta, tests);

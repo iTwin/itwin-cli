@@ -8,7 +8,7 @@ import { expect } from 'chai';
 
 import { authorizationInformation } from "../../src/services/authorization-client/authorization-type";
 import { serviceLoginToCli } from '../utils/helpers';
-import isMainModule from '../utils/is-main-module';
+import runSuiteIfMainModule from '../utils/run-suite-if-main-module';
 
 const tests = () => {
   it('should log in successfully using service authentication', async () => {
@@ -27,6 +27,4 @@ const tests = () => {
 
 export default tests;
 
-if (isMainModule(import.meta)) {
-  describe('Authentication Integration Tests (Service Client)', () => tests());
-}
+runSuiteIfMainModule(import.meta, () => describe('Authentication Integration Tests (Service Client)', () => tests()));

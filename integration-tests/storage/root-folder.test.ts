@@ -10,7 +10,8 @@ import { expect } from 'chai';
 import { fileTyped } from '../../src/services/storage-client/models/file-typed.js';
 import { folderTyped } from "../../src/services/storage-client/models/folder-typed.js";
 import { itemsWithFolderLink } from "../../src/services/storage-client/models/items-with-folder-link.js";
-import { createFile, createFolder, createITwin, deleteITwin, getRootFolderId } from '../utils/helpers';
+import { createFile, createFolder, createITwin, deleteITwin, getRootFolderId } from '../utils/helpers.js';
+import runSuiteIfMainModule from '../utils/run-suite-if-main-module.js';
 
 const tests = () => describe('root-folder', () => {
   const name = 'IntegrationTestITwin';
@@ -70,3 +71,5 @@ const tests = () => describe('root-folder', () => {
 });
 
 export default tests;
+
+runSuiteIfMainModule(import.meta, tests);

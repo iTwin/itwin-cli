@@ -1,9 +1,7 @@
 import { Command, Config } from "@oclif/core";
 import { expect } from "chai";
 
-import isMainModule from "../utils/is-main-module";
-
-const tests = () => describe('Command formatting tests', async () => {
+describe('Command formatting tests', async () => {
     let allCommands : CommandWithFlags[] = [];
 
     const commandToExcludeFromTests = [
@@ -70,10 +68,4 @@ const tests = () => describe('Command formatting tests', async () => {
 type CommandWithFlags = {
     cmd: Command.Loadable;
     flags: [string, Command.Flag.Cached][];
-}
-
-export default tests;
-
-if (isMainModule(import.meta)) {
-    tests();
 }

@@ -15,6 +15,7 @@ import {
   deleteITwin,
   getRootFolderId 
 } from '../../utils/helpers';
+import runSuiteIfMainModule from '../../utils/run-suite-if-main-module';
 
 const tests = () => describe('update-content', () => {
   let testITwinId: string;
@@ -83,3 +84,5 @@ const tests = () => describe('update-content', () => {
 });
 
 export default tests;
+
+runSuiteIfMainModule(import.meta, tests);

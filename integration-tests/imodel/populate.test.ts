@@ -6,17 +6,10 @@
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
-import { 
-  createFile,
-  createIModel,
-  createITwin, 
-  deleteFile, 
-  deleteIModel, 
-  deleteITwin, 
-  getRootFolderId 
-} from '../../utils/helpers';
+import { createFile, createIModel, createITwin, deleteFile, deleteIModel, deleteITwin, getRootFolderId } from '../utils/helpers';
+import runSuiteIfMainModule from '../utils/run-suite-if-main-module';
 
-const tests = () => describe('info', () => {
+const tests = () => describe('populate', () => {
   const testFileName = 'test.zip';
   const testFilePath = 'integration-tests/test.zip';
   let testFileId: string;
@@ -25,12 +18,12 @@ const tests = () => describe('info', () => {
 
   before(async () => {
     const testITwin = await createITwin('IntegrationTestITwin', 'Thing', 'Asset');
-    testITwinId = testITwin.id as string;
+    testITwinId = testITwin.id!;
     const testIModel = await createIModel('IntegrationTestIModel', testITwinId);
-    testIModelId = testIModel.id;
+    testIModelId = testIModel.id!;
     const rootFolderId = await getRootFolderId(testITwinId);
     const testFile = await createFile(rootFolderId, testFileName, testFilePath);
-    testFileId = testFile.id as string;
+    testFileId = testFile.id!;
   });
 
   after(async () => {
@@ -39,13 +32,12 @@ const tests = () => describe('info', () => {
     await deleteITwin(testITwinId);
   });
 
-  it('should get the info of the file', async () => {
-    const { stdout } = await runCommand(`storage file info --file-id ${testFileId}`);
-    const fileInfo = JSON.parse(stdout);
-
-    expect(fileInfo).to.have.property('id', testFileId);
-    expect(fileInfo).to.have.property('displayName', testFileName);
+  it('should populate the iModel with the uploaded file', async () => {
+    const result = await runCommand(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type SPPID`);
+    expect(result.result).to.have.property('iModelId', testIModelId);
   });
 });
 
 export default tests;
+
+runSuiteIfMainModule(import.meta, tests);

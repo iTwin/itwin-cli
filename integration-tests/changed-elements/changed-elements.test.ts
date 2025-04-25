@@ -3,9 +3,9 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import isMainModule from "../utils/is-main-module";
-import changesetsComparisonTests from "./changesets-comparison";
-import enableDisableInfoTests from "./enable-disable-info";
+import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
+import changesetsComparisonTests from "./changesets-comparison.test";
+import enableDisableInfoTests from "./enable-disable-info.test";
 
 const tests = () => describe('Changed Elements Integration Tests', () => {
   enableDisableInfoTests();
@@ -14,6 +14,4 @@ const tests = () => describe('Changed Elements Integration Tests', () => {
 
 export default tests;
 
-if (isMainModule(import.meta)) {
-    tests();
-}
+runSuiteIfMainModule(import.meta, tests);

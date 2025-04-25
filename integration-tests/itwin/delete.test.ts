@@ -8,6 +8,7 @@ import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
 import { createITwin } from "../utils/helpers";
+import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
 
 const tests = () => describe('delete', () => {
   let testITwin: ITwin;
@@ -28,3 +29,5 @@ const tests = () => describe('delete', () => {
 });
 
 export default tests;
+
+runSuiteIfMainModule(import.meta, tests);

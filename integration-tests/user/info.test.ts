@@ -6,6 +6,8 @@
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
+import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
+
 const tests = () => describe('info', () => {
   it('should retrieve information about a specific user', async () => {
     const meResult = await runCommand('user me');
@@ -31,3 +33,5 @@ const tests = () => describe('info', () => {
 });
 
 export default tests;
+
+runSuiteIfMainModule(import.meta, tests);

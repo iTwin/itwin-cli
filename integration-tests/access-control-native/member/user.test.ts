@@ -12,7 +12,7 @@ import { Role } from "../../../src/services/access-control-client/models/role";
 import { nativeLoginToCli } from "../../utils/helpers";
 import runSuiteIfMainModule from "../../utils/run-suite-if-main-module";
 
-const tests = () => describe('User', () => {
+const tests = () => describe('user', () => {
     let iTwinId: string;
     const iTwinName: string = `cli-itwin-integration-test-${new Date().toISOString()}`;
     

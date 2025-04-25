@@ -13,6 +13,7 @@ import {
   deleteITwin, 
   getRootFolderId 
 } from '../../utils/helpers';
+import runSuiteIfMainModule from '../../utils/run-suite-if-main-module';
 
 const tests = () => describe('create + upload + complete + delete', () => {
   let testFileId: string;
@@ -84,3 +85,5 @@ const tests = () => describe('create + upload + complete + delete', () => {
 });
 
 export default tests;
+
+runSuiteIfMainModule(import.meta, tests);

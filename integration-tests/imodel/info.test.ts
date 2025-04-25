@@ -7,8 +7,9 @@ import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
 import { createIModel, createITwin, deleteIModel, deleteITwin } from '../utils/helpers';
+import runSuiteIfMainModule from '../utils/run-suite-if-main-module';
 
-const tests = () => describe('list', () => {
+const tests = () => describe('info', () => {
   const testIModelName = 'IntegrationTestIModel';
   let testIModelId: string;
   let testITwinId: string;
@@ -25,15 +26,16 @@ const tests = () => describe('list', () => {
     await deleteITwin(testITwinId);
   });
 
-  it('should list all iModels for the specified iTwin', async () => {
-    const { stdout } = await runCommand(`imodel list --itwin-id ${testITwinId}`);
-    const iModelList = JSON.parse(stdout);
+  it('should get the iModel info', async () => {
+    const { stdout } = await runCommand(`imodel info --imodel-id ${testIModelId}`);
+    const iModelInfo = JSON.parse(stdout);
 
-    expect(iModelList).to.not.be.undefined;
-    expect(iModelList).to.be.an('array').that.is.not.empty;
-    expect(iModelList.some((imodel: { id: string; }) => imodel.id === testIModelId)).to.be.true;
+    expect(iModelInfo).to.have.property('id', testIModelId);
+    expect(iModelInfo).to.have.property('name', testIModelName);
+    expect(iModelInfo).to.have.property('iTwinId', testITwinId);
   });
-
 });
 
 export default tests;
+
+runSuiteIfMainModule(import.meta, tests);

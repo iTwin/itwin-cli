@@ -12,7 +12,7 @@ import { ownerResponse } from "../../../src/services/access-control-client/model
 import { nativeLoginToCli } from "../../utils/helpers.js";
 import runSuiteIfMainModule from "../../utils/run-suite-if-main-module.js";
 
-const tests = () => describe('Owner', () => {
+const tests = () => describe('owner', () => {
     let iTwinId: string;
     const iTwinName: string = `cli-itwin-integration-test-${new Date().toISOString()}`;
     

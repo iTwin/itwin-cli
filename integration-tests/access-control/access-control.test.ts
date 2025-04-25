@@ -9,7 +9,7 @@ import memberTests from "./member/member.test";
 import permissionTests from "./permissions.test";
 import roleTests from "./role.test";
 
-const tests = () => describe('access-control', () => {
+const tests = () => describe('Access Control Tests', () => {
     describe('group', () => {
         groupTests();
     });

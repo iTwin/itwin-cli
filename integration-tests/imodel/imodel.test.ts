@@ -3,12 +3,13 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import isMainModule from '../utils/is-main-module';
-import connectionTests from './connection';
-import createDeleteTests from "./create-delete";
-import infoTests from "./info";
-import listTests from "./list";
-import updateTests from "./update";
+import runSuiteIfMainModule from '../utils/run-suite-if-main-module';
+import connectionTests from './connection.test';
+import createDeleteTests from "./create-delete.test";
+import infoTests from "./info.test";
+import listTests from "./list.test";
+import populateTests from './populate.test';
+import updateTests from "./update.test";
 
 const tests = () => describe('iModel Integration Tests', () => {
   createDeleteTests();
@@ -16,10 +17,9 @@ const tests = () => describe('iModel Integration Tests', () => {
   updateTests();
   listTests();
   connectionTests();
+  populateTests();
 });
 
 export default tests;
 
-if (isMainModule(import.meta)) {
-    tests();
-}
+runSuiteIfMainModule(import.meta, tests);

@@ -7,6 +7,8 @@ import { ITwin } from "@itwin/itwins-client";
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
+import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
+
 const tests = () => describe('create', () => {
   let testITwinId: string;
   let testITwinId2: string;
@@ -68,3 +70,5 @@ const tests = () => describe('create', () => {
 });
 
 export default tests;
+
+runSuiteIfMainModule(import.meta, tests);
