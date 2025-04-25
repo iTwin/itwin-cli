@@ -4,9 +4,9 @@
 *--------------------------------------------------------------------------------------------*/
 
 import accessControlTests from '../access-control/access-control.test'
+import apiTests from '../api.test'
 import authTests from '../auth/auth.test'
 import authTestsService from  '../auth-service/auth-service.test'
-import apiTests from '../api.test'
 import changedElementsTests from '../changed-elements/changed-elements.test'
 import contextTests from '../context/context.test'
 import imodelTests from '../imodel/imodel.test'
