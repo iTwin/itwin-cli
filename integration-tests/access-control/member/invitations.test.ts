@@ -9,6 +9,7 @@ import { expect } from "chai";
 
 import { invitation } from "../../../src/services/access-control-client/models/invitations";
 import { ownerResponse } from "../../../src/services/access-control-client/models/owner";
+import runSuiteIfMainModule from "../../utils/run-suite-if-main-module";
 
 const tests = () => {
     let iTwinId: string;
@@ -41,3 +42,5 @@ const tests = () => {
 };
 
 export default tests;
+
+runSuiteIfMainModule(import.meta, () => describe("Access Control Member Invitation Tests", () => tests()));

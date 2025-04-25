@@ -9,12 +9,16 @@ import { expect } from "chai";
 
 import { member, membersResponse } from "../../../src/services/access-control-client/models/members";
 import { Role } from "../../../src/services/access-control-client/models/role";
+import { nativeLoginToCli } from "../../utils/helpers";
+import runSuiteIfMainModule from "../../utils/run-suite-if-main-module";
 
-const tests = () => describe('user', () => {
+const tests = () => describe('User', () => {
     let iTwinId: string;
     const iTwinName: string = `cli-itwin-integration-test-${new Date().toISOString()}`;
     
     before(async () => {
+        await nativeLoginToCli();
+        
         const iTwin = await runCommand<ITwin>(`itwin create --class Thing --sub-class Asset --name ${iTwinName}`);
         expect(iTwin.result?.id, "itwin create result").is.not.undefined;
         iTwinId = iTwin.result!.id!;
@@ -55,3 +59,5 @@ const tests = () => describe('user', () => {
 });
 
 export default tests;
+
+runSuiteIfMainModule(import.meta, tests);

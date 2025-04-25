@@ -3,11 +3,15 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import ownerTests from './owner';
-import userTests from './user'
+import runSuiteIfMainModule from '../../utils/run-suite-if-main-module';
+import ownerTests from './owner.test';
+import userTests from './user.test'
 
-export default () => describe('member', () => {
+const tests = () => describe('Member', () => {
     userTests();
     ownerTests();
 });
 
+export default tests;
+
+runSuiteIfMainModule(import.meta, tests);

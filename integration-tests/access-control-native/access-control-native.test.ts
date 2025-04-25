@@ -3,9 +3,9 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import isMainModule from '../utils/is-main-module';
-import groupTests from './group'
-import memberTests from './member/member'
+import runSuiteIfMainModule from '../utils/run-suite-if-main-module';
+import groupTests from './group.test'
+import memberTests from './member/member.test'
 
 const tests = () => describe('Access Control Tests (Native Client)', () => {
     groupTests();
@@ -14,6 +14,4 @@ const tests = () => describe('Access Control Tests (Native Client)', () => {
 
 export default tests;
 
-if (isMainModule(import.meta)) {
-    tests();
-}
+runSuiteIfMainModule(import.meta, tests);

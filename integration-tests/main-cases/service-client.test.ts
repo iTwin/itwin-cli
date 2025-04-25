@@ -12,8 +12,12 @@ import imodelTests from '../imodel/imodel.test'
 import itwinTests from '../itwin/itwin.test'
 import storageTests from '../storage/storage.test'
 import userTests from '../user/user.test'
+import { logoutFromCLI } from '../utils/helpers'
 
 describe('Service Client Tests', () => {
+    before(async () => {
+        await logoutFromCLI();
+    })
     accessControlTests();
 
     describe('Authentication Integration Tests', () => {

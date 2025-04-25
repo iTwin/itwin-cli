@@ -11,6 +11,7 @@ import { member, membersResponse } from "../../../src/services/access-control-cl
 import { Role } from "../../../src/services/access-control-client/models/role";
 import { User } from "../../../src/services/user-client/models/user";
 import { fetchEmailsAndGetInvitationLink } from "../../utils/helpers";
+import runSuiteIfMainModule from "../../utils/run-suite-if-main-module";
 
 const tests = () => {
     let iTwinId: string;
@@ -91,3 +92,5 @@ const tests = () => {
 };
 
 export default tests;
+
+runSuiteIfMainModule(import.meta, () => describe("Access Control Member User Tests", () => tests()));

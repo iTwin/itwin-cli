@@ -7,6 +7,8 @@ import { ITwin } from "@itwin/itwins-client";
 import { runCommand } from "@oclif/test";
 import { expect } from "chai";
 
+import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
+
 const tests = () => {
     let iTwinId: string;
 
@@ -36,3 +38,5 @@ const tests = () => {
 };
 
 export default tests;
+
+runSuiteIfMainModule(import.meta, () => describe("Access Control Permissions Tests", () => tests()));

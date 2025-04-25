@@ -11,6 +11,7 @@ import { groupMember } from "../../../src/services/access-control-client/models/
 import { ownerResponse } from "../../../src/services/access-control-client/models/owner";
 import { User } from "../../../src/services/user-client/models/user";
 import { fetchEmailsAndGetInvitationLink } from "../../utils/helpers";
+import runSuiteIfMainModule from "../../utils/run-suite-if-main-module";
 
 const tests = () => {
     let iTwinId: string;
@@ -62,8 +63,8 @@ const tests = () => {
         expect(userInfo.result!.id).is.not.undefined;
         expect(owners.result!.some(owner => owner.id === userInfo.result!.id)).to.be.true;
     });
-
-
 };
 
 export default tests;
+
+runSuiteIfMainModule(import.meta, () => describe("Access Control Member Owner Tests", () => tests()));

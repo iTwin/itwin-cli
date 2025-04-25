@@ -8,13 +8,17 @@ import { runCommand } from "@oclif/test";
 import { expect } from "chai";
 
 import { group } from "../../src/services/access-control-client/models/group";
+import { nativeLoginToCli } from "../utils/helpers";
+import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
 
-const tests = () => describe('group', () => {
+const tests = () => describe('Group', () => {
     let iTwinId: string;
     let groupId: string;
     const groupName = "Test Group";
     const groupDescription = "Test Group Description";
     before(async () => {
+        await nativeLoginToCli();
+        
         const iTwinName = `cli-itwin-integration-test-${new Date().toISOString()}`;
         const iTwin = await runCommand<ITwin>(`itwin create --class Thing --sub-class Asset --name ${iTwinName}`);
         expect(iTwin.result?.id).is.not.undefined;
@@ -40,3 +44,5 @@ const tests = () => describe('group', () => {
 });    
 
 export default tests;
+
+runSuiteIfMainModule(import.meta, tests);

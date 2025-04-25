@@ -8,6 +8,7 @@ import { runCommand } from "@oclif/test";
 import { expect } from "chai";
 
 import { Role } from "../../src/services/access-control-client/models/role";
+import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
 
 const tests = () => {
     let iTwinId: string;
@@ -81,3 +82,5 @@ const tests = () => {
 };    
 
 export default tests;
+
+runSuiteIfMainModule(import.meta, () => describe("Access Control Role Tests", () => tests()));

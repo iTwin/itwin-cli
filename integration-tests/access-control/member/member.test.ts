@@ -3,10 +3,11 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import groupMemberTests from './group';
-import invitationsMemberTests from './invitations';
-import ownerMemberTests from './owner';
-import userMemberTests from './user';
+import runTestSuiteIfMainModule from '../../utils/run-suite-if-main-module';
+import groupMemberTests from './group.test';
+import invitationsMemberTests from './invitations.test';
+import ownerMemberTests from './owner.test';
+import userMemberTests from './user.test';
 
 const tests = () => 
 { 
@@ -25,7 +26,8 @@ const tests = () =>
     describe('owner', () => {
         ownerMemberTests();
     });
-    
 };
 
 export default tests;
+
+runTestSuiteIfMainModule(import.meta, () => describe("Access Control Member Tests", () => tests()));
