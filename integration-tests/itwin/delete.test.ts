@@ -14,12 +14,11 @@ const tests = () => describe('delete', () => {
   let testITwin: ITwin;
 
   before(async () => {
-    testITwin = await createITwin('IntegrationTestITwin', 'Thing', 'Asset');
+    testITwin = await createITwin(`cli-itwin-integration-test-${new Date().toISOString()}`, 'Thing', 'Asset');
   });
 
   it('should delete the iTwin', async () => {
-    const result = await runCommand(`itwin delete --itwin-id ${testITwin.id}`);
-    const deleteResult = JSON.parse(result.stdout);
+    const { result: deleteResult } = await runCommand(`itwin delete --itwin-id ${testITwin.id}`);
     expect(deleteResult).to.have.property('result', 'deleted');
 
     const itwinChildResult = await runCommand(`itwin info --itwin-id ${testITwin.id}`);

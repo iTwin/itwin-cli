@@ -6,7 +6,7 @@
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
-import { createIModel, createITwin, deleteIModel, deleteITwin } from '../utils/helpers';
+import { createIModel, createITwin } from '../utils/helpers';
 import runSuiteIfMainModule from '../utils/run-suite-if-main-module';
 
 const tests = () => describe('update', () => {
@@ -14,15 +14,18 @@ const tests = () => describe('update', () => {
   let testITwinId: string;
 
   before(async () => {
-    const testITwin = await createITwin('IntegrationTestITwin', 'Thing', 'Asset');
+    const testITwin = await createITwin(`cli-itwin-integration-test-${new Date().toISOString()}`, 'Thing', 'Asset');
     testITwinId = testITwin.id as string;
-    const testIModel = await createIModel('IntegrationTestIModel', testITwinId);
+    const testIModel = await createIModel(`cli-imodel-integration-test-${new Date().toISOString()}`, testITwinId);
     testIModelId = testIModel.id;
   });
 
   after(async () => {
-    await deleteIModel(testIModelId);
-    await deleteITwin(testITwinId);
+    const { result: imodelDeleteResult } = await runCommand(`imodel delete --imodel-id ${testIModelId}`);
+    const { result: itwinDeleteResult } = await runCommand(`itwin delete --itwin-id ${testITwinId}`);
+
+    expect(imodelDeleteResult).to.have.property('result', 'deleted');
+    expect(itwinDeleteResult).to.have.property('result', 'deleted');
   });
 
   it('should update the iModel', async () => {

@@ -26,9 +26,13 @@ const tests = () => describe('create', () => {
   const testNumber = Math.random().toString(36).slice(2)
 
   after(async () => {
-    await runCommand(`itwin delete --itwin-id ${testITwinChildId}`);
-    await runCommand(`itwin delete --itwin-id ${testITwinId}`);
-    await runCommand(`itwin delete --itwin-id ${testITwinId2}`);
+    const { result: deleteResult1 } = await runCommand(`itwin delete --itwin-id ${testITwinChildId}`);
+    const { result: deleteResult2 } = await runCommand(`itwin delete --itwin-id ${testITwinId}`);
+    const { result: deleteResult3 } = await runCommand(`itwin delete --itwin-id ${testITwinId2}`);
+
+    expect(deleteResult1).to.have.property('result', 'deleted');
+    expect(deleteResult2).to.have.property('result', 'deleted');
+    expect(deleteResult3).to.have.property('result', 'deleted');
   })
 
   it('should create a new iTwin', async () => {
