@@ -204,7 +204,10 @@ export const isNativeAuthAccessTokenCached = (): boolean => {
 const getTokenPathByOS = () => {
     switch (os.type()) {
         case 'Linux': {
-            return `${os.homedir()}/.cache/itp/token.json`
+            const cachePath = `${os.homedir()}/.cache/itp`
+            if(!fs.existsSync(cachePath))
+                fs.mkdirSync(cachePath, {recursive: true})
+            return `${cachePath}/token.json`
         }
 
         case 'Windows_NT': {
