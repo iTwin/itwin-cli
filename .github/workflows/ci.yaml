@@ -37,11 +37,6 @@ jobs:
       - name: Build
         run: npm run build
 
-      - uses: actions/upload-artifact@v4
-        with:
-          name: build
-          path: dist
-
       - name: Audit
         run: npm audit
 
@@ -69,9 +64,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - uses: actions/download-artifact@v4
-        with:
-          name: build
+      - name: Build
+        run: npm run build
 
       - name: Test (Service Client)
         env:
@@ -101,9 +95,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - uses: actions/download-artifact@v4
-        with:
-          name: build
+      - name: Build
+        run: npm run build
 
       - name: Test (Native Client)
         env:
