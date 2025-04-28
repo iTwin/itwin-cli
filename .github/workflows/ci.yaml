@@ -37,6 +37,11 @@ jobs:
       - name: Build
         run: npm run build
 
+      - uses: actions/upload-artifact@v4
+        with:
+          name: build
+          path: dist
+
       - name: Audit
         run: npm audit
 
@@ -46,6 +51,28 @@ jobs:
       - name: Test (Formatting)
         run: npm run test:formatting
 
+  test_service:
+    name: Test (Service Client)
+    runs-on: ubuntu-latest
+    environment: QA
+    needs: build
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org/
+      - name: Install dependencies
+        run: npm ci
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: build
+
       - name: Test (Service Client)
         env:
           ITP_API_URL: ${{ vars.ITP_API_URL }}
@@ -54,6 +81,29 @@ jobs:
           ITP_SERVICE_CLIENT_SECRET: ${{ secrets.ITP_SERVICE_CLIENT_SECRET }}
           ITP_MAILINATOR_API_KEY: ${{ secrets.ITP_MAILINATOR_API_KEY }}
         run: npm run test:service
+
+  test_native:
+    name: Test (Native Client)
+    runs-on: ubuntu-latest
+    environment: QA
+    needs: build
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org/
+
+      - name: Install dependencies
+        run: npm ci
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: build
 
       - name: Test (Native Client)
         env:
