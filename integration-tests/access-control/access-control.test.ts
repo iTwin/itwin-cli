@@ -3,13 +3,13 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import isMainModule from '../utils/is-main-module';
-import groupTests from "./group";
-import memberTests from "./member/member";
-import permissionTests from "./permissions";
-import roleTests from "./role";
+import runSuiteIfMainModule from '../utils/run-suite-if-main-module';
+import groupTests from "./group.test";
+import memberTests from "./member/member.test";
+import permissionTests from "./permissions.test";
+import roleTests from "./role.test";
 
-const tests = () => describe('access-control', () => {
+const tests = () => describe('Access Control Tests', () => {
     describe('group', () => {
         groupTests();
     });
@@ -29,6 +29,4 @@ const tests = () => describe('access-control', () => {
 
 export default tests;
 
-if (isMainModule(import.meta)) {
-    tests();
-}
+runSuiteIfMainModule(import.meta, tests);

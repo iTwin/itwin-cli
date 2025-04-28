@@ -6,7 +6,7 @@
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
-import isMainModule from '../utils/is-main-module';
+import runSuiteIfMainModule from '../utils/run-suite-if-main-module';
 
 const tests = () => {
   it('should fail with incorrect credentials', async () => {
@@ -24,6 +24,4 @@ const tests = () => {
 
 export default tests;
 
-if (isMainModule(import.meta)) {
-  describe('Authentication Integration Tests', () => tests());
-}
+runSuiteIfMainModule(import.meta, () => describe('Authentication Integration Tests', () => tests()));

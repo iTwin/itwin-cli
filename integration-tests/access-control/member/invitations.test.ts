@@ -1,0 +1,46 @@
+/*---------------------------------------------------------------------------------------------
+* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+* See LICENSE.md in the project root for license terms and full copyright notice.
+*--------------------------------------------------------------------------------------------*/
+
+import { ITwin } from "@itwin/itwins-client";
+import { runCommand } from "@oclif/test";
+import { expect } from "chai";
+
+import { invitation } from "../../../src/services/access-control-client/models/invitations";
+import { ownerResponse } from "../../../src/services/access-control-client/models/owner";
+import runSuiteIfMainModule from "../../utils/run-suite-if-main-module";
+
+const tests = () => {
+    let iTwinId: string;
+    
+    before(async () => {
+        const iTwinName = `cli-itwin-integration-test-${new Date().toISOString()}`;
+        const iTwin = await runCommand<ITwin>(`itwin create --class Thing --sub-class Asset --name ${iTwinName}`);
+        expect(iTwin.result?.id).is.not.undefined;
+        iTwinId = iTwin.result!.id!;
+    });
+
+    after(async () => {
+        const result = await runCommand(`itwin delete --itwin-id ${iTwinId}`);
+        expect(result.stdout).to.contain('deleted');
+    });
+
+    it('Should get pending invitations', async () => {
+        const emailToAdd = 'APIM.OrgTest.Unassigned.QA@bentley.m8r.co';
+        const owner = await runCommand<ownerResponse>(`access-control member owner add --itwin-id ${iTwinId} --email ${emailToAdd}`);
+        expect(owner.result).is.not.undefined;
+        expect(owner.result!.member).is.null;
+        expect(owner.result!.invitation).is.not.undefined;
+        expect(owner.result!.invitation.email.toLowerCase()).to.equal(emailToAdd.toLowerCase());
+
+        const invitationResults = await runCommand<invitation[]>(`access-control member invitations --itwin-id ${iTwinId}`);
+        expect(invitationResults.result).is.not.undefined;
+        expect(invitationResults.result!.length).to.be.greaterThanOrEqual(1);
+        expect(invitationResults.result!.some(invitation => invitation.email.toLowerCase() === emailToAdd.toLowerCase())).to.be.true;
+    });
+};
+
+export default tests;
+
+runSuiteIfMainModule(import.meta, () => describe("Access Control Member Invitation Tests", () => tests()));

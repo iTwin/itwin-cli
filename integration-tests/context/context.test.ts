@@ -3,7 +3,7 @@ import { ITwin } from "@itwin/itwins-client";
 import { runCommand } from "@oclif/test";
 import { expect } from "chai";
 
-import isMainModule from "../utils/is-main-module";
+import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
 
 const tests = () => describe('Context Integration Tests', () => {
     let iTwin: ITwin;
@@ -118,6 +118,4 @@ const tests = () => describe('Context Integration Tests', () => {
 
 export default tests;
 
-if (isMainModule(import.meta)) {
-    tests();
-}
+runSuiteIfMainModule(import.meta, tests);
