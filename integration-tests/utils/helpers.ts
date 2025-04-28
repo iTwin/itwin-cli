@@ -188,7 +188,7 @@ const getNativeAuthAccessToken = async (): Promise<string> => {
     return accessToken!;
 } 
 
-const isNativeAuthAccessTokenCached = ():boolean => {
+export const isNativeAuthAccessTokenCached = (): boolean => {
     const tokenPath = getTokenPathByOS();
     if(fs.existsSync(tokenPath)) {
         const tokenJson = fs.readFileSync(tokenPath, 'utf8');

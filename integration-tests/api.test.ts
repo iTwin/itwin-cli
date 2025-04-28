@@ -4,7 +4,7 @@ import { runCommand } from "@oclif/test";
 import { expect } from "chai";
 
 import { User } from "../src/services/user-client/models/user.js";
-import isMainModule from "./utils/is-main-module.js";
+import runSuiteIfMainModule from "./utils/run-suite-if-main-module.js";
 
 const tests = () => describe("API Integration Tests", () => {
     let iTwin: ITwin;
@@ -112,6 +112,4 @@ const tests = () => describe("API Integration Tests", () => {
 
 export default tests;
 
-if (isMainModule(import.meta)) {
-    tests();
-}
+runSuiteIfMainModule(import.meta, tests);

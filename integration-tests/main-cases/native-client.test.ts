@@ -5,6 +5,7 @@
 
 import accessControlTests from '../access-control/access-control.test'
 import accessControlNativeTests from '../access-control-native/access-control-native.test'
+import apiTests from '../api.test'
 import authTests from '../auth/auth.test'
 import changedElementsTests from '../changed-elements/changed-elements.test'
 import contextTests from '../context/context.test'
@@ -36,6 +37,7 @@ describe('Native Client Tests', async () => {
         authTests();
     })
 
+    apiTests();
     changedElementsTests();
     contextTests();
     imodelTests();

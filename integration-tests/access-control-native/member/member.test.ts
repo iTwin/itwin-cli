@@ -3,13 +3,13 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import runSuiteIfMainModule from '../utils/run-suite-if-main-module';
-import groupTests from './group.test'
-import memberTests from './member/member.test'
+import runSuiteIfMainModule from '../../utils/run-suite-if-main-module';
+import ownerTests from './owner.test';
+import userTests from './user.test'
 
-const tests = () => describe('Access Control Tests (Native Client)', () => {
-    groupTests();
-    memberTests();
+const tests = () => describe('member', () => {
+    userTests();
+    ownerTests();
 });
 
 export default tests;

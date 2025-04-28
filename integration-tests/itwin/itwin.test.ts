@@ -3,13 +3,13 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import isMainModule from "../utils/is-main-module";
-import createTests from "./create";
-import deleteTests from './delete';
-import infoTests from "./info";
-import listTests from "./list";
-import repositoryTests from "./repository"
-import updateTests from "./update";
+import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
+import createTests from "./create.test";
+import deleteTests from './delete.test';
+import infoTests from "./info.test";
+import listTests from "./list.test";
+import repositoryTests from "./repository.test"
+import updateTests from "./update.test";
 
 const tests = () => describe('iTwin Integration Tests', () => {
   createTests();
@@ -22,6 +22,4 @@ const tests = () => describe('iTwin Integration Tests', () => {
 
 export default tests;
 
-if (isMainModule(import.meta)) {
-    tests();
-}
+runSuiteIfMainModule(import.meta, tests);
