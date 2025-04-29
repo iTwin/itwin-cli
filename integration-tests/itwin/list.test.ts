@@ -15,22 +15,22 @@ const tests = () => describe('list', () => {
   let testITwin2: ITwin;
 
   before(async () => {
-    const result1 = await runCommand<ITwin>(`itwin create --name IntegrationTestITwin --class Thing --sub-class Asset --type Type1 --number ${Math.random().toString(36).slice(2)}`); 
+    const result1 = await runCommand<ITwin>(`itwin create --name IntegrationTestITwin_${new Date().toISOString()} --class Thing --sub-class Asset --type Type1 --number ${Math.random().toString(36).slice(2)}`); 
     testITwin1 = result1.result as ITwin;
-    const result2 = await runCommand<ITwin>(`itwin create --name IntegrationTestITwinChild --class Thing --sub-class Asset --parent-id ${testITwin1.id} --status Inactive`);
+    const result2 = await runCommand<ITwin>(`itwin create --name IntegrationTestITwinChild_${new Date().toISOString()} --class Thing --sub-class Asset --parent-id ${testITwin1.id} --status Inactive`);
     testITwin1Child = result2.result as ITwin;
-    const result3 = await runCommand<ITwin>(`itwin create --name OtherIntegrationTestITwin --class Endeavor --sub-class Project --data-center-location "UK South" --iana-time-zone America/Los_Angeles --geographic-location "San Francisco, CA"`);
+    const result3 = await runCommand<ITwin>(`itwin create --name OtherIntegrationTestITwin_${new Date().toISOString()} --class Endeavor --sub-class Project --data-center-location "UK South" --iana-time-zone America/Los_Angeles --geographic-location "San Francisco, CA"`);
     testITwin2 = result3.result as ITwin;
   });
 
   after(async () => {
-    const deleteResult1 = await runCommand(`itwin delete --itwin-id ${testITwin1Child.id}`);
-    const deleteResult2 = await runCommand(`itwin delete --itwin-id ${testITwin1.id}`);
-    const deleteResult3 = await runCommand(`itwin delete --itwin-id ${testITwin2.id}`);
+    const { result: deleteResult1 } = await runCommand(`itwin delete --itwin-id ${testITwin1Child.id}`);
+    const { result: deleteResult2 } = await runCommand(`itwin delete --itwin-id ${testITwin1.id}`);
+    const { result: deleteResult3 } = await runCommand(`itwin delete --itwin-id ${testITwin2.id}`);
 
-    expect(deleteResult1.result).to.have.property('result', 'deleted');
-    expect(deleteResult2.result).to.have.property('result', 'deleted');
-    expect(deleteResult3.result).to.have.property('result', 'deleted');
+    expect(deleteResult1).to.have.property('result', 'deleted');
+    expect(deleteResult2).to.have.property('result', 'deleted');
+    expect(deleteResult3).to.have.property('result', 'deleted');
   })
 
   it('should fail when provided bad subClass', async () => {

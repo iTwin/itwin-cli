@@ -8,9 +8,7 @@ import { expect } from 'chai';
 
 import { 
   createFolder, 
-  createITwin, 
-  deleteFolder, 
-  deleteITwin, 
+  createITwin,  
   getRootFolderId 
 } from '../../utils/helpers';
 import runSuiteIfMainModule from '../../utils/run-suite-if-main-module';
@@ -25,7 +23,7 @@ const tests = () => describe('create + upload + complete + delete', () => {
   const description = 'Test description';
 
   before(async () => {
-    const testITwin = await createITwin('IntegrationTestITwin', 'Thing', 'Asset');
+    const testITwin = await createITwin(`cli-itwin-integration-test-${new Date().toISOString()}`, 'Thing', 'Asset');
     testITwinId = testITwin.id as string;
     rootFolderId = await getRootFolderId(testITwinId);
     const testFolder = await createFolder(rootFolderId, 'IntegrationTestFolder', 'Test description');
@@ -33,8 +31,11 @@ const tests = () => describe('create + upload + complete + delete', () => {
   });
 
   after(async () => {
-    await deleteFolder(testFolderId);
-    await deleteITwin(testITwinId);
+    const { result: folderDeleteResult } = await runCommand(`storage folder delete --folder-id ${testFolderId}`);
+    const { result: itwinDeleteResult } = await runCommand(`itwin delete --itwin-id ${testITwinId}`);
+
+    expect(folderDeleteResult).to.have.property('result', 'deleted');
+    expect(itwinDeleteResult).to.have.property('result', 'deleted');
   });
 
   it('should create a new file meta data', async () => {

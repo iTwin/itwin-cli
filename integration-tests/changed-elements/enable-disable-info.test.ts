@@ -12,20 +12,22 @@ import { resultResponse } from '../utils/result-response';
 import runSuiteIfMainModule from '../utils/run-suite-if-main-module';
 
 const tests = () => describe('enable + disable + info', () => {
-  const testIModelName = `IntegrationTestIModel-${new Date().toISOString()}`;
   let testIModelId: string;
   let testITwinId: string;
 
   before(async () => {
-    const testITwin = await createITwin('IntegrationTestITwin', 'Thing', 'Asset');
+    const testITwin = await createITwin(`cli-itwin-integration-test-${new Date().toISOString()}`, 'Thing', 'Asset');
     testITwinId = testITwin.id as string;
-    const testIModel = await createIModel(testIModelName, testITwinId);
+    const testIModel = await createIModel(`cli-imodel-integration-test--${new Date().toISOString()}`, testITwinId);
     testIModelId = testIModel.id;
   });
 
   after(async () => {
-    await runCommand(`imodel delete --imodel-id ${testIModelId}`);
-    await runCommand(`itwin delete --itwin-id ${testITwinId}`);
+    const { result: imodelDeleteResult } = await runCommand(`imodel delete --imodel-id ${testIModelId}`);
+    const { result: itwinDeleteResult } = await runCommand(`itwin delete --itwin-id ${testITwinId}`);
+
+    expect(imodelDeleteResult).to.have.property('result', 'deleted');
+    expect(itwinDeleteResult).to.have.property('result', 'deleted');
   });
 
   it('should have enabled change tracking', async () => {

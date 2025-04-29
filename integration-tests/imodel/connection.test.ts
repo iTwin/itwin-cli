@@ -6,13 +6,10 @@
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
-import { createFile, createIModel, createITwin, deleteFile, deleteIModel, deleteITwin, getRootFolderId } from '../utils/helpers';
+import { createFile, createIModel, createITwin, getRootFolderId } from '../utils/helpers';
 import runSuiteIfMainModule from '../utils/run-suite-if-main-module';
 
 const tests = () => describe('connection', () => {
-  const testFileName = 'test.zip';
-  const testFilePath = 'integration-tests/test.zip';
-  const testIModelName = 'IntegrationTestIModel';
   let testITwinId: string;
   let testIModelId: string;
   let rootFolderId: string;
@@ -20,19 +17,23 @@ const tests = () => describe('connection', () => {
   let connectionId: string;
 
   before(async () => {
-    const testITwin = await createITwin('IntegrationTestITwin', 'Thing', 'Asset');
+    const testITwin = await createITwin(`cli-itwin-integration-test--${new Date().toISOString()}`, 'Thing', 'Asset');
     testITwinId = testITwin.id as string;
-    const testIModel = await createIModel(testIModelName, testITwinId);
+    const testIModel = await createIModel(`cli-imodel-integration-test--${new Date().toISOString()}`, testITwinId);
     testIModelId = testIModel.id;
     rootFolderId = await getRootFolderId(testITwinId);
-    const testFile = await createFile(rootFolderId, testFileName, testFilePath);
+    const testFile = await createFile(rootFolderId, 'test.zip', 'integration-tests/test.zip');
     testFileId = testFile.id as string;
   });
 
   after(async () => {
-    await deleteFile(testFileId)
-    await deleteIModel(testIModelId);
-    await deleteITwin(testITwinId);
+    const { result: fileDeleteResult} = await runCommand(`storage file delete --file-id ${testFileId}`);
+    const { result: imodelDeleteResult } = await runCommand(`imodel delete --imodel-id ${testIModelId}`);
+    const { result: itwinDeleteResult } = await runCommand(`itwin delete --itwin-id ${testITwinId}`);
+
+    expect(fileDeleteResult).to.have.property('result', 'deleted');
+    expect(imodelDeleteResult).to.have.property('result', 'deleted');
+    expect(itwinDeleteResult).to.have.property('result', 'deleted');
   });
 
   it('should add a connection', async () => {

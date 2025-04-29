@@ -17,9 +17,9 @@ const tests = () => describe('populate', () => {
   let testITwinId: string;
 
   before(async () => {
-    const testITwin = await createITwin('IntegrationTestITwin', 'Thing', 'Asset');
+    const testITwin = await createITwin(`cli-itwin-integration-test-${new Date().toISOString()}`, 'Thing', 'Asset');
     testITwinId = testITwin.id!;
-    const testIModel = await createIModel('IntegrationTestIModel', testITwinId);
+    const testIModel = await createIModel(`cli-imodel-integration-test-${new Date().toISOString()}`, testITwinId);
     testIModelId = testIModel.id!;
     const rootFolderId = await getRootFolderId(testITwinId);
     const testFile = await createFile(rootFolderId, testFileName, testFilePath);
@@ -27,13 +27,13 @@ const tests = () => describe('populate', () => {
   });
 
   after(async () => {
-    const fileDeleteResult = await runCommand(`storage file delete --file-id ${testFileId}`);
-    const iModelDeleteResult = await runCommand(`imodel delete --imodel-id ${testIModelId}`);
-    const iTwinDeleteResult = await runCommand(`itwin delete --itwin-id ${testITwinId}`);
+    const { result: fileDeleteResult } = await runCommand(`storage file delete --file-id ${testFileId}`);
+    const { result: iModelDeleteResult } = await runCommand(`imodel delete --imodel-id ${testIModelId}`);
+    const { result: iTwinDeleteResult } = await runCommand(`itwin delete --itwin-id ${testITwinId}`);
 
-    expect(fileDeleteResult.result).to.have.property('result', 'deleted');
-    expect(iModelDeleteResult.result).to.have.property('result', 'deleted');
-    expect(iTwinDeleteResult.result).to.have.property('result', 'deleted');
+    expect(fileDeleteResult).to.have.property('result', 'deleted');
+    expect(iModelDeleteResult).to.have.property('result', 'deleted');
+    expect(iTwinDeleteResult).to.have.property('result', 'deleted');
   });
 
   it('should populate the iModel with the uploaded file', async () => {

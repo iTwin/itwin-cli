@@ -6,7 +6,7 @@
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
-import { createITwin, deleteITwin } from '../utils/helpers';
+import { createITwin } from '../utils/helpers';
 import runSuiteIfMainModule from '../utils/run-suite-if-main-module';
 
 const tests = () => describe('repository', () => {
@@ -17,12 +17,13 @@ const tests = () => describe('repository', () => {
   let iModelUri: string;
 
   before(async () => {
-    const testITwin = await createITwin('IntegrationTestITwin', 'Thing', 'Asset');
+    const testITwin = await createITwin(`cli-itwin-integration-test-${new Date().toISOString()}`, 'Thing', 'Asset');
     testITwinId = testITwin.id as string;
   });
 
   after(async () => {
-    await deleteITwin(testITwinId);
+    const { result: deleteResult } = await runCommand(`itwin delete --itwin-id ${testITwinId}`);
+    expect(deleteResult).to.have.property('result', 'deleted');
   });
 
   it('should create a new iTwin repository', async () => {
