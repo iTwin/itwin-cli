@@ -10,9 +10,6 @@ import {
   createFile, 
   createFolder,
   createITwin,
-  deleteFile, 
-  deleteFolder,
-  deleteITwin,
   getRootFolderId 
 } from '../../utils/helpers';
 import runSuiteIfMainModule from '../../utils/run-suite-if-main-module';
@@ -28,25 +25,25 @@ const tests = () => describe('update-content', () => {
   const filePath = 'integration-tests/test.csv';
 
   before(async () => {
-    // Create an iTwin to get the root folder
-    const testITwin = await createITwin('IntegrationTestITwin', 'Thing', 'Asset');
+    const testITwin = await createITwin(`cli-itwin-integration-test-${new Date().toISOString()}`, 'Thing', 'Asset');
     testITwinId = testITwin.id as string;
     rootFolderId = await getRootFolderId(testITwinId);
     
-    // Create a folder inside the root folder
     const testFolder = await createFolder(rootFolderId, 'IntegrationTestFolder', 'Test description');
     testFolderId = testFolder.id as string;
     
-    // Create a test file inside the folder
     const createdFile = await createFile(testFolderId, displayName, filePath, description);
     testFileId = createdFile.id as string;
   });
 
   after(async () => {
-    // Cleanup: Delete the test file, folder, and iTwin after tests are complete
-    await deleteFile(testFileId);
-    await deleteFolder(testFolderId);
-    await deleteITwin(testITwinId);
+    const { result: fileDeleteResult } = await runCommand(`storage file delete --file-id ${testFileId}`);
+    const { result: folderDeleteResult } = await runCommand(`storage folder delete --folder-id ${testFolderId}`);
+    const { result: itwinDeleteResult } = await runCommand(`itwin delete --itwin-id ${testITwinId}`);
+
+    expect(fileDeleteResult).to.have.property('result', 'deleted');
+    expect(folderDeleteResult).to.have.property('result', 'deleted');
+    expect(itwinDeleteResult).to.have.property('result', 'deleted');
   });
 
   it('should get URLs to update file content', async () => {

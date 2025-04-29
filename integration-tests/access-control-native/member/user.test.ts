@@ -25,8 +25,8 @@ const tests = () => describe('user', () => {
     });
 
     after(async () => {
-        const result = await runCommand(`itwin delete --itwin-id ${iTwinId}`);
-        expect(result.stdout).to.contain('deleted');
+        const { result: deleteResult } = await runCommand(`itwin delete --itwin-id ${iTwinId}`);
+        expect(deleteResult).to.have.property('result', 'deleted');
     });
 
     it('Should add an internal member to an iTwin and remove user member', async () => {

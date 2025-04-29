@@ -10,25 +10,24 @@ import {
   createFolder, 
   createITwin, 
   deleteFolder, 
-  deleteITwin, 
   getRootFolderId, 
 } from '../../utils/helpers';
 import runSuiteIfMainModule from '../../utils/run-suite-if-main-module';
 
 const tests = () => describe('create + delete', () => {
-  const name = 'IntegrationTestITwin';
   const classType = 'Thing';
   const subClass = 'Asset';
   let testITwinId: string;
   let testFolderId: string;
 
   before(async () => {
-    const testITwin = await createITwin(name, classType, subClass);
+    const testITwin = await createITwin(`cli-itwin-integration-test-${new Date().toISOString()}`, classType, subClass);
     testITwinId = testITwin.id as string;
   });
 
   after(async () => {
-    await deleteITwin(testITwinId);
+    const { result: itwinDeleteResult } = await runCommand(`itwin delete --itwin-id ${testITwinId}`);
+    expect(itwinDeleteResult).to.have.property('result', 'deleted');
   });
 
   it('should create a new folder', async () => {

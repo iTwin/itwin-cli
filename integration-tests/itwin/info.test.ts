@@ -6,11 +6,11 @@
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
-import { createITwin, deleteITwin } from '../utils/helpers';
+import { createITwin } from '../utils/helpers';
 import runSuiteIfMainModule from '../utils/run-suite-if-main-module';
 
 const tests = () => describe('info', () => {
-  const name = 'IntegrationTestITwin';
+  const name = `cli-itwin-integration-test-${new Date().toISOString()}`;
   const classType = 'Thing';
   const subClass = 'Asset';
   let testITwinId: string;
@@ -21,13 +21,14 @@ const tests = () => describe('info', () => {
   });
 
   after(async () => {
-    await deleteITwin(testITwinId);
+    const deleteResult = await runCommand(`itwin delete --itwin-id ${testITwinId}`);
+    expect(deleteResult.result).to.have.property('result', 'deleted');
   });
 
   it('should get the iTwin info', async () => {
     const { stdout } = await runCommand(`itwin info --itwin-id ${testITwinId}`);
     const iTwinInfo = JSON.parse(stdout);
-
+    
     expect(iTwinInfo).to.have.property('id', testITwinId);
     expect(iTwinInfo).to.have.property('displayName', name);
     expect(iTwinInfo).to.have.property('class', classType);

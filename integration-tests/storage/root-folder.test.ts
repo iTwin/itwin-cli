@@ -10,25 +10,25 @@ import { expect } from 'chai';
 import { fileTyped } from '../../src/services/storage-client/models/file-typed.js';
 import { folderTyped } from "../../src/services/storage-client/models/folder-typed.js";
 import { itemsWithFolderLink } from "../../src/services/storage-client/models/items-with-folder-link.js";
-import { createFile, createFolder, createITwin, deleteITwin, getRootFolderId } from '../utils/helpers.js';
+import { createFile, createFolder, createITwin, getRootFolderId } from '../utils/helpers.js';
 import runSuiteIfMainModule from '../utils/run-suite-if-main-module.js';
 
 const tests = () => describe('root-folder', () => {
-  const name = 'IntegrationTestITwin';
   let testITwin: ITwin;
   let rootFolderId: string;
   let testFolder: folderTyped;
   let testFile: fileTyped;
 
   before(async () => {
-    testITwin = await createITwin(name, 'Thing', 'Asset');
+    testITwin = await createITwin(`cli-itwin-integration-test-${new Date().toISOString()}`, 'Thing', 'Asset');
     rootFolderId = await getRootFolderId(testITwin.id as string) as string;
     testFolder = await createFolder(rootFolderId, 'IntegrationTestFolder', 'Test description');
     testFile = await createFile(rootFolderId, 'test.zip', 'integration-tests/test.zip');
   });
 
   after(async () => {
-    await deleteITwin(testITwin.id as string);
+    const { result: itwinDeleteResult } = await runCommand(`itwin delete --itwin-id ${testITwin.id}`);
+    expect(itwinDeleteResult).to.have.property('result', 'deleted');
   });
 
   it('should get the root folder with all items', async () => {

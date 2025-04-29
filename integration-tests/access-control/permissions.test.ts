@@ -20,8 +20,8 @@ const tests = () => {
     });
 
     after(async () => {
-        const result = await runCommand(`itwin delete --itwin-id ${iTwinId}`);
-        expect(result.stdout).to.contain('deleted');
+        const { result: deleteResult} = await runCommand(`itwin delete --itwin-id ${iTwinId}`);
+        expect(deleteResult).to.have.property('result', 'deleted');
     });
 
     it('Should retrieve my permissions', async () => {

@@ -31,8 +31,11 @@ const tests = () => describe('Context Integration Tests', () => {
     });
 
     after(async () => {
-      await runCommand(`itwin delete --id ${iTwin.id}`);
-      await runCommand(`itwin delete --id ${anotherITwin.id}`);
+      const { result: deleteResult1 } = await runCommand(`itwin delete -i ${iTwin.id}`);
+      const { result: deleteResult2 } = await runCommand(`itwin delete -i ${anotherITwin.id}`);
+
+      expect(deleteResult1).to.have.property('result', 'deleted');
+      expect(deleteResult2).to.have.property('result', 'deleted');
     });
 
     beforeEach(async () => {
