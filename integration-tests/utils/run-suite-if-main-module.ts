@@ -16,7 +16,11 @@ import { isNativeAuthAccessTokenCached } from './helpers';
  */
 function isMainModule(meta: {url: string}) {
     for (const arg of process.argv) {
-        if (!meta || !arg || arg.match(/integration-tests\/.*\.test\.ts/) === null) {
+        if(arg.match(/integration-tests\/.*\.test\.ts/) === null) {
+            continue;
+        }
+
+        if (!meta || !arg) {
             return false;
         }
     
