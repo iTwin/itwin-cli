@@ -76,10 +76,7 @@ jobs:
 
       - name: Test (Service Client)
         shell: pwsh
-        run: |
-          ./node_modules/.bin/mocha.ps1 --forbid-only integration-tests/main-cases/service-client-serial.test.ts |
-          ./node_modules/.bin/mocha.ps1 --forbid-only --parallel integration-tests/main-cases/service-client-parallel/*.test.ts
-        working-directory: .
+        run: ./integration-tests/main-cases/service-client.ps1
         env:
           ITP_API_URL: ${{ vars.ITP_API_URL }}
           ITP_ISSUER_URL: ${{ vars.ITP_ISSUER_URL }}
@@ -112,10 +109,7 @@ jobs:
 
       - name: Test (Native Client)
         shell: pwsh
-        run: |
-          ./node_modules/.bin/mocha.ps1 --forbid-only integration-tests/main-cases/native-client-serial.test.ts
-          ./node_modules/.bin/mocha.ps1 --forbid-only --parallel integration-tests/main-cases/native-client-parallel/*.test.ts
-        working-directory: .
+        run: ./integration-tests/main-cases/native-client.ps1
         env:
           ITP_API_URL: ${{ vars.ITP_API_URL }}
           ITP_ISSUER_URL: ${{ vars.ITP_ISSUER_URL }}
