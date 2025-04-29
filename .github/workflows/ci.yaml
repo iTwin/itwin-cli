@@ -77,6 +77,7 @@ jobs:
       - name: Test (Service Client)
         shell: pwsh
         run: ./integration-tests/main-cases/service-client.ps1
+        working-directory: .
         env:
           ITP_API_URL: ${{ vars.ITP_API_URL }}
           ITP_ISSUER_URL: ${{ vars.ITP_ISSUER_URL }}
@@ -110,6 +111,7 @@ jobs:
       - name: Test (Native Client)
         shell: pwsh
         run: ./integration-tests/main-cases/native-client.ps1
+        working-directory: .
         env:
           ITP_API_URL: ${{ vars.ITP_API_URL }}
           ITP_ISSUER_URL: ${{ vars.ITP_ISSUER_URL }}
