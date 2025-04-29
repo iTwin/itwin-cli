@@ -48,57 +48,6 @@
             "internalConsoleOptions": "neverOpen"
         },
         {
-            "name": "Debug Formatting Tests",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
-            "type": "node",
-            "request": "launch",
-            "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/mocha",
-            "args": [
-                "--forbid-only",
-                "--timeout",
-                "999999",
-                "integration-tests/main-cases/formatting.test.ts"
-            ],
-            "console": "integratedTerminal",
-            "internalConsoleOptions": "neverOpen"
-        },
-        {
-            "name": "Debug Service Client Tests",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
-            "type": "node",
-            "request": "launch",
-            "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/mocha",
-            "args": [
-                "--forbid-only",
-                "--timeout",
-                "999999",
-                "integration-tests/main-cases/service-client.test.ts"
-            ],
-            "console": "integratedTerminal",
-            "internalConsoleOptions": "neverOpen"
-        },
-        {
-            "name": "Debug Native Client Tests",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
-            "type": "node",
-            "request": "launch",
-            "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/mocha",
-            "args": [
-                "--forbid-only",
-                "--timeout",
-                "999999",
-                "integration-tests/main-cases/native-client.test.ts"
-            ],
-            "console": "integratedTerminal",
-            "internalConsoleOptions": "neverOpen"
-        },
-        {
             "name": "Debug Active Test",
             "skipFiles": [
                 "<node_internals>/**"

@@ -15,21 +15,26 @@ import { isNativeAuthAccessTokenCached } from './helpers';
  * @returns `true`, if the current file is not an import, otherwise `false`
  */
 function isMainModule(meta: {url: string}) {
-    if (!meta || !process.argv[2]) {
-        return false;
+    for (const arg of process.argv) {
+        if (!meta || !arg) {
+            return false;
+        }
+    
+        const currentFilePath = fileURLToPath(meta.url)
+            .replaceAll("\\", "/");
+    
+        const mainFilePath = arg;
+        const mainFilePathRegex = mainFilePath
+            .replaceAll("\\", "/")
+            .replaceAll(".", "\\.")
+            .replaceAll("**", ".*?")
+            .replaceAll("*", ".*?");
+        
+        if(currentFilePath.match(mainFilePathRegex) !== null)
+            return true;
     }
 
-    const currentFilePath = fileURLToPath(meta.url)
-        .replaceAll("\\", "/");
-
-    const mainFilePath = process.argv[2];
-    const mainFilePathRegex = mainFilePath
-        .replaceAll("\\", "/")
-        .replaceAll(".", "\\.")
-        .replaceAll("**", ".*?")
-        .replaceAll("*", ".*?");
-    
-    return currentFilePath.match(mainFilePathRegex) !== null;
+    return false;
 }
 
 // eslint-disable-next-line valid-jsdoc

@@ -163,8 +163,10 @@
     "prepack": "oclif manifest && oclif readme",
     "test": "mocha --forbid-only \"integration-tests/main-cases/*.test.ts\"",
     "test:formatting": "mocha --forbid-only \"integration-tests/main-cases/formatting.test.ts\"",
-    "test:service": "mocha --forbid-only \"integration-tests/main-cases/service-client.test.ts\"",
-    "test:native": "mocha --forbid-only \"integration-tests/main-cases/native-client.test.ts\"",
+    "test:service": "mocha --forbid-only \"integration-tests/main-cases/service-client/service-client.test.ts\"",
+    "test:service-populate": "mocha --forbid-only \"integration-tests/main-cases/service-client/service-client-populate.test.ts\"",
+    "test:native": "mocha --forbid-only \"integration-tests/main-cases/native-client/native-client.test.ts\"",
+    "test:native-populate": "mocha --forbid-only \"integration-tests/main-cases/native-client/native-client-populate.test.ts\"",
     "version": "oclif readme && git add README.md"
   },
   "types": "dist/index.d.ts"

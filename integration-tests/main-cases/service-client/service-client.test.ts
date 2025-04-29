@@ -3,17 +3,17 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import accessControlTests from '../access-control/access-control.test'
-import apiTests from '../api.test'
-import authTests from '../auth/auth.test'
-import authTestsService from  '../auth-service/auth-service.test'
-import changedElementsTests from '../changed-elements/changed-elements.test'
-import contextTests from '../context/context.test'
-import imodelTests from '../imodel/imodel.test'
-import itwinTests from '../itwin/itwin.test'
-import storageTests from '../storage/storage.test'
-import userTests from '../user/user.test'
-import { logoutFromCLI } from '../utils/helpers'
+import accessControlTests from '../../access-control/access-control.test'
+import apiTests from '../../api.test'
+import authTests from '../../auth/auth.test'
+import authTestsService from  '../../auth-service/auth-service.test'
+import changedElementsTests from '../../changed-elements/changed-elements.test'
+import contextTests from '../../context/context.test'
+import imodelTests from '../../imodel/imodel.test'
+import itwinTests from '../../itwin/itwin.test'
+import storageTests from '../../storage/storage.test'
+import userTests from '../../user/user.test'
+import { logoutFromCLI } from '../../utils/helpers'
 
 describe('Service Client Tests', () => {
     before(async () => {
