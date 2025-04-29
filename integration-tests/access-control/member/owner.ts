@@ -28,7 +28,7 @@ const tests = () => {
     });
 
     it('Should invite an external member to an iTwin, accept invitation and remove owner member', async () => {
-        const emailToAdd = 'iTwin.CLI.QA.IntegrationTest@bentley.m8r.co';
+        const emailToAdd = 'APIM.OrgTest.Unassigned.QA@bentley.m8r.co';
         const invitedOwner = await runCommand<ownerResponse>(`access-control member owner add -i ${iTwinId} --email ${emailToAdd}`);
         expect(invitedOwner.result).is.not.undefined;
         expect(invitedOwner.result!.member).is.null;

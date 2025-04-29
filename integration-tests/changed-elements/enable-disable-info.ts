@@ -7,11 +7,11 @@ import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
 import { trackingResponse } from '../../src/services/changed-elements-client/tracking';
-import { createIModel, createITwin, deleteIModel, deleteITwin } from '../utils/helpers';
+import { createIModel, createITwin } from '../utils/helpers';
 import { resultResponse } from '../utils/result-response';
 
 const tests = () => describe('enable + disable + info', () => {
-  const testIModelName = 'IntegrationTestIModel';
+  const testIModelName = `IntegrationTestIModel-${new Date().toISOString()}`;
   let testIModelId: string;
   let testITwinId: string;
 
@@ -23,8 +23,8 @@ const tests = () => describe('enable + disable + info', () => {
   });
 
   after(async () => {
-    await deleteIModel(testIModelId);
-    await deleteITwin(testITwinId);
+    await runCommand(`imodel delete --imodel-id ${testIModelId}`);
+    await runCommand(`itwin delete --itwin-id ${testITwinId}`);
   });
 
   it('should have enabled change tracking', async () => {

@@ -3,15 +3,14 @@ import { ITwin } from "@itwin/itwins-client";
 import { runCommand } from "@oclif/test";
 import { expect } from "chai";
 
-import { loginToCli } from "../utils/helpers";
+import isMainModule from "../utils/is-main-module";
 
-describe('Context Integration Tests', () => {
+const tests = () => describe('Context Integration Tests', () => {
     let iTwin: ITwin;
     let iModel: IModel;
     let anotherITwin: ITwin;
     
     before(async () => {
-      await loginToCli();
       const name = `IntegrationTestITwin_${new Date().toISOString()}`;
       const iTwinResult = await runCommand<ITwin>(`itwin create --name "${name}" --class Thing --sub-class Asset`);
       expect(iTwinResult.error).to.be.undefined;
@@ -116,3 +115,9 @@ describe('Context Integration Tests', () => {
         expect(output.error?.message).to.contain('Requested iModel is not available.');
     });
 });
+
+export default tests;
+
+if (isMainModule(import.meta)) {
+    tests();
+}

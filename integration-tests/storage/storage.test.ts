@@ -3,7 +3,7 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { loginToCli } from "../utils/helpers";
+import isMainModule from "../utils/is-main-module";
 import fileCreateUploadCompleteDeleteTests from "./file/create-upload-complete-delete";
 import fileInfoTests from "./file/info";
 import fileListTests from "./file/list";
@@ -15,11 +15,7 @@ import folderListTests from "./folder/list";
 import folderUpdateTests from "./folder/update";
 import rootFolderTests from "./root-folder";
 
-describe('Storage Integration Tests', () => {
-  beforeEach(async () => {
-    await loginToCli();
-  });
-
+const tests = () => describe('Storage Integration Tests', () => {
   rootFolderTests();
 
   describe('folder', () => {
@@ -37,3 +33,9 @@ describe('Storage Integration Tests', () => {
     fileUpdateContentTests();
   });
 });
+
+export default tests;
+
+if (isMainModule(import.meta)) {
+    tests();
+}

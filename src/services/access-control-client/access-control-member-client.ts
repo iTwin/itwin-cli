@@ -7,7 +7,7 @@ import { ITwinPlatformApiClient, Query } from "../iTwin-api-client.js";
 import { GroupMemberResponse, GroupMembersRequest, GroupMembersResponse } from "./models/group.js";
 import { invitationsResponse } from "./models/invitations.js";
 import { listOfMembers, memberResponse, membersListResponse, membersResponse } from "./models/members.js";
-import { ownerListRepsonse, ownerResponse } from "./models/owner.js";
+import { ownerListResponse, ownerResponse } from "./models/owner.js";
 
 export class AccessControlMemberClient {
     apiVersionHeader = 'application/vnd.bentley.itwin-platform.v2+json';
@@ -97,7 +97,7 @@ export class AccessControlMemberClient {
         });
     }
 
-    async getOwnerList(iTwinId: string): Promise<ownerListRepsonse> {
+    async getOwnerList(iTwinId: string): Promise<ownerListResponse> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `accesscontrol/itwins/${iTwinId}/members/owners`,
             method: 'GET'

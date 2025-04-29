@@ -1,0 +1,48 @@
+/*---------------------------------------------------------------------------------------------
+* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+* See LICENSE.md in the project root for license terms and full copyright notice.
+*--------------------------------------------------------------------------------------------*/
+
+import { ITwin } from "@itwin/itwins-client";
+import { runCommand } from "@oclif/test";
+import { expect } from "chai";
+
+import { groupMember } from "../../../src/services/access-control-client/models/group-members.js";
+import { ownerResponse } from "../../../src/services/access-control-client/models/owner.js";
+
+export default () => describe('owner', () => {
+    let iTwinId: string;
+    const iTwinName: string = `cli-itwin-integration-test-${new Date().toISOString()}`;
+    
+    before(async () => {
+        const iTwin = await runCommand<ITwin>(`itwin create --class Thing --sub-class Asset --name ${iTwinName}`);
+        expect(iTwin.result?.id).is.not.undefined;
+        iTwinId = iTwin.result!.id!;
+    });
+
+    after(async () => {
+        const result = await runCommand(`itwin delete --itwin-id ${iTwinId}`);
+        expect(result.stdout).to.contain('deleted');
+    });
+
+    it('Should add an internal member to an iTwin and remove owner member', async () => {
+        const emailToAdd = 'APIM.Basic.QA-developer@bentley.m8r.co';
+
+        const invitedUser = await runCommand<ownerResponse>(`access-control member owner add --itwin-id ${iTwinId} --email ${emailToAdd}`);
+
+        expect(invitedUser.result).to.not.be.undefined;
+        expect(invitedUser.result!.member).to.not.be.undefined;
+        expect(invitedUser.result!.member.email.toLowerCase()).to.be.equal(emailToAdd.toLowerCase());
+
+        const usersInfo = await runCommand<groupMember[]>(`access-control member owner list --itwin-id ${iTwinId}`);
+        expect(usersInfo.result).is.not.undefined;
+        expect(usersInfo.result!.length).to.be.equal(2);
+        const joinedUser = usersInfo.result?.filter(user => user.email.toLowerCase() === emailToAdd.toLowerCase())[0];
+        expect(joinedUser).to.not.be.undefined;
+
+        const deletionResult = await runCommand<{result: string}>(`access-control member owner delete --itwin-id ${iTwinId} --member-id ${joinedUser?.id}`);
+        expect(deletionResult.result).to.not.be.undefined;
+        expect(deletionResult.result!.result).to.be.equal("deleted");
+    });
+});
+

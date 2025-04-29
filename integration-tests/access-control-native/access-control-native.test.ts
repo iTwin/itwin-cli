@@ -4,27 +4,12 @@
 *--------------------------------------------------------------------------------------------*/
 
 import isMainModule from '../utils/is-main-module';
-import groupTests from "./group";
-import memberTests from "./member/member";
-import permissionTests from "./permissions";
-import roleTests from "./role";
+import groupTests from './group'
+import memberTests from './member/member'
 
-const tests = () => describe('access-control', () => {
-    describe('group', () => {
-        groupTests();
-    });
-
-    describe('role', () => {
-        roleTests();
-    });
-
-    describe('permissions', () => {
-        permissionTests();
-    });
-
-    describe('member', () => {
-        memberTests();
-    });
+const tests = () => describe('Access Control Tests (Native Client)', () => {
+    groupTests();
+    memberTests();
 });
 
 export default tests;
