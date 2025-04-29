@@ -4,7 +4,8 @@ import { runCommand } from "@oclif/test";
 import { expect } from "chai";
 
 import { User } from "../src/services/user-client/models/user.js";
-import isMainModule from "./utils/is-main-module.js";
+import { createITwin } from "./utils/helpers.js";
+import runSuiteIfMainModule from "./utils/run-suite-if-main-module.js";
 
 const tests = () => describe("API Integration Tests", () => {
     let iTwin: ITwin;
@@ -21,7 +22,8 @@ const tests = () => describe("API Integration Tests", () => {
     });
 
     after(async () => {
-        await runCommand(`itwin delete -i ${iTwin.id}`);
+        const { result: itwinDeleteResult } = await runCommand(`itwin delete --itwin-id ${iTwin.id}`);
+        expect(itwinDeleteResult).to.have.property('result', 'deleted');
     });
 
     it("should send a GET request and get user me info", async () => {
@@ -69,9 +71,9 @@ const tests = () => describe("API Integration Tests", () => {
     });
 
     it("should send a DELETE request to delete the iTwin", async () => {
-        const apiResponse = await runCommand(`api --method DELETE --path itwins/${iTwin.id} --empty-response`);
-        expect(apiResponse.error).to.be.undefined;
-        const deleteResponse = JSON.parse(apiResponse.stdout);
+        const createdItwin = await createITwin(`cli-itwin-integration-test-${new Date().toISOString()}`, "Thing", "Asset");
+
+        const {result: deleteResponse} = await runCommand(`api --method DELETE --path itwins/${createdItwin.id} --empty-response`);
         expect(deleteResponse).to.have.property("result").that.is.equal("success");
     });
 
@@ -112,6 +114,4 @@ const tests = () => describe("API Integration Tests", () => {
 
 export default tests;
 
-if (isMainModule(import.meta)) {
-    tests();
-}
+runSuiteIfMainModule(import.meta, tests);

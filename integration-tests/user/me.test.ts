@@ -3,21 +3,20 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import runSuiteIfMainModule from '../utils/run-suite-if-main-module';
-import connectionTests from './connection.test';
-import createDeleteTests from "./create-delete.test";
-import infoTests from "./info.test";
-import listTests from "./list.test";
-import populateTests from './populate.test';
-import updateTests from "./update.test";
+import { runCommand } from '@oclif/test';
+import { expect } from 'chai';
 
-const tests = () => describe('iModel Integration Tests', () => {
-  createDeleteTests();
-  infoTests();
-  updateTests();
-  listTests();
-  connectionTests();
-  populateTests();
+import runSuiteIfMainModule from '../utils/run-suite-if-main-module';
+
+const tests = () => describe('me', () => {
+  it('should retrieve the currently authenticated user', async () => {
+    const { stdout } = await runCommand('user me');
+    const userInfo = JSON.parse(stdout);
+  
+    expect(userInfo).to.have.property('id');
+    expect(userInfo).to.have.property('displayName');
+    expect(userInfo).to.have.property('email');
+  });
 });
 
 export default tests;

@@ -3,10 +3,10 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import isMainModule from "../utils/is-main-module";
-import infoTests from "./info";
-import meTests from "./me"
-import searchTests from "./search";
+import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
+import infoTests from "./info.test";
+import meTests from "./me.test"
+import searchTests from "./search.test";
 
 const tests = () => describe('User Integration Tests', () => {
   infoTests();
@@ -16,6 +16,4 @@ const tests = () => describe('User Integration Tests', () => {
 
 export default tests;
 
-if (isMainModule(import.meta)) {
-    tests();
-}
+runSuiteIfMainModule(import.meta, tests);

@@ -188,7 +188,7 @@ const getNativeAuthAccessToken = async (): Promise<string> => {
     return accessToken!;
 } 
 
-const isNativeAuthAccessTokenCached = ():boolean => {
+export const isNativeAuthAccessTokenCached = (): boolean => {
     const tokenPath = getTokenPathByOS();
     if(fs.existsSync(tokenPath)) {
         const tokenJson = fs.readFileSync(tokenPath, 'utf8');
@@ -204,7 +204,10 @@ const isNativeAuthAccessTokenCached = ():boolean => {
 const getTokenPathByOS = () => {
     switch (os.type()) {
         case 'Linux': {
-            return `${os.homedir()}/.cache/itp/token.json`
+            const cachePath = `${os.homedir()}/.cache/itp`
+            if(!fs.existsSync(cachePath))
+                fs.mkdirSync(cachePath, {recursive: true})
+            return `${cachePath}/token.json`
         }
 
         case 'Windows_NT': {
