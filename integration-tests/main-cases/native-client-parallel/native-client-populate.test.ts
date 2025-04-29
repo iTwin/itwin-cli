@@ -4,15 +4,11 @@
 *--------------------------------------------------------------------------------------------*/
 
 import iModelPopulateTests from '../../imodel/populate.test';
-import { logoutFromCLI, nativeLoginToCli } from '../../utils/helpers';
+import { nativeLoginToCli } from '../../utils/helpers';
 
 describe('Native Client Tests (imodel populate)', async () => {
     before(async () => {
         await nativeLoginToCli();
-    })
-    
-    after(async () => {
-        await logoutFromCLI();
     })
 
     iModelPopulateTests();
