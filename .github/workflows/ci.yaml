@@ -75,10 +75,8 @@ jobs:
           name: build
 
       - name: Test (Service Client)
-        uses: azure/powershell@v2
-        with:
-          inlineScript: ./integration-tests/main-cases/service-client.ps1
-          azPSVersion: "latest"
+        shell: pwsh
+        run: ./integration-tests/main-cases/service-client.ps1
         env:
           ITP_API_URL: ${{ vars.ITP_API_URL }}
           ITP_ISSUER_URL: ${{ vars.ITP_ISSUER_URL }}
@@ -110,10 +108,8 @@ jobs:
           name: build
 
       - name: Test (Native Client)
-        uses: azure/powershell@v2
-        with:
-          inlineScript: ./integration-tests/main-cases/service-client.ps1
-          azPSVersion: "latest"
+        shell: pwsh
+        run: ./integration-tests/main-cases/native-client.ps1
         env:
           ITP_API_URL: ${{ vars.ITP_API_URL }}
           ITP_ISSUER_URL: ${{ vars.ITP_ISSUER_URL }}
