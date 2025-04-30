@@ -64,7 +64,7 @@ jobs:
         run: npm run test:formatting
 
   test_service:
-    name: Test (Service Client)
+    name: Tests (Service Client)
     runs-on: ubuntu-latest
     environment: QA
     needs: build
@@ -87,16 +87,16 @@ jobs:
           name: build
 
       - name: Test (Service Client)
+        run: npm run test:service
         env:
           ITP_API_URL: ${{ vars.ITP_API_URL }}
           ITP_ISSUER_URL: ${{ vars.ITP_ISSUER_URL }}
           ITP_SERVICE_CLIENT_ID: ${{ vars.ITP_SERVICE_CLIENT_ID }}
           ITP_SERVICE_CLIENT_SECRET: ${{ secrets.ITP_SERVICE_CLIENT_SECRET }}
           ITP_MAILINATOR_API_KEY: ${{ secrets.ITP_MAILINATOR_API_KEY }}
-        run: npm run test:service
 
   test_native:
-    name: Test (Native Client)
+    name: Tests (Native Client)
     runs-on: ubuntu-latest
     environment: QA
     needs: build
@@ -119,6 +119,7 @@ jobs:
           name: build
 
       - name: Test (Native Client)
+        run: npm run test:native
         env:
           ITP_API_URL: ${{ vars.ITP_API_URL }}
           ITP_ISSUER_URL: ${{ vars.ITP_ISSUER_URL }}
@@ -126,4 +127,3 @@ jobs:
           ITP_NATIVE_TEST_CLIENT_ID: ${{ vars.ITP_NATIVE_TEST_CLIENT_ID }}
           ITP_TEST_USER_EMAIL: ${{ vars.ITP_TEST_USER_EMAIL }}
           ITP_TEST_USER_PASSWORD: ${{ secrets.ITP_TEST_USER_PASSWORD }}
-        run: npm run test:native

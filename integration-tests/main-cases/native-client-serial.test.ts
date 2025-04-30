@@ -1,0 +1,21 @@
+/*---------------------------------------------------------------------------------------------
+* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+* See LICENSE.md in the project root for license terms and full copyright notice.
+*--------------------------------------------------------------------------------------------*/
+
+import authTests from '../auth/auth.test'
+import { nativeLoginToCli } from '../utils/helpers';
+
+describe('Native Client Tests (serial)', async () => {
+    before(async () => {
+        await nativeLoginToCli();
+    })
+    
+    describe('Authentication Integration Tests', async () =>  {
+        after(async () => {
+            await nativeLoginToCli();
+        })
+        
+        authTests();
+    })
+});
