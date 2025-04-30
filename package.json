@@ -163,9 +163,10 @@
     "prepack": "oclif manifest && oclif readme",
     "test": "mocha --forbid-only \"integration-tests/main-cases/*.test.ts\"",
     "test:formatting": "mocha --forbid-only \"integration-tests/main-cases/formatting.test.ts\"",
-    "test:service": "./integration-tests/main-cases/service-client.ps1",
-    "test:native": "./integration-tests/main-cases/native-client.ps1",
-    "version": "oclif readme && git add README.md"
+    "test:service": "mocha --forbid-only \"integration-tests/main-cases/service-client.test.ts\"",
+    "test:native": "mocha --forbid-only \"integration-tests/main-cases/native-client.test.ts\"",
+    "version": "oclif readme && git add README.md",
+    "docs-generator": "node ./bin/run.js docs-generator"
   },
   "types": "dist/index.d.ts"
 }
