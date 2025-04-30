@@ -87,8 +87,7 @@ jobs:
           name: build
 
       - name: Test (Service Client)
-        shell: pwsh
-        run: ./integration-tests/main-cases/service-client.ps1
+        run: npm run test:service
         env:
           ITP_API_URL: ${{ vars.ITP_API_URL }}
           ITP_ISSUER_URL: ${{ vars.ITP_ISSUER_URL }}
@@ -120,8 +119,7 @@ jobs:
           name: build
 
       - name: Test (Native Client)
-        shell: pwsh
-        run: ./integration-tests/main-cases/native-client.ps1
+        run: npm run test:native
         env:
           ITP_API_URL: ${{ vars.ITP_API_URL }}
           ITP_ISSUER_URL: ${{ vars.ITP_ISSUER_URL }}

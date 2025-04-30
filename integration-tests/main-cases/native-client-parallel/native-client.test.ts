@@ -3,32 +3,16 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import accessControlTests from '../../access-control/access-control.test'
 import accessControlNativeTests from '../../access-control-native/access-control-native.test'
-import apiTests from '../../api.test'
-import changedElementsTests from '../../changed-elements/changed-elements.test'
-import contextTests from '../../context/context.test'
-import imodelTests from '../../imodel/imodel.test'
-import itwinTests from '../../itwin/itwin.test'
-import storageTests from '../../storage/storage.test'
-import userTests from '../../user/user.test'
 import { nativeLoginToCli } from '../../utils/helpers';
+import sharedQuickUseCasesParallel from '../shared-quick-use-cases-parallel';
 
 describe('Native Client Tests', async () => {
     before(async () => {
         await nativeLoginToCli();
     })
     
-    describe('Access Control tests', () => {
-        accessControlTests();
-        accessControlNativeTests();
-    });
+    accessControlNativeTests();
+    sharedQuickUseCasesParallel();
 
-    apiTests();
-    changedElementsTests();
-    contextTests();
-    imodelTests();
-    itwinTests();
-    storageTests();
-    userTests();
 });
