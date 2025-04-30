@@ -8,7 +8,6 @@ import connectionTests from './connection.test';
 import createDeleteTests from "./create-delete.test";
 import infoTests from "./info.test";
 import listTests from "./list.test";
-import populateTests from './populate.test';
 import updateTests from "./update.test";
 
 const tests = () => describe('iModel Integration Tests', () => {
@@ -17,7 +16,6 @@ const tests = () => describe('iModel Integration Tests', () => {
   updateTests();
   listTests();
   connectionTests();
-  populateTests();
 });
 
 export default tests;
