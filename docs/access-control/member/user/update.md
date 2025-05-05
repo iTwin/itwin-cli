@@ -13,7 +13,7 @@ Update the role assignments for a user in an iTwin.
   **Type:** `string` **Required:** Yes
 
 - **`--role-id`**  
-  A list of role IDs to assign to the user.  
+  A list of role IDs to assign to the user. Max amount of 50.  
   **Type:** `string` **Required:** Yes **Multiple:** Yes
 
 ## Examples

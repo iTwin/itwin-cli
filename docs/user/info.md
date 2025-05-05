@@ -5,7 +5,7 @@ Retrieve information about specific users based on their user IDs.
 ## Options
 
 - **`--user-id`**  
-  User IDs to retrieve information for.  
+  User IDs to retrieve information for. Max amount of 1000.  
   **Type:** `string` **Required:** Yes **Multiple:** Yes
 
 ## Examples

@@ -30,7 +30,7 @@ export default class AddUserMembers extends BaseCommand {
         description: 'The ID of the iTwin to which the users will be added.'
       }),
       members: Flags.string({
-        description: 'A list of members to add, each with an email and a list of role IDs.',
+        description: 'A list of members to add, each with an email and a list of role IDs. A maximum of 50 role assignments can be performed.',
         helpValue: '<string>',
         required: true,
       }),
@@ -42,6 +42,15 @@ export default class AddUserMembers extends BaseCommand {
       const client = await this.getAccessControlMemberClient();
   
       const members = JSON.parse(flags.members) as addMember[];
+
+      let roleAssignmentCount = 0;
+      for (const member of members)
+        roleAssignmentCount += member.roleIds.length;
+  
+      if(roleAssignmentCount > 50) {
+        this.error("A maximum of 50 role assignments can be performed.");
+      }
+
       const response = await client.addUserMembers(flags["itwin-id"], {
         members,
       });

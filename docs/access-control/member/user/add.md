@@ -9,7 +9,7 @@ Add one or more user members to an iTwin.
   **Type:** `string` **Required:** Yes
 
 - **`--members`**  
-  A list of members to add, each with an email and a list of role IDs.  
+  A list of members to add, each with an email and a list of role IDs. A maximum of 50 role assignments can be performed.  
   **Type:** `string` **Required:** Yes
 
 ## Examples

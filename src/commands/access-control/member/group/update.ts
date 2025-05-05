@@ -35,7 +35,7 @@ export default class UpdateGroupMember extends BaseCommand {
         description: 'The ID of the iTwin to which the groups will be added.'
       }),
       "role-id": Flags.string({
-        description: 'A list of role IDs to assign to the group.',
+        description: 'A list of role IDs to assign to the group. Max amount of 50.',
         helpValue: '<string>',
         multiple: true,
         required: true,
@@ -45,6 +45,10 @@ export default class UpdateGroupMember extends BaseCommand {
     async run() {
       const { flags } = await this.parse(UpdateGroupMember);
   
+      if(flags['role-id'] !== undefined && flags["role-id"]!.length > 50) {
+        this.error("A maximum of 50 roles can be assigned.");
+      }
+
       const client = await this.getAccessControlMemberClient();
   
       const response = await client.updateGroupMember(flags["itwin-id"], flags["group-id"], flags["role-id"]);

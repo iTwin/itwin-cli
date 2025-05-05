@@ -13,7 +13,7 @@ Update the role assignments for a group in an iTwin.
   **Type:** `string` **Required:** Yes
 
 - **`--role-id`**  
-  A list of role IDs to assign to the group.  
+  A list of role IDs to assign to the group. Max amount of 50.  
   **Type:** `string` **Required:** Yes **Multiple:** Yes
 
 ## Examples
