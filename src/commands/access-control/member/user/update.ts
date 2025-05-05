@@ -34,7 +34,7 @@ export default class UpdateUserMember extends BaseCommand {
         required: true,
       }),
       "role-id": Flags.string({
-        description: 'A list of role IDs to assign to the user.',
+        description: 'A list of role IDs to assign to the user. Max amount of 50.',
         helpValue: '<string>',
         multiple: true,
         required: true,
@@ -44,6 +44,10 @@ export default class UpdateUserMember extends BaseCommand {
     async run() {
       const { flags } = await this.parse(UpdateUserMember);
   
+      if(flags['role-id'] !== undefined && flags["role-id"]!.length > 50) {
+        this.error("A maximum of 50 roles can be assigned.");
+      }
+
       const client = await this.getAccessControlMemberClient();
   
       const response = await client.updateUserMember(flags["itwin-id"], flags["member-id"], flags["role-id"]);

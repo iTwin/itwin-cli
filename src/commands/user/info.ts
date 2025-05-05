@@ -25,7 +25,7 @@ export default class UserInfo extends BaseCommand {
 
     static flags = {
       "user-id": Flags.string({ 
-        description: "User IDs to retrieve information for.", 
+        description: "User IDs to retrieve information for. Max amount of 1000.", 
         helpValue: '<string>',
         multiple: true,
         required: true
@@ -35,6 +35,10 @@ export default class UserInfo extends BaseCommand {
     async run() {
       const { flags } = await this.parse(UserInfo);
   
+      if(flags["user-id"] !== undefined && flags["user-id"]!.length > 1000) {
+        this.error("A maximum of 1000 user IDs can be provided.");
+      }
+
       const client = await this.getUserApiClient();
       const response = await client.getUsers(flags["user-id"]);
   
