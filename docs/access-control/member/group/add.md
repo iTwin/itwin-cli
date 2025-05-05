@@ -5,7 +5,7 @@ Add one or more groups as members to an iTwin.
 ## Options
 
 - **`--groups`**  
-  A list of groups to add, each with a groupId and roleIds.  
+  A list of groups to add, each with a groupId and roleIds. A maximum of 50 role assignments can be performed.  
   **Type:** `string` **Required:** Yes
 
 - **`-i, --itwin-id`**  

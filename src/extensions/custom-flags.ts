@@ -11,12 +11,12 @@ export class CustomFlags {
     });
 
     static iTwinIDFlag = (config : CustomFlagConfig) => Flags.string({ 
-            char: 'i', 
-            description: config.description,
-            env: 'ITP_ITWIN_ID', 
-            helpValue: '<string>',
-            required: true
-          })
+        char: 'i', 
+        description: config.description,
+        env: 'ITP_ITWIN_ID', 
+        helpValue: '<string>',
+        required: true
+    })
 }
 
 export type CustomFlagConfig = {

@@ -86,6 +86,39 @@ const tests = () => {
         expect(resultDelete.error).to.be.undefined;
         expect(resultDelete.stdout).to.contain('deleted');
     });
+
+    it('Should fail to add iTwin group members, when there are too many role assignments', async () => {
+        const groups: {groupId: string, roleIds:string[]}[] = [];
+        for(let i = 0; i < 11; i++) {
+            groups.push({
+                groupId: crypto.randomUUID(),
+                roleIds: [
+                    crypto.randomUUID(),
+                    crypto.randomUUID(),
+                    crypto.randomUUID(),
+                    crypto.randomUUID(),
+                    crypto.randomUUID(),
+                ]
+            })
+        }
+        
+        const serializedGroupsInfo = JSON.stringify(groups);
+
+        const result = await runCommand<GroupMemberInfo[]>(`access-control member group add --itwin-id ${iTwinId} --groups ${serializedGroupsInfo}`);
+        expect(result.error).to.not.be.undefined;
+        expect(result.error?.message).to.be.equal('A maximum of 50 role assignments can be performed.');
+    });
+
+    it('Should fail to update iTwin group, when there are too many roles assigned', async () => {
+        let command = `access-control member group update --itwin-id ${iTwinId} --group-id ${groupId}`;
+
+        for(let i = 0; i < 51; i++)
+            command += ` --role-id role${i}`
+
+        const result = await runCommand<GroupMemberInfo[]>(command);
+        expect(result.error).to.not.be.undefined;
+        expect(result.error?.message).to.be.equal('A maximum of 50 roles can be assigned.');
+    });
 };
 
 export default tests;

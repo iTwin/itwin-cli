@@ -41,7 +41,7 @@ export default class UpdateAccessControlGroup extends BaseCommand {
         required: true,
       }),
       "ims-group": Flags.string({
-        description: 'A list of IMS Groups to be linked to the group.',
+        description: 'A list of IMS Groups to be linked to the group. Max amount of 50.',
         helpValue: '<string>',
         multiple: true,
       }),
@@ -49,7 +49,7 @@ export default class UpdateAccessControlGroup extends BaseCommand {
         description: 'The ID of the iTwin where the group exists.'
       }),
       member: Flags.string({
-        description: 'A list of members (emails) to be assigned to the group.',
+        description: 'A list of members (emails) to be assigned to the group. Max amount of 50.',
         helpValue: '<string>',
         multiple: true,
       }),
@@ -62,7 +62,15 @@ export default class UpdateAccessControlGroup extends BaseCommand {
   
     async run() {
       const { flags } = await this.parse(UpdateAccessControlGroup);
-  
+   
+      if(flags['ims-group'] !== undefined && flags["ims-group"]!.length > 50) {
+        this.error("A maximum of 50 ims groups can be provided.");
+      }
+
+      if(flags.member !== undefined && flags.member!.length > 50) {
+        this.error("A maximum of 50 members can be provided.");
+      }
+
       const client = await this.getAccessControlApiClient();
   
       const response = await client.updateGroup(flags["itwin-id"], flags["group-id"], {
@@ -71,7 +79,7 @@ export default class UpdateAccessControlGroup extends BaseCommand {
         members: flags.member,
         name: flags.name,
       });
-  
+
       return this.logAndReturnResult(response.group);
     }
   }

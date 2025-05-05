@@ -30,6 +30,17 @@ const tests = () => describe('info', () => {
     expect(result.error).to.be.not.undefined;
     expect(result.error!.message).to.include('Invalid request body');
   });
+
+  it('should return an error for too many user IDs', async () => {
+    let command = "user info"
+    for(let i = 0; i < 1001; i++) {
+      command += ` --user-id ${crypto.randomUUID()}`
+    }
+
+    const result = await runCommand(command);
+    expect(result.error).to.be.not.undefined;
+    expect(result.error?.message).to.be.equal('A maximum of 1000 user IDs can be provided.')
+  });
 });
 
 export default tests;

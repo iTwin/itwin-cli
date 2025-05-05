@@ -89,6 +89,41 @@ const tests = () => {
         expect(updateMemberResult.result!.roles.some(role => role.id === usersInfo.result![0].roles[0].id)).to.be.true;
     });
 
+    it('Should fail to add iTwin user members, when there are too many role assignments', async () => {
+        const members: {email: string, roleIds:string[]}[] = [];
+        for(let i = 0; i < 11; i++) {
+            members.push({
+                email: `email${i}@bentley.m8r.co`,
+                roleIds: [
+                    crypto.randomUUID(),
+                    crypto.randomUUID(),
+                    crypto.randomUUID(),
+                    crypto.randomUUID(),
+                    crypto.randomUUID(),
+                ]
+            })
+        }
+        
+        const serializedMembersInfo = JSON.stringify(members);
+
+        const result = await runCommand<membersResponse>(`access-control member user add --itwin-id ${iTwinId} --members ${serializedMembersInfo}`);
+        expect(result.error).to.not.be.undefined;
+        expect(result.error?.message).to.be.equal('A maximum of 50 role assignments can be performed.');
+    });
+
+    it('Should fail to update iTwin group, when there are too many roles assigned', async () => { 
+        const usersInfo = await runCommand<member[]>(`access-control member user list --itwin-id ${iTwinId}`);
+        expect(usersInfo.result).is.not.undefined;
+        expect(usersInfo.result!.length).to.be.equal(1);
+
+        let command = `access-control member user update --itwin-id ${iTwinId} --member-id ${usersInfo.result![0].id}`;
+        for(let i = 0; i < 51; i++)
+            command += ` --role-id role${i}`
+
+        const result = await runCommand<membersResponse>(command);
+        expect(result.error).to.not.be.undefined;
+        expect(result.error?.message).to.be.equal('A maximum of 50 roles can be assigned.');
+    });
 };
 
 export default tests;
