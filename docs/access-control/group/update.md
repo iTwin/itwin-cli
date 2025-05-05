@@ -17,11 +17,11 @@ Update the details of an existing group in an iTwin.
   **Type:** `string` **Required:** No
 
 - **`--ims-group`**  
-  A list of IMS Groups to be linked to the group.  
+  A list of IMS Groups to be linked to the group. Max amount of 50.  
   **Type:** `string` **Required:** No **Multiple:** Yes
 
 - **`--member`**  
-  A list of members (emails) to be assigned to the group.  
+  A list of members (emails) to be assigned to the group. Max amount of 50.  
   **Type:** `string` **Required:** No **Multiple:** Yes
 
 - **`-n, --name`**  
