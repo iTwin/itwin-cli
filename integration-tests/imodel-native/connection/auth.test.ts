@@ -11,7 +11,7 @@ import { storageConnection } from '../../../src/services/synchronizationClient/m
 import { createFile, createIModel, createITwin, getRootFolderId } from '../../utils/helpers';
 import runSuiteIfMainModule from '../../utils/run-suite-if-main-module';
 
-const tests = () => describe('auth', () => {
+const tests = () => describe('imodel connection auth', () => {
   let testITwinId: string;
   let testIModelId: string;
   let rootFolderId: string;

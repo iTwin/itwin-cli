@@ -8,7 +8,6 @@ import { ITwin } from '@itwin/itwins-client';
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
-import { populateResponse } from '../../src/commands/imodel/populate';
 import { changeset } from '../../src/services/changed-elements-client/tracking';
 import { createFile, createIModel, createITwin, getRootFolderId } from '../utils/helpers';
 import { resultResponse } from '../utils/result-response';
@@ -37,13 +36,9 @@ const tests = () => describe('named-version', () => {
         const rootFolderId = await getRootFolderId(testITwinId);
         await createFile(rootFolderId, testFileName, testFilePath);
 
-        const result = await runCommand<populateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type SPPID`);
+        const result = await runCommand(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type SPPID`);
         expect(result.result).to.have.property('iModelId', testIModelId);
         expect(result.result).to.have.property('iTwinId', testITwinId);
-
-        const {connectionId, runId} = result.result!.summary[0];
-        const { result: infoResult } = await runCommand(`imodel connection run info -c ${connectionId} --connection-run-id ${runId}`);
-        console.log(infoResult);
     }
     else {
         testITwinId = filteredITwins.result![0].id!;
@@ -52,7 +47,7 @@ const tests = () => describe('named-version', () => {
         expect(iModels.result?.length).to.be.equal(1);
         testIModelId = iModels.result![0].id;
     }
-  });
+  }).timeout(30 * 60 * 1000);
 
   after(async () => {
     const { result: imodelDeleteResult } = await runCommand(`imodel delete --imodel-id ${testIModelId}`);

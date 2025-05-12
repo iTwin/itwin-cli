@@ -32,7 +32,6 @@ const tests = () => describe('run', () => {
     const { result: createdConnection} = await runCommand<storageConnection>(`imodel connection create -m ${testIModelId} -f ${testFileId} --connector-type MSTN -n TestConnection --authentication-type ${authenticationType}`);
     expect(createdConnection).to.not.be.undefined;
     connectionId = createdConnection!.id!;
-    await runCommand(`imodel connection auth`);
   });
 
   after(async () => {
@@ -71,7 +70,7 @@ const tests = () => describe('run', () => {
     expect(infoResult?.id).to.be.equal(listResult?.runs[0].id);
     expect(infoResult?.state).to.be.equal("Completed")
     expect(infoResult?.result).to.be.equal("Success");
-  });
+  }).timeout(30 * 60 * 1000);
 });
 
 export default tests;

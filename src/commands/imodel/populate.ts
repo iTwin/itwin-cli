@@ -20,7 +20,7 @@ import { authInfo } from "../../services/synchronizationClient/models/connection
 import { connectorType } from "../../services/synchronizationClient/models/connector-type.js"
 import { executionState } from "../../services/synchronizationClient/models/execution-state.js"
 import { sourceFile } from "../../services/synchronizationClient/models/source-file.js"
-import { StorageConnection } from "../../services/synchronizationClient/models/storage-connection.js"
+import { storageConnection } from "../../services/synchronizationClient/models/storage-connection.js"
 import { storageConnectionListResponse } from "../../services/synchronizationClient/models/storage-connection-response.js"
 import { storageRun } from "../../services/synchronizationClient/models/storage-run.js"
 
@@ -207,14 +207,14 @@ export default class PopulateIModel extends BaseCommand {
     return newFile._links.completeUrl.href.split('/')[5];
   }
 
-  private async findOrCreateDefaultConnection(existingConnections: StorageConnection[], fileIds: { connectorType: connectorType, fileId: string, fileName: string }[], iModelId: string): Promise<string> {
+  private async findOrCreateDefaultConnection(existingConnections: storageConnection[], fileIds: { connectorType: connectorType, fileId: string, fileName: string }[], iModelId: string): Promise<string> {
     let defaultConnection = existingConnections.find(connection => connection.displayName === 'Default iTwinCLI Connection');
     if (!defaultConnection) {
       const authInfo = await this.runCommand<authorizationInformation>('auth:info', []);
       const authType = authInfo.authorizationType === 'Service' ? 'Service' : 'User';
 
       this.log(`Creating new default connection`);
-      defaultConnection = await this.runCommand<StorageConnection>('imodel:connection:create', ['--imodel-id', iModelId, '--connector-type', fileIds[0].connectorType, '--file-id', fileIds[0].fileId, '--authentication-type', authType, '--name', 'Default iTwinCLI Connection']);
+      defaultConnection = await this.runCommand<storageConnection>('imodel:connection:create', ['--imodel-id', iModelId, '--connector-type', fileIds[0].connectorType, '--file-id', fileIds[0].fileId, '--authentication-type', authType, '--name', 'Default iTwinCLI Connection']);
       if (defaultConnection?.id === undefined) {
         this.error("Storage connection id was not present");
       }
@@ -235,7 +235,7 @@ export default class PopulateIModel extends BaseCommand {
   }
 
   private async runSynchronization(connectionId: string, waitForCompletion: boolean): Promise<string> {
-    const storageConnection = await this.runCommand<StorageConnection>('imodel:connection:info', ['--connection-id', connectionId]);
+    const storageConnection = await this.runCommand<storageConnection>('imodel:connection:info', ['--connection-id', connectionId]);
     if (!storageConnection?._links?.lastRun?.href) {
       this.error(`No last run link available for storage connection: ${connectionId}`);
     }
