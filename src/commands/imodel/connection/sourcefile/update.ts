@@ -19,7 +19,7 @@ export default class ConnectionSourceFileUpdate extends BaseCommand {
 
     static examples = [
       {
-        command: `<%= config.bin %> <%= command.id %> --connection-id bf4d8b36-25d7-4b72-b38b-12c1f0325f42 --source-file-id 297c8ab9-53a3-4fe5-adf8-79b4c1a95cbb --connector-type DWG`,
+        command: `<%= config.bin %> <%= command.id %> --connection-id bf4d8b36-25d7-4b72-b38b-12c1f0325f42 --source-file-id 297c8ab9-53a3-4fe5-adf8-79b4c1a95cbb --connector-type DWG --storage-file-id b67d9839-2663-4465-a425-d1541d32e4c7`,
         description: 'Example 1:'
       }
     ];

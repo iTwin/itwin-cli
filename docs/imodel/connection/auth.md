@@ -1,6 +1,6 @@
 # itp imodel connection auth
 
-Ensures the user has a valid token for long-running connection tasks. This must be called before starting a connection run.
+Ensures the user has a valid token for long-running connection tasks. This must be called before starting a connection run with User authenticationType.
 
 ## Options
 
