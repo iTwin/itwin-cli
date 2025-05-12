@@ -44,6 +44,11 @@ export default class ConnectionSourceFileUpdate extends BaseCommand {
         helpValue: '<string>',
         required: true,
       }),
+      "storage-file-id": Flags.string({
+        description: 'The storage file ID to update to.',
+        helpValue: '<string>',
+        required: true
+      })
     };
   
     async run() {
@@ -53,7 +58,7 @@ export default class ConnectionSourceFileUpdate extends BaseCommand {
   
       const response = await client.updateSourceFile(flags["connection-id"], flags["source-file-id"], {
         connectorType: flags["connector-type"] as connectorType,
-        storageFileId: flags["source-file-id"],
+        storageFileId: flags["storage-file-id"],
       });
   
       return this.logAndReturnResult(response.sourceFile);

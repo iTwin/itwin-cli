@@ -3,13 +3,13 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { authenticationType } from "./authentication-type.js";
-import { connectionLinks } from "./connection-links.js";
+import iModelConnectionRunTests from '../../imodel/connection/run.test';
+import { logoutFromCLI } from '../../utils/helpers';
 
-export type storageConnection = {
-    _links: connectionLinks;
-    authenticationType: authenticationType;
-    displayName: string;
-    iModelId: string;
-    id: string;
-};
+describe('Service Client Tests (imodel connection run)', async () => {
+    before(async () => {
+        await logoutFromCLI();
+    })
+    
+    iModelConnectionRunTests();
+});

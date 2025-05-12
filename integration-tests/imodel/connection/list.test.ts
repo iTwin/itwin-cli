@@ -1,0 +1,84 @@
+/*---------------------------------------------------------------------------------------------
+* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+* See LICENSE.md in the project root for license terms and full copyright notice.
+*--------------------------------------------------------------------------------------------*/
+
+import { runCommand } from '@oclif/test';
+import { expect } from 'chai';
+
+import { storageConnection } from '../../../src/services/synchronizationClient/models/storage-connection';
+import { storageConnectionListResponse } from '../../../src/services/synchronizationClient/models/storage-connection-response';
+import { createFile, createIModel, createITwin, getRootFolderId } from '../../utils/helpers';
+import runSuiteIfMainModule from '../../utils/run-suite-if-main-module';
+
+const tests = () => describe('list', () => {
+  let testITwinId: string;
+  let testIModelId: string;
+  let rootFolderId: string;
+  let testFileId1: string;
+  let testFileId2: string;
+  let connectionId1: string;
+  let connectionId2: string;
+
+  before(async () => {
+    const testITwin = await createITwin(`cli-itwin-integration-test--${new Date().toISOString()}`, 'Thing', 'Asset');
+    testITwinId = testITwin.id as string;
+    const testIModel = await createIModel(`cli-imodel-integration-test--${new Date().toISOString()}`, testITwinId);
+    testIModelId = testIModel.id;
+    rootFolderId = await getRootFolderId(testITwinId);
+    const testFile1 = await createFile(rootFolderId, 'test.zip', 'integration-tests/test.zip');
+    testFileId1 = testFile1.id as string;
+    const testFile2 = await createFile(rootFolderId, 'test.csv', 'integration-tests/test.csv');
+    testFileId2 = testFile2.id as string;
+    const { result: createdConnection1} = await runCommand<storageConnection>(`imodel connection create -m ${testIModelId} -f ${testFileId1} --connector-type MSTN -n TestConnection`);
+    connectionId1 = createdConnection1!.id!;
+    const { result: createdConnection2} = await runCommand<storageConnection>(`imodel connection create -m ${testIModelId} -f ${testFileId2} --connector-type MSTN -n TestConnection`);
+    connectionId2 = createdConnection2!.id!;
+  });
+
+  after(async () => {
+    const { result: connectionDeleteResult1 } = await runCommand(`imodel connection delete --connection-id ${connectionId1}`);
+    const { result: connectionDeleteResult2 } = await runCommand(`imodel connection delete --connection-id ${connectionId2}`);
+    const { result: fileDeleteResult} = await runCommand(`storage file delete --file-id ${testFileId1}`);
+    const { result: imodelDeleteResult } = await runCommand(`imodel delete --imodel-id ${testIModelId}`);
+    const { result: itwinDeleteResult } = await runCommand(`itwin delete --itwin-id ${testITwinId}`);
+
+    expect(connectionDeleteResult1).to.have.property('result', 'deleted');
+    expect(connectionDeleteResult2).to.have.property('result', 'deleted');
+    expect(fileDeleteResult).to.have.property('result', 'deleted');
+    expect(imodelDeleteResult).to.have.property('result', 'deleted');
+    expect(itwinDeleteResult).to.have.property('result', 'deleted');
+  });
+
+  it('should get all connections', async () => {
+    const { result } = await runCommand<storageConnectionListResponse>(`imodel connection list -m ${testIModelId}`);
+    expect(result).to.not.be.undefined;
+    expect(result!.connections.length).to.be.equal(2);
+  });
+
+  it('should get 1st connection', async () => {
+    const { result: allConnections } = await runCommand<storageConnectionListResponse>(`imodel connection list -m ${testIModelId}`);
+    expect(allConnections).to.not.be.undefined;
+    expect(allConnections!.connections.length).to.be.equal(2);
+
+    const { result: filteredConnections } = await runCommand<storageConnectionListResponse>(`imodel connection list -m ${testIModelId} --top 1`);
+    expect(filteredConnections).to.not.be.undefined;
+    expect(filteredConnections!.connections.length).to.be.equal(1);
+    expect(filteredConnections!.connections[0].id).to.be.equal(allConnections!.connections[0].id);
+  });
+
+  it('should not get 1st connection', async () => {
+    const { result: allConnections } = await runCommand<storageConnectionListResponse>(`imodel connection list -m ${testIModelId}`);
+    expect(allConnections).to.not.be.undefined;
+    expect(allConnections!.connections.length).to.be.equal(2);
+
+    const { result: filteredConnections } = await runCommand<storageConnectionListResponse>(`imodel connection list -m ${testIModelId} --skip 1`);
+    expect(filteredConnections).to.not.be.undefined;
+    expect(filteredConnections!.connections.length).to.be.equal(1);
+    expect(filteredConnections!.connections[0].id).to.be.equal(allConnections!.connections[1].id);
+  });
+});
+
+export default tests;
+
+runSuiteIfMainModule(import.meta, tests);

@@ -3,7 +3,7 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { NamedVersion, NamedVersionOrderByProperty, OrderBy, OrderByOperator } from "@itwin/imodels-client-management";
+import { NamedVersion, NamedVersionOrderByProperty, OrderBy, OrderByOperator, take, toArray } from "@itwin/imodels-client-management";
 import { Flags } from "@oclif/core";
 
 import { apiReference } from "../../../extensions/api-reference.js";
@@ -92,11 +92,8 @@ export default class ListNamedVersions extends BaseCommand {
         }
       });
       
-      const result: NamedVersion[] = [];
-      for await (const namedVersion of namedVersionsList) {
-        result.push(namedVersion);
-      }
-  
+      const result: NamedVersion[] = await (flags.top ? take(namedVersionsList, flags.top) : toArray(namedVersionsList));
+      
       return this.logAndReturnResult(result);
     }
   }

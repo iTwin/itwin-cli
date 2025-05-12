@@ -3,13 +3,13 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { logoutFromCLI } from '../../utils/helpers'
-import sharedQuickUseCasesParallel from '../shared-quick-use-cases-parallel';
+import iModelNamedVersionTests from '../../imodel/named-version.test';
+import { nativeLoginToCli } from '../../utils/helpers';
 
-describe('Service Client Tests', () => {
+describe('Service Client Tests (imodel named-version)', async () => {
     before(async () => {
-        await logoutFromCLI();
+        await nativeLoginToCli();
     })
-    
-    sharedQuickUseCasesParallel();
+
+    iModelNamedVersionTests();
 });

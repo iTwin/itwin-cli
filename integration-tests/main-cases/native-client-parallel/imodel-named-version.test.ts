@@ -3,13 +3,13 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { authenticationType } from "./authentication-type.js";
-import { connectionLinks } from "./connection-links.js";
+import iModelNamedVersionTests from '../../imodel/named-version.test';
+import { nativeLoginToCli } from '../../utils/helpers';
 
-export type storageConnection = {
-    _links: connectionLinks;
-    authenticationType: authenticationType;
-    displayName: string;
-    iModelId: string;
-    id: string;
-};
+describe('Native Client Tests (imodel named-version)', async () => {
+    before(async () => {
+        await nativeLoginToCli();
+    })
+
+    iModelNamedVersionTests();
+});
