@@ -47,7 +47,7 @@ const tests = () => describe('named-version', () => {
         expect(iModels.result?.length).to.be.equal(1);
         testIModelId = iModels.result![0].id;
     }
-  }).timeout(30 * 60 * 1000);
+  })
 
   after(async () => {
     const { result: imodelDeleteResult } = await runCommand(`imodel delete --imodel-id ${testIModelId}`);
@@ -74,7 +74,7 @@ const tests = () => describe('named-version', () => {
     expect(response.result?.displayName).to.be.equal("Version 2.0");
     expect(response.result?.description).to.be.equal("Some description of the version");
   });
-});
+}).timeout(30 * 60 * 1000);
 
 export default tests;
 
