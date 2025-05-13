@@ -53,7 +53,7 @@ export default class ListConnections extends BaseCommand {
   
       const client = await this.getSynchronizationClient();
   
-      const response = await client.getStorageConnections(flags["imodel-id"], flags.skip, flags.top);
+      const response = await client.getStorageConnections(flags["imodel-id"], flags.top, flags.skip);
   
       return this.logAndReturnResult(response);
     }

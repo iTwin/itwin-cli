@@ -17,7 +17,7 @@ export default class ConnectionAuth extends BaseCommand {
     name: "Get Authorization Information",
   };
 
-  static description = 'Ensures the user has a valid token for long-running connection tasks. This must be called before starting a connection run.';
+  static description = 'Ensures the user has a valid token for long-running connection tasks. This must be called before starting a connection run with User authenticationType.';
 
 	static examples = [
     {
@@ -60,7 +60,7 @@ export default class ConnectionAuth extends BaseCommand {
       this.debug('Waiting for login callback on http://localhost:3301/callback');
     });
 
-    // Open page where autenticaiton should happen
+    // Open page where authentication should happen
     await open(response.authorizationInformation._links.authorizationUrl.href);
     
     // Query regularly and check if authentication was successful.

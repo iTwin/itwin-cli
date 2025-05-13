@@ -3,13 +3,16 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { logoutFromCLI } from '../../utils/helpers'
-import sharedQuickUseCasesParallel from '../shared-quick-use-cases-parallel';
+import iModelNamedVersionTests from '../../imodel/named-version.test';
+import iModelPopulateTests from '../../imodel/populate.test'
+import { logoutFromCLI } from '../../utils/helpers';
 
-describe('Service Client Tests', () => {
-    before(async () => {
+describe('Service Client Tests (imodel populate)', () => {
+    before(async function() {
+        this.timeout(5 * 60 * 1000);
         await logoutFromCLI();
     })
     
-    sharedQuickUseCasesParallel();
+    iModelNamedVersionTests();
+    iModelPopulateTests();
 });

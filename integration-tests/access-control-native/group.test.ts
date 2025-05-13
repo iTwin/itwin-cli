@@ -16,7 +16,8 @@ const tests = () => describe('group', () => {
     let groupId: string;
     const groupName = "Test Group";
     const groupDescription = "Test Group Description";
-    before(async () => {
+    before(async function() {
+        this.timeout(5 * 60 * 1000);
         await nativeLoginToCli();
         
         const iTwinName = `cli-itwin-integration-test-${new Date().toISOString()}`;

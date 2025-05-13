@@ -4,15 +4,15 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { links } from "../../general-models/links.js";
-import { StorageConnection } from "./storage-connection.js";
+import { storageConnection } from "./storage-connection.js";
 
 export type storageConnectionResponse = {
-    connection?: StorageConnection;
+    connection?: storageConnection;
 };
 
 export type storageConnectionListResponse = {
     _links: links;
-    connections: StorageConnection[];
+    connections: storageConnection[];
 }
 
 export type storageConnectionUpdate = {
