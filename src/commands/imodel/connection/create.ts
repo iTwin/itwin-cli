@@ -33,7 +33,7 @@ export default class CreateConnection extends BaseCommand {
 
   static flags = {
     "authentication-type": Flags.string({ 
-      description: 'The authorization workflow type.', 
+      description: `The authorization workflow type. Default value is 'User'`, 
       helpValue: '<string>',
       options: ['User', 'Service'], 
       required: false 

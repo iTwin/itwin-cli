@@ -3,7 +3,7 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { IModel, IModelOrderByProperty, OrderBy } from "@itwin/imodels-client-management";
+import { IModel, IModelOrderByProperty, OrderBy, take, toArray } from "@itwin/imodels-client-management";
 import { Flags } from "@oclif/core";
 
 import { apiReference } from "../../extensions/api-reference.js";
@@ -93,10 +93,7 @@ export default class ListIModels extends BaseCommand {
         },
       });
   
-      const result: IModel[] = [];
-      for await (const iModel of iModels) {
-        result.push(iModel);
-      }
+      const result: IModel[] = await (flags.top ? take(iModels, flags.top) : toArray(iModels));
   
       return this.logAndReturnResult(result);
     }

@@ -3,6 +3,7 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
+import { IModel } from '@itwin/imodels-client-management';
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
@@ -30,11 +31,26 @@ const tests = () => describe('update', () => {
 
   it('should update the iModel', async () => {
     const updatedName = 'UpdatedIntegrationTestIModel';
-    const { stdout } = await runCommand(`imodel update --imodel-id ${testIModelId} --name ${updatedName}`);
-    const updatedITwin = JSON.parse(stdout);
+    const updatedDescription = "Some Description";
+    const updatedExtent = {
+      northEast: {
+        latitude: 46.302_763_954_781_234,
+        longitude: 7.835_541_640_797_823
+      },
+      southWest: {
+        latitude: 46.132_677_028_348_06,
+        longitude: 7.672_120_009_938_448
+      }
+    }
 
-    expect(updatedITwin).to.have.property('id', testIModelId);
-    expect(updatedITwin).to.have.property('name', updatedName);
+    const { result: updatedIModel } = await runCommand<IModel>(`imodel update --imodel-id ${testIModelId} --name ${updatedName} --description "${updatedDescription}" --extent "${JSON.stringify(updatedExtent)}"`);
+
+    expect(updatedIModel).to.not.be.undefined;
+    expect(updatedIModel!.id).to.not.be.undefined;
+    expect(updatedIModel!.iTwinId).to.be.equal(testITwinId);
+    expect(updatedIModel!.name).to.be.equal(updatedName);
+    expect(updatedIModel!.description).to.be.equal(updatedDescription);
+    expect(updatedIModel!.extent).to.be.deep.equal(updatedExtent);
   });
 });
 

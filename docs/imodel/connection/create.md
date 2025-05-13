@@ -18,7 +18,7 @@ Create a storage connection that describes files from storage to synchronize wit
   **Type:** `string` **Required:** Yes
 
 - **`--authentication-type`**  
-  The authorization workflow type.  
+  The authorization workflow type. Default value is 'User'  
   **Type:** `string` **Required:** No  
   **Valid Values:** `"User"`, `"Service"`
 

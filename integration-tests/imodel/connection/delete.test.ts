@@ -6,10 +6,11 @@
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
-import { createFile, createIModel, createITwin, getRootFolderId } from '../utils/helpers';
-import runSuiteIfMainModule from '../utils/run-suite-if-main-module';
+import { storageConnection } from '../../../src/services/synchronizationClient/models/storage-connection';
+import { createFile, createIModel, createITwin, getRootFolderId } from '../../utils/helpers';
+import runSuiteIfMainModule from '../../utils/run-suite-if-main-module';
 
-const tests = () => describe('connection', () => {
+const tests = () => describe('delete', () => {
   let testITwinId: string;
   let testIModelId: string;
   let rootFolderId: string;
@@ -24,6 +25,9 @@ const tests = () => describe('connection', () => {
     rootFolderId = await getRootFolderId(testITwinId);
     const testFile = await createFile(rootFolderId, 'test.zip', 'integration-tests/test.zip');
     testFileId = testFile.id as string;
+    const { result: createdConnection} = await runCommand<storageConnection>(`imodel connection create -m ${testIModelId} -f ${testFileId} --connector-type MSTN -n TestConnection`);
+    expect(createdConnection).to.not.be.undefined;
+    connectionId = createdConnection!.id!;
   });
 
   after(async () => {
@@ -36,36 +40,9 @@ const tests = () => describe('connection', () => {
     expect(itwinDeleteResult).to.have.property('result', 'deleted');
   });
 
-  it('should add a connection', async () => {
-    const { stdout } = await runCommand(`imodel connection create -m ${testIModelId} -f ${testFileId} --connector-type MSTN -n TestConnection`);
-    const createdConnection = JSON.parse(stdout);
-
-    expect(createdConnection).to.not.be.undefined;
-    expect(createdConnection).to.have.property('id');
-    expect(createdConnection).to.have.property('iTwinId', testITwinId);
-    expect(createdConnection).to.have.property('iModelId', testIModelId);
-    expect(createdConnection).to.have.property('displayName', 'TestConnection');
-
-    connectionId = createdConnection.id;
-  });
-
-  it('should get a connection', async () => {
-    const { stdout } = await runCommand(`imodel connection info -c ${connectionId}`);
-    const connection = JSON.parse(stdout);
-
-    expect(connection).to.not.be.undefined;
-    expect(connection).to.not.be.undefined;
-    expect(connection).to.have.property('id');
-    expect(connection).to.have.property('iTwinId', testITwinId);
-    expect(connection).to.have.property('iModelId', testIModelId);
-    expect(connection).to.have.property('displayName', 'TestConnection');
-  });
-
   it('should delete a connection', async () => {
-    const { stdout } = await runCommand(`imodel connection delete --connection-id ${connectionId}`);
-    const result = JSON.parse(stdout);
-
-    expect(result.result).to.equal('deleted')
+    const { result } = await runCommand(`imodel connection delete --connection-id ${connectionId}`);
+    expect(result).to.have.property('result', 'deleted');
   });
 });
 
