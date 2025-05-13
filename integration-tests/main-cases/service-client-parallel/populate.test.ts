@@ -8,7 +8,8 @@ import iModelPopulateTests from '../../imodel/populate.test'
 import { logoutFromCLI } from '../../utils/helpers';
 
 describe('Service Client Tests (imodel populate)', () => {
-    before(async () => {
+    before(async function() {
+        this.timeout(30 * 60 * 1000);
         await logoutFromCLI();
     })
     

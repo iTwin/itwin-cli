@@ -9,7 +9,8 @@ describe('Command formatting tests', async () => {
         "plugins"
     ];
 
-    before(async () => {
+    before(async function() {
+        this.timeout(30 * 60 * 1000);
         const config = await Config.load({
             devPlugins: false,
             root: process.cwd(),

@@ -8,7 +8,8 @@ import { nativeLoginToCli } from '../../utils/helpers';
 import sharedQuickUseCasesParallel from '../shared-quick-use-cases-parallel';
 
 describe('Native Client Tests', async () => {
-    before(async () => {
+    before(async function() {
+        this.timeout(30 * 60 * 1000);
         await nativeLoginToCli();
     })
     
