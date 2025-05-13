@@ -10,7 +10,7 @@ import { nativeLoginToCli } from '../../utils/helpers';
 
 describe('Native Client Tests (imodel connection run)', async () => {
     before(async function() {
-        this.timeout(30 * 60 * 1000);
+        this.timeout(5 * 60 * 1000);
         await nativeLoginToCli();
         await runCommand(`imodel connection auth`);
     })

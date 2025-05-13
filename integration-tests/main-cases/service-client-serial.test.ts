@@ -8,8 +8,7 @@ import authTestsService from  '../auth-service/auth-service.test'
 import { logoutFromCLI } from '../utils/helpers'
 
 describe('Service Client Tests (serial)', () => {
-    before(async function() {
-        this.timeout(30 * 60 * 1000);
+    before(async () => {
         await logoutFromCLI();
     })
     describe('Authentication Integration Tests', () => {

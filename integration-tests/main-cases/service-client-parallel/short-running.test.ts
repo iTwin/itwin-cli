@@ -8,7 +8,7 @@ import sharedQuickUseCasesParallel from '../shared-quick-use-cases-parallel';
 
 describe('Service Client Tests', () => {
     before(async function() {
-        this.timeout(30 * 60 * 1000);
+        this.timeout(5 * 60 * 1000);
         await logoutFromCLI();
     })
 

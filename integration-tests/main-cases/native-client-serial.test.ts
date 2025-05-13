@@ -8,8 +8,7 @@ import iModelConnectionAuthTests from '../imodel-native/connection/auth.test'
 import { nativeLoginToCli } from '../utils/helpers';
 
 describe('Native Client Tests (serial)', async () => {
-    before(async function() {
-        this.timeout(30 * 60 * 1000);
+    before(async () => {
         await nativeLoginToCli();
     })
     
