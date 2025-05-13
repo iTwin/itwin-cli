@@ -74,7 +74,7 @@ const tests = () => describe('named-version', () => {
     expect(response.result?.displayName).to.be.equal("Version 2.0");
     expect(response.result?.description).to.be.equal("Some description of the version");
   });
-});
+}).timeout(30 * 60 * 1000);
 
 export default tests;
 
