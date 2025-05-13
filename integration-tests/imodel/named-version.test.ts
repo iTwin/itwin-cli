@@ -21,7 +21,9 @@ const tests = () => describe('named-version', () => {
   let testIModelId: string;
   let testITwinId: string;
 
-  before(async () => {
+  before(async function() {
+    this.timeout(30 * 60 * 1000);
+    
     const filteredITwins = await runCommand<ITwin[]>(`itwin list --name ${testITwinName}`);
     expect(filteredITwins.result).to.not.be.undefined
 
@@ -74,7 +76,7 @@ const tests = () => describe('named-version', () => {
     expect(response.result?.displayName).to.be.equal("Version 2.0");
     expect(response.result?.description).to.be.equal("Some description of the version");
   });
-}).timeout(30 * 60 * 1000);
+});
 
 export default tests;
 
