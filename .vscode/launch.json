@@ -42,13 +42,13 @@
                 "--forbid-only",
                 "--timeout",
                 "999999",
-                "integration-tests/main-cases/*.test.ts"
+                "integration-tests/main-cases/*.test.ts",
             ],
             "console": "integratedTerminal",
             "internalConsoleOptions": "neverOpen"
         },
         {
-            "name": "Debug Active Test",
+            "name": "Debug Active Test (Service Client)",
             "skipFiles": [
                 "<node_internals>/**"
             ],
@@ -59,10 +59,31 @@
                 "--forbid-only",
                 "--timeout",
                 "999999",
-                "${file}"
+                "${file}",
+                "--require",
+                "integration-tests/utils/mocha-global-setup-native.ts"
             ],
             "console": "integratedTerminal",
             "internalConsoleOptions": "neverOpen"
-        }
+        },
+        {
+            "name": "Debug Active Test (Native Client)",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/mocha",
+            "args": [
+                "--forbid-only",
+                "--timeout",
+                "999999",
+                "${file}",
+                "--require",
+                "integration-tests/utils/mocha-global-setup-native.ts"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        },
     ]
 }
