@@ -45,7 +45,7 @@ const tests = () => describe('named-version', () => {
   it('should create a new named version with specified changeset', async () => {
     const { result: changesets} = await runCommand<changeset[]>(`changed-elements changesets --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
     expect(changesets).to.not.be.undefined;
-    expect(changesets!.length).to.be.equal(4);
+    expect(changesets!.length).to.be.equal(15);
 
     const response = await runCommand<NamedVersion>(`imodel named-version create --imodel-id ${testIModelId} --changeset-id ${changesets![0].id} -n "Version 1.0" -d "Some description of the version"`);
     expect(response.result).to.not.be.undefined;
