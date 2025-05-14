@@ -3,8 +3,7 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { IModel, NamedVersion } from '@itwin/imodels-client-management';
-import { ITwin } from '@itwin/itwins-client';
+import { NamedVersion } from '@itwin/imodels-client-management';
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
@@ -16,38 +15,23 @@ import runSuiteIfMainModule from '../utils/run-suite-if-main-module';
 const tests = () => describe('named-version', () => {
   const testITwinName = 'ITwinCLI_IntegrationTestITwin_iModelNamedVersion';
   const testIModelName = 'ITwinCLI_IntegrationTestIModel_iModelNamedVersion';
-  const testFilePath = 'integration-tests/test.zip';
+  const testFilePath = 'examples/datasets/ExtonCampus.dgn';
   let testIModelId: string;
   let testITwinId: string;
 
   before(async function() {
     this.timeout(30 * 60 * 1000);
     
-    const { error, result: filteredITwins, stderr, stdout} = await runCommand<ITwin[]>(`itwin list --name ${testITwinName}`);
-    console.log(stdout);
-    console.log(stderr);
-    expect(error, JSON.stringify(error)).to.be.undefined;
-    expect(filteredITwins).to.not.be.undefined
+    const testITwin = await createITwin(testITwinName, 'Thing', 'Asset');
+    testITwinId = testITwin.id as string;
+    const testIModel = await createIModel(testIModelName, testITwinId);
+    testIModelId = testIModel.id;
 
-    if(filteredITwins!.length === 0) {
-        const testITwin = await createITwin(testITwinName, 'Thing', 'Asset');
-        testITwinId = testITwin.id as string;
-        const testIModel = await createIModel(testIModelName, testITwinId);
-        testIModelId = testIModel.id;
+    await runCommand<resultResponse>(`changed-elements enable --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
 
-        await runCommand<resultResponse>(`changed-elements enable --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
-
-        const result = await runCommand(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type SPPID`);
-        expect(result.result).to.have.property('iModelId', testIModelId);
-        expect(result.result).to.have.property('iTwinId', testITwinId);
-    }
-    else {
-        testITwinId = filteredITwins![0].id!;
-        const iModels = await runCommand<IModel[]>(`imodel list --itwin-id ${testITwinId}`);
-        expect(iModels.result).to.not.be.undefined;
-        expect(iModels.result?.length).to.be.equal(1);
-        testIModelId = iModels.result![0].id;
-    }
+    const result = await runCommand(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type MSTN`);
+    expect(result.result).to.have.property('iModelId', testIModelId);
+    expect(result.result).to.have.property('iTwinId', testITwinId);
   });
 
   after(async () => {

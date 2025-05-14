@@ -64,10 +64,9 @@ const tests = () => describe('populate', () => {
 
     const {connectionId, runId} = populateResult!.summary[0];
     let { result: infoResult } = await runCommand<storageRun>(`imodel connection run info -c ${connectionId} --connection-run-id ${runId}`);
-    let index = 0;
-    while(infoResult?.state !== "Completed" && ++index < 15) {
+    while(infoResult?.state !== "Completed") {
       // eslint-disable-next-line no-await-in-loop
-      await new Promise(r => {setTimeout(r, 3000 * index)});
+      await new Promise(r => {setTimeout(r, 10_000)});
 
       // eslint-disable-next-line no-await-in-loop
       const { result } = await runCommand<storageRun>(`imodel connection run info -c ${connectionId} --connection-run-id ${runId}`);
