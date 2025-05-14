@@ -23,7 +23,9 @@ const tests = () => describe('named-version', () => {
   before(async function() {
     this.timeout(30 * 60 * 1000);
     
-    const { error, result: filteredITwins} = await runCommand<ITwin[]>(`itwin list --name ${testITwinName}`);
+    const { error, result: filteredITwins, stderr, stdout} = await runCommand<ITwin[]>(`itwin list --name ${testITwinName}`);
+    console.log(stdout);
+    console.log(stderr);
     expect(error, JSON.stringify(error)).to.be.undefined;
     expect(filteredITwins).to.not.be.undefined
 
