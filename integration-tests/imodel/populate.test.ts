@@ -36,7 +36,7 @@ const tests = () => describe('populate', () => {
     expect(iTwinDeleteResult).to.have.property('result', 'deleted');
   });
 
-  it.skip('should populate the iModel with the uploaded file', async () => {
+  it('should populate the iModel with the uploaded file', async () => {
     const { result: populateResult } = await runCommand<populateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type MSTN`);
     expect(populateResult).to.not.be.undefined;
     expect(populateResult!.iTwinId).to.be.equal(testITwinId);
@@ -52,7 +52,7 @@ const tests = () => describe('populate', () => {
     expect(infoResult?.result).to.be.equal(executionResult.SUCCESS);
   }).timeout(30 * 60 * 1000);
 
-  it.skip('should populate the iModel with the uploaded file (no-wait flag with polling)', async () => {
+  it('should populate the iModel with the uploaded file (no-wait flag with polling)', async () => {
     const { result: populateResult } = await runCommand<populateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type SPPID --no-wait`);
     expect(populateResult).to.not.be.undefined;
     expect(populateResult!.iTwinId).to.be.equal(testITwinId);
