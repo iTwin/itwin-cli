@@ -23,10 +23,11 @@ const tests = () => describe('named-version', () => {
   before(async function() {
     this.timeout(30 * 60 * 1000);
     
-    const filteredITwins = await runCommand<ITwin[]>(`itwin list --name ${testITwinName}`);
-    expect(filteredITwins.result, `filteredITwins ${JSON.stringify(filteredITwins.error)}`).to.not.be.undefined
+    const { error, result: filteredITwins} = await runCommand<ITwin[]>(`itwin list --name ${testITwinName}`);
+    expect(error, JSON.stringify(error)).to.be.undefined;
+    expect(filteredITwins).to.not.be.undefined
 
-    if(filteredITwins.result!.length === 0) {
+    if(filteredITwins!.length === 0) {
         const testITwin = await createITwin(testITwinName, 'Thing', 'Asset');
         testITwinId = testITwin.id as string;
         const testIModel = await createIModel(testIModelName, testITwinId);
@@ -39,9 +40,9 @@ const tests = () => describe('named-version', () => {
         expect(result.result).to.have.property('iTwinId', testITwinId);
     }
     else {
-        testITwinId = filteredITwins.result![0].id!;
+        testITwinId = filteredITwins![0].id!;
         const iModels = await runCommand<IModel[]>(`imodel list --itwin-id ${testITwinId}`);
-        expect(iModels.result, `iModels ${JSON.stringify(iModels.error)}`).to.not.be.undefined;
+        expect(iModels.result).to.not.be.undefined;
         expect(iModels.result?.length).to.be.equal(1);
         testIModelId = iModels.result![0].id;
     }
