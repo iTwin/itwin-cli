@@ -9,14 +9,13 @@ import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
 import { changeset } from '../../src/services/changed-elements-client/tracking';
-import { createFile, createIModel, createITwin, getRootFolderId } from '../utils/helpers';
+import { createIModel, createITwin } from '../utils/helpers';
 import { resultResponse } from '../utils/result-response';
 import runSuiteIfMainModule from '../utils/run-suite-if-main-module';
 
 const tests = () => describe('named-version', () => {
   const testITwinName = 'ITwinCLI_IntegrationTestITwin_iModelNamedVersion';
   const testIModelName = 'ITwinCLI_IntegrationTestIModel_iModelNamedVersion';
-  const testFileName = 'test.zip';
   const testFilePath = 'integration-tests/test.zip';
   let testIModelId: string;
   let testITwinId: string;
@@ -34,9 +33,6 @@ const tests = () => describe('named-version', () => {
         testIModelId = testIModel.id;
 
         await runCommand<resultResponse>(`changed-elements enable --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
-
-        const rootFolderId = await getRootFolderId(testITwinId);
-        await createFile(rootFolderId, testFileName, testFilePath);
 
         const result = await runCommand(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type SPPID`);
         expect(result.result).to.have.property('iModelId', testIModelId);
