@@ -61,7 +61,7 @@
                 "999999",
                 "${file}",
                 "--require",
-                "integration-tests/utils/mocha-global-setup-native.ts"
+                "integration-tests/utils/mocha-global-setup-service.ts"
             ],
             "console": "integratedTerminal",
             "internalConsoleOptions": "neverOpen"
