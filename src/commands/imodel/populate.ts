@@ -1,5 +1,3 @@
-/* eslint-disable no-await-in-loop */
-
 /*---------------------------------------------------------------------------------------------
 * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
 * See LICENSE.md in the project root for license terms and full copyright notice.
@@ -108,27 +106,9 @@ export default class PopulateIModel extends BaseCommand {
       this.error(`Unable to get root folder for iTwin: ${iModel.iTwinId}`);
     }
 
-    const summary = [];
-    const fileIds = [];
-
-    for (const [, fileInfo] of filesAndConnectorToImport.entries()) {
-      this.log(`Processing file: ${fileInfo.fileName}`);
-      const fileExists = topFolders.items?.find(entry => entry.type === 'file' && entry.displayName === fileInfo.fileName);
-      let fileId: string | undefined;
-
-      if (fileExists?.id) {
-        this.log(`Updating existing file: '${fileInfo.fileName}' with ID: ${fileExists.id}`);
-        fileId = await this.updateExistingFile(fileExists.id, fileInfo.fullFilePath);
-      } else {
-        this.log(`Creating new file: ${fileInfo.fileName}`);
-        fileId = await this.createNewFile(rootFolderId, fileInfo.fileName, fileInfo.fullFilePath);
-      }
-
-      this.log(`Completing file upload for file ID: ${fileId}`);
-      await this.runCommand('storage:file:update-complete', ['--file-id', fileId]);
-
-      fileIds.push({ connectorType: fileInfo.connectorType, fileId, fileName: fileInfo.fileName });
-    }
+    const files = await Promise.all(
+      filesAndConnectorToImport.map((newFileInfo) => this.processFile(topFolders, rootFolderId, newFileInfo))
+    );
 
     this.log(`Checking existing connections for iModel ID: ${iModel.id}`);
     const existingConnections = await this.runCommand<storageConnectionListResponse>('imodel:connection:list', ['--imodel-id', iModel.id]);
@@ -144,16 +124,16 @@ export default class PopulateIModel extends BaseCommand {
       }
     }
 
-    const connectionId = await this.findOrCreateDefaultConnection(existingConnections.connections, fileIds, iModel.id);
+    const connectionId = await this.findOrCreateDefaultConnection(existingConnections.connections, files, iModel.id);
 
     this.log(`Running synchronization for connection ID: ${connectionId}`);
     const runId = await this.runSynchronization(connectionId, !flags["no-wait"]);
 
-    summary.push({
+    const summary = [{
       connectionId,
-      files: fileIds,
+      files,
       runId,
-    });
+    }];
 
     if(flags["no-wait"]) {
       this.log("Synchronization process started. Use the following command to check the status of the synchronization process:");
@@ -171,6 +151,14 @@ export default class PopulateIModel extends BaseCommand {
     }
 
     return populateResponse;
+  }
+
+  private async addFileToConnectionIfItIsNotPresent(connectionId: string, sourceFiles: sourceFile[], file: { connectorType: connectorType, fileId: string, fileName: string }) {
+    const fileExist = sourceFiles.find(f => f.storageFileId === file.fileId);
+      if (!fileExist) {
+        this.log(`Adding file: ${file.fileId} to default connection: ${connectionId}`);
+        await this.runCommand('imodel:connection:sourcefile:add', ['--connection-id', connectionId, '--connector-type', file.connectorType, '--storage-file-id', file.fileId]);
+      }
   }
 
   private checkAndGetFilesWithConnectors(files: string[], connectorTypes: string[] | undefined) : NewFileInfo[] {
@@ -217,31 +205,47 @@ export default class PopulateIModel extends BaseCommand {
     return newFile._links.completeUrl.href.split('/')[5];
   }
 
-  private async findOrCreateDefaultConnection(existingConnections: storageConnection[], fileIds: { connectorType: connectorType, fileId: string, fileName: string }[], iModelId: string): Promise<string> {
+  private async findOrCreateDefaultConnection(existingConnections: storageConnection[], files: { connectorType: connectorType, fileId: string, fileName: string }[], iModelId: string): Promise<string> {
     let defaultConnection = existingConnections.find(connection => connection.displayName === 'Default iTwinCLI Connection');
     if (!defaultConnection) {
       const authInfo = await this.runCommand<authorizationInformation>('auth:info', []);
       const authType = authInfo.authorizationType === 'Service' ? 'Service' : 'User';
 
       this.log(`Creating new default connection`);
-      defaultConnection = await this.runCommand<storageConnection>('imodel:connection:create', ['--imodel-id', iModelId, '--connector-type', fileIds[0].connectorType, '--file-id', fileIds[0].fileId, '--authentication-type', authType, '--name', 'Default iTwinCLI Connection']);
+      defaultConnection = await this.runCommand<storageConnection>('imodel:connection:create', 
+        ['--imodel-id', iModelId, '--connector-type', files[0].connectorType, '--file-id', files[0].fileId, '--authentication-type', authType, '--name', 'Default iTwinCLI Connection']);
       if (defaultConnection?.id === undefined) {
         this.error("Storage connection id was not present");
       }
     }
 
-    for (const file of fileIds) {
-      const connectionSourceFiles = await this.runCommand<sourceFile[]>('imodel:connection:sourcefile:list', ['--connection-id', defaultConnection.id]);
-      const fileExist = connectionSourceFiles.find(f => f.storageFileId === file.fileId);
-      if (!fileExist) {
-        this.log(`Adding file: ${file.fileId} to default connection: ${defaultConnection.id}`);
-        await this.runCommand('imodel:connection:sourcefile:add', ['--connection-id', defaultConnection.id, '--connector-type', file.connectorType, '--storage-file-id', file.fileId]);
-      }
-    }
+    const connectionSourceFiles = await this.runCommand<sourceFile[]>('imodel:connection:sourcefile:list', ['--connection-id', defaultConnection.id]);
+    await Promise.all(
+      files.map((file) => this.addFileToConnectionIfItIsNotPresent(defaultConnection.id, connectionSourceFiles, file))
+    );
 
     this.log(`Running connection for connection ID: ${defaultConnection.id}`);
     await this.runCommand('imodel:connection:run:create', ['--connection-id', defaultConnection.id]);
     return defaultConnection.id;
+  }
+
+  private async processFile(topFolders: itemsWithFolderLink, rootFolderId: string, fileInfo: NewFileInfo): Promise<{connectorType: connectorType, fileId: string, fileName: string}> {
+    this.log(`Processing file: ${fileInfo.fileName}`);
+    const fileExists = topFolders.items?.find(entry => entry.type === 'file' && entry.displayName === fileInfo.fileName);
+    let fileId: string | undefined;
+
+    if (fileExists?.id) {
+      this.log(`Updating existing file: '${fileInfo.fileName}' with ID: ${fileExists.id}`);
+      fileId = await this.updateExistingFile(fileExists.id, fileInfo.fullFilePath);
+    } else {
+      this.log(`Creating new file: ${fileInfo.fileName}`);
+      fileId = await this.createNewFile(rootFolderId, fileInfo.fileName, fileInfo.fullFilePath);
+    }
+
+    this.log(`Completing file upload for file: '${fileInfo.fileName}' with ID: ${fileId}`);
+    await this.runCommand('storage:file:update-complete', ['--file-id', fileId]);
+
+    return { connectorType: fileInfo.connectorType, fileId, fileName: fileInfo.fileName };
   }
 
   private async runSynchronization(connectionId: string, waitForCompletion: boolean): Promise<string> {
@@ -253,7 +257,9 @@ export default class PopulateIModel extends BaseCommand {
     const runId = storageConnection?._links?.lastRun?.href.split("/")[8];
     let storageConnectionRun;
     do {
+      // eslint-disable-next-line no-await-in-loop
       storageConnectionRun = await this.runCommand<storageRun>('imodel:connection:run:info', ['--connection-id', connectionId, '--connection-run-id', runId]);
+      // eslint-disable-next-line no-await-in-loop
       await new Promise(resolve => { setTimeout(resolve, 10_000) });
       this.log(`Waiting for synchronization to complete for run ID: ${runId} with state: ${storageConnectionRun?.state}`);
     // eslint-disable-next-line no-unmodified-loop-condition
