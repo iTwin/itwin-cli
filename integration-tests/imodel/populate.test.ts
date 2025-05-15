@@ -21,14 +21,14 @@ const tests = () => describe('populate', () => {
   let testIModelId: string;
   let testITwinId: string;
 
-  before(async () => {
+  beforeEach(async () => {
     const testITwin = await createITwin(`cli-itwin-integration-test-${new Date().toISOString()}`, 'Thing', 'Asset');
     testITwinId = testITwin.id!;
     const testIModel = await createIModel(`cli-imodel-integration-test-${new Date().toISOString()}`, testITwinId);
     testIModelId = testIModel.id!;
   });
 
-  after(async () => {
+  afterEach(async () => {
     const { result: iModelDeleteResult } = await runCommand(`imodel delete --imodel-id ${testIModelId}`);
     const { result: iTwinDeleteResult } = await runCommand(`itwin delete --itwin-id ${testITwinId}`);
 
@@ -82,7 +82,7 @@ const tests = () => describe('populate', () => {
     expect(infoResult?.jobs).to.have.lengthOf(1);
     expect(infoResult?.jobs![0].result).to.be.equal('Success');
     expect(infoResult?.jobs![0].tasks).to.have.lengthOf(1);
-    expect(infoResult?.jobs![0].tasks![0].result).to.be.equal('Success');
+    expect(infoResult?.jobs![0].tasks!.every((task) => task.result === 'Success'));
   }).timeout(30 * 60 * 1000);
 
   it('should return an error message if synchronization run completes with a non-success state', async () => {
@@ -92,11 +92,13 @@ const tests = () => describe('populate', () => {
     
     const command = populateError?.message.match(/imodel connection run info --connection-id .*? --connection-run-id .*?'/)![0]?.slice(0,-1);
     const { result: infoResult } = await runCommand<storageRun>(command!);
+    expect(infoResult?.state).to.be.equal(executionState.COMPLETED);
+    expect(infoResult?.result).to.be.equal(executionResult.ERROR);
     expect(infoResult).to.not.be.undefined;
     expect(infoResult?.jobs).to.have.lengthOf(1);
     expect(infoResult?.jobs![0].result).to.be.equal('Error');
     expect(infoResult?.jobs![0].tasks).to.have.lengthOf(1);
-    expect(infoResult?.jobs![0].tasks![0].result).to.be.equal('Error');
+    expect(infoResult?.jobs![0].tasks!.every((task) => task.result === 'Error'));
   }).timeout(30 * 60 * 1000);
 });
 
