@@ -18,6 +18,7 @@ import { fileUpload } from "../../services/storage-client/models/file-upload.js"
 import { itemsWithFolderLink } from "../../services/storage-client/models/items-with-folder-link.js"
 import { authInfo } from "../../services/synchronizationClient/models/connection-auth.js"
 import { connectorType } from "../../services/synchronizationClient/models/connector-type.js"
+import { executionResult } from "../../services/synchronizationClient/models/execution-result.js";
 import { executionState } from "../../services/synchronizationClient/models/execution-state.js"
 import { sourceFile } from "../../services/synchronizationClient/models/source-file.js"
 import { storageConnection } from "../../services/synchronizationClient/models/storage-connection.js"
@@ -131,9 +132,16 @@ export default class PopulateIModel extends BaseCommand {
 
     this.log(`Checking existing connections for iModel ID: ${iModel.id}`);
     const existingConnections = await this.runCommand<storageConnectionListResponse>('imodel:connection:list', ['--imodel-id', iModel.id]);
-    const connectionAuth = await this.runCommand<authInfo>('imodel:connection:auth', []);
-    if (connectionAuth.isUserAuthorized === undefined) {
-      this.error('User is not authenticated for connection run');
+
+    const authInfo = await this.runCommand<authorizationInformation>('auth:info', []);
+    const authType = authInfo.authorizationType === 'Service' ? 'Service' : 'User';
+
+    if(authType === 'User') {
+      this.log("Authorizing...");
+      const connectionAuth = await this.runCommand<authInfo>('imodel:connection:auth', []);
+      if (connectionAuth.isUserAuthorized === undefined) {
+        this.error('User is not authenticated for connection run');
+      }
     }
 
     const connectionId = await this.findOrCreateDefaultConnection(existingConnections.connections, fileIds, iModel.id);
@@ -155,12 +163,14 @@ export default class PopulateIModel extends BaseCommand {
       this.log('Synchronization process completed');
     }
 
-    return {
+    const populateResponse: populateResponse = {
       iModelId: iModel.id,
       iTwinId: iModel.iTwinId,
       rootFolderId,
       summary,
-    };
+    }
+
+    return populateResponse;
   }
 
   private checkAndGetFilesWithConnectors(files: string[], connectorTypes: string[] | undefined) : NewFileInfo[] {
@@ -249,6 +259,10 @@ export default class PopulateIModel extends BaseCommand {
     // eslint-disable-next-line no-unmodified-loop-condition
     } while (waitForCompletion && storageConnectionRun?.state !== executionState.COMPLETED);
 
+    if(waitForCompletion && storageConnectionRun.result !== executionResult.SUCCESS) {
+      this.error(`Synchronization run ${runId} resulted in an error. Run 'itp imodel connection run info --connection-id ${connectionId} --connection-run-id ${runId}' for more info.`);
+    }
+
     return runId;
   }
 
@@ -261,6 +275,21 @@ export default class PopulateIModel extends BaseCommand {
     await this.runCommand('storage:file:upload', ['--upload-url', updateFile._links.uploadUrl.href, '--file-path', filePath]);
     return fileId;
   }
+}
+
+export interface populateResponse {
+  iModelId: string;
+  iTwinId: string;
+  rootFolderId: string;
+  summary: {
+    connectionId: string;
+    files: {
+        connectorType: connectorType;
+        fileId: string;
+        fileName: string;
+    }[];
+    runId: string;
+  }[]
 }
 
 interface NewFileInfo {

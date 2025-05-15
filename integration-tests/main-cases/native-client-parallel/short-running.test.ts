@@ -4,16 +4,9 @@
 *--------------------------------------------------------------------------------------------*/
 
 import accessControlNativeTests from '../../access-control-native/access-control-native.test'
-import { nativeLoginToCli } from '../../utils/helpers';
 import sharedQuickUseCasesParallel from '../shared-quick-use-cases-parallel';
 
 describe('Native Client Tests', async () => {
-    before(async function() {
-        this.timeout(5 * 60 * 1000);
-        await nativeLoginToCli();
-    })
-    
     accessControlNativeTests();
     sharedQuickUseCasesParallel();
-
 });

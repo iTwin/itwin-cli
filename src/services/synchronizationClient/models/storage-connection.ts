@@ -10,6 +10,12 @@ export type storageConnection = {
     _links: connectionLinks;
     authenticationType: authenticationType;
     displayName: string;
+    error: storageConnectionError
     iModelId: string;
     id: string;
 };
+
+export type storageConnectionError = {
+    description: string;
+    errorKey: string;
+}
