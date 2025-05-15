@@ -7,7 +7,7 @@ export class CustomFlags {
         description: config.description,
         env: 'ITP_IMODEL_ID',
         helpValue: '<string>',
-        required: true
+        required: true,
     });
 
     static iTwinIDFlag = (config : CustomFlagConfig) => Flags.string({ 

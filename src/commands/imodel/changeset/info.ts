@@ -27,11 +27,18 @@ export default class ChangesetInfo extends BaseCommand {
     static flags = {
       "changeset-id": Flags.string({
         description: 'The ID of the changeset.',
+        exactlyOne: ["changeset-index"],
         helpValue: '<string>',
-        required: true,
+        required: false,
+      }),
+      "changeset-index": Flags.integer({
+        description: 'The index of the changeset.',
+        exactlyOne: ["changeset-id"],
+        helpValue: '<number>',
+        required: false,
       }),
       "imodel-id": CustomFlags.iModelIDFlag({
-        description: 'The ID of the iModel whose changeset you want to retrieve.'
+        description: 'The ID of the iModel whose changeset you want to retrieve.',
       }),
     };
   
@@ -41,12 +48,23 @@ export default class ChangesetInfo extends BaseCommand {
       const client = this.getIModelClient();
       const authorization = await this.getAuthorizationCallback();
   
+      if(flags["changeset-id"]) {
+        const changesetInfo = await client.changesets.getSingle({
+          authorization,
+          changesetId: flags["changeset-id"],
+          iModelId: flags["imodel-id"],
+        });
+    
+        return this.logAndReturnResult(changesetInfo);
+      } 
+
       const changesetInfo = await client.changesets.getSingle({
         authorization,
-        changesetId: flags["changeset-id"],
+        changesetIndex: flags["changeset-index"]!,
         iModelId: flags["imodel-id"],
       });
   
       return this.logAndReturnResult(changesetInfo);
+      
     }
   }
