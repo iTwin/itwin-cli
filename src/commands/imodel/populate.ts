@@ -107,7 +107,7 @@ export default class PopulateIModel extends BaseCommand {
     }
 
     const files = await Promise.all(
-      [...filesAndConnectorToImport.entries()].map((value) => this.processFile(topFolders, rootFolderId, value[1]))
+      filesAndConnectorToImport.map((newFileInfo) => this.processFile(topFolders, rootFolderId, newFileInfo))
     );
 
     this.log(`Checking existing connections for iModel ID: ${iModel.id}`);
