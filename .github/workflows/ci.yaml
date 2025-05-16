@@ -94,6 +94,7 @@ jobs:
           ITP_SERVICE_CLIENT_ID: ${{ vars.ITP_SERVICE_CLIENT_ID }}
           ITP_SERVICE_CLIENT_SECRET: ${{ secrets.ITP_SERVICE_CLIENT_SECRET }}
           ITP_MAILINATOR_API_KEY: ${{ secrets.ITP_MAILINATOR_API_KEY }}
+          ITP_TEST_USER_SAMEORG: ${{ vars.ITP_TEST_USER_SAMEORG }}
           ITP_TEST_USER_EXTERNAL: ${{ vars.ITP_TEST_USER_EXTERNAL }}
 
   test_native:
