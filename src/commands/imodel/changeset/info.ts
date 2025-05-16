@@ -15,7 +15,7 @@ export default class ChangesetInfo extends BaseCommand {
         name: "Get Changeset Details",
     };
 
-    static description = 'Retrieve details about a specific changeset of an iModel.';
+    static description = `Retrieve details about a specific changeset of an iModel. Exactly one of ['changeset-id', 'changeset-index'] flags needs to be provided.`;
 
     static examples = [
       {
@@ -26,13 +26,13 @@ export default class ChangesetInfo extends BaseCommand {
 
     static flags = {
       "changeset-id": Flags.string({
-        description: 'The ID of the changeset.',
+        description: 'The ID of the changeset. Mutually exclusive with --changeset-index flag.',
         exactlyOne: ["changeset-id", "changeset-index"],
         helpValue: '<string>',
         required: false,
       }),
       "changeset-index": Flags.integer({
-        description: 'The index of the changeset.',
+        description: 'The index of the changeset. Mutually exclusive with --changeset-id flag.',
         helpValue: '<number>',
         required: false,
       }),

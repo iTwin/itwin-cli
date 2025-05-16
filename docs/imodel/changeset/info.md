@@ -1,16 +1,20 @@
 # itp imodel changeset info
 
-Retrieve details about a specific changeset of an iModel.
+Retrieve details about a specific changeset of an iModel. Exactly one of ['changeset-id', 'changeset-index'] flags needs to be provided.
 
 ## Options
-
-- **`--changeset-id`**  
-  The ID of the changeset.  
-  **Type:** `string` **Required:** Yes
 
 - **`-m, --imodel-id`**  
   The ID of the iModel whose changeset you want to retrieve.  
   **Type:** `string` **Required:** Yes
+
+- **`--changeset-id`**  
+  The ID of the changeset. Mutually exclusive with --changeset-index flag.  
+  **Type:** `string` **Required:** No
+
+- **`--changeset-index`**  
+  The index of the changeset. Mutually exclusive with --changeset-id flag.  
+  **Type:** `number` **Required:** No
 
 ## Examples
 
