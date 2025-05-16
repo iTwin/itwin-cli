@@ -6,6 +6,7 @@
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
+import { sourceFile } from '../../../src/services/synchronizationClient/models/source-file';
 import { storageConnection } from '../../../src/services/synchronizationClient/models/storage-connection';
 import { createFile, createIModel, createITwin, getRootFolderId } from '../../utils/helpers';
 import runSuiteIfMainModule from '../../utils/run-suite-if-main-module';
@@ -14,7 +15,9 @@ const tests = () => describe('create', () => {
   let testITwinId: string;
   let testIModelId: string;
   let rootFolderId: string;
-  let testFileId: string;
+  let testFileId1: string;
+  let testFileId2: string;
+  let testFileId3: string;
 
   before(async () => {
     const testITwin = await createITwin(`cli-itwin-integration-test--${new Date().toISOString()}`, 'Thing', 'Asset');
@@ -22,32 +25,67 @@ const tests = () => describe('create', () => {
     const testIModel = await createIModel(`cli-imodel-integration-test--${new Date().toISOString()}`, testITwinId);
     testIModelId = testIModel.id;
     rootFolderId = await getRootFolderId(testITwinId);
-    const testFile = await createFile(rootFolderId, 'test.zip', 'integration-tests/test.zip');
-    testFileId = testFile.id as string;
+    const testFile1 = await createFile(rootFolderId, 'ExtonCampus.dgn', 'examples/datasets/ExtonCampus.dgn');
+    testFileId1 = testFile1.id as string;
+    const testFile2 = await createFile(rootFolderId, 'HouseModel.dgn', 'examples/datasets/HouseModel.dgn');
+    testFileId2 = testFile2.id as string;
+    const testFile3 = await createFile(rootFolderId, 'test.zip', 'integration-tests/test.zip');
+    testFileId3 = testFile3.id as string;
   });
 
   after(async () => {
-    const { result: fileDeleteResult} = await runCommand(`storage file delete --file-id ${testFileId}`);
+    const { result: fileDeleteResult1} = await runCommand(`storage file delete --file-id ${testFileId1}`);
+    const { result: fileDeleteResult2} = await runCommand(`storage file delete --file-id ${testFileId2}`);
+    const { result: fileDeleteResult3} = await runCommand(`storage file delete --file-id ${testFileId3}`);
     const { result: imodelDeleteResult } = await runCommand(`imodel delete --imodel-id ${testIModelId}`);
     const { result: itwinDeleteResult } = await runCommand(`itwin delete --itwin-id ${testITwinId}`);
 
-    expect(fileDeleteResult).to.have.property('result', 'deleted');
+    expect(fileDeleteResult1).to.have.property('result', 'deleted');
+    expect(fileDeleteResult2).to.have.property('result', 'deleted');
+    expect(fileDeleteResult3).to.have.property('result', 'deleted');
     expect(imodelDeleteResult).to.have.property('result', 'deleted');
     expect(itwinDeleteResult).to.have.property('result', 'deleted');
   });
 
-  it('should create a connection', async () => {
-    const { result: createdConnection } = await runCommand<storageConnection>(`imodel connection create -m ${testIModelId} -f ${testFileId} --connector-type MSTN -n TestConnection`);
+  it('should create a connection with multiple files and equal amount of connector types', async () => {
+    const { result: createdConnection } = await runCommand<storageConnection>(`imodel connection create -m ${testIModelId} -f ${testFileId1} -f ${testFileId3} --connector-type MSTN --connector-type SPPID -n TestConnection`);
 
     expect(createdConnection).to.not.be.undefined;
     expect(createdConnection!.id).to.not.be.undefined;
     expect(createdConnection!.iModelId).to.be.equal(testIModelId);
     expect(createdConnection!.displayName).to.be.equal('TestConnection');
-    expect(createdConnection!.authenticationType).to.be.equal('User');
+
+    const { result: listResult } = await runCommand<sourceFile[]>(`imodel connection sourcefile list -c ${createdConnection!.id}`);
+    expect(listResult).to.have.lengthOf(2);
+    expect(listResult!.some((sourceFile) => sourceFile.storageFileId === testFileId1 && sourceFile.connectorType === 'MSTN')).to.be.true;
+    expect(listResult!.some((sourceFile) => sourceFile.storageFileId === testFileId3 && sourceFile.connectorType === 'SPPID')).to.be.true;
 
     const { result } = await runCommand(`imodel connection delete --connection-id ${createdConnection!.id}`);
     expect(result).to.have.property('result', 'deleted');
   });
+
+  it('should create a connection with multiple files and a single connector type', async () => {
+    const { result: createdConnection } = await runCommand<storageConnection>(`imodel connection create -m ${testIModelId} -f ${testFileId1} -f ${testFileId2} --connector-type MSTN -n TestConnection`);
+
+    expect(createdConnection).to.not.be.undefined;
+    expect(createdConnection!.id).to.not.be.undefined;
+    expect(createdConnection!.iModelId).to.be.equal(testIModelId);
+    expect(createdConnection!.displayName).to.be.equal('TestConnection');
+
+    const { result: listResult } = await runCommand<sourceFile[]>(`imodel connection sourcefile list -c ${createdConnection!.id}`);
+    expect(listResult).to.have.lengthOf(2);
+    expect(listResult!.some((sourceFile) => sourceFile.storageFileId === testFileId1 && sourceFile.connectorType === 'MSTN')).to.be.true;
+    expect(listResult!.some((sourceFile) => sourceFile.storageFileId === testFileId2 && sourceFile.connectorType === 'MSTN')).to.be.true;
+
+    const { result } = await runCommand(`imodel connection delete --connection-id ${createdConnection!.id}`);
+    expect(result).to.have.property('result', 'deleted');
+  });
+
+  it(`should throw an error if file and connector-type amounts don't match and connector-type amount is > 1.`, async () => {
+    const { error: createError } = await runCommand<storageConnection>(`imodel connection create -m ${testIModelId} -f ${testFileId1} -f ${testFileId2} -f ${testFileId3} --connector-type MSTN --connector-type SPPID -n TestConnection`);
+    expect(createError).to.not.be.undefined;
+    expect(createError!.message).to.be.equal("The number of connector types must match the number of file ids or be equal to 1.");
+  })
 });
 
 export default tests;

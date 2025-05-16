@@ -39,7 +39,7 @@ export default class CreateConnection extends BaseCommand {
       required: false 
     }),
     "connector-type": Flags.string({ 
-      description: 'The connector type of your file. Each connector will be used for the corresponding file in the files list (first connector for the first file, second connector for the second file, and so on).', 
+      description: 'Specify connectors to prioritize for synchronization. This flag can be provided multiple times. If only one connector is specified, it will be used for all files. If multiple connectors are specified, each connector will be used for the corresponding file in the files list (first connector for the first file, second connector for the second file, and so on).', 
       helpValue: '<string>',
       multiple: true,
       options: [
@@ -85,13 +85,15 @@ export default class CreateConnection extends BaseCommand {
 
     const sourceFiles : storageFileCreate[] = [];
 
-    if(flags["connector-type"].length !== flags["file-id"].length) {
-      this.error("The number of connector types must match the number of file ids.");
+    if(flags["connector-type"].length !== flags["file-id"].length && flags["connector-type"].length !== 1) {
+      this.error("The number of connector types must match the number of file ids or be equal to 1.");
     }
 
+    const isSingleConnectorTypeProvided = flags["connector-type"].length === 1;
     for (let i = 0; i < flags["file-id"].length; i++) {
+      const connectorType = isSingleConnectorTypeProvided ? flags["connector-type"][0] as connectorType : flags["connector-type"][i] as connectorType
       sourceFiles.push({
-        connectorType: flags["connector-type"][i] as connectorType,
+        connectorType,
         storageFileId: flags["file-id"][i]
       });
     }
