@@ -27,13 +27,12 @@ export default class ChangesetInfo extends BaseCommand {
     static flags = {
       "changeset-id": Flags.string({
         description: 'The ID of the changeset.',
-        exactlyOne: ["changeset-index"],
+        exactlyOne: ["changeset-id", "changeset-index"],
         helpValue: '<string>',
         required: false,
       }),
       "changeset-index": Flags.integer({
         description: 'The index of the changeset.',
-        exactlyOne: ["changeset-id"],
         helpValue: '<number>',
         required: false,
       }),

@@ -89,6 +89,18 @@ const tests = () => describe('changeset', () => {
     const indexesAsc = listResultAsc!.map(changeset => changeset.index);
     expect(indexesAsc).to.be.deep.equal([...indexesAsc].sort((a, b) => a - b));
   });
+
+  it(`should return an error if neither of 'changeset-id' and 'changeset-index' flags are provided`, async () => {
+    const { error: infoError } = await runCommand<Changeset>(`imodel changeset info --imodel-id ${testIModelId}`);
+    expect(infoError).to.not.be.undefined;
+    expect(infoError!.message).to.contain("Exactly one of the following must be provided: --changeset-id, --changeset-index")
+  });
+
+  it(`should return an error if both of 'changeset-id' and 'changeset-index' flags are provided`, async () => {
+    const { error: infoError } = await runCommand<Changeset>(`imodel changeset info --imodel-id ${testIModelId} --changeset-id a4139edd-d28d-4bb9-9260-0802dfda0413 --changeset-index 1`);
+    expect(infoError).to.not.be.undefined;
+    expect(infoError!.message).to.contain("--changeset-index cannot also be provided when using --changeset-id")
+  });
 });
 
 export default tests;
