@@ -10,6 +10,7 @@ import { expect } from "chai";
 import { groupMember } from "../../../src/services/access-control-client/models/group-members";
 import { ownerResponse } from "../../../src/services/access-control-client/models/owner";
 import { User } from "../../../src/services/user-client/models/user";
+import { ITP_TEST_USER_EXTERNAL } from "../../utils/environment";
 import { fetchEmailsAndGetInvitationLink } from "../../utils/helpers";
 import runSuiteIfMainModule from "../../utils/run-suite-if-main-module";
 
@@ -29,14 +30,14 @@ const tests = () => {
     });
 
     it('Should invite an external member to an iTwin, accept invitation and remove owner member', async () => {
-        const emailToAdd = 'APIM.OrgTest.Unassigned.QA@bentley.m8r.co';
+        const emailToAdd = ITP_TEST_USER_EXTERNAL;
         const invitedOwner = await runCommand<ownerResponse>(`access-control member owner add -i ${iTwinId} --email ${emailToAdd}`);
         expect(invitedOwner.result).is.not.undefined;
         expect(invitedOwner.result!.member).is.null;
         expect(invitedOwner.result!.invitation).is.not.undefined;
-        expect(invitedOwner.result!.invitation.email.toLowerCase()).to.equal(emailToAdd.toLowerCase());
+        expect(invitedOwner.result!.invitation.email.toLowerCase()).to.equal(emailToAdd!.toLowerCase());
 
-        const invitationLink = await fetchEmailsAndGetInvitationLink(emailToAdd.split('@')[0], iTwinName);
+        const invitationLink = await fetchEmailsAndGetInvitationLink(emailToAdd!.split('@')[0], iTwinName);
 
         await fetch(invitationLink);
 
@@ -45,7 +46,7 @@ const tests = () => {
         const usersInfo = await runCommand<groupMember[]>(`access-control member owner list --itwin-id ${iTwinId}`);
         expect(usersInfo.result).is.not.undefined;
         expect(usersInfo.result!.length).to.be.equal(2);
-        const joinedUser = usersInfo.result?.filter(user => user.email.toLowerCase() === emailToAdd.toLowerCase())[0];
+        const joinedUser = usersInfo.result?.filter(user => user.email.toLowerCase() === emailToAdd!.toLowerCase())[0];
         expect(joinedUser).to.not.be.undefined;
 
         const deletionResult = await runCommand<{result: string}>(`access-control member owner delete --itwin-id ${iTwinId} --member-id ${joinedUser?.id}`);

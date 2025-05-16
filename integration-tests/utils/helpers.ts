@@ -17,6 +17,7 @@ import { fileTyped } from "../../src/services/storage-client/models/file-typed.j
 import { fileUpload } from "../../src/services/storage-client/models/file-upload.js";
 import { folderTyped } from "../../src/services/storage-client/models/folder-typed.js";
 import { itemsWithFolderLink } from "../../src/services/storage-client/models/items-with-folder-link.js";
+import { ITP_ISSUER_URL, ITP_MAILINATOR_API_KEY, ITP_NATIVE_TEST_CLIENT_ID, ITP_TEST_USER_EMAIL, ITP_TEST_USER_PASSWORD } from "./environment.js";
 
 export async function serviceLoginToCli() {
     const result = await runCommand('auth login');
@@ -111,7 +112,7 @@ export async function getRootFolderId(iTwinId: string): Promise<string> {
 
 /**
  * Fetches emails from the specified inbox and then finds and returns the invitation link for iTwinName iTwin.
- * NOTE: This function only works for `@bentley.m8r.co` email addresses and not `@be-mailinator.eastus.cloudapp.azure.com` email addresses.
+ * NOTE: This function only works for email addresses, that are accessible using the Mailinator API.
  * @param inbox Inbox to fetch the invitation email from.
  * @param iTwinName Name of the iTwin.
  * @returns Invitation link for joining the iTwin.
@@ -119,9 +120,9 @@ export async function getRootFolderId(iTwinId: string): Promise<string> {
 export async function fetchEmailsAndGetInvitationLink(inbox: string, iTwinName: string): Promise<string> {
     await new Promise<void>(resolve => {setTimeout(_ => resolve(), 45 * 1000);});
 
-    expect(process.env.ITP_MAILINATOR_API_KEY).to.not.be.undefined;
+    expect(ITP_MAILINATOR_API_KEY).to.not.be.undefined;
 
-    const client = new MailinatorClient(process.env.ITP_MAILINATOR_API_KEY!);
+    const client = new MailinatorClient(ITP_MAILINATOR_API_KEY);
     const inboxResponse = await client.request(new GetInboxRequest("private", inbox, undefined, 10));
     expect(inboxResponse.result).to.not.be.null;
 
@@ -167,20 +168,20 @@ export async function logoutFromCLI() {
 
 const getNativeAuthAccessToken = async (): Promise<string> => {
     dotenv.config({path: '.env'});
-    expect(process.env.ITP_NATIVE_TEST_CLIENT_ID, "ITP_NATIVE_TEST_CLIENT_ID").to.not.be.undefined;
-    expect(process.env.ITP_ISSUER_URL, "ITP_ISSUER_URL").to.not.be.undefined;
+    expect(ITP_NATIVE_TEST_CLIENT_ID, "ITP_NATIVE_TEST_CLIENT_ID").to.not.be.undefined;
+    expect(ITP_ISSUER_URL, "ITP_ISSUER_URL").to.not.be.undefined;
     const config: TestBrowserAuthorizationClientConfiguration = {
-        authority: process.env.ITP_ISSUER_URL!,
-        clientId: process.env.ITP_NATIVE_TEST_CLIENT_ID!,
+        authority: ITP_ISSUER_URL,
+        clientId: ITP_NATIVE_TEST_CLIENT_ID!,
         redirectUri: "http://localhost:3301/signin-callback",
         scope: "itwin-platform",
     }
 
-    expect(process.env.ITP_TEST_USER_EMAIL, "ITP_TEST_USER_EMAIL").to.not.be.undefined;
-    expect(process.env.ITP_TEST_USER_PASSWORD, "ITP_TEST_USER_PASSWORD").to.not.be.undefined;
+    expect(ITP_TEST_USER_EMAIL, "ITP_TEST_USER_EMAIL").to.not.be.undefined;
+    expect(ITP_TEST_USER_PASSWORD, "ITP_TEST_USER_PASSWORD").to.not.be.undefined;
     const user: TestUserCredentials = {
-        email: process.env.ITP_TEST_USER_EMAIL!,
-        password: process.env.ITP_TEST_USER_PASSWORD!
+        email: ITP_TEST_USER_EMAIL!,
+        password: ITP_TEST_USER_PASSWORD!
     }
 
     const accessToken = await getTestAccessToken(config, user);

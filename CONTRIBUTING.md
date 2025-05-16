@@ -36,6 +36,29 @@ We’d love to accept your contributions! Follow these steps to get started:
 git clone https://github.com/itwin/itwin-cli.git
 cd itwin-cli
 ```
+
+### **Setup Test Environment**
+- Create .env file in the project root and put the following environment variables into it:
+```sh
+# API and IMS URLs. The example has URLs for the QA environment, but it can be changed to DEV or PROD (no prefix).
+ITP_ISSUER_URL=https://qa-ims.bentley.com
+ITP_API_URL=https://qa-api.bentley.com
+# Your service client, created in the same environment as the provided API and IMS URLs.
+ITP_SERVICE_CLIENT_ID=
+ITP_SERVICE_CLIENT_SECRET=
+# Your native client, created in the same environment as the provided API and IMS URLs. 
+ITP_NATIVE_TEST_CLIENT_ID=
+# Email and password of a test user. (Belonging to an organization is needed by some of the tests)
+ITP_TEST_USER_EMAIL=
+ITP_TEST_USER_PASSWORD=
+# Your mailinator API key.
+ITP_MAILINATOR_API_KEY=
+# Mailinator email address, that belongs to the same organization as ITP_TEST_USER_EMAIL
+ITP_TEST_USER_SAMEORG=
+# Mailinator email address, that does not belong to the same organization as ITP_TEST_USER_EMAIL
+ITP_TEST_USER_EXTERNAL=
+```
+
 #### **Install Dependencies**
 ```bash
 npm ci
