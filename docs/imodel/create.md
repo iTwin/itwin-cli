@@ -38,17 +38,17 @@ iModel extent can be provided to this command in multiple ways:
   Southwest latitude of the extent.
   **Type** `float` **Required:** No
 
-  - **`--sw-longitude`**
-  Southwest longitude of the extent.
-  **Type** `float` **Required:** No
+- **`--sw-longitude`**
+Southwest longitude of the extent.
+**Type** `float` **Required:** No
 
-  - **`--ne-latitude`**
-  Northeast latitude of the extent.
-  **Type** `float` **Required:** No
+- **`--ne-latitude`**
+Northeast latitude of the extent.
+**Type** `float` **Required:** No
 
-  - **`--ne-longitude`**
-  Northeast longitude of the extent.
-  **Type** `float` **Required:** No
+- **`--ne-longitude`**
+Northeast longitude of the extent.
+**Type** `float` **Required:** No
 
 - **`--save`**
   Save the iTwin id to the [context](./../environment.md).  

@@ -93,7 +93,7 @@ const tests = () => describe('create + delete', () => {
     expect(createError?.message).to.match(new RegExp(`--extent=${JSON.stringify(extent)} cannot also be provided when using --sw-longitude`));
   });
 
-  it('should return an error if user does not provides all extent flags', async () => {
+  it('should return an error if user does not provide all extent flags', async () => {
     const extent = {
       northEast: {
         latitude: 46.302_763_954_781_234,
