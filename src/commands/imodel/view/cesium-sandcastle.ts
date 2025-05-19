@@ -50,6 +50,13 @@ export default class CesiumSandcastle extends BaseCommand {
         description: "Open the URL in the browser.",
         required: false,
       }),
+      "terrain": Flags.string({
+        options: [
+          "off",
+          "cesium",
+          "google"
+        ]
+      })
     };
   
     async createExport(iModelId: string, changesetId: string): Promise<ExportInfo> {
@@ -108,7 +115,7 @@ export default class CesiumSandcastle extends BaseCommand {
     async run() {
       const { flags } = await this.parse(CesiumSandcastle);
 
-      let changesetId = flags["changeset-id"];
+      let changesetId = flags["changeset-id"] ?? "";
       if (changesetId === undefined) {
         const existingChangesets = await this.runCommand<Changeset[]>("imodel:changeset:list", ["-m", flags["imodel-id"], "--top", "1", "--order-by", "desc"]);
         if (existingChangesets.length === 0) {
@@ -124,7 +131,7 @@ export default class CesiumSandcastle extends BaseCommand {
       const tilesetUrl : string = extractTileSetUrl(exportInfo);
       
       const data = [
-        jsData(tilesetUrl),
+        jsData(tilesetUrl, flags.terrain),
         htmlData(),
       ];
 
@@ -200,9 +207,16 @@ function htmlData() : string {
 `;
 }
 
-function jsData(tilesetUrl: string) : string {
+function jsData(tilesetUrl: string, terrain?: string) : string {
+  let viewerParams = ""
+  if(terrain === 'cesium') {
+    viewerParams = "terrain: Cesium.Terrain.fromWorldTerrain(),"
+  } else if (terrain === 'google') {
+    throw new Error("Not implemented");
+  }
+
   return `
-const viewer = new Cesium.Viewer("cesiumContainer");
+const viewer = new Cesium.Viewer("cesiumContainer",{${viewerParams}});
 viewer.scene.globe.show = true;
 viewer.scene.debugShowFramesPerSecond = true;
 const tilesetUrl = '${tilesetUrl}'; 
