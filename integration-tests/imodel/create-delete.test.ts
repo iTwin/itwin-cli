@@ -25,7 +25,7 @@ const tests = () => describe('create + delete', () => {
     expect(deleteResult).to.have.property('result', 'deleted');
   });
 
-  it('should create a new iModel', async () => {
+  it('should create a new iModel (JSON extent)', async () => {
     const extent = {
       northEast: {
         latitude: 46.302_763_954_781_234,
@@ -37,7 +37,7 @@ const tests = () => describe('create + delete', () => {
       }
     }
 
-    const iModelName = `${testIModelName}-create`;
+    const iModelName = `${testIModelName}-create1`;
     const { result: createdIModel} = await runCommand<IModel>(`imodel create --itwin-id ${testITwinId} --name "${iModelName}" --description "${testIModelDescription}" --extent "${JSON.stringify(extent)}"`);
 
     expect(createdIModel).to.not.be.undefined;
@@ -46,6 +46,78 @@ const tests = () => describe('create + delete', () => {
     expect(createdIModel!.name).to.be.equal(iModelName);
     expect(createdIModel!.description).to.be.equal(testIModelDescription);
     expect(createdIModel!.extent).to.be.deep.equal(extent);
+  });
+
+  it('should create a new iModel (seperate flag extent)', async () => {
+    const extent = {
+      northEast: {
+        latitude: 46.302_763_954_781_234,
+        longitude: 7.835_541_640_797_823
+      },
+      southWest: {
+        latitude: 46.132_677_028_348_06,
+        longitude: 7.672_120_009_938_448
+      }
+    }
+
+    const iModelName = `${testIModelName}-create2`;
+    const { result: createdIModel} = await runCommand<IModel>(`imodel create --itwin-id ${testITwinId} --name "${iModelName}" --description "${testIModelDescription}" --ne-latitude ${extent.northEast.latitude} --ne-longitude ${extent.northEast.longitude} --sw-latitude ${extent.southWest.latitude} --sw-longitude ${extent.southWest.longitude}`);
+
+    expect(createdIModel).to.not.be.undefined;
+    expect(createdIModel!.id).to.not.be.undefined;
+    expect(createdIModel!.iTwinId).to.be.equal(testITwinId);
+    expect(createdIModel!.name).to.be.equal(iModelName);
+    expect(createdIModel!.description).to.be.equal(testIModelDescription);
+    expect(createdIModel!.extent).to.be.deep.equal(extent);
+  });
+
+  it('should return an error if user provides extent in both ways', async () => {
+    const extent = {
+      northEast: {
+        latitude: 46.302_763_954_781_234,
+        longitude: 7.835_541_640_797_823
+      },
+      southWest: {
+        latitude: 46.132_677_028_348_06,
+        longitude: 7.672_120_009_938_448
+      }
+    }
+
+    const iModelName = `${testIModelName}-create2`;
+    const { error: createError} = await runCommand<IModel>(`imodel create --itwin-id ${testITwinId} --name "${iModelName}" --description "${testIModelDescription}" --extent "${JSON.stringify(extent)}" --ne-latitude ${extent.northEast.latitude} --ne-longitude ${extent.northEast.longitude} --sw-latitude ${extent.southWest.latitude} --sw-longitude ${extent.southWest.longitude}`);
+
+    expect(createError).to.not.be.undefined;
+    expect(createError?.message).to.match(new RegExp(`--extent=${JSON.stringify(extent)} cannot also be provided when using --ne-latitude`));
+    expect(createError?.message).to.match(new RegExp(`--extent=${JSON.stringify(extent)} cannot also be provided when using --ne-longitude`));
+    expect(createError?.message).to.match(new RegExp(`--extent=${JSON.stringify(extent)} cannot also be provided when using --sw-latitude`));
+    expect(createError?.message).to.match(new RegExp(`--extent=${JSON.stringify(extent)} cannot also be provided when using --sw-longitude`));
+  });
+
+  it('should return an error if user does not provides all extent flags', async () => {
+    const extent = {
+      northEast: {
+        latitude: 46.302_763_954_781_234,
+        longitude: 7.835_541_640_797_823
+      },
+      southWest: {
+        latitude: 46.132_677_028_348_06,
+        longitude: 7.672_120_009_938_448
+      }
+    }
+
+    const iModelName = `${testIModelName}-create2`;
+    const { error: createError} = await runCommand<IModel>(`imodel create --itwin-id ${testITwinId} --name "${iModelName}" --description "${testIModelDescription}" --ne-latitude ${extent.northEast.latitude} --ne-longitude ${extent.northEast.longitude} --sw-latitude ${extent.southWest.latitude}`);
+
+    expect(createError).to.not.be.undefined;
+    expect(createError?.message).to.match(/All of the following must be provided when using --sw-latitude: --ne-latitude, --ne-longitude, --sw-longitude/);
+  });
+
+  it('should return an error if a component of the provided extent is not a valid number', async () => {
+    const iModelName = `${testIModelName}-create2`;
+    const { error: createError} = await runCommand<IModel>(`imodel create --itwin-id ${testITwinId} --name "${iModelName}" --description "${testIModelDescription}" --ne-latitude 46.302abc --ne-longitude 7.835 --sw-latitude 46.132 --sw-longitude 7.672`);
+
+    expect(createError).to.not.be.undefined;
+    expect(createError?.message).to.match(/46.302abc is not a valid number./);
   });
 
   it('should delete the iModel', async () => {

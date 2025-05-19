@@ -2,6 +2,10 @@
 
 Create an empty iModel within a specified iTwin.
 
+iModel extent can be provided to this command in multiple ways:
+1) Utilizing the `--extent` flag, where coordinates are provided in form of serialized JSON.
+2) By providing all of the following flags: `--sw-latitude`, `--sw-longitude`, `--ne-latitude`, `--ne-longitude`
+
 ## Options
 
 - **`-i, --itwin-id`**  
@@ -17,7 +21,7 @@ Create an empty iModel within a specified iTwin.
   **Type:** `string` **Required:** No
 
 - **`--extent`**  
-  The maximum rectangular area on Earth that encloses the iModel, defined by its southwest and northeast corners.  
+  The maximum rectangular area on Earth that encloses the iModel, defined by its southwest and northeast corners and provided in serialized JSON format.  
   **Type:** `object` **Required:** No  
   - **`southWest`**  
     The southwest corner of the extent.  
@@ -30,6 +34,22 @@ Create an empty iModel within a specified iTwin.
     - **`latitude`**: `number`  
     - **`longitude`**: `number`
 
+- **`--sw-latitude`**
+  Southwest latitude of the extent.
+  **Type** `float` **Required:** No
+
+  - **`--sw-longitude`**
+  Southwest longitude of the extent.
+  **Type** `float` **Required:** No
+
+  - **`--ne-latitude`**
+  Northeast latitude of the extent.
+  **Type** `float` **Required:** No
+
+  - **`--ne-longitude`**
+  Northeast longitude of the extent.
+  **Type** `float` **Required:** No
+
 - **`--save`**
   Save the iTwin id to the [context](./../environment.md).  
   **Type:** `flag` **Required:** No
@@ -40,7 +60,7 @@ Create an empty iModel within a specified iTwin.
 # Example 1: Creating an iModel with minimal options
 itp imodel create --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --name "Basic iModel"
 
-# Example 2: Creating an iModel with all options, including extent and description
+# Example 2: Creating an iModel with all options, including extent (JSON format) and description
 itp imodel create --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --name "Sun City Renewable-energy Plant" --description "Overall model of wind and solar farms in Sun City" --extent '{
   "southWest": {
     "latitude": 46.13267702834806,
@@ -51,6 +71,9 @@ itp imodel create --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --name "Sun Ci
     "longitude": 7.835541640797823
   }
 }'
+
+# Example 3: Creating an iModel with all options, including extent (separate flags format) and description
+itp imodel create --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --name "Sun City Renewable-energy Plant" --description "Overall model of wind and solar farms in Sun City" --sw-latitude 46.13267702834806 --sw-longitude 7.672120009938448 --ne-latitude 46.302763954781234 --ne-longitude 7.835541640797823
 ```
 
 ## API Reference
