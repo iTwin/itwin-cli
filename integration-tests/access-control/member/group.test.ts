@@ -253,6 +253,20 @@ const tests = () => {
         expect(resultCreate.error?.message).to.match(/'not-a-serialized-json-string' is not valid serialized JSON./)
     });
 
+    it('should return an error when there are invalid GUIDs provided to `--role-ids` flag', async () => {
+        const groupsInfo = [
+            {
+                groupId: groupId1,
+                roleIds: [roleId1, roleId2]
+            }
+        ];
+
+        const resultCreate = await runCommand<GroupMemberInfo[]>(`access-control member group add --itwin-id ${iTwinId} --group-id ${groupsInfo[0].groupId}
+            --role-ids ${groupsInfo[0].roleIds.join(',')},some-invalid-guid`);
+        expect(resultCreate.error).is.not.undefined;
+        expect(resultCreate.error?.message).to.match(new RegExp(`There are invalid GUIDs in '${groupsInfo[0].roleIds.join(',')},some-invalid-guid'`))
+    });
+
     it('Should return an error when there are too many role assignments', async () => {
         const groups: { groupId: string, roleIds: string[] }[] = [];
         for (let i = 0; i < 11; i++) {

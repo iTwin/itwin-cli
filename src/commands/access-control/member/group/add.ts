@@ -8,7 +8,7 @@ import { Flags } from "@oclif/core";
 import { apiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
 import { CustomFlags } from "../../../../extensions/custom-flags.js";
-import { validateJson } from "../../../../extensions/validation.js";
+import { validateGuidCSV, validateJson } from "../../../../extensions/validation.js";
 import { GroupMember } from "../../../../services/access-control-client/models/group.js";
 
 export default class AddGroupMembers extends BaseCommand {
@@ -37,7 +37,7 @@ export default class AddGroupMembers extends BaseCommand {
   static flags = {
     "group-id": Flags.string({
       dependsOn: ['role-ids'],
-      description: 'Specify IDs of groups to add roles to. This flag can be provided multiple times.',
+      description: 'Specify id of the group to add roles to. This flag can be provided multiple times.',
       helpValue: "<string>",
       multiple: true,
       required: false,
@@ -58,6 +58,7 @@ export default class AddGroupMembers extends BaseCommand {
       description: 'Specify IDs of roles to be assigned to a group in CSV format without any whitespaces. This flag can be provided multiple times. If the flag is provided only once, the contained list of role IDs will be assigned to all provided group-ids list. If flag is provided multiple times, each role-ids will be used for the corresponding group-id (fist role-ids list for the first group-id, second role-ids list for the second group-id and so on).',
       helpValue: "<string>",
       multiple: true,
+      parse: input => validateGuidCSV(input),
       required: false,
     })
   };

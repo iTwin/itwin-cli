@@ -21,3 +21,13 @@ export const validateJson = async (jsonString: string): Promise<string> => {
     
     return jsonString;
 }
+
+export const validateGuidCSV = async (csvGuidString: string): Promise<string> => {
+    const GUIDs = csvGuidString.split(',');
+    const areAllGUIDs = GUIDs.every((guid) => guid.match(/^[\da-f]{8}-[\da-f]{4}-[1-5][\da-f]{3}-[89ab][\da-f]{3}-[\da-f]{12}$/i))
+    if(!areAllGUIDs) {
+        throw new Error(`There are invalid GUIDs in '${csvGuidString}'.`)
+    }
+    
+    return csvGuidString;
+}
