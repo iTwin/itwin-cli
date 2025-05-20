@@ -183,6 +183,42 @@ const tests = () => {
         expect(resultDelete3.stdout).to.contain('deleted');
     });
 
+    it('Should create multiple member groups using `--group-id` and `--role-ids` (single list) flags and delete them', async () => {
+        const roleIds = [roleId1, roleId2];
+        
+        const groupsInfo = [
+            {
+                groupId: groupId1,
+            },
+            {
+                groupId: groupId2,
+            },
+            {
+                groupId: groupId3,
+            },
+        ];
+
+        const resultCreate = await runCommand<GroupMemberInfo[]>(`access-control member group add --itwin-id ${iTwinId} --group-id ${groupsInfo[0].groupId} --group-id ${groupsInfo[1].groupId} --group-id ${groupsInfo[2].groupId} --role-ids ${roleIds.join(',')}`);
+        expect(resultCreate.result).is.not.undefined;
+        expect(resultCreate.result).to.have.lengthOf(3);
+        for (const [i, groupInfo] of groupsInfo.entries()) {
+            expect(resultCreate.result![i].id).to.be.equal(groupInfo.groupId);
+            expect(resultCreate.result![i].roles.map(role => role.id)).to.be.deep.equal(roleIds);
+        }
+
+        const resultDelete1 = await runCommand(`access-control member group delete --itwin-id ${iTwinId} --group-id ${groupId1}`);
+        expect(resultDelete1.error).to.be.undefined;
+        expect(resultDelete1.stdout).to.contain('deleted');
+
+        const resultDelete2 = await runCommand(`access-control member group delete --itwin-id ${iTwinId} --group-id ${groupId2}`);
+        expect(resultDelete2.error).to.be.undefined;
+        expect(resultDelete2.stdout).to.contain('deleted');
+
+        const resultDelete3 = await runCommand(`access-control member group delete --itwin-id ${iTwinId} --group-id ${groupId3}`);
+        expect(resultDelete3.error).to.be.undefined;
+        expect(resultDelete3.stdout).to.contain('deleted');
+    });
+
     it('Should return an error when all of the following flags are provided: `--groups`, `--group-id`, `--role-ids`', async () => {
         const groupsInfo = [
             {
