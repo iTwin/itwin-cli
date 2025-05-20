@@ -7,6 +7,7 @@ import { Command, Flags } from "@oclif/core";
 
 import { apiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
+import { validateJson } from "../../extensions/validation.js";
 import { Query } from "../../services/iTwin-api-client.js";
 
 export default class ApiRequest extends BaseCommand {
@@ -46,6 +47,7 @@ export default class ApiRequest extends BaseCommand {
         body: Flags.string({
             description: "The body to include in the request. It must be serialized JSON.",
             helpValue: '<string>',
+            parse: input => validateJson(input),
         }),
         "empty-response": Flags.boolean({
             description: "Indicates the request will not return a response body."

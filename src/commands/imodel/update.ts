@@ -9,6 +9,7 @@ import { Flags } from "@oclif/core";
 import { apiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
 import { CustomFlags } from "../../extensions/custom-flags.js";
+import { validateFloat, validateJson } from "../../extensions/validation.js";
 
 export default class UpdateCommand extends BaseCommand {
     static apiReference: apiReference = {
@@ -45,7 +46,8 @@ export default class UpdateCommand extends BaseCommand {
       }),
       extent: Flags.string({
         description: 'The new maximum rectangular area on Earth that encloses the iModel, defined by its southwest and northeast corners and provided in serialized JSON format.',
-        helpValue: '<string>',
+        helpValue: '<object>',
+        parse: input => validateJson(input),
         required: false,
       }),
       "imodel-id": CustomFlags.iModelIDFlag({
@@ -62,7 +64,7 @@ export default class UpdateCommand extends BaseCommand {
         description: 'Northeast latitude of the extent.',
         exclusive: ['extent'],
         helpValue: "<float>",
-        parse: (input) => CustomFlags.validateFloat(input),
+        parse: (input) => validateFloat(input),
         required: false,
       }),
       "ne-longitude": Flags.string({
@@ -70,7 +72,7 @@ export default class UpdateCommand extends BaseCommand {
         description: 'Northeast longitude of the extent.',
         exclusive: ['extent'],
         helpValue: "<float>",
-        parse: (input) => CustomFlags.validateFloat(input),
+        parse: (input) => validateFloat(input),
         required: false,
       }),
       "sw-latitude": Flags.string({
@@ -78,7 +80,7 @@ export default class UpdateCommand extends BaseCommand {
         description: 'Southwest latitude of the extent.',
         exclusive: ['extent'],
         helpValue: "<float>",
-        parse: (input) => CustomFlags.validateFloat(input),
+        parse: (input) => validateFloat(input),
         required: false,
       }),
       "sw-longitude": Flags.string({
@@ -86,7 +88,7 @@ export default class UpdateCommand extends BaseCommand {
         description: 'Southwest longitude of the extent.',
         exclusive: ['extent'],
         helpValue: "<float>",
-        parse: (input) => CustomFlags.validateFloat(input),
+        parse: (input) => validateFloat(input),
         required: false,
       }),
     };

@@ -8,53 +8,99 @@ import { Flags } from "@oclif/core";
 import { apiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
 import { CustomFlags } from "../../../../extensions/custom-flags.js";
+import { validateJson } from "../../../../extensions/validation.js";
 import { GroupMember } from "../../../../services/access-control-client/models/group.js";
 
 export default class AddGroupMembers extends BaseCommand {
-    static apiReference: apiReference = {
-        link: "https://developer.bentley.com/apis/access-control-v2/operations/add-itwin-group-members/",
-        name: "Add iTwin Group Members",
-    };
+  static apiReference: apiReference = {
+      link: "https://developer.bentley.com/apis/access-control-v2/operations/add-itwin-group-members/",
+      name: "Add iTwin Group Members",
+  };
 
-    static description = 'Add one or more groups as members to an iTwin.';
+  static description = 'Add one or more groups as members to an iTwin.';
 
-    static examples = [
-      {
-        command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --groups '[{"groupId": "group1-id", "roleIds": ["5abbfcef-0eab-472a-b5f5-5c5a43df34b1", "83ee0d80-dea3-495a-b6c0-7bb102ebbcc3"]}, {"groupId": "group2-id", "roleIds": ["5abbfcef-0eab-472a-b5f5-5c5a43df34b1"]}]',`,
-        description: 'Example 1: Add one or more groups as members to an iTwin.'
-      }
-    ];
-  
-    static flags = {
-      groups: Flags.string({
-        description: 'A list of groups to add, each with a groupId and roleIds. A maximum of 50 role assignments can be performed.',
-        helpValue: '<string>',
-        required: true
-      }),
-      "itwin-id": CustomFlags.iTwinIDFlag({
-        description: 'The ID of the iTwin to which the groups will be added.'
-      }),
-    };
-  
-    async run() {
-      const { flags } = await this.parse(AddGroupMembers);
-  
-      const client = await this.getAccessControlMemberClient();
-      
-      const members = JSON.parse(flags.groups) as GroupMember[];
-
-      let roleAssignmentCount = 0;
-      for (const member of members)
-        roleAssignmentCount += member.roleIds.length;
-  
-      if(roleAssignmentCount > 50) {
-        this.error("A maximum of 50 role assignments can be performed.");
-      }
-
-      const response = await client.addGroupMember(flags["itwin-id"], {
-        members,
-      });
-  
-      return this.logAndReturnResult(response.members);
+  static examples = [
+    {
+      command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --groups '[{"groupId": "group1-id", "roleIds": ["5abbfcef-0eab-472a-b5f5-5c5a43df34b1", "83ee0d80-dea3-495a-b6c0-7bb102ebbcc3"]}, {"groupId": "group2-id", "roleIds": ["5abbfcef-0eab-472a-b5f5-5c5a43df34b1"]}]'`,
+      description: 'Example 1: Add one or more groups as members to an iTwin using `--groups` flag.'
+    },
+    {
+      command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --group-id group1-id --group-id group2-id --role-ids 5abbfcef-0eab-472a-b5f5-5c5a43df34b1,83ee0d80-dea3-495a-b6c0-7bb102ebbcc3 --role-ids 5abbfcef-0eab-472a-b5f5-5c5a43df34b1`,
+      description: 'Example 2: Add one or more groups as members to an iTwin using `--group-id` and `--role-ids` flags.'
+    },
+    {
+      command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --group-id group1-id --group-id group2-id --role-ids 5abbfcef-0eab-472a-b5f5-5c5a43df34b1,83ee0d80-dea3-495a-b6c0-7bb102ebbcc3`,
+      description: 'Example 3: Add one or more groups as members to an iTwin using `--group-id` and `--role-ids` flags. Assign the same list of roles to all groups.'
     }
+  ];
+
+  static flags = {
+    "group-id": Flags.string({
+      dependsOn: ['role-ids'],
+      description: 'Specify IDs of groups to add roles to. This flag can be provided multiple times.',
+      helpValue: "<string>",
+      multiple: true,
+      required: false,
+    }),
+    groups: Flags.string({
+      description: 'A list of groups to add, each with a groupId and roleIds. A maximum of 50 role assignments can be performed. Provided in serialized JSON format.',
+      exactlyOne: ['groups', 'group-id'],
+      exclusive: ['group-id', "role-ids"],
+      helpValue: '<object>',
+      parse: input => validateJson(input),
+      required: false,
+    }),
+    "itwin-id": CustomFlags.iTwinIDFlag({
+      description: 'The ID of the iTwin to which the groups will be added.'
+    }),
+    "role-ids": Flags.string({
+      dependsOn: ['group-id'],
+      description: 'Specify IDs of roles to be assigned to a group in CSV format without any whitespaces. This flag can be provided multiple times. If the flag is provided only once, the contained list of role IDs will be assigned to all provided group-ids list. If flag is provided multiple times, each role-ids will be used for the corresponding group-id (fist role-ids list for the first group-id, second role-ids list for the second group-id and so on).',
+      helpValue: "<string>",
+      multiple: true,
+      required: false,
+    })
+  };
+
+  async run() {
+    const { flags } = await this.parse(AddGroupMembers);
+
+    const client = await this.getAccessControlMemberClient();
+    
+    const members = this.getGroupMembers(flags.groups, flags["group-id"], flags["role-ids"]);
+
+    let roleAssignmentCount = 0;
+    for (const member of members)
+      roleAssignmentCount += member.roleIds.length;
+
+    if(roleAssignmentCount > 50) {
+      this.error("A maximum of 50 role assignments can be performed.");
+    }
+
+    const response = await client.addGroupMember(flags["itwin-id"], {
+      members,
+    });
+
+    return this.logAndReturnResult(response.members);
   }
+
+  // eslint-disable-next-line perfectionist/sort-classes
+  private getGroupMembers(groupsJson: string | undefined, groupIds: string[] | undefined, roleIds: string[] | undefined): GroupMember[] {
+    let groups: GroupMember[] | undefined = groupsJson === undefined ? undefined : JSON.parse(groupsJson);
+    if (groups !== undefined)
+      return groups;
+
+    if(roleIds!.length !== 1 && groupIds!.length !== roleIds!.length) {
+      this.error("Number of `--role-ids` flags must match the amount of `--group-id` flags or be equal to 1.")
+    }
+
+    groups = [];
+    for (const [i, groupId] of groupIds!.entries()) {
+      const currentRoleIds = roleIds!.length === 1 ? roleIds![0].split(','): roleIds![i].split(',');
+      groups.push({groupId, roleIds: currentRoleIds});
+    }
+
+    return groups;
+  }
+}
+  

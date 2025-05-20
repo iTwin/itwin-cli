@@ -1,3 +1,8 @@
+/*---------------------------------------------------------------------------------------------
+* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+* See LICENSE.md in the project root for license terms and full copyright notice.
+*--------------------------------------------------------------------------------------------*/
+
 import { Flags } from "@oclif/core";
 
 // eslint-disable-next-line unicorn/no-static-only-class
@@ -17,14 +22,6 @@ export class CustomFlags {
         helpValue: '<string>',
         required: true,
     });
-
-    static async validateFloat(floatString: string): Promise<string> {
-        if(!/^-?\d*(\.\d+)?$/.test(floatString)){
-            throw new TypeError(`${floatString} is not a valid number.`)
-        }
-
-        return floatString;
-    };
 }
 
 export type CustomFlagConfig = {
