@@ -51,11 +51,13 @@ export default class CesiumSandcastle extends BaseCommand {
         required: false,
       }),
       "terrain": Flags.string({
+        default: 'off',
+        description: "Select type of terrain to use.",
         options: [
           "off",
           "cesium",
           "google"
-        ]
+        ],
       })
     };
   
