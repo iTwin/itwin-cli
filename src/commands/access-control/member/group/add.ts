@@ -17,7 +17,7 @@ export default class AddGroupMembers extends BaseCommand {
       name: "Add iTwin Group Members",
   };
 
-  static description = 'Add one or more groups as members to an iTwin.';
+  static description = 'Add one or more groups as members to an iTwin.\r\n\r\nGroups and their roles can be provided to this command in multiple ways:\r\n1) Utilizing the `--groups` flag, where the necessary data in provided in form of serialized JSON.\r\n2) Utilizing `--group-id` and `--role-ids` flags.';
 
   static examples = [
     {
