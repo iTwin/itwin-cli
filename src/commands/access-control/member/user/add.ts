@@ -17,7 +17,7 @@ export default class AddUserMembers extends BaseCommand {
       name: "Add iTwin User Members",
   };
 
-  static description = 'Add one or more user members to an iTwin.\r\n\r\nUsers and their roles can be provided to this command in multiple ways:\r\n1) Utilizing the `--members` flag, where the necessary data in provided in form of serialized JSON.\r\n2) Utilizing `--email` and `--role-ids` flags.';
+  static description = 'Add one or more user members to an iTwin.\n\nUsers and their roles can be provided to this command in multiple ways:\n1) Utilizing the `--members` flag, where the necessary data in provided in form of serialized JSON.\n2) Utilizing `--email` and `--role-ids` flags.';
 
   static examples = [
     {
