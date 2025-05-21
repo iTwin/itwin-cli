@@ -17,6 +17,11 @@ Setup iModel and get URL to view it in Cesium Sandcastle.
   Open the URL in the browser.  
   **Type:** `flag` **Required:** No
 
+- **`--terrain`**  
+    
+  **Type:** `undefined` **Required:** No  
+  **Valid Values:** `"off"`, `"cesium"`, `"google"`
+
 ## Examples
 
 ```bash
