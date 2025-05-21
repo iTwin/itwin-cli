@@ -19,7 +19,7 @@ Setup iModel and get URL to view it in Cesium Sandcastle.
 
 - **`--terrain`**  
   Select type of terrain to use.  
-  **Type:** `undefined` **Required:** No  
+  **Type:** `string` **Required:** No  
   **Valid Values:** `"off"`, `"cesium"`, `"google"`
 
 ## Examples
