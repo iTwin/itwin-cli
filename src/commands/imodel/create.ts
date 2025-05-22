@@ -50,7 +50,7 @@ export default class CreateIModel extends BaseCommand {
       }),
       extent: Flags.string({
         description: 'The maximum rectangular area on Earth that encloses the iModel, defined by its southwest and northeast corners and provided in serialized JSON format.',
-        helpValue: '<object>',
+        helpValue: '<string>',
         parse: input => validateJson(input),
         required: false,
       }),

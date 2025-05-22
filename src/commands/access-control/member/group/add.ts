@@ -21,15 +21,15 @@ export default class AddGroupMembers extends BaseCommand {
 
   static examples = [
     {
-      command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --groups '[{"groupId": "group1-id", "roleIds": ["5abbfcef-0eab-472a-b5f5-5c5a43df34b1", "83ee0d80-dea3-495a-b6c0-7bb102ebbcc3"]}, {"groupId": "group2-id", "roleIds": ["5abbfcef-0eab-472a-b5f5-5c5a43df34b1"]}]'`,
+      command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --groups '[{"groupId": "605e6f1e-b774-40f4-87cb-94ca7392c182", "roleIds": ["5abbfcef-0eab-472a-b5f5-5c5a43df34b1", "83ee0d80-dea3-495a-b6c0-7bb102ebbcc3"]}, {"groupId": "fb23fed5-182a-4ed1-b378-3b214fd3f043", "roleIds": ["5abbfcef-0eab-472a-b5f5-5c5a43df34b1"]}]'`,
       description: 'Example 1: Add one or more groups as members to an iTwin using `--groups` flag.'
     },
     {
-      command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --group-id group1-id --group-id group2-id --role-ids 5abbfcef-0eab-472a-b5f5-5c5a43df34b1,83ee0d80-dea3-495a-b6c0-7bb102ebbcc3 --role-ids 5abbfcef-0eab-472a-b5f5-5c5a43df34b1`,
+      command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --group-id 605e6f1e-b774-40f4-87cb-94ca7392c182 --group-id fb23fed5-182a-4ed1-b378-3b214fd3f043 --role-ids 5abbfcef-0eab-472a-b5f5-5c5a43df34b1,83ee0d80-dea3-495a-b6c0-7bb102ebbcc3 --role-ids 5abbfcef-0eab-472a-b5f5-5c5a43df34b1`,
       description: 'Example 2: Add one or more groups as members to an iTwin using `--group-id` and `--role-ids` flags.'
     },
     {
-      command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --group-id group1-id --group-id group2-id --role-ids 5abbfcef-0eab-472a-b5f5-5c5a43df34b1,83ee0d80-dea3-495a-b6c0-7bb102ebbcc3`,
+      command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --group-id 605e6f1e-b774-40f4-87cb-94ca7392c182 --group-id fb23fed5-182a-4ed1-b378-3b214fd3f043 --role-ids 5abbfcef-0eab-472a-b5f5-5c5a43df34b1,83ee0d80-dea3-495a-b6c0-7bb102ebbcc3`,
       description: 'Example 3: Add one or more groups as members to an iTwin using `--group-id` and `--role-ids` flags. Assign the same list of roles to all groups.'
     }
   ];
@@ -46,7 +46,7 @@ export default class AddGroupMembers extends BaseCommand {
       description: 'A list of groups to add, each with a groupId and roleIds. A maximum of 50 role assignments can be performed. Provided in serialized JSON format.',
       exactlyOne: ['groups', 'group-id'],
       exclusive: ['group-id', "role-ids"],
-      helpValue: '<object>',
+      helpValue: '<string>',
       parse: input => validateJson(input),
       required: false,
     }),

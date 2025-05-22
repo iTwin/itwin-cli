@@ -49,7 +49,7 @@ export default class AddUserMembers extends BaseCommand {
       description: 'A list of members to add, each with an email and a list of role IDs. A maximum of 50 role assignments can be performed. Provided in serialized JSON format.',
       exactlyOne: ['members', 'email'],
       exclusive: ['email', "role-ids"],
-      helpValue: '<object>',
+      helpValue: '<string>',
       parse: input => validateJson(input),
       required: false,
     }),

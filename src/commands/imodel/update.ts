@@ -46,7 +46,7 @@ export default class UpdateCommand extends BaseCommand {
       }),
       extent: Flags.string({
         description: 'The new maximum rectangular area on Earth that encloses the iModel, defined by its southwest and northeast corners and provided in serialized JSON format.',
-        helpValue: '<object>',
+        helpValue: '<string>',
         parse: input => validateJson(input),
         required: false,
       }),
