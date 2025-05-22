@@ -18,7 +18,7 @@ Users and their roles can be provided to this command in multiple ways:
 
 - **`--members`**  
   A list of members to add, each with an email and a list of role IDs. A maximum of 50 role assignments can be performed. Provided in serialized JSON format.  
-  **Type:** `object` **Required:** No
+  **Type:** `string` **Required:** No
 
 - **`--role-ids`**  
   Specify IDs of roles to be assigned to a user in CSV format without any whitespaces. This flag can be provided multiple times. If the flag is provided only once, the contained list of role IDs will be assigned to all provided group-ids list. If flag is provided multiple times, each role-ids will be used for the corresponding group-id (fist role-ids list for the first group-id, second role-ids list for the second group-id and so on).  
