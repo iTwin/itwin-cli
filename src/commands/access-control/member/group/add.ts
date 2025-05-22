@@ -68,7 +68,7 @@ export default class AddGroupMembers extends BaseCommand {
 
     const client = await this.getAccessControlMemberClient();
     
-    const members = this.getGroupMembers(flags.groups, flags["group-id"], flags["role-ids"]);
+    const members = this.getGroupMembers(flags["group-id"], flags["role-ids"], flags.groups);
 
     let roleAssignmentCount = 0;
     for (const member of members)
@@ -86,7 +86,7 @@ export default class AddGroupMembers extends BaseCommand {
   }
 
   // eslint-disable-next-line perfectionist/sort-classes
-  private getGroupMembers(groupsJson: string | undefined, groupIds: string[] | undefined, roleIds: string[] | undefined): GroupMember[] {
+  private getGroupMembers(groupIds: string[] | undefined, roleIds: string[] | undefined, groupsJson?: string): GroupMember[] {
     let groups: GroupMember[] | undefined = groupsJson === undefined ? undefined : JSON.parse(groupsJson);
     if (groups !== undefined)
       return groups;
