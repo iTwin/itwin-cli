@@ -84,7 +84,7 @@ const tests = () => describe('create', () => {
   it(`should throw an error if file and connector-type amounts don't match and connector-type amount is > 1.`, async () => {
     const { error: createError } = await runCommand<storageConnection>(`imodel connection create -m ${testIModelId} -f ${testFileId1} -f ${testFileId2} -f ${testFileId3} --connector-type MSTN --connector-type SPPID -n TestConnection`);
     expect(createError).to.not.be.undefined;
-    expect(createError!.message).to.be.equal("The number of connector types must match the number of file ids or be equal to 1.");
+    expect(createError!.message).to.be.equal("When multiple connector-type options are provided, their amount must match file-id option amount. Alternatively, you can provide a single connector-type option, which will then be applied to all file-id options.");
   })
 });
 
