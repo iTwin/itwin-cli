@@ -54,6 +54,7 @@ export default class CreateConnection extends BaseCommand {
         'NWD',
         'OBD',
         'OPENTOWER',
+        'PROSTRUCTURES',
         'REVIT',
         'SPPID',
         'SPXREVIEW' 
