@@ -11,7 +11,7 @@ Add a source file to an existing storage connection of an iModel.
 - **`--connector-type`**  
   The connector type for synchronization.  
   **Type:** `string` **Required:** Yes  
-  **Valid Values:** `"AUTOPLANT"`, `"CIVIL"`, `"CIVIL3D"`, `"DWG"`, `"IFC"`, `"MSTN"`, `"REVIT"`, `"OPENROADS"`, `"SPX"`, `"XER"`, `"PRIMAVERA"`, `"SYNCHRO"`, `"MICROSTATION"`
+  **Valid Values:** `"AUTOPLANT"`, `"AVEVAPID"`, `"CIVIL"`, `"CIVIL3D"`, `"DWG"`, `"GEOSPATIAL"`, `"IFC"`, `"MSTN"`, `"NWD"`, `"OBD"`, `"OPENTOWER"`, `"PROSTRUCTURES"`, `"REVIT"`, `"SPPID"`, `"SPXREVIEW"`
 
 - **`--storage-file-id`**  
   The storage file ID.  
