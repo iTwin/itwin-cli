@@ -110,12 +110,6 @@ const tests = () => describe("API Integration Tests", () => {
         expect(apiResponseJSON.api).to.have.property("version").that.is.an("string").and.not.undefined;
         expect(apiResponseJSON.api.version).to.equal("v1");
     });
-
-    it('should return an error if serialized JSON provided to `--body` flag is invalid', async () => {
-        const apiResponse = await runCommand(`api --method PATCH --path itwins/${iTwin.id} --body not-a-serialized-json-string`);
-        expect(apiResponse.error).is.not.undefined;
-        expect(apiResponse.error?.message).to.match(/'not-a-serialized-json-string' is not valid serialized JSON./)
-    });
 });
 
 export default tests;

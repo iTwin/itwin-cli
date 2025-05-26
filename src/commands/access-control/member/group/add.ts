@@ -8,7 +8,7 @@ import { Flags } from "@oclif/core";
 import { apiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
 import { CustomFlags } from "../../../../extensions/custom-flags.js";
-import { validateGuidCSV, validateJson } from "../../../../extensions/validation.js";
+import { validateGuidCSV } from "../../../../extensions/validation.js";
 import { GroupMember } from "../../../../services/access-control-client/models/group.js";
 
 export default class AddGroupMembers extends BaseCommand {
@@ -47,7 +47,6 @@ export default class AddGroupMembers extends BaseCommand {
       exactlyOne: ['groups', 'group-id'],
       exclusive: ['group-id', "role-ids"],
       helpValue: '<string>',
-      parse: input => validateJson(input),
       required: false,
     }),
     "itwin-id": CustomFlags.iTwinIDFlag({

@@ -283,12 +283,6 @@ const tests = () => {
         expect(resultCreate.error?.message).to.match(/All of the following must be provided when using --role-ids: --group-id/)
     });
 
-    it('should return an error when invalid JSON is provided to `--groups` flag', async () => {
-        const resultCreate = await runCommand<GroupMemberInfo[]>(`access-control member group add --itwin-id ${iTwinId} --groups not-a-serialized-json-string`);
-        expect(resultCreate.error).is.not.undefined;
-        expect(resultCreate.error?.message).to.match(/'not-a-serialized-json-string' is not valid serialized JSON./)
-    });
-
     it('should return an error when there are invalid GUIDs provided to `--role-ids` flag', async () => {
         const groupsInfo = [
             {

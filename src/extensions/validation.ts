@@ -11,17 +11,6 @@ export const validateFloat = async (floatString: string): Promise<string> => {
     return floatString;
 };
 
-export const validateJson = async (jsonString: string): Promise<string> => {
-    try {
-        JSON.parse(jsonString)
-    }
-    catch {
-        throw new Error(`'${jsonString}' is not valid serialized JSON.`);
-    }
-    
-    return jsonString;
-}
-
 export const validateGuidCSV = async (csvGuidString: string): Promise<string> => {
     const GUIDs = csvGuidString.split(',');
     const areAllGUIDs = GUIDs.every((guid) => guid.match(/^[\da-f]{8}-[\da-f]{4}-[1-5][\da-f]{3}-[89ab][\da-f]{3}-[\da-f]{12}$/i))

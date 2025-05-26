@@ -8,7 +8,7 @@ import { Flags } from "@oclif/core";
 import { apiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
 import { CustomFlags } from "../../../../extensions/custom-flags.js";
-import { validateGuidCSV, validateJson } from "../../../../extensions/validation.js";
+import { validateGuidCSV } from "../../../../extensions/validation.js";
 import { addMember } from "../../../../services/access-control-client/models/members.js";
 
 export default class AddUserMembers extends BaseCommand {
@@ -50,7 +50,6 @@ export default class AddUserMembers extends BaseCommand {
       exactlyOne: ['members', 'email'],
       exclusive: ['email', "role-ids"],
       helpValue: '<string>',
-      parse: input => validateJson(input),
       required: false,
     }),
     "role-ids": Flags.string({
