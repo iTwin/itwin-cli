@@ -1,6 +1,6 @@
 # itp access-control member user add
 
-Add one or more user members to an iTwin.
+Add and/or invite one or more user members to an iTwin. When using interactive login, specified users are directly added to the iTwin if they are in the same organization and sent invitation emails otherwise. When using a service client, specified users are sent invitation emails.
 
 ## Options
 
