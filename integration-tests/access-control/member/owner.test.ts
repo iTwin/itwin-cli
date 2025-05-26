@@ -51,7 +51,7 @@ const tests = () => {
             usersInfo = listResult.result!
         } while (usersInfo.length !== 2);
 
-        const joinedUser = usersInfo.find(user => user.email.toLowerCase() === emailToAdd.toLowerCase());
+        const joinedUser = usersInfo.find(user => user.email.toLowerCase() === emailToAdd!.toLowerCase());
         expect(joinedUser).to.not.be.undefined;
 
         const deletionResult = await runCommand<{result: string}>(`access-control member owner delete --itwin-id ${iTwinId} --member-id ${joinedUser?.id}`);
