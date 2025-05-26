@@ -77,6 +77,9 @@ export class SynchronizationApiClient {
     getSourceFiles(connectionId: string, top?: number, skip?: number): Promise<sourceFilesResponse> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `synchronization/imodels/storageconnections/${connectionId}/sourcefiles`,
+            headers: {
+                "Prefer": "return=representation"
+            },
             method: "GET",
             query: [
                 {

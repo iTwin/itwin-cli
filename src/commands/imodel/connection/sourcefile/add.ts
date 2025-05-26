@@ -35,8 +35,21 @@ export default class CreateConnectionSourceFile extends BaseCommand {
         description: 'The connector type for synchronization.',
         helpValue: '<string>',
         options: [
-          'AUTOPLANT', 'CIVIL', 'CIVIL3D', 'DWG', 'IFC', 'MSTN', 'REVIT', 
-          'OPENROADS', 'SPX', 'XER', 'PRIMAVERA', 'SYNCHRO', 'MICROSTATION'
+          'AUTOPLANT',
+          'AVEVAPID',
+          'CIVIL',
+          'CIVIL3D',
+          'DWG',
+          'GEOSPATIAL',
+          'IFC',
+          'MSTN',
+          'NWD',
+          'OBD',
+          'OPENTOWER',
+          'PROSTRUCTURES',
+          'REVIT',
+          'SPPID',
+          'SPXREVIEW' 
         ],
         required: true,
       }),
