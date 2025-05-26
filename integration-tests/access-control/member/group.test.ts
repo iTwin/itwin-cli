@@ -146,75 +146,26 @@ const tests = () => {
     });
 
     it('Should create multiple member groups using `--group-id` and `--role-ids` flags and delete them', async () => {
-        const groupsInfo = [
-            {
-                groupId: groupId1,
-                roleIds: [roleId1, roleId2]
-            },
-            {
-                groupId: groupId2,
-                roleIds: [roleId1, roleId3]
-            },
-            {
-                groupId: groupId3,
-                roleIds: [roleId2, roleId3]
-            },
-        ];
+        const groupIds = [groupId1, groupId2, groupId3];
+        const roleIds = [roleId1, roleId2, roleId3];
 
-        const resultCreate = await runCommand<GroupMemberInfo[]>(`access-control member group add --itwin-id ${iTwinId} --group-id ${groupsInfo[0].groupId} --group-id ${groupsInfo[1].groupId} --group-id ${groupsInfo[2].groupId}
-            --role-ids ${groupsInfo[0].roleIds.join(',')} --role-ids ${groupsInfo[1].roleIds.join(',')} --role-ids ${groupsInfo[2].roleIds.join(',')}`);
+        const resultCreate = await runCommand<GroupMemberInfo[]>(`access-control member group add --itwin-id ${iTwinId} --group-id ${groupIds[0]} --group-id ${groupIds[1]} --group-id ${groupIds[2]} --role-ids ${roleIds.join(',')}`);
         expect(resultCreate.result).is.not.undefined;
         expect(resultCreate.result).to.have.lengthOf(3);
-        for (const [i, groupInfo] of groupsInfo.entries()) {
-            expect(resultCreate.result![i].id).to.be.equal(groupInfo.groupId);
-            expect(resultCreate.result![i].roles.map(role => role.id)).to.be.deep.equal(groupInfo.roleIds);
+        for (const memberInfo of resultCreate.result!) {
+            expect(groupIds.includes(memberInfo.id)).to.be.true;
+            expect(memberInfo.roles.map(role => role.id)).to.be.deep.equal(roleIds);
         }
 
-        const resultDelete1 = await runCommand(`access-control member group delete --itwin-id ${iTwinId} --group-id ${groupId1}`);
+        const resultDelete1 = await runCommand(`access-control member group delete --itwin-id ${iTwinId} --group-id ${groupIds[0]}`);
         expect(resultDelete1.error).to.be.undefined;
         expect(resultDelete1.stdout).to.contain('deleted');
 
-        const resultDelete2 = await runCommand(`access-control member group delete --itwin-id ${iTwinId} --group-id ${groupId2}`);
+        const resultDelete2 = await runCommand(`access-control member group delete --itwin-id ${iTwinId} --group-id ${groupIds[1]}`);
         expect(resultDelete2.error).to.be.undefined;
         expect(resultDelete2.stdout).to.contain('deleted');
 
-        const resultDelete3 = await runCommand(`access-control member group delete --itwin-id ${iTwinId} --group-id ${groupId3}`);
-        expect(resultDelete3.error).to.be.undefined;
-        expect(resultDelete3.stdout).to.contain('deleted');
-    });
-
-    it('Should create multiple member groups using `--group-id` and `--role-ids` (single list) flags and delete them', async () => {
-        const roleIds = [roleId1, roleId2];
-        
-        const groupsInfo = [
-            {
-                groupId: groupId1,
-            },
-            {
-                groupId: groupId2,
-            },
-            {
-                groupId: groupId3,
-            },
-        ];
-
-        const resultCreate = await runCommand<GroupMemberInfo[]>(`access-control member group add --itwin-id ${iTwinId} --group-id ${groupsInfo[0].groupId} --group-id ${groupsInfo[1].groupId} --group-id ${groupsInfo[2].groupId} --role-ids ${roleIds.join(',')}`);
-        expect(resultCreate.result).is.not.undefined;
-        expect(resultCreate.result).to.have.lengthOf(3);
-        for (const [i, groupInfo] of groupsInfo.entries()) {
-            expect(resultCreate.result![i].id).to.be.equal(groupInfo.groupId);
-            expect(resultCreate.result![i].roles.map(role => role.id)).to.be.deep.equal(roleIds);
-        }
-
-        const resultDelete1 = await runCommand(`access-control member group delete --itwin-id ${iTwinId} --group-id ${groupId1}`);
-        expect(resultDelete1.error).to.be.undefined;
-        expect(resultDelete1.stdout).to.contain('deleted');
-
-        const resultDelete2 = await runCommand(`access-control member group delete --itwin-id ${iTwinId} --group-id ${groupId2}`);
-        expect(resultDelete2.error).to.be.undefined;
-        expect(resultDelete2.stdout).to.contain('deleted');
-
-        const resultDelete3 = await runCommand(`access-control member group delete --itwin-id ${iTwinId} --group-id ${groupId3}`);
+        const resultDelete3 = await runCommand(`access-control member group delete --itwin-id ${iTwinId} --group-id ${groupIds[2]}`);
         expect(resultDelete3.error).to.be.undefined;
         expect(resultDelete3.stdout).to.contain('deleted');
     });
@@ -235,8 +186,9 @@ const tests = () => {
             },
         ];
 
-        const resultCreate = await runCommand<GroupMemberInfo[]>(`access-control member group add --itwin-id ${iTwinId} --groups ${JSON.stringify(groupsInfo)} --group-id ${groupsInfo[0].groupId} --group-id ${groupsInfo[1].groupId} --group-id ${groupsInfo[2].groupId}
-            --role-ids ${groupsInfo[0].roleIds.join(',')} --role-ids ${groupsInfo[1].roleIds.join(',')} --role-ids ${groupsInfo[2].roleIds.join(',')}`);
+        const roleIds = [roleId1, roleId2, roleId3];
+
+        const resultCreate = await runCommand<GroupMemberInfo[]>(`access-control member group add --itwin-id ${iTwinId} --groups ${JSON.stringify(groupsInfo)} --group-id ${groupsInfo[0].groupId} --group-id ${groupsInfo[1].groupId} --group-id ${groupsInfo[2].groupId} --role-ids ${roleIds.join(',')}`);
         expect(resultCreate.error).is.not.undefined;
         expect(resultCreate.error?.message).to.match(new RegExp(`--group-id=${groupsInfo[0].groupId},${groupsInfo[1].groupId},${groupsInfo[2].groupId} cannot also be provided when using --groups`))
     });
@@ -266,19 +218,9 @@ const tests = () => {
     })
 
     it('should return an error when only `--role-ids` flag is provided', async  () => {
-        const groupsInfo = [
-            {
-                roleIds: [roleId1, roleId2]
-            },
-            {
-                roleIds: [roleId1, roleId3]
-            },
-            {
-                roleIds: [roleId2, roleId3]
-            },
-        ];
+        const roleIds = [roleId1, roleId2, roleId3];
 
-        const resultCreate = await runCommand<GroupMemberInfo[]>(`access-control member group add --itwin-id ${iTwinId} --role-ids ${groupsInfo[0].roleIds.join(',')} --role-ids ${groupsInfo[1].roleIds.join(',')} --role-ids ${groupsInfo[2].roleIds.join(',')}`);
+        const resultCreate = await runCommand<GroupMemberInfo[]>(`access-control member group add --itwin-id ${iTwinId} --role-ids ${roleIds.join(',')}`);
         expect(resultCreate.error).is.not.undefined;
         expect(resultCreate.error?.message).to.match(/All of the following must be provided when using --role-ids: --group-id/)
     });
