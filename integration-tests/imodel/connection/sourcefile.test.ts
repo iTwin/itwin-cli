@@ -38,13 +38,9 @@ const tests = () => describe('sourcefile', () => {
   });
 
   after(async () => {
-    const { result: connectionDeleteResult } = await runCommand(`imodel connection delete --connection-id ${connectionId}`);
-    const { result: fileDeleteResult} = await runCommand(`storage file delete --file-id ${testFileId}`);
     const { result: imodelDeleteResult } = await runCommand(`imodel delete --imodel-id ${testIModelId}`);
     const { result: itwinDeleteResult } = await runCommand(`itwin delete --itwin-id ${testITwinId}`);
 
-    expect(connectionDeleteResult).to.have.property('result', 'deleted');
-    expect(fileDeleteResult).to.have.property('result', 'deleted');
     expect(imodelDeleteResult).to.have.property('result', 'deleted');
     expect(itwinDeleteResult).to.have.property('result', 'deleted');
   });
@@ -64,7 +60,7 @@ const tests = () => describe('sourcefile', () => {
     expect(deleteResult).to.have.property('result', 'deleted');
   });
 
-  it('should update connector-type of a sourcefile', async () => {
+  it('should update connector-type and storage-file-id of a sourcefile', async () => {
     const { result: addResult } = await runCommand<sourceFile>(`imodel connection sourcefile add -c ${connectionId} --connector-type IFC --storage-file-id ${anotherTestFileId}`);
     expect(addResult).to.not.be.undefined;
     expect(addResult!.connectorType).to.be.equal("IFC");
@@ -75,7 +71,7 @@ const tests = () => describe('sourcefile', () => {
     expect(infoResult1!.connectorType).to.be.equal("IFC");
     expect(infoResult1!.storageFileId).to.be.equal(anotherTestFileId);
 
-    const { result: updateResult } = await runCommand<sourceFile>(`imodel connection sourcefile update -c ${connectionId} --connector-type MSTN --source-file-id ${addResult?.id} --storage-file-id ${yetAnotherTestFileId}`);
+    const { result: updateResult } = await runCommand<sourceFile>(`imodel connection sourcefile update -c ${connectionId} --source-file-id ${addResult?.id} --connector-type MSTN --storage-file-id ${yetAnotherTestFileId}`);
     expect(updateResult).to.not.be.undefined;
     expect(updateResult!.connectorType).to.be.equal("MSTN");
     expect(updateResult!.storageFileId).to.be.equal(yetAnotherTestFileId);
@@ -103,8 +99,9 @@ const tests = () => describe('sourcefile', () => {
     const { result: listResult } = await runCommand<sourceFile[]>(`imodel connection sourcefile list -c ${connectionId}`);
     expect(listResult).to.not.be.undefined;
     expect(listResult?.length).to.be.equal(3);
-    expect(listResult?.some(result => result.id === addResult1!.id && result.storageFileId === addResult1!.storageFileId)).to.be.true;
-    expect(listResult?.some(result => result.id === addResult2!.id && result.storageFileId === addResult2!.storageFileId)).to.be.true;
+    expect(listResult?.some(result => result.storageFileId === testFileId && result!.connectorType === "MSTN" ))
+    expect(listResult?.some(result => result.id === addResult1!.id && result.storageFileId === addResult1!.storageFileId && result!.connectorType === "IFC")).to.be.true;
+    expect(listResult?.some(result => result.id === addResult2!.id && result.storageFileId === addResult2!.storageFileId && result!.connectorType === "MSTN")).to.be.true;
 
     const { result: deleteResult1 } = await runCommand(`imodel connection sourcefile delete -c ${connectionId} --source-file-id ${addResult1?.id}`);
     expect(deleteResult1).to.have.property('result', 'deleted');
