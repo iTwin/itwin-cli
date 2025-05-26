@@ -5,9 +5,9 @@ Create a storage connection that describes files from storage to synchronize wit
 ## Options
 
 - **`--connector-type`**  
-  The connector type of your file. Each connector will be used for the corresponding file in the files list (first connector for the first file, second connector for the second file, and so on).  
+  Specify connectors to use for synchronization. This option can be provided multiple times. If a single connector-type option is provided, it will be matched to all file-id options. If multiple connectors are provided, each of them will be matched to a file by position: the first connector will be used for the first file, the second connector for the second file, and so on.  
   **Type:** `string` **Required:** Yes **Multiple:** Yes 
-  **Valid Values:** `"AUTOPLANT"`, `"AVEVAPID"`, `"CIVIL"`, `"CIVIL3D"`, `"DWG"`, `"GEOSPATIAL"`, `"IFC"`, `"MSTN"`, `"NWD"`, `"OBD"`, `"OPENTOWER"`, `"REVIT"`, `"SPPID"`, `"SPXREVIEW"`
+  **Valid Values:** `"AUTOPLANT"`, `"AVEVAPID"`, `"CIVIL"`, `"CIVIL3D"`, `"DWG"`, `"GEOSPATIAL"`, `"IFC"`, `"MSTN"`, `"NWD"`, `"OBD"`, `"OPENTOWER"`, `"PROSTRUCTURES"`, `"REVIT"`, `"SPPID"`, `"SPXREVIEW"`
 
 - **`-f, --file-id`**  
   The ID of the storage file to synchronize  

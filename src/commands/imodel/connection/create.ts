@@ -39,7 +39,7 @@ export default class CreateConnection extends BaseCommand {
       required: false 
     }),
     "connector-type": Flags.string({ 
-      description: 'The connector type of your file. Each connector will be used for the corresponding file in the files list (first connector for the first file, second connector for the second file, and so on).', 
+      description: 'Specify connectors to use for synchronization. This option can be provided multiple times. If a single connector-type option is provided, it will be matched to all file-id options. If multiple connectors are provided, each of them will be matched to a file by position: the first connector will be used for the first file, the second connector for the second file, and so on.', 
       helpValue: '<string>',
       multiple: true,
       options: [
@@ -54,6 +54,7 @@ export default class CreateConnection extends BaseCommand {
         'NWD',
         'OBD',
         'OPENTOWER',
+        'PROSTRUCTURES',
         'REVIT',
         'SPPID',
         'SPXREVIEW' 
@@ -85,13 +86,15 @@ export default class CreateConnection extends BaseCommand {
 
     const sourceFiles : storageFileCreate[] = [];
 
-    if(flags["connector-type"].length !== flags["file-id"].length) {
-      this.error("The number of connector types must match the number of file ids.");
+    if(flags["connector-type"].length !== flags["file-id"].length && flags["connector-type"].length !== 1) {
+      this.error("When multiple connector-type options are provided, their amount must match file-id option amount. Alternatively, you can provide a single connector-type option, which will then be applied to all file-id options.");
     }
 
+    const isSingleConnectorTypeProvided = flags["connector-type"].length === 1;
     for (let i = 0; i < flags["file-id"].length; i++) {
+      const connectorType = isSingleConnectorTypeProvided ? flags["connector-type"][0] as connectorType : flags["connector-type"][i] as connectorType
       sourceFiles.push({
-        connectorType: flags["connector-type"][i] as connectorType,
+        connectorType,
         storageFileId: flags["file-id"][i]
       });
     }

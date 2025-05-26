@@ -15,7 +15,7 @@ Synchronize design files into an iModel.
 - **`-c, --connector-type`**  
   Specify connectors to prioritize for synchronization. This flag can be provided multiple times. If only one connector is specified, it will be used for all files. If multiple connectors are specified, each connector will be used for the corresponding file in the files list (first connector for the first file, second connector for the second file, and so on).  
   **Type:** `string` **Required:** No **Multiple:** Yes 
-  **Valid Values:** `"AUTOPLANT"`, `"AVEVAPID"`, `"CIVIL"`, `"CIVIL3D"`, `"DWG"`, `"GEOSPATIAL"`, `"IFC"`, `"MSTN"`, `"NWD"`, `"OBD"`, `"OPENTOWER"`, `"REVIT"`, `"SPPID"`, `"SPXREVIEW"`
+  **Valid Values:** `"AUTOPLANT"`, `"AVEVAPID"`, `"CIVIL"`, `"CIVIL3D"`, `"DWG"`, `"GEOSPATIAL"`, `"IFC"`, `"MSTN"`, `"NWD"`, `"OBD"`, `"OPENTOWER"`, `"PROSTRUCTURES"`, `"REVIT"`, `"SPPID"`, `"SPXREVIEW"`
 
 - **`--no-wait`**  
   Do not wait for the synchronization process to complete.  

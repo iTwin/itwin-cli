@@ -69,6 +69,7 @@ export default class PopulateIModel extends BaseCommand {
             'NWD',
             'OBD',
             'OPENTOWER',
+            'PROSTRUCTURES',
             'REVIT',
             'SPPID',
             'SPXREVIEW' 
