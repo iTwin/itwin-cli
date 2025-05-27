@@ -54,9 +54,13 @@ const tests = () => describe('Context Integration Tests', () => {
     });
 
     it('should set the context', async () => {
-        const output = await runCommand(`context set --itwin-id ${iTwin.id} --imodel-id ${iModel.id}`);
-        expect(output.error).to.be.undefined;
-        expect(output.result).to.deep.equal({ iModelId: iModel.id, iTwinId: iTwin.id });
+        const output1 = await runCommand(`context set --itwin-id ${iTwin.id} --imodel-id ${iModel.id}`);
+        expect(output1.error).to.be.undefined;
+        expect(output1.result).to.deep.equal({ iModelId: iModel.id, iTwinId: iTwin.id });
+
+        const output2 = await runCommand(`context set --itwin-id ${anotherITwin.id}`);
+        expect(output2.error).to.be.undefined;
+        expect(output2.result).to.deep.equal({ iModelId: undefined, iTwinId: anotherITwin.id });
     });
 
     it('should fail to set context with invalid iTwin ID', async () => {
@@ -75,7 +79,7 @@ const tests = () => describe('Context Integration Tests', () => {
     it('should fail to set context without iTwin or iModel ID', async () => {
         const output = await runCommand('context set');
         expect(output.error).to.not.be.undefined;
-        expect(output.error?.message).to.contain('Either --itwin-id or --imodel-id must be provided.');
+        expect(output.error?.message).to.contain('At least one of the following must be provided: --imodel-id, --itwin-id');
     });
 
     it('should display the current context', async () => {

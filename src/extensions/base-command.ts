@@ -258,6 +258,13 @@ export default abstract class BaseCommand extends Command {
     return parsed;
   }
 
+  protected async parseWithoutContext<F extends FlagOutput, B extends FlagOutput, A extends ArgOutput>(
+    options?: Input<F, B, A>,
+    argv?: string[],
+  ): Promise<ParserOutput<F, B, A>> {
+    return super.parse(options, argv);
+  }
+
   protected async runCommand<T>(command: string, args: string[]) : Promise<T> {
     const mergedArgs = [...args, '--silent'];
     return this.config.runCommand<T>(command, mergedArgs);
