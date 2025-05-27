@@ -58,21 +58,20 @@ export default class PopulateIModel extends BaseCommand {
         helpValue: '<string>',
         multiple: true,
         options: [
-            'AUTOPLANT',
-            'AVEVAPID',
-            'CIVIL',
-            'CIVIL3D',
-            'DWG',
-            'GEOSPATIAL',
-            'IFC',
-            'MSTN',
-            'NWD',
-            'OBD',
-            'OPENTOWER',
-            'PROSTRUCTURES',
-            'REVIT',
-            'SPPID',
-            'SPXREVIEW' 
+          'AUTOPLANT',
+          'CIVIL',
+          'CIVIL3D',
+          'DWG',
+          'GEOSPATIAL',
+          'IFC',
+          'MSTN',
+          'NWD',
+          'OBD',
+          'OPENTOWER',
+          'PROSTRUCTURES',
+          'REVIT',
+          'SPPID',
+          'SPXREVIEW' 
         ],
         required: false,
         type: "option"
@@ -95,6 +94,10 @@ export default class PopulateIModel extends BaseCommand {
 
   async run() {
     const { flags } = await this.parse(PopulateIModel);
+
+    if(flags["connector-type"]!.length !== 1 && flags.file!.length !== flags["connector-type"]!.length) {
+      this.error("Number of `--connector-type` flags must match the amount of `--file` flags or be equal to 1.")
+    }
 
     const filesAndConnectorToImport = this.checkAndGetFilesWithConnectors(flags.file, flags["connector-type"]);
     this.log(`Synchronizing files into iModel with ID: ${flags["imodel-id"]}`);

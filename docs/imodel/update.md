@@ -2,6 +2,10 @@
 
 Update metadata of an existing iModel.
 
+iModel extent can be provided to this command in multiple ways:
+1) Utilizing the `--extent` flag, where coordinates are provided in form of serialized JSON.
+2) By providing all of the following flags: `--sw-latitude`, `--sw-longitude`, `--ne-latitude`, `--ne-longitude`
+
 ## Options
 
 - **`-m, --imodel-id`**  
@@ -30,9 +34,26 @@ Update metadata of an existing iModel.
     - **`latitude`**: `number`  
     - **`longitude`**: `number`
 
+- **`--sw-latitude`**
+  Southwest latitude of the extent.
+  **Type** `float` **Required:** No
+
+- **`--sw-longitude`**
+Southwest longitude of the extent.
+**Type** `float` **Required:** No
+
+- **`--ne-latitude`**
+Northeast latitude of the extent.
+**Type** `float` **Required:** No
+
+- **`--ne-longitude`**
+Northeast longitude of the extent.
+**Type** `float` **Required:** No
+
 ## Examples
 
 ```bash
+# Example 1: Updating an iModel name, description and extent (JSON format)
 itp imodel update --imodel-id 5e19bee0-3aea-4355-a9f0-c6df9989ee7d --name "Updated Sun City Renewable-energy Plant" --description "Updated overall model of wind and solar farms in Sun City" --extent '{
   "southWest": {
     "latitude": 46.13267702834806,
@@ -43,6 +64,9 @@ itp imodel update --imodel-id 5e19bee0-3aea-4355-a9f0-c6df9989ee7d --name "Updat
     "longitude": 7.835541640797823
   }
 }'
+
+# Example 2: Updating an iModel name, description and extent (separate flags format)
+itp imodel update --imodel-id 5e19bee0-3aea-4355-a9f0-c6df9989ee7d --name "Updated Sun City Renewable-energy Plant" --description "Updated overall model of wind and solar farms in Sun City" --sw-latitude 46.13267702834806 --sw-longitude 7.672120009938448 --ne-latitude 46.302763954781234 --ne-longitude 7.835541640797823
 ```
 
 ## API Reference
