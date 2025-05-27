@@ -10,6 +10,7 @@ import { expect } from "chai";
 import { member, membersResponse } from "../../../src/services/access-control-client/models/members";
 import { Role } from "../../../src/services/access-control-client/models/role";
 import { User } from "../../../src/services/user-client/models/user";
+import { ITP_TEST_USER_EXTERNAL } from "../../utils/environment";
 import { fetchEmailsAndGetInvitationLink } from "../../utils/helpers";
 import runSuiteIfMainModule from "../../utils/run-suite-if-main-module";
 
@@ -33,26 +34,33 @@ const tests = () => {
         expect(newRole.result).is.not.undefined;
         expect(newRole.result!.id).is.not.undefined;
         
-        const emailToAdd = 'APIM.OrgTest.Unassigned.QA@bentley.m8r.co';
+        const emailToAdd = ITP_TEST_USER_EXTERNAL;
 
         const invitedUser = await runCommand<membersResponse>(`access-control member user add --itwin-id ${iTwinId} --members "[{"email": "${emailToAdd}", "roleIds": ["${newRole.result!.id}"]}]"`);
 
         expect(invitedUser.result).to.not.be.undefined;
         expect(invitedUser.result!.invitations.length).to.be.equal(1);
-        expect(invitedUser.result!.invitations[0].email.toLowerCase()).to.be.equal(emailToAdd.toLowerCase());
+        expect(invitedUser.result!.invitations[0].email.toLowerCase()).to.be.equal(emailToAdd!.toLowerCase());
         expect(invitedUser.result!.invitations[0].roles.length).to.be.equal(1);
         expect(invitedUser.result!.invitations[0].roles[0].id).to.be.equal(newRole.result!.id);
 
-        const invitationLink = await fetchEmailsAndGetInvitationLink(emailToAdd.split('@')[0], iTwinName);
+        const invitationLink = await fetchEmailsAndGetInvitationLink(emailToAdd!.split('@')[0], iTwinName);
 
         await fetch(invitationLink);
 
+        let usersInfo: member[];
+        do {
+            // eslint-disable-next-line no-await-in-loop
+            await new Promise<void>(resolve => {setTimeout(_ => resolve(), 10 * 1000);});
+            // eslint-disable-next-line no-await-in-loop
+            const listResult = await runCommand<member[]>(`access-control member user list --itwin-id ${iTwinId}`);
+            expect(listResult.result).is.not.undefined;
+            usersInfo = listResult.result!
+        } while (usersInfo.length !== 2);
+
         await new Promise<void>(resolve => {setTimeout(_ => resolve(), 30 * 1000);});
 
-        const usersInfo = await runCommand<member[]>(`access-control member user list --itwin-id ${iTwinId}`);
-        expect(usersInfo.result).is.not.undefined;
-        expect(usersInfo.result!.length).to.be.equal(2);
-        const joinedUser = usersInfo.result?.filter(user => user.email.toLowerCase() === emailToAdd.toLowerCase())[0];
+        const joinedUser = usersInfo.find(user => user.email.toLowerCase() === emailToAdd!.toLowerCase());
         expect(joinedUser).to.not.be.undefined;
         expect(joinedUser?.roles.length).to.be.equal(1);
         expect(joinedUser?.roles[0].id).to.be.equal(newRole.result!.id);
@@ -60,7 +68,7 @@ const tests = () => {
         const deletionResult = await runCommand<{result: string}>(`access-control member user delete --itwin-id ${iTwinId} --member-id ${joinedUser?.id}`);
         expect(deletionResult.result).to.not.be.undefined;
         expect(deletionResult.result!.result).to.be.equal("deleted");
-    }).timeout(120 * 1000);
+    }).timeout(180 * 1000);
 
     it('Should display owner info of an iTwin in member info', async () => {
         const userInfo = await runCommand<User>(`user me`);
@@ -93,7 +101,7 @@ const tests = () => {
         const members: {email: string, roleIds:string[]}[] = [];
         for(let i = 0; i < 11; i++) {
             members.push({
-                email: `email${i}@bentley.m8r.co`,
+                email: `email${i}@example.com`,
                 roleIds: [
                     crypto.randomUUID(),
                     crypto.randomUUID(),

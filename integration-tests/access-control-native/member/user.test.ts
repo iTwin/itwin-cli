@@ -9,6 +9,7 @@ import { expect } from "chai";
 
 import { member, membersResponse } from "../../../src/services/access-control-client/models/members";
 import { Role } from "../../../src/services/access-control-client/models/role";
+import { ITP_TEST_USER_SAMEORG } from "../../utils/environment";
 import { nativeLoginToCli } from "../../utils/helpers";
 import runSuiteIfMainModule from "../../utils/run-suite-if-main-module";
 
@@ -34,20 +35,20 @@ const tests = () => describe('user', () => {
         expect(newRole.result).is.not.undefined;
         expect(newRole.result!.id).is.not.undefined;
         
-        const emailToAdd = 'APIM.Basic.QA-developer@bentley.m8r.co';
+        const emailToAdd = ITP_TEST_USER_SAMEORG;
 
         const invitedUser = await runCommand<membersResponse>(`access-control member user add --itwin-id ${iTwinId} --members "[{"email": "${emailToAdd}", "roleIds": ["${newRole.result!.id}"]}]"`);
 
         expect(invitedUser.result).to.not.be.undefined;
         expect(invitedUser.result!.members.length).to.be.equal(1);
-        expect(invitedUser.result!.members[0].email.toLowerCase()).to.be.equal(emailToAdd.toLowerCase());
+        expect(invitedUser.result!.members[0].email.toLowerCase()).to.be.equal(emailToAdd!.toLowerCase());
         expect(invitedUser.result!.members[0].roles.length).to.be.equal(1);
         expect(invitedUser.result!.members[0].roles[0].id).to.be.equal(newRole.result!.id);
 
         const usersInfo = await runCommand<member[]>(`access-control member user list --itwin-id ${iTwinId}`);
         expect(usersInfo.result).is.not.undefined;
         expect(usersInfo.result!.length).to.be.equal(2);
-        const joinedUser = usersInfo.result?.filter(user => user.email.toLowerCase() === emailToAdd.toLowerCase())[0];
+        const joinedUser = usersInfo.result?.filter(user => user.email.toLowerCase() === emailToAdd!.toLowerCase())[0];
         expect(joinedUser).to.not.be.undefined;
         expect(joinedUser?.roles.length).to.be.equal(1);
         expect(joinedUser?.roles[0].id).to.be.equal(newRole.result!.id);

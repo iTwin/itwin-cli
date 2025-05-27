@@ -7,6 +7,7 @@ import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
 import { authorizationInformation } from "../../src/services/authorization-client/authorization-type";
+import { ITP_API_URL, ITP_ISSUER_URL, ITP_SERVICE_CLIENT_ID } from '../utils/environment';
 import { serviceLoginToCli } from '../utils/helpers';
 import runSuiteIfMainModule from '../utils/run-suite-if-main-module';
 
@@ -18,10 +19,10 @@ const tests = () => {
   it('should return auth info', async () => {
     const result = await runCommand<authorizationInformation>('auth info');
     expect(result.result).to.be.not.undefined;
-    expect(result.result!.apiUrl).to.be.equal(process.env.ITP_API_URL);
+    expect(result.result!.apiUrl).to.be.equal(ITP_API_URL);
     expect(result.result!.authorizationType).to.be.not.undefined;
-    expect(result.result!.clientId).to.be.equal(process.env.ITP_SERVICE_CLIENT_ID);
-    expect(result.result!.issuerUrl).to.be.equal(process.env.ITP_ISSUER_URL);
+    expect(result.result!.clientId).to.be.equal(ITP_SERVICE_CLIENT_ID);
+    expect(result.result!.issuerUrl).to.be.equal(ITP_ISSUER_URL);
   });
 };
 
