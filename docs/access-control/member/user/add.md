@@ -6,10 +6,6 @@ Users and their roles can be provided to this command in multiple ways:
 1) Utilizing the `--members` flag, where the necessary data in provided in form of serialized JSON.
 2) Utilizing `--email` and `--role-ids` flags.
 
-Users and their roles can be provided to this command in multiple ways:
-1) Utilizing the `--members` flag, where the necessary data in provided in form of serialized JSON.
-2) Utilizing `--email` and `--role-ids` flags.
-
 ## Options
 
 - **`-i, --itwin-id`**  
