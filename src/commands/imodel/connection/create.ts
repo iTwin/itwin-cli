@@ -8,6 +8,7 @@ import { Flags } from "@oclif/core";
 import { apiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { CustomFlags } from "../../../extensions/custom-flags.js";
+import { authorizationInformation, authorizationType } from "../../../services/authorization-client/authorization-type.js";
 import { authenticationType } from "../../../services/synchronizationClient/models/authentication-type.js";
 import { connectorType } from "../../../services/synchronizationClient/models/connector-type.js";
 import { storageFileCreate } from "../../../services/synchronizationClient/models/storage-file-create.js";
@@ -33,7 +34,7 @@ export default class CreateConnection extends BaseCommand {
 
   static flags = {
     "authentication-type": Flags.string({ 
-      description: `The authorization workflow type. Default value is 'User'`, 
+      description: `The authorization workflow type. Default value depends on currently used authentication type as follows: Interactive login -> 'User', Service Client login -> 'Service'`, 
       helpValue: '<string>',
       options: ['User', 'Service'], 
       required: false 
@@ -99,8 +100,14 @@ export default class CreateConnection extends BaseCommand {
       });
     }
 
+    const authInfo = await this.runCommand<authorizationInformation>('auth:info',[]);
+    let authType = flags["authentication-type"] as authenticationType;
+    if(authType === undefined) {
+      authType = authInfo.authorizationType === authorizationType.Service ? authenticationType.SERVICE: authenticationType.USER;
+    }
+
     const response = await client.createStorageConnection({
-      authenticationType: flags["authentication-type"] as authenticationType,
+      authenticationType: authType,
       displayName: flags.name,
       iModelId: flags["imodel-id"],
       sourceFiles,

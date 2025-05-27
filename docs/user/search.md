@@ -1,6 +1,7 @@
 # itp user search
 
 Search for users based on filter criteria.
+NOTE: Only users in the same organization are returned by this command. Because of this, no results will be returned when this command is called by a service client. This is because service clients are not a part of service client owner's organization.
 
 ## Options
 

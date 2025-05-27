@@ -14,7 +14,7 @@ export default class UserSearch extends BaseCommand {
         name: "Search Users",
     };
 
-    static description = "Search for users based on filter criteria.";
+    static description = "Search for users based on filter criteria.\nNOTE: Only users in the same organization are returned by this command. Because of this, no results will be returned when this command is called by a service client. This is because service clients are not a part of service client owner's organization.";
 
     static examples = [
       {
