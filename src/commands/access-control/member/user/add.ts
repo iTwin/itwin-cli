@@ -12,12 +12,12 @@ import { validateGuidCSV } from "../../../../extensions/validation.js";
 import { addMember } from "../../../../services/access-control-client/models/members.js";
 
 export default class AddUserMembers extends BaseCommand {
-  static apiReference: apiReference = {
-      link: "https://developer.bentley.com/apis/access-control-v2/operations/add-itwin-user-members/",
-      name: "Add iTwin User Members",
-  };
+    static apiReference: apiReference = {
+        link: "https://developer.bentley.com/apis/access-control-v2/operations/add-itwin-user-members/",
+        name: "Add iTwin User Members",
+    };
 
-  static description = 'Add one or more user members to an iTwin.\n\nUsers and their roles can be provided to this command in multiple ways:\n1) Utilizing the `--members` flag, where the necessary data in provided in form of serialized JSON.\n2) Utilizing `--email` and `--role-ids` flags.';
+  static description = 'Add and/or invite one or more user members to an iTwin. When using interactive login, specified users are directly added to the iTwin if they are in the same organization and sent invitation emails otherwise. When using a service client, specified users are sent invitation emails.\n\nUsers and their roles can be provided to this command in multiple ways:\n1) Utilizing the `--members` flag, where the necessary data in provided in form of serialized JSON.\n2) Utilizing `--email` and `--role-ids` flags.';
 
   static examples = [
     {

@@ -15,7 +15,7 @@ export default class AddOwner extends BaseCommand {
         name: "Add iTwin Owner",
     };
 
-    static description = 'Add a new owner to an iTwin by email.';
+    static description = 'Add or invite a new owner to an iTwin by email. When using interactive login, specified user is directly added to the iTwin as an owner if they are in the same organization and sent an invitation email otherwise. When using a service client, specified user is sent an invitation email.';
 
     static examples = [
       {
