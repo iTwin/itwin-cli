@@ -52,13 +52,13 @@ export default class CesiumSandcastle extends BaseCommand {
       }),
       "terrain": Flags.string({
         default: 'off',
-        description: "Select type of terrain to use.",
+        description: "Select type of terrain to use. Default value is 'off'.",
         helpValue: '<string>',
         options: [
           "off",
-          "cesium",
-          "google"
+          "cesium"
         ],
+        required: false,
       })
     };
   
@@ -213,9 +213,7 @@ function htmlData() : string {
 function jsData(tilesetUrl: string, terrain?: string) : string {
   let viewerParams = ""
   if(terrain === 'cesium') {
-    viewerParams = "terrain: Cesium.Terrain.fromWorldTerrain(),"
-  } else if (terrain === 'google') {
-    throw new Error("Not implemented");
+    viewerParams += "terrain: Cesium.Terrain.fromWorldTerrain(),"
   }
 
   return `

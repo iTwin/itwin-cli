@@ -18,9 +18,9 @@ Setup iModel and get URL to view it in Cesium Sandcastle.
   **Type:** `flag` **Required:** No
 
 - **`--terrain`**  
-  Select type of terrain to use.  
+  Select type of terrain to use. Default value is 'off'.  
   **Type:** `string` **Required:** No  
-  **Valid Values:** `"off"`, `"cesium"`, `"google"`
+  **Valid Values:** `"off"`, `"cesium"`
 
 ## Examples
 
