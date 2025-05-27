@@ -16,10 +16,10 @@ export default class AddUserMembers extends BaseCommand {
         name: "Add iTwin User Members",
     };
 
-    static description = 'Add one or more user members to an iTwin.';
-  
-    static examples = [
-     {
+  static description = 'Add and/or invite one or more user members to an iTwin. When using interactive login, specified users are directly added to the iTwin if they are in the same organization and sent invitation emails otherwise. When using a service client, specified users are sent invitation emails.\n\nUsers and their roles can be provided to this command in multiple ways:\n1) Utilizing the `--members` flag, where the necessary data in provided in form of serialized JSON.\n2) Utilizing `--email` and `--role-ids` flags.';
+
+  static examples = [
+    {
       command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --members '[{"email": "user1@example.com", "roleIds": ["5abbfcef-0eab-472a-b5f5-5c5a43df34b1", "83ee0d80-dea3-495a-b6c0-7bb102ebbcc3"]}, {"email": "user2@example.com", "roleIds": ["5abbfcef-0eab-472a-b5f5-5c5a43df34b1"]}]'`,
       description: 'Example 1: Add multiple users to an iTwin with role IDs'
      } 
