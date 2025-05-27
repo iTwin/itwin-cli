@@ -100,6 +100,12 @@ const tests = () => describe('populate', () => {
     expect(infoResult?.jobs![0].tasks).to.have.lengthOf(1);
     expect(infoResult?.jobs![0].tasks!.every((task) => task.result === 'Error'));
   }).timeout(30 * 60 * 1000);
+
+  it('should return an error message if amount of connector-types does not match the amount of files and is not equal to 1', async () => {
+    const { error: populateError } = await runCommand<populateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath1} --file ${testFilePath2} --file ${failingTestFilePath} --connector-type MSTN --connector-type IFC`);
+    expect(populateError).to.not.be.undefined;
+    expect(populateError?.message).to.be.equal('Number of `--connector-type` flags must match the amount of `--file` flags or be equal to 1.');
+  });
 });
 
 export default tests;

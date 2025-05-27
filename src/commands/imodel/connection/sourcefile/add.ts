@@ -36,7 +36,6 @@ export default class CreateConnectionSourceFile extends BaseCommand {
         helpValue: '<string>',
         options: [
           'AUTOPLANT',
-          'AVEVAPID',
           'CIVIL',
           'CIVIL3D',
           'DWG',
