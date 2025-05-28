@@ -7,6 +7,7 @@ import { Command, Flags } from "@oclif/core";
 
 import { apiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
+import { CustomFlags } from "../../extensions/custom-flags.js";
 import { Query } from "../../services/iTwin-api-client.js";
 
 export default class ApiRequest extends BaseCommand {
@@ -43,7 +44,7 @@ export default class ApiRequest extends BaseCommand {
     ];
   
     static flags = {
-        body: Flags.string({
+        body: CustomFlags.noSchemaJson({
             description: "The body to include in the request. It must be serialized JSON.",
             helpValue: '<string>',
         }),
@@ -105,7 +106,7 @@ export default class ApiRequest extends BaseCommand {
         const requestOptions = {
             apiPath: flags.path,
             apiVersionHeader: flags["version-header"],
-            body: flags.body ? JSON.parse(flags.body) : undefined,
+            body: flags.body,
             headers: mappedHeaders,
             method: flags.method as "DELETE" | "GET" | "PATCH" | "POST" | "PUT",
             query
