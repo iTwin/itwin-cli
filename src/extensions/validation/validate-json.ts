@@ -16,7 +16,7 @@ export const validateJson = <T>(jsonString: string, validationFunc?: (input: T) 
         return parsed;
 
     const validationError = validationFunc(parsed)
-    if (validationError.length > 0) {
+    if (validationError) {
         throw new Error(validationError);
     }
     
