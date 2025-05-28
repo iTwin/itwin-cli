@@ -1,0 +1,28 @@
+/*---------------------------------------------------------------------------------------------
+* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+* See LICENSE.md in the project root for license terms and full copyright notice.
+*--------------------------------------------------------------------------------------------*/
+
+import { Flags } from "@oclif/core";
+import zod from "zod";
+
+import { GroupMember } from "../../services/access-control-client/models/group.js";
+import { validateJson } from "../validation/validate-json.js";
+import zodErrorToMessage from "../validation/zod-error-to-message.js";
+
+export default Flags.custom<GroupMember[]>({
+    parse: async (input) => validateJson<GroupMember[]>(input, validationFunction),
+});
+
+const validationFunction = (input: GroupMember[]): string => {
+    const result = zod.array(GroupMemberSchema).safeParse(input);
+    if(result.error === undefined)
+        return '';
+
+    return zodErrorToMessage(result.error);
+}
+
+const GroupMemberSchema = zod.object({
+    groupId: zod.string().uuid(),
+    roleIds: zod.array(zod.string().uuid()),
+}) satisfies zod.ZodType<GroupMember>

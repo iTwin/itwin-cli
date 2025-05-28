@@ -8,7 +8,7 @@ import { Flags } from "@oclif/core";
 import { apiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
 import { CustomFlags } from "../../../../extensions/custom-flags.js";
-import { validateGuidCSV } from "../../../../extensions/validation.js";
+import { validateUuidCSV } from "../../../../extensions/validation/validate-uuid-csv.js";
 import { GroupMember } from "../../../../services/access-control-client/models/group.js";
 
 export default class AddGroupMembers extends BaseCommand {
@@ -38,7 +38,7 @@ export default class AddGroupMembers extends BaseCommand {
       multiple: true,
       required: false,
     }),
-    groups: Flags.string({
+    groups: CustomFlags.groupMembers({
       description: 'A list of groups to add, each with a groupId and roleIds. A maximum of 50 role assignments can be performed. Provided in serialized JSON format.',
       exactlyOne: ['groups', 'group-id'],
       exclusive: ['group-id', "role-ids"],
@@ -52,7 +52,7 @@ export default class AddGroupMembers extends BaseCommand {
       dependsOn: ['group-id'],
       description: `Specify a list of role IDs to be assigned to all of 'group-id' groups. Provided in CSV format without whitespaces.`,
       helpValue: "<string>",
-      parse: input => validateGuidCSV(input),
+      parse: input => validateUuidCSV(input),
       required: false,
     })
   };
@@ -80,8 +80,7 @@ export default class AddGroupMembers extends BaseCommand {
   }
 
   // eslint-disable-next-line perfectionist/sort-classes
-  private getGroupMembers(groupIds: string[] | undefined, roleIds: string | undefined, groupsJson?: string): GroupMember[] {
-    let groups: GroupMember[] | undefined = groupsJson === undefined ? undefined : JSON.parse(groupsJson);
+  private getGroupMembers(groupIds?: string[], roleIds?: string, groups?: GroupMember[]): GroupMember[] {
     if (groups !== undefined)
       return groups;
 
