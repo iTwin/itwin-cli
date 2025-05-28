@@ -54,7 +54,7 @@ export default class PopulateIModel extends BaseCommand {
   static flags = {
     "connector-type": Flags.string({ 
         char: 'c',
-        description: 'Specify connectors to prioritize for synchronization. This flag can be provided multiple times. If only one connector is specified, it will be used for all files. If multiple connectors are specified, each connector will be used for the corresponding file in the files list (first connector for the first file, second connector for the second file, and so on).', 
+        description: `Specify connectors to prioritize for synchronization. This flag can be provided multiple times. If no connector-type options are provided, connector types for provided files are selected automatically depending on file extensions. If only one connector is specified, it will be used for all files. If multiple connectors are specified, each connector will be used for the corresponding file in the files list (first connector for the first file, second connector for the second file, and so on).\n NOTE: while .dgn and .dwg file types can be associated to multiple connector types, MSTN and DWG connectors are prioritized respectively when no 'connector-type' options are provided.`, 
         helpValue: '<string>',
         multiple: true,
         options: [
@@ -310,8 +310,8 @@ interface NewFileInfo {
 
 const fileExtensionToConnectorType: { [key: string]: connectorType[] } = {
   csv: [connectorType.SHELLEDWCSV],
-  dgn: [connectorType.CIVIL, connectorType.MSTN, connectorType.OBD, connectorType.PROSTRUCTURES],
-  dwg: [connectorType.AUTOPLANT, connectorType.AVEVAPID, connectorType.CIVIL3D, connectorType.DWG],
+  dgn: [connectorType.MSTN, connectorType.CIVIL, connectorType.OBD, connectorType.PROSTRUCTURES],
+  dwg: [connectorType.DWG, connectorType.AUTOPLANT, connectorType.AVEVAPID, connectorType.CIVIL3D],
   ifc: [connectorType.IFC],
   json: [connectorType.INTELLIPID],
   nwc: [connectorType.NWD],
