@@ -8,10 +8,10 @@ import { invitation } from "./invitations.js"
 import { Role } from "./role.js"
 
 export type listOfMembers = {
-    members: addMember[]
+    members: UserMember[]
 }
 
-export type addMember = {
+export type UserMember = {
     email: string
     roleIds: string[]
 }

@@ -225,7 +225,7 @@ const tests = () => {
         expect(resultCreate.error?.message).to.match(/All of the following must be provided when using --role-ids: --group-id/)
     });
 
-    it('should return an error when there are invalid GUIDs provided to `--role-ids` flag', async () => {
+    it('should return an error when there are invalid UUIDs provided to `--role-ids` flag', async () => {
         const groupsInfo = [
             {
                 groupId: groupId1,
@@ -234,9 +234,41 @@ const tests = () => {
         ];
 
         const resultCreate = await runCommand<GroupMemberInfo[]>(`access-control member group add --itwin-id ${iTwinId} --group-id ${groupsInfo[0].groupId}
-            --role-ids ${groupsInfo[0].roleIds.join(',')},some-invalid-guid`);
+            --role-ids ${groupsInfo[0].roleIds.join(',')},some-invalid-uuid`);
         expect(resultCreate.error).is.not.undefined;
-        expect(resultCreate.error?.message).to.match(new RegExp(`There are invalid GUIDs in '${groupsInfo[0].roleIds.join(',')},some-invalid-guid'`))
+        expect(resultCreate.error?.message).to.match(new RegExp(`There are invalid UUIDs in '${groupsInfo[0].roleIds.join(',')},some-invalid-uuid'`))
+    });
+
+    it('should return an error when invalid JSON is provided to `--groups` flag', async () => {
+        const resultCreate = await runCommand<GroupMemberInfo[]>(`access-control member group add --itwin-id ${iTwinId} --groups not-a-serialized-json-string`);
+        expect(resultCreate.error).is.not.undefined;
+        expect(resultCreate.error?.message).to.match(/'not-a-serialized-json-string' is not valid serialized JSON./)
+    });
+
+    it('should return an error when JSON provided to `--groups` flag is of invalid schema', async () => {
+        const groupsInfo = [
+            {
+                roleIds: ["not-a-uuid", roleId2]
+            },
+            {
+                groupId: "not-a-uuid",
+                roleIds: [123, {}]
+            },
+            {
+                groupId: true,
+                roleIds: [roleId2, roleId3]
+            },
+        ];
+        
+        const { error: createError } = await runCommand<GroupMemberInfo[]>(`access-control member group add --itwin-id ${iTwinId} --groups ${JSON.stringify(groupsInfo)}`);
+        
+        expect(createError).to.not.be.undefined;
+        expect(createError?.message).to.match(/missing required property '\[0].groupId' of type 'string'/);
+        expect(createError?.message).to.match(/\[0].roleIds\[0] is not a valid uuid/);
+        expect(createError?.message).to.match(/\[1].groupId is not a valid uuid/);
+        expect(createError?.message).to.match(/\[1].roleIds\[0]: expected type 'string', received 'number'/);
+        expect(createError?.message).to.match(/\[1].roleIds\[1]: expected type 'string', received 'object'/);
+        expect(createError?.message).to.match(/\[2].groupId: expected type 'string', received 'boolean'/);
     });
 
     it('Should return an error when there are too many role assignments', async () => {

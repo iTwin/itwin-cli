@@ -3,13 +3,12 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { Extent } from "@itwin/imodels-client-management";
 import { Flags } from "@oclif/core";
 
 import { apiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
 import { CustomFlags } from "../../extensions/custom-flags.js";
-import { validateFloat } from "../../extensions/validation.js";
+import { validateFloat } from "../../extensions/validation/validate-float.js";
 
 export default class UpdateCommand extends BaseCommand {
     static apiReference: apiReference = {
@@ -44,7 +43,7 @@ export default class UpdateCommand extends BaseCommand {
         helpValue: '<string>',
         required: false,
       }),
-      extent: Flags.string({
+      extent: CustomFlags.extent({
         description: 'The new maximum rectangular area on Earth that encloses the iModel, defined by its southwest and northeast corners and provided in serialized JSON format.',
         helpValue: '<string>',
         required: false,
@@ -95,9 +94,8 @@ export default class UpdateCommand extends BaseCommand {
     async run() {
       const { flags } = await this.parse(UpdateCommand);
   
-      let extent = flags.extent ? JSON.parse(flags.extent) as Extent : undefined;
       if(flags["ne-latitude"] !== undefined) {
-        extent ??= {
+        flags.extent ??= {
           northEast: {
             latitude: Number.parseFloat(flags["ne-latitude"]!),
             longitude: Number.parseFloat(flags["ne-longitude"]!),
@@ -109,7 +107,7 @@ export default class UpdateCommand extends BaseCommand {
         }
       }
   
-      if (flags.description === undefined && flags.name === undefined && extent === undefined) {
+      if (flags.description === undefined && flags.name === undefined && flags.extent === undefined) {
         this.error("At least one of the update parameters must be provided");
       }
   
@@ -126,7 +124,7 @@ export default class UpdateCommand extends BaseCommand {
         iModelId: flags["imodel-id"],
         iModelProperties: {
             description: flags.description,
-            extent,
+            extent: flags.extent,
             name: flags.name ?? iModelInfo.name
         },
       });

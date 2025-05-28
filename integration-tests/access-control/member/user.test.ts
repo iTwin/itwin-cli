@@ -225,7 +225,7 @@ const tests = () => {
         expect(resultCreate.error?.message).to.match(/All of the following must be provided when using --role-ids: --email/)
     });
 
-    it('should return an error when there are invalid GUIDs provided to `--role-ids` flag', async () => {
+    it('should return an error when there are invalid UUIDs provided to `--role-ids` flag', async () => {
         const usersInfo = [
             {
                 email: 'test1@example.com',
@@ -234,9 +234,39 @@ const tests = () => {
         ];
 
         const resultCreate = await runCommand<membersResponse>(`access-control member user add --itwin-id ${iTwinId} --email ${usersInfo[0].email}
-            --role-ids ${usersInfo[0].roleIds.join(',')},some-invalid-guid`);
+            --role-ids ${usersInfo[0].roleIds.join(',')},some-invalid-uuid`);
         expect(resultCreate.error).is.not.undefined;
-        expect(resultCreate.error?.message).to.match(new RegExp(`There are invalid GUIDs in '${usersInfo[0].roleIds.join(',')},some-invalid-guid'`))
+        expect(resultCreate.error?.message).to.match(new RegExp(`There are invalid UUIDs in '${usersInfo[0].roleIds.join(',')},some-invalid-uuid'`))
+    });
+
+    it('should return an error when invalid JSON is provided to `--members` flag', async () => {
+        const {error: createError} = await runCommand<membersResponse>(`access-control member user add --itwin-id ${iTwinId} --members not-valid-serialized-json`);
+        expect(createError).is.not.undefined;
+        expect(createError!.message).to.match(/'not-valid-serialized-json' is not valid serialized JSON./)
+    });
+
+    it('should return an error when JSON of invalid schema is provided to `--members` flag', async () => {
+        const usersInfo = [
+            {
+                email: "not-an-email",
+                roleIds: [roleId1, roleId2]
+            },
+            {
+                email: true,
+                roleIds: [roleId1, 123]
+            },
+            {
+                email: "test3@example.com",
+                roleIds: ["not-a-uuid", roleId3]
+            },
+        ];
+        
+        const {error: createError} = await runCommand<membersResponse>(`access-control member user add --itwin-id ${iTwinId} --members ${JSON.stringify(usersInfo)}`);
+        expect(createError).is.not.undefined;
+        expect(createError!.message).to.match(/\[0].email is not a valid email/);
+        expect(createError!.message).to.match(/\[1].email: expected type 'string', received 'boolean'/);
+        expect(createError!.message).to.match(/\[1].roleIds\[1]: expected type 'string', received 'number'/);
+        expect(createError!.message).to.match(/\[2].roleIds\[0] is not a valid uuid/);
     });
 
     it('Should fail to add iTwin user members, when there are too many role assignments', async () => {

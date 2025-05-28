@@ -87,10 +87,10 @@ const tests = () => describe('create + delete', () => {
     const { error: createError} = await runCommand<IModel>(`imodel create --itwin-id ${testITwinId} --name "${iModelName}" --description "${testIModelDescription}" --extent "${JSON.stringify(extent)}" --ne-latitude ${extent.northEast.latitude} --ne-longitude ${extent.northEast.longitude} --sw-latitude ${extent.southWest.latitude} --sw-longitude ${extent.southWest.longitude}`);
 
     expect(createError).to.not.be.undefined;
-    expect(createError?.message).to.match(new RegExp(`--extent=${JSON.stringify(extent)} cannot also be provided when using --ne-latitude`));
-    expect(createError?.message).to.match(new RegExp(`--extent=${JSON.stringify(extent)} cannot also be provided when using --ne-longitude`));
-    expect(createError?.message).to.match(new RegExp(`--extent=${JSON.stringify(extent)} cannot also be provided when using --sw-latitude`));
-    expect(createError?.message).to.match(new RegExp(`--extent=${JSON.stringify(extent)} cannot also be provided when using --sw-longitude`));
+    expect(createError?.message).to.match(/--extent=\[object Object] cannot also be provided when using --ne-latitude/);
+    expect(createError?.message).to.match(/--extent=\[object Object] cannot also be provided when using --ne-longitude/);
+    expect(createError?.message).to.match(/--extent=\[object Object] cannot also be provided when using --sw-latitude/);
+    expect(createError?.message).to.match(/--extent=\[object Object] cannot also be provided when using --sw-longitude/);
   });
 
   it('should return an error if user does not provide all extent flags', async () => {
@@ -118,6 +118,33 @@ const tests = () => describe('create + delete', () => {
 
     expect(createError).to.not.be.undefined;
     expect(createError?.message).to.match(/46.302abc is not a valid number./);
+  });
+
+  it('should return an error if a component of the provided extent is not valid JSON', async () => {
+    const iModelName = `${testIModelName}-create2`;
+    const { error: createError} = await runCommand<IModel>(`imodel create --itwin-id ${testITwinId} --name "${iModelName}" --description "${testIModelDescription}" --extent not-valid-json`);
+
+    expect(createError).to.not.be.undefined;
+    expect(createError?.message).to.match(/'not-valid-json' is not valid serialized JSON./);
+  });
+
+  it('should return an error if a component of the provided extent is not of valid JSON schema', async () => {
+    const extent = {
+      northEast: {
+        latitude: 46.302_763_954_781_234,
+        longitude: "some wrong value"
+      },
+      southWest: {
+        longitude: 7.672_120_009_938_448
+      },
+    }
+    
+    const iModelName = `${testIModelName}-create2`;
+    const { error: createError} = await runCommand<IModel>(`imodel create --itwin-id ${testITwinId} --name "${iModelName}" --description "${testIModelDescription}" --extent ${JSON.stringify(extent)}`);
+
+    expect(createError).to.not.be.undefined;
+    expect(createError?.message).to.match(/missing required property 'southWest.latitude' of type 'number'/);
+    expect(createError?.message).to.match(/northEast.longitude: expected type 'number', received 'string'/);
   });
 
   it('should delete the iModel', async () => {
