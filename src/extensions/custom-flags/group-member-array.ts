@@ -11,7 +11,9 @@ import { validateJson } from "../validation/validate-json.js";
 import zodErrorToMessage from "../validation/zod-error-to-message.js";
 
 export default Flags.custom<GroupMember[]>({
-    parse: async (input) => validateJson<GroupMember[]>(input, validationFunction),
+    parse: (input) => Promise.resolve(
+        validateJson<GroupMember[]>(input, validationFunction)
+    ),
 });
 
 const validationFunction = (input: GroupMember[]): string => {

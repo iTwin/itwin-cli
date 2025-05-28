@@ -11,7 +11,9 @@ import { validateJson } from "../validation/validate-json.js";
 import zodErrorToMessage from "../validation/zod-error-to-message.js";
 
 export default Flags.custom<Extent>({
-    parse: async (input) => validateJson<Extent>(input, validationFunction),
+    parse: (input) => Promise.resolve(
+        validateJson<Extent>(input, validationFunction),
+    )
 });
 
 const validationFunction = (input: Extent): string => {
