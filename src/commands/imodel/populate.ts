@@ -21,6 +21,7 @@ import { sourceFile } from "../../services/synchronizationClient/models/source-f
 import { storageConnection } from "../../services/synchronizationClient/models/storage-connection.js"
 import { storageConnectionListResponse } from "../../services/synchronizationClient/models/storage-connection-response.js"
 import { storageRun } from "../../services/synchronizationClient/models/storage-run.js"
+import { executionResult } from "../../services/synchronizationClient/models/execution-result.js";
 
 export default class PopulateIModel extends BaseCommand {    
   static apiReference: apiReference = {
