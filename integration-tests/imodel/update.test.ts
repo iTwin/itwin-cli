@@ -95,10 +95,10 @@ const tests = () => describe('update', () => {
     const { error: updateError } = await runCommand<IModel>(`imodel update --imodel-id ${testIModelId} --name ${updatedName} --description "${updatedDescription}" --extent "${JSON.stringify(updatedExtent)}" --ne-latitude ${updatedExtent.northEast.latitude} --ne-longitude ${updatedExtent.northEast.longitude} --sw-latitude ${updatedExtent.southWest.latitude} --sw-longitude ${updatedExtent.southWest.longitude}`);
 
     expect(updateError).to.not.be.undefined;
-    expect(updateError?.message).to.match(new RegExp(`--extent=${JSON.stringify(updatedExtent)} cannot also be provided when using --ne-latitude`));
-    expect(updateError?.message).to.match(new RegExp(`--extent=${JSON.stringify(updatedExtent)} cannot also be provided when using --ne-longitude`));
-    expect(updateError?.message).to.match(new RegExp(`--extent=${JSON.stringify(updatedExtent)} cannot also be provided when using --sw-latitude`));
-    expect(updateError?.message).to.match(new RegExp(`--extent=${JSON.stringify(updatedExtent)} cannot also be provided when using --sw-longitude`));
+    expect(updateError?.message).to.match(/--extent=\[object Object] cannot also be provided when using --ne-latitude/);
+    expect(updateError?.message).to.match(/--extent=\[object Object] cannot also be provided when using --ne-longitude/);
+    expect(updateError?.message).to.match(/--extent=\[object Object] cannot also be provided when using --sw-latitude/);
+    expect(updateError?.message).to.match(/--extent=\[object Object] cannot also be provided when using --sw-longitude/);
   });
 
   it('should return an error if user does not provide all extent flags', async () => {

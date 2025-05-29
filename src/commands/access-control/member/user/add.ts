@@ -8,8 +8,8 @@ import { Flags } from "@oclif/core";
 import { apiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
 import { CustomFlags } from "../../../../extensions/custom-flags.js";
-import { validateGuidCSV } from "../../../../extensions/validation.js";
-import { addMember } from "../../../../services/access-control-client/models/members.js";
+import { validateUuidCSV } from "../../../../extensions/validation/validate-uuid-csv.js";
+import { UserMember } from "../../../../services/access-control-client/models/members.js";
 
 export default class AddUserMembers extends BaseCommand {
     static apiReference: apiReference = {
@@ -45,7 +45,7 @@ export default class AddUserMembers extends BaseCommand {
     "itwin-id": CustomFlags.iTwinIDFlag({      
       description: 'The ID of the iTwin to which the users will be added.'
     }),
-    members: Flags.string({
+    members: CustomFlags.userMembers({
       description: 'A list of members to add, each with an email and a list of role IDs. A maximum of 50 role assignments can be performed. Provided in serialized JSON format.',
       exactlyOne: ['members', 'email'],
       exclusive: ['email', "role-ids"],
@@ -57,7 +57,7 @@ export default class AddUserMembers extends BaseCommand {
       description: 'Specify IDs of roles to be assigned to a user in CSV format without any whitespaces. This flag can be provided multiple times. If the flag is provided only once, the contained list of role IDs will be assigned to all provided group-ids list. If flag is provided multiple times, each role-ids will be used for the corresponding group-id (fist role-ids list for the first group-id, second role-ids list for the second group-id and so on).',
       helpValue: "<string>",
       multiple: true,
-      parse: input => validateGuidCSV(input),
+      parse: input => validateUuidCSV(input),
       required: false,
     })
   };
@@ -84,8 +84,7 @@ export default class AddUserMembers extends BaseCommand {
     return this.logAndReturnResult(response);
   }
 
-  private getUserMembers(membersJson: string | undefined, emails: string[] | undefined, roleIds: string[] | undefined): addMember[] {
-    let members: addMember[] | undefined = membersJson === undefined ? undefined : JSON.parse(membersJson);
+  private getUserMembers(members?: UserMember[], emails?: string[], roleIds?: string[]): UserMember[] {
     if (members !== undefined)
       return members;
 
