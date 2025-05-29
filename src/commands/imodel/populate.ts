@@ -16,12 +16,12 @@ import { fileUpload } from "../../services/storage-client/models/file-upload.js"
 import { itemsWithFolderLink } from "../../services/storage-client/models/items-with-folder-link.js"
 import { authInfo } from "../../services/synchronizationClient/models/connection-auth.js"
 import { connectorType } from "../../services/synchronizationClient/models/connector-type.js"
+import { executionResult } from "../../services/synchronizationClient/models/execution-result.js";
 import { executionState } from "../../services/synchronizationClient/models/execution-state.js"
 import { sourceFile } from "../../services/synchronizationClient/models/source-file.js"
 import { storageConnection } from "../../services/synchronizationClient/models/storage-connection.js"
 import { storageConnectionListResponse } from "../../services/synchronizationClient/models/storage-connection-response.js"
 import { storageRun } from "../../services/synchronizationClient/models/storage-run.js"
-import { executionResult } from "../../services/synchronizationClient/models/execution-result.js";
 
 export default class PopulateIModel extends BaseCommand {    
   static apiReference: apiReference = {
@@ -95,8 +95,8 @@ export default class PopulateIModel extends BaseCommand {
   async run() {
     const { flags } = await this.parse(PopulateIModel);
 
-    if(flags["connector-type"]!.length !== 1 && flags.file!.length !== flags["connector-type"]!.length) {
-      this.error("Number of `--connector-type` flags must match the amount of `--file` flags or be equal to 1.")
+    if(flags["connector-type"] && flags["connector-type"]!.length !== 1 && flags.file!.length !== flags["connector-type"]!.length) {
+      this.error("When multiple connector-type options are provided, their amount must match file option amount. Alternatively, you can provide a single connector-type option, which will then be applied to all file options. You can also provide no connector-type options, in which case the command will attempt automatic detection.")
     }
 
     const filesAndConnectorToImport = this.checkAndGetFilesWithConnectors(flags.file, flags["connector-type"]);
