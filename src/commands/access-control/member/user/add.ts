@@ -84,7 +84,6 @@ export default class AddUserMembers extends BaseCommand {
     return this.logAndReturnResult(response);
   }
 
-  // eslint-disable-next-line perfectionist/sort-classes
   private getUserMembers(membersJson: string | undefined, emails: string[] | undefined, roleIds: string[] | undefined): addMember[] {
     let members: addMember[] | undefined = membersJson === undefined ? undefined : JSON.parse(membersJson);
     if (members !== undefined)

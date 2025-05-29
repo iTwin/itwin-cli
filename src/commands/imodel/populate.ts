@@ -173,24 +173,37 @@ export default class PopulateIModel extends BaseCommand {
       {
         this.error(`File at: '${file}' does not exist`);
       }
-      
-      const splitedFile = file.split('.');
 
-      const extension = splitedFile.at(-1);
-      if(!extension)
-      {
-        this.error(`Unable to get extension from file name: ${file}`);
-      }
-
-      let connector = getConnectorTypeFromFileExtension(extension);
+      let connector;
       if(connectorTypes && connectorTypes.length === 1) {
         connector = connectorType[connectorTypes[0] as keyof typeof connectorType];
-      } else if(connectorTypes && connectorTypes.length > index) {
+      } 
+      else if(connectorTypes && connectorTypes.length === files.length) {
         connector = connectorType[connectorTypes[index] as keyof typeof connectorType];
+      } 
+      else if (!connectorTypes) {
+        const splitedFile = file.split('.');
+  
+        if(splitedFile.length === 1)
+        {
+          this.error(`${file} has no extension`);
+        }
+  
+        if(splitedFile.length >= 3) {
+          connector = getConnectorTypeFromFileExtension(`${splitedFile.at(-2)}.${splitedFile.at(-1)}`);
+        }
+  
+        connector ??= getConnectorTypeFromFileExtension(splitedFile.at(-1)!);
+  
+        if(!connector)
+          {
+            this.error(`Unable to get extension from file name: ${file}`);
+          }
       }
 
+
       resultArray.push({
-        connectorType: connector,
+        connectorType: connector!,
         fileName: path.basename(file),
         fullFilePath: file
       })
@@ -309,16 +322,34 @@ interface NewFileInfo {
 }
 
 const fileExtensionToConnectorType: { [key: string]: connectorType[] } = {
+  "3dm": [connectorType.MSTN], 
+  "3ds": [connectorType.MSTN],
+  dae: [connectorType.MSTN],
   dgn: [connectorType.MSTN, connectorType.CIVIL, connectorType.OBD, connectorType.PROSTRUCTURES],
-  dwg: [connectorType.DWG, connectorType.AUTOPLANT, connectorType.CIVIL3D],
+  dwg: [connectorType.DWG, connectorType.AUTOPLANT, connectorType.CIVIL3D, connectorType.MSTN],
+  dxf: [connectorType.DWG],
+  fbx: [connectorType.MSTN],
+  geodb: [connectorType.GEOSPATIAL],
+  geojson: [connectorType.GEOSPATIAL],
+  hln: [connectorType.MSTN],
+  "i.dgn": [connectorType.MSTN],
   ifc: [connectorType.IFC],
+  igs: [connectorType.MSTN],
+  jt: [connectorType.MSTN],
+  kml: [connectorType.GEOSPATIAL],
+  "land.xml": [connectorType.MSTN],
   nwc: [connectorType.NWD],
   nwd: [connectorType.NWD],
-  pid: [connectorType.SPPID],
+  obj: [connectorType.MSTN],
+  otxml: [connectorType.OPENTOWER],
   rvt: [connectorType.REVIT],
+  sat: [connectorType.MSTN],
   shp: [connectorType.GEOSPATIAL],
+  skp: [connectorType.MSTN],
+  stl: [connectorType.MSTN],
+  stp: [connectorType.MSTN],
   vue: [connectorType.SPXREVIEW],
-  xml: [connectorType.OPENTOWER],
+  "x_t": [connectorType.MSTN],
   zip: [connectorType.SPPID],
 };
 
