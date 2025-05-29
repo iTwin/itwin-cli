@@ -16,7 +16,6 @@ import { fileUpload } from "../../services/storage-client/models/file-upload.js"
 import { itemsWithFolderLink } from "../../services/storage-client/models/items-with-folder-link.js"
 import { authInfo } from "../../services/synchronizationClient/models/connection-auth.js"
 import { connectorType } from "../../services/synchronizationClient/models/connector-type.js"
-import { executionResult } from "../../services/synchronizationClient/models/execution-result.js";
 import { executionState } from "../../services/synchronizationClient/models/execution-state.js"
 import { sourceFile } from "../../services/synchronizationClient/models/source-file.js"
 import { storageConnection } from "../../services/synchronizationClient/models/storage-connection.js"
@@ -54,7 +53,7 @@ export default class PopulateIModel extends BaseCommand {
   static flags = {
     "connector-type": Flags.string({ 
         char: 'c',
-        description: `Specify connectors to prioritize for synchronization. This flag can be provided multiple times. If no connector-type options are provided, connector types for provided files are selected automatically depending on file extensions. If only one connector is specified, it will be used for all files. If multiple connectors are specified, each connector will be used for the corresponding file in the files list (first connector for the first file, second connector for the second file, and so on).\n NOTE: while .dgn and .dwg file types can be associated to multiple connector types, MSTN and DWG connectors are prioritized respectively when no 'connector-type' options are provided.`, 
+        description: `Specify connectors to prioritize for synchronization. This flag can be provided multiple times. If no connector-type options are provided, they are selected automatically depending on file extensions of provided files. If only one connector is specified, it will be used for all files. If multiple connectors are specified, each connector will be used for the corresponding file in the files list (first connector for the first file, second connector for the second file, and so on).\n NOTE: while .dgn and .dwg file types can be associated to multiple connector types, MSTN and DWG connectors are prioritized respectively when no 'connector-type' options are provided.`, 
         helpValue: '<string>',
         multiple: true,
         options: [
@@ -309,20 +308,15 @@ interface NewFileInfo {
 }
 
 const fileExtensionToConnectorType: { [key: string]: connectorType[] } = {
-  csv: [connectorType.SHELLEDWCSV],
   dgn: [connectorType.MSTN, connectorType.CIVIL, connectorType.OBD, connectorType.PROSTRUCTURES],
-  dwg: [connectorType.DWG, connectorType.AUTOPLANT, connectorType.AVEVAPID, connectorType.CIVIL3D],
+  dwg: [connectorType.DWG, connectorType.AUTOPLANT, connectorType.CIVIL3D],
   ifc: [connectorType.IFC],
-  json: [connectorType.INTELLIPID],
   nwc: [connectorType.NWD],
   nwd: [connectorType.NWD],
   pid: [connectorType.SPPID],
   rvt: [connectorType.REVIT],
   shp: [connectorType.GEOSPATIAL],
-  vsd: [connectorType.AVEVADIAGRAMS],
   vue: [connectorType.SPXREVIEW],
-  xls: [connectorType.PSEXCEL],
-  xlsx: [connectorType.PSEXCEL],
   xml: [connectorType.OPENTOWER],
   zip: [connectorType.SPPID],
 };
