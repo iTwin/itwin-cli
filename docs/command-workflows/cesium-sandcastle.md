@@ -20,7 +20,11 @@ The Cesium Sandcastle export command allows you to generate a URL to view an iMo
    Compress the tileset URL and embed it into a Cesium Sandcastle URL.  
    - Use the `deflate` function to compress the data and encode it in Base64 format.
 
-5. **Open in Browser (Optional)**  
+5. **Select Terrain (Optional)**
+   The `--terrain` flag can be used to select which terrain to use:
+   - `cesiumWorldTerrain` - [cesium world terrain](https://cesium.com/platform/cesium-ion/content/cesium-world-terrain/) is used.
+
+6. **Open in Browser (Optional)**  
    If the `--open` flag is provided, open the generated URL in the default browser.
 
 ## Notes
