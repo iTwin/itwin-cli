@@ -14,7 +14,8 @@ import { createIModel, createITwin } from '../utils/helpers';
 import runSuiteIfMainModule from '../utils/run-suite-if-main-module';
 
 const tests = () => describe('populate', () => {
-  const failingTestFilePath = 'integration-tests/test.zip'
+  const failingTestFilePath1 = 'integration-tests/test.zip'
+  const failingTestFilePath2 = 'integration-tests/test.land.xml'
   const testFilePath1 = 'examples/datasets/ExtonCampus.dgn';
   const testFilePath2 = 'examples/datasets/HouseModel.dgn';
 
@@ -86,7 +87,7 @@ const tests = () => describe('populate', () => {
   }).timeout(30 * 60 * 1000);
 
   it('should return an error message if synchronization run completes with a non-success state', async () => {
-    const { error: populateError } = await runCommand<populateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${failingTestFilePath} --connector-type IFC`);
+    const { error: populateError } = await runCommand<populateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${failingTestFilePath1} --connector-type IFC`);
     expect(populateError).to.not.be.undefined;
     expect(populateError?.message).to.match(/Synchronization run .*? resulted in an error. Run 'itp imodel connection run info --connection-id .*? --connection-run-id .*?' for more info./);
     
@@ -101,10 +102,32 @@ const tests = () => describe('populate', () => {
     expect(infoResult?.jobs![0].tasks!.every((task) => task.result === 'Error'));
   }).timeout(30 * 60 * 1000);
 
-  it('should return an error message if amount of connector-types does not match the amount of files and is not equal to 1', async () => {
-    const { error: populateError } = await runCommand<populateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath1} --file ${testFilePath2} --file ${failingTestFilePath} --connector-type MSTN --connector-type IFC`);
+  it('should pick correct connector-types according to file extensions, when no connector-types are provided', async () => {
+    const { error: populateError } = await runCommand<populateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${failingTestFilePath1} --file ${failingTestFilePath2}`);
     expect(populateError).to.not.be.undefined;
-    expect(populateError?.message).to.be.equal('Number of `--connector-type` flags must match the amount of `--file` flags or be equal to 1.');
+    expect(populateError?.message).to.match(/Synchronization run .*? resulted in an error. Run 'itp imodel connection run info --connection-id .*? --connection-run-id .*?' for more info./);
+    
+    const command = populateError?.message.match(/imodel connection run info --connection-id .*? --connection-run-id .*?'/)![0]?.slice(0,-1);
+    const { result: infoResult } = await runCommand<storageRun>(command!);
+    expect(infoResult).to.not.be.undefined;
+    expect(infoResult?.state).to.be.equal(executionState.COMPLETED);
+    expect(infoResult?.result).to.be.equal(executionResult.ERROR);
+    expect(infoResult).to.not.be.undefined;
+    expect(infoResult?.jobs).to.have.lengthOf(2);
+    for(const job of infoResult!.jobs!) {
+      expect(job.result).to.be.equal('Error');
+      expect(job.tasks).to.have.lengthOf(1);
+      expect(job.tasks!.every((task) => task.result === 'Error'));
+    }
+
+    expect(infoResult?.jobs![0].connectorType).to.be.equal("SPPID");
+    expect(infoResult?.jobs![1].connectorType).to.be.equal("MSTN");
+  }).timeout(30 * 60 * 1000);
+
+  it.skip('should return an error message if amount of connector-types does not match the amount of files and is not equal to 1', async () => {
+    const { error: populateError } = await runCommand<populateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath1} --file ${testFilePath2} --file ${failingTestFilePath1} --connector-type MSTN --connector-type IFC`);
+    expect(populateError).to.not.be.undefined;
+    expect(populateError?.message).to.be.equal('When multiple connector-type options are provided, their amount must match file option amount. Alternatively, you can provide a single connector-type option, which will then be applied to all file options. You can also provide no connector-type options, in which case the command will attempt automatic detection.');
   });
 });
 

@@ -45,7 +45,6 @@ export default class CreateConnection extends BaseCommand {
       multiple: true,
       options: [
         'AUTOPLANT',
-        'AVEVAPID',
         'CIVIL',
         'CIVIL3D',
         'DWG',
