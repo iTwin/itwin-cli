@@ -11,7 +11,7 @@ Update an existing source file in a storage connection of an iModel.
 - **`--connector-type`**  
   The connector type for synchronization.  
   **Type:** `string` **Required:** Yes  
-  **Valid Values:** `"AUTOPLANT"`, `"CIVIL"`, `"CIVIL3D"`, `"DWG"`, `"IFC"`, `"MSTN"`, `"REVIT"`
+  **Valid Values:** `"AUTOPLANT"`, `"CIVIL"`, `"CIVIL3D"`, `"DWG"`, `"GEOSPATIAL"`, `"IFC"`, `"MSTN"`, `"NWD"`, `"OBD"`, `"OPENTOWER"`, `"PROSTRUCTURES"`, `"REVIT"`, `"SPPID"`, `"SPXREVIEW"`
 
 - **`--source-file-id`**  
   The source file ID to update.  

@@ -84,7 +84,6 @@ export default class AddUserMembers extends BaseCommand {
     return this.logAndReturnResult(response);
   }
 
-  // eslint-disable-next-line perfectionist/sort-classes
   private getUserMembers(members?: UserMember[], emails?: string[], roleIds?: string[]): UserMember[] {
     if (members !== undefined)
       return members;

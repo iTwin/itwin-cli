@@ -79,7 +79,6 @@ export default class AddGroupMembers extends BaseCommand {
     return this.logAndReturnResult(response.members);
   }
 
-  // eslint-disable-next-line perfectionist/sort-classes
   private getGroupMembers(groupIds?: string[], roleIds?: string, groups?: GroupMember[]): GroupMember[] {
     if (groups !== undefined)
       return groups;

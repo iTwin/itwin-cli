@@ -35,7 +35,20 @@ export default class ConnectionSourceFileUpdate extends BaseCommand {
         description: 'The connector type for synchronization.',
         helpValue: '<string>',
         options: [
-          'AUTOPLANT', 'CIVIL', 'CIVIL3D', 'DWG', 'IFC', 'MSTN', 'REVIT'
+          'AUTOPLANT',
+          'CIVIL',
+          'CIVIL3D',
+          'DWG',
+          'GEOSPATIAL',
+          'IFC',
+          'MSTN',
+          'NWD',
+          'OBD',
+          'OPENTOWER',
+          'PROSTRUCTURES',
+          'REVIT',
+          'SPPID',
+          'SPXREVIEW' 
         ],
         required: true,
       }),

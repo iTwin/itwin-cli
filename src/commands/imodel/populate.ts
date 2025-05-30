@@ -54,7 +54,7 @@ export default class PopulateIModel extends BaseCommand {
   static flags = {
     "connector-type": Flags.string({ 
         char: 'c',
-        description: 'Specify connectors to prioritize for synchronization. This flag can be provided multiple times. If only one connector is specified, it will be used for all files. If multiple connectors are specified, each connector will be used for the corresponding file in the files list (first connector for the first file, second connector for the second file, and so on).', 
+        description: `Specify connectors to use for synchronization. This option can be provided multiple times. If no connector-type options are provided, they are selected automatically depending on file extensions of provided files. If only one connector is specified, it will be used for all files. If multiple connectors are specified, each connector will be used for the corresponding file in the files list (first connector for the first file, second connector for the second file, and so on).\n NOTE: .dgn and .dwg file types can be associated with multiple connector types. When no 'connector-type' options are provided, connectors for those file types are assigned as follows: .dgn => MSTN, .dwg => DWG `, 
         helpValue: '<string>',
         multiple: true,
         options: [
@@ -95,8 +95,8 @@ export default class PopulateIModel extends BaseCommand {
   async run() {
     const { flags } = await this.parse(PopulateIModel);
 
-    if(flags["connector-type"]!.length !== 1 && flags.file!.length !== flags["connector-type"]!.length) {
-      this.error("Number of `--connector-type` flags must match the amount of `--file` flags or be equal to 1.")
+    if(flags["connector-type"] && flags["connector-type"]!.length !== 1 && flags.file!.length !== flags["connector-type"]!.length) {
+      this.error("When multiple connector-type options are provided, their amount must match file option amount. Alternatively, you can provide a single connector-type option, which will then be applied to all file options. You can also provide no connector-type options, in which case the command will attempt automatic detection.")
     }
 
     const filesAndConnectorToImport = this.checkAndGetFilesWithConnectors(flags.file, flags["connector-type"]);
@@ -173,24 +173,37 @@ export default class PopulateIModel extends BaseCommand {
       {
         this.error(`File at: '${file}' does not exist`);
       }
-      
-      const splitedFile = file.split('.');
 
-      const extension = splitedFile.at(-1);
-      if(!extension)
-      {
-        this.error(`Unable to get extension from file name: ${file}`);
-      }
-
-      let connector = getConnectorTypeFromFileExtension(extension);
+      let connector;
       if(connectorTypes && connectorTypes.length === 1) {
         connector = connectorType[connectorTypes[0] as keyof typeof connectorType];
-      } else if(connectorTypes && connectorTypes.length > index) {
+      } 
+      else if(connectorTypes && connectorTypes.length === files.length) {
         connector = connectorType[connectorTypes[index] as keyof typeof connectorType];
+      } 
+      else if (!connectorTypes) {
+        const splitedFile = file.split('.');
+  
+        if(splitedFile.length === 1)
+        {
+          this.error(`${file} has no extension`);
+        }
+  
+        if(splitedFile.length >= 3) {
+          connector = getConnectorTypeFromFileExtension(`${splitedFile.at(-2)}.${splitedFile.at(-1)}`);
+        }
+  
+        connector ??= getConnectorTypeFromFileExtension(splitedFile.at(-1)!);
+  
+        if(!connector)
+          {
+            this.error(`Unable to get extension from file name: ${file}`);
+          }
       }
 
+
       resultArray.push({
-        connectorType: connector,
+        connectorType: connector!,
         fileName: path.basename(file),
         fullFilePath: file
       })
@@ -309,21 +322,34 @@ interface NewFileInfo {
 }
 
 const fileExtensionToConnectorType: { [key: string]: connectorType[] } = {
-  csv: [connectorType.SHELLEDWCSV],
-  dgn: [connectorType.CIVIL, connectorType.MSTN, connectorType.OBD, connectorType.PROSTRUCTURES],
-  dwg: [connectorType.AUTOPLANT, connectorType.AVEVAPID, connectorType.CIVIL3D, connectorType.DWG],
+  "3dm": [connectorType.MSTN], 
+  "3ds": [connectorType.MSTN],
+  dae: [connectorType.MSTN],
+  dgn: [connectorType.MSTN, connectorType.CIVIL, connectorType.OBD, connectorType.PROSTRUCTURES],
+  dwg: [connectorType.DWG, connectorType.AUTOPLANT, connectorType.CIVIL3D, connectorType.MSTN],
+  dxf: [connectorType.DWG],
+  fbx: [connectorType.MSTN],
+  geodb: [connectorType.GEOSPATIAL],
+  geojson: [connectorType.GEOSPATIAL],
+  hln: [connectorType.MSTN],
+  "i.dgn": [connectorType.MSTN],
   ifc: [connectorType.IFC],
-  json: [connectorType.INTELLIPID],
+  igs: [connectorType.MSTN],
+  jt: [connectorType.MSTN],
+  kml: [connectorType.GEOSPATIAL],
+  "land.xml": [connectorType.MSTN],
   nwc: [connectorType.NWD],
   nwd: [connectorType.NWD],
-  pid: [connectorType.SPPID],
+  obj: [connectorType.MSTN],
+  otxml: [connectorType.OPENTOWER],
   rvt: [connectorType.REVIT],
+  sat: [connectorType.MSTN],
   shp: [connectorType.GEOSPATIAL],
-  vsd: [connectorType.AVEVADIAGRAMS],
+  skp: [connectorType.MSTN],
+  stl: [connectorType.MSTN],
+  stp: [connectorType.MSTN],
   vue: [connectorType.SPXREVIEW],
-  xls: [connectorType.PSEXCEL],
-  xlsx: [connectorType.PSEXCEL],
-  xml: [connectorType.OPENTOWER],
+  "x_t": [connectorType.MSTN],
   zip: [connectorType.SPPID],
 };
 
