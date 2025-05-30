@@ -18,7 +18,7 @@ Setup iModel and get URL to view it in Cesium Sandcastle.
   **Type:** `flag` **Required:** No
 
 - **`--terrain`**  
-  Select terrain provider to use.  
+  Select which terrain should be used.  
   **Type:** `string` **Required:** No  
   **Valid Values:** `"cesiumWorldTerrain"`
 

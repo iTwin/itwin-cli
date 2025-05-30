@@ -55,7 +55,7 @@ export default class CesiumSandcastle extends BaseCommand {
       required: false,
     }),
     "terrain": Flags.string({
-      description: "Select terrain provider to use.",
+      description: "Select which terrain should be used.",
       helpValue: '<string>',
       options: [
         "cesiumWorldTerrain"
