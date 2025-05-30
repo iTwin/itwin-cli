@@ -34,6 +34,10 @@ export default class CesiumSandcastle extends BaseCommand {
     {
       command: `<%= config.bin %> <%= command.id %> --imodel-id 5e19bee0-3aea-4355-a9f0-c6df9989ee7d --changeset-id 2f3b4a8c92d747d5c8a8b2f9cde6742e5d74b3b5 --open`,
       description: 'Example 3: Get a link to a specific changeset of an iModel in Cesium Sandcastle and open the URL in the browser'
+    },
+    {
+      command: `<%= config.bin %> <%= command.id %> --imodel-id 5e19bee0-3aea-4355-a9f0-c6df9989ee7d --terrain cesiumWorldTerrain`,
+      description: 'Example 4: Get a link to a specific changeset of an iModel in Cesium Sandcastle and use cesium world terrain'
     }
   ];
 
@@ -51,7 +55,7 @@ export default class CesiumSandcastle extends BaseCommand {
       required: false,
     }),
     "terrain": Flags.string({
-      description: "Select type of terrain to use. Default value is 'off'.",
+      description: "Select terrain provider to use.",
       helpValue: '<string>',
       options: [
         "cesiumWorldTerrain"
