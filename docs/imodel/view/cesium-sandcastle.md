@@ -20,7 +20,7 @@ Setup iModel and get URL to view it in Cesium Sandcastle.
 - **`--terrain`**  
   Select type of terrain to use. Default value is 'off'.  
   **Type:** `string` **Required:** No  
-  **Valid Values:** `"off"`, `"cesium"`
+  **Valid Values:** `"cesiumWorldTerrain"`
 
 ## Examples
 

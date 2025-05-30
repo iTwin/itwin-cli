@@ -22,8 +22,7 @@ The Cesium Sandcastle export command allows you to generate a URL to view an iMo
 
 5. **Select Terrain (Optional)**
    The `--terrain` flag can be used to select which terrain to use:
-   - `off` - no terrain is used.
-   - `cesium` - [cesium world terrain](https://cesium.com/platform/cesium-ion/content/cesium-world-terrain/) is used.
+   - `cesiumWorldTerrain` - [cesium world terrain](https://cesium.com/platform/cesium-ion/content/cesium-world-terrain/) is used.
 
 6. **Open in Browser (Optional)**  
    If the `--open` flag is provided, open the generated URL in the default browser.

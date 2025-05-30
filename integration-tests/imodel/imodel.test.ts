@@ -10,6 +10,7 @@ import createDeleteTests from "./create-delete.test";
 import infoTests from "./info.test";
 import listTests from "./list.test";
 import updateTests from "./update.test";
+import viewCesiumSandcastleTests from "./view-cesium-sandcastle.test";
 
 const tests = () => describe('iModel Integration Tests', () => {
   changesetTests();
@@ -18,6 +19,7 @@ const tests = () => describe('iModel Integration Tests', () => {
   infoTests();
   listTests();
   updateTests();
+  viewCesiumSandcastleTests();
 });
 
 export default tests;

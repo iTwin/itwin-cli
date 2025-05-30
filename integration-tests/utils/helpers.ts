@@ -12,6 +12,7 @@ import * as dotenv from 'dotenv';
 import { GetInboxRequest, GetMessageRequest, MailinatorClient } from 'mailinator-client'
 import fs from "node:fs"
 import os from 'node:os'
+import { inflate } from "pako";
 
 import { fileTyped } from "../../src/services/storage-client/models/file-typed.js";
 import { fileUpload } from "../../src/services/storage-client/models/file-upload.js";
@@ -218,4 +219,9 @@ const getTokenPathByOS = () => {
             throw new Error("Unknown OS");
         }
     }
+}
+
+export const decodeCompressedBase64 = (base64String: string) => {
+    const buffer = Buffer.from(base64String!, "base64");
+    return inflate(buffer, {raw: true, to: 'string'});
 }
