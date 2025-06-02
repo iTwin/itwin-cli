@@ -41,7 +41,8 @@ export default class ListFiles extends BaseCommand {
         required: true 
       }),
       "include-folders": Flags.boolean({ 
-        description: "Whether to include subfolders in the result."
+        description: "Whether to include subfolders in the result.",
+        required: false,
       }),
     };
   

@@ -69,7 +69,7 @@ const tests = () => {
         expect(listedGroups).to.not.be.undefined;
         expect(listedGroups!.length).to.be.greaterThanOrEqual(1);
 
-        expect(listedGroups).contain((entry: { id: string | undefined; }) => entry.id === newGroup!.id, "Newly created group not found in the list");
+        expect(listedGroups!.some(entry => entry.id === newGroup!.id), "Newly created group not found in the list").to.be.true;
     });
 
     it('Should delete group', async () => {

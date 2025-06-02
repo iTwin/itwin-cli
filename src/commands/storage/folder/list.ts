@@ -42,6 +42,7 @@ export default class ListFolders extends BaseCommand {
       }),
       "include-files": Flags.boolean({ 
         description: "Whether to include files in the result.",
+        required: false,
       }),
     };
   

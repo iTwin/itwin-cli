@@ -54,11 +54,13 @@ export default class UpdateAccessControlGroup extends BaseCommand {
         description: 'A list of members (emails) to be assigned to the group. Max amount of 50.',
         helpValue: '<string>',
         multiple: true,
+        required: false,
       }),
       name: Flags.string({
         char: 'n',
         description: 'The updated name of the group.',
         helpValue: '<string>',
+        required: false,
       }),
     };
   

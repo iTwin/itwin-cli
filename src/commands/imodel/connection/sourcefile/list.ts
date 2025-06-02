@@ -40,11 +40,13 @@ export default class ListSourceFiles extends BaseCommand {
       }),
       skip: Flags.integer({ 
         description: 'Skip a number of source files in the result.', 
-        helpValue: '<integer>' 
+        helpValue: '<integer>',
+        required: false,
       }),
       top: Flags.integer({ 
         description: 'Limit the number of source files returned.', 
-        helpValue: '<integer>' 
+        helpValue: '<integer>',
+        required: false,
       }),
     };
   

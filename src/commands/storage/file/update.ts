@@ -32,6 +32,7 @@ export default class UpdateCommand extends BaseCommand {
         char: 'd', 
         description: "A description for the file." ,
         helpValue: '<string>',
+        required: false,
       }),
       "file-id": Flags.string({ 
         char: 'f', 
@@ -43,6 +44,7 @@ export default class UpdateCommand extends BaseCommand {
         char: 'n', 
         description: "The new display name for the file.",
         helpValue: '<string>',
+        required: false,
       }),
     };
   
