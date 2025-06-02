@@ -58,6 +58,7 @@ export default class ApiRequest extends BaseCommand {
             flag: "h",
             helpValue: '<string>',
             multiple: true,
+            required: false,
         }),
         method: Flags.string({
             description: "HTTP method for the request.",
