@@ -39,7 +39,7 @@ const tests = () => describe('group', () => {
         const groupUpdate = await runCommand<group>(`access-control group update --itwin-id ${iTwinId} --group-id ${groupId} --ims-group "${imsGroupName}"`);
         expect(groupUpdate.result).is.not.undefined;
         expect(groupUpdate.result!.id).is.not.undefined;
-        expect(groupUpdate.result!.imsGroups?.length).to.be.equal(1);
+        expect(groupUpdate.result!.imsGroups).to.have.lengthOf(1);
         expect(groupUpdate.result!.imsGroups![0]).to.be.equal(imsGroupName);
     });
 });    

@@ -53,7 +53,7 @@ const tests = () => describe('run', () => {
     const { result: listResult } = await runCommand<storageRunsResponse>(`imodel connection run list -c ${connectionId}`);
     expect(listResult).to.not.be.undefined;
     expect(listResult?.runs).to.not.be.undefined;
-    expect(listResult?.runs.length).to.be.equal(1);
+    expect(listResult?.runs).to.have.lengthOf(1);
     
     let { result: infoResult } = await runCommand<storageRun>(`imodel connection run info -c ${connectionId} --connection-run-id ${listResult?.runs[0].id}`);
 

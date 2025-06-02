@@ -43,7 +43,7 @@ const tests = () => describe('changesets + comparison', () => {
         testITwinId = filteredITwins.result![0].id!;
         const iModels = await runCommand<IModel[]>(`imodel list --itwin-id ${testITwinId}`);
         expect(iModels.result).to.not.be.undefined;
-        expect(iModels.result?.length).to.be.equal(1);
+        expect(iModels.result).to.have.lengthOf(1);
         testIModelId = iModels.result![0].id;
     }
   });
@@ -51,22 +51,22 @@ const tests = () => describe('changesets + comparison', () => {
   it('should get changesets', async () => {
     const response = await runCommand<changeset[]>(`changed-elements changesets --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
     expect(response.result).to.not.be.undefined;
-    expect(response.result?.length).to.be.equal(4);
+    expect(response.result).to.have.lengthOf(4);
 
     const responseFiltered = await runCommand<changeset[]>(`changed-elements changesets --imodel-id ${testIModelId} --itwin-id ${testITwinId} --skip 2 --top 2`);
     expect(responseFiltered.result).to.not.be.undefined;
-    expect(responseFiltered.result?.length).to.be.equal(2);
+    expect(responseFiltered.result).to.have.lengthOf(2);
     expect(responseFiltered.result?.map(x => x.id)).to.be.deep.equal(response.result?.map(x => x.id).slice(2))
   });
 
   it('should compare 2 changesets', async () => {
     const response = await runCommand<changeset[]>(`changed-elements changesets --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
     expect(response.result).to.not.be.undefined;
-    expect(response.result?.length).to.be.equal(4);
+    expect(response.result).to.have.lengthOf(4);
     
     const comparisonResponse = await runCommand<changesetComparison>(`changed-elements comparison --imodel-id ${testIModelId} --itwin-id ${testITwinId} --changeset-id1 ${response.result![0].id} --changeset-id2 ${response.result![3].id}`);
     expect(comparisonResponse.result).to.not.be.undefined;
-    expect(comparisonResponse.result!.opcodes.length).to.be.equal(1);
+    expect(comparisonResponse.result!.opcodes).to.have.lengthOf(1);
     expect(comparisonResponse.result!.opcodes[0]).to.be.equal(18); // Element was inserted
   });
 });

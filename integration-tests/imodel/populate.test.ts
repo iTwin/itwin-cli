@@ -43,7 +43,7 @@ const tests = () => describe('populate', () => {
     expect(populateResult!.iTwinId).to.be.equal(testITwinId);
     expect(populateResult!.iModelId).to.be.equal(testIModelId);
     expect(populateResult!.summary).to.not.be.undefined;
-    expect(populateResult!.summary.length).to.be.equal(1);
+    expect(populateResult!.summary).to.have.lengthOf(1);
     expect(populateResult!.summary[0].connectionId).to.not.be.undefined;
     expect(populateResult!.summary[0].runId).to.not.be.undefined;
 
@@ -63,7 +63,7 @@ const tests = () => describe('populate', () => {
     expect(populateResult!.iTwinId).to.be.equal(testITwinId);
     expect(populateResult!.iModelId).to.be.equal(testIModelId);
     expect(populateResult!.summary).to.not.be.undefined;
-    expect(populateResult!.summary.length).to.be.equal(1);
+    expect(populateResult!.summary).to.have.lengthOf(1);
     expect(populateResult!.summary[0].connectionId).to.not.be.undefined;
     expect(populateResult!.summary[0].runId).to.not.be.undefined;
 

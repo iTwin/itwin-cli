@@ -37,7 +37,7 @@ const tests = () => describe('root-folder', () => {
     expect(rootFolder).to.not.be.undefined;
     expect(rootFolder).to.have.property('items');
     expect(rootFolder!.items).to.be.an('array');
-    expect(rootFolder!.items!.length).to.be.equal(2);
+    expect(rootFolder!.items).to.have.lengthOf(2);
     expect(rootFolder!.items![0].displayName).to.be.equal(testFolder.displayName);
     expect(rootFolder!.items![1].displayName).to.be.equal(testFile.displayName);
     expect(rootFolder).to.have.property('_links');
@@ -56,7 +56,7 @@ const tests = () => describe('root-folder', () => {
     expect(rootFolder).to.not.be.undefined;
     expect(rootFolder).to.have.property('items');
     expect(rootFolder!.items).to.be.an('array');
-    expect(rootFolder!.items!.length).to.be.equal(1);
+    expect(rootFolder!.items).to.have.lengthOf(1);
     expect(rootFolder!.items![0].displayName).to.be.equal(testFile.displayName);
     expect(rootFolder).to.have.property('_links');
     expect(rootFolder!._links).to.have.property('folder');

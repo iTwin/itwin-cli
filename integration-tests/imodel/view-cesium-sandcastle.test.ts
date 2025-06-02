@@ -42,7 +42,7 @@ const tests = () => describe('view cesium-sandcastle', () => {
         testITwinId = filteredITwins.result![0].id!;
         const iModels = await runCommand<IModel[]>(`imodel list --itwin-id ${testITwinId}`);
         expect(iModels.result).to.not.be.undefined;
-        expect(iModels.result?.length).to.be.equal(1);
+        expect(iModels.result).to.have.lengthOf(1);
         testIModelId = iModels.result![0].id;
     }
   });

@@ -53,28 +53,28 @@ const tests = () => describe('list', () => {
   it('should get all connections', async () => {
     const { result } = await runCommand<storageConnectionListResponse>(`imodel connection list -m ${testIModelId}`);
     expect(result).to.not.be.undefined;
-    expect(result!.connections.length).to.be.equal(2);
+    expect(result!.connections).to.have.lengthOf(2);
   });
 
   it('should get 1st connection', async () => {
     const { result: allConnections } = await runCommand<storageConnectionListResponse>(`imodel connection list -m ${testIModelId}`);
     expect(allConnections).to.not.be.undefined;
-    expect(allConnections!.connections.length).to.be.equal(2);
+    expect(allConnections!.connections).to.have.lengthOf(2);
 
     const { result: filteredConnections } = await runCommand<storageConnectionListResponse>(`imodel connection list -m ${testIModelId} --top 1`);
     expect(filteredConnections).to.not.be.undefined;
-    expect(filteredConnections!.connections.length).to.be.equal(1);
+    expect(filteredConnections!.connections).to.have.lengthOf(1);
     expect(filteredConnections!.connections[0].id).to.be.equal(allConnections!.connections[0].id);
   });
 
   it('should not get 1st connection', async () => {
     const { result: allConnections } = await runCommand<storageConnectionListResponse>(`imodel connection list -m ${testIModelId}`);
     expect(allConnections).to.not.be.undefined;
-    expect(allConnections!.connections.length).to.be.equal(2);
+    expect(allConnections!.connections).to.have.lengthOf(2);
 
     const { result: filteredConnections } = await runCommand<storageConnectionListResponse>(`imodel connection list -m ${testIModelId} --skip 1`);
     expect(filteredConnections).to.not.be.undefined;
-    expect(filteredConnections!.connections.length).to.be.equal(1);
+    expect(filteredConnections!.connections).to.have.lengthOf(1);
     expect(filteredConnections!.connections[0].id).to.be.equal(allConnections!.connections[1].id);
   });
 });

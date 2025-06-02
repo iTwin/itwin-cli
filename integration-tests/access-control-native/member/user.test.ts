@@ -40,17 +40,17 @@ const tests = () => describe('user', () => {
         const invitedUser = await runCommand<membersResponse>(`access-control member user add --itwin-id ${iTwinId} --members "[{"email": "${emailToAdd}", "roleIds": ["${newRole.result!.id}"]}]"`);
 
         expect(invitedUser.result).to.not.be.undefined;
-        expect(invitedUser.result!.members.length).to.be.equal(1);
+        expect(invitedUser.result!.members).to.have.lengthOf(1);
         expect(invitedUser.result!.members[0].email.toLowerCase()).to.be.equal(emailToAdd!.toLowerCase());
-        expect(invitedUser.result!.members[0].roles.length).to.be.equal(1);
+        expect(invitedUser.result!.members[0].roles).to.have.lengthOf(1);
         expect(invitedUser.result!.members[0].roles[0].id).to.be.equal(newRole.result!.id);
 
         const usersInfo = await runCommand<member[]>(`access-control member user list --itwin-id ${iTwinId}`);
         expect(usersInfo.result).is.not.undefined;
-        expect(usersInfo.result!.length).to.be.equal(2);
+        expect(usersInfo.result).to.have.lengthOf(2);
         const joinedUser = usersInfo.result?.filter(user => user.email.toLowerCase() === emailToAdd!.toLowerCase())[0];
         expect(joinedUser).to.not.be.undefined;
-        expect(joinedUser?.roles.length).to.be.equal(1);
+        expect(joinedUser?.roles).to.have.lengthOf(1);
         expect(joinedUser?.roles[0].id).to.be.equal(newRole.result!.id);
 
         const deletionResult = await runCommand<{result: string}>(`access-control member user delete --itwin-id ${iTwinId} --member-id ${joinedUser?.id}`);

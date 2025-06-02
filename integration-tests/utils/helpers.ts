@@ -141,7 +141,7 @@ export async function fetchEmailsAndGetInvitationLink(inbox: string, iTwinName: 
         const invitationTokenRegex = /href=".*?invitationToken.*?"/;
         const matches = messageBody.match(invitationTokenRegex);
         expect(matches).to.not.be.null;
-        expect(matches!.length).to.be.equal(1);
+        expect(matches).to.have.lengthOf(1);
         return matches![0].slice("href=\"".length, -1);
     }
 

@@ -41,7 +41,7 @@ const tests = () => describe('owner', () => {
 
         const usersInfo = await runCommand<groupMember[]>(`access-control member owner list --itwin-id ${iTwinId}`);
         expect(usersInfo.result).is.not.undefined;
-        expect(usersInfo.result!.length).to.be.equal(2);
+        expect(usersInfo.result).to.have.lengthOf(2);
         const joinedUser = usersInfo.result?.filter(user => user.email.toLowerCase() === emailToAdd!.toLowerCase())[0];
         expect(joinedUser).to.not.be.undefined;
 

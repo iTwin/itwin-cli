@@ -54,9 +54,9 @@ const tests = () => {
         const invitedUser = await runCommand<membersResponse>(`access-control member user add --itwin-id ${iTwinId} --members "[{"email": "${emailToAdd}", "roleIds": ["${newRole.result!.id}"]}]"`);
 
         expect(invitedUser.result).to.not.be.undefined;
-        expect(invitedUser.result!.invitations.length).to.be.equal(1);
+        expect(invitedUser.result!.invitations).to.have.lengthOf(1);
         expect(invitedUser.result!.invitations[0].email.toLowerCase()).to.be.equal(emailToAdd!.toLowerCase());
-        expect(invitedUser.result!.invitations[0].roles.length).to.be.equal(1);
+        expect(invitedUser.result!.invitations[0].roles).to.have.lengthOf(1);
         expect(invitedUser.result!.invitations[0].roles[0].id).to.be.equal(newRole.result!.id);
 
         const invitationLink = await fetchEmailsAndGetInvitationLink(emailToAdd!.split('@')[0], iTwinName);
@@ -77,7 +77,7 @@ const tests = () => {
 
         const joinedUser = usersInfo.find(user => user.email.toLowerCase() === emailToAdd!.toLowerCase());
         expect(joinedUser).to.not.be.undefined;
-        expect(joinedUser?.roles.length).to.be.equal(1);
+        expect(joinedUser?.roles).to.have.lengthOf(1);
         expect(joinedUser?.roles[0].id).to.be.equal(newRole.result!.id);
 
         const deletionResult = await runCommand<{result: string}>(`access-control member user delete --itwin-id ${iTwinId} --member-id ${joinedUser?.id}`);
@@ -102,12 +102,12 @@ const tests = () => {
 
         const usersInfo = await runCommand<member[]>(`access-control member user list --itwin-id ${iTwinId}`);
         expect(usersInfo.result).is.not.undefined;
-        expect(usersInfo.result!.length).to.be.equal(1);
-        expect(usersInfo.result![0].roles.length).to.be.equal(1);
+        expect(usersInfo.result).to.have.lengthOf(1);
+        expect(usersInfo.result![0].roles).to.have.lengthOf(1);
 
         const updateMemberResult = await runCommand<member>(`access-control member user update --itwin-id ${iTwinId} --member-id ${usersInfo.result![0].id} --role-id ${usersInfo.result![0].roles[0].id} --role-id ${newRole.result!.id}`);
         expect(updateMemberResult.result).is.not.undefined;
-        expect(updateMemberResult.result!.roles.length).to.be.equal(2);
+        expect(updateMemberResult.result!.roles).to.have.lengthOf(2);
         expect(updateMemberResult.result!.roles.some(role => role.id === newRole.result!.id)).to.be.true;
         expect(updateMemberResult.result!.roles.some(role => role.id === usersInfo.result![0].roles[0].id)).to.be.true;
     });
@@ -294,7 +294,7 @@ const tests = () => {
     it('Should fail to update iTwin group, when there are too many roles assigned', async () => { 
         const usersInfo = await runCommand<member[]>(`access-control member user list --itwin-id ${iTwinId}`);
         expect(usersInfo.result).is.not.undefined;
-        expect(usersInfo.result!.length).to.be.equal(1);
+        expect(usersInfo.result!).to.have.lengthOf(1);
 
         let command = `access-control member user update --itwin-id ${iTwinId} --member-id ${usersInfo.result![0].id}`;
         for(let i = 0; i < 51; i++)
