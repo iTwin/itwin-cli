@@ -45,6 +45,7 @@ export default class UpdateAccessControlGroup extends BaseCommand {
         description: 'A list of IMS Groups to be linked to the group. Max amount of 50.',
         helpValue: '<string>',
         multiple: true,
+        required: false,
       }),
       "itwin-id": CustomFlags.iTwinIDFlag({
         description: 'The ID of the iTwin where the group exists.'
