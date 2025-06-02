@@ -38,4 +38,5 @@ The Cesium Sandcastle export command allows you to generate a URL to view an iMo
 - [Cesium Sandcastle](https://sandcastle.cesium.com/)
 - [Start Export API](https://developer.bentley.com/apis/mesh-export/operations/start-export/)
 - [Get Exports API](https://developer.bentley.com/apis/mesh-export/operations/get-exports/)
+- [Cesium world terrain](https://cesium.com/platform/cesium-ion/content/cesium-world-terrain/) 
 
