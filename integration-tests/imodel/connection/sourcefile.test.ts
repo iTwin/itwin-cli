@@ -56,8 +56,8 @@ const tests = () => describe('sourcefile', () => {
     expect(infoResult!.connectorType).to.be.equal("MSTN");
     expect(infoResult!.storageFileId).to.be.equal(anotherTestFileId);
 
-    const { result: deleteResult } = await runCommand(`imodel connection sourcefile delete -c ${connectionId} --source-file-id ${addResult?.id}`);
-    expect(deleteResult).to.have.property('result', 'deleted');
+    const { result: deleteResult } = await runCommand<{result: string}>(`imodel connection sourcefile delete -c ${connectionId} --source-file-id ${addResult?.id}`);
+    expect(deleteResult?.result).to.be.equal('deleted');
   });
 
   it('should update connector-type and storage-file-id of a sourcefile', async () => {

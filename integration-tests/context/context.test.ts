@@ -31,11 +31,11 @@ const tests = () => describe('Context Integration Tests', () => {
     });
 
     after(async () => {
-      const { result: deleteResult1 } = await runCommand(`itwin delete -i ${iTwin.id}`);
-      const { result: deleteResult2 } = await runCommand(`itwin delete -i ${anotherITwin.id}`);
+      const { result: deleteResult1 } = await runCommand<{result: string}>(`itwin delete -i ${iTwin.id}`);
+      const { result: deleteResult2 } = await runCommand<{result: string}>(`itwin delete -i ${anotherITwin.id}`);
 
-      expect(deleteResult1).to.have.property('result', 'deleted');
-      expect(deleteResult2).to.have.property('result', 'deleted');
+      expect(deleteResult1?.result).to.be.equal('deleted');
+      expect(deleteResult2?.result).to.be.equal('deleted');
     });
 
     beforeEach(async () => {

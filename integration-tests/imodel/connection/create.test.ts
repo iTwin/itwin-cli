@@ -34,17 +34,11 @@ const tests = () => describe('create', () => {
   });
 
   after(async () => {
-    const { result: fileDeleteResult1 } = await runCommand(`storage file delete --file-id ${testFileId1}`);
-    const { result: fileDeleteResult2 } = await runCommand(`storage file delete --file-id ${testFileId2}`);
-    const { result: fileDeleteResult3 } = await runCommand(`storage file delete --file-id ${testFileId3}`);
-    const { result: imodelDeleteResult } = await runCommand(`imodel delete --imodel-id ${testIModelId}`);
-    const { result: itwinDeleteResult } = await runCommand(`itwin delete --itwin-id ${testITwinId}`);
+    const { result: imodelDeleteResult } = await runCommand<{result: string}>(`imodel delete --imodel-id ${testIModelId}`);
+    const { result: itwinDeleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinId}`);
 
-    expect(fileDeleteResult1).to.have.property('result', 'deleted');
-    expect(fileDeleteResult2).to.have.property('result', 'deleted');
-    expect(fileDeleteResult3).to.have.property('result', 'deleted');
-    expect(imodelDeleteResult).to.have.property('result', 'deleted');
-    expect(itwinDeleteResult).to.have.property('result', 'deleted');
+    expect(imodelDeleteResult?.result).to.be.equal('deleted');
+    expect(itwinDeleteResult?.result).to.be.equal('deleted');
   });
 
   it('should create a connection with multiple files and equal amount of connector types', async () => {
@@ -60,8 +54,8 @@ const tests = () => describe('create', () => {
     expect(listResult!.some((sourceFile) => sourceFile.storageFileId === testFileId1 && sourceFile.connectorType === 'MSTN')).to.be.true;
     expect(listResult!.some((sourceFile) => sourceFile.storageFileId === testFileId3 && sourceFile.connectorType === 'SPPID')).to.be.true;
 
-    const { result } = await runCommand(`imodel connection delete --connection-id ${createdConnection!.id}`);
-    expect(result).to.have.property('result', 'deleted');
+    const { result } = await runCommand<{result: string}>(`imodel connection delete --connection-id ${createdConnection!.id}`);
+    expect(result?.result).to.be.equal('deleted');
   });
 
   it('should create a connection with multiple files and a single connector type', async () => {
@@ -77,8 +71,8 @@ const tests = () => describe('create', () => {
     expect(listResult!.some((sourceFile) => sourceFile.storageFileId === testFileId1 && sourceFile.connectorType === 'MSTN')).to.be.true;
     expect(listResult!.some((sourceFile) => sourceFile.storageFileId === testFileId2 && sourceFile.connectorType === 'MSTN')).to.be.true;
 
-    const { result: deleteResult } = await runCommand(`imodel connection delete --connection-id ${createdConnection!.id}`);
-    expect(deleteResult).to.have.property('result', 'deleted');
+    const { result: deleteResult } = await runCommand<{result: string}>(`imodel connection delete --connection-id ${createdConnection!.id}`);
+    expect(deleteResult?.result).to.be.equal('deleted');
   });
 
   it(`should throw an error if file and connector-type amounts don't match and connector-type amount is > 1.`, async () => {

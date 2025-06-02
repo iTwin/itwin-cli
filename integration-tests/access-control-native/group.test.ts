@@ -30,8 +30,8 @@ const tests = () => describe('group', () => {
     });
 
     after(async () => {
-        const { result: deleteResult } = await runCommand(`itwin delete --itwin-id ${iTwinId}`);
-        expect(deleteResult).to.have.property('result', 'deleted');
+        const { result: deleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${iTwinId}`);
+        expect(deleteResult?.result).to.be.equal('deleted');
     });
 
     it('Should update group ims-group', async () => {

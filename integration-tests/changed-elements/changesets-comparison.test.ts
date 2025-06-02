@@ -8,6 +8,7 @@ import { ITwin } from '@itwin/itwins-client';
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
+import { populateResponse} from '../../src/commands/imodel/populate';
 import { changeset, changesetComparison } from '../../src/services/changed-elements-client/tracking';
 import { createFile, createIModel, createITwin, getRootFolderId } from '../utils/helpers';
 import { resultResponse } from '../utils/result-response';
@@ -35,9 +36,9 @@ const tests = () => describe('changesets + comparison', () => {
 
         const rootFolderId = await getRootFolderId(testITwinId);
         await createFile(rootFolderId, testFileName, testFilePath);
-        const { result: populateResult } = await runCommand(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type SPPID`);
-        expect(populateResult).to.have.property('iModelId', testIModelId);
-        expect(populateResult).to.have.property('iTwinId', testITwinId);
+        const { result: populateResult } = await runCommand<populateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type SPPID`);
+        expect(populateResult?.iModelId).to.be.equal(testIModelId);
+        expect(populateResult?.iTwinId).to.be.equal(testITwinId);
     }
     else {
         testITwinId = filteredITwins![0].id!;
