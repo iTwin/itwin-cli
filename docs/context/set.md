@@ -1,6 +1,8 @@
 # itp context set
 
-Set a new cached context.
+Set a new cached context. This works by saving iModel and/or iTwin IDs to a file in CLI cache directory.
+NOTE: CLI cache directory can usually be found at: `%LOCALAPPDATA%/itp` on windows, `~/.cache/itp` on UNIX and `~/Library/Caches/itp` on macOS.
+NOTE2: CLI cache directory can be overriden by setting `XDG_CACHE_HOME` environment variable, which is useful in case there is a need to use context in multiple concurrent workflows.
 
 ## Options
 

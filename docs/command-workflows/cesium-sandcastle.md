@@ -4,13 +4,13 @@ The Cesium Sandcastle export command allows you to generate a URL to view an iMo
 
 **Workflow steps:**
 
-1. **Create Export**  
-   Use the [Create Export](https://developer.bentley.com/apis/mesh-export/operations/create-export/) API to generate a new export for the specified iModel and changeset.  
+1. **Start Export**  
+   Use the [Start Export](https://developer.bentley.com/apis/mesh-export/operations/start-export/) API to start a new export for the specified iModel and changeset.  
    - Input: iModel ID, changeset ID, and export type (`CESIUM`).
    - Output: Export ID and status.
 
 2. **Check Export Status**  
-   Use the [Get Export](https://developer.bentley.com/apis/mesh-export/operations/get-export/) API to check the status of the export.  
+   Use the [Get Exports](https://developer.bentley.com/apis/mesh-export/operations/get-exports/) API to check the status of the export.  
    - Poll the export status until it is marked as `Complete`.
 
 3. **Extract Tileset URL**  
@@ -36,6 +36,7 @@ The Cesium Sandcastle export command allows you to generate a URL to view an iMo
 ## References
 
 - [Cesium Sandcastle](https://sandcastle.cesium.com/)
-- [Create Export API](https://developer.bentley.com/apis/mesh-export/operations/create-export/)
-- [Get Export API](https://developer.bentley.com/apis/mesh-export/operations/get-export/)
+- [Start Export API](https://developer.bentley.com/apis/mesh-export/operations/start-export/)
+- [Get Exports API](https://developer.bentley.com/apis/mesh-export/operations/get-exports/)
+- [Cesium World Terrain](https://cesium.com/platform/cesium-ion/content/cesium-world-terrain/) 
 
