@@ -47,7 +47,7 @@ const tests = () => describe('owner', () => {
 
         const { result: deleteResult } = await runCommand<{result: string}>(`access-control member owner delete --itwin-id ${iTwinId} --member-id ${joinedUser?.id}`);
         expect(deleteResult).to.not.be.undefined;
-        expect(deleteResult!).to.be.equal("deleted");
+        expect(deleteResult!.result).to.be.equal("deleted");
     });
 });
 
