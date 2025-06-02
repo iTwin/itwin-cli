@@ -75,6 +75,7 @@ export default class ApiRequest extends BaseCommand {
             description: "URL query parameters for the request. Use format 'QueryKey:value'.",
             helpValue: '<string>',
             multiple: true,
+            required: false,
         }),
         "version-header": Flags.string({
             description: "API version header for versioned endpoints.",
