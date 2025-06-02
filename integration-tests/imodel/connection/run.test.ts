@@ -35,15 +35,11 @@ const tests = () => describe('run', () => {
   });
 
   after(async () => {
-    const { result: connectionDeleteResult } = await runCommand(`imodel connection delete --connection-id ${connectionId}`);
-    const { result: fileDeleteResult} = await runCommand(`storage file delete --file-id ${testFileId}`);
-    const { result: imodelDeleteResult } = await runCommand(`imodel delete --imodel-id ${testIModelId}`);
-    const { result: itwinDeleteResult } = await runCommand(`itwin delete --itwin-id ${testITwinId}`);
+    const { result: imodelDeleteResult } = await runCommand<{result: string}>(`imodel delete --imodel-id ${testIModelId}`);
+    const { result: itwinDeleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinId}`);
 
-    expect(connectionDeleteResult).to.have.property('result', 'deleted');
-    expect(fileDeleteResult).to.have.property('result', 'deleted');
-    expect(imodelDeleteResult).to.have.property('result', 'deleted');
-    expect(itwinDeleteResult).to.have.property('result', 'deleted');
+    expect(imodelDeleteResult?.result).to.be.equal('deleted');
+    expect(itwinDeleteResult?.result).to.be.equal('deleted');
   });
 
   it('should create a connection run and wait for it to complete', async () => {

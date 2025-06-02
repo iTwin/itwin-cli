@@ -24,116 +24,107 @@ const tests = () => describe('list', () => {
   });
 
   after(async () => {
-    const { result: deleteResult1 } = await runCommand(`itwin delete --itwin-id ${testITwin1Child.id}`);
-    const { result: deleteResult2 } = await runCommand(`itwin delete --itwin-id ${testITwin1.id}`);
-    const { result: deleteResult3 } = await runCommand(`itwin delete --itwin-id ${testITwin2.id}`);
+    const { result: deleteResult1 } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwin1Child.id}`);
+    const { result: deleteResult2 } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwin1.id}`);
+    const { result: deleteResult3 } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwin2.id}`);
 
-    expect(deleteResult1).to.have.property('result', 'deleted');
-    expect(deleteResult2).to.have.property('result', 'deleted');
-    expect(deleteResult3).to.have.property('result', 'deleted');
+    expect(deleteResult1?.result).to.be.equal('deleted');
+    expect(deleteResult2?.result).to.be.equal('deleted');
+    expect(deleteResult3?.result).to.be.equal('deleted');
   })
 
   it('should fail when provided bad subClass', async () => {
-    const result = await runCommand('itwin list --sub-class InvalidSubClass');
-    expect(result.error).to.be.not.undefined;
-    expect(result.error!.message).to.include('InvalidSubClass');
+    const { error: listError } = await runCommand<ITwin[]>('itwin list --sub-class InvalidSubClass');
+    expect(listError).to.be.not.undefined;
+    expect(listError!.message).to.include('InvalidSubClass');
   });
 
   it('should list itwins of specific subClass', async () => {
-    const result = await runCommand(`itwin list --sub-class ${testITwin2.subClass}`);
-    const resultArr: ITwin[] = JSON.parse(result.stdout);
+    const { result: listResult } = await runCommand<ITwin[]>(`itwin list --sub-class ${testITwin2.subClass}`);
 
-    expect(resultArr).to.be.an('array').that.is.not.empty;
-    expect(resultArr.some(itwin => itwin.id === testITwin1.id!)).to.be.false;
-    expect(resultArr.some(itwin => itwin.id === testITwin2.id!)).to.be.true;
-    expect(resultArr.some(itwin => itwin.id === testITwin1Child.id!)).to.be.false;
+    expect(listResult).to.be.an('array').that.is.not.empty;
+    expect(listResult!.some(itwin => itwin.id === testITwin1.id!)).to.be.false;
+    expect(listResult!.some(itwin => itwin.id === testITwin2.id!)).to.be.true;
+    expect(listResult!.some(itwin => itwin.id === testITwin1Child.id!)).to.be.false;
   });
 
   it('should list created active itwins', async () => {
-    const result = await runCommand(`itwin list`);
-    const resultArr: ITwin[] = JSON.parse(result.stdout);
+    const { result: listResult } = await runCommand<ITwin[]>(`itwin list`);
 
-    expect(resultArr).to.be.an('array').that.is.not.empty;
-    expect(resultArr.some(itwin => itwin.id === testITwin1.id!)).to.be.true;
-    expect(resultArr.some(itwin => itwin.id === testITwin2.id!)).to.be.true;
-    expect(resultArr.some(itwin => itwin.id === testITwin1Child.id!)).to.be.false;
+    expect(listResult).to.be.an('array').that.is.not.empty;
+    expect(listResult!.some(itwin => itwin.id === testITwin1.id!)).to.be.true;
+    expect(listResult!.some(itwin => itwin.id === testITwin2.id!)).to.be.true;
+    expect(listResult!.some(itwin => itwin.id === testITwin1Child.id!)).to.be.false;
   });
 
   it('should list all created itwins', async () => {
-    const result = await runCommand(`itwin list --include-inactive --itwin-account-id ${testITwin1.parentId}`);
-    const resultArr: ITwin[] = JSON.parse(result.stdout);
+    const { result: listResult } = await runCommand<ITwin[]>(`itwin list --include-inactive --itwin-account-id ${testITwin1.parentId}`);
 
-    expect(resultArr).to.be.an('array').that.is.not.empty;
-    expect(resultArr.some(itwin => itwin.id === testITwin1.id!)).to.be.true;
-    expect(resultArr.some(itwin => itwin.id === testITwin2.id!)).to.be.true;
-    expect(resultArr.some(itwin => itwin.id === testITwin1Child.id!)).to.be.true;
+    expect(listResult).to.be.an('array').that.is.not.empty;
+    expect(listResult!.some(itwin => itwin.id === testITwin1.id!)).to.be.true;
+    expect(listResult!.some(itwin => itwin.id === testITwin2.id!)).to.be.true;
+    expect(listResult!.some(itwin => itwin.id === testITwin1Child.id!)).to.be.true;
   });
 
   it('should list no itwins when provided invalid itwin account id', async () => {
-    const result = await runCommand(`itwin list --include-inactive --itwin-account-id ${crypto.randomUUID()}`);
-    const resultArr: ITwin[] = JSON.parse(result.stdout);
+    const { result: listResult} = await runCommand<ITwin[]>(`itwin list --include-inactive --itwin-account-id ${crypto.randomUUID()}`);
 
-    expect(resultArr).to.be.an('array').that.is.empty;
+    expect(listResult).to.be.an('array').that.is.empty;
   });
 
   it('should list itwin by display name', async () => {
-    const result = await runCommand(`itwin list --name ${testITwin2.displayName}`);
-    const resultArr: ITwin[] = JSON.parse(result.stdout);
+    const { result: listResult } = await runCommand<ITwin[]>(`itwin list --name ${testITwin2.displayName}`);
 
-    expect(resultArr).to.be.an('array').that.is.not.empty;
-    expect(resultArr.some(itwin => itwin.id === testITwin1.id!)).to.be.false;
-    expect(resultArr.some(itwin => itwin.id === testITwin2.id!)).to.be.true;
-    expect(resultArr.some(itwin => itwin.id === testITwin1Child.id!)).to.be.false;
+    expect(listResult).to.be.an('array').that.is.not.empty;
+    expect(listResult!.some(itwin => itwin.id === testITwin1.id!)).to.be.false;
+    expect(listResult!.some(itwin => itwin.id === testITwin2.id!)).to.be.true;
+    expect(listResult!.some(itwin => itwin.id === testITwin1Child.id!)).to.be.false;
   });
 
 
   it('should list itwin by type and number', async () => {
-    const result = await runCommand(`itwin list --include-inactive --type ${testITwin1.type} --number ${testITwin1.number}`);
-    const resultArr: ITwin[] = JSON.parse(result.stdout);
+    const { result: listResult } = await runCommand<ITwin[]>(`itwin list --include-inactive --type ${testITwin1.type} --number ${testITwin1.number}`);
 
-    expect(resultArr).to.be.an('array').that.is.not.empty;
-    expect(resultArr.some(itwin => itwin.id === testITwin1.id!)).to.be.true;
-    expect(resultArr.some(itwin => itwin.id === testITwin2.id!)).to.be.false;
-    expect(resultArr.some(itwin => itwin.id === testITwin1Child.id!)).to.be.false;
+    expect(listResult).to.be.an('array').that.is.not.empty;
+    expect(listResult!.some(itwin => itwin.id === testITwin1.id!)).to.be.true;
+    expect(listResult!.some(itwin => itwin.id === testITwin2.id!)).to.be.false;
+    expect(listResult!.some(itwin => itwin.id === testITwin1Child.id!)).to.be.false;
   });
 
   it('should list itwin by parent and status', async () => {
-    const result = await runCommand(`itwin list --parent-id ${testITwin1.id!} --status ${testITwin1Child.status}`);
-    const resultArr: ITwin[] = JSON.parse(result.stdout);
+    const { result: listResult } = await runCommand<ITwin[]>(`itwin list --parent-id ${testITwin1.id!} --status ${testITwin1Child.status}`);
 
-    expect(resultArr).to.be.an('array').that.is.not.empty;
-    expect(resultArr.some(itwin => itwin.id === testITwin1.id!)).to.be.false;
-    expect(resultArr.some(itwin => itwin.id === testITwin2.id!)).to.be.false;
-    expect(resultArr.some(itwin => itwin.id === testITwin1Child.id!)).to.be.true;
+    expect(listResult).to.be.an('array').that.is.not.empty;
+    expect(listResult!.some(itwin => itwin.id === testITwin1.id!)).to.be.false;
+    expect(listResult!.some(itwin => itwin.id === testITwin2.id!)).to.be.false;
+    expect(listResult!.some(itwin => itwin.id === testITwin1Child.id!)).to.be.true;
   });
 
   it('should search for itwins by number', async () => {
-    const result = await runCommand(`itwin list --search ${testITwin1.number}`);
-    const resultArr: ITwin[] = JSON.parse(result.stdout);
+    const { result: listResponse } = await runCommand<ITwin[]>(`itwin list --search ${testITwin1.number}`);
 
-    expect(resultArr).to.be.an('array').that.is.not.empty;
-    expect(resultArr.some(itwin => itwin.id === testITwin1.id!)).to.be.true;
-    expect(resultArr.some(itwin => itwin.id === testITwin2.id!)).to.be.false;
-    expect(resultArr.some(itwin => itwin.id === testITwin1Child.id!)).to.be.false;
+    expect(listResponse).to.be.an('array').that.is.not.empty;
+    expect(listResponse!.some(itwin => itwin.id === testITwin1.id!)).to.be.true;
+    expect(listResponse!.some(itwin => itwin.id === testITwin2.id!)).to.be.false;
+    expect(listResponse!.some(itwin => itwin.id === testITwin1Child.id!)).to.be.false;
   });
 
   it('should search for itwins by display name', async () => {
-    const result = await runCommand(`itwin list --search ${testITwin2.displayName}`);
-    const resultArr: ITwin[] = JSON.parse(result.stdout);
+    const { result: listResult } = await runCommand<ITwin[]>(`itwin list --search ${testITwin2.displayName}`);
 
-    expect(resultArr).to.be.an('array').that.is.not.empty;
-    expect(resultArr.some(itwin => itwin.id === testITwin1.id!)).to.be.false;
-    expect(resultArr.some(itwin => itwin.id === testITwin2.id!)).to.be.true;
-    expect(resultArr.some(itwin => itwin.id === testITwin1Child.id!)).to.be.false;
+    expect(listResult).to.be.an('array').that.is.not.empty;
+    expect(listResult!.some(itwin => itwin.id === testITwin1.id!)).to.be.false;
+    expect(listResult!.some(itwin => itwin.id === testITwin2.id!)).to.be.true;
+    expect(listResult!.some(itwin => itwin.id === testITwin1Child.id!)).to.be.false;
   });
 
   it('should list itwins with skip/top', async () => {
-    const result = await runCommand(`itwin list --include-inactive`);
-    const itwinIds: string[] = (JSON.parse(result.stdout) as ITwin[]).map(itwin => itwin.id!);
+    const { result: listResult } = await runCommand<ITwin[]>(`itwin list --include-inactive`);
+    const itwinIds: string[] = listResult!.map(itwin => itwin.id!);
     expect(itwinIds).to.be.an('array').that.is.not.empty;
 
-    const resultFiltered = await runCommand(`itwin list --include-inactive --skip 1 --top 2`);
-    const filteredITwinIds = (JSON.parse(resultFiltered.stdout) as ITwin[]).map(itwin => itwin.id);
+    const { result: filteredListResult } = await runCommand<ITwin[]>(`itwin list --include-inactive --skip 1 --top 2`);
+    const filteredITwinIds = filteredListResult!.map(itwin => itwin.id);
     expect(filteredITwinIds).to.be.an('array').that.is.not.empty;
     expect(filteredITwinIds.toString()).to.be.equal(itwinIds.slice(1, 3).toString())
   });

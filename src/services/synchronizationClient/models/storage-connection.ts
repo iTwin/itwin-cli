@@ -12,6 +12,7 @@ export type storageConnection = {
     displayName: string;
     error: storageConnectionError
     iModelId: string;
+    iTwinId: string;
     id: string;
 };
 

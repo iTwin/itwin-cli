@@ -22,8 +22,8 @@ const tests = () => describe("API Integration Tests", () => {
     });
 
     after(async () => {
-        const { result: itwinDeleteResult } = await runCommand(`itwin delete --itwin-id ${iTwin.id}`);
-        expect(itwinDeleteResult).to.have.property('result', 'deleted');
+        const { result: itwinDeleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${iTwin.id}`);
+        expect(itwinDeleteResult?.result).to.be.equal('deleted');
     });
 
     it("should send a GET request and get user me info", async () => {

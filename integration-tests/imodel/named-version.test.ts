@@ -7,6 +7,7 @@ import { NamedVersion } from '@itwin/imodels-client-management';
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
+import { populateResponse } from '../../src/commands/imodel/populate'
 import { changeset } from '../../src/services/changed-elements-client/tracking';
 import { createIModel, createITwin } from '../utils/helpers';
 import { resultResponse } from '../utils/result-response';
@@ -29,17 +30,17 @@ const tests = () => describe('named-version', () => {
 
     await runCommand<resultResponse>(`changed-elements enable --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
 
-    const result = await runCommand(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type MSTN`);
-    expect(result.result).to.have.property('iModelId', testIModelId);
-    expect(result.result).to.have.property('iTwinId', testITwinId);
+    const { result } = await runCommand<populateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type MSTN`);
+    expect(result?.iModelId).to.be.equal(testIModelId);
+    expect(result?.iTwinId).to.be.equal(testITwinId);
   });
 
   after(async () => {
-    const { result: imodelDeleteResult } = await runCommand(`imodel delete --imodel-id ${testIModelId}`);
-    const { result: itwinDeleteResult } = await runCommand(`itwin delete --itwin-id ${testITwinId}`);
+    const { result: imodelDeleteResult } = await runCommand<{result: string}>(`imodel delete --imodel-id ${testIModelId}`);
+    const { result: itwinDeleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinId}`);
 
-    expect(imodelDeleteResult).to.have.property('result', 'deleted');
-    expect(itwinDeleteResult).to.have.property('result', 'deleted');
+    expect(imodelDeleteResult?.result).to.be.equal('deleted');
+    expect(itwinDeleteResult?.result).to.be.equal('deleted');
   });
 
   it('should create a new named version with specified changeset', async () => {
@@ -47,17 +48,17 @@ const tests = () => describe('named-version', () => {
     expect(changesets).to.not.be.undefined;
     expect(changesets).to.have.lengthOf(15);
 
-    const response = await runCommand<NamedVersion>(`imodel named-version create --imodel-id ${testIModelId} --changeset-id ${changesets![0].id} -n "Version 1.0" -d "Some description of the version"`);
-    expect(response.result).to.not.be.undefined;
-    expect(response.result?.displayName).to.be.equal("Version 1.0");
-    expect(response.result?.description).to.be.equal("Some description of the version");
+    const { result: createResult } = await runCommand<NamedVersion>(`imodel named-version create --imodel-id ${testIModelId} --changeset-id ${changesets![0].id} -n "Version 1.0" -d "Some description of the version"`);
+    expect(createResult).to.not.be.undefined;
+    expect(createResult?.displayName).to.be.equal("Version 1.0");
+    expect(createResult?.description).to.be.equal("Some description of the version");
   });
 
   it('should create a new named version with latest changeset', async () => {
-    const response = await runCommand<NamedVersion>(`imodel named-version create --imodel-id ${testIModelId} -n "Version 2.0" -d "Some description of the version"`);
-    expect(response.result).to.not.be.undefined;
-    expect(response.result?.displayName).to.be.equal("Version 2.0");
-    expect(response.result?.description).to.be.equal("Some description of the version");
+    const { result: createResult } = await runCommand<NamedVersion>(`imodel named-version create --imodel-id ${testIModelId} -n "Version 2.0" -d "Some description of the version"`);
+    expect(createResult).to.not.be.undefined;
+    expect(createResult?.displayName).to.be.equal("Version 2.0");
+    expect(createResult?.description).to.be.equal("Some description of the version");
   });
 });
 

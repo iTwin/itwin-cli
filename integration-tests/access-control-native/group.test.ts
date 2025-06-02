@@ -21,12 +21,12 @@ const tests = () => describe('group', () => {
         await nativeLoginToCli();
         
         const iTwinName = `cli-itwin-integration-test-${new Date().toISOString()}`;
-        const iTwin = await runCommand<ITwin>(`itwin create --class Thing --sub-class Asset --name ${iTwinName}`);
-        expect(iTwin.result?.id).is.not.undefined;
-        iTwinId = iTwin.result!.id!;
-        const group = await runCommand<group>(`access-control group create --itwin-id ${iTwinId} --name "${groupName}" --description "${groupDescription}"`);
-        expect(group.result).to.not.be.undefined;
-        groupId = group.result!.id!;
+        const { result: iTwin } = await runCommand<ITwin>(`itwin create --class Thing --sub-class Asset --name ${iTwinName}`);
+        expect(iTwin?.id).to.not.be.undefined;
+        iTwinId = iTwin!.id!;
+        const { result: group } = await runCommand<group>(`access-control group create --itwin-id ${iTwinId} --name "${groupName}" --description "${groupDescription}"`);
+        expect(group).to.not.be.undefined;
+        groupId = group!.id!;
     });
 
     after(async () => {
@@ -36,11 +36,11 @@ const tests = () => describe('group', () => {
 
     it('Should update group ims-group', async () => {
         const imsGroupName = "iTwin CLI Test Group";
-        const groupUpdate = await runCommand<group>(`access-control group update --itwin-id ${iTwinId} --group-id ${groupId} --ims-group "${imsGroupName}"`);
-        expect(groupUpdate.result).is.not.undefined;
-        expect(groupUpdate.result!.id).is.not.undefined;
-        expect(groupUpdate.result!.imsGroups).to.have.lengthOf(1);
-        expect(groupUpdate.result!.imsGroups![0]).to.be.equal(imsGroupName);
+        const { result: groupUpdate } = await runCommand<group>(`access-control group update --itwin-id ${iTwinId} --group-id ${groupId} --ims-group "${imsGroupName}"`);
+        expect(groupUpdate).to.not.be.undefined;
+        expect(groupUpdate!.id).to.not.be.undefined;
+        expect(groupUpdate!.imsGroups).to.have.lengthOf(1);
+        expect(groupUpdate!.imsGroups![0]).to.be.equal(imsGroupName);
     });
 });    
 

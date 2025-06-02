@@ -6,6 +6,7 @@
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
+import { folderTyped } from '../../../src/services/storage-client/models/folder-typed';
 import { 
   createFolder, 
   createITwin, 
@@ -26,8 +27,8 @@ const tests = () => describe('create + delete', () => {
   });
 
   after(async () => {
-    const { result: itwinDeleteResult } = await runCommand(`itwin delete --itwin-id ${testITwinId}`);
-    expect(itwinDeleteResult).to.have.property('result', 'deleted');
+    const { result: itwinDeleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinId}`);
+    expect(itwinDeleteResult?.result).to.be.equal('deleted');
   });
 
   it('should create a new folder', async () => {
@@ -37,11 +38,11 @@ const tests = () => describe('create + delete', () => {
 
     const createdFolder = await createFolder(rootFolderId, displayName, description);
 
-    expect(createdFolder).to.have.property('type', 'folder');
-    expect(createdFolder).to.have.property('id');
-    expect(createdFolder).to.have.property('displayName', displayName);
-    expect(createdFolder).to.have.property('description', description);
-    expect(createdFolder).to.have.property('parentFolderId', rootFolderId);
+    expect(createdFolder.type).to.be.equal('folder');
+    expect(createdFolder.id).to.not.be.undefined;
+    expect(createdFolder.displayName).to.be.equal(displayName);
+    expect(createdFolder.description).to.be.equal(description);
+    expect(createdFolder.parentFolderId).to.be.equal(rootFolderId);
 
     testFolderId = createdFolder.id as string;
   });
@@ -49,9 +50,9 @@ const tests = () => describe('create + delete', () => {
   it('should delete the folder', async () => {
     await deleteFolder(testFolderId);
 
-    const result = await runCommand(`storage folder info -f ${testFolderId}`);
-    expect(result.error).to.be.not.undefined;
-    expect(result.error!.message).to.include('FolderNotFound');
+    const { error } = await runCommand<folderTyped>(`storage folder info -f ${testFolderId}`);
+    expect(error).to.be.not.undefined;
+    expect(error!.message).to.include('FolderNotFound');
   });
 });
 

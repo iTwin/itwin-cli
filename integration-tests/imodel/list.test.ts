@@ -29,13 +29,13 @@ const tests = () => describe('list', () => {
   });
 
   after(async () => {
-    const { result: imodelDeleteResult1 } = await runCommand(`imodel delete --imodel-id ${testIModelId1}`);
-    const { result: imodelDeleteResult2 } = await runCommand(`imodel delete --imodel-id ${testIModelId2}`);
-    const { result: itwinDeleteResult } = await runCommand(`itwin delete --itwin-id ${testITwinId}`);
+    const { result: imodelDeleteResult1 } = await runCommand<{result: string}>(`imodel delete --imodel-id ${testIModelId1}`);
+    const { result: imodelDeleteResult2 } = await runCommand<{result: string}>(`imodel delete --imodel-id ${testIModelId2}`);
+    const { result: itwinDeleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinId}`);
 
-    expect(imodelDeleteResult1).to.have.property('result', 'deleted');
-    expect(imodelDeleteResult2).to.have.property('result', 'deleted');
-    expect(itwinDeleteResult).to.have.property('result', 'deleted');
+    expect(imodelDeleteResult1?.result).to.be.equal('deleted');
+    expect(imodelDeleteResult2?.result).to.be.equal('deleted');
+    expect(itwinDeleteResult?.result).to.be.equal('deleted');
   });
 
   it('should list all iModels for the specified iTwin', async () => {

@@ -27,17 +27,17 @@ const tests = () => describe('imodel connection create tests (Service Client)', 
   });
 
   after(async () => {
-    const { result: imodelDeleteResult } = await runCommand(`imodel delete --imodel-id ${testIModelId}`);
-    const { result: itwinDeleteResult } = await runCommand(`itwin delete --itwin-id ${testITwinId}`);
+    const { result: imodelDeleteResult } = await runCommand<{result: string}>(`imodel delete --imodel-id ${testIModelId}`);
+    const { result: itwinDeleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinId}`);
 
-    expect(imodelDeleteResult).to.have.property('result', 'deleted');
-    expect(itwinDeleteResult).to.have.property('result', 'deleted');
+    expect(imodelDeleteResult?.result).to.be.equal('deleted');
+    expect(itwinDeleteResult?.result).to.be.equal('deleted');
   });
 
   it(`should create a 'Service' authentication-type connection by default`, async () => {
-    const { result } = await runCommand<storageConnection>(`imodel connection create -m ${testIModelId} -f ${testFileId} --connector-type SPPID -n TestConnection`);
-    expect(result).to.not.be.undefined;
-    expect(result?.authenticationType).to.be.equal(authenticationType.SERVICE);
+    const { result: createResult } = await runCommand<storageConnection>(`imodel connection create -m ${testIModelId} -f ${testFileId} --connector-type SPPID -n TestConnection`);
+    expect(createResult).to.not.be.undefined;
+    expect(createResult?.authenticationType).to.be.equal(authenticationType.SERVICE);
   });
 });
 

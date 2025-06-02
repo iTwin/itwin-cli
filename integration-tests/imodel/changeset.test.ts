@@ -20,10 +20,10 @@ const tests = () => describe('changeset', () => {
   let testITwinId: string;
 
   before(async () => {
-    const filteredITwins = await runCommand<ITwin[]>(`itwin list --name ${testITwinName}`);
-    expect(filteredITwins.result).to.not.be.undefined
+    const { result: filteredITwins } = await runCommand<ITwin[]>(`itwin list --name ${testITwinName}`);
+    expect(filteredITwins).to.not.be.undefined
 
-    if(filteredITwins.result!.length === 0) {
+    if(filteredITwins!.length === 0) {
         const testITwin = await createITwin(testITwinName, 'Thing', 'Asset');
         testITwinId = testITwin.id as string;
         const testIModel = await createIModel(testIModelName, testITwinId);
@@ -32,15 +32,15 @@ const tests = () => describe('changeset', () => {
         await runCommand<resultResponse>(`changed-elements enable --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
 
         const result = await runCommand(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type MSTN`);
-        expect(result.result).to.have.property('iModelId', testIModelId);
-        expect(result.result).to.have.property('iTwinId', testITwinId);
+        expect(result).to.have.property('iModelId', testIModelId);
+        expect(result).to.have.property('iTwinId', testITwinId);
     }
     else {
-        testITwinId = filteredITwins.result![0].id!;
+        testITwinId = filteredITwins![0].id!;
         const iModels = await runCommand<IModel[]>(`imodel list --itwin-id ${testITwinId}`);
-        expect(iModels.result).to.not.be.undefined;
-        expect(iModels.result).to.have.lengthOf(1);
-        testIModelId = iModels.result![0].id;
+        expect(iModels).to.not.be.undefined;
+        expect(iModels).to.have.lengthOf(1);
+        testIModelId = iModels![0].id;
     }
   });
 

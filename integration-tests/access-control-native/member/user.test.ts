@@ -20,9 +20,9 @@ const tests = () => describe('user', () => {
     before(async () => {
         await nativeLoginToCli();
         
-        const iTwin = await runCommand<ITwin>(`itwin create --class Thing --sub-class Asset --name ${iTwinName}`);
-        expect(iTwin.result?.id, "itwin create result").is.not.undefined;
-        iTwinId = iTwin.result!.id!;
+        const { result: iTwin } = await runCommand<ITwin>(`itwin create --class Thing --sub-class Asset --name ${iTwinName}`);
+        expect(iTwin?.id, "itwin create result").is.not.undefined;
+        iTwinId = iTwin!.id!;
     });
 
     after(async () => {
@@ -31,31 +31,31 @@ const tests = () => describe('user', () => {
     });
 
     it('Should add an internal member to an iTwin and remove user member', async () => {
-        const newRole = await runCommand<Role>(`access-control role create -i ${iTwinId} -n "Test Role 1" -d "Test Role Description"`);
-        expect(newRole.result).is.not.undefined;
-        expect(newRole.result!.id).is.not.undefined;
+        const { result: newRole } = await runCommand<Role>(`access-control role create -i ${iTwinId} -n "Test Role 1" -d "Test Role Description"`);
+        expect(newRole).is.not.undefined;
+        expect(newRole!.id).is.not.undefined;
         
         const emailToAdd = ITP_TEST_USER_SAMEORG;
 
-        const invitedUser = await runCommand<membersResponse>(`access-control member user add --itwin-id ${iTwinId} --members "[{"email": "${emailToAdd}", "roleIds": ["${newRole.result!.id}"]}]"`);
+        const { result: invitedUser } = await runCommand<membersResponse>(`access-control member user add --itwin-id ${iTwinId} --members "[{"email": "${emailToAdd}", "roleIds": ["${newRole!.id}"]}]"`);
 
-        expect(invitedUser.result).to.not.be.undefined;
-        expect(invitedUser.result!.members).to.have.lengthOf(1);
-        expect(invitedUser.result!.members[0].email.toLowerCase()).to.be.equal(emailToAdd!.toLowerCase());
-        expect(invitedUser.result!.members[0].roles).to.have.lengthOf(1);
-        expect(invitedUser.result!.members[0].roles[0].id).to.be.equal(newRole.result!.id);
+        expect(invitedUser).to.not.be.undefined;
+        expect(invitedUser!.members).to.have.lengthOf(1);
+        expect(invitedUser!.members[0].email.toLowerCase()).to.be.equal(emailToAdd!.toLowerCase());
+        expect(invitedUser!.members[0].roles).to.have.lengthOf(1);
+        expect(invitedUser!.members[0].roles[0].id).to.be.equal(newRole!.id);
 
-        const usersInfo = await runCommand<member[]>(`access-control member user list --itwin-id ${iTwinId}`);
-        expect(usersInfo.result).is.not.undefined;
-        expect(usersInfo.result).to.have.lengthOf(2);
-        const joinedUser = usersInfo.result?.filter(user => user.email.toLowerCase() === emailToAdd!.toLowerCase())[0];
+        const { result: usersInfo } = await runCommand<member[]>(`access-control member user list --itwin-id ${iTwinId}`);
+        expect(usersInfo).is.not.undefined;
+        expect(usersInfo).to.have.lengthOf(2);
+        const joinedUser = usersInfo?.filter(user => user.email.toLowerCase() === emailToAdd!.toLowerCase())[0];
         expect(joinedUser).to.not.be.undefined;
         expect(joinedUser?.roles).to.have.lengthOf(1);
-        expect(joinedUser?.roles[0].id).to.be.equal(newRole.result!.id);
+        expect(joinedUser?.roles[0].id).to.be.equal(newRole!.id);
 
-        const deletionResult = await runCommand<{result: string}>(`access-control member user delete --itwin-id ${iTwinId} --member-id ${joinedUser?.id}`);
-        expect(deletionResult.result).to.not.be.undefined;
-        expect(deletionResult.result!.result).to.be.equal("deleted");
+        const { result: deleteResult } = await runCommand<{result: string}>(`access-control member user delete --itwin-id ${iTwinId} --member-id ${joinedUser?.id}`);
+        expect(deleteResult).to.not.be.undefined;
+        expect(deleteResult!).to.be.equal("deleted");
     });
 });
 

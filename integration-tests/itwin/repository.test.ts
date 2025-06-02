@@ -3,6 +3,7 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
+import { Repository } from '@itwin/itwins-client';
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
@@ -22,8 +23,8 @@ const tests = () => describe('repository', () => {
   });
 
   after(async () => {
-    const { result: deleteResult } = await runCommand(`itwin delete --itwin-id ${testITwinId}`);
-    expect(deleteResult).to.have.property('result', 'deleted');
+    const { result: deleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinId}`);
+    expect(deleteResult?.result).to.be.equal('deleted');
   });
 
   it('should create a new iTwin repository', async () => {
@@ -31,48 +32,40 @@ const tests = () => describe('repository', () => {
     iModelSubclass = 'WebMapService';
     iModelUri = 'https://example.com/gis-repo'
     
-    const { stdout } = await runCommand(`itwin repository create --itwin-id ${testITwinId} --class ${iModelClass} --sub-class ${iModelSubclass} --uri ${iModelUri}`);
-    const createdITwinRepository = JSON.parse(stdout);
+    const { result: createdITwinRepository } = await runCommand<Repository>(`itwin repository create --itwin-id ${testITwinId} --class ${iModelClass} --sub-class ${iModelSubclass} --uri ${iModelUri}`);
     
-    expect(createdITwinRepository).to.have.property('id');
-    expect(createdITwinRepository).to.have.property('class', iModelClass);
-    expect(createdITwinRepository).to.have.property('subClass', iModelSubclass);
-    expect(createdITwinRepository).to.have.property('uri', iModelUri);
+    expect(createdITwinRepository?.id).to.not.be.undefined;
+    expect(createdITwinRepository?.class).to.be.equal(iModelClass);
+    expect(createdITwinRepository?.subClass).to.be.equal(iModelSubclass);
+    expect(createdITwinRepository?.uri).to.be.equal(iModelUri);
 
-    testRepositoryId = createdITwinRepository.id;
+    testRepositoryId = createdITwinRepository!.id!;
   });
 
   it('should list iTwin repositories for the specified iTwin', async () => {
-    const { stdout } = await runCommand(`itwin repository list --itwin-id ${testITwinId}`);
-    const repositories = JSON.parse(stdout);
+    const { result: repositories } = await runCommand<Repository[]>(`itwin repository list --itwin-id ${testITwinId}`);
 
     expect(repositories).to.be.an('array').that.is.not.empty;
-    // expect repositories list to contain the created repository
-    expect(repositories.some((repository: { id: string; }) => repository.id === testRepositoryId)).to.be.true;
+    expect(repositories!.some((repository) => repository.id === testRepositoryId)).to.be.true;
   });
 
   it('should list iTwin repositories for the specified iTwin (class/subclass found)', async () => {
-    const { stdout } = await runCommand(`itwin repository list -i ${testITwinId} --class ${iModelClass} --sub-class ${iModelSubclass}`);
-    const repositories = JSON.parse(stdout);
+    const { result: repositories } = await runCommand<Repository[]>(`itwin repository list -i ${testITwinId} --class ${iModelClass} --sub-class ${iModelSubclass}`);
 
     expect(repositories).to.be.an('array').that.is.not.empty;
-    // expect repositories list to contain the created repository
-    expect(repositories.some((repository: { id: string; }) => repository.id === testRepositoryId)).to.be.true;
+    expect(repositories!.some((repository) => repository.id === testRepositoryId)).to.be.true;
   });
 
   it('should list iTwin repositories for the specified iTwin (class/subclass not found)', async () => {
-    const { stdout } = await runCommand(`itwin repository list -i ${testITwinId} --class ${iModelClass} --sub-class MapServer`);
+    const { result: repositories } = await runCommand<Repository[]>(`itwin repository list -i ${testITwinId} --class ${iModelClass} --sub-class MapServer`);
 
-    const repositories = JSON.parse(stdout);
     expect(repositories).to.be.an('array').that.is.empty;
   });
 
   it('should delete the iTwin repository', async () => {
-    const { stdout } = await runCommand(`itwin repository delete --itwin-id ${testITwinId} --repository-id ${testRepositoryId}`);
-    const result = JSON.parse(stdout);
-    expect(result).to.have.property('result', 'deleted');
+    const { result: deleteResult } = await runCommand<{result: string}>(`itwin repository delete --itwin-id ${testITwinId} --repository-id ${testRepositoryId}`);
+    expect(deleteResult?.result).to.be.equal('deleted');
   });
-
 });
 
 export default tests;

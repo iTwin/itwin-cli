@@ -16,9 +16,9 @@ const tests = () => {
 
     before(async () => {
         const iTwinName = `cli-itwin-integration-test-${new Date().toISOString()}`;
-        const iTwin = await runCommand<ITwin>(`itwin create --class Thing --sub-class Asset --name ${iTwinName}`);
-        expect(iTwin.result?.id).is.not.undefined;
-        iTwinId = iTwin.result!.id!;
+        const { result: iTwin} = await runCommand<ITwin>(`itwin create --class Thing --sub-class Asset --name ${iTwinName}`);
+        expect(iTwin?.id).to.not.be.undefined;
+        iTwinId = iTwin!.id!;
     });
 
     after(async () => {
@@ -30,94 +30,94 @@ const tests = () => {
         const groupName = "Test Group";
         const groupDescription = "Test Group Description";
 
-        const groupCreate = await runCommand<group>(`access-control group create --itwin-id ${iTwinId} --name "${groupName}" --description "${groupDescription}"`);
+        const { result: groupCreate } = await runCommand<group>(`access-control group create --itwin-id ${iTwinId} --name "${groupName}" --description "${groupDescription}"`);
 
-        expect(groupCreate.result).is.not.undefined;
-        expect(groupCreate.result!.id).is.not.undefined;
-        expect(groupCreate.result!.name).to.be.equal(groupName);
-        expect(groupCreate.result!.description).to.be.equal(groupDescription);
+        expect(groupCreate).to.not.be.undefined;
+        expect(groupCreate!.id).to.not.be.undefined;
+        expect(groupCreate!.name).to.be.equal(groupName);
+        expect(groupCreate!.description).to.be.equal(groupDescription);
         
-        const groupInfo = await runCommand<group>(`access-control group info --itwin-id ${iTwinId} --group-id ${groupCreate.result!.id}`);
+        const { result: groupInfo } = await runCommand<group>(`access-control group info --itwin-id ${iTwinId} --group-id ${groupCreate!.id}`);
         
-        expect(groupInfo.result).to.not.be.undefined;
+        expect(groupInfo).to.not.be.undefined;
 
-        expect(groupInfo.result?.id).to.be.equal(groupCreate.result!.id);
-        expect(groupInfo.result?.name).to.be.equal(groupName);
-        expect(groupInfo.result?.description).to.be.equal(groupDescription);
+        expect(groupInfo?.id).to.be.equal(groupCreate!.id);
+        expect(groupInfo?.name).to.be.equal(groupName);
+        expect(groupInfo?.description).to.be.equal(groupDescription);
 
         const updatedGroupName = "Updated Group Name";
         const updatedGroupDescription = "Updated Group Description";
         const memberEmail = ITP_TEST_USER_SAMEORG;
 
-        const groupUpdate = await runCommand<group>(`access-control group update --itwin-id ${iTwinId} --group-id ${groupCreate.result!.id} --name "${updatedGroupName}" --description "${updatedGroupDescription}" --member ${memberEmail}`);
-        expect(groupUpdate.result).is.not.undefined;
-        expect(groupUpdate.result!.id).is.not.undefined;
-        expect(groupUpdate.result!.name).to.be.equal(updatedGroupName);
-        expect(groupUpdate.result!.description).to.be.equal(updatedGroupDescription);
-        expect(groupUpdate.result!.members).is.not.undefined;
-        expect(groupUpdate.result!.members!.some(member => member.email.toLowerCase() === memberEmail!.toLowerCase())).to.be.true;
+        const { result: groupUpdate  } = await runCommand<group>(`access-control group update --itwin-id ${iTwinId} --group-id ${groupCreate!.id} --name "${updatedGroupName}" --description "${updatedGroupDescription}" --member ${memberEmail}`);
+        expect(groupUpdate).to.not.be.undefined;
+        expect(groupUpdate!.id).to.not.be.undefined;
+        expect(groupUpdate!.name).to.be.equal(updatedGroupName);
+        expect(groupUpdate!.description).to.be.equal(updatedGroupDescription);
+        expect(groupUpdate!.members).to.not.be.undefined;
+        expect(groupUpdate!.members!.some(member => member.email.toLowerCase() === memberEmail!.toLowerCase())).to.be.true;
     });
 
     it('Should list groups', async () => {
-        const newGroup = await runCommand<group>(`access-control group create --itwin-id ${iTwinId} --name Test2 --description Description2`);
-        expect(newGroup.result).is.not.undefined;
-        expect(newGroup.result!.id).is.not.undefined;
-        expect(newGroup.result!.name).to.be.equal("Test2");
-        expect(newGroup.result!.description).to.be.equal("Description2");
+        const { result: newGroup } = await runCommand<group>(`access-control group create --itwin-id ${iTwinId} --name Test2 --description Description2`);
+        expect(newGroup).to.not.be.undefined;
+        expect(newGroup!.id).to.not.be.undefined;
+        expect(newGroup!.name).to.be.equal("Test2");
+        expect(newGroup!.description).to.be.equal("Description2");
 
-        const listedGroups = await runCommand<group[]>(`access-control group list --itwin-id ${iTwinId}`);
-        expect(listedGroups.result).is.not.undefined;
-        expect(listedGroups.result!.length).to.be.greaterThanOrEqual(1);
+        const { result: listedGroups } = await runCommand<group[]>(`access-control group list --itwin-id ${iTwinId}`);
+        expect(listedGroups).to.not.be.undefined;
+        expect(listedGroups!.length).to.be.greaterThanOrEqual(1);
 
-        expect(listedGroups).contain((entry: { id: string | undefined; }) => entry.id === newGroup.result!.id, "Newly created group not found in the list");
+        expect(listedGroups).contain((entry: { id: string | undefined; }) => entry.id === newGroup!.id, "Newly created group not found in the list");
     });
 
     it('Should delete group', async () => {
-        const newGroup = await runCommand<group>(`access-control group create --itwin-id ${iTwinId} --name Test3 --description Description3`);
-        expect(newGroup.result).is.not.undefined;
-        expect(newGroup.result!.id).is.not.undefined;
+        const { result: createResult } = await runCommand<group>(`access-control group create --itwin-id ${iTwinId} --name Test3 --description Description3`);
+        expect(createResult).to.not.be.undefined;
+        expect(createResult!.id).to.not.be.undefined;
 
-        const deleteGroup = await runCommand(`access-control group delete --itwin-id ${iTwinId} --group-id ${newGroup.result!.id}`);
-        expect(deleteGroup.stdout).to.contain('deleted');
+        const { result: deleteResult } = await runCommand<{result: string}>(`access-control group delete --itwin-id ${iTwinId} --group-id ${createResult!.id}`);
+        expect(deleteResult?.result).to.be.equal('deleted');
 
-        const groupInfo = await runCommand<group>(`access-control group info --itwin-id ${iTwinId} -g ${newGroup.result!.id}`);
-        expect(groupInfo.error?.message).to.contain('GroupNotFound')
+        const { error: infoError } = await runCommand<group>(`access-control group info --itwin-id ${iTwinId} -g ${createResult!.id}`);
+        expect(infoError?.message).to.contain('GroupNotFound')
     });
 
     it('Should fail to update group and return an error if too many members are provided', async () => {
-        const newGroup = await runCommand<group>(`access-control group create --itwin-id ${iTwinId} --name Test3 --description Description3`);
-        expect(newGroup.result).is.not.undefined;
-        expect(newGroup.result!.id).is.not.undefined;
+        const { result: newGroup } = await runCommand<group>(`access-control group create --itwin-id ${iTwinId} --name Test3 --description Description3`);
+        expect(newGroup).to.not.be.undefined;
+        expect(newGroup!.id).to.not.be.undefined;
 
-        let updateCommand = `access-control group update --itwin-id ${iTwinId} --group-id ${newGroup.result!.id}`
+        let updateCommand = `access-control group update --itwin-id ${iTwinId} --group-id ${newGroup!.id}`
         for (let i = 0; i < 51; i++) {
             updateCommand += ` --member user${i}@example.com`
         }
 
-        const updateGroup = await runCommand(updateCommand);
-        const deleteGroup = await runCommand(`access-control group delete --itwin-id ${iTwinId} --group-id ${newGroup.result!.id}`);
-        expect(deleteGroup.stdout).to.contain('deleted');
+        const { error: updateError } = await runCommand(updateCommand);
+        const { result: deleteResult } = await runCommand<{result: string}>(`access-control group delete --itwin-id ${iTwinId} --group-id ${newGroup!.id}`);
+        expect(deleteResult?.result).to.be.equal('deleted');
 
-        expect(updateGroup.error).to.not.be.undefined;
-        expect(updateGroup.error?.message).to.be.equal('A maximum of 50 members can be provided.');
+        expect(updateError).to.not.be.undefined;
+        expect(updateError?.message).to.be.equal('A maximum of 50 members can be provided.');
     });
 
     it('Should fail to update group and return an error if too many ims-groups are provided', async () => {
-        const newGroup = await runCommand<group>(`access-control group create --itwin-id ${iTwinId} --name Test3 --description Description3`);
-        expect(newGroup.result).is.not.undefined;
-        expect(newGroup.result!.id).is.not.undefined;
+        const { result: newGroup } = await runCommand<group>(`access-control group create --itwin-id ${iTwinId} --name Test3 --description Description3`);
+        expect(newGroup).to.not.be.undefined;
+        expect(newGroup!.id).to.not.be.undefined;
 
-        let updateCommand = `access-control group update --itwin-id ${iTwinId} --group-id ${newGroup.result!.id}`
+        let updateCommand = `access-control group update --itwin-id ${iTwinId} --group-id ${newGroup!.id}`
         for (let i = 0; i < 51; i++) {
             updateCommand += ` --ims-group IMS_Group_${i}`;
         }
 
-        const updateGroup = await runCommand(updateCommand);
-        const deleteGroup = await runCommand(`access-control group delete --itwin-id ${iTwinId} --group-id ${newGroup.result!.id}`);
-        expect(deleteGroup.stdout).to.contain('deleted');
+        const { error: updateError } = await runCommand(updateCommand);
+        const { result: deleteResult } = await runCommand<{result: string}>(`access-control group delete --itwin-id ${iTwinId} --group-id ${newGroup!.id}`);
+        expect(deleteResult?.result).to.be.equal('deleted');
 
-        expect(updateGroup.error).to.not.be.undefined;
-        expect(updateGroup.error?.message).to.be.equal('A maximum of 50 ims groups can be provided.');
+        expect(updateError).to.not.be.undefined;
+        expect(updateError?.message).to.be.equal('A maximum of 50 ims groups can be provided.');
     });
 };    
 

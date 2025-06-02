@@ -22,10 +22,10 @@ const tests = () => describe('changesets + comparison', () => {
   let testITwinId: string;
 
   before(async () => {
-    const filteredITwins = await runCommand<ITwin[]>(`itwin list --name ${testITwinName}`);
-    expect(filteredITwins.result).to.not.be.undefined
+    const { result: filteredITwins } = await runCommand<ITwin[]>(`itwin list --name ${testITwinName}`);
+    expect(filteredITwins).to.not.be.undefined
 
-    if(filteredITwins.result!.length === 0) {
+    if(filteredITwins!.length === 0) {
         const testITwin = await createITwin(testITwinName, 'Thing', 'Asset');
         testITwinId = testITwin.id as string;
         const testIModel = await createIModel(testIModelName, testITwinId);
@@ -35,39 +35,39 @@ const tests = () => describe('changesets + comparison', () => {
 
         const rootFolderId = await getRootFolderId(testITwinId);
         await createFile(rootFolderId, testFileName, testFilePath);
-        const result = await runCommand(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type SPPID`);
-        expect(result.result).to.have.property('iModelId', testIModelId);
-        expect(result.result).to.have.property('iTwinId', testITwinId);
+        const { result: populateResult } = await runCommand(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type SPPID`);
+        expect(populateResult).to.have.property('iModelId', testIModelId);
+        expect(populateResult).to.have.property('iTwinId', testITwinId);
     }
     else {
-        testITwinId = filteredITwins.result![0].id!;
-        const iModels = await runCommand<IModel[]>(`imodel list --itwin-id ${testITwinId}`);
-        expect(iModels.result).to.not.be.undefined;
-        expect(iModels.result).to.have.lengthOf(1);
-        testIModelId = iModels.result![0].id;
+        testITwinId = filteredITwins![0].id!;
+        const { result: iModels } = await runCommand<IModel[]>(`imodel list --itwin-id ${testITwinId}`);
+        expect(iModels).to.not.be.undefined;
+        expect(iModels).to.have.lengthOf(1);
+        testIModelId = iModels![0].id;
     }
   });
 
   it('should get changesets', async () => {
-    const response = await runCommand<changeset[]>(`changed-elements changesets --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
-    expect(response.result).to.not.be.undefined;
-    expect(response.result).to.have.lengthOf(4);
+    const { result: fullResult}  = await runCommand<changeset[]>(`changed-elements changesets --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
+    expect(fullResult).to.not.be.undefined;
+    expect(fullResult).to.have.lengthOf(4);
 
-    const responseFiltered = await runCommand<changeset[]>(`changed-elements changesets --imodel-id ${testIModelId} --itwin-id ${testITwinId} --skip 2 --top 2`);
-    expect(responseFiltered.result).to.not.be.undefined;
-    expect(responseFiltered.result).to.have.lengthOf(2);
-    expect(responseFiltered.result?.map(x => x.id)).to.be.deep.equal(response.result?.map(x => x.id).slice(2))
+    const { result: filteredResult } = await runCommand<changeset[]>(`changed-elements changesets --imodel-id ${testIModelId} --itwin-id ${testITwinId} --skip 2 --top 2`);
+    expect(filteredResult).to.not.be.undefined;
+    expect(filteredResult).to.have.lengthOf(2);
+    expect(filteredResult?.map(x => x.id)).to.be.deep.equal(fullResult?.map(x => x.id).slice(2))
   });
 
   it('should compare 2 changesets', async () => {
-    const response = await runCommand<changeset[]>(`changed-elements changesets --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
-    expect(response.result).to.not.be.undefined;
-    expect(response.result).to.have.lengthOf(4);
+    const { result: listResponse } = await runCommand<changeset[]>(`changed-elements changesets --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
+    expect(listResponse).to.not.be.undefined;
+    expect(listResponse).to.have.lengthOf(4);
     
-    const comparisonResponse = await runCommand<changesetComparison>(`changed-elements comparison --imodel-id ${testIModelId} --itwin-id ${testITwinId} --changeset-id1 ${response.result![0].id} --changeset-id2 ${response.result![3].id}`);
-    expect(comparisonResponse.result).to.not.be.undefined;
-    expect(comparisonResponse.result!.opcodes).to.have.lengthOf(1);
-    expect(comparisonResponse.result!.opcodes[0]).to.be.equal(18); // Element was inserted
+    const { result: comparisonResponse } = await runCommand<changesetComparison>(`changed-elements comparison --imodel-id ${testIModelId} --itwin-id ${testITwinId} --changeset-id1 ${listResponse![0].id} --changeset-id2 ${listResponse![3].id}`);
+    expect(comparisonResponse).to.not.be.undefined;
+    expect(comparisonResponse!.opcodes).to.have.lengthOf(1);
+    expect(comparisonResponse!.opcodes[0]).to.be.equal(18); // Element was inserted
   });
 });
 

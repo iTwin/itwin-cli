@@ -6,6 +6,8 @@
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
+import { fileTyped } from '../../../src/services/storage-client/models/file-typed';
+import { fileUpload } from '../../../src/services/storage-client/models/file-upload';
 import { 
   createFile, 
   createFolder,
@@ -37,46 +39,37 @@ const tests = () => describe('update-content', () => {
   });
 
   after(async () => {
-    const { result: fileDeleteResult } = await runCommand(`storage file delete --file-id ${testFileId}`);
-    const { result: folderDeleteResult } = await runCommand(`storage folder delete --folder-id ${testFolderId}`);
-    const { result: itwinDeleteResult } = await runCommand(`itwin delete --itwin-id ${testITwinId}`);
-
-    expect(fileDeleteResult).to.have.property('result', 'deleted');
-    expect(folderDeleteResult).to.have.property('result', 'deleted');
-    expect(itwinDeleteResult).to.have.property('result', 'deleted');
+    const { result: itwinDeleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinId}`);
+    expect(itwinDeleteResult?.result).to.be.equal('deleted');
   });
 
   it('should get URLs to update file content', async () => {
-    const { stdout } = await runCommand(`storage file update-content --file-id ${testFileId}`);
-    const updateResponse = JSON.parse(stdout);
+    const { result: updateResponse } = await runCommand<fileUpload>(`storage file update-content --file-id ${testFileId}`);
 
-    expect(updateResponse).to.have.property('_links');
-    expect(updateResponse._links).to.have.property('completeUrl');
-    expect(updateResponse._links).to.have.property('uploadUrl');
+    expect(updateResponse?._links).to.not.be.undefined;
+    expect(updateResponse?._links?.completeUrl).to.not.be.undefined;
+    expect(updateResponse?._links?.uploadUrl).to.not.be.undefined;
 
-    uploadUrl = updateResponse._links.uploadUrl.href;
+    uploadUrl = updateResponse!._links!.uploadUrl!.href!;
   });
 
   it('should upload a new file version', async () => {
-    const { stdout } = await runCommand(`storage file upload --upload-url "${uploadUrl}" --file-path ${filePath}`);
-    const uploadResult = JSON.parse(stdout);
-
-    expect(uploadResult).to.have.property('result', 'uploaded');
+    const { result: uploadResult } = await runCommand<{result: string}>(`storage file upload --upload-url "${uploadUrl}" --file-path ${filePath}`);
+    expect(uploadResult?.result).to.be.equal('uploaded');
   });
 
   it('should complete the file content update', async () => {
-    const { stdout } = await runCommand(`storage file update-complete -f ${testFileId}`);
-    const completedFile = JSON.parse(stdout);
+    const { result: completedFile } = await runCommand<fileTyped>(`storage file update-complete -f ${testFileId}`);
 
-    expect(completedFile).to.have.property('id', testFileId);
-    expect(completedFile).to.have.property('displayName', displayName);
-    expect(completedFile).to.have.property('description', description);
+    expect(completedFile?.id).to.be.equal(testFileId);
+    expect(completedFile?.displayName).to.be.equal(displayName);
+    expect(completedFile?.description).to.be.equal(description);
   });
 
   it('should throw an error when trying to update a non-existent file', async () => {
-    const result = await runCommand('storage file update-content -f non-existent-file-id');
-    expect(result.error).to.be.not.undefined;
-    expect(result.error!.message).to.include('FileNotFound');
+    const { error } = await runCommand<fileUpload>('storage file update-content -f non-existent-file-id');
+    expect(error).to.be.not.undefined;
+    expect(error!.message).to.include('FileNotFound');
   });
 });
 

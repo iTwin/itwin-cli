@@ -6,6 +6,8 @@
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
+import { fileTyped } from '../../../src/services/storage-client/models/file-typed';
+import { folderTyped } from '../../../src/services/storage-client/models/folder-typed';
 import { 
   createFile,
   createFolder, 
@@ -33,31 +35,23 @@ const tests = () => describe('list', () => {
   });
 
   after(async () => {
-    const { result: fileDeleteResult } = await runCommand(`storage file delete --file-id ${testFileId}`);
-    const { result: folderDeleteResult } = await runCommand(`storage folder delete --folder-id ${testFolderId}`);
-    const { result: itwinDeleteResult } = await runCommand(`itwin delete --itwin-id ${testITwinId}`);
-
-    expect(fileDeleteResult).to.have.property('result', 'deleted');
-    expect(folderDeleteResult).to.have.property('result', 'deleted');
-    expect(itwinDeleteResult).to.have.property('result', 'deleted');
+    const { result: itwinDeleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinId}`);
+    expect(itwinDeleteResult?.result).to.be.equal('deleted');
   });
 
   it('should get the list of folders in the specified folder', async () => {
-    const { stdout } = await runCommand(`storage folder list --folder-id ${rootFolderId}`);
-    const itemList = JSON.parse(stdout);
+    const { result: itemList } = await runCommand<folderTyped[]>(`storage folder list --folder-id ${rootFolderId}`);
 
     expect(itemList).to.be.an('array').that.is.not.empty;
-    expect(itemList.some((folder: { id: string; type: string; }) => folder.id === testFolderId && folder.type === "folder")).to.be.true;
-    expect(itemList.some((item: { id: string; type: string; }) => item.id === testFileId && item.type === "file")).to.be.false;
+    expect(itemList!.some((folder) => folder.id === testFolderId && folder.type === "folder")).to.be.true;
+    expect(itemList!.some((item) => item.id === testFileId)).to.be.false;
   });
 
   it('should get the list of folders and files in the specified folder', async () => {
-    const { stdout } = await runCommand(`storage folder list -f ${rootFolderId} --include-files`);
-    const itemList = JSON.parse(stdout);
-
+    const { result: itemList } = await runCommand<fileTyped[]>(`storage folder list -f ${rootFolderId} --include-files`);
     expect(itemList).to.be.an('array').that.is.not.empty;
-    expect(itemList.some((folder: { id: string; type: string; }) => folder.id === testFolderId && folder.type === "folder")).to.be.true;
-    expect(itemList.some((file: { id: string; type: string; }) => file.id === testFileId && file.type === "file")).to.be.true;
+    expect(itemList!.some((folder) => folder.id === testFolderId && folder.type === "folder")).to.be.true;
+    expect(itemList!.some((file) => file.id === testFileId && file.type === "file")).to.be.true;
   });
 });
 
