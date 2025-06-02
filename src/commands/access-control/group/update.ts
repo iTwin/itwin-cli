@@ -33,6 +33,7 @@ export default class UpdateAccessControlGroup extends BaseCommand {
         char: 'd',
         description: 'The updated description of the group.',
         helpValue: '<string>',
+        required: false,
       }),
       "group-id": Flags.string({
         char: 'g',
