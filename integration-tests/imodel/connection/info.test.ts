@@ -42,10 +42,10 @@ const tests = () => describe('info', () => {
     const { result: connection } = await runCommand<storageConnection>(`imodel connection info -c ${connectionId}`);
 
     expect(connection).to.not.be.undefined;
-    expect(connection!.id).to.not.be.undefined;
-    expect(connection!.iTwinId).to.be.equal(testITwinId);
-    expect(connection!.iModelId).to.be.equal(testIModelId);
-    expect(connection!.displayName).to.be.equal('TestConnection');
+    expect(connection).to.have.property('id');
+    expect(connection).to.have.property('iTwinId', testITwinId);
+    expect(connection).to.have.property('iModelId', testIModelId);
+    expect(connection).to.have.property('displayName', 'TestConnection');
   });
 });
 

@@ -23,8 +23,8 @@ const tests = () => describe('user search (Native Client Tests)', () => {
     expect(users).to.be.an('array').that.is.not.empty;
     const userInfo = users![0];
     
-    expect(userInfo.id).to.be.equal(testUserId);
-    expect(userInfo.email).to.be.equal(testUserEmail);
+    expect(userInfo).to.have.property('id', testUserId);
+    expect(userInfo).to.have.property('email', testUserEmail);
   });
 });
 

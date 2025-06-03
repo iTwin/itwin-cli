@@ -47,7 +47,7 @@ const tests = () => describe('update', () => {
 
     expect(updatedIModel).to.not.be.undefined;
     expect(updatedIModel!.id).to.not.be.undefined;
-    expect(updatedIModel!.iTwinId).to.be.equal(testITwinId);
+    expect(updatedIModel).to.have.property('iTwinId', testITwinId);
     expect(updatedIModel!.name).to.be.equal(updatedName);
     expect(updatedIModel!.description).to.be.equal(updatedDescription);
     expect(updatedIModel!.extent).to.be.deep.equal(updatedExtent);
@@ -71,7 +71,7 @@ const tests = () => describe('update', () => {
 
     expect(updatedIModel).to.not.be.undefined;
     expect(updatedIModel!.id).to.not.be.undefined;
-    expect(updatedIModel!.iTwinId).to.be.equal(testITwinId);
+    expect(updatedIModel).to.have.property('iTwinId', testITwinId);
     expect(updatedIModel!.name).to.be.equal(updatedName);
     expect(updatedIModel!.description).to.be.equal(updatedDescription);
     expect(updatedIModel!.extent).to.be.deep.equal(updatedExtent);

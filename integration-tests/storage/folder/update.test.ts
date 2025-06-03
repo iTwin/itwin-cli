@@ -38,10 +38,10 @@ const tests = () => describe('update', () => {
 
     const { result: updatedFolder } = await runCommand<folderTyped>(`storage folder update --folder-id ${testFolderId} --name ${updatedDisplayName} --description "${updatedDescription}"`);
 
-    expect(updatedFolder?.id).to.be.equal(testFolderId);
-    expect(updatedFolder?.displayName).to.be.equal(updatedDisplayName);
-    expect(updatedFolder?.description).to.be.equal(updatedDescription);
-    expect(updatedFolder?.parentFolderId).to.be.equal(rootFolderId);
+    expect(updatedFolder).to.have.property('id', testFolderId);
+    expect(updatedFolder).to.have.property('displayName', updatedDisplayName);
+    expect(updatedFolder).to.have.property('description', updatedDescription);
+    expect(updatedFolder).to.have.property('parentFolderId', rootFolderId);
   });
 });
 

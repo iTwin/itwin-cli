@@ -21,7 +21,7 @@ const tests = () => describe('user', () => {
         await nativeLoginToCli();
         
         const { result: iTwin } = await runCommand<ITwin>(`itwin create --class Thing --sub-class Asset --name ${iTwinName}`);
-        expect(iTwin?.id, "itwin create result").is.not.undefined;
+        expect(iTwin, "itwin create result").to.have.property('id'); 
         iTwinId = iTwin!.id!;
     });
 
@@ -32,8 +32,8 @@ const tests = () => describe('user', () => {
 
     it('Should add an internal member to an iTwin and remove user member', async () => {
         const { result: newRole } = await runCommand<Role>(`access-control role create -i ${iTwinId} -n "Test Role 1" -d "Test Role Description"`);
-        expect(newRole).is.not.undefined;
-        expect(newRole!.id).is.not.undefined;
+        expect(newRole).to.not.be.undefined;
+        expect(newRole!.id).to.not.be.undefined;
         
         const emailToAdd = ITP_TEST_USER_SAMEORG;
 
@@ -46,7 +46,7 @@ const tests = () => describe('user', () => {
         expect(invitedUser!.members[0].roles[0].id).to.be.equal(newRole!.id);
 
         const { result: usersInfo } = await runCommand<member[]>(`access-control member user list --itwin-id ${iTwinId}`);
-        expect(usersInfo).is.not.undefined;
+        expect(usersInfo).to.not.be.undefined;
         expect(usersInfo).to.have.lengthOf(2);
         const joinedUser = usersInfo?.filter(user => user.email.toLowerCase() === emailToAdd!.toLowerCase())[0];
         expect(joinedUser).to.not.be.undefined;

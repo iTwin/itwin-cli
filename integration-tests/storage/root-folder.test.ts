@@ -39,6 +39,9 @@ const tests = () => describe('root-folder', () => {
     expect(rootFolder!.items).to.be.an('array').with.lengthOf(2);
     expect(rootFolder!.items![0].displayName).to.be.equal(testFolder.displayName);
     expect(rootFolder!.items![1].displayName).to.be.equal(testFile.displayName);
+    expect(rootFolder).to.have.property('_links');
+    expect(rootFolder!._links).to.have.property('folder');
+    expect(rootFolder!._links!.folder).to.have.property('href');
     expect(rootFolder?._links?.folder?.href).to.be.a('string');
 
     // check helper function
@@ -52,7 +55,10 @@ const tests = () => describe('root-folder', () => {
     expect(rootFolder).to.not.be.undefined;
     expect(rootFolder?.items).to.be.an('array').with.lengthOf(1);
     expect(rootFolder!.items![0].displayName).to.be.equal(testFile.displayName);
-    expect(rootFolder?._links?.folder?.href).to.be.a('string');
+    expect(rootFolder).to.have.property('_links');
+    expect(rootFolder!._links).to.have.property('folder');
+    expect(rootFolder!._links!.folder).to.have.property('href');
+    expect(rootFolder!._links!.folder!.href).to.be.a('string');
 
     // check helper function
     const rootFolderId = await getRootFolderId(testITwin.id as string);

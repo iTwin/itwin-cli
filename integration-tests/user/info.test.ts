@@ -19,10 +19,10 @@ const tests = () => describe('info', () => {
     expect(users).to.be.an('array').that.is.not.empty;
     
     const userInfo = users![0];
-    expect(userInfo.id).to.be.equal(testUserId);
-    expect(userInfo.email).to.not.be.undefined;
-    expect(userInfo.givenName).to.not.be.undefined;
-    expect(userInfo.organizationName).to.not.be.undefined;
+    expect(userInfo).to.have.property('id', testUserId);
+    expect(userInfo).to.have.property('email');
+    expect(userInfo).to.have.property('givenName');
+    expect(userInfo).to.have.property('organizationName');
   });
 
   it('should return an error for invalid user IDs', async () => {

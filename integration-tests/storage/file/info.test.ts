@@ -43,8 +43,8 @@ const tests = () => describe('info', () => {
   it('should get the info of the file', async () => {
     const { result: fileInfo } = await runCommand<fileTyped>(`storage file info --file-id ${testFileId}`);
 
-    expect(fileInfo?.id).to.be.equal(testFileId);
-    expect(fileInfo?.displayName).to.be.equal(testFileName);
+    expect(fileInfo).to.have.property('id', testFileId);
+    expect(fileInfo).to.have.property('displayName', testFileName);
   });
 });
 

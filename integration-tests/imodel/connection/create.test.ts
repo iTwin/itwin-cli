@@ -46,7 +46,7 @@ const tests = () => describe('create', () => {
 
     expect(createdConnection).to.not.be.undefined;
     expect(createdConnection!.id).to.not.be.undefined;
-    expect(createdConnection!.iModelId).to.be.equal(testIModelId);
+    expect(createdConnection).to.have.property('iModelId', testIModelId);
     expect(createdConnection!.displayName).to.be.equal('TestConnection');
 
     const { result: listResult } = await runCommand<sourceFile[]>(`imodel connection sourcefile list -c ${createdConnection!.id}`);
@@ -63,7 +63,7 @@ const tests = () => describe('create', () => {
 
     expect(createdConnection).to.not.be.undefined;
     expect(createdConnection!.id).to.not.be.undefined;
-    expect(createdConnection!.iModelId).to.be.equal(testIModelId);
+    expect(createdConnection).to.have.property('iModelId', testIModelId);
     expect(createdConnection!.displayName).to.be.equal('TestConnection');
 
     const { result: listResult } = await runCommand<sourceFile[]>(`imodel connection sourcefile list -c ${createdConnection!.id}`);

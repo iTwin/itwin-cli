@@ -36,8 +36,8 @@ const tests = () => describe('view cesium-sandcastle', () => {
         const rootFolderId = await getRootFolderId(testITwinId);
         await createFile(rootFolderId, testFileName, testFilePath);
         const { result: populateResult } = await runCommand<populateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type MSTN`);
-        expect(populateResult?.iModelId).to.be.equal(testIModelId);
-        expect(populateResult?.iTwinId).to.be.equal(testITwinId);
+        expect(populateResult).to.have.property('iModelId', testIModelId);
+        expect(populateResult).to.have.property('iTwinId', testITwinId);
     }
     else {
         testITwinId = filteredITwins![0].id!;

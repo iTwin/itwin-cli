@@ -35,10 +35,10 @@ const tests = () => describe('info', () => {
   it('should get the info of the folder', async () => {
     const { result: folderInfo } = await runCommand<folderTyped>(`storage folder info --folder-id ${testFolderId}`);
 
-    expect(folderInfo?.id).to.be.equal(testFolderId);
-    expect(folderInfo?.displayName).to.be.equal('IntegrationTestFolder');
-    expect(folderInfo?.description).to.be.equal('Test description');
-    expect(folderInfo?.parentFolderId).to.be.equal(rootFolderId);
+    expect(folderInfo).to.have.property('id', testFolderId);
+    expect(folderInfo).to.have.property('displayName', 'IntegrationTestFolder');
+    expect(folderInfo).to.have.property('description', 'Test description');
+    expect(folderInfo).to.have.property('parentFolderId', rootFolderId);
   });
 });
 

@@ -29,10 +29,10 @@ const tests = () => describe('info', () => {
   it('should get the iTwin info', async () => {
     const { result: iTwin } = await runCommand<ITwin>(`itwin info --itwin-id ${testITwinId}`);
     
-    expect(iTwin?.id).to.be.equal(testITwinId);
-    expect(iTwin?.displayName).to.be.equal(name);
-    expect(iTwin?.class).to.be.equal(classType);
-    expect(iTwin?.subClass).to.be.equal(subClass);
+    expect(iTwin).to.have.property('id', testITwinId);
+    expect(iTwin).to.have.property('displayName', name);
+    expect(iTwin).to.have.property('class', classType);
+    expect(iTwin).to.have.property('subClass', subClass);
   });
 
 });

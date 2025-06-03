@@ -42,7 +42,7 @@ const tests = () => describe('create + delete', () => {
 
     expect(createdIModel).to.not.be.undefined;
     expect(createdIModel!.id).to.not.be.undefined;
-    expect(createdIModel!.iTwinId).to.be.equal(testITwinId);
+    expect(createdIModel).to.have.property('iTwinId', testITwinId);
     expect(createdIModel!.name).to.be.equal(iModelName);
     expect(createdIModel!.description).to.be.equal(testIModelDescription);
     expect(createdIModel!.extent).to.be.deep.equal(extent);
@@ -65,7 +65,7 @@ const tests = () => describe('create + delete', () => {
 
     expect(createdIModel).to.not.be.undefined;
     expect(createdIModel!.id).to.not.be.undefined;
-    expect(createdIModel!.iTwinId).to.be.equal(testITwinId);
+    expect(createdIModel).to.have.property('iTwinId', testITwinId);
     expect(createdIModel!.name).to.be.equal(iModelName);
     expect(createdIModel!.description).to.be.equal(testIModelDescription);
     expect(createdIModel!.extent).to.be.deep.equal(extent);

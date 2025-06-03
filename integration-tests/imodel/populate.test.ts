@@ -40,8 +40,8 @@ const tests = () => describe('populate', () => {
   it('should populate the iModel with the uploaded file', async () => {
     const { result: populateResult } = await runCommand<populateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath1} --file ${testFilePath2} --connector-type MSTN`);
     expect(populateResult).to.not.be.undefined;
-    expect(populateResult!.iTwinId).to.be.equal(testITwinId);
-    expect(populateResult!.iModelId).to.be.equal(testIModelId);
+    expect(populateResult).to.have.property('iTwinId', testITwinId);
+    expect(populateResult).to.have.property('iModelId', testIModelId);
     expect(populateResult!.summary).to.not.be.undefined;
     expect(populateResult!.summary).to.have.lengthOf(1);
     expect(populateResult!.summary[0].connectionId).to.not.be.undefined;
@@ -60,8 +60,8 @@ const tests = () => describe('populate', () => {
   it('should populate the iModel with the uploaded file (no-wait flag with polling)', async () => {
     const { result: populateResult } = await runCommand<populateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath1} --connector-type MSTN --no-wait`);
     expect(populateResult).to.not.be.undefined;
-    expect(populateResult!.iTwinId).to.be.equal(testITwinId);
-    expect(populateResult!.iModelId).to.be.equal(testIModelId);
+    expect(populateResult).to.have.property('iTwinId', testITwinId);
+    expect(populateResult).to.have.property('iModelId', testIModelId);
     expect(populateResult!.summary).to.not.be.undefined;
     expect(populateResult!.summary).to.have.lengthOf(1);
     expect(populateResult!.summary[0].connectionId).to.not.be.undefined;

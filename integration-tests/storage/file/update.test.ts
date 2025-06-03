@@ -44,9 +44,9 @@ const tests = () => describe('update', () => {
     const updatedDescription = 'Updated description';
     const { result: fileInfo } = await runCommand<fileTyped>(`storage file update --file-id ${testFileId} --name "${updatedDisplayName}" --description "${updatedDescription}"`);
 
-    expect(fileInfo?.id).to.be.equal(testFileId);
-    expect(fileInfo?.displayName).to.be.equal(updatedDisplayName);
-    expect(fileInfo?.description).to.be.equal(updatedDescription);
+    expect(fileInfo).to.have.property('id', testFileId);
+    expect(fileInfo).to.have.property('displayName', updatedDisplayName);
+    expect(fileInfo).to.have.property('description', updatedDescription);
   });
 });
 

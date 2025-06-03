@@ -37,7 +37,7 @@ const tests = () => describe('create', () => {
 
   it('should create a new iTwin', async () => {
     const { result: iTwin } = await runCommand<ITwin>(`itwin create --name "${testITwinName1}" --class ${testClass} --sub-class ${testSubClass} --type ${testType} --number ${testNumber}`); 
-    expect(iTwin!.id).to.not.be.undefined; 
+    expect(iTwin).to.have.property('id'); 
     expect(iTwin!.displayName).to.be.equal(testITwinName1);
     expect(iTwin!.class).to.be.equal(testClass);
     expect(iTwin!.subClass).to.be.equal(testSubClass);
@@ -48,7 +48,7 @@ const tests = () => describe('create', () => {
 
   it('should create a new child iTwin', async () => {
     const { result: iTwinChild } = await runCommand<ITwin>(`itwin create --name "${testChildITwinName}" --class ${testClass} --sub-class ${testSubClass} --parent-id ${testITwinId} --status ${testStatus}`);
-    expect(iTwinChild!.id).to.not.be.undefined; 
+    expect(iTwinChild).to.have.property('id'); 
     expect(iTwinChild!.displayName).to.be.equal(testChildITwinName);
     expect(iTwinChild!.class).to.be.equal(testClass);
     expect(iTwinChild!.subClass).to.be.equal(testSubClass);
@@ -59,7 +59,7 @@ const tests = () => describe('create', () => {
 
   it('should create a new iTwin with location information', async () => {
     const { result: iTwin } = await runCommand<ITwin>(`itwin create --name "${testITwinName2}" --class ${testClass} --sub-class ${testSubClass} --data-center-location "${testDataCenterLocation}" --iana-time-zone ${testIanaTimeZone} --geographic-location "${testGeographicLocation}"`);
-    expect(iTwin!.id).to.not.be.undefined; 
+    expect(iTwin).to.have.property('id'); 
     expect(iTwin!.displayName).to.be.equal(testITwinName2);
     expect(iTwin!.class).to.be.equal(testClass);
     expect(iTwin!.subClass).to.be.equal(testSubClass);

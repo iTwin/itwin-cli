@@ -46,9 +46,9 @@ const tests = () => describe('update-content', () => {
   it('should get URLs to update file content', async () => {
     const { result: updateResponse } = await runCommand<fileUpload>(`storage file update-content --file-id ${testFileId}`);
 
-    expect(updateResponse?._links).to.not.be.undefined;
-    expect(updateResponse?._links?.completeUrl).to.not.be.undefined;
-    expect(updateResponse?._links?.uploadUrl).to.not.be.undefined;
+    expect(updateResponse).to.have.property('_links');
+    expect(updateResponse!._links).to.have.property('completeUrl');
+    expect(updateResponse!._links).to.have.property('uploadUrl');
 
     uploadUrl = updateResponse!._links!.uploadUrl!.href!;
   });
@@ -61,9 +61,9 @@ const tests = () => describe('update-content', () => {
   it('should complete the file content update', async () => {
     const { result: completedFile } = await runCommand<fileTyped>(`storage file update-complete -f ${testFileId}`);
 
-    expect(completedFile?.id).to.be.equal(testFileId);
-    expect(completedFile?.displayName).to.be.equal(displayName);
-    expect(completedFile?.description).to.be.equal(description);
+    expect(completedFile).to.have.property('id', testFileId);
+    expect(completedFile).to.have.property('displayName', displayName);
+    expect(completedFile).to.have.property('description', description);
   });
 
   it('should throw an error when trying to update a non-existent file', async () => {

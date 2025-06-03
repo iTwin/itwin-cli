@@ -34,10 +34,10 @@ const tests = () => describe('repository', () => {
     
     const { result: createdITwinRepository } = await runCommand<Repository>(`itwin repository create --itwin-id ${testITwinId} --class ${iModelClass} --sub-class ${iModelSubclass} --uri ${iModelUri}`);
     
-    expect(createdITwinRepository?.id).to.not.be.undefined;
-    expect(createdITwinRepository?.class).to.be.equal(iModelClass);
-    expect(createdITwinRepository?.subClass).to.be.equal(iModelSubclass);
-    expect(createdITwinRepository?.uri).to.be.equal(iModelUri);
+    expect(createdITwinRepository).to.have.property('id');
+    expect(createdITwinRepository).to.have.property('class', iModelClass);
+    expect(createdITwinRepository).to.have.property('subClass', iModelSubclass);
+    expect(createdITwinRepository).to.have.property('uri', iModelUri);
 
     testRepositoryId = createdITwinRepository!.id!;
   });

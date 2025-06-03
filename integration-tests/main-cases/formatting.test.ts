@@ -37,7 +37,7 @@ describe('Command formatting tests', async () => {
                 expect(flag.description, `Flag '${flagName}' in command '${command.cmd.id}' is missing a description`).to.be.a('string').and.not.be.empty;
                 
                 if(flag.type === 'option') {
-                    expect(flag.helpValue, `Flag '${flagName}' in command '${command.cmd.id}' is missing a valid 'helpValue'`).to.be.a('string').and.not.be.empty;
+                    expect(flag, `Flag '${flagName}' in command '${command.cmd.id}' is missing a valid 'helpValue'`).to.have.property('helpValue').to.be.a('string').and.not.be.empty;
                 }
             }
         }

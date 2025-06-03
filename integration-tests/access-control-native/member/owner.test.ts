@@ -21,7 +21,7 @@ const tests = () => describe('owner', () => {
         await nativeLoginToCli();
 
         const { result: iTwin } = await runCommand<ITwin>(`itwin create --class Thing --sub-class Asset --name ${iTwinName}`);
-        expect(iTwin?.id).is.not.undefined;
+        expect(iTwin).to.have.property('id'); 
         iTwinId = iTwin!.id!;
     });
 
@@ -40,7 +40,7 @@ const tests = () => describe('owner', () => {
         expect(invitedUser!.member.email.toLowerCase()).to.be.equal(emailToAdd!.toLowerCase());
 
         const { result: usersInfo } = await runCommand<groupMember[]>(`access-control member owner list --itwin-id ${iTwinId}`);
-        expect(usersInfo).is.not.undefined;
+        expect(usersInfo).to.not.be.undefined;
         expect(usersInfo).to.have.lengthOf(2);
         const joinedUser = usersInfo?.filter(user => user.email.toLowerCase() === emailToAdd!.toLowerCase())[0];
         expect(joinedUser).to.not.be.undefined;

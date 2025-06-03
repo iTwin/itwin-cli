@@ -33,9 +33,9 @@ const tests = () => describe('info', () => {
   it('should get the iModel info', async () => {
     const { result: iModelInfo } = await runCommand<IModel>(`imodel info --imodel-id ${testIModelId}`);
 
-    expect(iModelInfo?.id).to.be.equal(testIModelId);
-    expect(iModelInfo?.name).to.be.equal(testIModelName);
-    expect(iModelInfo?.iTwinId).to.be.equal(testITwinId);
+    expect(iModelInfo).to.have.property('id', testIModelId);
+    expect(iModelInfo).to.have.property('name', testIModelName);
+    expect(iModelInfo).to.have.property('iTwinId', testITwinId);
   });
 });
 

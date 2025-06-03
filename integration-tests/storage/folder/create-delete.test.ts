@@ -38,11 +38,11 @@ const tests = () => describe('create + delete', () => {
 
     const createdFolder = await createFolder(rootFolderId, displayName, description);
 
-    expect(createdFolder.type).to.be.equal('folder');
-    expect(createdFolder.id).to.not.be.undefined;
-    expect(createdFolder.displayName).to.be.equal(displayName);
-    expect(createdFolder.description).to.be.equal(description);
-    expect(createdFolder.parentFolderId).to.be.equal(rootFolderId);
+    expect(createdFolder).to.have.property('type', 'folder');
+    expect(createdFolder).to.have.property('id');
+    expect(createdFolder).to.have.property('displayName', displayName);
+    expect(createdFolder).to.have.property('description', description);
+    expect(createdFolder).to.have.property('parentFolderId', rootFolderId);
 
     testFolderId = createdFolder.id as string;
   });

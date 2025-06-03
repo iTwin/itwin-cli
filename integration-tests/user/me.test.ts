@@ -13,9 +13,9 @@ const tests = () => describe('me', () => {
   it('should retrieve the currently authenticated user', async () => {
     const { result: userInfo } = await runCommand<User>('user me');
   
-    expect(userInfo?.id).to.not.be.undefined;
-    expect(userInfo?.displayName).to.not.be.undefined;
-    expect(userInfo?.email).to.not.be.undefined;
+    expect(userInfo).to.have.property('id');
+    expect(userInfo).to.have.property('displayName');
+    expect(userInfo).to.have.property('email');
   });
 });
 

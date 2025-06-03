@@ -29,8 +29,9 @@ export async function createFile(folderId: string, displayName: string, filePath
     // 1. Create meta data
     const {result: createdFile} = await runCommand<fileUpload>(`storage file create --folder-id ${folderId} --name "${displayName}" --description "${description}"`);
 
-    expect(createdFile!._links?.completeUrl).to.not.be.undefined;
-    expect(createdFile!._links?.uploadUrl).to.not.be.undefined;
+    expect(createdFile).to.have.property('_links');
+    expect(createdFile!._links).to.have.property('completeUrl');
+    expect(createdFile!._links).to.have.property('uploadUrl');
     const uploadUrl = createdFile!._links!.uploadUrl!.href;
 
     // extract file id from completeUrl that looks like this: "https://api.bentley.com/storage/files/TYJsPN0xtkWId0yUrXkS5pN5AQzuullIkxz5aDnDJSI/complete"
@@ -40,13 +41,13 @@ export async function createFile(folderId: string, displayName: string, filePath
     // 2. Upload file
     const { result: uploadedFile } = await runCommand<{result: string}>(`storage file upload --upload-url "${uploadUrl}" --file-path ${filePath}`);
 
-    expect(uploadedFile?.result).to.be.equal('uploaded');
+    expect(uploadedFile).to.have.property('result', 'uploaded');
 
     // 3. Confirm upload complete
     const {result: completedFile} = await runCommand<fileTyped>(`storage file update-complete --file-id ${fileId}`)
 
     expect(completedFile).to.not.be.undefined;
-    expect(completedFile?.id).to.be.equal(fileId);
+    expect(completedFile).to.have.property('id', fileId);
 
     return completedFile as fileTyped;
 }
@@ -65,7 +66,7 @@ export async function createITwin(displayName: string, classType: string, subCla
     const { result: createdITwin } = await runCommand<ITwin>(`itwin create --name "${displayName}" --class ${classType} --sub-class ${subClassType}`);
     
     expect(createdITwin).to.not.be.undefined;
-    expect(createdITwin?.id).to.not.be.undefined;
+    expect(createdITwin).to.have.property('id');
     return createdITwin as ITwin;
 }
 
@@ -73,7 +74,7 @@ export async function createIModel(name: string, iTwinId: string): Promise<IMode
     const { result: createdIModel} = await runCommand<IModel>(`imodel create --itwin-id ${iTwinId} --name "${name}"`);
     
     expect(createdIModel).to.not.be.undefined;
-    expect(createdIModel?.id).to.not.be.undefined;
+    expect(createdIModel).to.have.property('id');
     return createdIModel as IModel;
 }
 

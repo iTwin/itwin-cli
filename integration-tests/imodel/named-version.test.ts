@@ -31,8 +31,8 @@ const tests = () => describe('named-version', () => {
     await runCommand<resultResponse>(`changed-elements enable --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
 
     const { result } = await runCommand<populateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type MSTN`);
-    expect(result?.iModelId).to.be.equal(testIModelId);
-    expect(result?.iTwinId).to.be.equal(testITwinId);
+    expect(result).to.have.property('iModelId', testIModelId);
+    expect(result).to.have.property('iTwinId', testITwinId);
   });
 
   after(async () => {

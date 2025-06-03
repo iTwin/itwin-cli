@@ -40,9 +40,9 @@ const tests = () => describe('create + upload + complete + delete', () => {
   it('should create a new file meta data', async () => {
     const { result: createdFile } = await runCommand<fileUpload>(`storage file create --folder-id ${testFolderId} --name ${displayName} --description "${description}"`);
 
-    expect(createdFile?._links).to.not.be.undefined;
-    expect(createdFile!._links?.completeUrl).to.not.be.undefined;
-    expect(createdFile!._links?.uploadUrl).to.not.be.undefined;
+    expect(createdFile).to.have.property('_links');
+    expect(createdFile!._links).to.have.property('completeUrl');
+    expect(createdFile!._links).to.have.property('uploadUrl');
 
     uploadUrl = createdFile!._links!.uploadUrl!.href!;
 
@@ -61,10 +61,13 @@ const tests = () => describe('create + upload + complete + delete', () => {
   it('should complete the upload', async () => {
     const { result: completedFile } = await runCommand<fileTyped>(`storage file update-complete --file-id ${testFileId}`);
 
-    expect(completedFile?.id).to.be.equal(testFileId);
-    expect(completedFile?.displayName).to.be.equal(displayName);
-    expect(completedFile?.description).to.be.equal(description);
-    expect(completedFile?._links?.parentFolder?.href).to.include(testFolderId);
+    expect(completedFile).to.have.property('id', testFileId);
+    expect(completedFile).to.have.property('displayName', displayName);
+    expect(completedFile).to.have.property('description', description);
+    expect(completedFile).to.have.property('_links');
+    expect(completedFile!._links).to.have.property('parentFolder');
+    expect(completedFile!._links!.parentFolder).to.have.property('href');
+    expect(completedFile!._links!.parentFolder!.href).to.include(testFolderId);
   });
 
   it('should delete the file', async () => {
