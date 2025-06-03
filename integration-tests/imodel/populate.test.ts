@@ -124,7 +124,7 @@ const tests = () => describe('populate', () => {
     expect(infoResult?.jobs![1].connectorType).to.be.equal("MSTN");
   }).timeout(30 * 60 * 1000);
 
-  it.skip('should return an error message if amount of connector-types does not match the amount of files and is not equal to 1', async () => {
+  it('should return an error message if amount of connector-types does not match the amount of files and is not equal to 1', async () => {
     const { error: populateError } = await runCommand<populateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath1} --file ${testFilePath2} --file ${failingTestFilePath1} --connector-type MSTN --connector-type IFC`);
     expect(populateError).to.not.be.undefined;
     expect(populateError?.message).to.be.equal('When multiple connector-type options are provided, their amount must match file option amount. Alternatively, you can provide a single connector-type option, which will then be applied to all file options. You can also provide no connector-type options, in which case the command will attempt automatic detection.');
