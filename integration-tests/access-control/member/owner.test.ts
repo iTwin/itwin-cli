@@ -26,7 +26,7 @@ const tests = () => {
 
     after(async () => {
         const { result: deleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${iTwinId}`);
-        expect(deleteResult?.result).to.be.equal('deleted');
+        expect(deleteResult).to.have.property('result', 'deleted');
     });
 
     it('Should invite an external member to an iTwin, accept invitation and remove owner member', async () => {
@@ -56,7 +56,7 @@ const tests = () => {
 
         const { result: deletionResult } = await runCommand<{result: string}>(`access-control member owner delete --itwin-id ${iTwinId} --member-id ${joinedUser?.id}`);
         expect(deletionResult).to.not.be.undefined;
-        expect(deletionResult!.result).to.be.equal("deleted");
+        expect(deletionResult).to.have.property('result', "deleted");
     }).timeout(180 * 1000);
 
     it('Should list owners of an iTwin', async () => {

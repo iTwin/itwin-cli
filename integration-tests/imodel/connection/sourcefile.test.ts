@@ -41,8 +41,8 @@ const tests = () => describe('sourcefile', () => {
     const { result: imodelDeleteResult } = await runCommand<{result: string}>(`imodel delete --imodel-id ${testIModelId}`);
     const { result: itwinDeleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinId}`);
 
-    expect(imodelDeleteResult?.result).to.be.equal('deleted');
-    expect(itwinDeleteResult?.result).to.be.equal('deleted');
+    expect(imodelDeleteResult).to.have.property('result', 'deleted');
+    expect(itwinDeleteResult).to.have.property('result', 'deleted');
   });
 
   it('should add/get/delete a sourcefile', async () => {
@@ -57,7 +57,7 @@ const tests = () => describe('sourcefile', () => {
     expect(infoResult!.storageFileId).to.be.equal(anotherTestFileId);
 
     const { result: deleteResult } = await runCommand<{result: string}>(`imodel connection sourcefile delete -c ${connectionId} --source-file-id ${addResult?.id}`);
-    expect(deleteResult?.result).to.be.equal('deleted');
+    expect(deleteResult).to.have.property('result', 'deleted');
   });
 
   it('should update connector-type and storage-file-id of a sourcefile', async () => {
@@ -82,7 +82,7 @@ const tests = () => describe('sourcefile', () => {
     expect(infoResult2!.storageFileId).to.be.equal(yetAnotherTestFileId);
 
     const { result: deleteResult } = await runCommand<{result: string}>(`imodel connection sourcefile delete -c ${connectionId} --source-file-id ${addResult?.id}`);
-    expect(deleteResult?.result).to.be.equal('deleted');
+    expect(deleteResult).to.have.property('result', 'deleted');
   });
 
   it('should list sourcefiles', async () => {
@@ -104,10 +104,10 @@ const tests = () => describe('sourcefile', () => {
     expect(listResult?.some(result => result.id === addResult2!.id && result.storageFileId === addResult2!.storageFileId && result!.connectorType === "MSTN")).to.be.true;
 
     const { result: deleteResult1 } = await runCommand<{result: string}>(`imodel connection sourcefile delete -c ${connectionId} --source-file-id ${addResult1?.id}`);
-    expect(deleteResult1?.result).to.be.equal('deleted');
+    expect(deleteResult1).to.have.property('result', 'deleted');
 
     const { result: deleteResult2 } = await runCommand<{result: string}>(`imodel connection sourcefile delete -c ${connectionId} --source-file-id ${addResult2?.id}`);
-    expect(deleteResult2?.result).to.be.equal('deleted');
+    expect(deleteResult2).to.have.property('result', 'deleted');
   });
 });
 

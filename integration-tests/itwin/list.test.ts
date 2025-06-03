@@ -28,9 +28,9 @@ const tests = () => describe('list', () => {
     const { result: deleteResult2 } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwin1.id}`);
     const { result: deleteResult3 } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwin2.id}`);
 
-    expect(deleteResult1?.result).to.be.equal('deleted');
-    expect(deleteResult2?.result).to.be.equal('deleted');
-    expect(deleteResult3?.result).to.be.equal('deleted');
+    expect(deleteResult1).to.have.property('result', 'deleted');
+    expect(deleteResult2).to.have.property('result', 'deleted');
+    expect(deleteResult3).to.have.property('result', 'deleted');
   })
 
   it('should fail when provided bad subClass', async () => {

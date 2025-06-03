@@ -24,7 +24,7 @@ const tests = () => describe('repository', () => {
 
   after(async () => {
     const { result: deleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinId}`);
-    expect(deleteResult?.result).to.be.equal('deleted');
+    expect(deleteResult).to.have.property('result', 'deleted');
   });
 
   it('should create a new iTwin repository', async () => {
@@ -64,7 +64,7 @@ const tests = () => describe('repository', () => {
 
   it('should delete the iTwin repository', async () => {
     const { result: deleteResult } = await runCommand<{result: string}>(`itwin repository delete --itwin-id ${testITwinId} --repository-id ${testRepositoryId}`);
-    expect(deleteResult?.result).to.be.equal('deleted');
+    expect(deleteResult).to.have.property('result', 'deleted');
   });
 });
 

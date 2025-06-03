@@ -30,9 +30,9 @@ const tests = () => describe('create', () => {
     const { result: deleteResult2 } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinId}`);
     const { result: deleteResult3 } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinId2}`);
 
-    expect(deleteResult1?.result).to.be.equal('deleted');
-    expect(deleteResult2?.result).to.be.equal('deleted');
-    expect(deleteResult3?.result).to.be.equal('deleted');
+    expect(deleteResult1).to.have.property('result', 'deleted');
+    expect(deleteResult2).to.have.property('result', 'deleted');
+    expect(deleteResult3).to.have.property('result', 'deleted');
   })
 
   it('should create a new iTwin', async () => {

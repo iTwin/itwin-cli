@@ -23,7 +23,7 @@ const tests = () => describe('info', () => {
 
   after(async () => {
     const { result: deleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinId}`);
-    expect(deleteResult!.result).to.be.equal('deleted');
+    expect(deleteResult).to.have.property('result', 'deleted');
   });
 
   it('should get the iTwin info', async () => {

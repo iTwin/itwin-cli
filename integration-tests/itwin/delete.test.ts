@@ -19,7 +19,7 @@ const tests = () => describe('delete', () => {
 
   it('should delete the iTwin', async () => {
     const { result: deleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwin.id}`);
-    expect(deleteResult?.result).to.be.equal('deleted');
+    expect(deleteResult).to.have.property('result', 'deleted');
 
     const { error: errorResult } = await runCommand(`itwin info --itwin-id ${testITwin.id}`);
     expect(errorResult).to.be.not.undefined;

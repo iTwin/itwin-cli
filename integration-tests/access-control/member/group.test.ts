@@ -54,7 +54,7 @@ const tests = () => {
 
     after(async () => {
         const { result: deleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${iTwinId}`);
-        expect(deleteResult?.result).to.be.equal('deleted');
+        expect(deleteResult).to.have.property('result', 'deleted');
     });
 
     it('Should create, update and list info and delete member group', async () => {
@@ -104,7 +104,7 @@ const tests = () => {
         expect(resultList![0].roles![1].id).to.be.equal(additionalRole!.id);
 
         const { result: deleteResult } = await runCommand<{result: string}>(`access-control member group delete --itwin-id ${iTwinId} --group-id ${groupId1}`);
-        expect(deleteResult?.result).to.be.equal('deleted');
+        expect(deleteResult).to.have.property('result', 'deleted');
     });
 
     it('Should create multiple member groups using `--groups` flag and delete them', async () => {
@@ -132,13 +132,13 @@ const tests = () => {
         }
 
         const { result: deleteResult1 } = await runCommand<{result: string}>(`access-control member group delete --itwin-id ${iTwinId} --group-id ${groupId1}`);
-        expect(deleteResult1?.result).to.be.equal('deleted');
+        expect(deleteResult1).to.have.property('result', 'deleted');
 
         const { result: deleteResult2 } = await runCommand<{result: string}>(`access-control member group delete --itwin-id ${iTwinId} --group-id ${groupId2}`);
-        expect(deleteResult2?.result).to.be.equal('deleted');
+        expect(deleteResult2).to.have.property('result', 'deleted');
 
         const { result: deleteResult3 } = await runCommand<{result: string}>(`access-control member group delete --itwin-id ${iTwinId} --group-id ${groupId3}`);
-        expect(deleteResult3?.result).to.be.equal('deleted');
+        expect(deleteResult3).to.have.property('result', 'deleted');
     });
 
     it('Should create multiple member groups using `--group-id` and `--role-ids` flags and delete them', async () => {
@@ -154,13 +154,13 @@ const tests = () => {
         }
 
         const { result: deleteResult1} = await runCommand<{result: string}>(`access-control member group delete --itwin-id ${iTwinId} --group-id ${groupIds[0]}`);
-        expect(deleteResult1?.result).to.be.equal('deleted');;
+        expect(deleteResult1).to.have.property('result', 'deleted');;
 
         const {result: deleteResult2 } = await runCommand<{result: string}>(`access-control member group delete --itwin-id ${iTwinId} --group-id ${groupIds[1]}`);
-        expect(deleteResult2?.result).to.be.equal('deleted');
+        expect(deleteResult2).to.have.property('result', 'deleted');
 
         const {result: deleteResult3 } = await runCommand<{result: string}>(`access-control member group delete --itwin-id ${iTwinId} --group-id ${groupIds[2]}`);
-        expect(deleteResult3?.result).to.be.equal('deleted');
+        expect(deleteResult3).to.have.property('result', 'deleted');
     });
 
     it('Should return an error when all of the following flags are provided: `--groups`, `--group-id`, `--role-ids`', async () => {

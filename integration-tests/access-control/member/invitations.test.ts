@@ -24,7 +24,7 @@ const tests = () => {
 
     after(async () => {
         const { result: deleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${iTwinId}`);
-        expect(deleteResult?.result).to.be.equal('deleted');
+        expect(deleteResult).to.have.property('result', 'deleted');
     });
 
     it('Should get pending invitations', async () => {

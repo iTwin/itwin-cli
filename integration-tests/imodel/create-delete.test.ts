@@ -22,7 +22,7 @@ const tests = () => describe('create + delete', () => {
 
   after(async () => { 
     const { result: deleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinId}`);
-    expect(deleteResult?.result).to.be.equal('deleted');
+    expect(deleteResult).to.have.property('result', 'deleted');
   });
 
   it('should create a new iModel (JSON extent)', async () => {

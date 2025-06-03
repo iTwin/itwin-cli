@@ -34,13 +34,13 @@ const tests = () => describe('delete', () => {
     const { result: imodelDeleteResult } = await runCommand<{result: string}>(`imodel delete --imodel-id ${testIModelId}`);
     const { result: itwinDeleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinId}`);
 
-    expect(imodelDeleteResult?.result).to.be.equal('deleted');
-    expect(itwinDeleteResult?.result).to.be.equal('deleted');
+    expect(imodelDeleteResult).to.have.property('result', 'deleted');
+    expect(itwinDeleteResult).to.have.property('result', 'deleted');
   });
 
   it('should delete a connection', async () => {
     const { result: deleteResult } = await runCommand<{result: string}>(`imodel connection delete --connection-id ${connectionId}`);
-    expect(deleteResult?.result).to.be.equal('deleted');
+    expect(deleteResult).to.have.property('result', 'deleted');
   });
 });
 

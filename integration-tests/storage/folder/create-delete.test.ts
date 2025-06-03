@@ -28,7 +28,7 @@ const tests = () => describe('create + delete', () => {
 
   after(async () => {
     const { result: itwinDeleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinId}`);
-    expect(itwinDeleteResult?.result).to.be.equal('deleted');
+    expect(itwinDeleteResult).to.have.property('result', 'deleted');
   });
 
   it('should create a new folder', async () => {

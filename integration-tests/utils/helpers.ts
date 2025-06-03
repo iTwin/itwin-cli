@@ -79,22 +79,22 @@ export async function createIModel(name: string, iTwinId: string): Promise<IMode
 
 export async function deleteFile(fileId: string): Promise<void> {
     const { result: deleteResult } = await runCommand<{result: string}>(`storage file delete --file-id ${fileId}`);
-    expect(deleteResult?.result).to.be.equal('deleted');
+    expect(deleteResult).to.have.property('result', 'deleted');
 }
 
 export async function deleteFolder(folderId: string): Promise<void> {
     const { result: deleteResult } = await runCommand<{result: string}>(`storage folder delete --folder-id ${folderId}`);
-    expect(deleteResult?.result).to.be.equal('deleted');
+    expect(deleteResult).to.have.property('result', 'deleted');
 }
 
 export async function deleteITwin(id: string): Promise<void> {
     const { result: deleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${id}`);
-    expect(deleteResult).to.be.equal('deleted');
+    expect(deleteResult).to.have.property('result', 'deleted');
 }
 
 export async function deleteIModel(id: string): Promise<void> {
     const { result: deleteResult } = await runCommand<{result: string}>(`imodel delete --imodel-id ${id}`);
-    expect(deleteResult?.result).to.be.equal('deleted');
+    expect(deleteResult).to.have.property('result', 'deleted');
 }
 
 export async function getRootFolderId(iTwinId: string): Promise<string> {

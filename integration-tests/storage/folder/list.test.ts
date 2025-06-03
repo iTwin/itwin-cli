@@ -36,7 +36,7 @@ const tests = () => describe('list', () => {
 
   after(async () => {
     const { result: itwinDeleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinId}`);
-    expect(itwinDeleteResult?.result).to.be.equal('deleted');
+    expect(itwinDeleteResult).to.have.property('result', 'deleted');
   });
 
   it('should get the list of folders in the specified folder', async () => {
