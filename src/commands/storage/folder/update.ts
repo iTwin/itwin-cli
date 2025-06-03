@@ -32,7 +32,6 @@ export default class UpdateFolder extends BaseCommand {
         char: 'd', 
         description: "A description for the folder.",
         helpValue: '<string>',
-        required: false,
       }),
       "folder-id": Flags.string({ 
         char: 'f', 
@@ -44,7 +43,6 @@ export default class UpdateFolder extends BaseCommand {
         char: 'n', 
         description: "The new display name for the folder.",
         helpValue: '<string>',
-        required: false,
       }),
     };
   

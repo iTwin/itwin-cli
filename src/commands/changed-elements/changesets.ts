@@ -41,13 +41,11 @@ export default class GetChangesetStatus extends BaseCommand {
       }),
       skip: Flags.integer({ 
         description: 'Skip a number of changesets in the result.',
-        helpValue: '<integer>',
-        required: false,
+        helpValue: '<integer>'
       }),
       top: Flags.integer({ 
         description: 'Limit the number of changesets returned.',
-        helpValue: '<integer>',
-        required: false,
+        helpValue: '<integer>'
       }),
     };
   

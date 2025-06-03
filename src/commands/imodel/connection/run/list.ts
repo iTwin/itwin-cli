@@ -40,13 +40,11 @@ export default class ConnectionRunsListed extends BaseCommand {
       }),
       skip: Flags.integer({ 
         description: "Skip a number of runs in the result.", 
-        helpValue: '<integer>' ,
-        required: false,
+        helpValue: '<integer>'
       }),
       top: Flags.integer({ 
         description: "Limit the number of runs returned.", 
-        helpValue: '<integer>',
-        required: false,
+        helpValue: '<integer>'
       }),
     };
   

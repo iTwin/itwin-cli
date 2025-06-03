@@ -47,7 +47,6 @@ export default class CreateRepository extends BaseCommand {
         description: 'The subClass of your repository.',
         helpValue: '<string>',
         options: ['WebMapService', 'WebMapTileService', 'MapServer', 'Performance', 'EvoWorkspace'],
-        required: false,
       }),
       uri: Flags.string({
         description: 'The URI to the custom repository.',

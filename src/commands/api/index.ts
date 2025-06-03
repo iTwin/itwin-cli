@@ -47,18 +47,15 @@ export default class ApiRequest extends BaseCommand {
         body: CustomFlags.noSchemaJson({
             description: "The body to include in the request. It must be serialized JSON.",
             helpValue: '<string>',
-            required: false,
         }),
         "empty-response": Flags.boolean({
             description: "Indicates the request will not return a response body.",
-            required: false,
         }),
         header: Flags.string({
             description: "Headers to include in the request. Use the format 'HeaderName: value'.",
             flag: "h",
             helpValue: '<string>',
             multiple: true,
-            required: false,
         }),
         method: Flags.string({
             description: "HTTP method for the request.",
@@ -75,12 +72,10 @@ export default class ApiRequest extends BaseCommand {
             description: "URL query parameters for the request. Use format 'QueryKey:value'.",
             helpValue: '<string>',
             multiple: true,
-            required: false,
         }),
         "version-header": Flags.string({
             description: "API version header for versioned endpoints.",
             helpValue: '<string>',
-            required: false,
         }),
     };
   

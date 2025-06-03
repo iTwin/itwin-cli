@@ -12,7 +12,6 @@ export default class DocsGenerator extends BaseCommand {
         "output-dir": Flags.string({
             char: "o",
             description: "The output directory for the documentation files.",
-            required: false,
         }),
     }
 

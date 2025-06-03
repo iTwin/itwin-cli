@@ -33,7 +33,6 @@ export default class UpdateAccessControlGroup extends BaseCommand {
         char: 'd',
         description: 'The updated description of the group.',
         helpValue: '<string>',
-        required: false,
       }),
       "group-id": Flags.string({
         char: 'g',
@@ -45,7 +44,6 @@ export default class UpdateAccessControlGroup extends BaseCommand {
         description: 'A list of IMS Groups to be linked to the group. Max amount of 50.',
         helpValue: '<string>',
         multiple: true,
-        required: false,
       }),
       "itwin-id": CustomFlags.iTwinIDFlag({
         description: 'The ID of the iTwin where the group exists.'
@@ -54,13 +52,11 @@ export default class UpdateAccessControlGroup extends BaseCommand {
         description: 'A list of members (emails) to be assigned to the group. Max amount of 50.',
         helpValue: '<string>',
         multiple: true,
-        required: false,
       }),
       name: Flags.string({
         char: 'n',
         description: 'The updated name of the group.',
         helpValue: '<string>',
-        required: false,
       }),
     };
   

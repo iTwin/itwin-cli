@@ -31,8 +31,7 @@ export default class CreateFolder extends BaseCommand {
       description: Flags.string({ 
         char: 'd', 
         description: "A description of the folder.",
-        helpValue: '<string>',
-        required: false,
+        helpValue: '<string>'
       }),
       name: Flags.string({ 
         char: 'n', 
