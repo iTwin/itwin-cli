@@ -31,13 +31,9 @@ const tests = () => describe('update', () => {
   });
 
   after(async () => {
-    const { result: connectionDeleteResult } = await runCommand(`imodel connection delete --connection-id ${connectionId}`);
-    const { result: fileDeleteResult} = await runCommand(`storage file delete --file-id ${testFileId}`);
-    const { result: imodelDeleteResult } = await runCommand(`imodel delete --imodel-id ${testIModelId}`);
-    const { result: itwinDeleteResult } = await runCommand(`itwin delete --itwin-id ${testITwinId}`);
+    const { result: imodelDeleteResult } = await runCommand<{result: string}>(`imodel delete --imodel-id ${testIModelId}`);
+    const { result: itwinDeleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinId}`);
 
-    expect(connectionDeleteResult).to.have.property('result', 'deleted');
-    expect(fileDeleteResult).to.have.property('result', 'deleted');
     expect(imodelDeleteResult).to.have.property('result', 'deleted');
     expect(itwinDeleteResult).to.have.property('result', 'deleted');
   });
@@ -47,6 +43,7 @@ const tests = () => describe('update', () => {
 
     expect(connection).to.not.be.undefined;
     expect(connection).to.have.property('id');
+    expect(connection?.iTwinId).to.have.be.equal(testITwinId);
     expect(connection?.iModelId).to.have.be.equal(testIModelId);
     expect(connection?.displayName).to.be.equal('New Connection Name');
   });

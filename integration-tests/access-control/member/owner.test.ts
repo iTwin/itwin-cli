@@ -19,23 +19,23 @@ const tests = () => {
     const iTwinName: string = `cli-itwin-integration-test-${new Date().toISOString()}`;
     
     before(async () => {
-        const iTwin = await runCommand<ITwin>(`itwin create --class Thing --sub-class Asset --name ${iTwinName}`);
-        expect(iTwin.result?.id).is.not.undefined;
-        iTwinId = iTwin.result!.id!;
+        const { result: iTwin } = await runCommand<ITwin>(`itwin create --class Thing --sub-class Asset --name ${iTwinName}`);
+        expect(iTwin?.id).to.not.be.undefined;
+        iTwinId = iTwin!.id!;
     });
 
     after(async () => {
-        const { result: deleteResult } = await runCommand(`itwin delete --itwin-id ${iTwinId}`);
+        const { result: deleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${iTwinId}`);
         expect(deleteResult).to.have.property('result', 'deleted');
     });
 
     it('Should invite an external member to an iTwin, accept invitation and remove owner member', async () => {
         const emailToAdd = ITP_TEST_USER_EXTERNAL;
-        const invitedOwner = await runCommand<ownerResponse>(`access-control member owner add -i ${iTwinId} --email ${emailToAdd}`);
-        expect(invitedOwner.result).is.not.undefined;
-        expect(invitedOwner.result!.member).is.null;
-        expect(invitedOwner.result!.invitation).is.not.undefined;
-        expect(invitedOwner.result!.invitation.email.toLowerCase()).to.equal(emailToAdd!.toLowerCase());
+        const { result: invitedOwner } = await runCommand<ownerResponse>(`access-control member owner add -i ${iTwinId} --email ${emailToAdd}`);
+        expect(invitedOwner).to.not.be.undefined;
+        expect(invitedOwner!.member).to.be.null;
+        expect(invitedOwner!.invitation).to.not.be.undefined;
+        expect(invitedOwner!.invitation.email.toLowerCase()).to.equal(emailToAdd!.toLowerCase());
 
         const invitationLink = await fetchEmailsAndGetInvitationLink(emailToAdd!.split('@')[0], iTwinName);
 
@@ -46,28 +46,28 @@ const tests = () => {
             // eslint-disable-next-line no-await-in-loop
             await new Promise<void>(resolve => {setTimeout(_ => resolve(), 10 * 1000);});
             // eslint-disable-next-line no-await-in-loop
-            const listResult = await runCommand<groupMember[]>(`access-control member owner list --itwin-id ${iTwinId}`);
-            expect(listResult.result).is.not.undefined;
-            usersInfo = listResult.result!
+            const { result: listResult } = await runCommand<groupMember[]>(`access-control member owner list --itwin-id ${iTwinId}`);
+            expect(listResult).to.not.be.undefined;
+            usersInfo = listResult!;
         } while (usersInfo.length !== 2);
 
         const joinedUser = usersInfo.find(user => user.email.toLowerCase() === emailToAdd!.toLowerCase());
         expect(joinedUser).to.not.be.undefined;
 
-        const deletionResult = await runCommand<{result: string}>(`access-control member owner delete --itwin-id ${iTwinId} --member-id ${joinedUser?.id}`);
-        expect(deletionResult.result).to.not.be.undefined;
-        expect(deletionResult.result!.result).to.be.equal("deleted");
+        const { result: deletionResult } = await runCommand<{result: string}>(`access-control member owner delete --itwin-id ${iTwinId} --member-id ${joinedUser?.id}`);
+        expect(deletionResult).to.not.be.undefined;
+        expect(deletionResult).to.have.property('result', "deleted");
     }).timeout(180 * 1000);
 
     it('Should list owners of an iTwin', async () => {
-        const owners = await runCommand<groupMember[]>(`access-control member owner list --itwin-id ${iTwinId}`);
-        expect(owners.result).is.not.undefined;
-        expect(owners.result!.length).to.be.greaterThanOrEqual(1);
+        const { result: owners } = await runCommand<groupMember[]>(`access-control member owner list --itwin-id ${iTwinId}`);
+        expect(owners).to.not.be.undefined;
+        expect(owners!.length).to.be.greaterThanOrEqual(1);
 
-        const userInfo = await runCommand<User>(`user me`);
-        expect(userInfo.result).is.not.undefined;
-        expect(userInfo.result!.id).is.not.undefined;
-        expect(owners.result!.some(owner => owner.id === userInfo.result!.id)).to.be.true;
+        const { result: userInfo } = await runCommand<User>(`user me`);
+        expect(userInfo).to.not.be.undefined;
+        expect(userInfo!.id).to.not.be.undefined;
+        expect(owners!.some(owner => owner.id === userInfo!.id)).to.be.true;
     });
 };
 

@@ -21,7 +21,7 @@ const tests = () => describe('update', () => {
   });
 
   after(async () => {
-    const { result: deleteResult } = await runCommand(`itwin delete --itwin-id ${testITwinId}`);
+    const { result: deleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinId}`);
     expect(deleteResult).to.have.property('result', 'deleted');
   });
 
@@ -33,18 +33,17 @@ const tests = () => describe('update', () => {
     const updatedStatus = 'Trial'
     const updatedType = 'Type1'
 
-    const { stdout } = await runCommand(`itwin update --itwin-id ${testITwinId} --geographic-location "${updatedGeographicLocation}" --iana-time-zone ${updatedIanaTimeZone} --name ${updatedDisplayName} --number ${updatedNumber} --status ${updatedStatus} --type ${updatedType}`);
-    const updatedITwin: ITwin = JSON.parse(stdout);
+    const { result: updatedITwin } = await runCommand<ITwin>(`itwin update --itwin-id ${testITwinId} --geographic-location "${updatedGeographicLocation}" --iana-time-zone ${updatedIanaTimeZone} --name ${updatedDisplayName} --number ${updatedNumber} --status ${updatedStatus} --type ${updatedType}`);
 
     expect(updatedITwin).to.not.be.undefined;
-    expect(updatedITwin.id).to.be.equal(testITwinId);
-    expect(updatedITwin.displayName).to.be.equal(updatedDisplayName);
-    expect(updatedITwin.class).to.be.equal(classType);
-    expect(updatedITwin.geographicLocation).to.be.equal(updatedGeographicLocation);
-    expect(updatedITwin.ianaTimeZone).to.be.equal(updatedIanaTimeZone);
-    expect(updatedITwin.number).to.be.equal(updatedNumber);
-    expect(updatedITwin.status).to.be.equal(updatedStatus);
-    expect(updatedITwin.type).to.be.equal(updatedType);
+    expect(updatedITwin!.id).to.be.equal(testITwinId);
+    expect(updatedITwin!.displayName).to.be.equal(updatedDisplayName);
+    expect(updatedITwin!.class).to.be.equal(classType);
+    expect(updatedITwin!.geographicLocation).to.be.equal(updatedGeographicLocation);
+    expect(updatedITwin!.ianaTimeZone).to.be.equal(updatedIanaTimeZone);
+    expect(updatedITwin!.number).to.be.equal(updatedNumber);
+    expect(updatedITwin!.status).to.be.equal(updatedStatus);
+    expect(updatedITwin!.type).to.be.equal(updatedType);
   });
 });
 

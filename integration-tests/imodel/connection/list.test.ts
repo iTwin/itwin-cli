@@ -37,44 +37,40 @@ const tests = () => describe('list', () => {
   });
 
   after(async () => {
-    const { result: connectionDeleteResult1 } = await runCommand(`imodel connection delete --connection-id ${connectionId1}`);
-    const { result: connectionDeleteResult2 } = await runCommand(`imodel connection delete --connection-id ${connectionId2}`);
-    const { result: fileDeleteResult} = await runCommand(`storage file delete --file-id ${testFileId1}`);
-    const { result: imodelDeleteResult } = await runCommand(`imodel delete --imodel-id ${testIModelId}`);
-    const { result: itwinDeleteResult } = await runCommand(`itwin delete --itwin-id ${testITwinId}`);
+    const { result: imodelDeleteResult } = await runCommand<{result: string}>(`imodel delete --imodel-id ${testIModelId}`);
+    const { result: itwinDeleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinId}`);
 
-    expect(connectionDeleteResult1).to.have.property('result', 'deleted');
-    expect(connectionDeleteResult2).to.have.property('result', 'deleted');
-    expect(fileDeleteResult).to.have.property('result', 'deleted');
     expect(imodelDeleteResult).to.have.property('result', 'deleted');
     expect(itwinDeleteResult).to.have.property('result', 'deleted');
   });
 
   it('should get all connections', async () => {
-    const { result } = await runCommand<storageConnectionListResponse>(`imodel connection list -m ${testIModelId}`);
-    expect(result).to.not.be.undefined;
-    expect(result!.connections.length).to.be.equal(2);
+    const { result: listResult } = await runCommand<storageConnectionListResponse>(`imodel connection list -m ${testIModelId}`);
+    expect(listResult).to.not.be.undefined;
+    expect(listResult!.connections).to.have.lengthOf(2);
+    expect(listResult?.connections.some(connection => connection.id === connectionId1)).to.be.true;
+    expect(listResult?.connections.some(connection => connection.id === connectionId2)).to.be.true;
   });
 
   it('should get 1st connection', async () => {
     const { result: allConnections } = await runCommand<storageConnectionListResponse>(`imodel connection list -m ${testIModelId}`);
     expect(allConnections).to.not.be.undefined;
-    expect(allConnections!.connections.length).to.be.equal(2);
+    expect(allConnections!.connections).to.have.lengthOf(2);
 
     const { result: filteredConnections } = await runCommand<storageConnectionListResponse>(`imodel connection list -m ${testIModelId} --top 1`);
     expect(filteredConnections).to.not.be.undefined;
-    expect(filteredConnections!.connections.length).to.be.equal(1);
+    expect(filteredConnections!.connections).to.have.lengthOf(1);
     expect(filteredConnections!.connections[0].id).to.be.equal(allConnections!.connections[0].id);
   });
 
   it('should not get 1st connection', async () => {
     const { result: allConnections } = await runCommand<storageConnectionListResponse>(`imodel connection list -m ${testIModelId}`);
     expect(allConnections).to.not.be.undefined;
-    expect(allConnections!.connections.length).to.be.equal(2);
+    expect(allConnections!.connections).to.have.lengthOf(2);
 
     const { result: filteredConnections } = await runCommand<storageConnectionListResponse>(`imodel connection list -m ${testIModelId} --skip 1`);
     expect(filteredConnections).to.not.be.undefined;
-    expect(filteredConnections!.connections.length).to.be.equal(1);
+    expect(filteredConnections!.connections).to.have.lengthOf(1);
     expect(filteredConnections!.connections[0].id).to.be.equal(allConnections!.connections[1].id);
   });
 });

@@ -31,20 +31,15 @@ const tests = () => describe('info', () => {
   });
 
   after(async () => {
-    const { result: connectionDeleteResult } = await runCommand(`imodel connection delete --connection-id ${connectionId}`);
-    const { result: fileDeleteResult} = await runCommand(`storage file delete --file-id ${testFileId}`);
-    const { result: imodelDeleteResult } = await runCommand(`imodel delete --imodel-id ${testIModelId}`);
-    const { result: itwinDeleteResult } = await runCommand(`itwin delete --itwin-id ${testITwinId}`);
+    const { result: imodelDeleteResult } = await runCommand<{result: string}>(`imodel delete --imodel-id ${testIModelId}`);
+    const { result: itwinDeleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinId}`);
 
-    expect(connectionDeleteResult).to.have.property('result', 'deleted');
-    expect(fileDeleteResult).to.have.property('result', 'deleted');
     expect(imodelDeleteResult).to.have.property('result', 'deleted');
     expect(itwinDeleteResult).to.have.property('result', 'deleted');
   });
 
   it('should get a connection', async () => {
-    const { stdout } = await runCommand(`imodel connection info -c ${connectionId}`);
-    const connection = JSON.parse(stdout);
+    const { result: connection } = await runCommand<storageConnection>(`imodel connection info -c ${connectionId}`);
 
     expect(connection).to.not.be.undefined;
     expect(connection).to.have.property('id');

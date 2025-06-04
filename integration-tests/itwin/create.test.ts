@@ -26,9 +26,9 @@ const tests = () => describe('create', () => {
   const testNumber = Math.random().toString(36).slice(2)
 
   after(async () => {
-    const { result: deleteResult1 } = await runCommand(`itwin delete --itwin-id ${testITwinChildId}`);
-    const { result: deleteResult2 } = await runCommand(`itwin delete --itwin-id ${testITwinId}`);
-    const { result: deleteResult3 } = await runCommand(`itwin delete --itwin-id ${testITwinId2}`);
+    const { result: deleteResult1 } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinChildId}`);
+    const { result: deleteResult2 } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinId}`);
+    const { result: deleteResult3 } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinId2}`);
 
     expect(deleteResult1).to.have.property('result', 'deleted');
     expect(deleteResult2).to.have.property('result', 'deleted');
@@ -36,40 +36,37 @@ const tests = () => describe('create', () => {
   })
 
   it('should create a new iTwin', async () => {
-    const itwinJson = await runCommand(`itwin create --name "${testITwinName1}" --class ${testClass} --sub-class ${testSubClass} --type ${testType} --number ${testNumber}`); 
-    const itwinObj: ITwin = JSON.parse(itwinJson.stdout);
-    expect(itwinObj).to.have.property('id'); 
-    expect(itwinObj.displayName).to.be.equal(testITwinName1);
-    expect(itwinObj.class).to.be.equal(testClass);
-    expect(itwinObj.subClass).to.be.equal(testSubClass);
-    expect(itwinObj.type).to.be.equal(testType);
-    expect(itwinObj.number).to.be.equal(testNumber);
-    testITwinId = itwinObj.id!;
+    const { result: iTwin } = await runCommand<ITwin>(`itwin create --name "${testITwinName1}" --class ${testClass} --sub-class ${testSubClass} --type ${testType} --number ${testNumber}`); 
+    expect(iTwin).to.have.property('id'); 
+    expect(iTwin!.displayName).to.be.equal(testITwinName1);
+    expect(iTwin!.class).to.be.equal(testClass);
+    expect(iTwin!.subClass).to.be.equal(testSubClass);
+    expect(iTwin!.type).to.be.equal(testType);
+    expect(iTwin!.number).to.be.equal(testNumber);
+    testITwinId = iTwin!.id!;
   });
 
   it('should create a new child iTwin', async () => {
-    const itwinChildJson = await runCommand(`itwin create --name "${testChildITwinName}" --class ${testClass} --sub-class ${testSubClass} --parent-id ${testITwinId} --status ${testStatus}`);
-    const itwinChildObj: ITwin = JSON.parse(itwinChildJson.stdout);
-    expect(itwinChildObj).to.have.property('id'); 
-    expect(itwinChildObj.displayName).to.be.equal(testChildITwinName);
-    expect(itwinChildObj.class).to.be.equal(testClass);
-    expect(itwinChildObj.subClass).to.be.equal(testSubClass);
-    expect(itwinChildObj.parentId).to.be.equal(testITwinId);
-    expect(itwinChildObj.status).to.be.equal(testStatus);
-    testITwinChildId = itwinChildObj.id!;
+    const { result: iTwinChild } = await runCommand<ITwin>(`itwin create --name "${testChildITwinName}" --class ${testClass} --sub-class ${testSubClass} --parent-id ${testITwinId} --status ${testStatus}`);
+    expect(iTwinChild).to.have.property('id'); 
+    expect(iTwinChild!.displayName).to.be.equal(testChildITwinName);
+    expect(iTwinChild!.class).to.be.equal(testClass);
+    expect(iTwinChild!.subClass).to.be.equal(testSubClass);
+    expect(iTwinChild!.parentId).to.be.equal(testITwinId);
+    expect(iTwinChild!.status).to.be.equal(testStatus);
+    testITwinChildId = iTwinChild!.id!;
   });
 
   it('should create a new iTwin with location information', async () => {
-    const itwinJson = await runCommand(`itwin create --name "${testITwinName2}" --class ${testClass} --sub-class ${testSubClass} --data-center-location "${testDataCenterLocation}" --iana-time-zone ${testIanaTimeZone} --geographic-location "${testGeographicLocation}"`);
-    const itwinObj: ITwin = JSON.parse(itwinJson.stdout);
-    expect(itwinObj).to.have.property('id'); 
-    expect(itwinObj.displayName).to.be.equal(testITwinName2);
-    expect(itwinObj.class).to.be.equal(testClass);
-    expect(itwinObj.subClass).to.be.equal(testSubClass);
-    expect(itwinObj.dataCenterLocation).to.be.equal(testDataCenterLocation);
-    expect(itwinObj.ianaTimeZone).to.be.equal(testIanaTimeZone);
-    expect(itwinObj.geographicLocation).to.be.equal(testGeographicLocation);
-    testITwinId2 = itwinObj.id!;
+    const { result: iTwin } = await runCommand<ITwin>(`itwin create --name "${testITwinName2}" --class ${testClass} --sub-class ${testSubClass} --data-center-location "${testDataCenterLocation}" --iana-time-zone ${testIanaTimeZone} --geographic-location "${testGeographicLocation}"`);
+    expect(iTwin).to.have.property('id'); 
+    expect(iTwin!.displayName).to.be.equal(testITwinName2);
+    expect(iTwin!.class).to.be.equal(testClass);
+    expect(iTwin!.subClass).to.be.equal(testSubClass);
+    expect(iTwin!.dataCenterLocation).to.be.equal(testDataCenterLocation);
+    expect(iTwin!.ianaTimeZone).to.be.equal(testIanaTimeZone);
+    expect(iTwin!.geographicLocation).to.be.equal(testGeographicLocation);
+    testITwinId2 = iTwin!.id!;
   });
 });
 

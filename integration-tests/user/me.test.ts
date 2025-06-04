@@ -6,12 +6,12 @@
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
+import { User } from '../../src/services/user-client/models/user';
 import runSuiteIfMainModule from '../utils/run-suite-if-main-module';
 
 const tests = () => describe('me', () => {
   it('should retrieve the currently authenticated user', async () => {
-    const { stdout } = await runCommand('user me');
-    const userInfo = JSON.parse(stdout);
+    const { result: userInfo } = await runCommand<User>('user me');
   
     expect(userInfo).to.have.property('id');
     expect(userInfo).to.have.property('displayName');

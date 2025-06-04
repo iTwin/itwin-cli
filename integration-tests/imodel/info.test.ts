@@ -3,6 +3,7 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
+import { IModel } from '@itwin/imodels-client-management';
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
@@ -22,16 +23,15 @@ const tests = () => describe('info', () => {
   });
 
   after(async () => {
-    const { result: imodelDeleteResult } = await runCommand(`imodel delete --imodel-id ${testIModelId}`);
-    const { result: itwinDeleteResult } = await runCommand(`itwin delete --itwin-id ${testITwinId}`);
+    const { result: imodelDeleteResult } = await runCommand<{result: string}>(`imodel delete --imodel-id ${testIModelId}`);
+    const { result: itwinDeleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinId}`);
 
     expect(imodelDeleteResult).to.have.property('result', 'deleted');
     expect(itwinDeleteResult).to.have.property('result', 'deleted');
   });
 
   it('should get the iModel info', async () => {
-    const { stdout } = await runCommand(`imodel info --imodel-id ${testIModelId}`);
-    const iModelInfo = JSON.parse(stdout);
+    const { result: iModelInfo } = await runCommand<IModel>(`imodel info --imodel-id ${testIModelId}`);
 
     expect(iModelInfo).to.have.property('id', testIModelId);
     expect(iModelInfo).to.have.property('name', testIModelName);

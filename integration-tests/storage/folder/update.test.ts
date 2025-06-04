@@ -6,6 +6,7 @@
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
+import { folderTyped } from '../../../src/services/storage-client/models/folder-typed';
 import { 
   createFolder, 
   createITwin, 
@@ -27,10 +28,7 @@ const tests = () => describe('update', () => {
   });
 
   after(async () => {
-    const { result: folderDeleteResult } = await runCommand(`storage folder delete --folder-id ${testFolderId}`);
-    const { result: itwinDeleteResult } = await runCommand(`itwin delete --itwin-id ${testITwinId}`);
-
-    expect(folderDeleteResult).to.have.property('result', 'deleted');
+    const { result: itwinDeleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinId}`);
     expect(itwinDeleteResult).to.have.property('result', 'deleted');
   });
 
@@ -38,8 +36,7 @@ const tests = () => describe('update', () => {
     const updatedDisplayName = 'UpdatedIntegrationTestFolder';
     const updatedDescription = 'Updated test description';
 
-    const { stdout } = await runCommand(`storage folder update --folder-id ${testFolderId} --name ${updatedDisplayName} --description "${updatedDescription}"`);
-    const updatedFolder = JSON.parse(stdout);
+    const { result: updatedFolder } = await runCommand<folderTyped>(`storage folder update --folder-id ${testFolderId} --name ${updatedDisplayName} --description "${updatedDescription}"`);
 
     expect(updatedFolder).to.have.property('id', testFolderId);
     expect(updatedFolder).to.have.property('displayName', updatedDisplayName);

@@ -17,28 +17,28 @@ const tests = () => {
     
     before(async () => {
         const iTwinName = `cli-itwin-integration-test-${new Date().toISOString()}`;
-        const iTwin = await runCommand<ITwin>(`itwin create --class Thing --sub-class Asset --name ${iTwinName}`);
-        expect(iTwin.result?.id).is.not.undefined;
-        iTwinId = iTwin.result!.id!;
+        const { result: iTwin } = await runCommand<ITwin>(`itwin create --class Thing --sub-class Asset --name ${iTwinName}`);
+        expect(iTwin?.id).to.not.be.undefined;
+        iTwinId = iTwin!.id!;
     });
 
     after(async () => {
-        const { result: deleteResult } = await runCommand(`itwin delete --itwin-id ${iTwinId}`);
+        const { result: deleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${iTwinId}`);
         expect(deleteResult).to.have.property('result', 'deleted');
     });
 
     it('Should get pending invitations', async () => {
         const emailToAdd = ITP_TEST_USER_EXTERNAL;
-        const owner = await runCommand<ownerResponse>(`access-control member owner add --itwin-id ${iTwinId} --email ${emailToAdd}`);
-        expect(owner.result).is.not.undefined;
-        expect(owner.result!.member).is.null;
-        expect(owner.result!.invitation).is.not.undefined;
-        expect(owner.result!.invitation.email.toLowerCase()).to.equal(emailToAdd!.toLowerCase());
+        const { result: owner } = await runCommand<ownerResponse>(`access-control member owner add --itwin-id ${iTwinId} --email ${emailToAdd}`);
+        expect(owner).to.not.be.undefined;
+        expect(owner!.member).is.null;
+        expect(owner!.invitation).to.not.be.undefined;
+        expect(owner!.invitation.email.toLowerCase()).to.equal(emailToAdd!.toLowerCase());
 
-        const invitationResults = await runCommand<invitation[]>(`access-control member invitations --itwin-id ${iTwinId}`);
-        expect(invitationResults.result).is.not.undefined;
-        expect(invitationResults.result!.length).to.be.greaterThanOrEqual(1);
-        expect(invitationResults.result!.some(invitation => invitation.email.toLowerCase() === emailToAdd!.toLowerCase())).to.be.true;
+        const { result: invitationResults } = await runCommand<invitation[]>(`access-control member invitations --itwin-id ${iTwinId}`);
+        expect(invitationResults).to.not.be.undefined;
+        expect(invitationResults!.length).to.be.greaterThanOrEqual(1);
+        expect(invitationResults!.some(invitation => invitation.email.toLowerCase() === emailToAdd!.toLowerCase())).to.be.true;
     });
 };
 
