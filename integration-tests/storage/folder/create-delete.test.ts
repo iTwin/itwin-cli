@@ -6,7 +6,7 @@
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
-import { folderTyped } from '../../../src/services/storage-client/models/folder-typed';
+import { FolderTyped } from '../../../src/services/storage-client/models/folder-typed';
 import { 
   createFolder, 
   createITwin, 
@@ -50,7 +50,7 @@ const tests = () => describe('create + delete', () => {
   it('should delete the folder', async () => {
     await deleteFolder(testFolderId);
 
-    const { error } = await runCommand<folderTyped>(`storage folder info -f ${testFolderId}`);
+    const { error } = await runCommand<FolderTyped>(`storage folder info -f ${testFolderId}`);
     expect(error).to.be.not.undefined;
     expect(error!.message).to.include('FolderNotFound');
   });

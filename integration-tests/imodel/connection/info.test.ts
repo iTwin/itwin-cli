@@ -39,7 +39,7 @@ const tests = () => describe('info', () => {
   });
 
   it('should get a connection', async () => {
-    const { result: connection } = await runCommand<storageConnection>(`imodel connection info -c ${connectionId}`);
+    const { result: connection } = await runCommand<StorageConnection>(`imodel connection info -c ${connectionId}`);
 
     expect(connection).to.not.be.undefined;
     expect(connection).to.have.property('id');
