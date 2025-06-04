@@ -3,9 +3,9 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { linksUpload } from "./links-upload.js";
+import { LinksUpload } from "./links-upload.js";
 
 
-export type fileUpload = {
-    _links?: linksUpload;
+export type FileUpload = {
+    _links?: LinksUpload;
 };

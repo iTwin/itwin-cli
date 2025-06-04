@@ -22,7 +22,7 @@ import { ITwinPlatformApiClient } from '../services/iTwin-api-client.js';
 import { StorageApiClient } from '../services/storage-client/storage-api-client.js';
 import { SynchronizationApiClient } from '../services/synchronizationClient/synchronization-api-client.js';
 import { UserApiClient } from '../services/user-client/user-api-client.js';
-import { configuration } from './configuration.js';
+import { Configuration } from './configuration.js';
 
 export default abstract class BaseCommand extends Command {
   static baseFlags = {
@@ -103,10 +103,10 @@ export default abstract class BaseCommand extends Command {
     return new ChangedElementsApiClient(await this.getITwinApiClient());
   }
 
-  protected getConfig() : configuration {
+  protected getConfig() : Configuration {
     const configPath = path.join(this.config.configDir, "config.json");
 
-    let config : configuration = {
+    let config : Configuration = {
       apiUrl: 'https://api.bentley.com',
       clientId: 'native-QJi5VlgxoujsCRwcGHMUtLGMZ',
       clientSecret: undefined,

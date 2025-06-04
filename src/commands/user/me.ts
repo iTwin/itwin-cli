@@ -3,11 +3,11 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { apiReference } from "../../extensions/api-reference.js"; // Added import
+import { ApiReference } from "../../extensions/api-reference.js"; // Added import
 import BaseCommand from "../../extensions/base-command.js";
 
 export default class Me extends BaseCommand {
-  static apiReference: apiReference = {
+  static apiReference: ApiReference = {
     link: "https://developer.bentley.com/apis/users/operations/me/",
     name: "User Me",
   };

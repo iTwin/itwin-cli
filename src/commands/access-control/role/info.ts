@@ -5,12 +5,12 @@
 
 import { Flags } from "@oclif/core";
 
-import { apiReference } from "../../../extensions/api-reference.js";
+import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { CustomFlags } from "../../../extensions/custom-flags.js";
 
 export default class InfoRole extends BaseCommand {
-    static apiReference: apiReference = {
+    static apiReference: ApiReference = {
         link: "https://developer.bentley.com/apis/access-control-v2/operations/get-itwin-role/",
         name: "Get iTwin Role Info",
     };

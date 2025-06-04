@@ -8,11 +8,11 @@
 import http2 from "node:http2";
 import open from 'open';
 
-import { apiReference } from "../../../extensions/api-reference.js";
+import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 
 export default class ConnectionAuth extends BaseCommand {
-  static apiReference: apiReference = {
+  static apiReference: ApiReference = {
     link: "https://developer.bentley.com/apis/synchronization/operations/get-authorization-information/",
     name: "Get Authorization Information",
   };

@@ -3,34 +3,34 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { links } from "../general-models/links.js"
+import { Links } from "../general-models/links.js"
 
-export type changeTrackingRequest = {
+export type ChangeTrackingRequest = {
     enable: boolean,
     iModelId: string,
     iTwinId: string
 }
 
-export type trackingResponse = {
+export type TrackingResponse = {
     enabled : boolean
 }
 
-export type changesetsResponse = {
-    _links: links
-    changesetStatus: changeset[]
+export type ChangesetsResponse = {
+    _links: Links
+    changesetStatus: Changeset[]
 }
 
-export type changeset = {
+export type Changeset = {
     id: string,
     index: number,
     ready: boolean
 }
 
-export type changesetComparisonResponse = {
-    changedElements: changesetComparison
+export type ChangesetComparisonResponse = {
+    changedElements: ChangesetComparison
 }
 
-export type changesetComparison = {
+export type ChangesetComparison = {
     classIds: string[],
     elements: string[],
     modelIds: string[],

@@ -3,27 +3,27 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { link, links } from "../../general-models/links.js"
-import { connectorType } from "./connector-type.js"
+import { Link, Links } from "../../general-models/links.js"
+import { ConnectorType } from "./connector-type.js"
 
-export type sourceFile = {
+export type SourceFile = {
     _links: {
-        file: link
+        file: Link
     }
     id: string,
     lastKnownFileName: string,
-} & sourceFileInfo
+} & SourceFileInfo
 
-export type sourceFileInfo = {
-    connectorType: connectorType
+export type SourceFileInfo = {
+    connectorType: ConnectorType
     storageFileId: string,
 }
 
-export type sourceFileResponse = {
-    sourceFile: sourceFile;
+export type SourceFileResponse = {
+    sourceFile: SourceFile;
 }
 
-export type sourceFilesResponse = {
-    _links: links
-    sourceFiles: sourceFile[];
+export type SourceFilesResponse = {
+    _links: Links
+    sourceFiles: SourceFile[];
 }

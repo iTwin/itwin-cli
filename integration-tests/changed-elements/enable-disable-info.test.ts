@@ -6,9 +6,9 @@
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
-import { trackingResponse } from '../../src/services/changed-elements-client/tracking';
+import { TrackingResponse } from '../../src/services/changed-elements-client/tracking';
 import { createIModel, createITwin } from '../utils/helpers';
-import { resultResponse } from '../utils/result-response';
+import { ResultResponse } from '../utils/result-response';
 import runSuiteIfMainModule from '../utils/run-suite-if-main-module';
 
 const tests = () => describe('enable + disable + info', () => {
@@ -31,18 +31,18 @@ const tests = () => describe('enable + disable + info', () => {
   });
 
   it('should have enabled change tracking', async () => {
-    const { result: enableResponse } = await runCommand<resultResponse>(`changed-elements enable --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
+    const { result: enableResponse } = await runCommand<ResultResponse>(`changed-elements enable --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
     expect(enableResponse?.result).equals('enabled');    
 
-    const { result: infoResponse } = await runCommand<trackingResponse>(`changed-elements info --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
+    const { result: infoResponse } = await runCommand<TrackingResponse>(`changed-elements info --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
     expect(infoResponse?.enabled).to.be.true;
   });
 
   it('should disable change tracking for the specified iModel', async () => {
-    const { result: disableResponse } = await runCommand<resultResponse>(`changed-elements disable --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
+    const { result: disableResponse } = await runCommand<ResultResponse>(`changed-elements disable --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
     expect(disableResponse?.result).equals('disabled');    
     
-    const { result: infoResponse } = await runCommand<trackingResponse>(`changed-elements info -m ${testIModelId} -i ${testITwinId}`);
+    const { result: infoResponse } = await runCommand<TrackingResponse>(`changed-elements info -m ${testIModelId} -i ${testITwinId}`);
     expect(infoResponse?.enabled).to.be.false;
   });
 });

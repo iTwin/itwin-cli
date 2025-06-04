@@ -5,11 +5,11 @@
 
 import { Flags } from "@oclif/core";
 
-import { apiReference } from "../../../../extensions/api-reference.js";
+import { ApiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
 
 export default class CreateConnectionRun extends BaseCommand {
-    static apiReference: apiReference = {
+    static apiReference: ApiReference = {
         link: "https://developer.bentley.com/apis/synchronization/operations/run-storage-connection/",
         name: "Run Storage Connection",
     };

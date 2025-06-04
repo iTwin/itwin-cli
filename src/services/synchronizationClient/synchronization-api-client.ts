@@ -4,11 +4,11 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { ITwinPlatformApiClient } from "../iTwin-api-client.js";
-import { connectionAuth } from "./models/connection-auth.js";
-import { sourceFileInfo, sourceFileResponse, sourceFilesResponse } from "./models/source-file.js";
-import { storageConnectionCreate } from "./models/storage-connection-create.js";
-import { storageConnectionListResponse, storageConnectionResponse, storageConnectionUpdate } from "./models/storage-connection-response.js";
-import { storageRunResponse, storageRunsResponse } from "./models/storage-run-response.js";
+import { ConnectionAuth } from "./models/connection-auth.js";
+import { SourceFileInfo, SourceFileResponse, SourceFilesResponse } from "./models/source-file.js";
+import { StorageConnectionCreate } from "./models/storage-connection-create.js";
+import { StorageConnectionListResponse, StorageConnectionResponse, StorageConnectionUpdate } from "./models/storage-connection-response.js";
+import { StorageRunResponse, StorageRunsResponse } from "./models/storage-run-response.js";
 
 export class SynchronizationApiClient {
     iTwinPlatformApiClient: ITwinPlatformApiClient;
@@ -17,7 +17,7 @@ export class SynchronizationApiClient {
         this.iTwinPlatformApiClient = client;
     }
 
-    addSourceFile(connectionId: string, sourceFile: sourceFileInfo): Promise<sourceFileResponse> {
+    addSourceFile(connectionId: string, sourceFile: SourceFileInfo): Promise<SourceFileResponse> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `synchronization/imodels/storageconnections/${connectionId}/sourcefiles`,
             body: sourceFile,
@@ -25,7 +25,7 @@ export class SynchronizationApiClient {
         });
     }
 
-    authorizeUserForConnection(): Promise<connectionAuth> {
+    authorizeUserForConnection(): Promise<ConnectionAuth> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: 'synchronization/imodels/connections/authorizationinformation',
             method: 'GET',
@@ -38,7 +38,7 @@ export class SynchronizationApiClient {
         });
     }
 
-    createStorageConnection(connection: storageConnectionCreate): Promise<storageConnectionResponse> {
+    createStorageConnection(connection: StorageConnectionCreate): Promise<StorageConnectionResponse> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: 'synchronization/imodels/storageconnections',
             body: connection,
@@ -67,14 +67,14 @@ export class SynchronizationApiClient {
         });
     }
 
-    getSourceFile(connectionId: string, sourceFileId: string): Promise<sourceFileResponse> {
+    getSourceFile(connectionId: string, sourceFileId: string): Promise<SourceFileResponse> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `synchronization/imodels/storageconnections/${connectionId}/sourcefiles/${sourceFileId}`,
             method: "GET"
         });
     }
 
-    getSourceFiles(connectionId: string, top?: number, skip?: number): Promise<sourceFilesResponse> {
+    getSourceFiles(connectionId: string, top?: number, skip?: number): Promise<SourceFilesResponse> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `synchronization/imodels/storageconnections/${connectionId}/sourcefiles`,
             headers: {
@@ -94,21 +94,21 @@ export class SynchronizationApiClient {
         });
     }
 
-    getStorageConnection(connectionId: string): Promise<storageConnectionResponse> {
+    getStorageConnection(connectionId: string): Promise<StorageConnectionResponse> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `synchronization/imodels/storageconnections/${connectionId}`,
             method: 'GET'
         });
     }
 
-    getStorageConnectionRun(connectionId: string, runId: string) : Promise<storageRunResponse> {
+    getStorageConnectionRun(connectionId: string, runId: string) : Promise<StorageRunResponse> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `synchronization/imodels/storageconnections/${connectionId}/runs/${runId}`,
             method: "GET"
         });
     }
 
-    getStorageConnectionRuns(connectionId: string, top?: number, skip?: number): Promise<storageRunsResponse> {
+    getStorageConnectionRuns(connectionId: string, top?: number, skip?: number): Promise<StorageRunsResponse> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `synchronization/imodels/storageconnections/${connectionId}/runs`,
             method: "GET",
@@ -125,7 +125,7 @@ export class SynchronizationApiClient {
         });
     }
 
-    getStorageConnections(iModelId: string, top?: number, skip?: number): Promise<storageConnectionListResponse> {
+    getStorageConnections(iModelId: string, top?: number, skip?: number): Promise<StorageConnectionListResponse> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `synchronization/imodels/storageconnections`,
             method: 'GET',
@@ -147,7 +147,7 @@ export class SynchronizationApiClient {
         });
     }
 
-    updateSourceFile(connectionId: string, sourceFileId: string, update: sourceFileInfo): Promise<sourceFileResponse> {
+    updateSourceFile(connectionId: string, sourceFileId: string, update: SourceFileInfo): Promise<SourceFileResponse> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `synchronization/imodels/storageconnections/${connectionId}/sourcefiles/${sourceFileId}`,
             body: update,
@@ -155,7 +155,7 @@ export class SynchronizationApiClient {
         });
     }
 
-    updateStorageConnection(connectionId: string, update: storageConnectionUpdate): Promise<storageConnectionResponse> {
+    updateStorageConnection(connectionId: string, update: StorageConnectionUpdate): Promise<StorageConnectionResponse> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `synchronization/imodels/storageconnections/${connectionId}`,
             body: update,

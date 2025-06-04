@@ -3,19 +3,19 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { links } from "../../general-models/links.js";
-import { storageConnection } from "./storage-connection.js";
+import { Links } from "../../general-models/links.js";
+import { StorageConnection } from "./storage-connection.js";
 
-export type storageConnectionResponse = {
-    connection?: storageConnection;
+export type StorageConnectionResponse = {
+    connection?: StorageConnection;
 };
 
-export type storageConnectionListResponse = {
-    _links: links;
-    connections: storageConnection[];
+export type StorageConnectionListResponse = {
+    _links: Links;
+    connections: StorageConnection[];
 }
 
-export type storageConnectionUpdate = {
+export type StorageConnectionUpdate = {
     authenticationType?: 'Service' | 'User';
     displayName?: string;
 }

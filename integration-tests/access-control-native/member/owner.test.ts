@@ -7,8 +7,8 @@ import { ITwin } from "@itwin/itwins-client";
 import { runCommand } from "@oclif/test";
 import { expect } from "chai";
 
-import { groupMember } from "../../../src/services/access-control-client/models/group-members.js";
-import { ownerResponse } from "../../../src/services/access-control-client/models/owner.js";
+import { GroupMember } from "../../../src/services/access-control-client/models/group-members.js";
+import { OwnerResponse } from "../../../src/services/access-control-client/models/owner.js";
 import { ITP_TEST_USER_SAMEORG } from "../../utils/environment.js";
 import { nativeLoginToCli } from "../../utils/helpers.js";
 import runSuiteIfMainModule from "../../utils/run-suite-if-main-module.js";
@@ -33,13 +33,13 @@ const tests = () => describe('owner', () => {
     it('Should add an internal member to an iTwin and remove owner member', async () => {
         const emailToAdd = ITP_TEST_USER_SAMEORG;
 
-        const { result: invitedUser } = await runCommand<ownerResponse>(`access-control member owner add --itwin-id ${iTwinId} --email ${emailToAdd}`);
+        const { result: invitedUser } = await runCommand<OwnerResponse>(`access-control member owner add --itwin-id ${iTwinId} --email ${emailToAdd}`);
 
         expect(invitedUser).to.not.be.undefined;
         expect(invitedUser!.member).to.not.be.undefined;
         expect(invitedUser!.member.email.toLowerCase()).to.be.equal(emailToAdd!.toLowerCase());
 
-        const { result: usersInfo } = await runCommand<groupMember[]>(`access-control member owner list --itwin-id ${iTwinId}`);
+        const { result: usersInfo } = await runCommand<GroupMember[]>(`access-control member owner list --itwin-id ${iTwinId}`);
         expect(usersInfo).to.not.be.undefined;
         expect(usersInfo).to.have.lengthOf(2);
         const joinedUser = usersInfo?.filter(user => user.email.toLowerCase() === emailToAdd!.toLowerCase())[0];

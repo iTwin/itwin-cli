@@ -3,7 +3,7 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-export enum authenticationType {
+export enum AuthenticationType {
     SERVICE = 'Service',
     USER = 'User'
 }

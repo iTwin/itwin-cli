@@ -5,11 +5,11 @@
 
 import { Flags } from "@oclif/core";
 
-import { apiReference } from "../../../extensions/api-reference.js";
+import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 
 export default class UpdateContent extends BaseCommand {
-    static apiReference : apiReference = {
+    static apiReference : ApiReference = {
         link: 'https://developer.bentley.com/apis/storage/operations/update-file-content/',
         name: 'Update File Content',
     }

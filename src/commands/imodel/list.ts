@@ -6,12 +6,12 @@
 import { IModel, IModelOrderByProperty, OrderBy, take, toArray } from "@itwin/imodels-client-management";
 import { Flags } from "@oclif/core";
 
-import { apiReference } from "../../extensions/api-reference.js";
+import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
 import { CustomFlags } from "../../extensions/custom-flags.js";
 
 export default class ListIModels extends BaseCommand {
-    static apiReference: apiReference = {
+    static apiReference: ApiReference = {
         link: "https://developer.bentley.com/apis/imodels-v2/operations/get-itwin-imodels/",
         name: "List iModels",
     };
