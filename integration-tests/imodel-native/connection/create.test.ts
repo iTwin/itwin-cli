@@ -27,8 +27,8 @@ const tests = () => describe('imodel connection create tests (Native Client)', (
   });
 
   after(async () => {
-    const { result: imodelDeleteResult } = await runCommand(`imodel delete --imodel-id ${testIModelId}`);
-    const { result: itwinDeleteResult } = await runCommand(`itwin delete --itwin-id ${testITwinId}`);
+    const { result: imodelDeleteResult } = await runCommand<{result: string}>(`imodel delete --imodel-id ${testIModelId}`);
+    const { result: itwinDeleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinId}`);
 
     expect(imodelDeleteResult).to.have.property('result', 'deleted');
     expect(itwinDeleteResult).to.have.property('result', 'deleted');

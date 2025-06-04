@@ -10,9 +10,9 @@ import runSuiteIfMainModule from '../utils/run-suite-if-main-module';
 
 const tests = () => {
   it('should fail with incorrect credentials', async () => {
-    const result = await runCommand('auth login --client-id invalid-id --client-secret wrong-secret');
-    expect(result.error).to.be.not.undefined;
-    expect(result.error!.message).to.include('User login was not successful');
+    const { error: loginError } = await runCommand('auth login --client-id invalid-id --client-secret wrong-secret');
+    expect(loginError).to.be.not.undefined;
+    expect(loginError!.message).to.include('User login was not successful');
   });
 
   it('should log out successfully', async () => {

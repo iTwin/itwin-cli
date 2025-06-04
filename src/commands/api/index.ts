@@ -49,7 +49,7 @@ export default class ApiRequest extends BaseCommand {
             helpValue: '<string>',
         }),
         "empty-response": Flags.boolean({
-            description: "Indicates the request will not return a response body."
+            description: "Indicates the request will not return a response body.",
         }),
         header: Flags.string({
             description: "Headers to include in the request. Use the format 'HeaderName: value'.",

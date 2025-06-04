@@ -14,26 +14,26 @@ const tests = () => {
 
     before(async () => {
         const iTwinName = `cli-itwin-integration-test-${new Date().toISOString()}`;
-        const iTwin = await runCommand<ITwin>(`itwin create --class Thing --sub-class Asset --name ${iTwinName}`);
-        expect(iTwin.result?.id).is.not.undefined;
-        iTwinId = iTwin.result!.id!;
+        const { result: iTwin } = await runCommand<ITwin>(`itwin create --class Thing --sub-class Asset --name ${iTwinName}`);
+        expect(iTwin?.id).to.not.be.undefined;
+        iTwinId = iTwin!.id!;
     });
 
     after(async () => {
-        const { result: deleteResult} = await runCommand(`itwin delete --itwin-id ${iTwinId}`);
+        const { result: deleteResult} = await runCommand<{result: string}>(`itwin delete --itwin-id ${iTwinId}`);
         expect(deleteResult).to.have.property('result', 'deleted');
     });
 
     it('Should retrieve my permissions', async () => {
-        const myPermissions = await runCommand<string[]>(`access-control permissions me --itwin-id ${iTwinId}`);
-        expect(myPermissions.result).is.not.undefined;
-        expect(myPermissions.result!.length).to.be.greaterThan(0);
+        const { result: myPermissions } = await runCommand<string[]>(`access-control permissions me --itwin-id ${iTwinId}`);
+        expect(myPermissions).to.not.be.undefined;
+        expect(myPermissions!.length).to.be.greaterThan(0);
     });
 
     it('Should list all permissions', async () => {
-        const allPermissions = await runCommand<string[]>(`access-control permissions all`);
-        expect(allPermissions.result).is.not.undefined;
-        expect(allPermissions.result!.length).to.be.greaterThan(0);
+        const { result: allPermissions } = await runCommand<string[]>(`access-control permissions all`);
+        expect(allPermissions).to.not.be.undefined;
+        expect(allPermissions!.length).to.be.greaterThan(0);
     });
 };
 

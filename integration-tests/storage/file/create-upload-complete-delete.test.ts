@@ -6,6 +6,8 @@
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
+import { fileTyped } from '../../../src/services/storage-client/models/file-typed';
+import { fileUpload } from '../../../src/services/storage-client/models/file-upload';
 import { 
   createFolder, 
   createITwin,  
@@ -31,56 +33,49 @@ const tests = () => describe('create + upload + complete + delete', () => {
   });
 
   after(async () => {
-    const { result: folderDeleteResult } = await runCommand(`storage folder delete --folder-id ${testFolderId}`);
-    const { result: itwinDeleteResult } = await runCommand(`itwin delete --itwin-id ${testITwinId}`);
-
-    expect(folderDeleteResult).to.have.property('result', 'deleted');
+    const { result: itwinDeleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinId}`);
     expect(itwinDeleteResult).to.have.property('result', 'deleted');
   });
 
   it('should create a new file meta data', async () => {
-    const { stdout } = await runCommand(`storage file create --folder-id ${testFolderId} --name ${displayName} --description "${description}"`);
-    const createdFile = JSON.parse(stdout);
+    const { result: createdFile } = await runCommand<fileUpload>(`storage file create --folder-id ${testFolderId} --name ${displayName} --description "${description}"`);
 
     expect(createdFile).to.have.property('_links');
-    expect(createdFile._links).to.have.property('completeUrl');
-    expect(createdFile._links).to.have.property('uploadUrl');
+    expect(createdFile!._links).to.have.property('completeUrl');
+    expect(createdFile!._links).to.have.property('uploadUrl');
 
-    uploadUrl = createdFile._links.uploadUrl.href;
+    uploadUrl = createdFile!._links!.uploadUrl!.href!;
 
     // extract file id from completeUrl that looks like this: "https://api.bentley.com/storage/files/TYJsPN0xtkWId0yUrXkS5pN5AQzuullIkxz5aDnDJSI/complete"
-    const completeUrl = createdFile._links.completeUrl.href;
-    testFileId = completeUrl.split('/').at(-2);
+    const completeUrl = createdFile!._links!.completeUrl!.href;
+    testFileId = completeUrl!.split('/').at(-2)!;
   });
 
   it('should upload a file', async () => {
     const filePath = 'integration-tests/test.csv';
-    const { stdout } = await runCommand(`storage file upload --upload-url "${uploadUrl}" --file-path ${filePath}`);
-    const uploadedFile = JSON.parse(stdout);
+    const { result: uploadResult } = await runCommand<{result: string}>(`storage file upload --upload-url "${uploadUrl}" --file-path ${filePath}`);
 
-    expect(uploadedFile).to.have.property('result', 'uploaded');
+    expect(uploadResult?.result).to.be.equal('uploaded');
   });
 
   it('should complete the upload', async () => {
-    const { stdout } = await runCommand(`storage file update-complete --file-id ${testFileId}`);
-    const completedFile = JSON.parse(stdout);
+    const { result: completedFile } = await runCommand<fileTyped>(`storage file update-complete --file-id ${testFileId}`);
 
     expect(completedFile).to.have.property('id', testFileId);
     expect(completedFile).to.have.property('displayName', displayName);
     expect(completedFile).to.have.property('description', description);
-
     expect(completedFile).to.have.property('_links');
-    expect(completedFile._links).to.have.property('parentFolder');
-    expect(completedFile._links.parentFolder).to.have.property('href');
-    expect(completedFile._links.parentFolder.href).to.include(testFolderId);
+    expect(completedFile!._links).to.have.property('parentFolder');
+    expect(completedFile!._links!.parentFolder).to.have.property('href');
+    expect(completedFile!._links!.parentFolder!.href).to.include(testFolderId);
   });
 
   it('should delete the file', async () => {
     await runCommand(`storage file delete --file-id ${testFileId}`);
 
-    const result = await runCommand(`storage file info --file-id ${testFileId}`);
-    expect(result.error).to.be.not.undefined;
-    expect(result.error!.message).to.include('FileNotFound');
+    const { error: infoError } = await runCommand<fileTyped>(`storage file info --file-id ${testFileId}`);
+    expect(infoError).to.be.not.undefined;
+    expect(infoError!.message).to.include('FileNotFound');
   });
 
 });

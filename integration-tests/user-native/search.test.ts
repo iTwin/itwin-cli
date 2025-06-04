@@ -11,9 +11,12 @@ import runSuiteIfMainModule from '../utils/run-suite-if-main-module';
 
 const tests = () => describe('user search (Native Client Tests)', () => {
   it('should search for users with a valid query', async () => {
-    const meResult = await runCommand('user me').then((result) => JSON.parse(result.stdout));
-    const testUserId = meResult.id;
-    const testUserEmail = meResult.email;
+    const { result: meResult } = await runCommand<User>('user me');
+    expect(meResult?.id).to.not.be.undefined;
+    expect(meResult?.email).to.not.be.undefined;
+
+    const testUserId = meResult!.id;
+    const testUserEmail = meResult!.email;
 
     const { result: users } = await runCommand<User[]>(`user search --search ${testUserEmail}`);
 

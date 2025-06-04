@@ -8,6 +8,7 @@ import { ITwin } from '@itwin/itwins-client';
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
+import { populateResponse} from '../../src/commands/imodel/populate';
 import { createFile, createIModel, createITwin, decodeCompressedBase64, getRootFolderId } from '../utils/helpers';
 import { resultResponse } from '../utils/result-response';
 import runSuiteIfMainModule from '../utils/run-suite-if-main-module';
@@ -21,10 +22,10 @@ const tests = () => describe('view cesium-sandcastle', () => {
   let testITwinId: string;
 
   before(async () => {
-    const filteredITwins = await runCommand<ITwin[]>(`itwin list --name ${testITwinName}`);
-    expect(filteredITwins.result).to.not.be.undefined
+    const { result: filteredITwins } = await runCommand<ITwin[]>(`itwin list --name ${testITwinName}`);
+    expect(filteredITwins).to.not.be.undefined
 
-    if(filteredITwins.result!.length === 0) {
+    if(filteredITwins!.length === 0) {
         const testITwin = await createITwin(testITwinName, 'Thing', 'Asset');
         testITwinId = testITwin.id as string;
         const testIModel = await createIModel(testIModelName, testITwinId);
@@ -34,21 +35,21 @@ const tests = () => describe('view cesium-sandcastle', () => {
 
         const rootFolderId = await getRootFolderId(testITwinId);
         await createFile(rootFolderId, testFileName, testFilePath);
-        const result = await runCommand(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type MSTN`);
-        expect(result.result).to.have.property('iModelId', testIModelId);
-        expect(result.result).to.have.property('iTwinId', testITwinId);
+        const { result: populateResult } = await runCommand<populateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type MSTN`);
+        expect(populateResult).to.have.property('iModelId', testIModelId);
+        expect(populateResult).to.have.property('iTwinId', testITwinId);
     }
     else {
-        testITwinId = filteredITwins.result![0].id!;
-        const iModels = await runCommand<IModel[]>(`imodel list --itwin-id ${testITwinId}`);
-        expect(iModels.result).to.not.be.undefined;
-        expect(iModels.result?.length).to.be.equal(1);
-        testIModelId = iModels.result![0].id;
+        testITwinId = filteredITwins![0].id!;
+        const { result: iModels  } = await runCommand<IModel[]>(`imodel list --itwin-id ${testITwinId}`);
+        expect(iModels).to.not.be.undefined;
+        expect(iModels).to.have.lengthOf(1);
+        testIModelId = iModels![0].id;
     }
   });
 
   it('should not use terrain when no terrain is specified', async () => {
-    const {result} = await runCommand<{url: string}>(`imodel view cesium-sandcastle --imodel-id ${testIModelId}`);
+    const { result } = await runCommand<{url: string}>(`imodel view cesium-sandcastle --imodel-id ${testIModelId}`);
     expect(result).to.not.be.undefined;
     expect(result!.url).to.not.be.undefined;
 
@@ -59,7 +60,7 @@ const tests = () => describe('view cesium-sandcastle', () => {
   });
 
   it(`should use cesium world terrain, when '--terrain cesiumWorldTerrain' is provided`, async () => {
-    const {result} = await runCommand<{url: string}>(`imodel view cesium-sandcastle --imodel-id ${testIModelId} --terrain cesiumWorldTerrain`);
+    const { result } = await runCommand<{url: string}>(`imodel view cesium-sandcastle --imodel-id ${testIModelId} --terrain cesiumWorldTerrain`);
     expect(result).to.not.be.undefined;
     expect(result!.url).to.not.be.undefined;
 

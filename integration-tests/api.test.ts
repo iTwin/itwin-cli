@@ -22,7 +22,7 @@ const tests = () => describe("API Integration Tests", () => {
     });
 
     after(async () => {
-        const { result: itwinDeleteResult } = await runCommand(`itwin delete --itwin-id ${iTwin.id}`);
+        const { result: itwinDeleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${iTwin.id}`);
         expect(itwinDeleteResult).to.have.property('result', 'deleted');
     });
 
@@ -113,7 +113,7 @@ const tests = () => describe("API Integration Tests", () => {
 
     it('should return an error if serialized JSON provided to `--body` flag is invalid', async () => {
         const apiResponse = await runCommand(`api --method PATCH --path itwins/${iTwin.id} --body not-a-serialized-json-string`);
-        expect(apiResponse.error).is.not.undefined;
+        expect(apiResponse).to.have.property('error'); 
         expect(apiResponse.error?.message).to.match(/'not-a-serialized-json-string' is not valid serialized JSON./)
     });
 });

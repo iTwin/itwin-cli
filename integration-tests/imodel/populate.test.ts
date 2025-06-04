@@ -30,8 +30,8 @@ const tests = () => describe('populate', () => {
   });
 
   afterEach(async () => {
-    const { result: iModelDeleteResult } = await runCommand(`imodel delete --imodel-id ${testIModelId}`);
-    const { result: iTwinDeleteResult } = await runCommand(`itwin delete --itwin-id ${testITwinId}`);
+    const { result: iModelDeleteResult } = await runCommand<{result: string}>(`imodel delete --imodel-id ${testIModelId}`);
+    const { result: iTwinDeleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinId}`);
 
     expect(iModelDeleteResult).to.have.property('result', 'deleted');
     expect(iTwinDeleteResult).to.have.property('result', 'deleted');
@@ -40,10 +40,10 @@ const tests = () => describe('populate', () => {
   it('should populate the iModel with the uploaded file', async () => {
     const { result: populateResult } = await runCommand<populateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath1} --file ${testFilePath2} --connector-type MSTN`);
     expect(populateResult).to.not.be.undefined;
-    expect(populateResult!.iTwinId).to.be.equal(testITwinId);
-    expect(populateResult!.iModelId).to.be.equal(testIModelId);
+    expect(populateResult).to.have.property('iTwinId', testITwinId);
+    expect(populateResult).to.have.property('iModelId', testIModelId);
     expect(populateResult!.summary).to.not.be.undefined;
-    expect(populateResult!.summary.length).to.be.equal(1);
+    expect(populateResult!.summary).to.have.lengthOf(1);
     expect(populateResult!.summary[0].connectionId).to.not.be.undefined;
     expect(populateResult!.summary[0].runId).to.not.be.undefined;
 
@@ -60,10 +60,10 @@ const tests = () => describe('populate', () => {
   it('should populate the iModel with the uploaded file (no-wait flag with polling)', async () => {
     const { result: populateResult } = await runCommand<populateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath1} --connector-type MSTN --no-wait`);
     expect(populateResult).to.not.be.undefined;
-    expect(populateResult!.iTwinId).to.be.equal(testITwinId);
-    expect(populateResult!.iModelId).to.be.equal(testIModelId);
+    expect(populateResult).to.have.property('iTwinId', testITwinId);
+    expect(populateResult).to.have.property('iModelId', testIModelId);
     expect(populateResult!.summary).to.not.be.undefined;
-    expect(populateResult!.summary.length).to.be.equal(1);
+    expect(populateResult!.summary).to.have.lengthOf(1);
     expect(populateResult!.summary[0].connectionId).to.not.be.undefined;
     expect(populateResult!.summary[0].runId).to.not.be.undefined;
 
@@ -124,7 +124,7 @@ const tests = () => describe('populate', () => {
     expect(infoResult?.jobs![1].connectorType).to.be.equal("MSTN");
   }).timeout(30 * 60 * 1000);
 
-  it.skip('should return an error message if amount of connector-types does not match the amount of files and is not equal to 1', async () => {
+  it('should return an error message if amount of connector-types does not match the amount of files and is not equal to 1', async () => {
     const { error: populateError } = await runCommand<populateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath1} --file ${testFilePath2} --file ${failingTestFilePath1} --connector-type MSTN --connector-type IFC`);
     expect(populateError).to.not.be.undefined;
     expect(populateError?.message).to.be.equal('When multiple connector-type options are provided, their amount must match file option amount. Alternatively, you can provide a single connector-type option, which will then be applied to all file options. You can also provide no connector-type options, in which case the command will attempt automatic detection.');

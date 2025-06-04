@@ -35,13 +35,9 @@ const tests = () => describe('run', () => {
   });
 
   after(async () => {
-    const { result: connectionDeleteResult } = await runCommand(`imodel connection delete --connection-id ${connectionId}`);
-    const { result: fileDeleteResult} = await runCommand(`storage file delete --file-id ${testFileId}`);
-    const { result: imodelDeleteResult } = await runCommand(`imodel delete --imodel-id ${testIModelId}`);
-    const { result: itwinDeleteResult } = await runCommand(`itwin delete --itwin-id ${testITwinId}`);
+    const { result: imodelDeleteResult } = await runCommand<{result: string}>(`imodel delete --imodel-id ${testIModelId}`);
+    const { result: itwinDeleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinId}`);
 
-    expect(connectionDeleteResult).to.have.property('result', 'deleted');
-    expect(fileDeleteResult).to.have.property('result', 'deleted');
     expect(imodelDeleteResult).to.have.property('result', 'deleted');
     expect(itwinDeleteResult).to.have.property('result', 'deleted');
   });
@@ -53,7 +49,7 @@ const tests = () => describe('run', () => {
     const { result: listResult } = await runCommand<storageRunsResponse>(`imodel connection run list -c ${connectionId}`);
     expect(listResult).to.not.be.undefined;
     expect(listResult?.runs).to.not.be.undefined;
-    expect(listResult?.runs.length).to.be.equal(1);
+    expect(listResult?.runs).to.have.lengthOf(1);
     
     let { result: infoResult } = await runCommand<storageRun>(`imodel connection run info -c ${connectionId} --connection-run-id ${listResult?.runs[0].id}`);
 

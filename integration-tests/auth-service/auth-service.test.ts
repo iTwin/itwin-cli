@@ -17,12 +17,12 @@ const tests = () => {
   });
 
   it('should return auth info', async () => {
-    const result = await runCommand<authorizationInformation>('auth info');
-    expect(result.result).to.be.not.undefined;
-    expect(result.result!.apiUrl).to.be.equal(ITP_API_URL);
-    expect(result.result!.authorizationType).to.be.not.undefined;
-    expect(result.result!.clientId).to.be.equal(ITP_SERVICE_CLIENT_ID);
-    expect(result.result!.issuerUrl).to.be.equal(ITP_ISSUER_URL);
+    const { result: infoResult } = await runCommand<authorizationInformation>('auth info');
+    expect(infoResult).to.be.not.undefined;
+    expect(infoResult!.apiUrl).to.be.equal(ITP_API_URL);
+    expect(infoResult!.authorizationType).to.be.not.undefined;
+    expect(infoResult!.clientId).to.be.equal(ITP_SERVICE_CLIENT_ID);
+    expect(infoResult!.issuerUrl).to.be.equal(ITP_ISSUER_URL);
   });
 };
 

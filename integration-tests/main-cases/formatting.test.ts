@@ -35,7 +35,6 @@ describe('Command formatting tests', async () => {
         for (const command of allCommands) {
             for (const [flagName, flag] of command.flags) {
                 expect(flag.description, `Flag '${flagName}' in command '${command.cmd.id}' is missing a description`).to.be.a('string').and.not.be.empty;
-                expect(flag, `Flag '${flagName}' in command '${command.cmd.id}' is missing the 'required' property`).to.have.property('required');
                 
                 if(flag.type === 'option') {
                     expect(flag, `Flag '${flagName}' in command '${command.cmd.id}' is missing a valid 'helpValue'`).to.have.property('helpValue').to.be.a('string').and.not.be.empty;

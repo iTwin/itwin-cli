@@ -18,12 +18,12 @@ const tests = () => describe('delete', () => {
   });
 
   it('should delete the iTwin', async () => {
-    const { result: deleteResult } = await runCommand(`itwin delete --itwin-id ${testITwin.id}`);
+    const { result: deleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwin.id}`);
     expect(deleteResult).to.have.property('result', 'deleted');
 
-    const itwinChildResult = await runCommand(`itwin info --itwin-id ${testITwin.id}`);
-    expect(itwinChildResult.error).to.be.not.undefined;
-    expect(itwinChildResult.error!.message).to.include('iTwinNotFound');
+    const { error: errorResult } = await runCommand(`itwin info --itwin-id ${testITwin.id}`);
+    expect(errorResult).to.be.not.undefined;
+    expect(errorResult!.message).to.include('iTwinNotFound');
   });
 });
 

@@ -32,7 +32,6 @@ export async function createFile(folderId: string, displayName: string, filePath
     expect(createdFile).to.have.property('_links');
     expect(createdFile!._links).to.have.property('completeUrl');
     expect(createdFile!._links).to.have.property('uploadUrl');
-
     const uploadUrl = createdFile!._links!.uploadUrl!.href;
 
     // extract file id from completeUrl that looks like this: "https://api.bentley.com/storage/files/TYJsPN0xtkWId0yUrXkS5pN5AQzuullIkxz5aDnDJSI/complete"
@@ -40,8 +39,7 @@ export async function createFile(folderId: string, displayName: string, filePath
     const fileId = completeUrl!.split('/').at(-2);
 
     // 2. Upload file
-    const uploadResult = await runCommand(`storage file upload --upload-url "${uploadUrl}" --file-path ${filePath}`);
-    const uploadedFile = JSON.parse(uploadResult.stdout);
+    const { result: uploadedFile } = await runCommand<{result: string}>(`storage file upload --upload-url "${uploadUrl}" --file-path ${filePath}`);
 
     expect(uploadedFile).to.have.property('result', 'uploaded');
 
@@ -81,26 +79,22 @@ export async function createIModel(name: string, iTwinId: string): Promise<IMode
 }
 
 export async function deleteFile(fileId: string): Promise<void> {
-    const result = await runCommand(`storage file delete --file-id ${fileId}`);
-    const deleteResult = JSON.parse(result.stdout);
+    const { result: deleteResult } = await runCommand<{result: string}>(`storage file delete --file-id ${fileId}`);
     expect(deleteResult).to.have.property('result', 'deleted');
 }
 
 export async function deleteFolder(folderId: string): Promise<void> {
-    const result = await runCommand(`storage folder delete --folder-id ${folderId}`);
-    const deleteResult = JSON.parse(result.stdout);
+    const { result: deleteResult } = await runCommand<{result: string}>(`storage folder delete --folder-id ${folderId}`);
     expect(deleteResult).to.have.property('result', 'deleted');
 }
 
 export async function deleteITwin(id: string): Promise<void> {
-    const result = await runCommand(`itwin delete --itwin-id ${id}`);
-    const deleteResult = JSON.parse(result.stdout);
+    const { result: deleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${id}`);
     expect(deleteResult).to.have.property('result', 'deleted');
 }
 
 export async function deleteIModel(id: string): Promise<void> {
-    const result = await runCommand(`imodel delete --imodel-id ${id}`);
-    const deleteResult = JSON.parse(result.stdout);
+    const { result: deleteResult } = await runCommand<{result: string}>(`imodel delete --imodel-id ${id}`);
     expect(deleteResult).to.have.property('result', 'deleted');
 }
 
@@ -141,7 +135,7 @@ export async function fetchEmailsAndGetInvitationLink(inbox: string, iTwinName: 
         const invitationTokenRegex = /href=".*?invitationToken.*?"/;
         const matches = messageBody.match(invitationTokenRegex);
         expect(matches).to.not.be.null;
-        expect(matches!.length).to.be.equal(1);
+        expect(matches).to.have.lengthOf(1);
         return matches![0].slice("href=\"".length, -1);
     }
 
