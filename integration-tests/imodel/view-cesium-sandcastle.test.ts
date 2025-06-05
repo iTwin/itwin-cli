@@ -8,7 +8,7 @@ import { ITwin } from '@itwin/itwins-client';
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
-import { populateResponse} from '../../src/commands/imodel/populate';
+import { PopulateResponse} from '../../src/commands/imodel/populate';
 import { createFile, createIModel, createITwin, decodeCompressedBase64, getRootFolderId } from '../utils/helpers';
 import { resultResponse } from '../utils/result-response';
 import runSuiteIfMainModule from '../utils/run-suite-if-main-module';
@@ -35,7 +35,7 @@ const tests = () => describe('view cesium-sandcastle', () => {
 
         const rootFolderId = await getRootFolderId(testITwinId);
         await createFile(rootFolderId, testFileName, testFilePath);
-        const { result: populateResult } = await runCommand<populateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type MSTN`);
+        const { result: populateResult } = await runCommand<PopulateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type MSTN`);
         expect(populateResult).to.have.property('iModelId', testIModelId);
         expect(populateResult).to.have.property('iTwinId', testITwinId);
     }

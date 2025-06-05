@@ -164,8 +164,8 @@
     "prepack": "oclif manifest && oclif readme",
     "test": "mocha --forbid-only \"integration-tests/main-cases/*.test.ts\"",
     "test:formatting": "mocha --forbid-only \"integration-tests/main-cases/formatting.test.ts\"",
-    "test:service": "mocha --forbid-only integration-tests/main-cases/service-client-serial.test.ts --timeout 180000 --require integration-tests/utils/mocha-global-setup-service.ts && mocha --forbid-only --parallel --jobs 4 integration-tests/main-cases/service-client-parallel/*.test.ts --timeout 180000 --require integration-tests/utils/mocha-global-setup-service.ts",
-    "test:native": "mocha --forbid-only integration-tests/main-cases/native-client-serial.test.ts --timeout 180000 --require integration-tests/utils/mocha-global-setup-native.ts && mocha --forbid-only --parallel --jobs 4 integration-tests/main-cases/native-client-parallel/*.test.ts --timeout 180000 --require integration-tests/utils/mocha-global-setup-native.ts",
+    "test:service": "mocha --forbid-only integration-tests/main-cases/service-client-serial.test.ts --timeout 180000 --require integration-tests/utils/mocha-global-setup-service.ts && mocha --forbid-only --parallel --jobs 7 integration-tests/main-cases/service-client-parallel/**/*.test.ts --timeout 180000 --require integration-tests/utils/mocha-global-setup-service.ts",
+    "test:native": "mocha --forbid-only integration-tests/main-cases/native-client-serial.test.ts --timeout 180000 --require integration-tests/utils/mocha-global-setup-native.ts && mocha --forbid-only --parallel --jobs 7 integration-tests/main-cases/native-client-parallel/**/*.test.ts --timeout 180000 --require integration-tests/utils/mocha-global-setup-native.ts",
     "version": "oclif readme && git add README.md",
     "docs-generator": "npm run build && node ./bin/run.js docs-generator"
   },

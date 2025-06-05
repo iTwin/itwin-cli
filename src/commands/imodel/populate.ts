@@ -16,12 +16,12 @@ import { fileUpload } from "../../services/storage-client/models/file-upload.js"
 import { itemsWithFolderLink } from "../../services/storage-client/models/items-with-folder-link.js"
 import { authInfo } from "../../services/synchronizationClient/models/connection-auth.js"
 import { connectorType } from "../../services/synchronizationClient/models/connector-type.js"
-import { executionResult } from "../../services/synchronizationClient/models/execution-result.js";
-import { executionState } from "../../services/synchronizationClient/models/execution-state.js"
+import { ExecutionResult } from "../../services/synchronizationClient/models/execution-result.js";
+import { ExecutionState } from "../../services/synchronizationClient/models/execution-state.js"
 import { sourceFile } from "../../services/synchronizationClient/models/source-file.js"
 import { storageConnection } from "../../services/synchronizationClient/models/storage-connection.js"
 import { storageConnectionListResponse } from "../../services/synchronizationClient/models/storage-connection-response.js"
-import { storageRun } from "../../services/synchronizationClient/models/storage-run.js"
+import { StorageRun } from "../../services/synchronizationClient/models/storage-run.js"
 
 export default class PopulateIModel extends BaseCommand {    
   static apiReference: apiReference = {
@@ -147,14 +147,14 @@ export default class PopulateIModel extends BaseCommand {
       this.log('Synchronization process completed');
     }
 
-    const populateResponse: populateResponse = {
+    const PopulateResponse: PopulateResponse = {
       iModelId: iModel.id,
       iTwinId: iModel.iTwinId,
       rootFolderId,
       summary,
     }
 
-    return populateResponse;
+    return PopulateResponse;
   }
 
   private async addFileToConnectionIfItIsNotPresent(connectionId: string, sourceFiles: sourceFile[], file: { connectorType: connectorType, fileId: string, fileName: string }) {
@@ -275,14 +275,14 @@ export default class PopulateIModel extends BaseCommand {
     let storageConnectionRun;
     do {
       // eslint-disable-next-line no-await-in-loop
-      storageConnectionRun = await this.runCommand<storageRun>('imodel:connection:run:info', ['--connection-id', connectionId, '--connection-run-id', runId]);
+      storageConnectionRun = await this.runCommand<StorageRun>('imodel:connection:run:info', ['--connection-id', connectionId, '--connection-run-id', runId]);
       // eslint-disable-next-line no-await-in-loop
       await new Promise(resolve => { setTimeout(resolve, 10_000) });
       this.log(`Waiting for synchronization to complete for run ID: ${runId} with state: ${storageConnectionRun?.state}`);
     // eslint-disable-next-line no-unmodified-loop-condition
-    } while (waitForCompletion && storageConnectionRun?.state !== executionState.COMPLETED);
+    } while (waitForCompletion && storageConnectionRun?.state !== ExecutionState.COMPLETED);
 
-    if(waitForCompletion && storageConnectionRun.result !== executionResult.SUCCESS) {
+    if(waitForCompletion && storageConnectionRun.result !== ExecutionResult.SUCCESS) {
       this.error(`Synchronization run ${runId} resulted in an error. Run 'itp imodel connection run info --connection-id ${connectionId} --connection-run-id ${runId}' for more info.`);
     }
 
@@ -300,7 +300,7 @@ export default class PopulateIModel extends BaseCommand {
   }
 }
 
-export interface populateResponse {
+export interface PopulateResponse {
   iModelId: string;
   iTwinId: string;
   rootFolderId: string;

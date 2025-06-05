@@ -7,8 +7,8 @@ import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
 import { storageConnection } from '../../../src/services/synchronizationClient/models/storage-connection';
-import { storageRun } from '../../../src/services/synchronizationClient/models/storage-run';
-import { storageRunsResponse } from '../../../src/services/synchronizationClient/models/storage-run-response';
+import { StorageRun } from '../../../src/services/synchronizationClient/models/storage-run';
+import { StorageRunsResponse } from '../../../src/services/synchronizationClient/models/storage-run-response';
 import { createFile, createIModel, createITwin, getRootFolderId, isNativeAuthAccessTokenCached } from '../../utils/helpers';
 import runSuiteIfMainModule from '../../utils/run-suite-if-main-module';
 
@@ -46,19 +46,19 @@ const tests = () => describe('run', () => {
     const { result: createResult } = await runCommand(`imodel connection run create -c ${connectionId}`);
     expect(createResult).to.not.be.undefined;
 
-    const { result: listResult } = await runCommand<storageRunsResponse>(`imodel connection run list -c ${connectionId}`);
+    const { result: listResult } = await runCommand<StorageRunsResponse>(`imodel connection run list -c ${connectionId}`);
     expect(listResult).to.not.be.undefined;
     expect(listResult?.runs).to.not.be.undefined;
     expect(listResult?.runs).to.have.lengthOf(1);
     
-    let { result: infoResult } = await runCommand<storageRun>(`imodel connection run info -c ${connectionId} --connection-run-id ${listResult?.runs[0].id}`);
+    let { result: infoResult } = await runCommand<StorageRun>(`imodel connection run info -c ${connectionId} --connection-run-id ${listResult?.runs[0].id}`);
 
     while(infoResult?.state !== "Completed") {
       // eslint-disable-next-line no-await-in-loop
       await new Promise(r => {setTimeout(r, 10_000)});
 
       // eslint-disable-next-line no-await-in-loop
-      const { result } = await runCommand<storageRun>(`imodel connection run info -c ${connectionId} --connection-run-id ${listResult?.runs[0].id}`);
+      const { result } = await runCommand<StorageRun>(`imodel connection run info -c ${connectionId} --connection-run-id ${listResult?.runs[0].id}`);
       infoResult = result;
     }
 

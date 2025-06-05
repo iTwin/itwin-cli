@@ -3,8 +3,8 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import iModelPopulateTests from '../../imodel/populate.test';
+import iModelPopulateTests from '../../../imodel/populate/basic-usage.test';
 
-describe('Native Client Tests (imodel populate)', async () => {
+describe('Native Client Tests (imodel populate: basic usage tests)', async () => {
     iModelPopulateTests();
 });

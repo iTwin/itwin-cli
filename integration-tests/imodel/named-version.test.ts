@@ -7,7 +7,7 @@ import { NamedVersion } from '@itwin/imodels-client-management';
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
-import { populateResponse } from '../../src/commands/imodel/populate'
+import { PopulateResponse } from '../../src/commands/imodel/populate'
 import { changeset } from '../../src/services/changed-elements-client/tracking';
 import { createIModel, createITwin } from '../utils/helpers';
 import { resultResponse } from '../utils/result-response';
@@ -30,7 +30,7 @@ const tests = () => describe('named-version', () => {
 
     await runCommand<resultResponse>(`changed-elements enable --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
 
-    const { result } = await runCommand<populateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type MSTN`);
+    const { result } = await runCommand<PopulateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type MSTN`);
     expect(result).to.have.property('iModelId', testIModelId);
     expect(result).to.have.property('iTwinId', testITwinId);
   });

@@ -3,14 +3,8 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { links } from "../../general-models/links.js";
-import { StorageRun } from "./storage-run.js";
+import iModelPopulateTests from '../../../imodel/populate/connector-type-detect.test';
 
-export type StorageRunResponse = {
-    run?: StorageRun;
-};
-
-export type StorageRunsResponse = {
-    _links: links
-    runs: StorageRun[];
-}
+describe('Service Client Tests (imodel populate: connector type detection tests)', async () => {
+    iModelPopulateTests();
+});
