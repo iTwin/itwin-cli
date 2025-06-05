@@ -8,7 +8,7 @@ import { connectionAuth } from "./models/connection-auth.js";
 import { sourceFileInfo, sourceFileResponse, sourceFilesResponse } from "./models/source-file.js";
 import { storageConnectionCreate } from "./models/storage-connection-create.js";
 import { storageConnectionListResponse, storageConnectionResponse, storageConnectionUpdate } from "./models/storage-connection-response.js";
-import { StorageRunResponse, StorageRunsResponse } from "./models/storage-run-response.js";
+import { storageRunResponse, storageRunsResponse } from "./models/storage-run-response.js";
 
 export class SynchronizationApiClient {
     iTwinPlatformApiClient: ITwinPlatformApiClient;
@@ -101,14 +101,14 @@ export class SynchronizationApiClient {
         });
     }
 
-    getStorageConnectionRun(connectionId: string, runId: string) : Promise<StorageRunResponse> {
+    getStorageConnectionRun(connectionId: string, runId: string) : Promise<storageRunResponse> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `synchronization/imodels/storageconnections/${connectionId}/runs/${runId}`,
             method: "GET"
         });
     }
 
-    getStorageConnectionRuns(connectionId: string, top?: number, skip?: number): Promise<StorageRunsResponse> {
+    getStorageConnectionRuns(connectionId: string, top?: number, skip?: number): Promise<storageRunsResponse> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `synchronization/imodels/storageconnections/${connectionId}/runs`,
             method: "GET",

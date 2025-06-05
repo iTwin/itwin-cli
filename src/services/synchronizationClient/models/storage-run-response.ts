@@ -4,13 +4,13 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { links } from "../../general-models/links.js";
-import { StorageRun } from "./storage-run.js";
+import { storageRun } from "./storage-run.js";
 
-export type StorageRunResponse = {
-    run?: StorageRun;
+export type storageRunResponse = {
+    run?: storageRun;
 };
 
-export type StorageRunsResponse = {
+export type storageRunsResponse = {
     _links: links
-    runs: StorageRun[];
+    runs: storageRun[];
 }

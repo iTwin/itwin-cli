@@ -8,7 +8,7 @@ import { ITwin } from '@itwin/itwins-client';
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
-import { PopulateResponse} from '../../src/commands/imodel/populate';
+import { populateResponse} from '../../src/commands/imodel/populate';
 import { changeset, changesetComparison } from '../../src/services/changed-elements-client/tracking';
 import { createFile, createIModel, createITwin, getRootFolderId } from '../utils/helpers';
 import { resultResponse } from '../utils/result-response';
@@ -36,7 +36,7 @@ const tests = () => describe('changesets + comparison', () => {
 
         const rootFolderId = await getRootFolderId(testITwinId);
         await createFile(rootFolderId, testFileName, testFilePath);
-        const { result: populateResult } = await runCommand<PopulateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type SPPID`);
+        const { result: populateResult } = await runCommand<populateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type SPPID`);
         expect(populateResult).to.have.property('iModelId', testIModelId);
         expect(populateResult).to.have.property('iTwinId', testITwinId);
     }

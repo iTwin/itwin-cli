@@ -3,7 +3,7 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-export enum ExecutionResult {
+export enum executionResult {
     CANCELLED = "Cancelled",
     ERROR = "Error",
     PARTIAL_SUCCESS = "PartialSuccess",
