@@ -13,7 +13,7 @@ import { storageRun } from '../../src/services/synchronizationClient/models/stor
 import { createIModel, createITwin } from '../utils/helpers';
 import runSuiteIfMainModule from '../utils/run-suite-if-main-module';
 
-const tests = () => describe('populate (basic usage)', () => {
+const tests = () => describe('populate', () => {
   const failingTestFilePath1 = 'integration-tests/test.zip'
   const testFilePath1 = 'examples/datasets/ExtonCampus.dgn';
   const testFilePath2 = 'examples/datasets/HouseModel.dgn';
