@@ -37,7 +37,7 @@ const tests = () => describe('populate (error result)', () => {
   });
 
   it('should return an error message if synchronization run completes with a non-success state', async () => {
-    const { error: populateError } = await runCommand<PopulateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${failingTestFilePath1} --connector-type IFC`);
+    const { error: populateError } = await runCommand<PopulateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${failingTestFilePath1} --connector-type MSTN`);
     expect(populateError).to.not.be.undefined;
     expect(populateError?.message).to.match(/Synchronization run .*? resulted in an error. Run 'itp imodel connection run info --connection-id .*? --connection-run-id .*?' for more info./);
     
