@@ -3,16 +3,16 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { links } from "../../general-models/links.js"
-import { groupMember } from "./group-members.js"
-import { invitation } from "./invitations.js"
+import { Links } from "../../general-models/links.js"
+import { GroupMember } from "./group-members.js"
+import { Invitation } from "./invitations.js"
 
-export type ownerResponse = {
-    invitation: invitation
-    member: groupMember,
+export type OwnerResponse = {
+    invitation: Invitation
+    member: GroupMember,
 }
 
-export type ownerListResponse = {
-    _links: links
-    members: groupMember[],
+export type OwnerListResponse = {
+    _links: Links
+    members: GroupMember[],
 }

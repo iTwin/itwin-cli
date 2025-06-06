@@ -6,7 +6,7 @@
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
-import { storageConnection } from '../../../src/services/synchronizationClient/models/storage-connection';
+import { StorageConnection } from '../../../src/services/synchronizationClient/models/storage-connection';
 import { createFile, createIModel, createITwin, getRootFolderId } from '../../utils/helpers';
 import runSuiteIfMainModule from '../../utils/run-suite-if-main-module';
 
@@ -25,7 +25,7 @@ const tests = () => describe('delete', () => {
     rootFolderId = await getRootFolderId(testITwinId);
     const testFile = await createFile(rootFolderId, 'test.zip', 'integration-tests/test.zip');
     testFileId = testFile.id as string;
-    const { result: createdConnection} = await runCommand<storageConnection>(`imodel connection create -m ${testIModelId} -f ${testFileId} --connector-type MSTN -n TestConnection`);
+    const { result: createdConnection} = await runCommand<StorageConnection>(`imodel connection create -m ${testIModelId} -f ${testFileId} --connector-type MSTN -n TestConnection`);
     expect(createdConnection).to.not.be.undefined;
     connectionId = createdConnection!.id!;
   });

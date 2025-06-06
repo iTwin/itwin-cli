@@ -7,7 +7,7 @@ import { ITwin } from "@itwin/itwins-client";
 import { runCommand } from "@oclif/test";
 import { expect } from "chai";
 
-import { group } from "../../src/services/access-control-client/models/group";
+import { Group } from "../../src/services/access-control-client/models/group";
 import { ITP_TEST_USER_SAMEORG } from "../utils/environment";
 import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
 
@@ -30,14 +30,14 @@ const tests = () => {
         const groupName = "Test Group";
         const groupDescription = "Test Group Description";
 
-        const { result: groupCreate } = await runCommand<group>(`access-control group create --itwin-id ${iTwinId} --name "${groupName}" --description "${groupDescription}"`);
+        const { result: groupCreate } = await runCommand<Group>(`access-control group create --itwin-id ${iTwinId} --name "${groupName}" --description "${groupDescription}"`);
 
         expect(groupCreate).to.not.be.undefined;
         expect(groupCreate!.id).to.not.be.undefined;
         expect(groupCreate!.name).to.be.equal(groupName);
         expect(groupCreate!.description).to.be.equal(groupDescription);
         
-        const { result: groupInfo } = await runCommand<group>(`access-control group info --itwin-id ${iTwinId} --group-id ${groupCreate!.id}`);
+        const { result: groupInfo } = await runCommand<Group>(`access-control group info --itwin-id ${iTwinId} --group-id ${groupCreate!.id}`);
         
         expect(groupInfo).to.not.be.undefined;
 
@@ -49,7 +49,7 @@ const tests = () => {
         const updatedGroupDescription = "Updated Group Description";
         const memberEmail = ITP_TEST_USER_SAMEORG;
 
-        const { result: groupUpdate  } = await runCommand<group>(`access-control group update --itwin-id ${iTwinId} --group-id ${groupCreate!.id} --name "${updatedGroupName}" --description "${updatedGroupDescription}" --member ${memberEmail}`);
+        const { result: groupUpdate  } = await runCommand<Group>(`access-control group update --itwin-id ${iTwinId} --group-id ${groupCreate!.id} --name "${updatedGroupName}" --description "${updatedGroupDescription}" --member ${memberEmail}`);
         expect(groupUpdate).to.not.be.undefined;
         expect(groupUpdate!.id).to.not.be.undefined;
         expect(groupUpdate!.name).to.be.equal(updatedGroupName);
@@ -59,13 +59,13 @@ const tests = () => {
     });
 
     it('Should list groups', async () => {
-        const { result: newGroup } = await runCommand<group>(`access-control group create --itwin-id ${iTwinId} --name Test2 --description Description2`);
+        const { result: newGroup } = await runCommand<Group>(`access-control group create --itwin-id ${iTwinId} --name Test2 --description Description2`);
         expect(newGroup).to.not.be.undefined;
         expect(newGroup!.id).to.not.be.undefined;
         expect(newGroup!.name).to.be.equal("Test2");
         expect(newGroup!.description).to.be.equal("Description2");
 
-        const { result: listedGroups } = await runCommand<group[]>(`access-control group list --itwin-id ${iTwinId}`);
+        const { result: listedGroups } = await runCommand<Group[]>(`access-control group list --itwin-id ${iTwinId}`);
         expect(listedGroups).to.not.be.undefined;
         expect(listedGroups!.length).to.be.greaterThanOrEqual(1);
 
@@ -73,19 +73,19 @@ const tests = () => {
     });
 
     it('Should delete group', async () => {
-        const { result: createResult } = await runCommand<group>(`access-control group create --itwin-id ${iTwinId} --name Test3 --description Description3`);
+        const { result: createResult } = await runCommand<Group>(`access-control group create --itwin-id ${iTwinId} --name Test3 --description Description3`);
         expect(createResult).to.not.be.undefined;
         expect(createResult!.id).to.not.be.undefined;
 
         const { result: deleteResult } = await runCommand<{result: string}>(`access-control group delete --itwin-id ${iTwinId} --group-id ${createResult!.id}`);
         expect(deleteResult).to.have.property('result', 'deleted');
 
-        const { error: infoError } = await runCommand<group>(`access-control group info --itwin-id ${iTwinId} -g ${createResult!.id}`);
+        const { error: infoError } = await runCommand<Group>(`access-control group info --itwin-id ${iTwinId} -g ${createResult!.id}`);
         expect(infoError?.message).to.contain('GroupNotFound')
     });
 
     it('Should fail to update group and return an error if too many members are provided', async () => {
-        const { result: newGroup } = await runCommand<group>(`access-control group create --itwin-id ${iTwinId} --name Test3 --description Description3`);
+        const { result: newGroup } = await runCommand<Group>(`access-control group create --itwin-id ${iTwinId} --name Test3 --description Description3`);
         expect(newGroup).to.not.be.undefined;
         expect(newGroup!.id).to.not.be.undefined;
 
@@ -103,7 +103,7 @@ const tests = () => {
     });
 
     it('Should fail to update group and return an error if too many ims-groups are provided', async () => {
-        const { result: newGroup } = await runCommand<group>(`access-control group create --itwin-id ${iTwinId} --name Test3 --description Description3`);
+        const { result: newGroup } = await runCommand<Group>(`access-control group create --itwin-id ${iTwinId} --name Test3 --description Description3`);
         expect(newGroup).to.not.be.undefined;
         expect(newGroup!.id).to.not.be.undefined;
 

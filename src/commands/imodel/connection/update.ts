@@ -5,12 +5,12 @@
 
 import { Flags } from "@oclif/core";
 
-import { apiReference } from "../../../extensions/api-reference.js";
+import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
-import { authenticationType } from "../../../services/synchronizationClient/models/authentication-type.js";
+import { AuthenticationType } from "../../../services/synchronizationClient/models/authentication-type.js";
 
 export default class UpdateStorageConnection extends BaseCommand {
-    static apiReference: apiReference = {
+    static apiReference: ApiReference = {
         link: "https://developer.bentley.com/apis/synchronization/operations/update-storage-connection/",
         name: "Update Storage Connection",
     };
@@ -55,7 +55,7 @@ export default class UpdateStorageConnection extends BaseCommand {
       const client = await this.getSynchronizationClient();
   
       const response = await client.updateStorageConnection(flags["connection-id"], {
-        authenticationType: flags["authentication-type"] as authenticationType,
+        authenticationType: flags["authentication-type"] as AuthenticationType,
         displayName: flags.name,
       });
   

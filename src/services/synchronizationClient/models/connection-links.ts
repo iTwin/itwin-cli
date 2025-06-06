@@ -3,10 +3,10 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { link } from "../../general-models/links.js";
+import { Link } from "../../general-models/links.js";
 
-export type connectionLinks = {
-    iModel?: link;
-    lastRun?: link;
-    project?: link;
+export type ConnectionLinks = {
+    iModel?: Link;
+    lastRun?: Link;
+    project?: Link;
 };

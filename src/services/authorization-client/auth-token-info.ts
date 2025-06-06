@@ -3,10 +3,10 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { authorizationType } from "./authorization-type.js"
+import { AuthorizationType } from "./authorization-type.js"
 
-export type authTokenInfo = {
+export type AuthTokenInfo = {
     authToken?: string,
-    authenticationType?: authorizationType,
+    authenticationType?: AuthorizationType,
     expirationDate?: Date
 }

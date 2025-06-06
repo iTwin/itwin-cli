@@ -3,10 +3,10 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { linksItem } from "./links-item.js";
+import { LinksItem } from "./links-item.js";
 
-export type folderTyped = {
-    _links?: linksItem;
+export type FolderTyped = {
+    _links?: LinksItem;
     /**
      * Date when the folder was created.
      */
@@ -42,23 +42,23 @@ export type folderTyped = {
     /**
      * Identification of the folder entity.
      */
-    type?: folderTypedType;
+    type?: FolderTypedType;
 
 };
 
-export enum folderTypedType {
+export enum FolderTypedType {
     FOLDER = 'folder'
 }
 
-export type folderInfo = {
+export type FolderInfo = {
     description?: string
     displayName?: string
 }
 
-export type folderResponse = {
-    folder: folderTyped;
+export type FolderResponse = {
+    folder: FolderTyped;
 }
 
-export type foldersResponse = {
-    folders: folderTyped[];
+export type FoldersResponse = {
+    folders: FolderTyped[];
 }

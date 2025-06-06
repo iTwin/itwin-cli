@@ -3,14 +3,14 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { authenticationType } from "./authentication-type.js";
-import { storageFileCreate } from "./storage-file-create.js";
+import { AuthenticationType } from "./authentication-type.js";
+import { StorageFileCreate } from "./storage-file-create.js";
 
-export type storageConnectionCreate = {
-    authenticationType?: authenticationType;
+export type StorageConnectionCreate = {
+    authenticationType?: AuthenticationType;
     displayName?: string;
     iModelId: string;
-    sourceFiles: Array<storageFileCreate>;
+    sourceFiles: Array<StorageFileCreate>;
 };
 
 

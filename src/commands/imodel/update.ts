@@ -5,13 +5,13 @@
 
 import { Flags } from "@oclif/core";
 
-import { apiReference } from "../../extensions/api-reference.js";
+import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
 import { CustomFlags } from "../../extensions/custom-flags.js";
 import { validateFloat } from "../../extensions/validation/validate-float.js";
 
 export default class UpdateCommand extends BaseCommand {
-    static apiReference: apiReference = {
+    static apiReference: ApiReference = {
         link: "https://developer.bentley.com/apis/imodels-v2/operations/update-imodel/",
         name: "Update iModel",
     };

@@ -8,9 +8,9 @@ import { ITwin } from '@itwin/itwins-client';
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
-import { populateResponse } from '../../src/commands/imodel/populate';
+import { PopulateResponse } from '../../src/commands/imodel/populate';
 import { createIModel, createITwin } from '../utils/helpers';
-import { resultResponse } from '../utils/result-response';
+import { ResultResponse } from '../utils/result-response';
 import runSuiteIfMainModule from '../utils/run-suite-if-main-module';
 
 const tests = () => describe('changeset', () => {
@@ -30,9 +30,9 @@ const tests = () => describe('changeset', () => {
         const testIModel = await createIModel(testIModelName, testITwinId);
         testIModelId = testIModel.id;
 
-        await runCommand<resultResponse>(`changed-elements enable --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
+        await runCommand<ResultResponse>(`changed-elements enable --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
 
-        const { result } = await runCommand<populateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type MSTN`);
+        const { result } = await runCommand<PopulateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type MSTN`);
         expect(result).to.have.property('iModelId', testIModelId);
         expect(result).to.have.property('iTwinId', testITwinId);
     }

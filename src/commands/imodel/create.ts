@@ -5,13 +5,13 @@
 
 import { Flags } from "@oclif/core";
 
-import { apiReference } from "../../extensions/api-reference.js";
+import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
 import { CustomFlags } from "../../extensions/custom-flags.js";
 import { validateFloat } from "../../extensions/validation/validate-float.js";
 
 export default class CreateIModel extends BaseCommand {
-  static apiReference: apiReference = {
+  static apiReference: ApiReference = {
       link: "https://developer.bentley.com/apis/imodels-v2/operations/create-imodel/",
       name: "Create iModel",
   };

@@ -3,20 +3,20 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { authenticationType } from "./authentication-type.js";
-import { connectionLinks } from "./connection-links.js";
+import { AuthenticationType } from "./authentication-type.js";
+import { ConnectionLinks } from "./connection-links.js";
 
-export type storageConnection = {
-    _links: connectionLinks;
-    authenticationType: authenticationType;
+export type StorageConnection = {
+    _links: ConnectionLinks;
+    authenticationType: AuthenticationType;
     displayName: string;
-    error: storageConnectionError
+    error: StorageConnectionError
     iModelId: string;
     iTwinId: string;
     id: string;
 };
 
-export type storageConnectionError = {
+export type StorageConnectionError = {
     description: string;
     errorKey: string;
 }

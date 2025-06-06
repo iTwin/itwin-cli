@@ -7,8 +7,8 @@ import { ITwin } from "@itwin/itwins-client";
 import { runCommand } from "@oclif/test";
 import { expect } from "chai";
 
-import { invitation } from "../../../src/services/access-control-client/models/invitations";
-import { ownerResponse } from "../../../src/services/access-control-client/models/owner";
+import { Invitation } from "../../../src/services/access-control-client/models/invitations";
+import { OwnerResponse } from "../../../src/services/access-control-client/models/owner";
 import { ITP_TEST_USER_EXTERNAL } from "../../utils/environment";
 import runSuiteIfMainModule from "../../utils/run-suite-if-main-module";
 
@@ -29,13 +29,13 @@ const tests = () => {
 
     it('Should get pending invitations', async () => {
         const emailToAdd = ITP_TEST_USER_EXTERNAL;
-        const { result: owner } = await runCommand<ownerResponse>(`access-control member owner add --itwin-id ${iTwinId} --email ${emailToAdd}`);
+        const { result: owner } = await runCommand<OwnerResponse>(`access-control member owner add --itwin-id ${iTwinId} --email ${emailToAdd}`);
         expect(owner).to.not.be.undefined;
         expect(owner!.member).is.null;
         expect(owner!.invitation).to.not.be.undefined;
         expect(owner!.invitation.email.toLowerCase()).to.equal(emailToAdd!.toLowerCase());
 
-        const { result: invitationResults } = await runCommand<invitation[]>(`access-control member invitations --itwin-id ${iTwinId}`);
+        const { result: invitationResults } = await runCommand<Invitation[]>(`access-control member invitations --itwin-id ${iTwinId}`);
         expect(invitationResults).to.not.be.undefined;
         expect(invitationResults!.length).to.be.greaterThanOrEqual(1);
         expect(invitationResults!.some(invitation => invitation.email.toLowerCase() === emailToAdd!.toLowerCase())).to.be.true;

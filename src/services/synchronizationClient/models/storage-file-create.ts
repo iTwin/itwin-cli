@@ -3,9 +3,9 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { connectorType } from "./connector-type.js";
+import { ConnectorType } from "./connector-type.js";
 
-export type storageFileCreate = {
-    connectorType: connectorType;
+export type StorageFileCreate = {
+    connectorType: ConnectorType;
     storageFileId: string;
 };

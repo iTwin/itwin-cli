@@ -3,7 +3,7 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-export enum jobPhase {
+export enum JobPhase {
     MASTER_FILE = "MasterFile",
     PREPROCESSOR = "Preprocessor",
     REFERENCE_FILE = "ReferenceFile"

@@ -5,12 +5,12 @@
 
 import { Flags } from "@oclif/core";
 
-import { apiReference } from "../../../extensions/api-reference.js";
+import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { CustomFlags } from "../../../extensions/custom-flags.js";
 
 export default class ListConnections extends BaseCommand {
-    static apiReference: apiReference = {
+    static apiReference: ApiReference = {
         link: "https://developer.bentley.com/apis/synchronization/operations/get-storage-connections/",
         name: "Get Storage Connections",
     };

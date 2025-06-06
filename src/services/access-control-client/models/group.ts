@@ -3,10 +3,10 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { links } from "../../general-models/links.js"
+import { Links } from "../../general-models/links.js"
 import { Role } from "./role.js"
 
-export type group = {
+export type Group = {
     description?: string,
     id?: string,
     imsGroups?: string[]
@@ -22,7 +22,7 @@ export type GroupUser = {
     userId: string,
 }
 
-export type groupUpdate = {
+export type GroupUpdate = {
     description?: string,
     imsGroups?: string[]
     members?: string[],
@@ -30,11 +30,11 @@ export type groupUpdate = {
 }
 
 export type GroupResponse = {
-    group: group
+    group: Group
 }
 
 export type GroupsResponse = {
-    groups: group[]
+    groups: Group[]
 }
 
 export type GroupMember = {
@@ -47,7 +47,7 @@ export type GroupMembersRequest = {
 }
 
 export type GroupMembersResponse = {
-    _links: links
+    _links: Links
     members: GroupMemberInfo[]
 }
 
