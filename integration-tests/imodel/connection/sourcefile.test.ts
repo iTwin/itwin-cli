@@ -6,8 +6,8 @@
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
-import { sourceFile } from '../../../src/services/synchronizationClient/models/source-file';
-import { storageConnection } from '../../../src/services/synchronizationClient/models/storage-connection';
+import { SourceFile } from '../../../src/services/synchronizationClient/models/source-file';
+import { StorageConnection } from '../../../src/services/synchronizationClient/models/storage-connection';
 import { createFile, createIModel, createITwin, getRootFolderId } from '../../utils/helpers';
 import runSuiteIfMainModule from '../../utils/run-suite-if-main-module';
 
@@ -32,7 +32,7 @@ const tests = () => describe('sourcefile', () => {
     anotherTestFileId = anotherTestFile.id!;
     const yetAnotherTestFile = await createFile(rootFolderId, 'HouseModel.dgn', 'examples/datasets/ExtonCampus.dgn');
     yetAnotherTestFileId = yetAnotherTestFile.id!;
-    const { result: createdConnection} = await runCommand<storageConnection>(`imodel connection create -m ${testIModelId} -f ${testFileId} --connector-type MSTN -n TestConnection`);
+    const { result: createdConnection} = await runCommand<StorageConnection>(`imodel connection create -m ${testIModelId} -f ${testFileId} --connector-type MSTN -n TestConnection`);
     expect(createdConnection).to.not.be.undefined;
     connectionId = createdConnection!.id!;
   });
@@ -46,12 +46,12 @@ const tests = () => describe('sourcefile', () => {
   });
 
   it('should add/get/delete a sourcefile', async () => {
-    const { result: addResult } = await runCommand<sourceFile>(`imodel connection sourcefile add -c ${connectionId} --connector-type MSTN --storage-file-id ${anotherTestFileId}`);
+    const { result: addResult } = await runCommand<SourceFile>(`imodel connection sourcefile add -c ${connectionId} --connector-type MSTN --storage-file-id ${anotherTestFileId}`);
     expect(addResult).to.not.be.undefined;
     expect(addResult!.connectorType).to.be.equal("MSTN");
     expect(addResult!.storageFileId).to.be.equal(anotherTestFileId);
 
-    const { result: infoResult } = await runCommand<sourceFile>(`imodel connection sourcefile info -c ${connectionId} --source-file-id ${addResult?.id}`);
+    const { result: infoResult } = await runCommand<SourceFile>(`imodel connection sourcefile info -c ${connectionId} --source-file-id ${addResult?.id}`);
     expect(infoResult).to.not.be.undefined;
     expect(infoResult!.connectorType).to.be.equal("MSTN");
     expect(infoResult!.storageFileId).to.be.equal(anotherTestFileId);
@@ -61,22 +61,22 @@ const tests = () => describe('sourcefile', () => {
   });
 
   it('should update connector-type and storage-file-id of a sourcefile', async () => {
-    const { result: addResult } = await runCommand<sourceFile>(`imodel connection sourcefile add -c ${connectionId} --connector-type IFC --storage-file-id ${anotherTestFileId}`);
+    const { result: addResult } = await runCommand<SourceFile>(`imodel connection sourcefile add -c ${connectionId} --connector-type IFC --storage-file-id ${anotherTestFileId}`);
     expect(addResult).to.not.be.undefined;
     expect(addResult!.connectorType).to.be.equal("IFC");
     expect(addResult!.storageFileId).to.be.equal(anotherTestFileId);
 
-    const { result: infoResult1 } = await runCommand<sourceFile>(`imodel connection sourcefile info -c ${connectionId} --source-file-id ${addResult?.id}`);
+    const { result: infoResult1 } = await runCommand<SourceFile>(`imodel connection sourcefile info -c ${connectionId} --source-file-id ${addResult?.id}`);
     expect(infoResult1).to.not.be.undefined;
     expect(infoResult1!.connectorType).to.be.equal("IFC");
     expect(infoResult1!.storageFileId).to.be.equal(anotherTestFileId);
 
-    const { result: updateResult } = await runCommand<sourceFile>(`imodel connection sourcefile update -c ${connectionId} --source-file-id ${addResult?.id} --connector-type MSTN --storage-file-id ${yetAnotherTestFileId}`);
+    const { result: updateResult } = await runCommand<SourceFile>(`imodel connection sourcefile update -c ${connectionId} --source-file-id ${addResult?.id} --connector-type MSTN --storage-file-id ${yetAnotherTestFileId}`);
     expect(updateResult).to.not.be.undefined;
     expect(updateResult!.connectorType).to.be.equal("MSTN");
     expect(updateResult!.storageFileId).to.be.equal(yetAnotherTestFileId);
 
-    const { result: infoResult2 } = await runCommand<sourceFile>(`imodel connection sourcefile info -c ${connectionId} --source-file-id ${addResult?.id}`);
+    const { result: infoResult2 } = await runCommand<SourceFile>(`imodel connection sourcefile info -c ${connectionId} --source-file-id ${addResult?.id}`);
     expect(infoResult2).to.not.be.undefined;
     expect(infoResult2!.connectorType).to.be.equal("MSTN");
     expect(infoResult2!.storageFileId).to.be.equal(yetAnotherTestFileId);
@@ -86,17 +86,17 @@ const tests = () => describe('sourcefile', () => {
   });
 
   it('should list sourcefiles', async () => {
-    const { result: addResult1 } = await runCommand<sourceFile>(`imodel connection sourcefile add -c ${connectionId} --connector-type IFC --storage-file-id ${anotherTestFileId}`);
+    const { result: addResult1 } = await runCommand<SourceFile>(`imodel connection sourcefile add -c ${connectionId} --connector-type IFC --storage-file-id ${anotherTestFileId}`);
     expect(addResult1).to.not.be.undefined;
     expect(addResult1!.connectorType).to.be.equal("IFC");
     expect(addResult1!.storageFileId).to.be.equal(anotherTestFileId);
 
-    const { result: addResult2 } = await runCommand<sourceFile>(`imodel connection sourcefile add -c ${connectionId} --connector-type MSTN --storage-file-id ${yetAnotherTestFileId}`);
+    const { result: addResult2 } = await runCommand<SourceFile>(`imodel connection sourcefile add -c ${connectionId} --connector-type MSTN --storage-file-id ${yetAnotherTestFileId}`);
     expect(addResult2).to.not.be.undefined;
     expect(addResult2!.connectorType).to.be.equal("MSTN");
     expect(addResult2!.storageFileId).to.be.equal(yetAnotherTestFileId);
 
-    const { result: listResult } = await runCommand<sourceFile[]>(`imodel connection sourcefile list -c ${connectionId}`);
+    const { result: listResult } = await runCommand<SourceFile[]>(`imodel connection sourcefile list -c ${connectionId}`);
     expect(listResult).to.not.be.undefined;
     expect(listResult).to.have.lengthOf(3);
     expect(listResult?.some(result => result.storageFileId === testFileId && result!.connectorType === "MSTN" ))

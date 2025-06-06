@@ -3,12 +3,12 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { link } from "../../general-models/links.js";
+import { Link } from "../../general-models/links.js";
 
-export type linksPagingWithFolderLink = {
-    folder?: link;
-    next?: link;
-    prev?: link;
-    self?: link;
+export type LinksPagingWithFolderLink = {
+    folder?: Link;
+    next?: Link;
+    prev?: Link;
+    self?: Link;
 };
 

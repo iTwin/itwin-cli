@@ -7,7 +7,7 @@ import { ITwin } from "@itwin/itwins-client";
 import { runCommand } from "@oclif/test";
 import { expect } from "chai";
 
-import { member, membersResponse } from "../../../src/services/access-control-client/models/members";
+import { Member, MembersResponse } from "../../../src/services/access-control-client/models/members";
 import { Role } from "../../../src/services/access-control-client/models/role";
 import { User } from "../../../src/services/user-client/models/user";
 import { ITP_TEST_USER_EXTERNAL } from "../../utils/environment";
@@ -51,7 +51,7 @@ const tests = () => {
         
         const emailToAdd = ITP_TEST_USER_EXTERNAL;
 
-        const { result: invitedUser } = await runCommand<membersResponse>(`access-control member user add --itwin-id ${iTwinId} --members "[{"email": "${emailToAdd}", "roleIds": ["${newRole!.id}"]}]"`);
+        const { result: invitedUser } = await runCommand<MembersResponse>(`access-control member user add --itwin-id ${iTwinId} --members "[{"email": "${emailToAdd}", "roleIds": ["${newRole!.id}"]}]"`);
 
         expect(invitedUser).to.not.be.undefined;
         expect(invitedUser!.invitations).to.have.lengthOf(1);
@@ -63,12 +63,12 @@ const tests = () => {
 
         await fetch(invitationLink);
 
-        let usersInfo: member[];
+        let usersInfo: Member[];
         do {
             // eslint-disable-next-line no-await-in-loop
             await new Promise<void>(resolve => {setTimeout(_ => resolve(), 10 * 1000);});
             // eslint-disable-next-line no-await-in-loop
-            const listResult = await runCommand<member[]>(`access-control member user list --itwin-id ${iTwinId}`);
+            const listResult = await runCommand<Member[]>(`access-control member user list --itwin-id ${iTwinId}`);
             expect(listResult.result).to.not.be.undefined;
             usersInfo = listResult.result!
         } while (usersInfo.length !== 2);
@@ -89,7 +89,7 @@ const tests = () => {
         const { result: userInfo } = await runCommand<User>(`user me`);
         expect(userInfo).to.not.be.undefined;
 
-        const { result: getMemberUserInfo } = await runCommand<member>(`access-control member user info --itwin-id ${iTwinId} --member-id ${userInfo!.id}`);
+        const { result: getMemberUserInfo } = await runCommand<Member>(`access-control member user info --itwin-id ${iTwinId} --member-id ${userInfo!.id}`);
         expect(getMemberUserInfo).to.not.be.undefined;
         expect(getMemberUserInfo!.id).to.not.be.undefined;
         expect(getMemberUserInfo!.id).to.be.equal(userInfo!.id);
@@ -100,12 +100,12 @@ const tests = () => {
         expect(newRole).to.not.be.undefined;
         expect(newRole!.id).to.not.be.undefined;
 
-        const { result: usersInfo } = await runCommand<member[]>(`access-control member user list --itwin-id ${iTwinId}`);
+        const { result: usersInfo } = await runCommand<Member[]>(`access-control member user list --itwin-id ${iTwinId}`);
         expect(usersInfo).to.not.be.undefined;
         expect(usersInfo).to.have.lengthOf(1);
         expect(usersInfo![0].roles).to.have.lengthOf(1);
 
-        const { result: updateMemberResult } = await runCommand<member>(`access-control member user update --itwin-id ${iTwinId} --member-id ${usersInfo![0].id} --role-id ${usersInfo![0].roles[0].id} --role-id ${newRole!.id}`);
+        const { result: updateMemberResult } = await runCommand<Member>(`access-control member user update --itwin-id ${iTwinId} --member-id ${usersInfo![0].id} --role-id ${usersInfo![0].roles[0].id} --role-id ${newRole!.id}`);
         expect(updateMemberResult).to.not.be.undefined;
         expect(updateMemberResult!.roles).to.have.lengthOf(2);
         expect(updateMemberResult!.roles.some(role => role.id === newRole!.id)).to.be.true;
@@ -128,7 +128,7 @@ const tests = () => {
             },
         ];
 
-        const { result: createResult } = await runCommand<membersResponse>(`access-control member user add --itwin-id ${iTwinId} --email ${usersInfo[0].email} --email ${usersInfo[1].email} --email ${usersInfo[2].email}
+        const { result: createResult } = await runCommand<MembersResponse>(`access-control member user add --itwin-id ${iTwinId} --email ${usersInfo[0].email} --email ${usersInfo[1].email} --email ${usersInfo[2].email}
             --role-ids ${usersInfo[0].roleIds.join(',')} --role-ids ${usersInfo[1].roleIds.join(',')} --role-ids ${usersInfo[2].roleIds.join(',')}`);
         expect(createResult).to.not.be.undefined;
         expect(createResult!.invitations).to.have.lengthOf(3);
@@ -152,7 +152,7 @@ const tests = () => {
             },
         ];
 
-        const { result: createResult } = await runCommand<membersResponse>(`access-control member user add --itwin-id ${iTwinId} --email ${usersInfo[0].email} --email ${usersInfo[1].email} --email ${usersInfo[2].email} --role-ids ${roleIds.join(',')}`);
+        const { result: createResult } = await runCommand<MembersResponse>(`access-control member user add --itwin-id ${iTwinId} --email ${usersInfo[0].email} --email ${usersInfo[1].email} --email ${usersInfo[2].email} --role-ids ${roleIds.join(',')}`);
         expect(createResult).to.not.be.undefined;
         expect(createResult!.invitations).to.have.lengthOf(3);
         for (const [i, userInfo] of usersInfo.entries()) {
@@ -177,14 +177,14 @@ const tests = () => {
             },
         ];
 
-        const { error: createError } = await runCommand<membersResponse>(`access-control member user add --itwin-id ${iTwinId} --members ${JSON.stringify(usersInfo)} --email ${usersInfo[0].email} --email ${usersInfo[1].email} --email ${usersInfo[2].email}
+        const { error: createError } = await runCommand<MembersResponse>(`access-control member user add --itwin-id ${iTwinId} --members ${JSON.stringify(usersInfo)} --email ${usersInfo[0].email} --email ${usersInfo[1].email} --email ${usersInfo[2].email}
             --role-ids ${usersInfo[0].roleIds.join(',')} --role-ids ${usersInfo[1].roleIds.join(',')} --role-ids ${usersInfo[2].roleIds.join(',')}`);
         expect(createError).to.not.be.undefined;
         expect(createError?.message).to.match(new RegExp(`--email=${usersInfo[0].email},${usersInfo[1].email},${usersInfo[2].email} cannot also be provided when using --members`))
     });
 
     it('Should return an error when none of the following flags are provided: `--members`, `--member`, `--role-ids`', async () => {
-        const { error: createError } = await runCommand<membersResponse>(`access-control member user add --itwin-id ${iTwinId}`);
+        const { error: createError } = await runCommand<MembersResponse>(`access-control member user add --itwin-id ${iTwinId}`);
         expect(createError).to.not.be.undefined;
         expect(createError?.message).to.match(/Exactly one of the following must be provided: --email, --members/);
     });
@@ -202,7 +202,7 @@ const tests = () => {
             },
         ];
 
-        const { error: createError } = await runCommand<membersResponse>(`access-control member user add --itwin-id ${iTwinId} --email ${usersInfo[0].email} --email ${usersInfo[1].email} --email ${usersInfo[2].email}`);
+        const { error: createError } = await runCommand<MembersResponse>(`access-control member user add --itwin-id ${iTwinId} --email ${usersInfo[0].email} --email ${usersInfo[1].email} --email ${usersInfo[2].email}`);
         expect(createError).to.not.be.undefined;
         expect(createError?.message).to.match(/All of the following must be provided when using --email: --role-ids/)
     })
@@ -220,7 +220,7 @@ const tests = () => {
             },
         ];
 
-        const { error: createError } = await runCommand<membersResponse>(`access-control member user add --itwin-id ${iTwinId} --role-ids ${usersInfo[0].roleIds.join(',')} --role-ids ${usersInfo[1].roleIds.join(',')} --role-ids ${usersInfo[2].roleIds.join(',')}`);
+        const { error: createError } = await runCommand<MembersResponse>(`access-control member user add --itwin-id ${iTwinId} --role-ids ${usersInfo[0].roleIds.join(',')} --role-ids ${usersInfo[1].roleIds.join(',')} --role-ids ${usersInfo[2].roleIds.join(',')}`);
         expect(createError).to.not.be.undefined;
         expect(createError?.message).to.match(/All of the following must be provided when using --role-ids: --email/)
     });
@@ -233,14 +233,14 @@ const tests = () => {
             }
         ];
 
-        const { error: createError } = await runCommand<membersResponse>(`access-control member user add --itwin-id ${iTwinId} --email ${usersInfo[0].email}
+        const { error: createError } = await runCommand<MembersResponse>(`access-control member user add --itwin-id ${iTwinId} --email ${usersInfo[0].email}
             --role-ids ${usersInfo[0].roleIds.join(',')},some-invalid-uuid`);
         expect(createError).to.not.be.undefined;
         expect(createError?.message).to.match(new RegExp(`There are invalid UUIDs in '${usersInfo[0].roleIds.join(',')},some-invalid-uuid'`))
     });
 
     it('should return an error when invalid JSON is provided to `--members` flag', async () => {
-        const { error: createError } = await runCommand<membersResponse>(`access-control member user add --itwin-id ${iTwinId} --members not-valid-serialized-json`);
+        const { error: createError } = await runCommand<MembersResponse>(`access-control member user add --itwin-id ${iTwinId} --members not-valid-serialized-json`);
         expect(createError).to.not.be.undefined;
         expect(createError!.message).to.match(/'not-valid-serialized-json' is not valid serialized JSON./)
     });
@@ -261,7 +261,7 @@ const tests = () => {
             },
         ];
         
-        const { error: createError } = await runCommand<membersResponse>(`access-control member user add --itwin-id ${iTwinId} --members ${JSON.stringify(usersInfo)}`);
+        const { error: createError } = await runCommand<MembersResponse>(`access-control member user add --itwin-id ${iTwinId} --members ${JSON.stringify(usersInfo)}`);
         expect(createError).to.not.be.undefined;
         expect(createError!.message).to.match(/\[0].email is not a valid email/);
         expect(createError!.message).to.match(/\[1].email: expected type 'string', received 'boolean'/);
@@ -286,13 +286,13 @@ const tests = () => {
         
         const serializedMembersInfo = JSON.stringify(members);
 
-        const { error: createError } = await runCommand<membersResponse>(`access-control member user add --itwin-id ${iTwinId} --members ${serializedMembersInfo}`);
+        const { error: createError } = await runCommand<MembersResponse>(`access-control member user add --itwin-id ${iTwinId} --members ${serializedMembersInfo}`);
         expect(createError).to.not.be.undefined;
         expect(createError?.message).to.be.equal('A maximum of 50 role assignments can be performed.');
     });
 
     it('Should fail to update iTwin group, when there are too many roles assigned', async () => { 
-        const { result: usersInfo } = await runCommand<member[]>(`access-control member user list --itwin-id ${iTwinId}`);
+        const { result: usersInfo } = await runCommand<Member[]>(`access-control member user list --itwin-id ${iTwinId}`);
         expect(usersInfo).to.not.be.undefined;
         expect(usersInfo!).to.have.lengthOf(1);
 
@@ -300,7 +300,7 @@ const tests = () => {
         for(let i = 0; i < 51; i++)
             command += ` --role-id role${i}`
 
-        const result = await runCommand<membersResponse>(command);
+        const result = await runCommand<MembersResponse>(command);
         expect(result.error).to.not.be.undefined;
         expect(result.error?.message).to.be.equal('A maximum of 50 roles can be assigned.');
     });

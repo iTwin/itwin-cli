@@ -6,12 +6,12 @@
 import { Changeset, ChangesetOrderByProperty, OrderBy, OrderByOperator, take, toArray } from "@itwin/imodels-client-management";
 import { Flags } from "@oclif/core";
 
-import { apiReference } from "../../../extensions/api-reference.js";
+import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { CustomFlags } from "../../../extensions/custom-flags.js";
 
 export default class ListChangesets extends BaseCommand {
-    static apiReference: apiReference = {
+    static apiReference: ApiReference = {
         link: "https://developer.bentley.com/apis/imodels-v2/operations/get-imodel-changesets/",
         name: "List Changesets",
     };

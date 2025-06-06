@@ -3,12 +3,12 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { apiReference } from "../../extensions/api-reference.js";
+import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
 import { CustomFlags } from "../../extensions/custom-flags.js";
 
 export default class ChangedElementsEnable extends BaseCommand {
-    static apiReference: apiReference = {
+    static apiReference: ApiReference = {
         link: "https://developer.bentley.com/apis/changed-elements/operations/enable-change-tracking/",
         name: "Enable Change Tracking",
     };

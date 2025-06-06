@@ -3,14 +3,14 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { links } from "../../general-models/links.js";
-import { storageRun } from "./storage-run.js";
+import { Links } from "../../general-models/links.js";
+import { StorageRun } from "./storage-run.js";
 
-export type storageRunResponse = {
-    run?: storageRun;
+export type StorageRunResponse = {
+    run?: StorageRun;
 };
 
-export type storageRunsResponse = {
-    _links: links
-    runs: storageRun[];
+export type StorageRunsResponse = {
+    _links: Links
+    runs: StorageRun[];
 }

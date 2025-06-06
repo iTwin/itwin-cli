@@ -6,8 +6,8 @@
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
-import { fileTyped } from '../../../src/services/storage-client/models/file-typed';
-import { folderTyped } from '../../../src/services/storage-client/models/folder-typed';
+import { FileTyped } from '../../../src/services/storage-client/models/file-typed';
+import { FolderTyped } from '../../../src/services/storage-client/models/folder-typed';
 import { 
   createFile,
   createFolder, 
@@ -40,7 +40,7 @@ const tests = () => describe('list', () => {
   });
 
   it('should get the list of folders in the specified folder', async () => {
-    const { result: itemList } = await runCommand<folderTyped[]>(`storage folder list --folder-id ${rootFolderId}`);
+    const { result: itemList } = await runCommand<FolderTyped[]>(`storage folder list --folder-id ${rootFolderId}`);
 
     expect(itemList).to.be.an('array').that.is.not.empty;
     expect(itemList!.some((folder) => folder.id === testFolderId && folder.type === "folder")).to.be.true;
@@ -48,7 +48,7 @@ const tests = () => describe('list', () => {
   });
 
   it('should get the list of folders and files in the specified folder', async () => {
-    const { result: itemList } = await runCommand<fileTyped[]>(`storage folder list -f ${rootFolderId} --include-files`);
+    const { result: itemList } = await runCommand<FileTyped[]>(`storage folder list -f ${rootFolderId} --include-files`);
     expect(itemList).to.be.an('array').that.is.not.empty;
     expect(itemList!.some((folder) => folder.id === testFolderId && folder.type === "folder")).to.be.true;
     expect(itemList!.some((file) => file.id === testFileId && file.type === "file")).to.be.true;

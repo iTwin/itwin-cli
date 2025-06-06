@@ -3,15 +3,15 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { link } from "../../general-models/links.js"
+import { Link } from "../../general-models/links.js"
 
-export type authInfo = {
+export type AuthInfo = {
     _links: {
-        authorizationUrl : link
+        authorizationUrl : Link
     }
     isUserAuthorized: boolean
 }
 
-export type connectionAuth = {
-    authorizationInformation: authInfo
+export type ConnectionAuth = {
+    authorizationInformation: AuthInfo
 }

@@ -6,8 +6,8 @@
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
-import { storageConnection } from '../../../src/services/synchronizationClient/models/storage-connection';
-import { storageConnectionListResponse } from '../../../src/services/synchronizationClient/models/storage-connection-response';
+import { StorageConnection } from '../../../src/services/synchronizationClient/models/storage-connection';
+import { StorageConnectionListResponse } from '../../../src/services/synchronizationClient/models/storage-connection-response';
 import { createFile, createIModel, createITwin, getRootFolderId } from '../../utils/helpers';
 import runSuiteIfMainModule from '../../utils/run-suite-if-main-module';
 
@@ -30,9 +30,9 @@ const tests = () => describe('list', () => {
     testFileId1 = testFile1.id as string;
     const testFile2 = await createFile(rootFolderId, 'test.csv', 'integration-tests/test.csv');
     testFileId2 = testFile2.id as string;
-    const { result: createdConnection1} = await runCommand<storageConnection>(`imodel connection create -m ${testIModelId} -f ${testFileId1} --connector-type MSTN -n TestConnection`);
+    const { result: createdConnection1} = await runCommand<StorageConnection>(`imodel connection create -m ${testIModelId} -f ${testFileId1} --connector-type MSTN -n TestConnection`);
     connectionId1 = createdConnection1!.id!;
-    const { result: createdConnection2} = await runCommand<storageConnection>(`imodel connection create -m ${testIModelId} -f ${testFileId2} --connector-type MSTN -n TestConnection`);
+    const { result: createdConnection2} = await runCommand<StorageConnection>(`imodel connection create -m ${testIModelId} -f ${testFileId2} --connector-type MSTN -n TestConnection`);
     connectionId2 = createdConnection2!.id!;
   });
 
@@ -45,7 +45,7 @@ const tests = () => describe('list', () => {
   });
 
   it('should get all connections', async () => {
-    const { result: listResult } = await runCommand<storageConnectionListResponse>(`imodel connection list -m ${testIModelId}`);
+    const { result: listResult } = await runCommand<StorageConnectionListResponse>(`imodel connection list -m ${testIModelId}`);
     expect(listResult).to.not.be.undefined;
     expect(listResult!.connections).to.have.lengthOf(2);
     expect(listResult?.connections.some(connection => connection.id === connectionId1)).to.be.true;
@@ -53,22 +53,22 @@ const tests = () => describe('list', () => {
   });
 
   it('should get 1st connection', async () => {
-    const { result: allConnections } = await runCommand<storageConnectionListResponse>(`imodel connection list -m ${testIModelId}`);
+    const { result: allConnections } = await runCommand<StorageConnectionListResponse>(`imodel connection list -m ${testIModelId}`);
     expect(allConnections).to.not.be.undefined;
     expect(allConnections!.connections).to.have.lengthOf(2);
 
-    const { result: filteredConnections } = await runCommand<storageConnectionListResponse>(`imodel connection list -m ${testIModelId} --top 1`);
+    const { result: filteredConnections } = await runCommand<StorageConnectionListResponse>(`imodel connection list -m ${testIModelId} --top 1`);
     expect(filteredConnections).to.not.be.undefined;
     expect(filteredConnections!.connections).to.have.lengthOf(1);
     expect(filteredConnections!.connections[0].id).to.be.equal(allConnections!.connections[0].id);
   });
 
   it('should not get 1st connection', async () => {
-    const { result: allConnections } = await runCommand<storageConnectionListResponse>(`imodel connection list -m ${testIModelId}`);
+    const { result: allConnections } = await runCommand<StorageConnectionListResponse>(`imodel connection list -m ${testIModelId}`);
     expect(allConnections).to.not.be.undefined;
     expect(allConnections!.connections).to.have.lengthOf(2);
 
-    const { result: filteredConnections } = await runCommand<storageConnectionListResponse>(`imodel connection list -m ${testIModelId} --skip 1`);
+    const { result: filteredConnections } = await runCommand<StorageConnectionListResponse>(`imodel connection list -m ${testIModelId} --skip 1`);
     expect(filteredConnections).to.not.be.undefined;
     expect(filteredConnections!.connections).to.have.lengthOf(1);
     expect(filteredConnections!.connections[0].id).to.be.equal(allConnections!.connections[1].id);

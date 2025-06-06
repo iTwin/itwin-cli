@@ -1,3 +1,3 @@
-export type resultResponse = {
+export type ResultResponse = {
     result: string;
 }

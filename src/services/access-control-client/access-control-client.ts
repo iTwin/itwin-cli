@@ -4,8 +4,8 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { ITwinPlatformApiClient } from "../iTwin-api-client.js";
-import { GroupResponse, GroupsResponse, group, groupUpdate } from "./models/group.js";
-import { permissions } from "./models/permissions.js";
+import { Group, GroupResponse, GroupUpdate, GroupsResponse } from "./models/group.js";
+import { Permissions } from "./models/permissions.js";
 import { Role, RoleResponse, RolesResponse } from "./models/role.js";
 
 export class AccessControlClient {
@@ -16,7 +16,7 @@ export class AccessControlClient {
         this.iTwinPlatformApiClient = new ITwinPlatformApiClient(apiUrl, authToken, this.apiVersionHeader);
     }
 
-    createGroup(iTwinId: string, group: group): Promise<GroupResponse> {
+    createGroup(iTwinId: string, group: Group): Promise<GroupResponse> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `accesscontrol/itwins/${iTwinId}/groups`,
             body: group,
@@ -46,14 +46,14 @@ export class AccessControlClient {
         });
     }
 
-    getAllAvailableiTwinPermissions(): Promise<permissions> {
+    getAllAvailableiTwinPermissions(): Promise<Permissions> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `accesscontrol/itwins/permissions`,
             method: 'GET'
         });
     }
 
-    getAlliTwinPermissions(iTwinId: string): Promise<permissions> {
+    getAlliTwinPermissions(iTwinId: string): Promise<Permissions> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `accesscontrol/itwins/${iTwinId}/permissions`,
             method: 'GET'
@@ -88,7 +88,7 @@ export class AccessControlClient {
         });
     }
 
-    updateGroup(iTwinId: string, groupId: string, group: groupUpdate): Promise<GroupResponse> {
+    updateGroup(iTwinId: string, groupId: string, group: GroupUpdate): Promise<GroupResponse> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `accesscontrol/itwins/${iTwinId}/groups/${groupId}`,
             body: group,

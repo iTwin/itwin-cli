@@ -5,12 +5,12 @@
 
 import { Flags } from "@oclif/core";
 
-import { apiReference } from "../../../../extensions/api-reference.js";
+import { ApiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
-import { connectorType } from "../../../../services/synchronizationClient/models/connector-type.js";
+import { ConnectorType } from "../../../../services/synchronizationClient/models/connector-type.js";
 
 export default class ConnectionSourceFileUpdate extends BaseCommand {
-    static apiReference: apiReference = {
+    static apiReference: ApiReference = {
         link: "https://developer.bentley.com/apis/synchronization/operations/update-storage-connection-sourcefile/",
         name: "Update Storage Connection SourceFile",
     };
@@ -70,7 +70,7 @@ export default class ConnectionSourceFileUpdate extends BaseCommand {
       const client = await this.getSynchronizationClient();
   
       const response = await client.updateSourceFile(flags["connection-id"], flags["source-file-id"], {
-        connectorType: flags["connector-type"] as connectorType,
+        connectorType: flags["connector-type"] as ConnectorType,
         storageFileId: flags["storage-file-id"],
       });
   

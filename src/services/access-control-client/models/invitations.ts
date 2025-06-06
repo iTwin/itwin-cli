@@ -5,7 +5,7 @@
 
 import { Role } from "./role.js"
 
-export type invitation = {
+export type Invitation = {
     createdDate: Date,
     email: string,
     expirationDate: Date,
@@ -15,6 +15,6 @@ export type invitation = {
     status: string,
 }
 
-export type invitationsResponse = {
-    invitations: invitation[]
+export type InvitationsResponse = {
+    invitations: Invitation[]
 }

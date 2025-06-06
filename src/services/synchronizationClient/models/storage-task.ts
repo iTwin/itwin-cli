@@ -3,11 +3,11 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { taskError } from "./task-error.js";
+import { TaskError } from "./task-error.js";
 
-export type storageTask = {
+export type StorageTask = {
     endDateTime?: string;
-    error?: taskError;
+    error?: TaskError;
     id?: string;
     result?: string;
     retryAttempts?: number;

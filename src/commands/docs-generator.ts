@@ -2,7 +2,7 @@ import { Command, Config, Flags } from "@oclif/core";
 import fs from "node:fs";
 import path from "node:path";
 
-import { apiReference } from "../extensions/api-reference.js";
+import { ApiReference } from "../extensions/api-reference.js";
 import BaseCommand from "../extensions/base-command.js";
 
 export default class DocsGenerator extends BaseCommand {
@@ -94,14 +94,14 @@ export default class DocsGenerator extends BaseCommand {
 
         if(command.apiReference) {
             if(Array.isArray(command.apiReference)) {
-                const apiReferences = command.apiReference as apiReference[]; 
+                const apiReferences = command.apiReference as ApiReference[]; 
                 returnContent.push(`## ${command.apiReference[0].sectionName ?? 'API Reference'}`);
                 for (const apiRef of apiReferences) {
                     returnContent.push(`[${apiRef.name}](${apiRef.link})`);
                 }
             }
             else {
-                const apiReference = command.apiReference as apiReference;
+                const apiReference = command.apiReference as ApiReference;
                 returnContent.push(`## ${apiReference.sectionName ?? 'API Reference'}`, `[${apiReference.name}](${apiReference.link})`);
             }
         }

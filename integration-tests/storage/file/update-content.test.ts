@@ -6,8 +6,8 @@
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
-import { fileTyped } from '../../../src/services/storage-client/models/file-typed';
-import { fileUpload } from '../../../src/services/storage-client/models/file-upload';
+import { FileTyped } from '../../../src/services/storage-client/models/file-typed';
+import { FileUpload } from '../../../src/services/storage-client/models/file-upload';
 import { 
   createFile, 
   createFolder,
@@ -44,7 +44,7 @@ const tests = () => describe('update-content', () => {
   });
 
   it('should get URLs to update file content', async () => {
-    const { result: updateResponse } = await runCommand<fileUpload>(`storage file update-content --file-id ${testFileId}`);
+    const { result: updateResponse } = await runCommand<FileUpload>(`storage file update-content --file-id ${testFileId}`);
 
     expect(updateResponse).to.have.property('_links');
     expect(updateResponse!._links).to.have.property('completeUrl');
@@ -59,7 +59,7 @@ const tests = () => describe('update-content', () => {
   });
 
   it('should complete the file content update', async () => {
-    const { result: completedFile } = await runCommand<fileTyped>(`storage file update-complete -f ${testFileId}`);
+    const { result: completedFile } = await runCommand<FileTyped>(`storage file update-complete -f ${testFileId}`);
 
     expect(completedFile).to.have.property('id', testFileId);
     expect(completedFile).to.have.property('displayName', displayName);
@@ -67,7 +67,7 @@ const tests = () => describe('update-content', () => {
   });
 
   it('should throw an error when trying to update a non-existent file', async () => {
-    const { error } = await runCommand<fileUpload>('storage file update-content -f non-existent-file-id');
+    const { error } = await runCommand<FileUpload>('storage file update-content -f non-existent-file-id');
     expect(error).to.be.not.undefined;
     expect(error!.message).to.include('FileNotFound');
   });

@@ -3,12 +3,12 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { fileTypedType } from "./file-typed-type.js";
-import { linksItem } from "./links-item.js";
+import { FileTypedType } from "./file-typed-type.js";
+import { LinksItem } from "./links-item.js";
 
 
-export type fileTyped = {
-    _links?: linksItem;
+export type FileTyped = {
+    _links?: LinksItem;
     /**
      * Date when the file was created.
      */
@@ -48,6 +48,6 @@ export type fileTyped = {
     /**
      * Identification of the file entity.
      */
-    type?: fileTypedType;
+    type?: FileTypedType;
 };
 

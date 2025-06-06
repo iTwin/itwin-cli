@@ -3,7 +3,7 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-export type taskError = {
+export type TaskError = {
     bridgeExitCode?: number;
     canUserFix?: boolean;
     category?: string;

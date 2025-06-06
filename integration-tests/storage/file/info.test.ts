@@ -6,7 +6,7 @@
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
-import { fileTyped } from '../../../src/services/storage-client/models/file-typed';
+import { FileTyped } from '../../../src/services/storage-client/models/file-typed';
 import { 
   createFile,
   createIModel,
@@ -41,7 +41,7 @@ const tests = () => describe('info', () => {
   });
 
   it('should get the info of the file', async () => {
-    const { result: fileInfo } = await runCommand<fileTyped>(`storage file info --file-id ${testFileId}`);
+    const { result: fileInfo } = await runCommand<FileTyped>(`storage file info --file-id ${testFileId}`);
 
     expect(fileInfo).to.have.property('id', testFileId);
     expect(fileInfo).to.have.property('displayName', testFileName);

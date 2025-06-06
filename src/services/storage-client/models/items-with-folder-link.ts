@@ -3,11 +3,11 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { fileTyped } from "./file-typed.js";
-import { folderTyped } from "./folder-typed.js";
-import { linksPagingWithFolderLink } from "./links-paging-with-folder-link.js";
+import { FileTyped } from "./file-typed.js";
+import { FolderTyped } from "./folder-typed.js";
+import { LinksPagingWithFolderLink } from "./links-paging-with-folder-link.js";
 
-export type itemsWithFolderLink = {
-    _links?: linksPagingWithFolderLink
-    items?: Array<fileTyped | folderTyped>;
+export type ItemsWithFolderLink = {
+    _links?: LinksPagingWithFolderLink
+    items?: Array<FileTyped | FolderTyped>;
 };

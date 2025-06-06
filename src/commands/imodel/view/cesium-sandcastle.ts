@@ -8,13 +8,13 @@ import { Flags } from "@oclif/core";
 import open from 'open';
 import { deflate } from "pako";
 
-import { apiReference } from "../../../extensions/api-reference.js";
+import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { CustomFlags } from "../../../extensions/custom-flags.js";
-import { link, links } from "../../../services/general-models/links.js";
+import { Link, Links } from "../../../services/general-models/links.js";
 
 export default class CesiumSandcastle extends BaseCommand {
-  static apiReference: apiReference = {
+  static apiReference: ApiReference = {
       link: "/docs/command-workflows/cesium-sandcastle",
       name: "Cesium Sandcastle",
       sectionName: "Workflow Reference",
@@ -157,7 +157,7 @@ export default class CesiumSandcastle extends BaseCommand {
 
 
 type ExportResponse = {
-  _links: links
+  _links: Links
   exports: ExportInfo[],
 }
 
@@ -167,7 +167,7 @@ type ExportCreateResponse = {
 
 type ExportInfo = {
   _links: {
-    mesh: link
+    mesh: Link
   },
   displayName: string,
   error?: string,

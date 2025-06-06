@@ -8,23 +8,23 @@ import { Flags } from "@oclif/core"
 import fs from "node:fs"
 import path from "node:path"
 
-import { apiReference } from "../../extensions/api-reference.js";
+import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js"
 import { CustomFlags } from "../../extensions/custom-flags.js"
-import { authorizationInformation } from "../../services/authorization-client/authorization-type.js"
-import { fileUpload } from "../../services/storage-client/models/file-upload.js"
-import { itemsWithFolderLink } from "../../services/storage-client/models/items-with-folder-link.js"
-import { authInfo } from "../../services/synchronizationClient/models/connection-auth.js"
-import { connectorType } from "../../services/synchronizationClient/models/connector-type.js"
-import { executionResult } from "../../services/synchronizationClient/models/execution-result.js";
-import { executionState } from "../../services/synchronizationClient/models/execution-state.js"
-import { sourceFile } from "../../services/synchronizationClient/models/source-file.js"
-import { storageConnection } from "../../services/synchronizationClient/models/storage-connection.js"
-import { storageConnectionListResponse } from "../../services/synchronizationClient/models/storage-connection-response.js"
-import { storageRun } from "../../services/synchronizationClient/models/storage-run.js"
+import { AuthorizationInformation } from "../../services/authorization-client/authorization-type.js"
+import { FileUpload } from "../../services/storage-client/models/file-upload.js"
+import { ItemsWithFolderLink } from "../../services/storage-client/models/items-with-folder-link.js"
+import { AuthInfo } from "../../services/synchronizationClient/models/connection-auth.js"
+import { ConnectorType } from "../../services/synchronizationClient/models/connector-type.js"
+import { ExecutionResult } from "../../services/synchronizationClient/models/execution-result.js";
+import { ExecutionState } from "../../services/synchronizationClient/models/execution-state.js"
+import { SourceFile } from "../../services/synchronizationClient/models/source-file.js"
+import { StorageConnection } from "../../services/synchronizationClient/models/storage-connection.js"
+import { StorageConnectionListResponse } from "../../services/synchronizationClient/models/storage-connection-response.js"
+import { StorageRun } from "../../services/synchronizationClient/models/storage-run.js"
 
 export default class PopulateIModel extends BaseCommand {    
-  static apiReference: apiReference = {
+  static apiReference: ApiReference = {
     link: "/docs/command-workflows/imodel-populate",
     name: "iModel Populate",
     sectionName: "Workflow Reference"
@@ -104,7 +104,7 @@ export default class PopulateIModel extends BaseCommand {
     const iModel = await this.runCommand<IModel>('imodel:info', ['--imodel-id', flags["imodel-id"]]);
 
     this.log(`Fetching root folder for iTwin: ${iModel.iTwinId}`);
-    const topFolders = await this.runCommand<itemsWithFolderLink>('storage:root-folder', ['--itwin-id', iModel.iTwinId]);
+    const topFolders = await this.runCommand<ItemsWithFolderLink>('storage:root-folder', ['--itwin-id', iModel.iTwinId]);
     const rootFolderId = topFolders?._links?.folder?.href?.split('/').pop();
     if (rootFolderId === undefined) {
       this.error(`Unable to get root folder for iTwin: ${iModel.iTwinId}`);
@@ -115,14 +115,14 @@ export default class PopulateIModel extends BaseCommand {
     );
 
     this.log(`Checking existing connections for iModel ID: ${iModel.id}`);
-    const existingConnections = await this.runCommand<storageConnectionListResponse>('imodel:connection:list', ['--imodel-id', iModel.id]);
+    const existingConnections = await this.runCommand<StorageConnectionListResponse>('imodel:connection:list', ['--imodel-id', iModel.id]);
 
-    const authInfo = await this.runCommand<authorizationInformation>('auth:info', []);
+    const authInfo = await this.runCommand<AuthorizationInformation>('auth:info', []);
     const authType = authInfo.authorizationType === 'Service' ? 'Service' : 'User';
 
     if(authType === 'User') {
       this.log("Authorizing...");
-      const connectionAuth = await this.runCommand<authInfo>('imodel:connection:auth', []);
+      const connectionAuth = await this.runCommand<AuthInfo>('imodel:connection:auth', []);
       if (connectionAuth.isUserAuthorized === undefined) {
         this.error('User is not authenticated for connection run');
       }
@@ -147,7 +147,7 @@ export default class PopulateIModel extends BaseCommand {
       this.log('Synchronization process completed');
     }
 
-    const populateResponse: populateResponse = {
+    const populateResponse: PopulateResponse = {
       iModelId: iModel.id,
       iTwinId: iModel.iTwinId,
       rootFolderId,
@@ -157,7 +157,7 @@ export default class PopulateIModel extends BaseCommand {
     return populateResponse;
   }
 
-  private async addFileToConnectionIfItIsNotPresent(connectionId: string, sourceFiles: sourceFile[], file: { connectorType: connectorType, fileId: string, fileName: string }) {
+  private async addFileToConnectionIfItIsNotPresent(connectionId: string, sourceFiles: SourceFile[], file: { connectorType: ConnectorType, fileId: string, fileName: string }) {
     const fileExist = sourceFiles.find(f => f.storageFileId === file.fileId);
       if (!fileExist) {
         this.log(`Adding file: ${file.fileId} to default connection: ${connectionId}`);
@@ -176,10 +176,10 @@ export default class PopulateIModel extends BaseCommand {
 
       let connector;
       if(connectorTypes && connectorTypes.length === 1) {
-        connector = connectorType[connectorTypes[0] as keyof typeof connectorType];
+        connector = ConnectorType[connectorTypes[0] as keyof typeof ConnectorType];
       } 
       else if(connectorTypes && connectorTypes.length === files.length) {
-        connector = connectorType[connectorTypes[index] as keyof typeof connectorType];
+        connector = ConnectorType[connectorTypes[index] as keyof typeof ConnectorType];
       } 
       else if (!connectorTypes) {
         const splitedFile = file.split('.');
@@ -213,7 +213,7 @@ export default class PopulateIModel extends BaseCommand {
   }
 
   private async createNewFile(rootFolderId: string, fileName: string, filePath: string): Promise<string> {
-    const newFile = await this.runCommand<fileUpload>('storage:file:create', ['--folder-id', rootFolderId, '--name', fileName]);
+    const newFile = await this.runCommand<FileUpload>('storage:file:create', ['--folder-id', rootFolderId, '--name', fileName]);
     if (newFile._links?.uploadUrl?.href === undefined || newFile._links?.completeUrl?.href === undefined) {
       this.error('No upload url was provided when creating a file');
     }
@@ -222,21 +222,21 @@ export default class PopulateIModel extends BaseCommand {
     return newFile._links.completeUrl.href.split('/')[5];
   }
 
-  private async findOrCreateDefaultConnection(existingConnections: storageConnection[], files: { connectorType: connectorType, fileId: string, fileName: string }[], iModelId: string): Promise<string> {
+  private async findOrCreateDefaultConnection(existingConnections: StorageConnection[], files: { connectorType: ConnectorType, fileId: string, fileName: string }[], iModelId: string): Promise<string> {
     let defaultConnection = existingConnections.find(connection => connection.displayName === 'Default iTwinCLI Connection');
     if (!defaultConnection) {
-      const authInfo = await this.runCommand<authorizationInformation>('auth:info', []);
+      const authInfo = await this.runCommand<AuthorizationInformation>('auth:info', []);
       const authType = authInfo.authorizationType === 'Service' ? 'Service' : 'User';
 
       this.log(`Creating new default connection`);
-      defaultConnection = await this.runCommand<storageConnection>('imodel:connection:create', 
+      defaultConnection = await this.runCommand<StorageConnection>('imodel:connection:create', 
         ['--imodel-id', iModelId, '--connector-type', files[0].connectorType, '--file-id', files[0].fileId, '--authentication-type', authType, '--name', 'Default iTwinCLI Connection']);
       if (defaultConnection?.id === undefined) {
         this.error("Storage connection id was not present");
       }
     }
 
-    const connectionSourceFiles = await this.runCommand<sourceFile[]>('imodel:connection:sourcefile:list', ['--connection-id', defaultConnection.id]);
+    const connectionSourceFiles = await this.runCommand<SourceFile[]>('imodel:connection:sourcefile:list', ['--connection-id', defaultConnection.id]);
     await Promise.all(
       files.map((file) => this.addFileToConnectionIfItIsNotPresent(defaultConnection.id, connectionSourceFiles, file))
     );
@@ -246,7 +246,7 @@ export default class PopulateIModel extends BaseCommand {
     return defaultConnection.id;
   }
 
-  private async processFile(topFolders: itemsWithFolderLink, rootFolderId: string, fileInfo: NewFileInfo): Promise<{connectorType: connectorType, fileId: string, fileName: string}> {
+  private async processFile(topFolders: ItemsWithFolderLink, rootFolderId: string, fileInfo: NewFileInfo): Promise<{connectorType: ConnectorType, fileId: string, fileName: string}> {
     this.log(`Processing file: ${fileInfo.fileName}`);
     const fileExists = topFolders.items?.find(entry => entry.type === 'file' && entry.displayName === fileInfo.fileName);
     let fileId: string | undefined;
@@ -266,7 +266,7 @@ export default class PopulateIModel extends BaseCommand {
   }
 
   private async runSynchronization(connectionId: string, waitForCompletion: boolean): Promise<string> {
-    const storageConnection = await this.runCommand<storageConnection>('imodel:connection:info', ['--connection-id', connectionId]);
+    const storageConnection = await this.runCommand<StorageConnection>('imodel:connection:info', ['--connection-id', connectionId]);
     if (!storageConnection?._links?.lastRun?.href) {
       this.error(`No last run link available for storage connection: ${connectionId}`);
     }
@@ -275,14 +275,14 @@ export default class PopulateIModel extends BaseCommand {
     let storageConnectionRun;
     do {
       // eslint-disable-next-line no-await-in-loop
-      storageConnectionRun = await this.runCommand<storageRun>('imodel:connection:run:info', ['--connection-id', connectionId, '--connection-run-id', runId]);
+      storageConnectionRun = await this.runCommand<StorageRun>('imodel:connection:run:info', ['--connection-id', connectionId, '--connection-run-id', runId]);
       // eslint-disable-next-line no-await-in-loop
       await new Promise(resolve => { setTimeout(resolve, 10_000) });
       this.log(`Waiting for synchronization to complete for run ID: ${runId} with state: ${storageConnectionRun?.state}`);
     // eslint-disable-next-line no-unmodified-loop-condition
-    } while (waitForCompletion && storageConnectionRun?.state !== executionState.COMPLETED);
+    } while (waitForCompletion && storageConnectionRun?.state !== ExecutionState.COMPLETED);
 
-    if(waitForCompletion && storageConnectionRun.result !== executionResult.SUCCESS) {
+    if(waitForCompletion && storageConnectionRun.result !== ExecutionResult.SUCCESS) {
       this.error(`Synchronization run ${runId} resulted in an error. Run 'itp imodel connection run info --connection-id ${connectionId} --connection-run-id ${runId}' for more info.`);
     }
 
@@ -290,7 +290,7 @@ export default class PopulateIModel extends BaseCommand {
   }
 
   private async updateExistingFile(fileId: string, filePath: string): Promise<string> {
-    const updateFile = await this.runCommand<fileUpload>('storage:file:update-content', ['--file-id', fileId]);
+    const updateFile = await this.runCommand<FileUpload>('storage:file:update-content', ['--file-id', fileId]);
     if (updateFile._links?.uploadUrl?.href === undefined || updateFile._links.completeUrl?.href === undefined) {
       this.error('No upload url was provided when creating content update for a file');
     }
@@ -300,14 +300,14 @@ export default class PopulateIModel extends BaseCommand {
   }
 }
 
-export interface populateResponse {
+export interface PopulateResponse {
   iModelId: string;
   iTwinId: string;
   rootFolderId: string;
   summary: {
     connectionId: string;
     files: {
-        connectorType: connectorType;
+        connectorType: ConnectorType;
         fileId: string;
         fileName: string;
     }[];
@@ -316,44 +316,44 @@ export interface populateResponse {
 }
 
 interface NewFileInfo {
-  connectorType: connectorType;
+  connectorType: ConnectorType;
   fileName: string;
   fullFilePath: string;
 }
 
-const fileExtensionToConnectorType: { [key: string]: connectorType[] } = {
-  "3dm": [connectorType.MSTN], 
-  "3ds": [connectorType.MSTN],
-  dae: [connectorType.MSTN],
-  dgn: [connectorType.MSTN, connectorType.CIVIL, connectorType.OBD, connectorType.PROSTRUCTURES],
-  dwg: [connectorType.DWG, connectorType.AUTOPLANT, connectorType.CIVIL3D, connectorType.MSTN],
-  dxf: [connectorType.DWG],
-  fbx: [connectorType.MSTN],
-  geodb: [connectorType.GEOSPATIAL],
-  geojson: [connectorType.GEOSPATIAL],
-  hln: [connectorType.MSTN],
-  "i.dgn": [connectorType.MSTN],
-  ifc: [connectorType.IFC],
-  igs: [connectorType.MSTN],
-  jt: [connectorType.MSTN],
-  kml: [connectorType.GEOSPATIAL],
-  "land.xml": [connectorType.MSTN],
-  nwc: [connectorType.NWD],
-  nwd: [connectorType.NWD],
-  obj: [connectorType.MSTN],
-  otxml: [connectorType.OPENTOWER],
-  rvt: [connectorType.REVIT],
-  sat: [connectorType.MSTN],
-  shp: [connectorType.GEOSPATIAL],
-  skp: [connectorType.MSTN],
-  stl: [connectorType.MSTN],
-  stp: [connectorType.MSTN],
-  vue: [connectorType.SPXREVIEW],
-  "x_t": [connectorType.MSTN],
-  zip: [connectorType.SPPID],
+const fileExtensionToConnectorType: { [key: string]: ConnectorType[] } = {
+  "3dm": [ConnectorType.MSTN], 
+  "3ds": [ConnectorType.MSTN],
+  dae: [ConnectorType.MSTN],
+  dgn: [ConnectorType.MSTN, ConnectorType.CIVIL, ConnectorType.OBD, ConnectorType.PROSTRUCTURES],
+  dwg: [ConnectorType.DWG, ConnectorType.AUTOPLANT, ConnectorType.CIVIL3D, ConnectorType.MSTN],
+  dxf: [ConnectorType.DWG],
+  fbx: [ConnectorType.MSTN],
+  geodb: [ConnectorType.GEOSPATIAL],
+  geojson: [ConnectorType.GEOSPATIAL],
+  hln: [ConnectorType.MSTN],
+  "i.dgn": [ConnectorType.MSTN],
+  ifc: [ConnectorType.IFC],
+  igs: [ConnectorType.MSTN],
+  jt: [ConnectorType.MSTN],
+  kml: [ConnectorType.GEOSPATIAL],
+  "land.xml": [ConnectorType.MSTN],
+  nwc: [ConnectorType.NWD],
+  nwd: [ConnectorType.NWD],
+  obj: [ConnectorType.MSTN],
+  otxml: [ConnectorType.OPENTOWER],
+  rvt: [ConnectorType.REVIT],
+  sat: [ConnectorType.MSTN],
+  shp: [ConnectorType.GEOSPATIAL],
+  skp: [ConnectorType.MSTN],
+  stl: [ConnectorType.MSTN],
+  stp: [ConnectorType.MSTN],
+  vue: [ConnectorType.SPXREVIEW],
+  "x_t": [ConnectorType.MSTN],
+  zip: [ConnectorType.SPPID],
 };
 
-function  getConnectorTypeFromFileExtension(extension: string): connectorType {
+function  getConnectorTypeFromFileExtension(extension: string): ConnectorType {
   const found = fileExtensionToConnectorType[extension.toLowerCase()];
   return found[0];
 }
