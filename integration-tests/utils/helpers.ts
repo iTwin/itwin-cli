@@ -14,10 +14,10 @@ import fs from "node:fs"
 import os from 'node:os'
 import { inflate } from "pako";
 
-import { fileTyped } from "../../src/services/storage-client/models/file-typed.js";
-import { fileUpload } from "../../src/services/storage-client/models/file-upload.js";
-import { folderTyped } from "../../src/services/storage-client/models/folder-typed.js";
-import { itemsWithFolderLink } from "../../src/services/storage-client/models/items-with-folder-link.js";
+import { FileTyped } from "../../src/services/storage-client/models/file-typed.js";
+import { FileUpload } from "../../src/services/storage-client/models/file-upload.js";
+import { FolderTyped } from "../../src/services/storage-client/models/folder-typed.js";
+import { ItemsWithFolderLink } from "../../src/services/storage-client/models/items-with-folder-link.js";
 import { ITP_ISSUER_URL, ITP_MAILINATOR_API_KEY, ITP_NATIVE_TEST_CLIENT_ID, ITP_TEST_USER_EMAIL, ITP_TEST_USER_PASSWORD } from "./environment.js";
 
 export async function serviceLoginToCli() {
@@ -25,9 +25,9 @@ export async function serviceLoginToCli() {
     expect(result.stdout).to.contain('User successfully logged in using Service login');
 }
 
-export async function createFile(folderId: string, displayName: string, filePath: string, description?: string): Promise<fileTyped> {
+export async function createFile(folderId: string, displayName: string, filePath: string, description?: string): Promise<FileTyped> {
     // 1. Create meta data
-    const {result: createdFile} = await runCommand<fileUpload>(`storage file create --folder-id ${folderId} --name "${displayName}" --description "${description}"`);
+    const {result: createdFile} = await runCommand<FileUpload>(`storage file create --folder-id ${folderId} --name "${displayName}" --description "${description}"`);
 
     expect(createdFile).to.have.property('_links');
     expect(createdFile!._links).to.have.property('completeUrl');
@@ -44,22 +44,22 @@ export async function createFile(folderId: string, displayName: string, filePath
     expect(uploadedFile).to.have.property('result', 'uploaded');
 
     // 3. Confirm upload complete
-    const {result: completedFile} = await runCommand<fileTyped>(`storage file update-complete --file-id ${fileId}`)
+    const {result: completedFile} = await runCommand<FileTyped>(`storage file update-complete --file-id ${fileId}`)
 
     expect(completedFile).to.not.be.undefined;
     expect(completedFile).to.have.property('id', fileId);
 
-    return completedFile as fileTyped;
+    return completedFile as FileTyped;
 }
 
-export async function createFolder(parentFolderId: string, displayName: string, description?: string): Promise<folderTyped> {
-    const { result: createdFolder } = await runCommand<folderTyped>(`storage folder create --parent-folder-id ${parentFolderId} --name "${displayName}" --description "${description}"`);
+export async function createFolder(parentFolderId: string, displayName: string, description?: string): Promise<FolderTyped> {
+    const { result: createdFolder } = await runCommand<FolderTyped>(`storage folder create --parent-folder-id ${parentFolderId} --name "${displayName}" --description "${description}"`);
    
     expect(createdFolder).to.not.be.undefined;
     expect(createdFolder!.type).to.be.equal('folder');
     expect(createdFolder!.displayName).to.be.equal(displayName);
     expect(createdFolder!.parentFolderId).to.be.equal(parentFolderId);
-    return createdFolder as folderTyped;
+    return createdFolder as FolderTyped;
 }
 
 export async function createITwin(displayName: string, classType: string, subClassType: string): Promise<ITwin> {
@@ -99,7 +99,7 @@ export async function deleteIModel(id: string): Promise<void> {
 }
 
 export async function getRootFolderId(iTwinId: string): Promise<string> {
-    const { result: topFolders } = await runCommand<itemsWithFolderLink>(`storage root-folder --itwin-id ${iTwinId}`);
+    const { result: topFolders } = await runCommand<ItemsWithFolderLink>(`storage root-folder --itwin-id ${iTwinId}`);
     const rootFolderId = topFolders?._links?.folder?.href?.split('/').pop();
     expect(rootFolderId).to.not.be.undefined;
     return rootFolderId as string;

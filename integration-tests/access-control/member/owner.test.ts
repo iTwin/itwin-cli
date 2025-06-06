@@ -7,8 +7,8 @@ import { ITwin } from "@itwin/itwins-client";
 import { runCommand } from "@oclif/test";
 import { expect } from "chai";
 
-import { groupMember } from "../../../src/services/access-control-client/models/group-members";
-import { ownerResponse } from "../../../src/services/access-control-client/models/owner";
+import { GroupMember } from "../../../src/services/access-control-client/models/group-members";
+import { OwnerResponse } from "../../../src/services/access-control-client/models/owner";
 import { User } from "../../../src/services/user-client/models/user";
 import { ITP_TEST_USER_EXTERNAL } from "../../utils/environment";
 import { fetchEmailsAndGetInvitationLink } from "../../utils/helpers";
@@ -31,7 +31,7 @@ const tests = () => {
 
     it('Should invite an external member to an iTwin, accept invitation and remove owner member', async () => {
         const emailToAdd = ITP_TEST_USER_EXTERNAL;
-        const { result: invitedOwner } = await runCommand<ownerResponse>(`access-control member owner add -i ${iTwinId} --email ${emailToAdd}`);
+        const { result: invitedOwner } = await runCommand<OwnerResponse>(`access-control member owner add -i ${iTwinId} --email ${emailToAdd}`);
         expect(invitedOwner).to.not.be.undefined;
         expect(invitedOwner!.member).to.be.null;
         expect(invitedOwner!.invitation).to.not.be.undefined;
@@ -41,12 +41,12 @@ const tests = () => {
 
         await fetch(invitationLink);
 
-        let usersInfo: groupMember[];
+        let usersInfo: GroupMember[];
         do {
             // eslint-disable-next-line no-await-in-loop
             await new Promise<void>(resolve => {setTimeout(_ => resolve(), 10 * 1000);});
             // eslint-disable-next-line no-await-in-loop
-            const { result: listResult } = await runCommand<groupMember[]>(`access-control member owner list --itwin-id ${iTwinId}`);
+            const { result: listResult } = await runCommand<GroupMember[]>(`access-control member owner list --itwin-id ${iTwinId}`);
             expect(listResult).to.not.be.undefined;
             usersInfo = listResult!;
         } while (usersInfo.length !== 2);
@@ -60,7 +60,7 @@ const tests = () => {
     }).timeout(180 * 1000);
 
     it('Should list owners of an iTwin', async () => {
-        const { result: owners } = await runCommand<groupMember[]>(`access-control member owner list --itwin-id ${iTwinId}`);
+        const { result: owners } = await runCommand<GroupMember[]>(`access-control member owner list --itwin-id ${iTwinId}`);
         expect(owners).to.not.be.undefined;
         expect(owners!.length).to.be.greaterThanOrEqual(1);
 

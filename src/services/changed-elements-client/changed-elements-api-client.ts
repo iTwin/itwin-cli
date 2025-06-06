@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { ITwinPlatformApiClient } from "../iTwin-api-client.js";
-import { changeTrackingRequest, changesetComparisonResponse, changesetsResponse, trackingResponse } from "./tracking.js";
+import { ChangeTrackingRequest, ChangesetComparisonResponse, ChangesetsResponse, TrackingResponse } from "./tracking.js";
 
 export class ChangedElementsApiClient {
     iTwinPlatformApiClient: ITwinPlatformApiClient;
@@ -13,7 +13,7 @@ export class ChangedElementsApiClient {
         this.iTwinPlatformApiClient = client;
     }
 
-    async changeTracking(request: changeTrackingRequest) : Promise<void> {
+    async changeTracking(request: ChangeTrackingRequest) : Promise<void> {
         await this.iTwinPlatformApiClient.sendRequestNoResponse({
             apiPath: 'changedelements/tracking',
             body: request,
@@ -21,7 +21,7 @@ export class ChangedElementsApiClient {
         });
     }
 
-    async getComparison(iTwinId: string, iModelId: string, startChangesetId: string, endChangesetId: string) : Promise<changesetComparisonResponse> {
+    async getComparison(iTwinId: string, iModelId: string, startChangesetId: string, endChangesetId: string) : Promise<ChangesetComparisonResponse> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: 'changedelements/comparison',
             method: 'GET',
@@ -46,7 +46,7 @@ export class ChangedElementsApiClient {
         });
     }
 
-    getTracking(iModelId: string, iTwinId: string) : Promise<trackingResponse> {
+    getTracking(iModelId: string, iTwinId: string) : Promise<TrackingResponse> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: 'changedelements/tracking',
             method: 'GET',
@@ -63,7 +63,7 @@ export class ChangedElementsApiClient {
         });
     }
 
-    listChangesets(iModelId: string, iTwinId: string, top?: number, skip?: number) : Promise<changesetsResponse> {
+    listChangesets(iModelId: string, iTwinId: string, top?: number, skip?: number) : Promise<ChangesetsResponse> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: 'changedelements/changesets',
             method: 'GET',

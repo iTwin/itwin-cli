@@ -3,11 +3,11 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { links } from "../../general-models/links.js"
-import { invitation } from "./invitations.js"
+import { Links } from "../../general-models/links.js"
+import { Invitation } from "./invitations.js"
 import { Role } from "./role.js"
 
-export type listOfMembers = {
+export type ListOfMembers = {
     members: UserMember[]
 }
 
@@ -16,7 +16,7 @@ export type UserMember = {
     roleIds: string[]
 }
 
-export type member = {
+export type Member = {
     email: string
     givenName: string
     id: string
@@ -25,16 +25,16 @@ export type member = {
     surname: string
 }
 
-export type membersResponse = {
-    invitations: invitation[]
-    members: member[],
+export type MembersResponse = {
+    invitations: Invitation[]
+    members: Member[],
 }
 
-export type membersListResponse = {
-    _links: links
-    members: member[],
+export type MembersListResponse = {
+    _links: Links
+    members: Member[],
 }
 
-export type memberResponse = {
-    member: member
+export type MemberResponse = {
+    member: Member
 }

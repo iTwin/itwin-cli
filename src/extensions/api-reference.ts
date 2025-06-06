@@ -3,7 +3,7 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-export type apiReference = {
+export type ApiReference = {
     link: string;
     name: string;
     sectionName?: string;

@@ -4,10 +4,10 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { ITwinPlatformApiClient } from "../iTwin-api-client.js";
-import { fileResponse, filesResponse, itemsResponse } from "./models/file-response.js";
-import { fileUpload } from "./models/file-upload.js";
-import { folderInfo, folderResponse, foldersResponse } from "./models/folder-typed.js";
-import { itemsWithFolderLink } from "./models/items-with-folder-link.js";
+import { FileResponse, FilesResponse, ItemsResponse } from "./models/file-response.js";
+import { FileUpload } from "./models/file-upload.js";
+import { FolderInfo, FolderResponse, FoldersResponse } from "./models/folder-typed.js";
+import { ItemsWithFolderLink } from "./models/items-with-folder-link.js";
 
 export class StorageApiClient {
     iTwinPlatformApiClient: ITwinPlatformApiClient;
@@ -16,14 +16,14 @@ export class StorageApiClient {
         this.iTwinPlatformApiClient = client;
     }
 
-    completeFileUpload(fileId: string) : Promise<fileResponse> {
+    completeFileUpload(fileId: string) : Promise<FileResponse> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `storage/files/${fileId}/complete`,
             method: "POST"
         });
     }
 
-    createFile(folderId: string, displayName: string, description?: string) : Promise<fileUpload> {
+    createFile(folderId: string, displayName: string, description?: string) : Promise<FileUpload> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `storage/folders/${folderId}/files`,
             body: {
@@ -34,7 +34,7 @@ export class StorageApiClient {
         });
     }
 
-    createFolder(folderId: string, folder: folderInfo): Promise<folderResponse> {
+    createFolder(folderId: string, folder: FolderInfo): Promise<FolderResponse> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `storage/folders/${folderId}/folders`,
             body: folder,
@@ -56,42 +56,42 @@ export class StorageApiClient {
         });
     }
 
-    getFile(fileId: string): Promise<fileResponse> {
+    getFile(fileId: string): Promise<FileResponse> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `storage/files/${fileId}`,
             method: "GET",
         });
     }
 
-    getFiles(folderId: string): Promise<filesResponse> {
+    getFiles(folderId: string): Promise<FilesResponse> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `storage/folders/${folderId}/files`,
             method: "GET",
         });
     }
 
-    getFilesAndFolders(folderId: string): Promise<itemsResponse> {
+    getFilesAndFolders(folderId: string): Promise<ItemsResponse> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `storage/folders/${folderId}/list`,
             method: "GET",
         });
     }
 
-    getFolder(folderId: string): Promise<folderResponse> {
+    getFolder(folderId: string): Promise<FolderResponse> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `storage/folders/${folderId}`,
             method: 'GET'
         });
     }
 
-    getFolders(folderId: string): Promise<foldersResponse> {
+    getFolders(folderId: string): Promise<FoldersResponse> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `storage/folders/${folderId}/folders`,
             method: 'GET'
         });
     }
 
-    getTopLevelFoldersAndFiles(iTwinId: string, top?: number, skip?: number) : Promise<itemsWithFolderLink> {
+    getTopLevelFoldersAndFiles(iTwinId: string, top?: number, skip?: number) : Promise<ItemsWithFolderLink> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `storage/`,
             headers: { accept: "application/vnd.bentley.itwin-platform.v1+json" },
@@ -113,7 +113,7 @@ export class StorageApiClient {
         });
     }
 
-    updateFile(fileId: string, displayName?: string, description?: string) : Promise<fileResponse> {
+    updateFile(fileId: string, displayName?: string, description?: string) : Promise<FileResponse> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `storage/files/${fileId}`,
             body: {
@@ -124,14 +124,14 @@ export class StorageApiClient {
         });
     }
 
-    updateFileContent(fileId: string) : Promise<fileUpload> {
+    updateFileContent(fileId: string) : Promise<FileUpload> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `storage/files/${fileId}/updatecontent`,
             method: "POST"
         });
     }
 
-    updateFolder(folderId: string, folderInfo: folderInfo): Promise<folderResponse> {
+    updateFolder(folderId: string, folderInfo: FolderInfo): Promise<FolderResponse> {
         return this.iTwinPlatformApiClient.sendRequest({
             apiPath: `storage/folders/${folderId}`,
             body: folderInfo,

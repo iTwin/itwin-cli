@@ -7,7 +7,7 @@ import { ITwin } from "@itwin/itwins-client";
 import { runCommand } from "@oclif/test";
 import { expect } from "chai";
 
-import { member, membersResponse } from "../../../src/services/access-control-client/models/members";
+import { Member, MembersResponse } from "../../../src/services/access-control-client/models/members";
 import { Role } from "../../../src/services/access-control-client/models/role";
 import { ITP_TEST_USER_SAMEORG } from "../../utils/environment";
 import { nativeLoginToCli } from "../../utils/helpers";
@@ -37,7 +37,7 @@ const tests = () => describe('user', () => {
         
         const emailToAdd = ITP_TEST_USER_SAMEORG;
 
-        const { result: invitedUser } = await runCommand<membersResponse>(`access-control member user add --itwin-id ${iTwinId} --members "[{"email": "${emailToAdd}", "roleIds": ["${newRole!.id}"]}]"`);
+        const { result: invitedUser } = await runCommand<MembersResponse>(`access-control member user add --itwin-id ${iTwinId} --members "[{"email": "${emailToAdd}", "roleIds": ["${newRole!.id}"]}]"`);
 
         expect(invitedUser).to.not.be.undefined;
         expect(invitedUser!.members).to.have.lengthOf(1);
@@ -45,7 +45,7 @@ const tests = () => describe('user', () => {
         expect(invitedUser!.members[0].roles).to.have.lengthOf(1);
         expect(invitedUser!.members[0].roles[0].id).to.be.equal(newRole!.id);
 
-        const { result: usersInfo } = await runCommand<member[]>(`access-control member user list --itwin-id ${iTwinId}`);
+        const { result: usersInfo } = await runCommand<Member[]>(`access-control member user list --itwin-id ${iTwinId}`);
         expect(usersInfo).to.not.be.undefined;
         expect(usersInfo).to.have.lengthOf(2);
         const joinedUser = usersInfo?.filter(user => user.email.toLowerCase() === emailToAdd!.toLowerCase())[0];

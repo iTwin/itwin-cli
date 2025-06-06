@@ -6,8 +6,8 @@
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
-import { authenticationType } from '../../../src/services/synchronizationClient/models/authentication-type';
-import { storageConnection } from '../../../src/services/synchronizationClient/models/storage-connection';
+import { AuthenticationType } from '../../../src/services/synchronizationClient/models/authentication-type';
+import { StorageConnection } from '../../../src/services/synchronizationClient/models/storage-connection';
 import { createFile, createIModel, createITwin, getRootFolderId } from '../../utils/helpers';
 import runSuiteIfMainModule from '../../utils/run-suite-if-main-module';
 
@@ -35,9 +35,9 @@ const tests = () => describe('imodel connection create tests (Service Client)', 
   });
 
   it(`should create a 'Service' authentication-type connection by default`, async () => {
-    const { result: createResult } = await runCommand<storageConnection>(`imodel connection create -m ${testIModelId} -f ${testFileId} --connector-type SPPID -n TestConnection`);
+    const { result: createResult } = await runCommand<StorageConnection>(`imodel connection create -m ${testIModelId} -f ${testFileId} --connector-type SPPID -n TestConnection`);
     expect(createResult).to.not.be.undefined;
-    expect(createResult?.authenticationType).to.be.equal(authenticationType.SERVICE);
+    expect(createResult?.authenticationType).to.be.equal(AuthenticationType.SERVICE);
   });
 });
 

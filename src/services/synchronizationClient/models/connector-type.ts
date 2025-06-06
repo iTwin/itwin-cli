@@ -3,7 +3,7 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-export enum connectorType {
+export enum ConnectorType {
     AUTOPLANT = 'AUTOPLANT',
     CIVIL = 'CIVIL',
     CIVIL3D = 'CIVIL3D',

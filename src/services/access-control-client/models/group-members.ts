@@ -3,7 +3,7 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-export type groupMember = {
+export type GroupMember = {
     email: string;
     givenName: string;
     id: string;

@@ -8,10 +8,9 @@ import { ITwin } from '@itwin/itwins-client';
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
-import { populateResponse} from '../../src/commands/imodel/populate';
-import { changeset, changesetComparison } from '../../src/services/changed-elements-client/tracking';
+import { PopulateResponse} from '../../src/commands/imodel/populate';
+import { Changeset, ChangesetComparison } from '../../src/services/changed-elements-client/tracking';
 import { createFile, createIModel, createITwin, getRootFolderId } from '../utils/helpers';
-import { resultResponse } from '../utils/result-response';
 import runSuiteIfMainModule from '../utils/run-suite-if-main-module';
 
 const tests = () => describe('changesets + comparison', () => {
@@ -32,11 +31,11 @@ const tests = () => describe('changesets + comparison', () => {
         const testIModel = await createIModel(testIModelName, testITwinId);
         testIModelId = testIModel.id;
 
-        await runCommand<resultResponse>(`changed-elements enable --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
+        await runCommand<{result: string}>(`changed-elements enable --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
 
         const rootFolderId = await getRootFolderId(testITwinId);
         await createFile(rootFolderId, testFileName, testFilePath);
-        const { result: populateResult } = await runCommand<populateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type SPPID`);
+        const { result: populateResult } = await runCommand<PopulateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type SPPID`);
         expect(populateResult).to.have.property('iModelId', testIModelId);
         expect(populateResult).to.have.property('iTwinId', testITwinId);
     }
@@ -50,22 +49,22 @@ const tests = () => describe('changesets + comparison', () => {
   });
 
   it('should get changesets', async () => {
-    const { result: fullResult}  = await runCommand<changeset[]>(`changed-elements changesets --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
+    const { result: fullResult}  = await runCommand<Changeset[]>(`changed-elements changesets --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
     expect(fullResult).to.not.be.undefined;
     expect(fullResult).to.have.lengthOf(4);
 
-    const { result: filteredResult } = await runCommand<changeset[]>(`changed-elements changesets --imodel-id ${testIModelId} --itwin-id ${testITwinId} --skip 2 --top 2`);
+    const { result: filteredResult } = await runCommand<Changeset[]>(`changed-elements changesets --imodel-id ${testIModelId} --itwin-id ${testITwinId} --skip 2 --top 2`);
     expect(filteredResult).to.not.be.undefined;
     expect(filteredResult).to.have.lengthOf(2);
     expect(filteredResult?.map(x => x.id)).to.be.deep.equal(fullResult?.map(x => x.id).slice(2))
   });
 
   it('should compare 2 changesets', async () => {
-    const { result: listResponse } = await runCommand<changeset[]>(`changed-elements changesets --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
+    const { result: listResponse } = await runCommand<Changeset[]>(`changed-elements changesets --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
     expect(listResponse).to.not.be.undefined;
     expect(listResponse).to.have.lengthOf(4);
     
-    const { result: comparisonResponse } = await runCommand<changesetComparison>(`changed-elements comparison --imodel-id ${testIModelId} --itwin-id ${testITwinId} --changeset-id1 ${listResponse![0].id} --changeset-id2 ${listResponse![3].id}`);
+    const { result: comparisonResponse } = await runCommand<ChangesetComparison>(`changed-elements comparison --imodel-id ${testIModelId} --itwin-id ${testITwinId} --changeset-id1 ${listResponse![0].id} --changeset-id2 ${listResponse![3].id}`);
     expect(comparisonResponse).to.not.be.undefined;
     expect(comparisonResponse!.opcodes).to.have.lengthOf(1);
     expect(comparisonResponse!.opcodes[0]).to.be.equal(18); // Element was inserted

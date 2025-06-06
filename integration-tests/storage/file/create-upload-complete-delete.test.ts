@@ -6,8 +6,8 @@
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
-import { fileTyped } from '../../../src/services/storage-client/models/file-typed';
-import { fileUpload } from '../../../src/services/storage-client/models/file-upload';
+import { FileTyped } from '../../../src/services/storage-client/models/file-typed';
+import { FileUpload } from '../../../src/services/storage-client/models/file-upload';
 import { 
   createFolder, 
   createITwin,  
@@ -38,7 +38,7 @@ const tests = () => describe('create + upload + complete + delete', () => {
   });
 
   it('should create a new file meta data', async () => {
-    const { result: createdFile } = await runCommand<fileUpload>(`storage file create --folder-id ${testFolderId} --name ${displayName} --description "${description}"`);
+    const { result: createdFile } = await runCommand<FileUpload>(`storage file create --folder-id ${testFolderId} --name ${displayName} --description "${description}"`);
 
     expect(createdFile).to.have.property('_links');
     expect(createdFile!._links).to.have.property('completeUrl');
@@ -59,7 +59,7 @@ const tests = () => describe('create + upload + complete + delete', () => {
   });
 
   it('should complete the upload', async () => {
-    const { result: completedFile } = await runCommand<fileTyped>(`storage file update-complete --file-id ${testFileId}`);
+    const { result: completedFile } = await runCommand<FileTyped>(`storage file update-complete --file-id ${testFileId}`);
 
     expect(completedFile).to.have.property('id', testFileId);
     expect(completedFile).to.have.property('displayName', displayName);
@@ -73,7 +73,7 @@ const tests = () => describe('create + upload + complete + delete', () => {
   it('should delete the file', async () => {
     await runCommand(`storage file delete --file-id ${testFileId}`);
 
-    const { error: infoError } = await runCommand<fileTyped>(`storage file info --file-id ${testFileId}`);
+    const { error: infoError } = await runCommand<FileTyped>(`storage file info --file-id ${testFileId}`);
     expect(infoError).to.be.not.undefined;
     expect(infoError!.message).to.include('FileNotFound');
   });

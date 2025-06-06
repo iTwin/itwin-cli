@@ -3,9 +3,9 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { link } from "../../general-models/links.js";
+import { Link } from "../../general-models/links.js";
 
-export type linksUpload = {
-    completeUrl?: link;
-    uploadUrl?: link;
+export type LinksUpload = {
+    completeUrl?: Link;
+    uploadUrl?: Link;
 };

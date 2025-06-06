@@ -3,14 +3,14 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-export enum authorizationType {
+export enum AuthorizationType {
     Interactive = "Interactive",
     Service = "Service"
 }
 
-export type authorizationInformation = {
+export type AuthorizationInformation = {
     apiUrl: string;
-    authorizationType: authorizationType;
+    authorizationType: AuthorizationType;
     clientId: string;
     expirationDate?: Date;
     issuerUrl: string;

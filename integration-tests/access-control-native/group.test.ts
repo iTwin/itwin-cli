@@ -7,7 +7,7 @@ import { ITwin } from "@itwin/itwins-client";
 import { runCommand } from "@oclif/test";
 import { expect } from "chai";
 
-import { group } from "../../src/services/access-control-client/models/group";
+import { Group } from "../../src/services/access-control-client/models/group";
 import { nativeLoginToCli } from "../utils/helpers";
 import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
 
@@ -24,7 +24,7 @@ const tests = () => describe('group', () => {
         const { result: iTwin } = await runCommand<ITwin>(`itwin create --class Thing --sub-class Asset --name ${iTwinName}`);
         expect(iTwin?.id).to.not.be.undefined;
         iTwinId = iTwin!.id!;
-        const { result: group } = await runCommand<group>(`access-control group create --itwin-id ${iTwinId} --name "${groupName}" --description "${groupDescription}"`);
+        const { result: group } = await runCommand<Group>(`access-control group create --itwin-id ${iTwinId} --name "${groupName}" --description "${groupDescription}"`);
         expect(group).to.not.be.undefined;
         groupId = group!.id!;
     });
@@ -36,7 +36,7 @@ const tests = () => describe('group', () => {
 
     it('Should update group ims-group', async () => {
         const imsGroupName = "iTwin CLI Test Group";
-        const { result: groupUpdate } = await runCommand<group>(`access-control group update --itwin-id ${iTwinId} --group-id ${groupId} --ims-group "${imsGroupName}"`);
+        const { result: groupUpdate } = await runCommand<Group>(`access-control group update --itwin-id ${iTwinId} --group-id ${groupId} --ims-group "${imsGroupName}"`);
         expect(groupUpdate).to.not.be.undefined;
         expect(groupUpdate!.id).to.not.be.undefined;
         expect(groupUpdate!.imsGroups).to.have.lengthOf(1);

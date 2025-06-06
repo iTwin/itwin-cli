@@ -6,8 +6,8 @@
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
-import { authenticationType } from '../../../src/services/synchronizationClient/models/authentication-type';
-import { storageConnection } from '../../../src/services/synchronizationClient/models/storage-connection';
+import { AuthenticationType } from '../../../src/services/synchronizationClient/models/authentication-type';
+import { StorageConnection } from '../../../src/services/synchronizationClient/models/storage-connection';
 import { createFile, createIModel, createITwin, getRootFolderId } from '../../utils/helpers';
 import runSuiteIfMainModule from '../../utils/run-suite-if-main-module';
 
@@ -35,9 +35,9 @@ const tests = () => describe('imodel connection create tests (Native Client)', (
   });
 
   it(`should create a 'User' authentication-type connection by default`, async () => {
-    const { result } = await runCommand<storageConnection>(`imodel connection create -m ${testIModelId} -f ${testFileId} --connector-type SPPID -n TestConnection`);
+    const { result } = await runCommand<StorageConnection>(`imodel connection create -m ${testIModelId} -f ${testFileId} --connector-type SPPID -n TestConnection`);
     expect(result).to.not.be.undefined;
-    expect(result?.authenticationType).to.be.equal(authenticationType.USER);
+    expect(result?.authenticationType).to.be.equal(AuthenticationType.USER);
   });
 });
 

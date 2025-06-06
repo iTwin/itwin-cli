@@ -7,7 +7,7 @@ import { ITwin } from "@itwin/itwins-client";
 import { runCommand } from "@oclif/test";
 import { expect } from "chai";
 
-import { GroupMemberInfo, group } from "../../../src/services/access-control-client/models/group";
+import { Group, GroupMemberInfo } from "../../../src/services/access-control-client/models/group";
 import { Role } from "../../../src/services/access-control-client/models/role";
 import runSuiteIfMainModule from '../../utils/run-suite-if-main-module';
 
@@ -27,15 +27,15 @@ const tests = () => {
         expect(iTwin?.id).to.not.be.undefined;
         iTwinId = iTwin!.id!;
 
-        const { result: group1 } = await runCommand<group>(`access-control group create --itwin-id ${iTwinId} --name "Test Group #1" --description "Test Group Description"`);
+        const { result: group1 } = await runCommand<Group>(`access-control group create --itwin-id ${iTwinId} --name "Test Group #1" --description "Test Group Description"`);
         expect(group1?.id).to.not.be.undefined;
         groupId1 = group1!.id!;
 
-        const { result: group2 } = await runCommand<group>(`access-control group create --itwin-id ${iTwinId} --name "Test Group #2" --description "Test Group Description"`);
+        const { result: group2 } = await runCommand<Group>(`access-control group create --itwin-id ${iTwinId} --name "Test Group #2" --description "Test Group Description"`);
         expect(group2?.id).to.not.be.undefined;
         groupId2 = group2!.id!;
 
-        const { result: group3 } = await runCommand<group>(`access-control group create --itwin-id ${iTwinId} --name "Test Group #3" --description "Test Group Description"`);
+        const { result: group3 } = await runCommand<Group>(`access-control group create --itwin-id ${iTwinId} --name "Test Group #3" --description "Test Group Description"`);
         expect(group3?.id).to.not.be.undefined;
         groupId3 = group3!.id!;
 

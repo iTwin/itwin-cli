@@ -10,15 +10,15 @@ import { jwtDecode } from "jwt-decode";
 import * as fs from 'node:fs';
 import path from "node:path";
 
-import { configuration } from "../../extensions/configuration.js";
-import { authTokenInfo } from "./auth-token-info.js";
-import { authorizationInformation, authorizationType } from "./authorization-type.js";
+import { Configuration } from "../../extensions/configuration.js";
+import { AuthTokenInfo } from "./auth-token-info.js";
+import { AuthorizationInformation, AuthorizationType } from "./authorization-type.js";
 
 export class AuthorizationClient {
   private readonly cliConfiguration: Config;
-  private readonly environmentConfiguration: configuration;
+  private readonly environmentConfiguration: Configuration;
   
-  constructor(envConfig: configuration, cliConfig: Config)
+  constructor(envConfig: Configuration, cliConfig: Config)
   {
       this.environmentConfiguration = envConfig;
       this.cliConfiguration = cliConfig;
@@ -35,20 +35,20 @@ export class AuthorizationClient {
       return newTokenInfo.authToken;
     }
     
-    info() : authorizationInformation {
+    info() : AuthorizationInformation {
       const existingTokenInfo = this.getExistingAuthTokenInfo();
 
       return {
         apiUrl : this.environmentConfiguration.apiUrl,
-        authorizationType: existingTokenInfo?.authenticationType ?? authorizationType.Interactive,
+        authorizationType: existingTokenInfo?.authenticationType ?? AuthorizationType.Interactive,
         clientId: this.environmentConfiguration.clientId,
         expirationDate: existingTokenInfo?.expirationDate,
         issuerUrl: this.environmentConfiguration.issuerUrl
       }
     }
 
-    async login(clientId?: string, clientSecret?: string) : Promise<authTokenInfo> {
-      let authType: authorizationType;
+    async login(clientId?: string, clientSecret?: string) : Promise<AuthTokenInfo> {
+      let authType: AuthorizationType;
       let usedToken : string;
       
       const usedClientId = clientId ?? this.environmentConfiguration.clientId;
@@ -56,11 +56,11 @@ export class AuthorizationClient {
 
       if(usedClientId && usedClientSecret) {
         usedToken = await this.getAccessTokenFromService(usedClientId, usedClientSecret, this.environmentConfiguration.issuerUrl);
-        authType = authorizationType.Service;
+        authType = AuthorizationType.Service;
       }
       else {
         usedToken = await this.getAccessTokenFromWebsiteLogin(usedClientId, this.environmentConfiguration.issuerUrl);
-        authType = authorizationType.Interactive;
+        authType = AuthorizationType.Interactive;
       }
 
       return this.saveAccessToken(usedToken, authType);
@@ -70,7 +70,7 @@ export class AuthorizationClient {
       const existingTokenInfo = this.getExistingAuthTokenInfo();
 
       // Login from IMS
-      if(existingTokenInfo?.authenticationType === authorizationType.Interactive) {
+      if(existingTokenInfo?.authenticationType === AuthorizationType.Interactive) {
         const {clientId, issuerUrl} = this.environmentConfiguration
         
         const client = new NodeCliAuthorizationClient({
@@ -127,7 +127,7 @@ export class AuthorizationClient {
         return;
       }
  
-      return JSON.parse(fs.readFileSync(tokenPath, 'utf8')) as authTokenInfo;
+      return JSON.parse(fs.readFileSync(tokenPath, 'utf8')) as AuthTokenInfo;
     }
 
     private isExpirationDateValid(expirationDate: Date | undefined)  {
@@ -143,7 +143,7 @@ export class AuthorizationClient {
       return expirationDateFixed > currentDate;      
     }
 
-    private saveAccessToken(accessToken: string, authenticationType: authorizationType) {
+    private saveAccessToken(accessToken: string, authenticationType: AuthorizationType) {
       // Ensure the directory exists
       if (!fs.existsSync(this.cliConfiguration.cacheDir)) {
         fs.mkdirSync(this.cliConfiguration.cacheDir, { recursive: true });
@@ -154,7 +154,7 @@ export class AuthorizationClient {
       const parsedToken = jwtDecode(fixedAccessToken);
 
       const expiration = new Date(parsedToken.exp! * 1000);
-      const tokenInfo : authTokenInfo = {
+      const tokenInfo : AuthTokenInfo = {
         authToken: fixedAccessToken,
         authenticationType,
         expirationDate: expiration

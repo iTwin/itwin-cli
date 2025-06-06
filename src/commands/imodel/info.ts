@@ -3,12 +3,12 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { apiReference } from "../../extensions/api-reference.js";
+import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
 import { CustomFlags } from "../../extensions/custom-flags.js";
 
 export class IModelInfo extends BaseCommand {
-  static apiReference : apiReference = {
+  static apiReference : ApiReference = {
     link: "https://developer.bentley.com/apis/imodels-v2/operations/get-imodel-details/",
     name: "Get iModel Details",
   };

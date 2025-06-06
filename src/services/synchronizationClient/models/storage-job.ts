@@ -3,15 +3,15 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { connectorType } from "./connector-type.js";
-import { storageTask } from "./storage-task.js";
+import { ConnectorType } from "./connector-type.js";
+import { StorageTask } from "./storage-task.js";
 
-export type storageJob = {
-    connectorType?: connectorType;
+export type StorageJob = {
+    connectorType?: ConnectorType;
     endDateTime?: string;
     id?: string;
     result?: string;
     startDateTime?: string;
     state?: string;
-    tasks?: Array<storageTask>;
+    tasks?: Array<StorageTask>;
 };

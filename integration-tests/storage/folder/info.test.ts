@@ -6,7 +6,7 @@
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
-import { folderTyped } from '../../../src/services/storage-client/models/folder-typed';
+import { FolderTyped } from '../../../src/services/storage-client/models/folder-typed';
 import { 
   createFolder, 
   createITwin, 
@@ -33,7 +33,7 @@ const tests = () => describe('info', () => {
   });
 
   it('should get the info of the folder', async () => {
-    const { result: folderInfo } = await runCommand<folderTyped>(`storage folder info --folder-id ${testFolderId}`);
+    const { result: folderInfo } = await runCommand<FolderTyped>(`storage folder info --folder-id ${testFolderId}`);
 
     expect(folderInfo).to.have.property('id', testFolderId);
     expect(folderInfo).to.have.property('displayName', 'IntegrationTestFolder');

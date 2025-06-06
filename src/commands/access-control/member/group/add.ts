@@ -5,14 +5,14 @@
 
 import { Flags } from "@oclif/core";
 
-import { apiReference } from "../../../../extensions/api-reference.js";
+import { ApiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
 import { CustomFlags } from "../../../../extensions/custom-flags.js";
 import { validateUuidCSV } from "../../../../extensions/validation/validate-uuid-csv.js";
 import { GroupMember } from "../../../../services/access-control-client/models/group.js";
 
 export default class AddGroupMembers extends BaseCommand {
-  static apiReference: apiReference = {
+  static apiReference: ApiReference = {
       link: "https://developer.bentley.com/apis/access-control-v2/operations/add-itwin-group-members/",
       name: "Add iTwin Group Members",
   };
