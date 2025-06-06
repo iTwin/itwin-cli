@@ -10,7 +10,7 @@
     "composite": true,
     "sourceMap": true
   },
-  "include": ["./src/**/*"],
+  "include": ["./src/**/*", "./integration-tests/**/*"],
   "ts-node": {
     "esm": true
   }
