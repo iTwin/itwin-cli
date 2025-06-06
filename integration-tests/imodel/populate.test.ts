@@ -114,8 +114,8 @@ const tests = () => describe('populate', () => {
 
     const {connectionId, runId} = populateResult!.summary[0];
     const { result: infoResult } = await runCommand<StorageRun>(`imodel connection run info -c ${connectionId} --connection-run-id ${runId}`);
-    expect(infoResult?.state).to.be.equal(executionState.COMPLETED);
-    expect(infoResult?.result).to.be.equal(executionResult.SUCCESS);
+    expect(infoResult?.state).to.be.equal(ExecutionState.COMPLETED);
+    expect(infoResult?.result).to.be.equal(ExecutionResult.SUCCESS);
     expect(infoResult?.jobs).to.have.lengthOf(1);
     expect(infoResult?.jobs![0].result).to.be.equal('Success');
     expect(infoResult?.jobs![0].tasks).to.have.lengthOf(1);
