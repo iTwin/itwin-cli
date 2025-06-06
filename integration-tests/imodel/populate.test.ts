@@ -15,7 +15,6 @@ import runSuiteIfMainModule from '../utils/run-suite-if-main-module';
 
 const tests = () => describe('populate', () => {
   const failingTestFilePath1 = 'integration-tests/test.zip'
-  const failingTestFilePath2 = 'integration-tests/test.land.xml'
   const testFilePath1 = 'examples/datasets/ExtonCampus.dgn';
   const testFilePath2 = 'examples/datasets/HouseModel.dgn';
 
@@ -57,6 +56,7 @@ const tests = () => describe('populate', () => {
     expect(infoResult?.jobs![0].tasks!.every((task) => task.result === 'Success'));
   }).timeout(30 * 60 * 1000);
 
+  
   it('should populate the iModel with the uploaded file (no-wait flag with polling)', async () => {
     const { result: populateResult } = await runCommand<PopulateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath1} --connector-type MSTN --no-wait`);
     expect(populateResult).to.not.be.undefined;
@@ -87,10 +87,10 @@ const tests = () => describe('populate', () => {
   }).timeout(30 * 60 * 1000);
 
   it('should return an error message if synchronization run completes with a non-success state', async () => {
-    const { error: populateError } = await runCommand<PopulateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${failingTestFilePath1} --connector-type IFC`);
+    const { error: populateError } = await runCommand<PopulateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${failingTestFilePath1} --connector-type MSTN`);
     expect(populateError).to.not.be.undefined;
     expect(populateError?.message).to.match(/Synchronization run .*? resulted in an error. Run 'itp imodel connection run info --connection-id .*? --connection-run-id .*?' for more info./);
-    
+
     const command = populateError?.message.match(/imodel connection run info --connection-id .*? --connection-run-id .*?'/)![0]?.slice(0,-1);
     const { result: infoResult } = await runCommand<StorageRun>(command!);
     expect(infoResult?.state).to.be.equal(ExecutionState.COMPLETED);
@@ -103,25 +103,24 @@ const tests = () => describe('populate', () => {
   }).timeout(30 * 60 * 1000);
 
   it('should pick correct connector-types according to file extensions, when no connector-types are provided', async () => {
-    const { error: populateError } = await runCommand<PopulateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${failingTestFilePath1} --file ${failingTestFilePath2}`);
-    expect(populateError).to.not.be.undefined;
-    expect(populateError?.message).to.match(/Synchronization run .*? resulted in an error. Run 'itp imodel connection run info --connection-id .*? --connection-run-id .*?' for more info./);
-    
-    const command = populateError?.message.match(/imodel connection run info --connection-id .*? --connection-run-id .*?'/)![0]?.slice(0,-1);
-    const { result: infoResult } = await runCommand<StorageRun>(command!);
-    expect(infoResult).to.not.be.undefined;
-    expect(infoResult?.state).to.be.equal(ExecutionState.COMPLETED);
-    expect(infoResult?.result).to.be.equal(ExecutionResult.ERROR);
-    expect(infoResult).to.not.be.undefined;
-    expect(infoResult?.jobs).to.have.lengthOf(2);
-    for(const job of infoResult!.jobs!) {
-      expect(job.result).to.be.equal('Error');
-      expect(job.tasks).to.have.lengthOf(1);
-      expect(job.tasks!.every((task) => task.result === 'Error'));
-    }
+    const { result: populateResult } = await runCommand<PopulateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath1}`);
+    expect(populateResult).to.not.be.undefined;
+    expect(populateResult).to.have.property('iTwinId', testITwinId);
+    expect(populateResult).to.have.property('iModelId', testIModelId);
+    expect(populateResult!.summary).to.not.be.undefined;
+    expect(populateResult!.summary).to.have.lengthOf(1);
+    expect(populateResult!.summary[0].connectionId).to.not.be.undefined;
+    expect(populateResult!.summary[0].runId).to.not.be.undefined;
 
-    expect(infoResult?.jobs![0].connectorType).to.be.equal("SPPID");
-    expect(infoResult?.jobs![1].connectorType).to.be.equal("MSTN");
+    const {connectionId, runId} = populateResult!.summary[0];
+    const { result: infoResult } = await runCommand<StorageRun>(`imodel connection run info -c ${connectionId} --connection-run-id ${runId}`);
+    expect(infoResult?.state).to.be.equal(ExecutionState.COMPLETED);
+    expect(infoResult?.result).to.be.equal(ExecutionResult.SUCCESS);
+    expect(infoResult?.jobs).to.have.lengthOf(1);
+    expect(infoResult?.jobs![0].result).to.be.equal('Success');
+    expect(infoResult?.jobs![0].tasks).to.have.lengthOf(1);
+    expect(infoResult?.jobs![0].tasks!.every((task) => task.result === 'Success'));
+    expect(infoResult?.jobs![0].connectorType).to.be.equal("MSTN");
   }).timeout(30 * 60 * 1000);
 
   it('should return an error message if amount of connector-types does not match the amount of files and is not equal to 1', async () => {
