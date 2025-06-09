@@ -8,8 +8,6 @@
   },
   "bugs": "https://github.com/iTwin/itwin-cli/issues",
   "dependencies": {
-    "@eslint/js": "^9.28.0",
-    "@itwin/eslint-plugin": "^5.2.1",
     "@itwin/imodels-client-management": "^5.9.0",
     "@itwin/itwins-client": "^1.6.1",
     "@itwin/node-cli-authorization": "^2.0.3",
@@ -28,6 +26,8 @@
     "zod": "^3.25.30"
   },
   "devDependencies": {
+    "@eslint/js": "^9.28.0",
+    "@itwin/eslint-plugin": "^5.2.1",
     "@itwin/oidc-signin-tool": "^4.4.1",
     "@oclif/prettier-config": "^0.2.1",
     "@oclif/test": "^4",
@@ -43,7 +43,7 @@
     "oclif": "^4",
     "shx": "^0.3.3",
     "ts-node": "^10",
-    "typescript": "^5.8.3",
+    "typescript": "^5",
     "typescript-eslint": "^8.33.1"
   },
   "engines": {
