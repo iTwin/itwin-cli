@@ -3,34 +3,35 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { Links } from "../general-models/links.js"
+import { Links } from "../general-models/links.js";
 
-export type ChangeTrackingRequest = {
+export interface ChangeTrackingRequest {
     enable: boolean,
     iModelId: string,
     iTwinId: string
 }
 
-export type TrackingResponse = {
+export interface TrackingResponse {
     enabled : boolean
 }
 
-export type ChangesetsResponse = {
+export interface ChangesetsResponse { 
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     _links: Links
     changesetStatus: Changeset[]
 }
 
-export type Changeset = {
+export interface Changeset {
     id: string,
     index: number,
     ready: boolean
 }
 
-export type ChangesetComparisonResponse = {
+export interface ChangesetComparisonResponse {
     changedElements: ChangesetComparison
 }
 
-export type ChangesetComparison = {
+export interface ChangesetComparison {
     classIds: string[],
     elements: string[],
     modelIds: string[],

@@ -9,7 +9,7 @@ import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 
 export default class ListFolders extends BaseCommand {
-    static apiReference: ApiReference[] = [
+    public static apiReference: ApiReference[] = [
       {
         link: "https://developer.bentley.com/apis/storage/operations/get-folders-in-folder/",
         name: "List Folders in Folder",
@@ -20,9 +20,9 @@ export default class ListFolders extends BaseCommand {
       }
     ];
 
-    static description = "List folders in a parent folder of an iTwin's storage. Optionally, include files in the result.";
+    public static description = "List folders in a parent folder of an iTwin's storage. Optionally, include files in the result.";
 
-    static examples = [
+    public static examples = [
       {
         command: `<%= config.bin %> <%= command.id %> --folder-id a1b2c3d4-5678-90ab-cdef-1234567890ab`,
         description: 'Example 1: List all folders in a parent folder'
@@ -33,7 +33,7 @@ export default class ListFolders extends BaseCommand {
       }
     ];
 
-    static flags = {
+    public static flags = {
       "folder-id": Flags.string({ 
         char: 'f',
         description: "The ID of the parent folder whose contents you want to list.",
@@ -45,7 +45,7 @@ export default class ListFolders extends BaseCommand {
       }),
     };
   
-    async run() {
+    public async run() {
       const { flags } = await this.parse(ListFolders);
   
       const client = await this.getStorageApiClient();

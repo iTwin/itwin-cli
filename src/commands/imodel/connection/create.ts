@@ -7,21 +7,21 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
-import { CustomFlags } from "../../../extensions/custom-flags.js";
+import { customFlags } from "../../../extensions/custom-flags.js";
 import { AuthorizationInformation, AuthorizationType } from "../../../services/authorization-client/authorization-type.js";
 import { AuthenticationType } from "../../../services/synchronizationClient/models/authentication-type.js";
 import { ConnectorType } from "../../../services/synchronizationClient/models/connector-type.js";
 import { StorageFileCreate } from "../../../services/synchronizationClient/models/storage-file-create.js";
 
 export default class CreateConnection extends BaseCommand {
-  static apiReference: ApiReference = {
+  public static apiReference: ApiReference = {
     link: "https://developer.bentley.com/apis/synchronization/operations/create-storage-connection/",
     name: "Create Storage Connection",
   };
 
-  static description = 'Create a storage connection that describes files from storage to synchronize with an iModel.';
+  public static description = 'Create a storage connection that describes files from storage to synchronize with an iModel.';
 
-	static examples = [
+	public static examples = [
     {
       command: `<%= config.bin %> <%= command.id %> --imodel-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --file-id t5bDFuN4qUa9ojVw1E5FGtldp8BgSbNCiJ2XMdiT-cA --connector-type MSTN`,
       description: 'Example 1: Minimal example with only required options'
@@ -32,7 +32,7 @@ export default class CreateConnection extends BaseCommand {
     }
   ];
 
-  static flags = {
+  public static flags = {
     "authentication-type": Flags.string({ 
       description: `The authorization workflow type. Default value depends on currently used authentication type as follows: Interactive login -> 'User', Service Client login -> 'Service'`, 
       helpValue: '<string>',
@@ -68,7 +68,7 @@ export default class CreateConnection extends BaseCommand {
       multiple: true,
       required: true
     }),
-    "imodel-id": CustomFlags.iModelIDFlag({
+    "imodel-id": customFlags.iModelIDFlag({
       description: 'The ID of the iModel.'
     }),
     name: Flags.string({
@@ -79,7 +79,7 @@ export default class CreateConnection extends BaseCommand {
     }),
   };
 
-  async run() {
+  public async run() {
     const { flags } = await this.parse(CreateConnection);
 
     const client = await this.getSynchronizationClient();
@@ -92,7 +92,7 @@ export default class CreateConnection extends BaseCommand {
 
     const isSingleConnectorTypeProvided = flags["connector-type"].length === 1;
     for (let i = 0; i < flags["file-id"].length; i++) {
-      const connectorType = isSingleConnectorTypeProvided ? flags["connector-type"][0] as ConnectorType : flags["connector-type"][i] as ConnectorType
+      const connectorType = isSingleConnectorTypeProvided ? flags["connector-type"][0] as ConnectorType : flags["connector-type"][i] as ConnectorType;
       sourceFiles.push({
         connectorType,
         storageFileId: flags["file-id"][i]

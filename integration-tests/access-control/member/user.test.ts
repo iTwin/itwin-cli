@@ -65,12 +65,12 @@ const tests = () => {
 
         let usersInfo: Member[];
         do {
-            // eslint-disable-next-line no-await-in-loop
+             
             await new Promise<void>(resolve => {setTimeout(_ => resolve(), 10 * 1000);});
-            // eslint-disable-next-line no-await-in-loop
+             
             const listResult = await runCommand<Member[]>(`access-control member user list --itwin-id ${iTwinId}`);
             expect(listResult.result).to.not.be.undefined;
-            usersInfo = listResult.result!
+            usersInfo = listResult.result!;
         } while (usersInfo.length !== 2);
 
         await new Promise<void>(resolve => {setTimeout(_ => resolve(), 30 * 1000);});
@@ -180,7 +180,7 @@ const tests = () => {
         const { error: createError } = await runCommand<MembersResponse>(`access-control member user add --itwin-id ${iTwinId} --members ${JSON.stringify(usersInfo)} --email ${usersInfo[0].email} --email ${usersInfo[1].email} --email ${usersInfo[2].email}
             --role-ids ${usersInfo[0].roleIds.join(',')} --role-ids ${usersInfo[1].roleIds.join(',')} --role-ids ${usersInfo[2].roleIds.join(',')}`);
         expect(createError).to.not.be.undefined;
-        expect(createError?.message).to.match(new RegExp(`--email=${usersInfo[0].email},${usersInfo[1].email},${usersInfo[2].email} cannot also be provided when using --members`))
+        expect(createError?.message).to.match(new RegExp(`--email=${usersInfo[0].email},${usersInfo[1].email},${usersInfo[2].email} cannot also be provided when using --members`));
     });
 
     it('Should return an error when none of the following flags are provided: `--members`, `--member`, `--role-ids`', async () => {
@@ -204,8 +204,8 @@ const tests = () => {
 
         const { error: createError } = await runCommand<MembersResponse>(`access-control member user add --itwin-id ${iTwinId} --email ${usersInfo[0].email} --email ${usersInfo[1].email} --email ${usersInfo[2].email}`);
         expect(createError).to.not.be.undefined;
-        expect(createError?.message).to.match(/All of the following must be provided when using --email: --role-ids/)
-    })
+        expect(createError?.message).to.match(/All of the following must be provided when using --email: --role-ids/);
+    });
 
     it('should return an error when only `--role-ids` flag is provided', async  () => {
         const usersInfo = [
@@ -222,7 +222,7 @@ const tests = () => {
 
         const { error: createError } = await runCommand<MembersResponse>(`access-control member user add --itwin-id ${iTwinId} --role-ids ${usersInfo[0].roleIds.join(',')} --role-ids ${usersInfo[1].roleIds.join(',')} --role-ids ${usersInfo[2].roleIds.join(',')}`);
         expect(createError).to.not.be.undefined;
-        expect(createError?.message).to.match(/All of the following must be provided when using --role-ids: --email/)
+        expect(createError?.message).to.match(/All of the following must be provided when using --role-ids: --email/);
     });
 
     it('should return an error when there are invalid UUIDs provided to `--role-ids` flag', async () => {
@@ -236,13 +236,13 @@ const tests = () => {
         const { error: createError } = await runCommand<MembersResponse>(`access-control member user add --itwin-id ${iTwinId} --email ${usersInfo[0].email}
             --role-ids ${usersInfo[0].roleIds.join(',')},some-invalid-uuid`);
         expect(createError).to.not.be.undefined;
-        expect(createError?.message).to.match(new RegExp(`There are invalid UUIDs in '${usersInfo[0].roleIds.join(',')},some-invalid-uuid'`))
+        expect(createError?.message).to.match(new RegExp(`There are invalid UUIDs in '${usersInfo[0].roleIds.join(',')},some-invalid-uuid'`));
     });
 
     it('should return an error when invalid JSON is provided to `--members` flag', async () => {
         const { error: createError } = await runCommand<MembersResponse>(`access-control member user add --itwin-id ${iTwinId} --members not-valid-serialized-json`);
         expect(createError).to.not.be.undefined;
-        expect(createError!.message).to.match(/'not-valid-serialized-json' is not valid serialized JSON./)
+        expect(createError!.message).to.match(/'not-valid-serialized-json' is not valid serialized JSON./);
     });
 
     it('should return an error when JSON of invalid schema is provided to `--members` flag', async () => {
@@ -281,7 +281,7 @@ const tests = () => {
                     crypto.randomUUID(),
                     crypto.randomUUID(),
                 ]
-            })
+            });
         }
         
         const serializedMembersInfo = JSON.stringify(members);
@@ -298,7 +298,7 @@ const tests = () => {
 
         let command = `access-control member user update --itwin-id ${iTwinId} --member-id ${usersInfo![0].id}`;
         for(let i = 0; i < 51; i++)
-            command += ` --role-id role${i}`
+            command += ` --role-id role${i}`;
 
         const result = await runCommand<MembersResponse>(command);
         expect(result.error).to.not.be.undefined;

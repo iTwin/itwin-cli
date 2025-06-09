@@ -8,7 +8,7 @@ export enum AuthorizationType {
     Service = "Service"
 }
 
-export type AuthorizationInformation = {
+export interface AuthorizationInformation {
     apiUrl: string;
     authorizationType: AuthorizationType;
     clientId: string;

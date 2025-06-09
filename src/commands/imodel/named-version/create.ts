@@ -7,17 +7,17 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
-import { CustomFlags } from "../../../extensions/custom-flags.js";
+import { customFlags } from "../../../extensions/custom-flags.js";
 
 export default class CreateNamedVersion extends BaseCommand {
-    static apiReference: ApiReference = {
+    public static apiReference: ApiReference = {
         link: "https://developer.bentley.com/apis/imodels-v2/operations/create-imodel-named-version/",
         name: "Create Named Version",
     };
 
-    static description = 'Create a new named version for iModel.';
+    public static description = 'Create a new named version for iModel.';
 
-    static examples = [
+    public static examples = [
       {
         command: `<%= config.bin %> <%= command.id %> --imodel-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --changeset-id 2f3b4a8c92d747d5c8a8b2f9cde6742e5d74b3b5 --name "Version 1.0" --description "Initial release"`,
         description: 'Example 1: Creating a named version with a description'
@@ -32,7 +32,7 @@ export default class CreateNamedVersion extends BaseCommand {
       }
     ];
 
-    static flags = {
+    public static flags = {
       "changeset-id": Flags.string({
         description: 'The ID of the changeset for the named version. Defaults to the latest changeset if not specified.',
         helpValue: '<string>',
@@ -44,7 +44,7 @@ export default class CreateNamedVersion extends BaseCommand {
         helpValue: '<string>',
         required: false,
       }),
-      "imodel-id": CustomFlags.iModelIDFlag({
+      "imodel-id": customFlags.iModelIDFlag({
         description: 'The ID of the iModel where the named version will be created.'
       }),
       name: Flags.string({
@@ -55,7 +55,7 @@ export default class CreateNamedVersion extends BaseCommand {
       }),
     };
   
-    async run() {
+    public async run() {
       const { flags } = await this.parse(CreateNamedVersion);
   
       const client = this.getIModelClient();

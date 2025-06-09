@@ -15,10 +15,10 @@ export const validateJson = <T>(jsonString: string, validationFunc?: (input: T) 
     if(validationFunc === undefined)
         return parsed;
 
-    const validationError = validationFunc(parsed)
+    const validationError = validationFunc(parsed);
     if (validationError) {
         throw new Error(validationError);
     }
     
     return parsed;
-}
+};

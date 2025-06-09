@@ -18,12 +18,12 @@ const tests = () => describe('create', () => {
   const testChildITwinName = `IntegrationTestITwinChild_${new Date().toISOString()}`;
   const testClass = 'Thing';
   const testSubClass = 'Asset';
-  const testGeographicLocation= 'San Francisco, CA'
-  const testDataCenterLocation = 'UK South'
-  const testStatus = 'Inactive'
-  const testIanaTimeZone = 'America/Los_Angeles'
-  const testType = 'Type1'
-  const testNumber = Math.random().toString(36).slice(2)
+  const testGeographicLocation= 'San Francisco, CA';
+  const testDataCenterLocation = 'UK South';
+  const testStatus = 'Inactive';
+  const testIanaTimeZone = 'America/Los_Angeles';
+  const testType = 'Type1';
+  const testNumber = Math.random().toString(36).slice(2);
 
   after(async () => {
     const { result: deleteResult1 } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinChildId}`);
@@ -33,7 +33,7 @@ const tests = () => describe('create', () => {
     expect(deleteResult1).to.have.property('result', 'deleted');
     expect(deleteResult2).to.have.property('result', 'deleted');
     expect(deleteResult3).to.have.property('result', 'deleted');
-  })
+  });
 
   it('should create a new iTwin', async () => {
     const { result: iTwin } = await runCommand<ITwin>(`itwin create --name "${testITwinName1}" --class ${testClass} --sub-class ${testSubClass} --type ${testType} --number ${testNumber}`); 

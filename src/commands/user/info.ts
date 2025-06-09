@@ -9,21 +9,21 @@ import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
 
 export default class UserInfo extends BaseCommand {
-    static apiReference: ApiReference = {
+    public static apiReference: ApiReference = {
         link: "https://developer.bentley.com/apis/users/operations/get-users-by-id-list/",
         name: "Get Users by ID List",
     };
 
-    static description = "Retrieve information about specific users based on their user IDs.";
+    public static description = "Retrieve information about specific users based on their user IDs.";
 
-    static examples = [
+    public static examples = [
       {
         command: `<%= config.bin %> <%= command.id %> --user-id user1-id --user-id user2-id --user-id user3-id`,
         description: 'Example 1: Retrieve information about specific users by their user IDs'
       }
     ];
 
-    static flags = {
+    public static flags = {
       "user-id": Flags.string({ 
         description: "User IDs to retrieve information for. Max amount of 1000.", 
         helpValue: '<string>',
@@ -32,10 +32,10 @@ export default class UserInfo extends BaseCommand {
       }),
     };
   
-    async run() {
+    public async run() {
       const { flags } = await this.parse(UserInfo);
   
-      if(flags["user-id"] !== undefined && flags["user-id"]!.length > 1000) {
+      if(flags["user-id"] !== undefined && flags["user-id"].length > 1000) {
         this.error("A maximum of 1000 user IDs can be provided.");
       }
 

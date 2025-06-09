@@ -23,7 +23,7 @@ const tests = () => describe('view cesium-sandcastle', () => {
 
   before(async () => {
     const { result: filteredITwins } = await runCommand<ITwin[]>(`itwin list --name ${testITwinName}`);
-    expect(filteredITwins).to.not.be.undefined
+    expect(filteredITwins).to.not.be.undefined;
 
     if(filteredITwins!.length === 0) {
         const testITwin = await createITwin(testITwinName, 'Thing', 'Asset');
@@ -56,7 +56,7 @@ const tests = () => describe('view cesium-sandcastle', () => {
     const base64String = result!.url.slice("https://sandcastle.cesium.com/#c=".length);
     const dataString = decodeCompressedBase64(base64String);
     const pattern = new RegExp('const viewer = new Cesium.Viewer("cesiumContainer",{})'.replaceAll("(","\\(").replaceAll(")","\\)").replaceAll("\"","\\\\\""));
-    expect(dataString).to.match(pattern)
+    expect(dataString).to.match(pattern);
   });
 
   it(`should use cesium world terrain, when '--terrain cesiumWorldTerrain' is provided`, async () => {
@@ -67,7 +67,7 @@ const tests = () => describe('view cesium-sandcastle', () => {
     const base64String = result!.url.slice("https://sandcastle.cesium.com/#c=".length);
     const dataString = decodeCompressedBase64(base64String);
     const pattern = new RegExp('const viewer = new Cesium.Viewer("cesiumContainer",{terrain: Cesium.Terrain.fromWorldTerrain(),})'.replaceAll("(","\\(").replaceAll(")","\\)").replaceAll("\"","\\\\\""));
-    expect(dataString).to.match(pattern)
+    expect(dataString).to.match(pattern);
   });
 });
 

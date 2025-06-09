@@ -5,7 +5,7 @@
 
 import { TaskError } from "./task-error.js";
 
-export type StorageTask = {
+export interface StorageTask {
     endDateTime?: string;
     error?: TaskError;
     id?: string;
@@ -14,4 +14,4 @@ export type StorageTask = {
     startDateTime?: string;
     state?: string;
     storageFileId?: string;
-};
+}

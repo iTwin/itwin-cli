@@ -3,10 +3,10 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { Links } from "../../general-models/links.js"
-import { Role } from "./role.js"
+import { Links } from "../../general-models/links.js";
+import { Role } from "./role.js";
 
-export type Group = {
+export interface Group {
     description?: string,
     id?: string,
     imsGroups?: string[]
@@ -14,7 +14,7 @@ export type Group = {
     name?: string,
 }
 
-export type GroupUser = {
+export interface GroupUser {
     email: string,
     givenName: string,
     organization: string
@@ -22,40 +22,41 @@ export type GroupUser = {
     userId: string,
 }
 
-export type GroupUpdate = {
+export interface GroupUpdate {
     description?: string,
     imsGroups?: string[]
     members?: string[],
     name?: string,
 }
 
-export type GroupResponse = {
+export interface GroupResponse {
     group: Group
 }
 
-export type GroupsResponse = {
+export interface GroupsResponse {
     groups: Group[]
 }
 
-export type GroupMember = {
+export interface GroupMember {
     groupId: string,
     roleIds: string[]
 }
 
-export type GroupMembersRequest = {
+export interface GroupMembersRequest {
     members: GroupMember[]
 }
 
-export type GroupMembersResponse = {
+export interface GroupMembersResponse {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     _links: Links
     members: GroupMemberInfo[]
 }
 
-export type GroupMemberResponse = {
+export interface GroupMemberResponse {
     member: GroupMemberInfo
 }
 
-export type GroupMemberInfo = {
+export interface GroupMemberInfo {
     groupDescription: string,
     groupName: string,
     id: string,

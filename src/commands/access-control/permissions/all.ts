@@ -7,21 +7,21 @@ import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 
 export default class ListAllPermissions extends BaseCommand {
-    static apiReference: ApiReference = {
+    public static apiReference: ApiReference = {
         link: "https://developer.bentley.com/apis/access-control-v2/operations/get-all-permissions/",
         name: "Get All Permissions",
     };
 
-    static description = 'Retrieve a list of all iTwin Platform permissions.';
+    public static description = 'Retrieve a list of all iTwin Platform permissions.';
 
-    static examples = [
+    public static examples = [
       {
         command: `<%= config.bin %> <%= command.id %>`,
         description: 'Example 1:'
       }
     ];
 
-    async run() {
+    public async run() {
       await this.parse(ListAllPermissions);
   
       const client = await this.getAccessControlApiClient();

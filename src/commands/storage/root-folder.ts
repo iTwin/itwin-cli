@@ -6,25 +6,26 @@
 import { Flags } from '@oclif/core';
 
 import BaseCommand from '../../extensions/base-command.js';
-import { CustomFlags } from '../../extensions/custom-flags.js';
+import { customFlags } from '../../extensions/custom-flags.js';
+import { ApiReference } from '../../extensions/api-reference.js';
 
 export default class GetRootFolder extends BaseCommand {
-  static apiReference = {
+  public static apiReference: ApiReference = {
     link: 'https://developer.bentley.com/apis/storage/operations/get-top-level-folders-and-files-by-project/',
     name: 'Get Top-Level Folders and Files',
   };
 
-  static description = 'Retrieve the top-level folders and files in an iTwin\'s storage.';
+  public static description = 'Retrieve the top-level folders and files in an iTwin\'s storage.';
 
-	static examples = [
+	public static examples = [
     {
       command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51`,
       description: 'Example 1:'
     }
   ];
 
-  static flags = {
-    "itwin-id": CustomFlags.iTwinIDFlag({
+  public static flags = {
+    "itwin-id": customFlags.iTwinIDFlag({
       description: 'The ID of the iTwin whose top-level folders and files you want to retrieve.'
     }),
     skip: Flags.integer({
@@ -39,7 +40,7 @@ export default class GetRootFolder extends BaseCommand {
     }),
   };
 
-  async run() {
+  public async run() {
     const { flags } = await this.parse(GetRootFolder);
     
     const client = await this.getStorageApiClient();

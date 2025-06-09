@@ -43,9 +43,7 @@ const tests = () => {
 
         let usersInfo: GroupMember[];
         do {
-            // eslint-disable-next-line no-await-in-loop
             await new Promise<void>(resolve => {setTimeout(_ => resolve(), 10 * 1000);});
-            // eslint-disable-next-line no-await-in-loop
             const { result: listResult } = await runCommand<GroupMember[]>(`access-control member owner list --itwin-id ${iTwinId}`);
             expect(listResult).to.not.be.undefined;
             usersInfo = listResult!;

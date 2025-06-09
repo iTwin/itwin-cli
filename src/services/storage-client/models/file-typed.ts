@@ -7,7 +7,8 @@ import { FileTypedType } from "./file-typed-type.js";
 import { LinksItem } from "./links-item.js";
 
 
-export type FileTyped = {
+export interface FileTyped {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     _links?: LinksItem;
     /**
      * Date when the file was created.
@@ -49,5 +50,5 @@ export type FileTyped = {
      * Identification of the file entity.
      */
     type?: FileTypedType;
-};
+}
 

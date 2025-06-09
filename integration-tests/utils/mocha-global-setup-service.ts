@@ -1,7 +1,9 @@
-import { logoutFromCLI, serviceLoginToCli } from "./helpers";
+import { logoutFromCLI, serviceLoginToCli } from "./helpers.ts";
 
 export async function mochaGlobalSetup() {
     await logoutFromCLI();
     await serviceLoginToCli();
-    console.log("\n\nRunning tests with service client")
+
+    // eslint-disable-next-line no-console
+    console.log("\n\nRunning tests with service client");
 }

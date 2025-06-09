@@ -3,7 +3,7 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-export type TaskError = {
+export interface TaskError {
     bridgeExitCode?: number;
     canUserFix?: boolean;
     category?: string;
@@ -15,4 +15,4 @@ export type TaskError = {
     message?: string;
     phase?: string;
     system?: string;
-};
+}

@@ -5,33 +5,33 @@
 
 import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
-import { CustomFlags } from "../../extensions/custom-flags.js";
+import { customFlags } from "../../extensions/custom-flags.js";
 
 export default class ChangedElementsInfo extends BaseCommand {
-    static apiReference: ApiReference = {
+    public static apiReference: ApiReference = {
         link: "https://developer.bentley.com/apis/changed-elements/operations/get-tracking/",
         name: "Get Tracking Info",
     };
 
-    static description = "Retrieve change tracking information for a specified iModel.";
+    public static description = "Retrieve change tracking information for a specified iModel.";
 
-    static examples = [
+    public static examples = [
       {
         command: `<%= config.bin %> <%= command.id %> --itwin-id 1a2b3c4d-5678-90ab-cdef-1234567890ab --imodel-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51`,
         description: 'Example 1:'
       }
     ];
 
-    static flags = {
-      "imodel-id": CustomFlags.iModelIDFlag({  
+    public static flags = {
+      "imodel-id": customFlags.iModelIDFlag({  
         description: "The ID of the iModel to retrieve tracking information for."
       }),
-      "itwin-id": CustomFlags.iTwinIDFlag({ 
+      "itwin-id": customFlags.iTwinIDFlag({ 
         description: "The ID of the iTwin associated with the iModel."
       }),
     };
   
-    async run() {
+    public async run() {
       const { flags } = await this.parse(ChangedElementsInfo);
   
       const client = await this.getChangeElementApiClient();

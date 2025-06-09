@@ -7,25 +7,25 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
-import { CustomFlags } from "../../../../extensions/custom-flags.js";
+import { customFlags } from "../../../../extensions/custom-flags.js";
 
 export default class DeleteUserMember extends BaseCommand {
-    static apiReference: ApiReference = {
+    public static apiReference: ApiReference = {
         link: "https://developer.bentley.com/apis/access-control-v2/operations/remove-itwin-user-member/",
         name: "Remove iTwin User Member",
     };
 
-    static description = 'Remove a user from an iTwin.';
+    public static description = 'Remove a user from an iTwin.';
 
-    static examples = [
+    public static examples = [
       {
         command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --member-id user1-id`,
         description: 'Example 1:'
       }
     ];
 
-    static flags = {
-      "itwin-id": CustomFlags.iTwinIDFlag({
+    public static flags = {
+      "itwin-id": customFlags.iTwinIDFlag({
         description: 'The ID of the iTwin where the user is a member.'
       }),
       "member-id": Flags.string({
@@ -35,7 +35,7 @@ export default class DeleteUserMember extends BaseCommand {
       }),
     };
   
-    async run() {
+    public async run() {
       const { flags } = await this.parse(DeleteUserMember);
   
       const client = await this.getAccessControlMemberClient();

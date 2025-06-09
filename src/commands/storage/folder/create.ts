@@ -9,14 +9,14 @@ import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 
 export default class CreateFolder extends BaseCommand {
-    static apiReference: ApiReference = {
+    public static apiReference: ApiReference = {
         link: "https://developer.bentley.com/apis/storage/operations/create-folder/",
         name: "Create Folder",
     };
 
-    static description = "Create a new folder in a specified parent folder in iTwin's storage.";
+    public static description = "Create a new folder in a specified parent folder in iTwin's storage.";
 
-    static examples = [
+    public static examples = [
       {
         command: `<%= config.bin %> <%= command.id %> --parent-folder-id ROOT_FOLDER_ID_HERE --name "Project Documents" --description "Folder for all project-related documents"`,
         description: `Example 1: Create a folder inside the root folder with a description\n#Note: You can retrieve the root folder ID using the 'itp storage root-folder' command.`
@@ -27,7 +27,7 @@ export default class CreateFolder extends BaseCommand {
       }
     ];
 
-    static flags = {
+    public static flags = {
       description: Flags.string({ 
         char: 'd', 
         description: "A description of the folder.",
@@ -46,7 +46,7 @@ export default class CreateFolder extends BaseCommand {
       }),
     };
   
-    async run() {
+    public async run() {
       const { flags } = await this.parse(CreateFolder);
   
       const client = await this.getStorageApiClient();

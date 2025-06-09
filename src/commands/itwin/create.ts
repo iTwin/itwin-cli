@@ -10,16 +10,16 @@ import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
 
 export default class CreateITwin extends BaseCommand {
-    static apiReference: ApiReference = {
+    public static apiReference: ApiReference = {
         link: "https://developer.bentley.com/apis/itwins/operations/create-itwin/",
         name: "Create iTwin",
     };
 
-    static customDocs = true;
+    public static customDocs = true;
 
-    static description = 'Create a new iTwin with specified properties.';
+    public static description = 'Create a new iTwin with specified properties.';
 
-    static examples = [
+    public static examples = [
       {
         command: `<%= config.bin %> <%= command.id %> --class Thing --sub-class Asset --name "Golden Gate Revamp"`,
         description: `Example 1: Creating an iTwin with the 'Thing' class and 'Asset' subclass`
@@ -34,7 +34,7 @@ export default class CreateITwin extends BaseCommand {
       }
     ];
 
-    static flags = {
+    public static flags = {
       class: Flags.string({
         description: 'The Class of your iTwin.',
         helpValue: '<string>',
@@ -63,6 +63,7 @@ export default class CreateITwin extends BaseCommand {
         helpValue: '<string>',
         required: true,
       }),
+      // eslint-disable-next-line id-denylist
       number: Flags.string({
         description: 'Unique identifier for the iTwin. Defaults to iTwin Id if unspecified.',
         helpValue: '<string>',
@@ -96,7 +97,7 @@ export default class CreateITwin extends BaseCommand {
       }),
     };
   
-    async run() {
+    public async run() {
       const { flags } = await this.parse(CreateITwin);
   
       const iTwin : ITwin = {
@@ -105,6 +106,7 @@ export default class CreateITwin extends BaseCommand {
         displayName: flags.name,
         geographicLocation: flags["geographic-location"],
         ianaTimeZone: flags["iana-time-zone"],
+        // eslint-disable-next-line id-denylist
         number: flags.number,
         parentId: flags["parent-id"],
         status: flags.status,
@@ -126,7 +128,7 @@ export default class CreateITwin extends BaseCommand {
           this.log("iTwin Id not found in response. Cannot save to context.");
         }
         else {
-          this.setContext(creatediTwin.data.id);
+          await this.setContext(creatediTwin.data.id);
         }
       }
   

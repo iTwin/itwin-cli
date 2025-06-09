@@ -31,7 +31,7 @@ const tests = () => describe('list', () => {
     expect(deleteResult1).to.have.property('result', 'deleted');
     expect(deleteResult2).to.have.property('result', 'deleted');
     expect(deleteResult3).to.have.property('result', 'deleted');
-  })
+  });
 
   it('should fail when provided bad subClass', async () => {
     const { error: listError } = await runCommand<ITwin[]>('itwin list --sub-class InvalidSubClass');
@@ -126,7 +126,7 @@ const tests = () => describe('list', () => {
     const { result: filteredListResult } = await runCommand<ITwin[]>(`itwin list --include-inactive --skip 1 --top 2`);
     const filteredITwinIds = filteredListResult!.map(itwin => itwin.id);
     expect(filteredITwinIds).to.be.an('array').that.is.not.empty;
-    expect(filteredITwinIds.toString()).to.be.equal(itwinIds.slice(1, 3).toString())
+    expect(filteredITwinIds.toString()).to.be.equal(itwinIds.slice(1, 3).toString());
   });
 });
 

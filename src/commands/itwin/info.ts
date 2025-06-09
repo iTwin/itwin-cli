@@ -5,30 +5,30 @@
 
 import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
-import { CustomFlags } from "../../extensions/custom-flags.js";
+import { customFlags } from "../../extensions/custom-flags.js";
 
 export default class ITwinInfo extends BaseCommand {
-    static apiReference: ApiReference = {
+    public static apiReference: ApiReference = {
         link: "https://developer.bentley.com/apis/iTwins/operations/get-itwin/",
         name: "Get iTwin Details",
     };
 
-    static description = 'Retrieve metadata for the specified iTwin.';
+    public static description = 'Retrieve metadata for the specified iTwin.';
 
-    static examples = [
+    public static examples = [
       {
         command: `<%= config.bin %> <%= command.id %> --itwin-id b1a2c3d4-5678-90ab-cdef-1234567890ab`,
         description: 'Example 1:'
       }
     ];
 
-    static flags = {
-      "itwin-id": CustomFlags.iTwinIDFlag({
+    public static flags = {
+      "itwin-id": customFlags.iTwinIDFlag({
         description: 'The ID of the iTwin to retrieve information about.'
       }),
     };
   
-    async run() {
+    public async run() {
       const { flags } = await this.parse(ITwinInfo);
     
       const accessToken = await this.getAccessToken();

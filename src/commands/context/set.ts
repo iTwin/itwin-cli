@@ -10,9 +10,9 @@ import { Flags } from "@oclif/core";
 import BaseCommand from "../../extensions/base-command.js";
 
 export default class SetContext extends BaseCommand {
-    static description = "Set a new cached context. This works by saving iModel and/or iTwin IDs to a file in CLI cache directory.\nNOTE: CLI cache directory can usually be found at: `%LOCALAPPDATA%/itp` on windows, `~/.cache/itp` on UNIX and `~/Library/Caches/itp` on macOS.\nNOTE2: CLI cache directory can be overriden by setting `XDG_CACHE_HOME` environment variable, which is useful in case there is a need to use context in multiple concurrent workflows.";
+    public static description = "Set a new cached context. This works by saving iModel and/or iTwin IDs to a file in CLI cache directory.\nNOTE: CLI cache directory can usually be found at: `%LOCALAPPDATA%/itp` on windows, `~/.cache/itp` on UNIX and `~/Library/Caches/itp` on macOS.\nNOTE2: CLI cache directory can be overriden by setting `XDG_CACHE_HOME` environment variable, which is useful in case there is a need to use context in multiple concurrent workflows.";
 
-    static examples = [
+    public static examples = [
         {
             command: `<%= config.bin %> <%= command.id %> --itwin-id 12345`,
             description: 'Example 1: Set a new cached context using an iTwin ID'
@@ -27,7 +27,7 @@ export default class SetContext extends BaseCommand {
         }
     ];
 
-    static flags = {
+    public static flags = {
         "imodel-id": Flags.string({
             atLeastOne: ['imodel-id', 'itwin-id'],
             char: 'm',
@@ -43,7 +43,7 @@ export default class SetContext extends BaseCommand {
         }),
     };
 
-    async run() {
+    public async run() {
         const { flags } = await this.parseWithoutContext(SetContext);
         const iModelId = flags["imodel-id"];
         let iTwinId = flags["itwin-id"];
@@ -63,7 +63,10 @@ export default class SetContext extends BaseCommand {
             await this.runCommand<ITwin>("itwin:info", ["--itwin-id", iTwinId]);
         } 
 
-        const context = await this.setContext(iTwinId!, iModelId);
+        if(iTwinId === undefined)
+            throw new Error();
+
+        const context = await this.setContext(iTwinId, iModelId);
         return this.logAndReturnResult(context);
     }
 }

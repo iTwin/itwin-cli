@@ -6,7 +6,8 @@
 import { AuthenticationType } from "./authentication-type.js";
 import { ConnectionLinks } from "./connection-links.js";
 
-export type StorageConnection = {
+export interface StorageConnection {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     _links: ConnectionLinks;
     authenticationType: AuthenticationType;
     displayName: string;
@@ -14,9 +15,9 @@ export type StorageConnection = {
     iModelId: string;
     iTwinId: string;
     id: string;
-};
+}
 
-export type StorageConnectionError = {
+export interface StorageConnectionError {
     description: string;
     errorKey: string;
 }

@@ -7,17 +7,17 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
-import { CustomFlags } from "../../../extensions/custom-flags.js";
+import { customFlags } from "../../../extensions/custom-flags.js";
 
 export default class UpdateRole extends BaseCommand {
-    static apiReference: ApiReference = {
+    public static apiReference: ApiReference = {
         link: "https://developer.bentley.com/apis/access-control-v2/operations/update-itwin-role/",
         name: "Update iTwin Role",
     };
 
-    static description = 'Update the details of an existing role in an iTwin.';
+    public static description = 'Update the details of an existing role in an iTwin.';
 
-    static examples = [
+    public static examples = [
       {
         command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --role-id role1-id --name "Lead Engineer" --description "Oversees engineering tasks"`,
         description: 'Example 1: Update role name and description'
@@ -28,14 +28,14 @@ export default class UpdateRole extends BaseCommand {
       }
     ];
 
-    static flags = {
+    public static flags = {
       description: Flags.string({
         char: 'd',
         description: 'The updated description of the role.',
         helpValue: '<string>',
         required: false,
       }),
-      "itwin-id": CustomFlags.iTwinIDFlag({
+      "itwin-id": customFlags.iTwinIDFlag({
         description: 'The ID of the iTwin where the role exists.'
       }),
       name: Flags.string({
@@ -57,7 +57,7 @@ export default class UpdateRole extends BaseCommand {
       }),
     };
   
-    async run() {
+    public async run() {
       const { flags } = await this.parse(UpdateRole);
   
       const client = await this.getAccessControlApiClient();

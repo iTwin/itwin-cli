@@ -5,30 +5,30 @@
 
 import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
-import { CustomFlags } from "../../extensions/custom-flags.js";
+import { customFlags } from "../../extensions/custom-flags.js";
 
 export default class DeleteIModel extends BaseCommand {
-  static apiReference : ApiReference = {
+  public static apiReference: ApiReference = {
     link: "https://developer.bentley.com/apis/imodels-v2/operations/delete-imodel/",
     name: "Delete iModel",
   };
 
-  static description = 'Delete an existing iModel.';
+  public static description = 'Delete an existing iModel.';
 
-	static examples = [
+	public static examples = [
     {
       command: `<%= config.bin %> <%= command.id %> --imodel-id 5e19bee0-3aea-4355-a9f0-c6df9989ee7d`,
       description: 'Example 1:'
     }
   ];
 
-  static flags = {
-    "imodel-id": CustomFlags.iModelIDFlag({
+  public static flags = {
+    "imodel-id": customFlags.iModelIDFlag({
       description: 'The ID of the iModel to delete.'
     }),
   };
 
-  async run() {
+  public async run() {
     const { flags } = await this.parse(DeleteIModel);
 
     const client = this.getIModelClient();

@@ -54,16 +54,16 @@ const tests = () => describe('run', () => {
     let { result: infoResult } = await runCommand<StorageRun>(`imodel connection run info -c ${connectionId} --connection-run-id ${listResult?.runs[0].id}`);
 
     while(infoResult?.state !== "Completed") {
-      // eslint-disable-next-line no-await-in-loop
-      await new Promise(r => {setTimeout(r, 10_000)});
+       
+      await new Promise(r => {setTimeout(r, 10_000);});
 
-      // eslint-disable-next-line no-await-in-loop
+       
       const { result } = await runCommand<StorageRun>(`imodel connection run info -c ${connectionId} --connection-run-id ${listResult?.runs[0].id}`);
       infoResult = result;
     }
 
     expect(infoResult?.id).to.be.equal(listResult?.runs[0].id);
-    expect(infoResult?.state).to.be.equal("Completed")
+    expect(infoResult?.state).to.be.equal("Completed");
     expect(infoResult?.result).to.be.equal("Success");
   }).timeout(30 * 60 * 1000);
 });

@@ -9,21 +9,21 @@ import { ApiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
 
 export default class ConnectionSourceFileDelete extends BaseCommand {
-    static apiReference: ApiReference = {
+    public static apiReference: ApiReference = {
         link: "https://developer.bentley.com/apis/synchronization/operations/remove-storage-connection-sourcefile/",
         name: "Remove Storage Connection SourceFile",
     };
 
-    static description = "Remove a source file from a storage connection of an iModel.";
+    public static description = "Remove a source file from a storage connection of an iModel.";
 
-    static examples = [
+    public static examples = [
       {
         command: `<%= config.bin %> <%= command.id %> --connection-id bf4d8b36-25d7-4b72-b38b-12c1f0325f42 --source-file-id 297c8ab9-53a3-4fe5-adf8-79b4c1a95cbb`,
         description: 'Example 1:'
       }
     ];
 
-    static flags = {
+    public static flags = {
       "connection-id": Flags.string({
         char: 'c',
         description: 'The ID of the storage connection.',
@@ -37,7 +37,7 @@ export default class ConnectionSourceFileDelete extends BaseCommand {
       }),
     };
   
-    async run() {
+    public async run() {
       const { flags } = await this.parse(ConnectionSourceFileDelete);
   
       const client = await this.getSynchronizationClient();

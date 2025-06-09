@@ -183,7 +183,7 @@ const tests = () => {
 
         const { error: createError } = await runCommand<GroupMemberInfo[]>(`access-control member group add --itwin-id ${iTwinId} --groups ${JSON.stringify(groupsInfo)} --group-id ${groupsInfo[0].groupId} --group-id ${groupsInfo[1].groupId} --group-id ${groupsInfo[2].groupId} --role-ids ${roleIds.join(',')}`);
         expect(createError).to.not.be.undefined;
-        expect(createError!.message).to.match(new RegExp(`--group-id=${groupsInfo[0].groupId},${groupsInfo[1].groupId},${groupsInfo[2].groupId} cannot also be provided when using --groups`))
+        expect(createError!.message).to.match(new RegExp(`--group-id=${groupsInfo[0].groupId},${groupsInfo[1].groupId},${groupsInfo[2].groupId} cannot also be provided when using --groups`));
     });
 
     it('Should return an error when none of the following flags are provided: `--groups`, `--group-id`, `--role-ids`', async () => {
@@ -207,15 +207,15 @@ const tests = () => {
 
         const { error: createError } = await runCommand<GroupMemberInfo[]>(`access-control member group add --itwin-id ${iTwinId} --group-id ${groupsInfo[0].groupId} --group-id ${groupsInfo[1].groupId} --group-id ${groupsInfo[2].groupId}`);
         expect(createError).to.not.be.undefined;
-        expect(createError!.message).to.match(/All of the following must be provided when using --group-id: --role-ids/)
-    })
+        expect(createError!.message).to.match(/All of the following must be provided when using --group-id: --role-ids/);
+    });
 
     it('should return an error when only `--role-ids` flag is provided', async  () => {
         const roleIds = [roleId1, roleId2, roleId3];
 
         const { error: createError } = await runCommand<GroupMemberInfo[]>(`access-control member group add --itwin-id ${iTwinId} --role-ids ${roleIds.join(',')}`);
         expect(createError).to.not.be.undefined;
-        expect(createError?.message).to.match(/All of the following must be provided when using --role-ids: --group-id/)
+        expect(createError?.message).to.match(/All of the following must be provided when using --role-ids: --group-id/);
     });
 
     it('should return an error when there are invalid UUIDs provided to `--role-ids` flag', async () => {
@@ -229,13 +229,13 @@ const tests = () => {
         const { error: createError } = await runCommand<GroupMemberInfo[]>(`access-control member group add --itwin-id ${iTwinId} --group-id ${groupsInfo[0].groupId}
             --role-ids ${groupsInfo[0].roleIds.join(',')},some-invalid-uuid`);
         expect(createError).to.not.be.undefined;
-        expect(createError!.message).to.match(new RegExp(`There are invalid UUIDs in '${groupsInfo[0].roleIds.join(',')},some-invalid-uuid'`))
+        expect(createError!.message).to.match(new RegExp(`There are invalid UUIDs in '${groupsInfo[0].roleIds.join(',')},some-invalid-uuid'`));
     });
 
     it('should return an error when invalid JSON is provided to `--groups` flag', async () => {
         const { error: createError } = await runCommand<GroupMemberInfo[]>(`access-control member group add --itwin-id ${iTwinId} --groups not-a-serialized-json-string`);
         expect(createError).to.not.be.undefined;
-        expect(createError?.message).to.match(/'not-a-serialized-json-string' is not valid serialized JSON./)
+        expect(createError?.message).to.match(/'not-a-serialized-json-string' is not valid serialized JSON./);
     });
 
     it('should return an error when JSON provided to `--groups` flag is of invalid schema', async () => {
@@ -276,7 +276,7 @@ const tests = () => {
                     crypto.randomUUID(),
                     crypto.randomUUID(),
                 ]
-            })
+            });
         }
 
         const serializedGroupsInfo = JSON.stringify(groups);
@@ -290,7 +290,7 @@ const tests = () => {
         let command = `access-control member group update --itwin-id ${iTwinId} --group-id ${groupId1}`;
 
         for (let i = 0; i < 51; i++)
-            command += ` --role-id role${i}`
+            command += ` --role-id role${i}`;
 
         const { error: createError } = await runCommand<GroupMemberInfo[]>(command);
         expect(createError).to.not.be.undefined;

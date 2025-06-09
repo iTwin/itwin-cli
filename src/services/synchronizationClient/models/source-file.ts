@@ -3,27 +3,29 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { Link, Links } from "../../general-models/links.js"
-import { ConnectorType } from "./connector-type.js"
+import { Link, Links } from "../../general-models/links.js";
+import { ConnectorType } from "./connector-type.js";
 
 export type SourceFile = {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     _links: {
         file: Link
     }
     id: string,
     lastKnownFileName: string,
-} & SourceFileInfo
+} & SourceFileInfo;
 
-export type SourceFileInfo = {
+export interface SourceFileInfo {
     connectorType: ConnectorType
     storageFileId: string,
 }
 
-export type SourceFileResponse = {
+export interface SourceFileResponse {
     sourceFile: SourceFile;
 }
 
-export type SourceFilesResponse = {
+export interface SourceFilesResponse {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     _links: Links
     sourceFiles: SourceFile[];
 }

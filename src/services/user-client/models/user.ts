@@ -3,15 +3,15 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-export type UserResponse = {
+export interface UserResponse {
     user: User
 }
 
-export type UsersResponse = {
+export interface UsersResponse {
     users: User[]
 }
 
-export type User = {
+export interface User {
     alternateEmail: string,
     city?: string,
     country: string,

@@ -7,17 +7,17 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
-import { CustomFlags } from "../../extensions/custom-flags.js";
+import { customFlags } from "../../extensions/custom-flags.js";
 
 export default class ChangedElementsComparison extends BaseCommand {
-    static apiReference: ApiReference = {
+    public static apiReference: ApiReference = {
         link: "https://developer.bentley.com/apis/changed-elements/operations/get-comparison/",
         name: "Get Comparison",
     };
 
-    static description = 'Compare changes between two changesets in an iModel.';
+    public static description = 'Compare changes between two changesets in an iModel.';
 
-    static examples = [
+    public static examples = [
       {
         command: `<%= config.bin %> <%= command.id %> --itwin-id 89337c07-ab59-4080-81cc-5e237be55369 --imodel-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --changeset-id1 2f3b4a8c92d747d5c8a8b2f9cde6742e5d74b3b5 --changeset-id2 4b8a5d9e8d534a71b02894f2a2b4e91d`,
         description: 'Example 1: Compare two changesets in an iModel'
@@ -28,7 +28,7 @@ export default class ChangedElementsComparison extends BaseCommand {
       }
     ];
 
-    static flags = {
+    public static flags = {
       "changeset-id1": Flags.string({ 
         description: 'The ID of the first changeset to compare.',
         helpValue: '<string>',
@@ -39,15 +39,15 @@ export default class ChangedElementsComparison extends BaseCommand {
         helpValue: '<string>',
         required: true 
       }),
-      "imodel-id": CustomFlags.iModelIDFlag({ 
+      "imodel-id": customFlags.iModelIDFlag({ 
         description: 'The ID of the iModel to compare changesets for.'
       }),
-      "itwin-id": CustomFlags.iTwinIDFlag({ 
+      "itwin-id": customFlags.iTwinIDFlag({ 
         description: 'The ID of the iTwin associated with the iModel.'
       })
     };
   
-    async run() {
+    public async run() {
       const { flags } = await this.parse(ChangedElementsComparison);
   
       const client = await this.getChangeElementApiClient();

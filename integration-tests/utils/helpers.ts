@@ -3,15 +3,15 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { IModel } from "@itwin/imodels-client-management"
+import { IModel } from "@itwin/imodels-client-management";
 import { ITwin } from "@itwin/itwins-client";
-import { TestBrowserAuthorizationClientConfiguration, TestUserCredentials, getTestAccessToken } from "@itwin/oidc-signin-tool";
+import { getTestAccessToken, TestBrowserAuthorizationClientConfiguration, TestUserCredentials } from "@itwin/oidc-signin-tool";
 import { runCommand } from "@oclif/test";
 import { expect } from "chai";
 import * as dotenv from 'dotenv';
-import { GetInboxRequest, GetMessageRequest, MailinatorClient } from 'mailinator-client'
-import fs from "node:fs"
-import os from 'node:os'
+import { GetInboxRequest, GetMessageRequest, MailinatorClient } from 'mailinator-client';
+import fs from "node:fs";
+import os from 'node:os';
 import { inflate } from "pako";
 
 import { FileTyped } from "../../src/services/storage-client/models/file-typed.js";
@@ -44,7 +44,7 @@ export async function createFile(folderId: string, displayName: string, filePath
     expect(uploadedFile).to.have.property('result', 'uploaded');
 
     // 3. Confirm upload complete
-    const {result: completedFile} = await runCommand<FileTyped>(`storage file update-complete --file-id ${fileId}`)
+    const {result: completedFile} = await runCommand<FileTyped>(`storage file update-complete --file-id ${fileId}`);
 
     expect(completedFile).to.not.be.undefined;
     expect(completedFile).to.have.property('id', fileId);
@@ -121,12 +121,12 @@ export async function fetchEmailsAndGetInvitationLink(inbox: string, iTwinName: 
     const inboxResponse = await client.request(new GetInboxRequest("private", inbox, undefined, 10));
     expect(inboxResponse.result).to.not.be.null;
 
-    for (let i = 0; i < inboxResponse.result!.msgs.length; i++) {
-        if (inboxResponse.result!.msgs[i].subject !== "You have been invited to collaborate")
+    for (const message of inboxResponse.result!.msgs) {
+        if (message.subject !== "You have been invited to collaborate")
             continue;
         
-        // eslint-disable-next-line no-await-in-loop
-        const messageResponse = await client.request(new GetMessageRequest("private", inboxResponse.result!.msgs[i].id ));
+         
+        const messageResponse = await client.request(new GetMessageRequest("private", message.id));
         expect(messageResponse.result).to.not.be.null;
         const messageBody = messageResponse.result!.parts[0].body;
         if (!messageBody.includes(iTwinName))
@@ -139,7 +139,7 @@ export async function fetchEmailsAndGetInvitationLink(inbox: string, iTwinName: 
         return matches![0].slice("href=\"".length, -1);
     }
 
-    throw new Error("Email was not found in inbox.")
+    throw new Error("Email was not found in inbox.");
 }
 
 export async function nativeLoginToCli() {
@@ -151,7 +151,7 @@ export async function nativeLoginToCli() {
         authenticationType: "Interactive",
         expirationDate: new Date(Date.now() + 1000 * 60 * 59),
         manuallyWritten: true
-    }
+    };
     
     fs.writeFileSync(getTokenPathByOS(), JSON.stringify(authTokenObject), 'utf8');
 }
@@ -170,19 +170,19 @@ const getNativeAuthAccessToken = async (): Promise<string> => {
         clientId: ITP_NATIVE_TEST_CLIENT_ID!,
         redirectUri: "http://localhost:3301/signin-callback",
         scope: "itwin-platform",
-    }
+    };
 
     expect(ITP_TEST_USER_EMAIL, "ITP_TEST_USER_EMAIL").to.not.be.undefined;
     expect(ITP_TEST_USER_PASSWORD, "ITP_TEST_USER_PASSWORD").to.not.be.undefined;
     const user: TestUserCredentials = {
         email: ITP_TEST_USER_EMAIL!,
         password: ITP_TEST_USER_PASSWORD!
-    }
+    };
 
     const accessToken = await getTestAccessToken(config, user);
     expect(accessToken, "Access token").to.not.be.undefined;
     return accessToken!;
-} 
+}; 
 
 export const isNativeAuthAccessTokenCached = (): boolean => {
     const tokenPath = getTokenPathByOS();
@@ -195,28 +195,28 @@ export const isNativeAuthAccessTokenCached = (): boolean => {
     }
 
     return false;
-}
+};
 
 const getTokenPathByOS = () => {
     switch (os.type()) {
         case 'Linux': {
-            const cachePath = `${os.homedir()}/.cache/itp`
+            const cachePath = `${os.homedir()}/.cache/itp`;
             if(!fs.existsSync(cachePath))
-                fs.mkdirSync(cachePath, {recursive: true})
-            return `${cachePath}/token.json`
+                fs.mkdirSync(cachePath, {recursive: true});
+            return `${cachePath}/token.json`;
         }
 
         case 'Windows_NT': {
-            return `${process.env.LOCALAPPDATA}/itp/token.json`
+            return `${process.env.LOCALAPPDATA}/itp/token.json`;
         }
 
         default: {
             throw new Error("Unknown OS");
         }
     }
-}
+};
 
 export const decodeCompressedBase64 = (base64String: string) => {
-    const buffer = Buffer.from(base64String!, "base64");
+    const buffer = Buffer.from(base64String, "base64");
     return inflate(buffer, {raw: true, to: 'string'});
-}
+};

@@ -7,17 +7,17 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
-import { CustomFlags } from "../../../extensions/custom-flags.js";
+import { customFlags } from "../../../extensions/custom-flags.js";
 
 export default class ListConnections extends BaseCommand {
-    static apiReference: ApiReference = {
+    public static apiReference: ApiReference = {
         link: "https://developer.bentley.com/apis/synchronization/operations/get-storage-connections/",
         name: "Get Storage Connections",
     };
 
-    static description = 'List all storage connections of a specific iModel.';
+    public static description = 'List all storage connections of a specific iModel.';
 
-    static examples = [
+    public static examples = [
       {
         command: `<%= config.bin %> <%= command.id %> --imodel-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51`,
         description: 'Example 1: Listing all connections for an iModel'
@@ -32,8 +32,8 @@ export default class ListConnections extends BaseCommand {
       }
     ];
 
-    static flags = {
-      "imodel-id": CustomFlags.iModelIDFlag({
+    public static flags = {
+      "imodel-id": customFlags.iModelIDFlag({
         description: 'The ID of the iModel whose storage connections you want to list.'
       }),
       skip: Flags.integer({
@@ -48,7 +48,7 @@ export default class ListConnections extends BaseCommand {
       }),
     };
   
-    async run() {
+    public async run() {
       const { flags } = await this.parse(ListConnections);
   
       const client = await this.getSynchronizationClient();

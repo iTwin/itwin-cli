@@ -4,25 +4,25 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { ITwinPlatformApiClient } from "../iTwin-api-client.js";
-import { ChangeTrackingRequest, ChangesetComparisonResponse, ChangesetsResponse, TrackingResponse } from "./tracking.js";
+import { ChangesetComparisonResponse, ChangesetsResponse, ChangeTrackingRequest, TrackingResponse } from "./tracking.js";
 
 export class ChangedElementsApiClient {
-    iTwinPlatformApiClient: ITwinPlatformApiClient;
+    private _iTwinPlatformApiClient: ITwinPlatformApiClient;
 
     constructor(client : ITwinPlatformApiClient) {
-        this.iTwinPlatformApiClient = client;
+        this._iTwinPlatformApiClient = client;
     }
 
-    async changeTracking(request: ChangeTrackingRequest) : Promise<void> {
-        await this.iTwinPlatformApiClient.sendRequestNoResponse({
+    public async changeTracking(request: ChangeTrackingRequest) : Promise<void> {
+        await this._iTwinPlatformApiClient.sendRequestNoResponse({
             apiPath: 'changedelements/tracking',
             body: request,
             method: 'PUT'
         });
     }
 
-    async getComparison(iTwinId: string, iModelId: string, startChangesetId: string, endChangesetId: string) : Promise<ChangesetComparisonResponse> {
-        return this.iTwinPlatformApiClient.sendRequest({
+    public async getComparison(iTwinId: string, iModelId: string, startChangesetId: string, endChangesetId: string) : Promise<ChangesetComparisonResponse> {
+        return this._iTwinPlatformApiClient.sendRequest({
             apiPath: 'changedelements/comparison',
             method: 'GET',
             query: [
@@ -46,8 +46,8 @@ export class ChangedElementsApiClient {
         });
     }
 
-    getTracking(iModelId: string, iTwinId: string) : Promise<TrackingResponse> {
-        return this.iTwinPlatformApiClient.sendRequest({
+    public async getTracking(iModelId: string, iTwinId: string) : Promise<TrackingResponse> {
+        return this._iTwinPlatformApiClient.sendRequest({
             apiPath: 'changedelements/tracking',
             method: 'GET',
             query: [
@@ -63,8 +63,8 @@ export class ChangedElementsApiClient {
         });
     }
 
-    listChangesets(iModelId: string, iTwinId: string, top?: number, skip?: number) : Promise<ChangesetsResponse> {
-        return this.iTwinPlatformApiClient.sendRequest({
+    public async listChangesets(iModelId: string, iTwinId: string, top?: number, skip?: number) : Promise<ChangesetsResponse> {
+        return this._iTwinPlatformApiClient.sendRequest({
             apiPath: 'changedelements/changesets',
             method: 'GET',
             query: [

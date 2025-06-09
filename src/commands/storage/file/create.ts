@@ -9,14 +9,14 @@ import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 
 export default class FileCreate extends BaseCommand {
-    static apiReference: ApiReference = {
+    public static apiReference: ApiReference = {
         link: "https://developer.bentley.com/apis/storage/operations/create-file/",
         name: "Create File",
     };
 
-    static description = 'Create a new file in a specified folder in iTwin\'s storage.';
+    public static description = 'Create a new file in a specified folder in iTwin\'s storage.';
 
-    static examples = [
+    public static examples = [
       {
         command: `<%= config.bin %> <%= command.id %> --folder-id abc12345-6789-4321-abcd-9876543210ef --name design.dwg`,
         description: 'Example 1: Creating a file with display name only'
@@ -27,7 +27,7 @@ export default class FileCreate extends BaseCommand {
       }
     ];
 
-    static flags = {
+    public static flags = {
       description: Flags.string({ 
         char: 'd', 
         description: 'A description for the file.', 
@@ -48,7 +48,7 @@ export default class FileCreate extends BaseCommand {
       }),
     };
   
-    async run() {
+    public async run() {
       const { flags } = await this.parse(FileCreate);
   
       const client = await this.getStorageApiClient();

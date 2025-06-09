@@ -5,10 +5,10 @@
 
 import { Link } from "../../general-models/links.js";
 
-export type LinksPagingWithFolderLink = {
+export interface LinksPagingWithFolderLink {
     folder?: Link;
     next?: Link;
     prev?: Link;
     self?: Link;
-};
+}
 

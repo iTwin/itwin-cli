@@ -8,7 +8,7 @@ import createTests from "./create.test";
 import deleteTests from './delete.test';
 import infoTests from "./info.test";
 import listTests from "./list.test";
-import repositoryTests from "./repository.test"
+import repositoryTests from "./repository.test";
 import updateTests from "./update.test";
 
 const tests = () => describe('iTwin Integration Tests', () => {

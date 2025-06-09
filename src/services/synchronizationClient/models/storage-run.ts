@@ -8,7 +8,7 @@ import { ExecutionState } from "./execution-state.js";
 import { JobPhase } from "./job-phase.js";
 import { StorageJob } from "./storage-job.js";
 
-export type StorageRun = {
+export interface StorageRun {
     connectionId?: string;
     endDateTime?: string;
     id?: string;
@@ -17,4 +17,4 @@ export type StorageRun = {
     result?: ExecutionResult;
     startDateTime?: string;
     state?: ExecutionState;
-};
+}

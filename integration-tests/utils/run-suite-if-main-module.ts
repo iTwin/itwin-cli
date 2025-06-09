@@ -39,7 +39,6 @@ function isMainModule(meta: {url: string}) {
     return false;
 }
 
-// eslint-disable-next-line valid-jsdoc
 /**
  * Run the provided test suite if provided meta object is main module.
  * @param meta Provided `import.meta` object.

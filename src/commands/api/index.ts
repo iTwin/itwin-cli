@@ -7,19 +7,19 @@ import { Command, Flags } from "@oclif/core";
 
 import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
-import { CustomFlags } from "../../extensions/custom-flags.js";
+import { customFlags } from "../../extensions/custom-flags.js";
 import { Query } from "../../services/iTwin-api-client.js";
 
 export default class ApiRequest extends BaseCommand {
-    static apiReference : ApiReference = {
+    public static apiReference : ApiReference = {
         link: "https://developer.bentley.com/apis/",
         name: "ITwin Platform APIs docs",
         sectionName: "APIs Docs Reference",
     };
 
-    static description = "Make direct HTTP requests to any iTwin Platform API endpoint. Useful for custom operations or accessing APIs without dedicated commands.";
+    public static description = "Make direct HTTP requests to any iTwin Platform API endpoint. Useful for custom operations or accessing APIs without dedicated commands.";
 
-    static examples: Command.Example[] = [
+    public static examples: Command.Example[] = [
         {
             command: "itp api --method GET --path users/me",
             description: "Example 1: Sending a GET request",
@@ -43,8 +43,8 @@ export default class ApiRequest extends BaseCommand {
         },
     ];
   
-    static flags = {
-        body: CustomFlags.noSchemaJson({
+    public static flags = {
+        body: customFlags.noSchemaJson({
             description: "The body to include in the request. It must be serialized JSON.",
             helpValue: '<string>',
         }),
@@ -79,7 +79,7 @@ export default class ApiRequest extends BaseCommand {
         }),
     };
   
-    async run() {
+    public async run() {
         const { flags } = await this.parse(ApiRequest);
   
         const mappedHeaders: Record<string, string> = flags.header?.reduce((acc, header) => {
@@ -88,7 +88,7 @@ export default class ApiRequest extends BaseCommand {
             return acc;
         }, {} as Record<string, string>) || {};
 
-        const query: Query[] | undefined = flags.query?.map((query) => {
+        const queries: Query[] | undefined = flags.query?.map((query) => {
             const indexOfColon = query.indexOf(":");
             if (indexOfColon === -1) {
                 this.error(`Invalid query format: ${query}. Expected format is 'key:value'.`);
@@ -109,7 +109,7 @@ export default class ApiRequest extends BaseCommand {
             body: flags.body,
             headers: mappedHeaders,
             method: flags.method as "DELETE" | "GET" | "PATCH" | "POST" | "PUT",
-            query
+            query: queries
         };
 
         if (flags["empty-response"]) {

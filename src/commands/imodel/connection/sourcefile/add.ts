@@ -10,21 +10,21 @@ import BaseCommand from "../../../../extensions/base-command.js";
 import { ConnectorType } from "../../../../services/synchronizationClient/models/connector-type.js";
 
 export default class CreateConnectionSourceFile extends BaseCommand {
-    static apiReference: ApiReference = {
+    public static apiReference: ApiReference = {
         link: "https://developer.bentley.com/apis/synchronization/operations/add-storage-connection-sourcefile/",
         name: "Add Storage Connection SourceFile",
     };
 
-    static description = 'Add a source file to an existing storage connection of an iModel.';
+    public static description = 'Add a source file to an existing storage connection of an iModel.';
 
-    static examples = [
+    public static examples = [
       {
         command: `<%= config.bin %> <%= command.id %> --connection-id bf4d8b36-25d7-4b72-b38b-12c1f0325f42 --storage-file-id t5bDFuN4qUa9ojVw1E5FGtldp8BgSbNCiJ2XMdiT-cA --connector-type MSTN`,
         description: 'Example 1: Add a source file to a storage connection'
       }
     ];
 
-    static flags = {
+    public static flags = {
       "connection-id": Flags.string({
         char: 'c',
         description: 'The ID of the storage connection to which the source file will be added.',
@@ -59,7 +59,7 @@ export default class CreateConnectionSourceFile extends BaseCommand {
       }),
     };
   
-    async run() {
+    public async run() {
       const { flags } = await this.parse(CreateConnectionSourceFile);
   
       const client = await this.getSynchronizationClient();

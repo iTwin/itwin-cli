@@ -3,7 +3,7 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { ZodError, ZodIssue } from "zod"
+import { ZodError, ZodIssue } from "zod";
 
 const zodErrorToMessage = (error: ZodError): string => {
     let message = "Following issues were found during schema validation:\n";
@@ -12,7 +12,7 @@ const zodErrorToMessage = (error: ZodError): string => {
     }
 
     return message;
-}
+};
 
 const zodIssueToErrorMessage = (issue: ZodIssue): string => {
     const path = joinPath(issue.path);
@@ -24,14 +24,14 @@ const zodIssueToErrorMessage = (issue: ZodIssue): string => {
         }
 
         case "invalid_string": {
-            return `\t- ${path} is not a valid ${issue.validation}\n`
+            return `\t- ${path} is not a valid ${issue.validation as string}\n`;
         }
 
         default: {
-            return `\t- ${path}: value is not valid\n`
+            return `\t- ${path}: value is not valid\n`;
         }
     }
-}
+};
 
 const joinPath = (path: (number|string)[]): string => {
     let builtPath = "";
@@ -44,6 +44,6 @@ const joinPath = (path: (number|string)[]): string => {
     }
     
     return builtPath.slice(0, -1);
-}
+};
 
 export default zodErrorToMessage;

@@ -7,7 +7,8 @@ import { FileTyped } from "./file-typed.js";
 import { FolderTyped } from "./folder-typed.js";
 import { LinksPagingWithFolderLink } from "./links-paging-with-folder-link.js";
 
-export type ItemsWithFolderLink = {
+export interface ItemsWithFolderLink {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     _links?: LinksPagingWithFolderLink
     items?: Array<FileTyped | FolderTyped>;
-};
+}

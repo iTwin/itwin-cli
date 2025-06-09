@@ -9,14 +9,14 @@ import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 
 export default class UpdateCommand extends BaseCommand {
-    static apiReference: ApiReference = {
+    public static apiReference: ApiReference = {
         link: "https://developer.bentley.com/apis/storage/operations/update-file/",
         name: "Update File",
     };
 
-    static description = "Update the metadata of a file in an iTwin's storage, such as display name or description.";
+    public static description = "Update the metadata of a file in an iTwin's storage, such as display name or description.";
 
-    static examples = [
+    public static examples = [
       {
         command: `<%= config.bin %> <%= command.id %> --file-id bf4d8b36-25d7-4b72-b38b-12c1f0325f42 --name "Updated Design File"`,
         description: 'Example 1: Update file display name'
@@ -27,7 +27,7 @@ export default class UpdateCommand extends BaseCommand {
       }
     ];
 
-    static flags = {
+    public static flags = {
       description: Flags.string({ 
         char: 'd', 
         description: "A description for the file." ,
@@ -46,7 +46,7 @@ export default class UpdateCommand extends BaseCommand {
       }),
     };
   
-    async run() {
+    public async run() {
       const { flags } = await this.parse(UpdateCommand);
   
       const client = await this.getStorageApiClient();

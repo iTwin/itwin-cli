@@ -5,7 +5,7 @@
 
 import { ConnectorType } from "./connector-type.js";
 
-export type StorageFileCreate = {
+export interface StorageFileCreate {
     connectorType: ConnectorType;
     storageFileId: string;
-};
+}

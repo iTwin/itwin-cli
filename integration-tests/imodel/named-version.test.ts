@@ -7,7 +7,7 @@ import { NamedVersion } from '@itwin/imodels-client-management';
 import { runCommand } from '@oclif/test';
 import { expect } from 'chai';
 
-import { PopulateResponse } from '../../src/commands/imodel/populate'
+import { PopulateResponse } from '../../src/commands/imodel/populate';
 import { Changeset } from '../../src/services/changed-elements-client/tracking';
 import { createIModel, createITwin } from '../utils/helpers';
 import { ResultResponse } from '../utils/result-response';

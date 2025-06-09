@@ -14,7 +14,7 @@ import { createIModel, createITwin } from '../utils/helpers';
 import runSuiteIfMainModule from '../utils/run-suite-if-main-module';
 
 const tests = () => describe('populate', () => {
-  const failingTestFilePath1 = 'integration-tests/test.zip'
+  const failingTestFilePath1 = 'integration-tests/test.zip';
   const testFilePath1 = 'examples/datasets/ExtonCampus.dgn';
   const testFilePath2 = 'examples/datasets/HouseModel.dgn';
 
@@ -70,10 +70,10 @@ const tests = () => describe('populate', () => {
     const {connectionId, runId} = populateResult!.summary[0];
     let { result: infoResult } = await runCommand<StorageRun>(`imodel connection run info -c ${connectionId} --connection-run-id ${runId}`);
     while(infoResult?.state !== "Completed") {
-      // eslint-disable-next-line no-await-in-loop
-      await new Promise(r => {setTimeout(r, 10_000)});
+       
+      await new Promise(r => {setTimeout(r, 10_000);});
 
-      // eslint-disable-next-line no-await-in-loop
+       
       const { result } = await runCommand<StorageRun>(`imodel connection run info -c ${connectionId} --connection-run-id ${runId}`);
       infoResult = result;
     }

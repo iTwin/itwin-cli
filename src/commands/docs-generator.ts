@@ -6,18 +6,18 @@ import { ApiReference } from "../extensions/api-reference.js";
 import BaseCommand from "../extensions/base-command.js";
 
 export default class DocsGenerator extends BaseCommand {
-    static description = "Generate command and overview markdown files for the CLI.";
+    public static description = "Generate command and overview markdown files for the CLI.";
 
-    static flags = {
+    public static flags = {
         "output-dir": Flags.string({
             char: "o",
             description: "The output directory for the documentation files.",
         }),
-    }
+    };
 
-    static hidden = true;
+    public static hidden = true;
 
-    generateCommandMarkdown(command: Command.Loadable, flags: [string, Command.Flag.Cached][]): string {            
+    private generateCommandMarkdown(command: Command.Loadable, flags: [string, Command.Flag.Cached][]): string {            
         const options = flags.length > 0
             ? 
                   flags.filter(([_, flag]) => !flag.hidden && flag.helpGroup !== "GLOBAL")
@@ -34,7 +34,7 @@ export default class DocsGenerator extends BaseCommand {
                       let type = "";
                       let validValues = "";
                       if(flag.type === "option") {
-                        type = `**Type:** \`${flag.helpValue?.slice(1, -1)}\``;
+                        type = `**Type:** \`${typeof flag.helpValue === 'string' ? flag.helpValue?.slice(1, -1): new Error("Not Implemented")}\``;
                         if(Array.isArray(flag.options)) {
                             validValues = `\n  **Valid Values:** \`"${flag.options.join('"`, `"')}"\``;
                         }
@@ -109,7 +109,7 @@ export default class DocsGenerator extends BaseCommand {
         return returnContent.join("\n\n");
     }
     
-    async generateDocs(config: Config, basePath: string) {
+    private async generateDocs(config: Config, basePath: string) {
         const filteredCommands = config.commands.filter(c => !c.id.includes("help") && !c.id.includes("plugins") && !c.hidden);
         if(!filteredCommands) {
             return;
@@ -134,7 +134,7 @@ export default class DocsGenerator extends BaseCommand {
         }        
     }
 
-    async run() {
+    public async run() {
         const {flags} = await this.parse(DocsGenerator);
 
         const config = await Config.load(
@@ -145,10 +145,10 @@ export default class DocsGenerator extends BaseCommand {
             }
         );
 
-        this.generateDocs(config, flags["output-dir"] ?? `${config.root}/docs`);
+        await this.generateDocs(config, flags["output-dir"] ?? `${config.root}/docs`);
     }
     
-    writeToFile(filePath: string, markdown: string) {
+    private writeToFile(filePath: string, markdown: string) {
         const finalPath = `${filePath}.md`;
         this.log(`Writing to directory: ${finalPath}`);
 

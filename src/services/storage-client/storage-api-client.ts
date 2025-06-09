@@ -10,21 +10,21 @@ import { FolderInfo, FolderResponse, FoldersResponse } from "./models/folder-typ
 import { ItemsWithFolderLink } from "./models/items-with-folder-link.js";
 
 export class StorageApiClient {
-    iTwinPlatformApiClient: ITwinPlatformApiClient;
+    private _iTwinPlatformApiClient: ITwinPlatformApiClient;
 
     constructor(client: ITwinPlatformApiClient) {
-        this.iTwinPlatformApiClient = client;
+        this._iTwinPlatformApiClient = client;
     }
 
-    completeFileUpload(fileId: string) : Promise<FileResponse> {
-        return this.iTwinPlatformApiClient.sendRequest({
+    public async completeFileUpload(fileId: string) : Promise<FileResponse> {
+        return this._iTwinPlatformApiClient.sendRequest({
             apiPath: `storage/files/${fileId}/complete`,
             method: "POST"
         });
     }
 
-    createFile(folderId: string, displayName: string, description?: string) : Promise<FileUpload> {
-        return this.iTwinPlatformApiClient.sendRequest({
+    public async createFile(folderId: string, displayName: string, description?: string) : Promise<FileUpload> {
+        return this._iTwinPlatformApiClient.sendRequest({
             apiPath: `storage/folders/${folderId}/files`,
             body: {
                 description,
@@ -34,65 +34,65 @@ export class StorageApiClient {
         });
     }
 
-    createFolder(folderId: string, folder: FolderInfo): Promise<FolderResponse> {
-        return this.iTwinPlatformApiClient.sendRequest({
+    public async createFolder(folderId: string, folder: FolderInfo): Promise<FolderResponse> {
+        return this._iTwinPlatformApiClient.sendRequest({
             apiPath: `storage/folders/${folderId}/folders`,
             body: folder,
             method: 'POST'
         });
     }
 
-    async deleteFile(fileId: string): Promise<void> {
-        await this.iTwinPlatformApiClient.sendRequestNoResponse({
+    public async deleteFile(fileId: string): Promise<void> {
+        await this._iTwinPlatformApiClient.sendRequestNoResponse({
             apiPath: `storage/files/${fileId}`,
             method: "DELETE",
         });
     }
 
-    async deleteFolder(folderId: string): Promise<void> {
-        await this.iTwinPlatformApiClient.sendRequestNoResponse({
+    public async deleteFolder(folderId: string): Promise<void> {
+        await this._iTwinPlatformApiClient.sendRequestNoResponse({
             apiPath: `storage/folders/${folderId}`,
             method: 'DELETE'
         });
     }
 
-    getFile(fileId: string): Promise<FileResponse> {
-        return this.iTwinPlatformApiClient.sendRequest({
+    public async getFile(fileId: string): Promise<FileResponse> {
+        return this._iTwinPlatformApiClient.sendRequest({
             apiPath: `storage/files/${fileId}`,
             method: "GET",
         });
     }
 
-    getFiles(folderId: string): Promise<FilesResponse> {
-        return this.iTwinPlatformApiClient.sendRequest({
+    public async getFiles(folderId: string): Promise<FilesResponse> {
+        return this._iTwinPlatformApiClient.sendRequest({
             apiPath: `storage/folders/${folderId}/files`,
             method: "GET",
         });
     }
 
-    getFilesAndFolders(folderId: string): Promise<ItemsResponse> {
-        return this.iTwinPlatformApiClient.sendRequest({
+    public async getFilesAndFolders(folderId: string): Promise<ItemsResponse> {
+        return this._iTwinPlatformApiClient.sendRequest({
             apiPath: `storage/folders/${folderId}/list`,
             method: "GET",
         });
     }
 
-    getFolder(folderId: string): Promise<FolderResponse> {
-        return this.iTwinPlatformApiClient.sendRequest({
+    public async getFolder(folderId: string): Promise<FolderResponse> {
+        return this._iTwinPlatformApiClient.sendRequest({
             apiPath: `storage/folders/${folderId}`,
             method: 'GET'
         });
     }
 
-    getFolders(folderId: string): Promise<FoldersResponse> {
-        return this.iTwinPlatformApiClient.sendRequest({
+    public async getFolders(folderId: string): Promise<FoldersResponse> {
+        return this._iTwinPlatformApiClient.sendRequest({
             apiPath: `storage/folders/${folderId}/folders`,
             method: 'GET'
         });
     }
 
-    getTopLevelFoldersAndFiles(iTwinId: string, top?: number, skip?: number) : Promise<ItemsWithFolderLink> {
-        return this.iTwinPlatformApiClient.sendRequest({
+    public async getTopLevelFoldersAndFiles(iTwinId: string, top?: number, skip?: number) : Promise<ItemsWithFolderLink> {
+        return this._iTwinPlatformApiClient.sendRequest({
             apiPath: `storage/`,
             headers: { accept: "application/vnd.bentley.itwin-platform.v1+json" },
             method: 'GET',
@@ -113,8 +113,8 @@ export class StorageApiClient {
         });
     }
 
-    updateFile(fileId: string, displayName?: string, description?: string) : Promise<FileResponse> {
-        return this.iTwinPlatformApiClient.sendRequest({
+    public async updateFile(fileId: string, displayName?: string, description?: string) : Promise<FileResponse> {
+        return this._iTwinPlatformApiClient.sendRequest({
             apiPath: `storage/files/${fileId}`,
             body: {
                 description,
@@ -124,22 +124,22 @@ export class StorageApiClient {
         });
     }
 
-    updateFileContent(fileId: string) : Promise<FileUpload> {
-        return this.iTwinPlatformApiClient.sendRequest({
+    public async updateFileContent(fileId: string) : Promise<FileUpload> {
+        return this._iTwinPlatformApiClient.sendRequest({
             apiPath: `storage/files/${fileId}/updatecontent`,
             method: "POST"
         });
     }
 
-    updateFolder(folderId: string, folderInfo: FolderInfo): Promise<FolderResponse> {
-        return this.iTwinPlatformApiClient.sendRequest({
+    public async updateFolder(folderId: string, folderInfo: FolderInfo): Promise<FolderResponse> {
+        return this._iTwinPlatformApiClient.sendRequest({
             apiPath: `storage/folders/${folderId}`,
             body: folderInfo,
             method: 'PATCH'
         });
     }
 
-    uploadFile(url: string, file: ArrayBuffer) {
+    public async uploadFile(url: string, file: ArrayBuffer) {
         return fetch(url, {
             body: file,
             headers: { 'x-ms-blob-type': 'BlockBlob' },

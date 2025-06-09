@@ -69,7 +69,7 @@ describe('Command formatting tests', async () => {
     });
 });
 
-type CommandWithFlags = {
+interface CommandWithFlags {
     cmd: Command.Loadable;
     flags: [string, Command.Flag.Cached][];
 }

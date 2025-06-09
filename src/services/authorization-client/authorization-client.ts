@@ -16,15 +16,15 @@ import { AuthorizationInformation, AuthorizationType } from "./authorization-typ
 
 export class AuthorizationClient {
   private readonly _cliConfiguration: Config;
-  private readonly environmentConfiguration: Configuration;
+  private readonly _environmentConfiguration: Configuration;
   
   constructor(envConfig: Configuration, cliConfig: Config)
   {
-      this.environmentConfiguration = envConfig;
+      this._environmentConfiguration = envConfig;
       this._cliConfiguration = cliConfig;
     }
     
-    async getTokenAsync() : Promise<string | undefined> {
+    public async getTokenAsync() : Promise<string | undefined> {
       const tokenInfo = this.getExistingAuthTokenInfo();
       if(tokenInfo?.authToken && this.isExpirationDateValid(tokenInfo.expirationDate)) {
         return tokenInfo.authToken;
@@ -35,43 +35,43 @@ export class AuthorizationClient {
       return newTokenInfo.authToken;
     }
     
-    info() : AuthorizationInformation {
+    public info() : AuthorizationInformation {
       const existingTokenInfo = this.getExistingAuthTokenInfo();
 
       return {
-        apiUrl : this.environmentConfiguration.apiUrl,
+        apiUrl : this._environmentConfiguration.apiUrl,
         authorizationType: existingTokenInfo?.authenticationType ?? AuthorizationType.Interactive,
-        clientId: this.environmentConfiguration.clientId,
+        clientId: this._environmentConfiguration.clientId,
         expirationDate: existingTokenInfo?.expirationDate,
-        issuerUrl: this.environmentConfiguration.issuerUrl
-      }
+        issuerUrl: this._environmentConfiguration.issuerUrl
+      };
     }
 
-    async login(clientId?: string, clientSecret?: string) : Promise<AuthTokenInfo> {
+    public async login(clientId?: string, clientSecret?: string) : Promise<AuthTokenInfo> {
       let authType: AuthorizationType;
       let usedToken : string;
       
-      const usedClientId = clientId ?? this.environmentConfiguration.clientId;
-      const usedClientSecret = clientSecret ?? this.environmentConfiguration.clientSecret;
+      const usedClientId = clientId ?? this._environmentConfiguration.clientId;
+      const usedClientSecret = clientSecret ?? this._environmentConfiguration.clientSecret;
 
       if(usedClientId && usedClientSecret) {
-        usedToken = await this.getAccessTokenFromService(usedClientId, usedClientSecret, this.environmentConfiguration.issuerUrl);
+        usedToken = await this.getAccessTokenFromService(usedClientId, usedClientSecret, this._environmentConfiguration.issuerUrl);
         authType = AuthorizationType.Service;
       }
       else {
-        usedToken = await this.getAccessTokenFromWebsiteLogin(usedClientId, this.environmentConfiguration.issuerUrl);
+        usedToken = await this.getAccessTokenFromWebsiteLogin(usedClientId, this._environmentConfiguration.issuerUrl);
         authType = AuthorizationType.Interactive;
       }
 
       return this.saveAccessToken(usedToken, authType);
     }
 
-    async logout() {
+    public async logout() {
       const existingTokenInfo = this.getExistingAuthTokenInfo();
 
       // Login from IMS
       if(existingTokenInfo?.authenticationType === AuthorizationType.Interactive) {
-        const {clientId, issuerUrl} = this.environmentConfiguration
+        const {clientId, issuerUrl} = this._environmentConfiguration;
         
         const client = new NodeCliAuthorizationClient({
           clientId,
@@ -102,7 +102,7 @@ export class AuthorizationClient {
           clientId,
           clientSecret,
           scope: 'itwin-platform'
-        })
+        });
     
         return client.getAccessToken();
       }
@@ -154,12 +154,15 @@ export class AuthorizationClient {
 
       const parsedToken = jwtDecode(fixedAccessToken);
 
-      const expiration = new Date(parsedToken.exp! * 1000);
+      if(parsedToken.exp === undefined)
+        throw new Error();
+
+      const expiration = new Date(parsedToken.exp * 1000);
       const tokenInfo : AuthTokenInfo = {
         authToken: fixedAccessToken,
         authenticationType,
         expirationDate: expiration
-      }
+      };
 
       const tokenPath = path.join(this._cliConfiguration.cacheDir, 'token.json');
       fs.writeFileSync(tokenPath, JSON.stringify(tokenInfo));

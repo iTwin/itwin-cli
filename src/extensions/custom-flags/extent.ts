@@ -11,20 +11,20 @@ import { validateJson } from "../validation/validate-json.js";
 import zodErrorToMessage from "../validation/zod-error-to-message.js";
 
 export default Flags.custom<Extent>({
-    parse: (input) => Promise.resolve(
+    parse: async (input) => Promise.resolve(
         validateJson<Extent>(input, validationFunction),
     )
 });
 
 const validationFunction = (input: Extent): string => {
-    const result = ExtentSchema.safeParse(input);
+    const result = extentSchema.safeParse(input);
     if(result.error === undefined)
         return '';
 
     return zodErrorToMessage(result.error);
-}
+};
 
-const ExtentSchema = zod.object({
+const extentSchema = zod.object({
     northEast: zod.object({
         latitude: zod.number(),
         longitude: zod.number(),
@@ -33,4 +33,4 @@ const ExtentSchema = zod.object({
         latitude: zod.number(),
         longitude: zod.number(),
     }),
-}) satisfies zod.ZodType<Extent>
+}) satisfies zod.ZodType<Extent>;

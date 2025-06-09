@@ -3,16 +3,17 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { Links } from "../../general-models/links.js"
-import { GroupMember } from "./group-members.js"
-import { Invitation } from "./invitations.js"
+import { Links } from "../../general-models/links.js";
+import { GroupMember } from "./group-members.js";
+import { Invitation } from "./invitations.js";
 
-export type OwnerResponse = {
+export interface OwnerResponse {
     invitation: Invitation
     member: GroupMember,
 }
 
-export type OwnerListResponse = {
+export interface OwnerListResponse {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     _links: Links
     members: GroupMember[],
 }

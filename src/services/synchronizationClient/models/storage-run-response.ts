@@ -6,11 +6,12 @@
 import { Links } from "../../general-models/links.js";
 import { StorageRun } from "./storage-run.js";
 
-export type StorageRunResponse = {
+export interface StorageRunResponse {
     run?: StorageRun;
-};
+}
 
-export type StorageRunsResponse = {
+export interface StorageRunsResponse {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     _links: Links
     runs: StorageRun[];
 }

@@ -7,10 +7,10 @@ import { Flags } from "@oclif/core";
 
 import extent from "./custom-flags/extent.js";
 import groupMembers from "./custom-flags/group-member-array.js";
-import noSchemaJson from "./custom-flags/no-schema-json.js"
+import noSchemaJson from "./custom-flags/no-schema-json.js";
 import userMembers from "./custom-flags/user-member-array.js";
 
-export const CustomFlags = {
+export const customFlags = {
     extent,
     groupMembers,
     iModelIDFlag: (config : CustomFlagConfig) => Flags.string({
@@ -29,8 +29,8 @@ export const CustomFlags = {
     }),
     noSchemaJson,
     userMembers
-}
-
-export type CustomFlagConfig = {
-    description: string;
 };
+
+export interface CustomFlagConfig {
+    description: string;
+}

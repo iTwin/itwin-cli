@@ -81,7 +81,7 @@ const tests = () => {
         expect(deleteResult).to.have.property('result', 'deleted');
 
         const { error: infoError } = await runCommand<Group>(`access-control group info --itwin-id ${iTwinId} -g ${createResult!.id}`);
-        expect(infoError?.message).to.contain('GroupNotFound')
+        expect(infoError?.message).to.contain('GroupNotFound');
     });
 
     it('Should fail to update group and return an error if too many members are provided', async () => {
@@ -89,9 +89,9 @@ const tests = () => {
         expect(newGroup).to.not.be.undefined;
         expect(newGroup!.id).to.not.be.undefined;
 
-        let updateCommand = `access-control group update --itwin-id ${iTwinId} --group-id ${newGroup!.id}`
+        let updateCommand = `access-control group update --itwin-id ${iTwinId} --group-id ${newGroup!.id}`;
         for (let i = 0; i < 51; i++) {
-            updateCommand += ` --member user${i}@example.com`
+            updateCommand += ` --member user${i}@example.com`;
         }
 
         const { error: updateError } = await runCommand(updateCommand);
@@ -107,7 +107,7 @@ const tests = () => {
         expect(newGroup).to.not.be.undefined;
         expect(newGroup!.id).to.not.be.undefined;
 
-        let updateCommand = `access-control group update --itwin-id ${iTwinId} --group-id ${newGroup!.id}`
+        let updateCommand = `access-control group update --itwin-id ${iTwinId} --group-id ${newGroup!.id}`;
         for (let i = 0; i < 51; i++) {
             updateCommand += ` --ims-group IMS_Group_${i}`;
         }

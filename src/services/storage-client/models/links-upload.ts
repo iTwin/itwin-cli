@@ -5,7 +5,7 @@
 
 import { Link } from "../../general-models/links.js";
 
-export type LinksUpload = {
+export interface LinksUpload {
     completeUrl?: Link;
     uploadUrl?: Link;
-};
+}

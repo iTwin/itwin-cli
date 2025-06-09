@@ -79,7 +79,7 @@ const tests = () => describe('create', () => {
     const { error: createError } = await runCommand<StorageConnection>(`imodel connection create -m ${testIModelId} -f ${testFileId1} -f ${testFileId2} -f ${testFileId3} --connector-type MSTN --connector-type SPPID -n TestConnection`);
     expect(createError).to.not.be.undefined;
     expect(createError!.message).to.be.equal("When multiple connector-type options are provided, their amount must match file-id option amount. Alternatively, you can provide a single connector-type option, which will then be applied to all file-id options.");
-  })
+  });
 });
 
 export default tests;

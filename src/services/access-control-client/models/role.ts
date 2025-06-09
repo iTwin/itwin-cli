@@ -3,7 +3,7 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-export type Role = {
+export interface Role {
     description?: string,
     displayName?: string,
     id?: string,
@@ -11,10 +11,10 @@ export type Role = {
 
 }
 
-export type RoleResponse = {
+export interface RoleResponse {
     role: Role
 }
 
-export type RolesResponse = {
+export interface RolesResponse {
     roles: Role[]
 }

@@ -1,4 +1,9 @@
-export type UserContext = {
+/*---------------------------------------------------------------------------------------------
+* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+* See LICENSE.md in the project root for license terms and full copyright notice.
+*--------------------------------------------------------------------------------------------*/
+
+export interface UserContext {
     iModelId?: string;
     iTwinId?: string;
 }

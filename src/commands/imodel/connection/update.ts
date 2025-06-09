@@ -10,14 +10,14 @@ import BaseCommand from "../../../extensions/base-command.js";
 import { AuthenticationType } from "../../../services/synchronizationClient/models/authentication-type.js";
 
 export default class UpdateStorageConnection extends BaseCommand {
-    static apiReference: ApiReference = {
+    public static apiReference: ApiReference = {
         link: "https://developer.bentley.com/apis/synchronization/operations/update-storage-connection/",
         name: "Update Storage Connection",
     };
 
-    static description = 'Update an existing storage connection of an iModel.';
+    public static description = 'Update an existing storage connection of an iModel.';
 
-    static examples = [
+    public static examples = [
       {
         command: `<%= config.bin %> <%= command.id %> --connection-id bf4d8b36-25d7-4b72-b38b-12c1f0325f42 --name "Updated Project Files"`,
         description: 'Example 1: Updating a connection with a new display name'
@@ -28,7 +28,7 @@ export default class UpdateStorageConnection extends BaseCommand {
       }
     ];
 
-    static flags = {
+    public static flags = {
       "authentication-type": Flags.string({
         description: 'The authorization workflow type.',
         helpValue: '<string>',
@@ -49,7 +49,7 @@ export default class UpdateStorageConnection extends BaseCommand {
       }),
     };
   
-    async run() {
+    public async run() {
       const { flags } = await this.parse(UpdateStorageConnection);
   
       const client = await this.getSynchronizationClient();

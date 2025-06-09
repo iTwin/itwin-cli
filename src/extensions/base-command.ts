@@ -25,7 +25,7 @@ import { UserApiClient } from '../services/user-client/user-api-client.js';
 import { Configuration } from './configuration.js';
 
 export default abstract class BaseCommand extends Command {
-  static baseFlags = {
+  public static baseFlags = {
     json: Flags.boolean({
       char: 'j',
       description: 'Pretty format the JSON command response and suppress all logging.',
@@ -44,12 +44,12 @@ export default abstract class BaseCommand extends Command {
       helpGroup: 'GLOBAL',
       required: false
     }),
-  }
+  };
 
-  static enableJsonFlag = true;
+  public static enableJsonFlag = true;
 
   protected async clearContext() {
-    const contextPath = this.config.cacheDir + '/context.json';
+    const contextPath = `${this.config.cacheDir  }/context.json`;
     if (fs.existsSync(contextPath)) {
       fs.rmSync(contextPath, { force: true });
     }
@@ -84,7 +84,7 @@ export default abstract class BaseCommand extends Command {
   protected async getAuthorizationCallback(accessToken?: string) : Promise<AuthorizationCallback> {
     const parts = (accessToken ?? await this.getAccessToken()).split(" ");
 
-    return () => Promise.resolve<Authorization>({
+    return async () => Promise.resolve<Authorization>({
       scheme: parts[0],
       token: parts[1]
     });
@@ -139,7 +139,7 @@ export default abstract class BaseCommand extends Command {
   }
 
   protected getContext() : UserContext | undefined {
-    const contextPath = this.config.cacheDir + '/context.json';
+    const contextPath = `${this.config.cacheDir  }/context.json`;
     if (!fs.existsSync(contextPath)) {
       return;
     }
@@ -222,7 +222,7 @@ export default abstract class BaseCommand extends Command {
     if(Array.isArray(data))
       {
         const table = new Table();
-        table.addRows(data)
+        table.addRows(data);
 
         for (const column of table.table.columns) column.alignment = "left";
         this.log(table.render());
@@ -230,7 +230,7 @@ export default abstract class BaseCommand extends Command {
       else
       {
         const table = new Table();
-        table.addRows([data])
+        table.addRows([data]);
 
         for (const column of table.table.columns) column.alignment = "left";
         this.log(table.render());
@@ -271,7 +271,7 @@ export default abstract class BaseCommand extends Command {
   }
 
   protected async setContext(iTwinId: string, iModelId?: string) {
-    const contextPath = this.config.cacheDir + '/context.json';
+    const contextPath = `${this.config.cacheDir  }/context.json`;
     
     const context: UserContext = {
       iModelId,

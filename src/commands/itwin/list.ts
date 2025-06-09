@@ -10,14 +10,14 @@ import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
 
 export default class ListITwins extends BaseCommand {
-    static apiReference: ApiReference = {
+    public static apiReference: ApiReference = {
         link: "https://developer.bentley.com/apis/itwins/operations/get-my-itwins/",
         name: "List iTwins",
     };
 
-    static description = 'List all iTwins the calling user is a member of.';
+    public static description = 'List all iTwins the calling user is a member of.';
 
-    static examples = [
+    public static examples = [
       {
         command: `<%= config.bin %> <%= command.id %>`,
         description: 'Example 1: Getting all itwins'
@@ -40,7 +40,7 @@ export default class ListITwins extends BaseCommand {
       }
     ];
 
-    static flags = {
+    public static flags = {
       "include-inactive": Flags.boolean({
         description: 'Include Inactive iTwins in the result.',
         required: false
@@ -56,6 +56,7 @@ export default class ListITwins extends BaseCommand {
         helpValue: '<string>',
         required: false,
       }),
+      // eslint-disable-next-line id-denylist
       number: Flags.string({
         description: 'Find iTwins with the exact number specified.',
         helpValue: '<string>',
@@ -100,7 +101,7 @@ export default class ListITwins extends BaseCommand {
       }),
     };
   
-    async run() {
+    public async run() {
       const { flags } = await this.parse(ListITwins);
   
       const accessToken = await this.getAccessToken();
@@ -110,6 +111,7 @@ export default class ListITwins extends BaseCommand {
         displayName: flags.name,
         iTwinAccountId: flags["itwin-account-id"],
         includeInactive: flags["include-inactive"],
+        // eslint-disable-next-line id-denylist
         number: flags.number,
         parentId: flags["parent-id"],
         resultMode: 'representation',
@@ -119,7 +121,7 @@ export default class ListITwins extends BaseCommand {
         subClass: flags["sub-class"] as ITwinSubClass,
         top: flags.top,
         type: flags.type
-      })
+      });
 
       if(response.error)
       {

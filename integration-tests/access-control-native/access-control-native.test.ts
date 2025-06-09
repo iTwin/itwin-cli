@@ -4,8 +4,8 @@
 *--------------------------------------------------------------------------------------------*/
 
 import runSuiteIfMainModule from '../utils/run-suite-if-main-module';
-import groupTests from './group.test'
-import memberTests from './member/member.test'
+import groupTests from './group.test';
+import memberTests from './member/member.test';
 
 const tests = () => describe('Access Control Tests (Native Client)', () => {
     groupTests();

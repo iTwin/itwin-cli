@@ -3,6 +3,6 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-export type Permissions = {
+export interface Permissions {
     permissions: string[]
 }

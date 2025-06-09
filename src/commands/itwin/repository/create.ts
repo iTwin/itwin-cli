@@ -8,17 +8,17 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
-import { CustomFlags } from "../../../extensions/custom-flags.js";
+import { customFlags } from "../../../extensions/custom-flags.js";
 
 export default class CreateRepository extends BaseCommand {
-    static apiReference: ApiReference = {
+    public static apiReference: ApiReference = {
         link: "https://developer.bentley.com/apis/iTwins/operations/create-repository/",
         name: "Create Repository",
     };
 
-    static description = 'Create a new repository URI for iTwin data.';
+    public static description = 'Create a new repository URI for iTwin data.';
 
-    static examples = [
+    public static examples = [
       {
         command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --class GeographicInformationSystem --sub-class WebMapTileService --uri https://example.com/repository1`,
         description: 'Example 1: Creating a repository with Geographic Information System class'
@@ -33,14 +33,14 @@ export default class CreateRepository extends BaseCommand {
       }
     ];
 
-    static flags = {
+    public static flags = {
       class: Flags.string({
         description: 'The class of your iTwin repository.',
         helpValue: '<string>',
         options: ['GeographicInformationSystem', 'Construction', 'Subsurface'],
         required: true,
       }),
-      "itwin-id": CustomFlags.iTwinIDFlag({
+      "itwin-id": customFlags.iTwinIDFlag({
         description: 'The ID of the iTwin to which the repository belongs.'
       }),
       "sub-class": Flags.string({
@@ -55,7 +55,7 @@ export default class CreateRepository extends BaseCommand {
       }),
     };
   
-    async run() {
+    public async run() {
       const { flags } = await this.parse(CreateRepository);
   
       const accessToken = await this.getAccessToken();

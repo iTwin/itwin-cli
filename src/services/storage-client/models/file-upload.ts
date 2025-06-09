@@ -6,6 +6,7 @@
 import { LinksUpload } from "./links-upload.js";
 
 
-export type FileUpload = {
+export interface FileUpload {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     _links?: LinksUpload;
-};
+}

@@ -6,7 +6,7 @@
 import { ConnectorType } from "./connector-type.js";
 import { StorageTask } from "./storage-task.js";
 
-export type StorageJob = {
+export interface StorageJob {
     connectorType?: ConnectorType;
     endDateTime?: string;
     id?: string;
@@ -14,4 +14,4 @@ export type StorageJob = {
     startDateTime?: string;
     state?: string;
     tasks?: Array<StorageTask>;
-};
+}

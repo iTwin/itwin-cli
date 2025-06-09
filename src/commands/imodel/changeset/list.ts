@@ -8,17 +8,17 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
-import { CustomFlags } from "../../../extensions/custom-flags.js";
+import { customFlags } from "../../../extensions/custom-flags.js";
 
 export default class ListChangesets extends BaseCommand {
-    static apiReference: ApiReference = {
+    public static apiReference: ApiReference = {
         link: "https://developer.bentley.com/apis/imodels-v2/operations/get-imodel-changesets/",
         name: "List Changesets",
     };
 
-    static description = 'List all changesets for a specific iModel.';
+    public static description = 'List all changesets for a specific iModel.';
 
-    static examples = [
+    public static examples = [
       {
         command: `<%= config.bin %> <%= command.id %> --imodel-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --top 10`,
         description: 'Example 1: List the first 10 changesets for a specific iModel'
@@ -37,13 +37,13 @@ export default class ListChangesets extends BaseCommand {
       }
     ];
 
-    static flags = {
+    public static flags = {
       "after-index": Flags.integer({
         description: 'List changesets after a specific index (exclusive).',
         helpValue: '<integer>',
         required: false,
       }),
-      "imodel-id": CustomFlags.iModelIDFlag({
+      "imodel-id": customFlags.iModelIDFlag({
         description: 'The ID of the iModel whose changesets you want to list.'
       }),
       "last-index": Flags.integer({
@@ -69,7 +69,7 @@ export default class ListChangesets extends BaseCommand {
       }),
     };
   
-    async run() {
+    public async run() {
       const { flags } = await this.parse(ListChangesets);
     
       const client = this.getIModelClient();

@@ -3,15 +3,16 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { Link } from "../../general-models/links.js"
+import { Link } from "../../general-models/links.js";
 
-export type AuthInfo = {
+export interface AuthInfo {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     _links: {
         authorizationUrl : Link
     }
     isUserAuthorized: boolean
 }
 
-export type ConnectionAuth = {
+export interface ConnectionAuth {
     authorizationInformation: AuthInfo
 }

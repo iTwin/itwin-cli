@@ -8,17 +8,17 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
-import { CustomFlags } from "../../../extensions/custom-flags.js";
+import { customFlags } from "../../../extensions/custom-flags.js";
 
 export default class ListNamedVersions extends BaseCommand {
-    static apiReference: ApiReference = {
+    public static apiReference: ApiReference = {
         link: "https://developer.bentley.com/apis/imodels-v2/operations/get-imodel-named-versions/",
         name: "Get Named Versions",
     };
 
-    static description = 'List all named versions for a specific iModel.';
+    public static description = 'List all named versions for a specific iModel.';
 
-    static examples = [
+    public static examples = [
       {
         command: `<%= config.bin %> <%= command.id %> --imodel-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --top 10`,
         description: 'Example 1: List the first 10 named versions for a specific iModel'
@@ -37,8 +37,8 @@ export default class ListNamedVersions extends BaseCommand {
       }
     ];
 
-    static flags = {
-      "imodel-id": CustomFlags.iModelIDFlag({
+    public static flags = {
+      "imodel-id": customFlags.iModelIDFlag({
         description: 'The ID of the iModel whose named versions you want to list.'
       }),
       name: Flags.string({
@@ -69,7 +69,7 @@ export default class ListNamedVersions extends BaseCommand {
       }),
     };
   
-    async run() {
+    public async run() {
       const { flags } = await this.parse(ListNamedVersions);
   
       const client = this.getIModelClient();

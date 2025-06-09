@@ -3,9 +3,9 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { Role } from "./role.js"
+import { Role } from "./role.js";
 
-export type Invitation = {
+export interface Invitation {
     createdDate: Date,
     email: string,
     expirationDate: Date,
@@ -15,6 +15,6 @@ export type Invitation = {
     status: string,
 }
 
-export type InvitationsResponse = {
+export interface InvitationsResponse {
     invitations: Invitation[]
 }

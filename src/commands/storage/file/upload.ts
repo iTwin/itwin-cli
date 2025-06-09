@@ -4,19 +4,20 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { Flags } from "@oclif/core";
-import fs from "node:fs"
+import fs from "node:fs";
 
 import BaseCommand from "../../../extensions/base-command.js";
+import { ApiReference } from "../../../extensions/api-reference.js";
 
 export default class FileUpload extends BaseCommand {
-    static apiReference = {
+    public static apiReference: ApiReference = {
         link: 'https://developer.bentley.com/apis/storage/operations/upload-file/',
         name: 'Upload File',
     };
     
-    static description = 'Upload a new file to a specified URL within iTwin storage.';
+    public static description = 'Upload a new file to a specified URL within iTwin storage.';
 
-    static examples = [
+    public static examples = [
       {
         command: `<%= config.bin %> <%= command.id %> --upload-url https://example.com/upload-url --file-path /path/to/your/file.pdf`,
         description: 'Example 1: Upload a PDF file to the storage'
@@ -27,7 +28,7 @@ export default class FileUpload extends BaseCommand {
       }
     ];
 
-    static flags = {
+    public static flags = {
       "file-path": Flags.string({ 
         char: 'f', 
         description: 'The path to the file you want to upload.', 
@@ -42,7 +43,7 @@ export default class FileUpload extends BaseCommand {
       }),
     };
   
-    async run() {
+    public async run() {
       const { flags } = await this.parse(FileUpload);
   
       const client = await this.getStorageApiClient();
@@ -59,7 +60,7 @@ export default class FileUpload extends BaseCommand {
       return this.logAndReturnResult(returnObject);
     }
   
-    toArrayBuffer(buffer: Buffer) {
+    private toArrayBuffer(buffer: Buffer) {
       const arrayBuffer = new ArrayBuffer(buffer.length);
       const view = new Uint8Array(arrayBuffer);
       for (const [i, element] of buffer.entries()) {

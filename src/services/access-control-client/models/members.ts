@@ -3,20 +3,20 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { Links } from "../../general-models/links.js"
-import { Invitation } from "./invitations.js"
-import { Role } from "./role.js"
+import { Links } from "../../general-models/links.js";
+import { Invitation } from "./invitations.js";
+import { Role } from "./role.js";
 
-export type ListOfMembers = {
+export interface ListOfMembers {
     members: UserMember[]
 }
 
-export type UserMember = {
+export interface UserMember {
     email: string
     roleIds: string[]
 }
 
-export type Member = {
+export interface Member {
     email: string
     givenName: string
     id: string
@@ -25,16 +25,17 @@ export type Member = {
     surname: string
 }
 
-export type MembersResponse = {
+export interface MembersResponse {
     invitations: Invitation[]
     members: Member[],
 }
 
-export type MembersListResponse = {
+export interface MembersListResponse {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     _links: Links
     members: Member[],
 }
 
-export type MemberResponse = {
+export interface MemberResponse {
     member: Member
 }

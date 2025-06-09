@@ -9,21 +9,21 @@ import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 
 export default class FileInfo extends BaseCommand {
-    static apiReference: ApiReference = {
+    public static apiReference: ApiReference = {
         link: "https://developer.bentley.com/apis/storage/operations/get-file/",
         name: "Get File",
     };
 
-    static description = "Retrieve metadata for a specific file in an iTwin's storage.";
+    public static description = "Retrieve metadata for a specific file in an iTwin's storage.";
 
-    static examples = [
+    public static examples = [
       {
         command: `<%= config.bin %> <%= command.id %> --file-id bf4d8b36-25d7-4b72-b38b-12c1f0325f42`,
         description: 'Example 1:'
       }
     ];
 
-    static flags = {
+    public static flags = {
       "file-id": Flags.string({ 
         char: 'f', 
         description: "The ID of the file to retrieve information about.", 
@@ -32,7 +32,7 @@ export default class FileInfo extends BaseCommand {
       }),
     };
   
-    async run() {
+    public async run() {
       const { flags } = await this.parse(FileInfo);
   
       const client = await this.getStorageApiClient();

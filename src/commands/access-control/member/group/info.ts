@@ -7,36 +7,36 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
-import { CustomFlags } from "../../../../extensions/custom-flags.js";
+import { customFlags } from "../../../../extensions/custom-flags.js";
 
 export default class InfoGroupMember extends BaseCommand {
-    static apiReference: ApiReference = {
+    public static apiReference: ApiReference = {
         link: "https://developer.bentley.com/apis/access-control-v2/operations/get-itwin-group-member/",
         name: "Get iTwin Group Member",
     };
 
-    static description = 'Retrieve details about a specific group member in an iTwin.';
+    public static description = 'Retrieve details about a specific group member in an iTwin.';
 
-    static examples = [
+    public static examples = [
       {
         command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --group-id group1-id`,
         description: 'Example 1:'
       }
     ];
 
-    static flags = {
+    public static flags = {
       "group-id": Flags.string({
         char: 'g',
         description: 'The ID of the group to retrieve information about.',
         helpValue: '<string>',
         required: true,
       }),
-      "itwin-id": CustomFlags.iTwinIDFlag({
+      "itwin-id": customFlags.iTwinIDFlag({
         description: 'The ID of the iTwin where the group is a member.'
       }),
     };
   
-    async run() {
+    public async run() {
       const { flags } = await this.parse(InfoGroupMember);
   
       const client = await this.getAccessControlMemberClient();

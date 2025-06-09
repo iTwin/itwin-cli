@@ -7,31 +7,31 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
-import { CustomFlags } from "../../../extensions/custom-flags.js";
+import { customFlags } from "../../../extensions/custom-flags.js";
 
 export default class CreateRole extends BaseCommand {
-    static apiReference: ApiReference = {
+    public static apiReference: ApiReference = {
         link: "https://developer.bentley.com/apis/access-control-v2/operations/create-iTwin-role/",
         name: "Create iTwin Role",
     };
 
-    static description = 'Create a new role for an iTwin. To assign permissions after creation, use `itp access-control role update`.';
+    public static description = 'Create a new role for an iTwin. To assign permissions after creation, use `itp access-control role update`.';
 
-    static examples = [
+    public static examples = [
       {
         command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --name "Project Manager" --description "Manages all aspects of the project"`,
         description: 'Example 1:'
       }
     ];
 
-    static flags = {
+    public static flags = {
       description: Flags.string({
         char: 'd',
         description: 'A description of the role.',
         helpValue: '<string>',
         required: true,
       }),
-      "itwin-id": CustomFlags.iTwinIDFlag({
+      "itwin-id": customFlags.iTwinIDFlag({
         description: 'The ID of the iTwin for which the role is being created.'
       }),
       name: Flags.string({
@@ -42,7 +42,7 @@ export default class CreateRole extends BaseCommand {
       }),
     };
   
-    async run() {
+    public async run() {
       const { flags } = await this.parse(CreateRole);
   
       const client = await this.getAccessControlApiClient();

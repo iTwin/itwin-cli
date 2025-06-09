@@ -22,7 +22,7 @@ const tests = () => describe('changeset', () => {
 
   before(async () => {
     const { result: filteredITwins } = await runCommand<ITwin[]>(`itwin list --name ${testITwinName}`);
-    expect(filteredITwins).to.not.be.undefined
+    expect(filteredITwins).to.not.be.undefined;
 
     if(filteredITwins!.length === 0) {
         const testITwin = await createITwin(testITwinName, 'Thing', 'Asset');
@@ -77,7 +77,7 @@ const tests = () => describe('changeset', () => {
     expect(listResult).to.not.be.undefined;
     expect(listResult).to.have.lengthOf(4);
     expect(listResult?.every((result) => result.index > 5 && result.index <= 9)).to.be.true;
-  })
+  });
 
   it('should order returned changesets by index', async () => {
     const { result: listResultDesc } = await runCommand<Changeset[]>(`imodel changeset list --imodel-id ${testIModelId} --order-by desc`);
@@ -94,13 +94,13 @@ const tests = () => describe('changeset', () => {
   it(`should return an error if neither of 'changeset-id' and 'changeset-index' flags are provided`, async () => {
     const { error: infoError } = await runCommand<Changeset>(`imodel changeset info --imodel-id ${testIModelId}`);
     expect(infoError).to.not.be.undefined;
-    expect(infoError!.message).to.contain("Exactly one of the following must be provided: --changeset-id, --changeset-index")
+    expect(infoError!.message).to.contain("Exactly one of the following must be provided: --changeset-id, --changeset-index");
   });
 
   it(`should return an error if both of 'changeset-id' and 'changeset-index' flags are provided`, async () => {
     const { error: infoError } = await runCommand<Changeset>(`imodel changeset info --imodel-id ${testIModelId} --changeset-id a4139edd-d28d-4bb9-9260-0802dfda0413 --changeset-index 1`);
     expect(infoError).to.not.be.undefined;
-    expect(infoError!.message).to.contain("--changeset-index cannot also be provided when using --changeset-id")
+    expect(infoError!.message).to.contain("--changeset-index cannot also be provided when using --changeset-id");
   });
 });
 

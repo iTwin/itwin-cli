@@ -23,7 +23,7 @@ const tests = () => describe('changesets + comparison', () => {
 
   before(async () => {
     const { result: filteredITwins } = await runCommand<ITwin[]>(`itwin list --name ${testITwinName}`);
-    expect(filteredITwins).to.not.be.undefined
+    expect(filteredITwins).to.not.be.undefined;
 
     if(filteredITwins!.length === 0) {
         const testITwin = await createITwin(testITwinName, 'Thing', 'Asset');
@@ -56,7 +56,7 @@ const tests = () => describe('changesets + comparison', () => {
     const { result: filteredResult } = await runCommand<Changeset[]>(`changed-elements changesets --imodel-id ${testIModelId} --itwin-id ${testITwinId} --skip 2 --top 2`);
     expect(filteredResult).to.not.be.undefined;
     expect(filteredResult).to.have.lengthOf(2);
-    expect(filteredResult?.map(x => x.id)).to.be.deep.equal(fullResult?.map(x => x.id).slice(2))
+    expect(filteredResult?.map(x => x.id)).to.be.deep.equal(fullResult?.map(x => x.id).slice(2));
   });
 
   it('should compare 2 changesets', async () => {

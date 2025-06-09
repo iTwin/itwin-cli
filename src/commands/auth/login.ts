@@ -8,13 +8,11 @@ import { Flags } from '@oclif/core';
 import BaseCommand from '../../extensions/base-command.js';
 
 export default class Login extends BaseCommand {
-  static args = {}
+  public static customDocs = true;
 
-  static customDocs = true;
+  public static description = 'Authenticate itp with Bentley. This command initiates the login process to obtain the necessary authentication tokens.';
 
-  static description = 'Authenticate itp with Bentley. This command initiates the login process to obtain the necessary authentication tokens.'
-
-	static examples = [
+	public static examples = [
     {
       command: `<%= config.bin %> <%= command.id %>`,
       description: 'Example 1:'
@@ -29,7 +27,7 @@ export default class Login extends BaseCommand {
     }
   ];
 
-  static flags = {
+  public static flags = {
     "client-id": Flags.string({
       description: 'Provided client id that will be used for service or website login', 
       helpValue: '<string>',
@@ -40,9 +38,9 @@ export default class Login extends BaseCommand {
       helpValue: '<string>',
       required: false
     })
-  }
+  };
 
-  async run(): Promise<void> {    
+  public async run(): Promise<void> {    
     const { flags } = await this.parse(Login);
 
     const authClient = this.getAuthorizationClient();

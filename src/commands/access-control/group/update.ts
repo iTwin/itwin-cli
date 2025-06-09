@@ -7,17 +7,17 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
-import { CustomFlags } from "../../../extensions/custom-flags.js";
+import { customFlags } from "../../../extensions/custom-flags.js";
 
 export default class UpdateAccessControlGroup extends BaseCommand {
-    static apiReference: ApiReference = {
+    public static apiReference: ApiReference = {
         link: "https://developer.bentley.com/apis/access-control-v2/operations/update-itwin-group/",
         name: "Update iTwin Group",
     };
 
-    static description = 'Update the details of an existing group in an iTwin.';
+    public static description = 'Update the details of an existing group in an iTwin.';
   
-    static examples = [
+    public static examples = [
       {
         command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --group-id bf4d8b36-25d7-4b72-b38b-12c1f0325f42 --name "Updated Engineering Team" --description "Updated description"`,
         description: 'Example 1: Update group name and description'
@@ -28,7 +28,7 @@ export default class UpdateAccessControlGroup extends BaseCommand {
       }
     ];
       
-    static flags = {
+    public static flags = {
       description: Flags.string({
         char: 'd',
         description: 'The updated description of the group.',
@@ -45,7 +45,7 @@ export default class UpdateAccessControlGroup extends BaseCommand {
         helpValue: '<string>',
         multiple: true,
       }),
-      "itwin-id": CustomFlags.iTwinIDFlag({
+      "itwin-id": customFlags.iTwinIDFlag({
         description: 'The ID of the iTwin where the group exists.'
       }),
       member: Flags.string({
@@ -60,14 +60,14 @@ export default class UpdateAccessControlGroup extends BaseCommand {
       }),
     };
   
-    async run() {
+    public async run() {
       const { flags } = await this.parse(UpdateAccessControlGroup);
    
-      if(flags['ims-group'] !== undefined && flags["ims-group"]!.length > 50) {
+      if(flags['ims-group'] !== undefined && flags["ims-group"].length > 50) {
         this.error("A maximum of 50 ims groups can be provided.");
       }
 
-      if(flags.member !== undefined && flags.member!.length > 50) {
+      if(flags.member !== undefined && flags.member.length > 50) {
         this.error("A maximum of 50 members can be provided.");
       }
 

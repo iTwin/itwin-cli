@@ -34,7 +34,7 @@ const tests = () => describe('create + delete', () => {
   it('should create a new folder', async () => {
     const rootFolderId = await getRootFolderId(testITwinId);
     const displayName = 'IntegrationTestFolder';
-    const description = 'Test description'
+    const description = 'Test description';
 
     const createdFolder = await createFolder(rootFolderId, displayName, description);
 

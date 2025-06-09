@@ -5,30 +5,30 @@
 
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
-import { CustomFlags } from "../../../extensions/custom-flags.js";
+import { customFlags } from "../../../extensions/custom-flags.js";
 
 export default class MyPermissions extends BaseCommand {
-    static apiReference: ApiReference = {
+    public static apiReference: ApiReference = {
         link: "https://developer.bentley.com/apis/access-control-v2/operations/get-iTwin-permissions/",
         name: "Get My iTwin Permissions",
     };
 
-    static description = 'Retrieve a list of your permissions on a specified iTwin.';
+    public static description = 'Retrieve a list of your permissions on a specified iTwin.';
 
-	static examples = [
+	public static examples = [
       {
         command: `<%= config.bin %> <%= command.id %> --itwin-id e9a0d55a-65aa-42bd-9aa3-fd1c68d5e7b5`,
         description: 'Example 1:'
       }
     ];
 
-    static flags = {
-      "itwin-id": CustomFlags.iTwinIDFlag({
+    public static flags = {
+      "itwin-id": customFlags.iTwinIDFlag({
         description: 'The ID of the iTwin for which the role is being created.'
       }),
     };
   
-    async run() {
+    public async run() {
       const { flags } = await this.parse(MyPermissions);
   
       const client = await this.getAccessControlApiClient();

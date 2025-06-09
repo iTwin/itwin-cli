@@ -5,7 +5,8 @@
 
 import { LinksItem } from "./links-item.js";
 
-export type FolderTyped = {
+export interface FolderTyped {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     _links?: LinksItem;
     /**
      * Date when the folder was created.
@@ -44,21 +45,21 @@ export type FolderTyped = {
      */
     type?: FolderTypedType;
 
-};
+}
 
 export enum FolderTypedType {
     FOLDER = 'folder'
 }
 
-export type FolderInfo = {
+export interface FolderInfo {
     description?: string
     displayName?: string
 }
 
-export type FolderResponse = {
+export interface FolderResponse {
     folder: FolderTyped;
 }
 
-export type FoldersResponse = {
+export interface FoldersResponse {
     folders: FolderTyped[];
 }
