@@ -15,13 +15,13 @@ import { AuthTokenInfo } from "./auth-token-info.js";
 import { AuthorizationInformation, AuthorizationType } from "./authorization-type.js";
 
 export class AuthorizationClient {
-  private readonly cliConfiguration: Config;
+  private readonly _cliConfiguration: Config;
   private readonly environmentConfiguration: Configuration;
   
   constructor(envConfig: Configuration, cliConfig: Config)
   {
       this.environmentConfiguration = envConfig;
-      this.cliConfiguration = cliConfig;
+      this._cliConfiguration = cliConfig;
     }
     
     async getTokenAsync() : Promise<string | undefined> {
@@ -84,12 +84,12 @@ export class AuthorizationClient {
         await client.signOut();
       }
 
-      if (!fs.existsSync(this.cliConfiguration.cacheDir)) {
-        fs.mkdirSync(this.cliConfiguration.cacheDir, { recursive: true });
+      if (!fs.existsSync(this._cliConfiguration.cacheDir)) {
+        fs.mkdirSync(this._cliConfiguration.cacheDir, { recursive: true });
       }
 
       // Remove token from cache
-      const tokenPath = path.join(this.cliConfiguration.cacheDir, 'token.json');
+      const tokenPath = path.join(this._cliConfiguration.cacheDir, 'token.json');
       if(fs.existsSync(tokenPath))
       {
           fs.unlinkSync(tokenPath);
@@ -113,7 +113,8 @@ export class AuthorizationClient {
           expiryBuffer: 10 * 60,
           issuerUrl,
           redirectUri: "http://localhost:3301/signin-callback",
-          scope: "itwin-platform"
+          scope: "itwin-platform",
+          tokenStorePath: this._cliConfiguration.cacheDir,
         });
     
         await client.signIn();
@@ -121,7 +122,7 @@ export class AuthorizationClient {
     }
 
     private getExistingAuthTokenInfo() {
-      const tokenPath = path.join(this.cliConfiguration.cacheDir, 'token.json');
+      const tokenPath = path.join(this._cliConfiguration.cacheDir, 'token.json');
 
       if (!fs.existsSync(tokenPath)) {
         return;
@@ -145,8 +146,8 @@ export class AuthorizationClient {
 
     private saveAccessToken(accessToken: string, authenticationType: AuthorizationType) {
       // Ensure the directory exists
-      if (!fs.existsSync(this.cliConfiguration.cacheDir)) {
-        fs.mkdirSync(this.cliConfiguration.cacheDir, { recursive: true });
+      if (!fs.existsSync(this._cliConfiguration.cacheDir)) {
+        fs.mkdirSync(this._cliConfiguration.cacheDir, { recursive: true });
       }
 
       const fixedAccessToken = accessToken.startsWith('Bearer ') ? accessToken : `Bearer ${accessToken}`;
@@ -160,7 +161,7 @@ export class AuthorizationClient {
         expirationDate: expiration
       }
 
-      const tokenPath = path.join(this.cliConfiguration.cacheDir, 'token.json');
+      const tokenPath = path.join(this._cliConfiguration.cacheDir, 'token.json');
       fs.writeFileSync(tokenPath, JSON.stringify(tokenInfo));
 
       return tokenInfo;
