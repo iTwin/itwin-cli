@@ -6,47 +6,10 @@ import { defineConfig, globalIgnores } from "eslint/config";
 
 export default tseslint.config(
   defineConfig([globalIgnores(["dist/*", "tmp/*"])]),
-  {
-    ...eslint.configs.recommended,
-    languageOptions: {
-      parser: tseslint.parser,
-      parserOptions: {
-        project: "tsconfig.eslint.json",
-      },
-    },
-  },
-  tseslint.configs.recommended.map(config => {
-    return {
-      ...config,
-      languageOptions: {
-        parser: tseslint.parser,
-        parserOptions: {
-          project: "tsconfig.eslint.json",
-        },
-      },
-    };
-  }),
-  tseslint.configs.stylistic.map(config => {
-    return {
-      ...config,
-      languageOptions: {
-        parser: tseslint.parser,
-        parserOptions: {
-          project: "tsconfig.eslint.json",
-        },
-      },
-    };
-  }),
-  {
-    ...iTwinEslintPlugin.configs.iTwinjsRecommendedConfig,
-    ignores: ["bin/*", "eslint.config.mjs"],
-    languageOptions: {
-      parser: tseslint.parser,
-      parserOptions: {
-        project: "tsconfig.eslint.json",
-      },
-    },
-  },
+  eslint.configs.recommended,
+  tseslint.configs.recommended,
+  tseslint.configs.stylistic,
+  iTwinEslintPlugin.configs.iTwinjsRecommendedConfig,
   {
     plugins: {
       "@stylistic": stylistic,
@@ -57,7 +20,7 @@ export default tseslint.config(
     languageOptions: {
       parser: tseslint.parser,
       parserOptions: {
-        project: "tsconfig.eslint.json",
+        project: "./tsconfig.eslint.json",
       },
     },
   },
@@ -65,12 +28,6 @@ export default tseslint.config(
     files: ["integration-tests/**/*"],
     rules: {
       '@typescript-eslint/no-non-null-assertion': 'off'
-    },
-    languageOptions: {
-      parser: tseslint.parser,
-      parserOptions: {
-        project: "tsconfig.eslint.json",
-      },
     },
   }
 );
