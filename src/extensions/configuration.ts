@@ -4,8 +4,8 @@
 *--------------------------------------------------------------------------------------------*/
 
 export interface Configuration {
-    apiUrl: string
-    clientId: string
-    clientSecret: string | undefined
-    issuerUrl: string
+  apiUrl: string
+  clientId: string
+  clientSecret: string | undefined
+  issuerUrl: string
 }

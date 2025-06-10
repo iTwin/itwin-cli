@@ -8,8 +8,8 @@ import ownerTests from './owner.test';
 import userTests from './user.test';
 
 const tests = () => describe('member', () => {
-    userTests();
-    ownerTests();
+  userTests();
+  ownerTests();
 });
 
 export default tests;

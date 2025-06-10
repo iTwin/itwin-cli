@@ -12,8 +12,8 @@ import { validateFloat } from "../../extensions/validation/validate-float.js";
 
 export default class CreateIModel extends BaseCommand {
   public static apiReference: ApiReference = {
-      link: "https://developer.bentley.com/apis/imodels-v2/operations/create-imodel/",
-      name: "Create iModel",
+    link: "https://developer.bentley.com/apis/imodels-v2/operations/create-imodel/",
+    name: "Create iModel",
   };
 
   public static customDocs = true; // Set to true to use custom documentation

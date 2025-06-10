@@ -26,25 +26,25 @@ const tests = () => describe('view cesium-sandcastle', () => {
     expect(filteredITwins).to.not.be.undefined;
 
     if(filteredITwins!.length === 0) {
-        const testITwin = await createITwin(testITwinName, 'Thing', 'Asset');
-        testITwinId = testITwin.id as string;
-        const testIModel = await createIModel(testIModelName, testITwinId);
-        testIModelId = testIModel.id;
+      const testITwin = await createITwin(testITwinName, 'Thing', 'Asset');
+      testITwinId = testITwin.id as string;
+      const testIModel = await createIModel(testIModelName, testITwinId);
+      testIModelId = testIModel.id;
 
-        await runCommand<ResultResponse>(`changed-elements enable --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
+      await runCommand<ResultResponse>(`changed-elements enable --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
 
-        const rootFolderId = await getRootFolderId(testITwinId);
-        await createFile(rootFolderId, testFileName, testFilePath);
-        const { result: populateResult } = await runCommand<PopulateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type MSTN`);
-        expect(populateResult).to.have.property('iModelId', testIModelId);
-        expect(populateResult).to.have.property('iTwinId', testITwinId);
+      const rootFolderId = await getRootFolderId(testITwinId);
+      await createFile(rootFolderId, testFileName, testFilePath);
+      const { result: populateResult } = await runCommand<PopulateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type MSTN`);
+      expect(populateResult).to.have.property('iModelId', testIModelId);
+      expect(populateResult).to.have.property('iTwinId', testITwinId);
     }
     else {
-        testITwinId = filteredITwins![0].id!;
-        const { result: iModels  } = await runCommand<IModel[]>(`imodel list --itwin-id ${testITwinId}`);
-        expect(iModels).to.not.be.undefined;
-        expect(iModels).to.have.lengthOf(1);
-        testIModelId = iModels![0].id;
+      testITwinId = filteredITwins![0].id!;
+      const { result: iModels  } = await runCommand<IModel[]>(`imodel list --itwin-id ${testITwinId}`);
+      expect(iModels).to.not.be.undefined;
+      expect(iModels).to.have.lengthOf(1);
+      testIModelId = iModels![0].id;
     }
   });
 

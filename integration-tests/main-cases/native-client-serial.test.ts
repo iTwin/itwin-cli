@@ -8,12 +8,12 @@ import iModelConnectionAuthTests from '../imodel-native/connection/auth.test';
 import { nativeLoginToCli } from '../utils/helpers';
 
 describe('Native Client Tests (serial)', async () => {
-    describe('Authentication Integration Tests', async () =>  {
-        after(async () => {
-            await nativeLoginToCli();
-        });
-        
-        authTests();
+  describe('Authentication Integration Tests', async () =>  {
+    after(async () => {
+      await nativeLoginToCli();
     });
-    iModelConnectionAuthTests();
+        
+    authTests();
+  });
+  iModelConnectionAuthTests();
 });

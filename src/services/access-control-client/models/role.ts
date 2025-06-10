@@ -4,17 +4,17 @@
 *--------------------------------------------------------------------------------------------*/
 
 export interface Role {
-    description?: string,
-    displayName?: string,
-    id?: string,
-    permissions?: string[]
+  description?: string,
+  displayName?: string,
+  id?: string,
+  permissions?: string[]
 
 }
 
 export interface RoleResponse {
-    role: Role
+  role: Role
 }
 
 export interface RolesResponse {
-    roles: Role[]
+  roles: Role[]
 }

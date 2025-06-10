@@ -11,20 +11,20 @@ import { validateJson } from "../validation/validate-json.js";
 import zodErrorToMessage from "../validation/zod-error-to-message.js";
 
 export default Flags.custom<UserMember[]>({
-    parse: async (input) => Promise.resolve(
-        validateJson<UserMember[]>(input, validationFunction)
-    ),
+  parse: async (input) => Promise.resolve(
+    validateJson<UserMember[]>(input, validationFunction)
+  ),
 });
 
 const validationFunction = (input: UserMember[]): string => {
-    const result = zod.array(userMemberSchema).safeParse(input);
-    if(result.error === undefined)
-        return '';
+  const result = zod.array(userMemberSchema).safeParse(input);
+  if(result.error === undefined)
+    return '';
 
-    return zodErrorToMessage(result.error);
+  return zodErrorToMessage(result.error);
 };
 
 const userMemberSchema = zod.object({
-    email: zod.string().email(),
-    roleIds: zod.array(zod.string().uuid())
+  email: zod.string().email(),
+  roleIds: zod.array(zod.string().uuid())
 }) satisfies zod.ZodType<UserMember>;

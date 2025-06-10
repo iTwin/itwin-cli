@@ -8,7 +8,7 @@ import { Flags } from "@oclif/core";
 import { validateJson } from "../validation/validate-json.js";
 
 export default Flags.custom<object>({
-    parse: async (input) => Promise.resolve(
-        validateJson<object>(input)
-    ),
+  parse: async (input) => Promise.resolve(
+    validateJson<object>(input)
+  ),
 });

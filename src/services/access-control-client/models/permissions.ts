@@ -4,5 +4,5 @@
 *--------------------------------------------------------------------------------------------*/
 
 export interface Permissions {
-    permissions: string[]
+  permissions: string[]
 }

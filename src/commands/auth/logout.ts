@@ -8,7 +8,7 @@ import BaseCommand from '../../extensions/base-command.js';
 export default class Logout extends BaseCommand {
   public static description = 'Log out of the Bentley authentication session. This command clears the current authentication tokens and configuration.';
 
-	public static examples = [
+  public static examples = [
     {
       command: `<%= config.bin %> <%= command.id %>`,
       description: 'Example 1:'
@@ -24,7 +24,7 @@ export default class Logout extends BaseCommand {
       await authClient.logout();
       this.log('User successfully logged out');
     } catch (error) {
-        this.error(`User logout encountered an error: ${JSON.stringify(error)}`);
+      this.error(`User logout encountered an error: ${JSON.stringify(error)}`);
     }
   }
 }

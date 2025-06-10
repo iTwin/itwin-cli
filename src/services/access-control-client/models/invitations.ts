@@ -6,15 +6,15 @@
 import { Role } from "./role.js";
 
 export interface Invitation {
-    createdDate: Date,
-    email: string,
-    expirationDate: Date,
-    id: string,
-    invitedByEmail: string,
-    roles: Role[]
-    status: string,
+  createdDate: Date,
+  email: string,
+  expirationDate: Date,
+  id: string,
+  invitedByEmail: string,
+  roles: Role[]
+  status: string,
 }
 
 export interface InvitationsResponse {
-    invitations: Invitation[]
+  invitations: Invitation[]
 }

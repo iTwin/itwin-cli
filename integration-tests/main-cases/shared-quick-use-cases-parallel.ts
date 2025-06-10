@@ -13,14 +13,14 @@ import storageTests from '../storage/storage.test';
 import userTests from '../user/user.test';
 
 const sharedQuickUseCasesParallel = () => {
-    accessControlTests();
-    apiTests();
-    changedElementsTests();
-    contextTests();
-    imodelTests();
-    itwinTests();
-    storageTests();
-    userTests();
+  accessControlTests();
+  apiTests();
+  changedElementsTests();
+  contextTests();
+  imodelTests();
+  itwinTests();
+  storageTests();
+  userTests();
 };
 
 export default sharedQuickUseCasesParallel;

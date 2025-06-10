@@ -4,9 +4,9 @@
 *--------------------------------------------------------------------------------------------*/
 
 export interface GroupMember {
-    email: string;
-    givenName: string;
-    id: string;
-    organization: string;
-    surname: string;
+  email: string;
+  givenName: string;
+  id: string;
+  organization: string;
+  surname: string;
 }

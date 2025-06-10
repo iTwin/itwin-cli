@@ -11,21 +11,21 @@ import userMemberTests from './user.test';
 
 const tests = () => 
 { 
-    describe('group', () => {
-        groupMemberTests();
-    });
+  describe('group', () => {
+    groupMemberTests();
+  });
 
-    describe('user', () => {
-        userMemberTests();
-    });
+  describe('user', () => {
+    userMemberTests();
+  });
 
-    describe('invitations', () => {
-        invitationsMemberTests();
-    });
+  describe('invitations', () => {
+    invitationsMemberTests();
+  });
 
-    describe('owner', () => {
-        ownerMemberTests();
-    });
+  describe('owner', () => {
+    ownerMemberTests();
+  });
 };
 
 export default tests;

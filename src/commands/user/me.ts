@@ -16,7 +16,7 @@ export default class Me extends BaseCommand {
 
   public static description = 'Retrieve information about the currently authenticated user.';
 
-	public static examples = [
+  public static examples = [
     {
       command: `<%= config.bin %> <%= command.id %>`,
       description: 'Example 1:'

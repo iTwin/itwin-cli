@@ -6,7 +6,7 @@
 import { Link } from "../../general-models/links.js";
 
 export interface ConnectionLinks {
-    iModel?: Link;
-    lastRun?: Link;
-    project?: Link;
+  iModel?: Link;
+  lastRun?: Link;
+  project?: Link;
 }

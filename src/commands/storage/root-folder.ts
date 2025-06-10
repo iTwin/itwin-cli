@@ -17,7 +17,7 @@ export default class GetRootFolder extends BaseCommand {
 
   public static description = 'Retrieve the top-level folders and files in an iTwin\'s storage.';
 
-	public static examples = [
+  public static examples = [
     {
       command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51`,
       description: 'Example 1:'

@@ -4,6 +4,6 @@
 *--------------------------------------------------------------------------------------------*/
 
 export interface UserContext {
-    iModelId?: string;
-    iTwinId?: string;
+  iModelId?: string;
+  iTwinId?: string;
 }

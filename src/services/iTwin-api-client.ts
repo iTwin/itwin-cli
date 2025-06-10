@@ -24,9 +24,9 @@ export class ITwinPlatformApiClient {
 
   constructor(url: string, token: string, apiVersionHeader?: string | undefined)
   {
-      this._iTwinPlatformApiBasePath = url;
-      this._authToken = token;
-      this._apiVersionHeader = apiVersionHeader;
+    this._iTwinPlatformApiBasePath = url;
+    this._authToken = token;
+    this._apiVersionHeader = apiVersionHeader;
   }
   
   public async sendRequest<T>(options: RequestOption): Promise<T> {

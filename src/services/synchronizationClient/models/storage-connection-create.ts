@@ -7,10 +7,10 @@ import { AuthenticationType } from "./authentication-type.js";
 import { StorageFileCreate } from "./storage-file-create.js";
 
 export interface StorageConnectionCreate {
-    authenticationType?: AuthenticationType;
-    displayName?: string;
-    iModelId: string;
-    sourceFiles: Array<StorageFileCreate>;
+  authenticationType?: AuthenticationType;
+  displayName?: string;
+  iModelId: string;
+  sourceFiles: Array<StorageFileCreate>;
 }
 
 

@@ -4,15 +4,15 @@
 *--------------------------------------------------------------------------------------------*/
 
 export interface TaskError {
-    bridgeExitCode?: number;
-    canUserFix?: boolean;
-    category?: string;
-    description?: string;
-    descriptionKey?: string;
-    details?: string;
-    errorCode?: string;
-    kbArticleLink?: string;
-    message?: string;
-    phase?: string;
-    system?: string;
+  bridgeExitCode?: number;
+  canUserFix?: boolean;
+  category?: string;
+  description?: string;
+  descriptionKey?: string;
+  details?: string;
+  errorCode?: string;
+  kbArticleLink?: string;
+  message?: string;
+  phase?: string;
+  system?: string;
 }

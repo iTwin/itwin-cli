@@ -4,14 +4,14 @@
 *--------------------------------------------------------------------------------------------*/
 
 export interface FileBase {
-    /**
+  /**
      * Description of the file.
      */
-    description?: string;
-    /**
+  description?: string;
+  /**
      * Display name of the file.
      */
-    displayName?: string;
+  displayName?: string;
 }
 
 

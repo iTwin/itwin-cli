@@ -13,8 +13,8 @@ import { GroupMember } from "../../../../services/access-control-client/models/g
 
 export default class AddGroupMembers extends BaseCommand {
   public static apiReference: ApiReference = {
-      link: "https://developer.bentley.com/apis/access-control-v2/operations/add-itwin-group-members/",
-      name: "Add iTwin Group Members",
+    link: "https://developer.bentley.com/apis/access-control-v2/operations/add-itwin-group-members/",
+    name: "Add iTwin Group Members",
   };
 
   public static description = 'Add one or more groups as members to an iTwin.\n\nGroups and their roles can be provided to this command in multiple ways:\n1) Utilizing the `--groups` option, where the necessary data in provided in form of serialized JSON.\n2) Utilizing `--group-id` and `--role-ids` options, in which case all of `--role-id` roles will be applied to each `--group-id` group.';

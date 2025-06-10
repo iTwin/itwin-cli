@@ -7,15 +7,15 @@ import { Links } from "../../general-models/links.js";
 import { FileTyped } from "./file-typed.js";
 
 export interface FileResponse {
-    file?: FileTyped;
+  file?: FileTyped;
 }
 
 export interface FilesResponse {
-    files: FileTyped[];
+  files: FileTyped[];
 }
 
 export interface ItemsResponse {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    _links: Links
-    items: FileTyped[];
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  _links: Links
+  items: FileTyped[];
 }

@@ -220,21 +220,21 @@ export default abstract class BaseCommand extends Command {
 
   protected logTable<T>(data: T) {
     if(Array.isArray(data))
-      {
-        const table = new Table();
-        table.addRows(data);
+    {
+      const table = new Table();
+      table.addRows(data);
 
-        for (const column of table.table.columns) column.alignment = "left";
-        this.log(table.render());
-      }
-      else
-      {
-        const table = new Table();
-        table.addRows([data]);
+      for (const column of table.table.columns) column.alignment = "left";
+      this.log(table.render());
+    }
+    else
+    {
+      const table = new Table();
+      table.addRows([data]);
 
-        for (const column of table.table.columns) column.alignment = "left";
-        this.log(table.render());
-      }
+      for (const column of table.table.columns) column.alignment = "left";
+      this.log(table.render());
+    }
   }
 
   protected override async parse<F extends FlagOutput, B extends FlagOutput, A extends ArgOutput>(

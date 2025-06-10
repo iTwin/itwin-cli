@@ -10,38 +10,38 @@ import BaseCommand from "../../../../extensions/base-command.js";
 import { customFlags } from "../../../../extensions/custom-flags.js";
 
 export default class DeleteUserMember extends BaseCommand {
-    public static apiReference: ApiReference = {
-        link: "https://developer.bentley.com/apis/access-control-v2/operations/remove-itwin-user-member/",
-        name: "Remove iTwin User Member",
-    };
+  public static apiReference: ApiReference = {
+    link: "https://developer.bentley.com/apis/access-control-v2/operations/remove-itwin-user-member/",
+    name: "Remove iTwin User Member",
+  };
 
-    public static description = 'Remove a user from an iTwin.';
+  public static description = 'Remove a user from an iTwin.';
 
-    public static examples = [
-      {
-        command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --member-id user1-id`,
-        description: 'Example 1:'
-      }
-    ];
-
-    public static flags = {
-      "itwin-id": customFlags.iTwinIDFlag({
-        description: 'The ID of the iTwin where the user is a member.'
-      }),
-      "member-id": Flags.string({
-        description: 'The ID of the user to remove from the iTwin.',
-        helpValue: '<string>',
-        required: true,
-      }),
-    };
-  
-    public async run() {
-      const { flags } = await this.parse(DeleteUserMember);
-  
-      const client = await this.getAccessControlMemberClient();
-  
-      await client.deleteUserMember(flags["itwin-id"], flags["member-id"]);
-  
-      return this.logAndReturnResult({ result: 'deleted' });
+  public static examples = [
+    {
+      command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --member-id user1-id`,
+      description: 'Example 1:'
     }
+  ];
+
+  public static flags = {
+    "itwin-id": customFlags.iTwinIDFlag({
+      description: 'The ID of the iTwin where the user is a member.'
+    }),
+    "member-id": Flags.string({
+      description: 'The ID of the user to remove from the iTwin.',
+      helpValue: '<string>',
+      required: true,
+    }),
+  };
+  
+  public async run() {
+    const { flags } = await this.parse(DeleteUserMember);
+  
+    const client = await this.getAccessControlMemberClient();
+  
+    await client.deleteUserMember(flags["itwin-id"], flags["member-id"]);
+  
+    return this.logAndReturnResult({ result: 'deleted' });
   }
+}

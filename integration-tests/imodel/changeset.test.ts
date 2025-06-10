@@ -25,23 +25,23 @@ const tests = () => describe('changeset', () => {
     expect(filteredITwins).to.not.be.undefined;
 
     if(filteredITwins!.length === 0) {
-        const testITwin = await createITwin(testITwinName, 'Thing', 'Asset');
-        testITwinId = testITwin.id as string;
-        const testIModel = await createIModel(testIModelName, testITwinId);
-        testIModelId = testIModel.id;
+      const testITwin = await createITwin(testITwinName, 'Thing', 'Asset');
+      testITwinId = testITwin.id as string;
+      const testIModel = await createIModel(testIModelName, testITwinId);
+      testIModelId = testIModel.id;
 
-        await runCommand<ResultResponse>(`changed-elements enable --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
+      await runCommand<ResultResponse>(`changed-elements enable --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
 
-        const { result } = await runCommand<PopulateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type MSTN`);
-        expect(result).to.have.property('iModelId', testIModelId);
-        expect(result).to.have.property('iTwinId', testITwinId);
+      const { result } = await runCommand<PopulateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type MSTN`);
+      expect(result).to.have.property('iModelId', testIModelId);
+      expect(result).to.have.property('iTwinId', testITwinId);
     }
     else {
-        testITwinId = filteredITwins![0].id!;
-        const { result: iModels } = await runCommand<IModel[]>(`imodel list --itwin-id ${testITwinId}`);
-        expect(iModels).to.not.be.undefined;
-        expect(iModels).to.have.lengthOf(1);
-        testIModelId = iModels![0].id;
+      testITwinId = filteredITwins![0].id!;
+      const { result: iModels } = await runCommand<IModel[]>(`imodel list --itwin-id ${testITwinId}`);
+      expect(iModels).to.not.be.undefined;
+      expect(iModels).to.have.lengthOf(1);
+      testIModelId = iModels![0].id;
     }
   });
 

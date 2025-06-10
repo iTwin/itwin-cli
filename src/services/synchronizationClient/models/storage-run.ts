@@ -9,12 +9,12 @@ import { JobPhase } from "./job-phase.js";
 import { StorageJob } from "./storage-job.js";
 
 export interface StorageRun {
-    connectionId?: string;
-    endDateTime?: string;
-    id?: string;
-    jobs?: Array<StorageJob>;
-    phase?: JobPhase;
-    result?: ExecutionResult;
-    startDateTime?: string;
-    state?: ExecutionState;
+  connectionId?: string;
+  endDateTime?: string;
+  id?: string;
+  jobs?: Array<StorageJob>;
+  phase?: JobPhase;
+  result?: ExecutionResult;
+  startDateTime?: string;
+  state?: ExecutionState;
 }

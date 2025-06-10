@@ -10,21 +10,21 @@ import permissionTests from "./permissions.test";
 import roleTests from "./role.test";
 
 const tests = () => describe('Access Control Tests', () => {
-    describe('group', () => {
-        groupTests();
-    });
+  describe('group', () => {
+    groupTests();
+  });
 
-    describe('role', () => {
-        roleTests();
-    });
+  describe('role', () => {
+    roleTests();
+  });
 
-    describe('permissions', () => {
-        permissionTests();
-    });
+  describe('permissions', () => {
+    permissionTests();
+  });
 
-    describe('member', () => {
-        memberTests();
-    });
+  describe('member', () => {
+    memberTests();
+  });
 });
 
 export default tests;

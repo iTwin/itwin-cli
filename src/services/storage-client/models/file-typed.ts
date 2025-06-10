@@ -8,47 +8,47 @@ import { LinksItem } from "./links-item.js";
 
 
 export interface FileTyped {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    _links?: LinksItem;
-    /**
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  _links?: LinksItem;
+  /**
      * Date when the file was created.
      */
-    createdDateTime?: string;
-    /**
+  createdDateTime?: string;
+  /**
      * Description of the file.
      */
-    description?: string;
-    /**
+  description?: string;
+  /**
      * Display name of the file.
      */
-    displayName?: string;
-    /**
+  displayName?: string;
+  /**
      * Unique Identifier of the file.
      */
-    id?: string;
-    /**
+  id?: string;
+  /**
      * Display name of the user who modified file last.
      */
-    lastModifiedByDisplayName?: string;
-    /**
+  lastModifiedByDisplayName?: string;
+  /**
      * Date when the file was last time modified.
      */
-    lastModifiedDateTime?: string;
-    /**
+  lastModifiedDateTime?: string;
+  /**
      * Unique Identifier of the parent folder.
      */
-    parentFolderId?: string;
-    /**
+  parentFolderId?: string;
+  /**
      * Absolute path to the file.
      */
-    path?: string;
-    /**
+  path?: string;
+  /**
      * Size to the file in bytes.
      */
-    size?: number;
-    /**
+  size?: number;
+  /**
      * Identification of the file entity.
      */
-    type?: FileTypedType;
+  type?: FileTypedType;
 }
 

@@ -6,60 +6,60 @@
 import { LinksItem } from "./links-item.js";
 
 export interface FolderTyped {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    _links?: LinksItem;
-    /**
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  _links?: LinksItem;
+  /**
      * Date when the folder was created.
      */
-    createdDateTime?: string;
-    /**
+  createdDateTime?: string;
+  /**
      * Description of the folder.
      */
-    description?: string;
-    /**
+  description?: string;
+  /**
      * Display name of the folder.
      */
-    displayName?: string;
-    /**
+  displayName?: string;
+  /**
      * Unique Identifier of the folder.
      */
-    id?: string;
-    /**
+  id?: string;
+  /**
      * Display name of the user who modified folder last.
      */
-    lastModifiedByDisplayName?: string;
-    /**
+  lastModifiedByDisplayName?: string;
+  /**
      * Date when the folder was last time modified.
      */
-    lastModifiedDateTime?: string;
-    /**
+  lastModifiedDateTime?: string;
+  /**
      * Unique Identifier of the parent folder.
      */
-    parentFolderId?: string;
-    /**
+  parentFolderId?: string;
+  /**
      * Absolute path to the folder.
      */
-    path?: string;
-    /**
+  path?: string;
+  /**
      * Identification of the folder entity.
      */
-    type?: FolderTypedType;
+  type?: FolderTypedType;
 
 }
 
 export enum FolderTypedType {
-    FOLDER = 'folder'
+  FOLDER = 'folder'
 }
 
 export interface FolderInfo {
-    description?: string
-    displayName?: string
+  description?: string
+  displayName?: string
 }
 
 export interface FolderResponse {
-    folder: FolderTyped;
+  folder: FolderTyped;
 }
 
 export interface FoldersResponse {
-    folders: FolderTyped[];
+  folders: FolderTyped[];
 }

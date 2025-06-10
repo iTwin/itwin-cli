@@ -15,7 +15,7 @@ export class IModelInfo extends BaseCommand {
 
   public static description = 'Retrieve metadata of an iModel.';
 
-	public static examples = [
+  public static examples = [
     {
       command: `<%= config.bin %> <%= command.id %> --imodel-id 5e19bee0-3aea-4355-a9f0-c6df9989ee7d`,
       description: 'Example 1:'
@@ -34,8 +34,8 @@ export class IModelInfo extends BaseCommand {
     const iModelClient = this.getIModelClient();
 
     const iModel = await iModelClient.iModels.getSingle({
-        authorization: await this.getAuthorizationCallback(),
-        iModelId: flags["imodel-id"]
+      authorization: await this.getAuthorizationCallback(),
+      iModelId: flags["imodel-id"]
     });
 
     return this.logAndReturnResult(iModel);

@@ -21,7 +21,7 @@ export default class CreateConnection extends BaseCommand {
 
   public static description = 'Create a storage connection that describes files from storage to synchronize with an iModel.';
 
-	public static examples = [
+  public static examples = [
     {
       command: `<%= config.bin %> <%= command.id %> --imodel-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --file-id t5bDFuN4qUa9ojVw1E5FGtldp8BgSbNCiJ2XMdiT-cA --connector-type MSTN`,
       description: 'Example 1: Minimal example with only required options'

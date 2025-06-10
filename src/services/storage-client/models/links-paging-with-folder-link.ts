@@ -6,9 +6,9 @@
 import { Link } from "../../general-models/links.js";
 
 export interface LinksPagingWithFolderLink {
-    folder?: Link;
-    next?: Link;
-    prev?: Link;
-    self?: Link;
+  folder?: Link;
+  next?: Link;
+  prev?: Link;
+  self?: Link;
 }
 

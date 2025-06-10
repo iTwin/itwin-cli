@@ -11,26 +11,26 @@ import { validateJson } from "../validation/validate-json.js";
 import zodErrorToMessage from "../validation/zod-error-to-message.js";
 
 export default Flags.custom<Extent>({
-    parse: async (input) => Promise.resolve(
-        validateJson<Extent>(input, validationFunction),
-    )
+  parse: async (input) => Promise.resolve(
+    validateJson<Extent>(input, validationFunction),
+  )
 });
 
 const validationFunction = (input: Extent): string => {
-    const result = extentSchema.safeParse(input);
-    if(result.error === undefined)
-        return '';
+  const result = extentSchema.safeParse(input);
+  if(result.error === undefined)
+    return '';
 
-    return zodErrorToMessage(result.error);
+  return zodErrorToMessage(result.error);
 };
 
 const extentSchema = zod.object({
-    northEast: zod.object({
-        latitude: zod.number(),
-        longitude: zod.number(),
-    }),
-    southWest: zod.object({
-        latitude: zod.number(),
-        longitude: zod.number(),
-    }),
+  northEast: zod.object({
+    latitude: zod.number(),
+    longitude: zod.number(),
+  }),
+  southWest: zod.object({
+    latitude: zod.number(),
+    longitude: zod.number(),
+  }),
 }) satisfies zod.ZodType<Extent>;

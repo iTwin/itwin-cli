@@ -33,7 +33,7 @@ export default class PopulateIModel extends BaseCommand {
 
   public static description = 'Synchronize design files into an iModel.';
 
-	public static examples = [
+  public static examples = [
     {
       command: `<%= config.bin %> <%= command.id %> --imodel-id b1a2c3d4-5678-90ab-cdef-1234567890ab --file file1.dwg --connector-type DWG --file file2.dwg --connector-type DWG`,
       description: 'Example 1: Synchronizing DWG Files'
@@ -54,42 +54,42 @@ export default class PopulateIModel extends BaseCommand {
 
   public static flags = {
     "connector-type": Flags.string({ 
-        char: 'c',
-        description: `Specify connectors to use for synchronization. This option can be provided multiple times. If no connector-type options are provided, they are selected automatically depending on file extensions of provided files. If only one connector is specified, it will be used for all files. If multiple connectors are specified, each connector will be used for the corresponding file in the files list (first connector for the first file, second connector for the second file, and so on).\n NOTE: .dgn and .dwg file types can be associated with multiple connector types. When no 'connector-type' options are provided, connectors for those file types are assigned as follows: .dgn => MSTN, .dwg => DWG `, 
-        helpValue: '<string>',
-        multiple: true,
-        options: [
-          'AUTOPLANT',
-          'CIVIL',
-          'CIVIL3D',
-          'DWG',
-          'GEOSPATIAL',
-          'IFC',
-          'MSTN',
-          'NWD',
-          'OBD',
-          'OPENTOWER',
-          'PROSTRUCTURES',
-          'REVIT',
-          'SPPID',
-          'SPXREVIEW' 
-        ],
-        required: false,
-        type: "option"
-      }),
+      char: 'c',
+      description: `Specify connectors to use for synchronization. This option can be provided multiple times. If no connector-type options are provided, they are selected automatically depending on file extensions of provided files. If only one connector is specified, it will be used for all files. If multiple connectors are specified, each connector will be used for the corresponding file in the files list (first connector for the first file, second connector for the second file, and so on).\n NOTE: .dgn and .dwg file types can be associated with multiple connector types. When no 'connector-type' options are provided, connectors for those file types are assigned as follows: .dgn => MSTN, .dwg => DWG `, 
+      helpValue: '<string>',
+      multiple: true,
+      options: [
+        'AUTOPLANT',
+        'CIVIL',
+        'CIVIL3D',
+        'DWG',
+        'GEOSPATIAL',
+        'IFC',
+        'MSTN',
+        'NWD',
+        'OBD',
+        'OPENTOWER',
+        'PROSTRUCTURES',
+        'REVIT',
+        'SPPID',
+        'SPXREVIEW' 
+      ],
+      required: false,
+      type: "option"
+    }),
     file: Flags.file({ 
-        char: 'f', 
-        description: 'Specify a list of source files to synchronize into the iModel.', 
-        helpValue: '<string>',
-        multiple: true,
-        required: true
-      }),
+      char: 'f', 
+      description: 'Specify a list of source files to synchronize into the iModel.', 
+      helpValue: '<string>',
+      multiple: true,
+      required: true
+    }),
     "imodel-id": customFlags.iModelIDFlag({
-        description: 'The ID of the iModel to populate.'
+      description: 'The ID of the iModel to populate.'
     }),
     "no-wait": Flags.boolean({
-        description: 'Do not wait for the synchronization process to complete.',
-        required: false,
+      description: 'Do not wait for the synchronization process to complete.',
+      required: false,
     }),
   };
 
@@ -160,10 +160,10 @@ export default class PopulateIModel extends BaseCommand {
 
   private async addFileToConnectionIfItIsNotPresent(connectionId: string, sourceFiles: SourceFile[], file: { connectorType: ConnectorType, fileId: string, fileName: string }) {
     const fileExist = sourceFiles.find(f => f.storageFileId === file.fileId);
-      if (!fileExist) {
-        this.log(`Adding file: ${file.fileId} to default connection: ${connectionId}`);
-        await this.runCommand('imodel:connection:sourcefile:add', ['--connection-id', connectionId, '--connector-type', file.connectorType, '--storage-file-id', file.fileId]);
-      }
+    if (!fileExist) {
+      this.log(`Adding file: ${file.fileId} to default connection: ${connectionId}`);
+      await this.runCommand('imodel:connection:sourcefile:add', ['--connection-id', connectionId, '--connector-type', file.connectorType, '--storage-file-id', file.fileId]);
+    }
   }
 
   private checkAndGetFilesWithConnectors(files: string[], connectorTypes: string[] | undefined) : NewFileInfo[] {
@@ -310,9 +310,9 @@ export interface PopulateResponse {
   summary: {
     connectionId: string;
     files: {
-        connectorType: ConnectorType;
-        fileId: string;
-        fileName: string;
+      connectorType: ConnectorType;
+      fileId: string;
+      fileName: string;
     }[];
     runId: string;
   }[]

@@ -6,5 +6,5 @@
 import iModelConnectionRunTests from '../../imodel/connection/run.test';
 
 describe('Service Client Tests (imodel connection run)', async () => {
-    iModelConnectionRunTests();
+  iModelConnectionRunTests();
 });

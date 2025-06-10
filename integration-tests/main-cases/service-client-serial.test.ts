@@ -7,8 +7,8 @@ import authTests from '../auth/auth.test';
 import authTestsService from  '../auth-service/auth-service.test';
 
 describe('Service Client Tests (serial)', () => {
-    describe('Authentication Integration Tests', () => {
-        authTestsService();
-        authTests();
-    });
+  describe('Authentication Integration Tests', () => {
+    authTestsService();
+    authTests();
+  });
 });

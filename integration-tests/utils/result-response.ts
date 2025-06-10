@@ -1,3 +1,3 @@
 export interface ResultResponse {
-    result: string;
+  result: string;
 }

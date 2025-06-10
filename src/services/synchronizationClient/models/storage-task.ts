@@ -6,12 +6,12 @@
 import { TaskError } from "./task-error.js";
 
 export interface StorageTask {
-    endDateTime?: string;
-    error?: TaskError;
-    id?: string;
-    result?: string;
-    retryAttempts?: number;
-    startDateTime?: string;
-    state?: string;
-    storageFileId?: string;
+  endDateTime?: string;
+  error?: TaskError;
+  id?: string;
+  result?: string;
+  retryAttempts?: number;
+  startDateTime?: string;
+  state?: string;
+  storageFileId?: string;
 }

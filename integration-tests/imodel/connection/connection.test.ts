@@ -12,12 +12,12 @@ import sourcefileTests from './sourcefile.test';
 import updateTests from './update.test';
 
 const tests = () => describe('connection', async () => {
-    createTests();
-    deleteTests();
-    infoTests();
-    listTests();
-    sourcefileTests();
-    updateTests();
+  createTests();
+  deleteTests();
+  infoTests();
+  listTests();
+  sourcefileTests();
+  updateTests();
 });
 
 export default tests;

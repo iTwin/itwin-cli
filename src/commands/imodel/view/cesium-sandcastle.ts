@@ -15,9 +15,9 @@ import { Link, Links } from "../../../services/general-models/links.js";
 
 export default class CesiumSandcastle extends BaseCommand {
   public static apiReference: ApiReference = {
-      link: "/docs/command-workflows/cesium-sandcastle",
-      name: "Cesium Sandcastle",
-      sectionName: "Workflow Reference",
+    link: "/docs/command-workflows/cesium-sandcastle",
+    name: "Cesium Sandcastle",
+    sectionName: "Workflow Reference",
   };
 
   public static description = "> 🔬 This command is currently in Technical Preview.\nSetup iModel and get URL to view it in Cesium Sandcastle.";
@@ -71,9 +71,9 @@ export default class CesiumSandcastle extends BaseCommand {
       "--path", "mesh-export",
       "--version-header", "application/vnd.bentley.itwin-platform.v1+json",
       "--body", JSON.stringify({
-          changesetId, 
-          exportType: "CESIUM", 
-          iModelId
+        changesetId, 
+        exportType: "CESIUM", 
+        iModelId
       }),
     ];
 
@@ -203,7 +203,7 @@ function makeCompressedBase64String(data: string[]) : string {
   let jsonString = JSON.stringify(data);
   jsonString = jsonString.slice(2, 2 + jsonString.length - 4);
   let base64String = Buffer.from(
-      deflate(jsonString, { raw: true })
+    deflate(jsonString, { raw: true })
   ).toString('base64');
   base64String = base64String.replace(/=+$/, ''); // remove padding
 

@@ -9,8 +9,8 @@ import userSearchNativeTests from '../../user-native/search.test';
 import sharedQuickUseCasesParallel from '../shared-quick-use-cases-parallel';
 
 describe('Native Client Tests', async () => {
-    accessControlNativeTests();
-    imodelConnectionCreateNativeTests();
-    userSearchNativeTests();
-    sharedQuickUseCasesParallel();
+  accessControlNativeTests();
+  imodelConnectionCreateNativeTests();
+  userSearchNativeTests();
+  sharedQuickUseCasesParallel();
 });

@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 export interface ApiReference {
-    link: string;
-    name: string;
-    sectionName?: string;
+  link: string;
+  name: string;
+  sectionName?: string;
 }

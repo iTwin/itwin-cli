@@ -4,9 +4,9 @@
 *--------------------------------------------------------------------------------------------*/
 
 export const validateFloat = async (floatString: string): Promise<string> => {
-    if(!/^-?\d*(\.\d+)?$/.test(floatString)){
-        throw new TypeError(`${floatString} is not a valid number.`);
-    }
+  if(!/^-?\d*(\.\d+)?$/.test(floatString)){
+    throw new TypeError(`${floatString} is not a valid number.`);
+  }
 
-    return floatString;
+  return floatString;
 };

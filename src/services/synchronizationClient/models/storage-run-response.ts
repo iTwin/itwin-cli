@@ -7,11 +7,11 @@ import { Links } from "../../general-models/links.js";
 import { StorageRun } from "./storage-run.js";
 
 export interface StorageRunResponse {
-    run?: StorageRun;
+  run?: StorageRun;
 }
 
 export interface StorageRunsResponse {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    _links: Links
-    runs: StorageRun[];
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  _links: Links
+  runs: StorageRun[];
 }

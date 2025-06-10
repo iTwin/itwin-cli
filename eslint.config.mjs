@@ -16,6 +16,7 @@ export default tseslint.config(
     },
     rules: {
       '@stylistic/semi': 'error',
+      '@stylistic/indent': ['error', 2],
     },
     languageOptions: {
       parser: tseslint.parser,

@@ -6,5 +6,5 @@
 import iModelConnectionRunTests from '../../imodel/connection/run.test';
 
 describe('Native Client Tests (imodel connection run)', async () => {
-    iModelConnectionRunTests();
+  iModelConnectionRunTests();
 });

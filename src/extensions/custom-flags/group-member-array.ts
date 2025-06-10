@@ -11,20 +11,20 @@ import { validateJson } from "../validation/validate-json.js";
 import zodErrorToMessage from "../validation/zod-error-to-message.js";
 
 export default Flags.custom<GroupMember[]>({
-    parse: async (input) => Promise.resolve(
-        validateJson<GroupMember[]>(input, validationFunction)
-    ),
+  parse: async (input) => Promise.resolve(
+    validateJson<GroupMember[]>(input, validationFunction)
+  ),
 });
 
 const validationFunction = (input: GroupMember[]): string => {
-    const result = zod.array(groupMemberSchema).safeParse(input);
-    if(result.error === undefined)
-        return '';
+  const result = zod.array(groupMemberSchema).safeParse(input);
+  if(result.error === undefined)
+    return '';
 
-    return zodErrorToMessage(result.error);
+  return zodErrorToMessage(result.error);
 };
 
 const groupMemberSchema = zod.object({
-    groupId: zod.string().uuid(),
-    roleIds: zod.array(zod.string().uuid()),
+  groupId: zod.string().uuid(),
+  roleIds: zod.array(zod.string().uuid()),
 }) satisfies zod.ZodType<GroupMember>;

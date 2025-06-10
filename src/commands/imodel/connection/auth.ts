@@ -19,7 +19,7 @@ export default class ConnectionAuth extends BaseCommand {
 
   public static description = 'Ensures the user has a valid token for long-running connection tasks. This must be called before starting a connection run with User authenticationType.';
 
-	public static examples = [
+  public static examples = [
     {
       command: `<%= config.bin %> <%= command.id %>`,
       description: 'Example 1:'

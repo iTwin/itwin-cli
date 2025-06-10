@@ -12,7 +12,7 @@ export default class Login extends BaseCommand {
 
   public static description = 'Authenticate itp with Bentley. This command initiates the login process to obtain the necessary authentication tokens.';
 
-	public static examples = [
+  public static examples = [
     {
       command: `<%= config.bin %> <%= command.id %>`,
       description: 'Example 1:'

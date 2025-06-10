@@ -4,23 +4,23 @@
 *--------------------------------------------------------------------------------------------*/
 
 export interface UserResponse {
-    user: User
+  user: User
 }
 
 export interface UsersResponse {
-    users: User[]
+  users: User[]
 }
 
 export interface User {
-    alternateEmail: string,
-    city?: string,
-    country: string,
-    createdDateTime: Date
-    displayName: string,
-    email: string,
-    givenName: string,
-    id: string,
-    language: string,
-    organizationName: string,
-    phone?: string,
+  alternateEmail: string,
+  city?: string,
+  country: string,
+  createdDateTime: Date
+  displayName: string,
+  email: string,
+  givenName: string,
+  id: string,
+  language: string,
+  organizationName: string,
+  phone?: string,
 }
