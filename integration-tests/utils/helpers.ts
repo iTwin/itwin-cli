@@ -20,7 +20,7 @@ import { FolderTyped } from "../../src/services/storage-client/models/folder-typ
 import { ItemsWithFolderLink } from "../../src/services/storage-client/models/items-with-folder-link.js";
 import { ITP_ISSUER_URL, ITP_MAILINATOR_API_KEY, ITP_NATIVE_TEST_CLIENT_ID, ITP_TEST_USER_EMAIL, ITP_TEST_USER_PASSWORD } from "./environment.js";
 
-export async function serviceLoginToCli() {
+export async function serviceLoginToCli(): Promise<void> {
   const result = await runCommand('auth login');
   expect(result.stdout).to.contain('User successfully logged in using Service login');
 }
@@ -142,7 +142,7 @@ export async function fetchEmailsAndGetInvitationLink(inbox: string, iTwinName: 
   throw new Error("Email was not found in inbox.");
 }
 
-export async function nativeLoginToCli() {
+export async function nativeLoginToCli(): Promise<void> {
   if(isNativeAuthAccessTokenCached())
     return;
 
@@ -156,7 +156,7 @@ export async function nativeLoginToCli() {
   fs.writeFileSync(getTokenPathByOS(), JSON.stringify(authTokenObject), 'utf8');
 }
 
-export async function logoutFromCLI() {
+export async function logoutFromCLI(): Promise<void> {
   const result = await runCommand('auth logout');
   expect(result.stdout).to.contain('User successfully logged out');
 }
@@ -197,7 +197,7 @@ export const isNativeAuthAccessTokenCached = (): boolean => {
   return false;
 };
 
-const getTokenPathByOS = () => {
+const getTokenPathByOS = (): string => {
   switch (os.type()) {
     case 'Linux': {
       const cachePath = `${os.homedir()}/.cache/itp`;
@@ -216,7 +216,7 @@ const getTokenPathByOS = () => {
   }
 };
 
-export const decodeCompressedBase64 = (base64String: string) => {
+export const decodeCompressedBase64 = (base64String: string): string => {
   const buffer = Buffer.from(base64String, "base64");
   return inflate(buffer, {raw: true, to: 'string'});
 };

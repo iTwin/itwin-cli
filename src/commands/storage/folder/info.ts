@@ -7,6 +7,7 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
+import { FolderTyped } from "../../../services/storage-client/models/folder-typed.js";
 
 export default class FolderInfo extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -32,7 +33,7 @@ export default class FolderInfo extends BaseCommand {
     }),
   };
   
-  public async run() {
+  public async run(): Promise<FolderTyped> {
     const { flags } = await this.parse(FolderInfo);
   
     const client = await this.getStorageApiClient();

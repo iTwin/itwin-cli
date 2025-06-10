@@ -8,6 +8,7 @@ import { Flags } from "@oclif/core";
 import { ApiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
 import { customFlags } from "../../../../extensions/custom-flags.js";
+import { ResultResponse } from "../../../../services/general-models/result-response.js";
 
 export default class DeleteGroupMember extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -36,7 +37,7 @@ export default class DeleteGroupMember extends BaseCommand {
     }),
   };
   
-  public async run() {
+  public async run(): Promise<ResultResponse> {
     const { flags } = await this.parse(DeleteGroupMember);
   
     const client = await this.getAccessControlMemberClient();

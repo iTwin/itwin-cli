@@ -69,7 +69,7 @@ export default class ListNamedVersions extends BaseCommand {
     }),
   };
   
-  public async run() {
+  public async run(): Promise<NamedVersion[]> {
     const { flags } = await this.parse(ListNamedVersions);
   
     const client = this.getIModelClient();

@@ -7,6 +7,7 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
+import { FileTyped } from "../../../services/storage-client/models/file-typed.js";
 
 export default class UpdateCommand extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -46,7 +47,7 @@ export default class UpdateCommand extends BaseCommand {
     }),
   };
   
-  public async run() {
+  public async run(): Promise<FileTyped | undefined> {
     const { flags } = await this.parse(UpdateCommand);
   
     const client = await this.getStorageApiClient();

@@ -8,6 +8,7 @@ import { Flags } from "@oclif/core";
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { customFlags } from "../../../extensions/custom-flags.js";
+import { Changeset } from "@itwin/imodels-client-management";
 
 export default class ChangesetInfo extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -41,7 +42,7 @@ export default class ChangesetInfo extends BaseCommand {
     }),
   };
   
-  public async run() {
+  public async run(): Promise<Changeset | undefined> {
     const { flags } = await this.parse(ChangesetInfo);
   
     const client = this.getIModelClient();

@@ -8,6 +8,7 @@ import { Flags } from "@oclif/core";
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { customFlags } from "../../../extensions/custom-flags.js";
+import { NamedVersion } from "@itwin/imodels-client-management";
 
 export default class CreateNamedVersion extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -55,7 +56,7 @@ export default class CreateNamedVersion extends BaseCommand {
     }),
   };
   
-  public async run() {
+  public async run(): Promise<NamedVersion> {
     const { flags } = await this.parse(CreateNamedVersion);
   
     const client = this.getIModelClient();

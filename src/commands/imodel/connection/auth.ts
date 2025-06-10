@@ -8,6 +8,7 @@ import open from 'open';
 
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
+import { AuthInfo } from "../../../services/synchronizationClient/models/connection-auth.js";
 
 export default class ConnectionAuth extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -24,7 +25,7 @@ export default class ConnectionAuth extends BaseCommand {
     }
   ];
 
-  public async run() {
+  public async run(): Promise<AuthInfo> {
     await this.parse(ConnectionAuth);
 
     const client = await this.getSynchronizationClient();

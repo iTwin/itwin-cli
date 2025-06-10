@@ -7,6 +7,7 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
+import { FileUpload } from "../../../services/storage-client/models/file-upload.js";
 
 export default class FileCreate extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -48,7 +49,7 @@ export default class FileCreate extends BaseCommand {
     }),
   };
   
-  public async run() {
+  public async run(): Promise<FileUpload> {
     const { flags } = await this.parse(FileCreate);
   
     const client = await this.getStorageApiClient();

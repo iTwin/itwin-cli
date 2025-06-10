@@ -3,6 +3,7 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
+import { IModel } from "@itwin/imodels-client-management";
 import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
 import { customFlags } from "../../extensions/custom-flags.js";
@@ -28,7 +29,7 @@ export class IModelInfo extends BaseCommand {
     }),
   };
 
-  public async run() {
+  public async run(): Promise<IModel> {
     const { flags } = await this.parse(IModelInfo);
     
     const iModelClient = this.getIModelClient();

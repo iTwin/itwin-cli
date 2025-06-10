@@ -4,6 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import BaseCommand from "../../extensions/base-command.js";
+import { UserContext } from "../../services/general-models/user-context.js";
 
 export default class InfoContext extends BaseCommand {
   public static description = "Display the cached context.";
@@ -15,7 +16,7 @@ export default class InfoContext extends BaseCommand {
     }
   ];
 
-  public async run() {
+  public async run(): Promise<UserContext | undefined> {
     const context = this.getContext();
     return this.logAndReturnResult(context);
   }

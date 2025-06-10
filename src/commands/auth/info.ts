@@ -4,6 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import BaseCommand from '../../extensions/base-command.js';
+import { AuthorizationInformation } from '../../services/authorization-client/authorization-type.js';
 
 export default class Info extends BaseCommand {
   public static args = {};
@@ -19,7 +20,7 @@ export default class Info extends BaseCommand {
 
   public static flags = {};
 
-  public async run() {    
+  public async run(): Promise<AuthorizationInformation> {    
     const authClient = this.getAuthorizationClient();  
     const authInfo = authClient.info();
     return this.logAndReturnResult(authInfo);

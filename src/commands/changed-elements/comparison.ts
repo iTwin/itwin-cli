@@ -8,6 +8,7 @@ import { Flags } from "@oclif/core";
 import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
 import { customFlags } from "../../extensions/custom-flags.js";
+import { ChangesetComparison } from "../../services/changed-elements-client/tracking.js";
 
 export default class ChangedElementsComparison extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -47,10 +48,10 @@ export default class ChangedElementsComparison extends BaseCommand {
     })
   };
   
-  public async run() {
+  public async run(): Promise<ChangesetComparison> {
     const { flags } = await this.parse(ChangedElementsComparison);
   
-    const client = await this.getChangeElementApiClient();
+    const client = await this.getChangedElementsApiClient();
     const result = await client.getComparison(flags["itwin-id"], flags["imodel-id"], flags["changeset-id1"], flags["changeset-id2"]);
   
     return this.logAndReturnResult(result.changedElements);

@@ -17,6 +17,11 @@ export default tseslint.config(
     rules: {
       '@stylistic/semi': 'error',
       '@stylistic/indent': ['error', 2],
+      '@typescript-eslint/explicit-function-return-type': ['error', 
+        {
+          "allowedNames": ["tests", "sharedQuickUseCasesParallel"]
+        }
+      ]
     },
     languageOptions: {
       parser: tseslint.parser,

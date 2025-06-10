@@ -4,6 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import BaseCommand from "../../extensions/base-command.js";
+import { ResultResponse } from "../../services/general-models/result-response.js";
 
 export default class ClearContext extends BaseCommand {
   public static description = "Clear the cached context.";
@@ -15,7 +16,7 @@ export default class ClearContext extends BaseCommand {
     }
   ];
   
-  public async run() {
+  public async run(): Promise<ResultResponse> {
     await this.clearContext();      
     return this.logAndReturnResult({ result: "Context cleared." });
   }
