@@ -62,7 +62,8 @@ export default class UpdateCommand extends BaseCommand {
       description: 'Northeast latitude of the extent.',
       exclusive: ['extent'],
       helpValue: "<float>",
-      parse: async (input) => validateFloat(input),
+      // eslint-disable-next-line @typescript-eslint/promise-function-async
+      parse: (input) => validateFloat(input),
       required: false,
     }),
     "ne-longitude": Flags.string({
@@ -70,7 +71,8 @@ export default class UpdateCommand extends BaseCommand {
       description: 'Northeast longitude of the extent.',
       exclusive: ['extent'],
       helpValue: "<float>",
-      parse: async (input) => validateFloat(input),
+      // eslint-disable-next-line @typescript-eslint/promise-function-async
+      parse: (input) => validateFloat(input),
       required: false,
     }),
     "sw-latitude": Flags.string({
@@ -78,7 +80,8 @@ export default class UpdateCommand extends BaseCommand {
       description: 'Southwest latitude of the extent.',
       exclusive: ['extent'],
       helpValue: "<float>",
-      parse: async (input) => validateFloat(input),
+      // eslint-disable-next-line @typescript-eslint/promise-function-async
+      parse: (input) => validateFloat(input),
       required: false,
     }),
     "sw-longitude": Flags.string({
@@ -86,7 +89,8 @@ export default class UpdateCommand extends BaseCommand {
       description: 'Southwest longitude of the extent.',
       exclusive: ['extent'],
       helpValue: "<float>",
-      parse: async (input) => validateFloat(input),
+      // eslint-disable-next-line @typescript-eslint/promise-function-async
+      parse: (input) => validateFloat(input),
       required: false,
     }),
   };

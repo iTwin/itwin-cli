@@ -107,9 +107,9 @@ export default class CesiumSandcastle extends BaseCommand {
     let newExport = await this.createExport(iModelId, changesetId);
     while (newExport.status !== "Complete") {
       this.log(`Export status is ${newExport.status}. Waiting for export to complete...`);
-       
-      existingExports = await this.getExports(iModelId);
       
+      existingExports = await this.getExports(iModelId);
+
       const foundExport = existingExports.find((exp) => exp.id === newExport.id);
       if(foundExport === undefined)
         this.error("Export creation has failed");

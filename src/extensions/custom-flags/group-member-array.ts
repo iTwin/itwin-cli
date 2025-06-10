@@ -11,7 +11,8 @@ import { validateJson } from "../validation/validate-json.js";
 import zodErrorToMessage from "../validation/zod-error-to-message.js";
 
 export default Flags.custom<GroupMember[]>({
-  parse: async (input) => Promise.resolve(
+  // eslint-disable-next-line @typescript-eslint/promise-function-async
+  parse: (input) => Promise.resolve(
     validateJson<GroupMember[]>(input, validationFunction)
   ),
 });

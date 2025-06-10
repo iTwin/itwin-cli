@@ -11,7 +11,8 @@ import { validateJson } from "../validation/validate-json.js";
 import zodErrorToMessage from "../validation/zod-error-to-message.js";
 
 export default Flags.custom<UserMember[]>({
-  parse: async (input) => Promise.resolve(
+  // eslint-disable-next-line @typescript-eslint/promise-function-async
+  parse: (input) => Promise.resolve(
     validateJson<UserMember[]>(input, validationFunction)
   ),
 });

@@ -70,10 +70,8 @@ const tests = () => describe('populate', () => {
     const {connectionId, runId} = populateResult!.summary[0];
     let { result: infoResult } = await runCommand<StorageRun>(`imodel connection run info -c ${connectionId} --connection-run-id ${runId}`);
     while(infoResult?.state !== "Completed") {
-       
       await new Promise(r => {setTimeout(r, 10_000);});
-
-       
+      
       const { result } = await runCommand<StorageRun>(`imodel connection run info -c ${connectionId} --connection-run-id ${runId}`);
       infoResult = result;
     }

@@ -57,7 +57,8 @@ export default class AddUserMembers extends BaseCommand {
       description: 'Specify IDs of roles to be assigned to a user in CSV format without any whitespaces. This flag can be provided multiple times. If the flag is provided only once, the contained list of role IDs will be assigned to all provided group-ids list. If flag is provided multiple times, each role-ids will be used for the corresponding group-id (fist role-ids list for the first group-id, second role-ids list for the second group-id and so on).',
       helpValue: "<string>",
       multiple: true,
-      parse: async input => validateUuidCSV(input),
+      // eslint-disable-next-line @typescript-eslint/promise-function-async
+      parse: input => validateUuidCSV(input),
       required: false,
     })
   };

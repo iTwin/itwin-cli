@@ -274,12 +274,10 @@ export default class PopulateIModel extends BaseCommand {
     const runId = storageConnection?._links?.lastRun?.href.split("/")[8];
     let storageConnectionRun;
     do {
-       
       storageConnectionRun = await this.runCommand<StorageRun>('imodel:connection:run:info', ['--connection-id', connectionId, '--connection-run-id', runId]);
-       
+      
       await new Promise(resolve => { setTimeout(resolve, 10_000); });
       this.log(`Waiting for synchronization to complete for run ID: ${runId} with state: ${storageConnectionRun?.state}`);
-     
     } while (waitForCompletion && storageConnectionRun?.state !== ExecutionState.COMPLETED);
 
     if(waitForCompletion && storageConnectionRun.result !== ExecutionResult.SUCCESS) {

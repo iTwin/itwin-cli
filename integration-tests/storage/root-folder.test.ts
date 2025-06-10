@@ -21,7 +21,7 @@ const tests = () => describe('root-folder', () => {
 
   before(async () => {
     testITwin = await createITwin(`cli-itwin-integration-test-${new Date().toISOString()}`, 'Thing', 'Asset');
-    rootFolderId = await getRootFolderId(testITwin.id as string);
+    rootFolderId = await getRootFolderId(testITwin.id!);
     testFolder = await createFolder(rootFolderId, 'IntegrationTestFolder', 'Test description');
     testFile = await createFile(rootFolderId, 'test.zip', 'integration-tests/test.zip');
   });
@@ -45,7 +45,7 @@ const tests = () => describe('root-folder', () => {
     expect(rootFolder?._links?.folder?.href).to.be.a('string');
 
     // check helper function
-    const fetchedRootFolderId = await getRootFolderId(testITwin.id as string);
+    const fetchedRootFolderId = await getRootFolderId(testITwin.id!);
     expect(rootFolder!._links!.folder!.href).to.contain(fetchedRootFolderId);
   });
 
@@ -61,7 +61,7 @@ const tests = () => describe('root-folder', () => {
     expect(rootFolder!._links!.folder!.href).to.be.a('string');
 
     // check helper function
-    const fetchedRootFolderId = await getRootFolderId(testITwin.id as string);
+    const fetchedRootFolderId = await getRootFolderId(testITwin.id!);
     expect(rootFolder!._links!.folder!.href).to.contain(fetchedRootFolderId);
   });
 

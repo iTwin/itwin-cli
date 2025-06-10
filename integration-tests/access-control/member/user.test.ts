@@ -64,10 +64,9 @@ const tests = () => {
     await fetch(invitationLink);
 
     let usersInfo: Member[];
-    do {
-             
-      await new Promise<void>(resolve => {setTimeout(_ => resolve(), 10 * 1000);});
-             
+    do {             
+      await new Promise<void>(resolve => {setTimeout(_ => resolve(), 10 * 1000);});    
+      
       const listResult = await runCommand<Member[]>(`access-control member user list --itwin-id ${iTwinId}`);
       expect(listResult.result).to.not.be.undefined;
       usersInfo = listResult.result!;

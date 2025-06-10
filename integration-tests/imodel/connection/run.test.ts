@@ -54,10 +54,8 @@ const tests = () => describe('run', () => {
     let { result: infoResult } = await runCommand<StorageRun>(`imodel connection run info -c ${connectionId} --connection-run-id ${listResult?.runs[0].id}`);
 
     while(infoResult?.state !== "Completed") {
-       
       await new Promise(r => {setTimeout(r, 10_000);});
-
-       
+      
       const { result } = await runCommand<StorageRun>(`imodel connection run info -c ${connectionId} --connection-run-id ${listResult?.runs[0].id}`);
       infoResult = result;
     }

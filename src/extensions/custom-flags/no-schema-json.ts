@@ -8,7 +8,8 @@ import { Flags } from "@oclif/core";
 import { validateJson } from "../validation/validate-json.js";
 
 export default Flags.custom<object>({
-  parse: async (input) => Promise.resolve(
+  // eslint-disable-next-line @typescript-eslint/promise-function-async
+  parse: (input) => Promise.resolve(
     validateJson<object>(input)
   ),
 });
