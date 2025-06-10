@@ -63,10 +63,8 @@ export default class SetContext extends BaseCommand {
       await this.runCommand<ITwin>("itwin:info", ["--itwin-id", iTwinId]);
     } 
 
-    if(iTwinId === undefined)
-      throw new Error();
-
-    const context = await this.setContext(iTwinId, iModelId);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const context = await this.setContext(iTwinId!, iModelId);
     return this.logAndReturnResult(context);
   }
 }

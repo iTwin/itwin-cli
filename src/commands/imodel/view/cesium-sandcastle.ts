@@ -112,7 +112,7 @@ export default class CesiumSandcastle extends BaseCommand {
       
       const foundExport = existingExports.find((exp) => exp.id === newExport.id);
       if(foundExport === undefined)
-        throw new Error();
+        this.error("Export creation has failed");
 
       newExport = foundExport;
        

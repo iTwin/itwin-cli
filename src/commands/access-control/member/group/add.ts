@@ -83,12 +83,11 @@ export default class AddGroupMembers extends BaseCommand {
     if (groups !== undefined)
       return groups;
 
-    if (groupIds === undefined || roleIds === undefined)
-      throw new Error();
-
     groups = [];
-    for (const groupId of groupIds) {
-      const currentRoleIds = roleIds.split(',');
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    for (const groupId of groupIds!) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const currentRoleIds = roleIds!.split(',');
       groups.push({groupId, roleIds: currentRoleIds});
     }
 

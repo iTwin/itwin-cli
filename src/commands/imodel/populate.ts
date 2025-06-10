@@ -184,9 +184,6 @@ export default class PopulateIModel extends BaseCommand {
       } 
       else if (!connectorTypes) {
         const splitedFile = file.split('.');
-  
-        if(splitedFile.length === 0)
-          throw new Error();
 
         if(splitedFile.length === 1)
         {

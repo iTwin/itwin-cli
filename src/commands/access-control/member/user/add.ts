@@ -88,16 +88,16 @@ export default class AddUserMembers extends BaseCommand {
     if (members !== undefined)
       return members;
 
-    if(roleIds === undefined || emails === undefined)
-      throw new Error();
-
-    if(roleIds.length !== 1 && emails.length !== roleIds.length) {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    if(roleIds!.length !== 1 && emails!.length !== roleIds!.length) {
       this.error("Number of `--role-ids` flags must match the amount of `--group-id` flags or be equal to 1.");
     }
 
     members = [];
-    for (const [i, email] of emails.entries()) {
-      const currentRoleIds = roleIds.length === 1 ? roleIds[0].split(','): roleIds[i].split(',');
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    for (const [i, email] of emails!.entries()) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const currentRoleIds = roleIds!.length === 1 ? roleIds![0].split(','): roleIds![i].split(',');
       members.push({email, roleIds: currentRoleIds});
     }
 
