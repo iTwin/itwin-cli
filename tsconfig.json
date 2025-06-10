@@ -8,9 +8,11 @@
     "target": "es2022",
     "moduleResolution": "node16",
     "composite": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "allowJs": true,
   },
   "include": ["./src/**/*"],
+  "exclude": ["dist", "./tmp/**","./bin/**", "./eslint.config.mjs"],
   "ts-node": {
     "esm": true
   }

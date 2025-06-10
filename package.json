@@ -26,24 +26,25 @@
     "zod": "^3.25.30"
   },
   "devDependencies": {
+    "@eslint/js": "^9.28.0",
+    "@itwin/eslint-plugin": "^5.2.1",
     "@itwin/oidc-signin-tool": "^4.4.1",
     "@oclif/prettier-config": "^0.2.1",
     "@oclif/test": "^4",
+    "@stylistic/eslint-plugin": "^4.4.1",
     "@types/chai": "^4",
     "@types/mocha": "^10",
     "@types/node": "^18.19.64",
     "@types/pako": "^2.0.3",
     "chai": "^4",
-    "eslint": "^8",
-    "eslint-config-oclif": "^5",
-    "eslint-config-oclif-typescript": "^3",
-    "eslint-config-prettier": "^9",
+    "eslint": "^9.28.0",
     "mailinator-client": "^1.0.5",
     "mocha": "^10",
     "oclif": "^4",
     "shx": "^0.3.3",
     "ts-node": "^10",
-    "typescript": "^5"
+    "typescript": "^5",
+    "typescript-eslint": "^8.33.1"
   },
   "engines": {
     "node": ">=20.16.0"
@@ -159,6 +160,7 @@
     "clean": "shx rm -rf dist tsconfig.tsbuildinfo",
     "build": "npm run clean && tsc -b",
     "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
     "postpack": "shx rm -f oclif.manifest.json",
     "posttest": "npm run lint",
     "prepack": "oclif manifest && oclif readme",

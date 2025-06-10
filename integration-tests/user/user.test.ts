@@ -5,7 +5,7 @@
 
 import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
 import infoTests from "./info.test";
-import meTests from "./me.test"
+import meTests from "./me.test";
 import searchTests from "./search.test";
 
 const tests = () => describe('User Integration Tests', () => {

@@ -22,26 +22,26 @@ const tests = () => describe('changeset', () => {
 
   before(async () => {
     const { result: filteredITwins } = await runCommand<ITwin[]>(`itwin list --name ${testITwinName}`);
-    expect(filteredITwins).to.not.be.undefined
+    expect(filteredITwins).to.not.be.undefined;
 
     if(filteredITwins!.length === 0) {
-        const testITwin = await createITwin(testITwinName, 'Thing', 'Asset');
-        testITwinId = testITwin.id as string;
-        const testIModel = await createIModel(testIModelName, testITwinId);
-        testIModelId = testIModel.id;
+      const testITwin = await createITwin(testITwinName, 'Thing', 'Asset');
+      testITwinId = testITwin.id as string;
+      const testIModel = await createIModel(testIModelName, testITwinId);
+      testIModelId = testIModel.id;
 
-        await runCommand<ResultResponse>(`changed-elements enable --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
+      await runCommand<ResultResponse>(`changed-elements enable --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
 
-        const { result } = await runCommand<PopulateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type MSTN`);
-        expect(result).to.have.property('iModelId', testIModelId);
-        expect(result).to.have.property('iTwinId', testITwinId);
+      const { result } = await runCommand<PopulateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type MSTN`);
+      expect(result).to.have.property('iModelId', testIModelId);
+      expect(result).to.have.property('iTwinId', testITwinId);
     }
     else {
-        testITwinId = filteredITwins![0].id!;
-        const { result: iModels } = await runCommand<IModel[]>(`imodel list --itwin-id ${testITwinId}`);
-        expect(iModels).to.not.be.undefined;
-        expect(iModels).to.have.lengthOf(1);
-        testIModelId = iModels![0].id;
+      testITwinId = filteredITwins![0].id!;
+      const { result: iModels } = await runCommand<IModel[]>(`imodel list --itwin-id ${testITwinId}`);
+      expect(iModels).to.not.be.undefined;
+      expect(iModels).to.have.lengthOf(1);
+      testIModelId = iModels![0].id;
     }
   });
 
@@ -77,7 +77,7 @@ const tests = () => describe('changeset', () => {
     expect(listResult).to.not.be.undefined;
     expect(listResult).to.have.lengthOf(4);
     expect(listResult?.every((result) => result.index > 5 && result.index <= 9)).to.be.true;
-  })
+  });
 
   it('should order returned changesets by index', async () => {
     const { result: listResultDesc } = await runCommand<Changeset[]>(`imodel changeset list --imodel-id ${testIModelId} --order-by desc`);
@@ -94,13 +94,13 @@ const tests = () => describe('changeset', () => {
   it(`should return an error if neither of 'changeset-id' and 'changeset-index' flags are provided`, async () => {
     const { error: infoError } = await runCommand<Changeset>(`imodel changeset info --imodel-id ${testIModelId}`);
     expect(infoError).to.not.be.undefined;
-    expect(infoError!.message).to.contain("Exactly one of the following must be provided: --changeset-id, --changeset-index")
+    expect(infoError!.message).to.contain("Exactly one of the following must be provided: --changeset-id, --changeset-index");
   });
 
   it(`should return an error if both of 'changeset-id' and 'changeset-index' flags are provided`, async () => {
     const { error: infoError } = await runCommand<Changeset>(`imodel changeset info --imodel-id ${testIModelId} --changeset-id a4139edd-d28d-4bb9-9260-0802dfda0413 --changeset-index 1`);
     expect(infoError).to.not.be.undefined;
-    expect(infoError!.message).to.contain("--changeset-index cannot also be provided when using --changeset-id")
+    expect(infoError!.message).to.contain("--changeset-index cannot also be provided when using --changeset-id");
   });
 });
 

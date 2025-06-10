@@ -23,28 +23,28 @@ const tests = () => describe('changesets + comparison', () => {
 
   before(async () => {
     const { result: filteredITwins } = await runCommand<ITwin[]>(`itwin list --name ${testITwinName}`);
-    expect(filteredITwins).to.not.be.undefined
+    expect(filteredITwins).to.not.be.undefined;
 
     if(filteredITwins!.length === 0) {
-        const testITwin = await createITwin(testITwinName, 'Thing', 'Asset');
-        testITwinId = testITwin.id as string;
-        const testIModel = await createIModel(testIModelName, testITwinId);
-        testIModelId = testIModel.id;
+      const testITwin = await createITwin(testITwinName, 'Thing', 'Asset');
+      testITwinId = testITwin.id as string;
+      const testIModel = await createIModel(testIModelName, testITwinId);
+      testIModelId = testIModel.id;
 
-        await runCommand<{result: string}>(`changed-elements enable --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
+      await runCommand<{result: string}>(`changed-elements enable --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
 
-        const rootFolderId = await getRootFolderId(testITwinId);
-        await createFile(rootFolderId, testFileName, testFilePath);
-        const { result: populateResult } = await runCommand<PopulateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type SPPID`);
-        expect(populateResult).to.have.property('iModelId', testIModelId);
-        expect(populateResult).to.have.property('iTwinId', testITwinId);
+      const rootFolderId = await getRootFolderId(testITwinId);
+      await createFile(rootFolderId, testFileName, testFilePath);
+      const { result: populateResult } = await runCommand<PopulateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type SPPID`);
+      expect(populateResult).to.have.property('iModelId', testIModelId);
+      expect(populateResult).to.have.property('iTwinId', testITwinId);
     }
     else {
-        testITwinId = filteredITwins![0].id!;
-        const { result: iModels } = await runCommand<IModel[]>(`imodel list --itwin-id ${testITwinId}`);
-        expect(iModels).to.not.be.undefined;
-        expect(iModels).to.have.lengthOf(1);
-        testIModelId = iModels![0].id;
+      testITwinId = filteredITwins![0].id!;
+      const { result: iModels } = await runCommand<IModel[]>(`imodel list --itwin-id ${testITwinId}`);
+      expect(iModels).to.not.be.undefined;
+      expect(iModels).to.have.lengthOf(1);
+      testIModelId = iModels![0].id;
     }
   });
 
@@ -56,7 +56,7 @@ const tests = () => describe('changesets + comparison', () => {
     const { result: filteredResult } = await runCommand<Changeset[]>(`changed-elements changesets --imodel-id ${testIModelId} --itwin-id ${testITwinId} --skip 2 --top 2`);
     expect(filteredResult).to.not.be.undefined;
     expect(filteredResult).to.have.lengthOf(2);
-    expect(filteredResult?.map(x => x.id)).to.be.deep.equal(fullResult?.map(x => x.id).slice(2))
+    expect(filteredResult?.map(x => x.id)).to.be.deep.equal(fullResult?.map(x => x.id).slice(2));
   });
 
   it('should compare 2 changesets', async () => {

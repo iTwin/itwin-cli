@@ -35,7 +35,7 @@ const tests = () => describe('create + delete', () => {
         latitude: 46.132_677_028_348_06,
         longitude: 7.672_120_009_938_448
       }
-    }
+    };
 
     const iModelName = `${testIModelName}-create1`;
     const { result: createdIModel} = await runCommand<IModel>(`imodel create --itwin-id ${testITwinId} --name "${iModelName}" --description "${testIModelDescription}" --extent "${JSON.stringify(extent)}"`);
@@ -58,7 +58,7 @@ const tests = () => describe('create + delete', () => {
         latitude: 46.132_677_028_348_06,
         longitude: 7.672_120_009_938_448
       }
-    }
+    };
 
     const iModelName = `${testIModelName}-create2`;
     const { result: createdIModel} = await runCommand<IModel>(`imodel create --itwin-id ${testITwinId} --name "${iModelName}" --description "${testIModelDescription}" --ne-latitude ${extent.northEast.latitude} --ne-longitude ${extent.northEast.longitude} --sw-latitude ${extent.southWest.latitude} --sw-longitude ${extent.southWest.longitude}`);
@@ -81,7 +81,7 @@ const tests = () => describe('create + delete', () => {
         latitude: 46.132_677_028_348_06,
         longitude: 7.672_120_009_938_448
       }
-    }
+    };
 
     const iModelName = `${testIModelName}-create2`;
     const { error: createError} = await runCommand<IModel>(`imodel create --itwin-id ${testITwinId} --name "${iModelName}" --description "${testIModelDescription}" --extent "${JSON.stringify(extent)}" --ne-latitude ${extent.northEast.latitude} --ne-longitude ${extent.northEast.longitude} --sw-latitude ${extent.southWest.latitude} --sw-longitude ${extent.southWest.longitude}`);
@@ -103,7 +103,7 @@ const tests = () => describe('create + delete', () => {
         latitude: 46.132_677_028_348_06,
         longitude: 7.672_120_009_938_448
       }
-    }
+    };
 
     const iModelName = `${testIModelName}-create2`;
     const { error: createError} = await runCommand<IModel>(`imodel create --itwin-id ${testITwinId} --name "${iModelName}" --description "${testIModelDescription}" --ne-latitude ${extent.northEast.latitude} --ne-longitude ${extent.northEast.longitude} --sw-latitude ${extent.southWest.latitude}`);
@@ -137,7 +137,7 @@ const tests = () => describe('create + delete', () => {
       southWest: {
         longitude: 7.672_120_009_938_448
       },
-    }
+    };
     
     const iModelName = `${testIModelName}-create2`;
     const { error: createError} = await runCommand<IModel>(`imodel create --itwin-id ${testITwinId} --name "${iModelName}" --description "${testIModelDescription}" --extent ${JSON.stringify(extent)}`);

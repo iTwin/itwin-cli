@@ -4,21 +4,21 @@
 *--------------------------------------------------------------------------------------------*/
 
 export const validateJson = <T>(jsonString: string, validationFunc?: (input: T) => string): T => {
-    let parsed: T;
-    try {
-        parsed = JSON.parse(jsonString) as T;
-    }
-    catch {
-        throw new Error(`'${jsonString}' is not valid serialized JSON.`);
-    }
+  let parsed: T;
+  try {
+    parsed = JSON.parse(jsonString) as T;
+  }
+  catch {
+    throw new Error(`'${jsonString}' is not valid serialized JSON.`);
+  }
     
-    if(validationFunc === undefined)
-        return parsed;
-
-    const validationError = validationFunc(parsed)
-    if (validationError) {
-        throw new Error(validationError);
-    }
-    
+  if(validationFunc === undefined)
     return parsed;
-}
+
+  const validationError = validationFunc(parsed);
+  if (validationError) {
+    throw new Error(validationError);
+  }
+    
+  return parsed;
+};

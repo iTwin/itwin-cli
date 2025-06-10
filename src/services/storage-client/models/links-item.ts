@@ -5,8 +5,8 @@
 
 import { Link } from "../../general-models/links.js";
 
-export type LinksItem = {
-    createdBy?: Link;
-    lastModifiedBy?: Link;
-    parentFolder?: Link;
-};
+export interface LinksItem {
+  createdBy?: Link;
+  lastModifiedBy?: Link;
+  parentFolder?: Link;
+}

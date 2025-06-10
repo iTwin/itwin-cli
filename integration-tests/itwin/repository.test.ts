@@ -30,7 +30,7 @@ const tests = () => describe('repository', () => {
   it('should create a new iTwin repository', async () => {
     iModelClass = 'GeographicInformationSystem';
     iModelSubclass = 'WebMapService';
-    iModelUri = 'https://example.com/gis-repo'
+    iModelUri = 'https://example.com/gis-repo';
     
     const { result: createdITwinRepository } = await runCommand<Repository>(`itwin repository create --itwin-id ${testITwinId} --class ${iModelClass} --sub-class ${iModelSubclass} --uri ${iModelUri}`);
     

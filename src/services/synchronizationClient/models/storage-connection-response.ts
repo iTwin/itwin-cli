@@ -6,16 +6,17 @@
 import { Links } from "../../general-models/links.js";
 import { StorageConnection } from "./storage-connection.js";
 
-export type StorageConnectionResponse = {
-    connection?: StorageConnection;
-};
-
-export type StorageConnectionListResponse = {
-    _links: Links;
-    connections: StorageConnection[];
+export interface StorageConnectionResponse {
+  connection?: StorageConnection;
 }
 
-export type StorageConnectionUpdate = {
-    authenticationType?: 'Service' | 'User';
-    displayName?: string;
+export interface StorageConnectionListResponse {
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  _links: Links;
+  connections: StorageConnection[];
+}
+
+export interface StorageConnectionUpdate {
+  authenticationType?: 'Service' | 'User';
+  displayName?: string;
 }

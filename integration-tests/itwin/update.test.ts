@@ -30,8 +30,8 @@ const tests = () => describe('update', () => {
     const updatedIanaTimeZone = 'America/Los_Angeles';
     const updatedDisplayName = 'UpdatedIntegrationTestITwin';
     const updatedNumber = Math.random().toString(36).slice(2);
-    const updatedStatus = 'Trial'
-    const updatedType = 'Type1'
+    const updatedStatus = 'Trial';
+    const updatedType = 'Type1';
 
     const { result: updatedITwin } = await runCommand<ITwin>(`itwin update --itwin-id ${testITwinId} --geographic-location "${updatedGeographicLocation}" --iana-time-zone ${updatedIanaTimeZone} --name ${updatedDisplayName} --number ${updatedNumber} --status ${updatedStatus} --type ${updatedType}`);
 

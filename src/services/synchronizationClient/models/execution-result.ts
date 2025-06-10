@@ -4,11 +4,11 @@
 *--------------------------------------------------------------------------------------------*/
 
 export enum ExecutionResult {
-    CANCELLED = "Cancelled",
-    ERROR = "Error",
-    PARTIAL_SUCCESS = "PartialSuccess",
-    SKIPPED = "Skipped",
-    SUCCESS = "Success",
-    TIMED_OUT = "TimedOut",
-    UNDETERMINED = "Undetermined"
+  CANCELLED = "Cancelled",
+  ERROR = "Error",
+  PARTIAL_SUCCESS = "PartialSuccess",
+  SKIPPED = "Skipped",
+  SUCCESS = "Success",
+  TIMED_OUT = "TimedOut",
+  UNDETERMINED = "Undetermined"
 }

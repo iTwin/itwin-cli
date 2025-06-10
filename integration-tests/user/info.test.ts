@@ -32,14 +32,14 @@ const tests = () => describe('info', () => {
   });
 
   it('should return an error for too many user IDs', async () => {
-    let command = "user info"
+    let command = "user info";
     for(let i = 0; i < 1001; i++) {
-      command += ` --user-id ${crypto.randomUUID()}`
+      command += ` --user-id ${crypto.randomUUID()}`;
     }
 
     const { error } = await runCommand(command);
     expect(error).to.be.not.undefined;
-    expect(error?.message).to.be.equal('A maximum of 1000 user IDs can be provided.')
+    expect(error?.message).to.be.equal('A maximum of 1000 user IDs can be provided.');
   });
 });
 

@@ -7,26 +7,26 @@ import { ApiReference } from "../../extensions/api-reference.js"; // Added impor
 import BaseCommand from "../../extensions/base-command.js";
 
 export default class Me extends BaseCommand {
-  static apiReference: ApiReference = {
+  public static apiReference: ApiReference = {
     link: "https://developer.bentley.com/apis/users/operations/me/",
     name: "User Me",
   };
 
-  static args = {}
+  public static args = {};
 
-  static description = 'Retrieve information about the currently authenticated user.'
+  public static description = 'Retrieve information about the currently authenticated user.';
 
-	static examples = [
+  public static examples = [
     {
       command: `<%= config.bin %> <%= command.id %>`,
       description: 'Example 1:'
     }
   ];
 
-  static flags = {}
+  public static flags = {};
 
-  async run() {
-    const userApiClient = await this.getUserApiClient()
+  public async run() {
+    const userApiClient = await this.getUserApiClient();
     const userInfo = await userApiClient.getMe();
 
     return this.logAndReturnResult(userInfo.user);

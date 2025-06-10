@@ -14,41 +14,41 @@ import { nativeLoginToCli } from "../../utils/helpers.js";
 import runSuiteIfMainModule from "../../utils/run-suite-if-main-module.js";
 
 const tests = () => describe('owner', () => {
-    let iTwinId: string;
-    const iTwinName: string = `cli-itwin-integration-test-${new Date().toISOString()}`;
+  let iTwinId: string;
+  const iTwinName: string = `cli-itwin-integration-test-${new Date().toISOString()}`;
     
-    before(async () => {
-        await nativeLoginToCli();
+  before(async () => {
+    await nativeLoginToCli();
 
-        const { result: iTwin } = await runCommand<ITwin>(`itwin create --class Thing --sub-class Asset --name ${iTwinName}`);
-        expect(iTwin).to.have.property('id'); 
-        iTwinId = iTwin!.id!;
-    });
+    const { result: iTwin } = await runCommand<ITwin>(`itwin create --class Thing --sub-class Asset --name ${iTwinName}`);
+    expect(iTwin).to.have.property('id'); 
+    iTwinId = iTwin!.id!;
+  });
 
-    after(async () => {
-        const { result: deleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${iTwinId}`);
-        expect(deleteResult).to.have.property('result', 'deleted');
-    });
+  after(async () => {
+    const { result: deleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${iTwinId}`);
+    expect(deleteResult).to.have.property('result', 'deleted');
+  });
 
-    it('Should add an internal member to an iTwin and remove owner member', async () => {
-        const emailToAdd = ITP_TEST_USER_SAMEORG;
+  it('Should add an internal member to an iTwin and remove owner member', async () => {
+    const emailToAdd = ITP_TEST_USER_SAMEORG;
 
-        const { result: invitedUser } = await runCommand<OwnerResponse>(`access-control member owner add --itwin-id ${iTwinId} --email ${emailToAdd}`);
+    const { result: invitedUser } = await runCommand<OwnerResponse>(`access-control member owner add --itwin-id ${iTwinId} --email ${emailToAdd}`);
 
-        expect(invitedUser).to.not.be.undefined;
-        expect(invitedUser!.member).to.not.be.undefined;
-        expect(invitedUser!.member.email.toLowerCase()).to.be.equal(emailToAdd!.toLowerCase());
+    expect(invitedUser).to.not.be.undefined;
+    expect(invitedUser!.member).to.not.be.undefined;
+    expect(invitedUser!.member.email.toLowerCase()).to.be.equal(emailToAdd!.toLowerCase());
 
-        const { result: usersInfo } = await runCommand<GroupMember[]>(`access-control member owner list --itwin-id ${iTwinId}`);
-        expect(usersInfo).to.not.be.undefined;
-        expect(usersInfo).to.have.lengthOf(2);
-        const joinedUser = usersInfo?.filter(user => user.email.toLowerCase() === emailToAdd!.toLowerCase())[0];
-        expect(joinedUser).to.not.be.undefined;
+    const { result: usersInfo } = await runCommand<GroupMember[]>(`access-control member owner list --itwin-id ${iTwinId}`);
+    expect(usersInfo).to.not.be.undefined;
+    expect(usersInfo).to.have.lengthOf(2);
+    const joinedUser = usersInfo?.filter(user => user.email.toLowerCase() === emailToAdd!.toLowerCase())[0];
+    expect(joinedUser).to.not.be.undefined;
 
-        const { result: deleteResult } = await runCommand<{result: string}>(`access-control member owner delete --itwin-id ${iTwinId} --member-id ${joinedUser?.id}`);
-        expect(deleteResult).to.not.be.undefined;
-        expect(deleteResult).to.have.property('result', "deleted");
-    });
+    const { result: deleteResult } = await runCommand<{result: string}>(`access-control member owner delete --itwin-id ${iTwinId} --member-id ${joinedUser?.id}`);
+    expect(deleteResult).to.not.be.undefined;
+    expect(deleteResult).to.have.property('result', "deleted");
+  });
 });
 
 export default tests;

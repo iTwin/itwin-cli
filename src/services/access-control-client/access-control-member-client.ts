@@ -10,131 +10,131 @@ import { ListOfMembers, MemberResponse, MembersListResponse, MembersResponse } f
 import { OwnerListResponse, OwnerResponse } from "./models/owner.js";
 
 export class AccessControlMemberClient {
-    apiVersionHeader = 'application/vnd.bentley.itwin-platform.v2+json';
-    iTwinPlatformApiClient: ITwinPlatformApiClient;
+  private _apiVersionHeader = 'application/vnd.bentley.itwin-platform.v2+json';
+  private _iTwinPlatformApiClient: ITwinPlatformApiClient;
 
-    constructor(apiUrl: string, accessToken: string) {
-        this.iTwinPlatformApiClient = new ITwinPlatformApiClient(apiUrl, accessToken, this.apiVersionHeader);
-    }
+  constructor(apiUrl: string, accessToken: string) {
+    this._iTwinPlatformApiClient = new ITwinPlatformApiClient(apiUrl, accessToken, this._apiVersionHeader);
+  }
 
-    async addGroupMember(iTwinId: string, groups: GroupMembersRequest): Promise<GroupMembersResponse> {
-        return this.iTwinPlatformApiClient.sendRequest({
-            apiPath: `accesscontrol/itwins/${iTwinId}/members/groups`,
-            body: groups,
-            method: 'POST'
-        });
-    }
+  public async addGroupMember(iTwinId: string, groups: GroupMembersRequest): Promise<GroupMembersResponse> {
+    return this._iTwinPlatformApiClient.sendRequest({
+      apiPath: `accesscontrol/itwins/${iTwinId}/members/groups`,
+      body: groups,
+      method: 'POST'
+    });
+  }
 
-    async addOwner(iTwinId: string, email: string): Promise<OwnerResponse> {
-        return this.iTwinPlatformApiClient.sendRequest({
-            apiPath: `accesscontrol/itwins/${iTwinId}/members/owners`,
-            body: {
-                email
-            },
-            method: 'POST'
-        });
-    }
+  public async addOwner(iTwinId: string, email: string): Promise<OwnerResponse> {
+    return this._iTwinPlatformApiClient.sendRequest({
+      apiPath: `accesscontrol/itwins/${iTwinId}/members/owners`,
+      body: {
+        email
+      },
+      method: 'POST'
+    });
+  }
 
-    async addUserMembers(iTwinId: string, members: ListOfMembers): Promise<MembersResponse> {
-        return this.iTwinPlatformApiClient.sendRequest({
-            apiPath: `accesscontrol/itwins/${iTwinId}/members/users`,
-            body: members,
-            method: 'POST'
-        });
-    }
+  public async addUserMembers(iTwinId: string, members: ListOfMembers): Promise<MembersResponse> {
+    return this._iTwinPlatformApiClient.sendRequest({
+      apiPath: `accesscontrol/itwins/${iTwinId}/members/users`,
+      body: members,
+      method: 'POST'
+    });
+  }
 
-    async deleteGroupMember(iTwinId: string, groupId: string): Promise<void> {
-        await this.iTwinPlatformApiClient.sendRequestNoResponse({
-            apiPath: `accesscontrol/itwins/${iTwinId}/members/groups/${groupId}`,
-            method: 'DELETE'
-        });
-    }
+  public async deleteGroupMember(iTwinId: string, groupId: string): Promise<void> {
+    await this._iTwinPlatformApiClient.sendRequestNoResponse({
+      apiPath: `accesscontrol/itwins/${iTwinId}/members/groups/${groupId}`,
+      method: 'DELETE'
+    });
+  }
 
-    async deleteOwner(iTwinId: string, memberId: string): Promise<void> {
-        await this.iTwinPlatformApiClient.sendRequestNoResponse({
-            apiPath: `accesscontrol/itwins/${iTwinId}/members/owners/${memberId}`,
-            method: 'DELETE'
-        });
-    }
+  public async deleteOwner(iTwinId: string, memberId: string): Promise<void> {
+    await this._iTwinPlatformApiClient.sendRequestNoResponse({
+      apiPath: `accesscontrol/itwins/${iTwinId}/members/owners/${memberId}`,
+      method: 'DELETE'
+    });
+  }
 
-    async deleteUserMember(iTwinId: string, memberId: string): Promise<void> {
-        await this.iTwinPlatformApiClient.sendRequestNoResponse({
-            apiPath: `accesscontrol/itwins/${iTwinId}/members/users/${memberId}`,
-            method: 'DELETE'
-        });
-    }
+  public async deleteUserMember(iTwinId: string, memberId: string): Promise<void> {
+    await this._iTwinPlatformApiClient.sendRequestNoResponse({
+      apiPath: `accesscontrol/itwins/${iTwinId}/members/users/${memberId}`,
+      method: 'DELETE'
+    });
+  }
 
-    async getGroupMember(iTwinId: string, groupId: string): Promise<GroupMemberResponse> {
-        return this.iTwinPlatformApiClient.sendRequest({
-            apiPath: `accesscontrol/itwins/${iTwinId}/members/groups/${groupId}`,
-            method: 'GET'
-        });
-    }
+  public async getGroupMember(iTwinId: string, groupId: string): Promise<GroupMemberResponse> {
+    return this._iTwinPlatformApiClient.sendRequest({
+      apiPath: `accesscontrol/itwins/${iTwinId}/members/groups/${groupId}`,
+      method: 'GET'
+    });
+  }
 
-    async getGroupMembers(iTwinId: string): Promise<GroupMembersResponse> {
-        return this.iTwinPlatformApiClient.sendRequest({
-            apiPath: `accesscontrol/itwins/${iTwinId}/members/groups`,
-            method: 'GET'
-        });
-    }
+  public async getGroupMembers(iTwinId: string): Promise<GroupMembersResponse> {
+    return this._iTwinPlatformApiClient.sendRequest({
+      apiPath: `accesscontrol/itwins/${iTwinId}/members/groups`,
+      method: 'GET'
+    });
+  }
 
-    async getMemberInvitations(iTwinId: string, skip?: number, top?: number): Promise<InvitationsResponse> {
-        const query: Query[] = [
-            {
-                key: "$skip",
-                value: skip
-            },
-            {
-                key: "$top",
-                value: top
-            }
-        ];
+  public async getMemberInvitations(iTwinId: string, skip?: number, top?: number): Promise<InvitationsResponse> {
+    const query: Query[] = [
+      {
+        key: "$skip",
+        value: skip
+      },
+      {
+        key: "$top",
+        value: top
+      }
+    ];
 
-        return this.iTwinPlatformApiClient.sendRequest({
-            apiPath: `accesscontrol/itwins/${iTwinId}/members/invitations`,
-            method: 'GET',
-            query
-        });
-    }
+    return this._iTwinPlatformApiClient.sendRequest({
+      apiPath: `accesscontrol/itwins/${iTwinId}/members/invitations`,
+      method: 'GET',
+      query
+    });
+  }
 
-    async getOwnerList(iTwinId: string): Promise<OwnerListResponse> {
-        return this.iTwinPlatformApiClient.sendRequest({
-            apiPath: `accesscontrol/itwins/${iTwinId}/members/owners`,
-            method: 'GET'
-        });
-    }
+  public async getOwnerList(iTwinId: string): Promise<OwnerListResponse> {
+    return this._iTwinPlatformApiClient.sendRequest({
+      apiPath: `accesscontrol/itwins/${iTwinId}/members/owners`,
+      method: 'GET'
+    });
+  }
 
-    async getUserMember(iTwinId: string, memberId: string): Promise<MemberResponse> {
-        return this.iTwinPlatformApiClient.sendRequest({
-            apiPath: `accesscontrol/itwins/${iTwinId}/members/users/${memberId}`,
-            method: 'GET'
-        });
-    }
+  public async getUserMember(iTwinId: string, memberId: string): Promise<MemberResponse> {
+    return this._iTwinPlatformApiClient.sendRequest({
+      apiPath: `accesscontrol/itwins/${iTwinId}/members/users/${memberId}`,
+      method: 'GET'
+    });
+  }
 
-    async getUserMembers(iTwinId: string): Promise<MembersListResponse> {
-        return this.iTwinPlatformApiClient.sendRequest({
-            apiPath: `accesscontrol/itwins/${iTwinId}/members/users`,
-            method: 'GET'
-        });
-    }
+  public async getUserMembers(iTwinId: string): Promise<MembersListResponse> {
+    return this._iTwinPlatformApiClient.sendRequest({
+      apiPath: `accesscontrol/itwins/${iTwinId}/members/users`,
+      method: 'GET'
+    });
+  }
 
-    async updateGroupMember(iTwinId: string, groupId: string, roleIds: string[]): Promise<GroupMemberResponse> {
-        return this.iTwinPlatformApiClient.sendRequest({
-            apiPath: `accesscontrol/itwins/${iTwinId}/members/groups/${groupId}`,
-            body: {
-                roleIds
-            },
-            method: 'PATCH'
-        });
-    }
+  public async updateGroupMember(iTwinId: string, groupId: string, roleIds: string[]): Promise<GroupMemberResponse> {
+    return this._iTwinPlatformApiClient.sendRequest({
+      apiPath: `accesscontrol/itwins/${iTwinId}/members/groups/${groupId}`,
+      body: {
+        roleIds
+      },
+      method: 'PATCH'
+    });
+  }
 
-    async updateUserMember(iTwinId: string, memberId: string, roleIds: string[]): Promise<MemberResponse> {
-        return this.iTwinPlatformApiClient.sendRequest({
-            apiPath: `accesscontrol/itwins/${iTwinId}/members/users/${memberId}`,
-            body: {
-                roleIds
-            },
-            method: 'PATCH'
-        });
-    }
+  public async updateUserMember(iTwinId: string, memberId: string, roleIds: string[]): Promise<MemberResponse> {
+    return this._iTwinPlatformApiClient.sendRequest({
+      apiPath: `accesscontrol/itwins/${iTwinId}/members/users/${memberId}`,
+      body: {
+        roleIds
+      },
+      method: 'PATCH'
+    });
+  }
 }

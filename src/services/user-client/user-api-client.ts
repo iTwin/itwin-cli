@@ -7,38 +7,38 @@ import { ITwinPlatformApiClient, Query } from "../iTwin-api-client.js";
 import { UserResponse, UsersResponse } from "./models/user.js";
 
 export class UserApiClient {
-    iTwinPlatformApiClient: ITwinPlatformApiClient;
+  private _iTwinPlatformApiClient: ITwinPlatformApiClient;
 
-    constructor(client: ITwinPlatformApiClient) {
-        this.iTwinPlatformApiClient = client;
-    }
+  constructor(client: ITwinPlatformApiClient) {
+    this._iTwinPlatformApiClient = client;
+  }
 
-    async getMe() : Promise<UserResponse> {
-        return this.iTwinPlatformApiClient.sendRequest({
-            apiPath: 'users/me',
-            method: 'GET'
-        })
-    }
+  public async getMe() : Promise<UserResponse> {
+    return this._iTwinPlatformApiClient.sendRequest({
+      apiPath: 'users/me',
+      method: 'GET'
+    });
+  }
 
-    async getUsers(userIDs: string[]) : Promise<UsersResponse> {
-        return this.iTwinPlatformApiClient.sendRequest({
-            apiPath: 'users/getbyidlist',
-            body: userIDs,
-            method: 'POST'
-        })
-    }
+  public async getUsers(userIDs: string[]) : Promise<UsersResponse> {
+    return this._iTwinPlatformApiClient.sendRequest({
+      apiPath: 'users/getbyidlist',
+      body: userIDs,
+      method: 'POST'
+    });
+  }
 
-    async searchUsers(search: string) : Promise<UsersResponse> {
-        const query : Query[] = [];
-        query.push({
-            key: "$search",
-            value: search
-        });
+  public async searchUsers(search: string) : Promise<UsersResponse> {
+    const query : Query[] = [];
+    query.push({
+      key: "$search",
+      value: search
+    });
 
-        return this.iTwinPlatformApiClient.sendRequest({
-            apiPath: 'users/',
-            method: 'GET',
-            query
-        })
-    }
+    return this._iTwinPlatformApiClient.sendRequest({
+      apiPath: 'users/',
+      method: 'GET',
+      query
+    });
+  }
 }

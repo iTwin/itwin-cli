@@ -6,5 +6,5 @@
 import iModelNamedVersionTests from '../../imodel/named-version.test';
 
 describe('Native Client Tests (imodel named-version)', async () => {
-    iModelNamedVersionTests();
+  iModelNamedVersionTests();
 });

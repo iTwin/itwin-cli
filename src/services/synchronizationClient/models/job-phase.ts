@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 export enum JobPhase {
-    MASTER_FILE = "MasterFile",
-    PREPROCESSOR = "Preprocessor",
-    REFERENCE_FILE = "ReferenceFile"
+  MASTER_FILE = "MasterFile",
+  PREPROCESSOR = "Preprocessor",
+  REFERENCE_FILE = "ReferenceFile"
 }

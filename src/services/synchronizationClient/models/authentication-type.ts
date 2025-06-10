@@ -4,6 +4,6 @@
 *--------------------------------------------------------------------------------------------*/
 
 export enum AuthenticationType {
-    SERVICE = 'Service',
-    USER = 'User'
+  SERVICE = 'Service',
+  USER = 'User'
 }

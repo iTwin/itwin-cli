@@ -5,13 +5,13 @@
 
 import { TaskError } from "./task-error.js";
 
-export type StorageTask = {
-    endDateTime?: string;
-    error?: TaskError;
-    id?: string;
-    result?: string;
-    retryAttempts?: number;
-    startDateTime?: string;
-    state?: string;
-    storageFileId?: string;
-};
+export interface StorageTask {
+  endDateTime?: string;
+  error?: TaskError;
+  id?: string;
+  result?: string;
+  retryAttempts?: number;
+  startDateTime?: string;
+  state?: string;
+  storageFileId?: string;
+}

@@ -6,5 +6,5 @@
 import iModelNamedVersionTests from '../../imodel/named-version.test';
 
 describe('Service Client Tests (imodel named-version)', () => {
-    iModelNamedVersionTests();
+  iModelNamedVersionTests();
 });

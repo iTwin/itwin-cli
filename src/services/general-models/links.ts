@@ -3,15 +3,15 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-export type Links = {
-    next: Link
-    prev: Link,
-    self: Link,
+export interface Links {
+  next: Link
+  prev: Link,
+  self: Link,
 }
 
-export type Link = {
-    /**
+export interface Link {
+  /**
      * Hyperlink to the specific entity.
      */
-    href?: string;
-};
+  href?: string;
+}

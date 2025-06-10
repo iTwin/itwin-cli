@@ -1,3 +1,3 @@
-export type ResultResponse = {
-    result: string;
+export interface ResultResponse {
+  result: string;
 }

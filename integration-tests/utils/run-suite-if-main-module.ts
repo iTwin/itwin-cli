@@ -13,40 +13,39 @@ import {fileURLToPath} from 'node:url';
  * @returns `true`, if the current file is not an import, otherwise `false`
  */
 function isMainModule(meta: {url: string}) {
-    for (const arg of process.argv) {
-        if(arg.match(/integration-tests(\/|\\).*\.test\.ts/) === null) {
-            continue;
-        }
-
-        if (!meta || !arg) {
-            return false;
-        }
-    
-        const currentFilePath = fileURLToPath(meta.url)
-            .replaceAll("\\", "/");
-    
-        const mainFilePath = arg;
-        const mainFilePathRegex = mainFilePath
-            .replaceAll("\\", "/")
-            .replaceAll(".", "\\.")
-            .replaceAll("**", ".*?")
-            .replaceAll("*", ".*?");
-        
-        if(currentFilePath.match(mainFilePathRegex) !== null)
-            return true;
+  for (const arg of process.argv) {
+    if(arg.match(/integration-tests(\/|\\).*\.test\.ts/) === null) {
+      continue;
     }
 
-    return false;
+    if (!meta || !arg) {
+      return false;
+    }
+    
+    const currentFilePath = fileURLToPath(meta.url)
+      .replaceAll("\\", "/");
+    
+    const mainFilePath = arg;
+    const mainFilePathRegex = mainFilePath
+      .replaceAll("\\", "/")
+      .replaceAll(".", "\\.")
+      .replaceAll("**", ".*?")
+      .replaceAll("*", ".*?");
+        
+    if(currentFilePath.match(mainFilePathRegex) !== null)
+      return true;
+  }
+
+  return false;
 }
 
-// eslint-disable-next-line valid-jsdoc
 /**
  * Run the provided test suite if provided meta object is main module.
  * @param meta Provided `import.meta` object.
  * @param testSuite Test suite that should be executed.
  */
 export default function runSuiteIfMainModule(meta: {url: string}, testSuite: () => Mocha.Suite): void {
-    if (isMainModule(meta)) {
-        testSuite();
-    }
+  if (isMainModule(meta)) {
+    testSuite();
+  }
 }

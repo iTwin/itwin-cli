@@ -6,5 +6,5 @@
 import iModelPopulateTests from '../../imodel/populate.test';
 
 describe('Native Client Tests (imodel populate)', async () => {
-    iModelPopulateTests();
+  iModelPopulateTests();
 });

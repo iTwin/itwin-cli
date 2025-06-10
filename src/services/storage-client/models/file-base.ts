@@ -3,15 +3,15 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-export type FileBase = {
-    /**
+export interface FileBase {
+  /**
      * Description of the file.
      */
-    description?: string;
-    /**
+  description?: string;
+  /**
      * Display name of the file.
      */
-    displayName?: string;
-};
+  displayName?: string;
+}
 
 
