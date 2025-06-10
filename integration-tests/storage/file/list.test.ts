@@ -27,7 +27,7 @@ const tests = () => describe('list', () => {
     const testITwin = await createITwin(`cli-itwin-integration-test-${new Date().toISOString()}`, 'Thing', 'Asset');
     testITwinId = testITwin.id as string;
     rootFolderId = await getRootFolderId(testITwinId);
-    const testFolder = await createFolder(rootFolderId, "IntegrationTestFolder", "Test description")
+    const testFolder = await createFolder(rootFolderId, "IntegrationTestFolder", "Test description");
     testFolderId = testFolder.id as string;
     const testFile = await createFile(rootFolderId, testFileName, testFilePath);
     testFileId = testFile.id as string;

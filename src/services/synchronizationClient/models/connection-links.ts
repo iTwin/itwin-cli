@@ -5,8 +5,8 @@
 
 import { Link } from "../../general-models/links.js";
 
-export type ConnectionLinks = {
-    iModel?: Link;
-    lastRun?: Link;
-    project?: Link;
-};
+export interface ConnectionLinks {
+  iModel?: Link;
+  lastRun?: Link;
+  project?: Link;
+}

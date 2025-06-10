@@ -1,5 +1,3 @@
-/* eslint-disable no-await-in-loop */
-
 /*---------------------------------------------------------------------------------------------
 * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
 * See LICENSE.md in the project root for license terms and full copyright notice.
@@ -12,21 +10,21 @@ import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 
 export default class ConnectionAuth extends BaseCommand {
-  static apiReference: ApiReference = {
+  public static apiReference: ApiReference = {
     link: "https://developer.bentley.com/apis/synchronization/operations/get-authorization-information/",
     name: "Get Authorization Information",
   };
 
-  static description = 'Ensures the user has a valid token for long-running connection tasks. This must be called before starting a connection run with User authenticationType.';
+  public static description = 'Ensures the user has a valid token for long-running connection tasks. This must be called before starting a connection run with User authenticationType.';
 
-	static examples = [
+  public static examples = [
     {
       command: `<%= config.bin %> <%= command.id %>`,
       description: 'Example 1:'
     }
   ];
 
-  async run() {
+  public async run() {
     await this.parse(ConnectionAuth);
 
     const client = await this.getSynchronizationClient();
@@ -69,7 +67,7 @@ export default class ConnectionAuth extends BaseCommand {
     {
       response = await client.authorizeUserForConnection();
       this.debug(`Current state of user connection authentication is ${response.authorizationInformation.isUserAuthorized}`);
-      await new Promise(r => {setTimeout(r, 3000 * index)});
+      await new Promise(r => {setTimeout(r, 3000 * index);});
     }
     
     server.close();

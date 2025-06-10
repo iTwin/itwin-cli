@@ -99,7 +99,7 @@ const tests = () => describe('sourcefile', () => {
     const { result: listResult } = await runCommand<SourceFile[]>(`imodel connection sourcefile list -c ${connectionId}`);
     expect(listResult).to.not.be.undefined;
     expect(listResult).to.have.lengthOf(3);
-    expect(listResult?.some(result => result.storageFileId === testFileId && result!.connectorType === "MSTN" ))
+    expect(listResult?.some(result => result.storageFileId === testFileId && result!.connectorType === "MSTN" ));
     expect(listResult?.some(result => result.id === addResult1!.id && result.storageFileId === addResult1!.storageFileId && result!.connectorType === "IFC")).to.be.true;
     expect(listResult?.some(result => result.id === addResult2!.id && result.storageFileId === addResult2!.storageFileId && result!.connectorType === "MSTN")).to.be.true;
 

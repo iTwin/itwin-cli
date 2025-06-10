@@ -10,19 +10,19 @@ import { deflate } from "pako";
 
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
-import { CustomFlags } from "../../../extensions/custom-flags.js";
+import { customFlags } from "../../../extensions/custom-flags.js";
 import { Link, Links } from "../../../services/general-models/links.js";
 
 export default class CesiumSandcastle extends BaseCommand {
-  static apiReference: ApiReference = {
-      link: "/docs/command-workflows/cesium-sandcastle",
-      name: "Cesium Sandcastle",
-      sectionName: "Workflow Reference",
+  public static apiReference: ApiReference = {
+    link: "/docs/command-workflows/cesium-sandcastle",
+    name: "Cesium Sandcastle",
+    sectionName: "Workflow Reference",
   };
 
-  static description = "> 🔬 This command is currently in Technical Preview.\nSetup iModel and get URL to view it in Cesium Sandcastle.";
+  public static description = "> 🔬 This command is currently in Technical Preview.\nSetup iModel and get URL to view it in Cesium Sandcastle.";
 
-  static examples = [
+  public static examples = [
     {
       command: `<%= config.bin %> <%= command.id %> --imodel-id 5e19bee0-3aea-4355-a9f0-c6df9989ee7d`,
       description: 'Example 1: Get a link to an iModel in Cesium Sandcastle'
@@ -41,13 +41,13 @@ export default class CesiumSandcastle extends BaseCommand {
     }
   ];
 
-  static flags = {
+  public static flags = {
     "changeset-id": Flags.string({
       description: "Changeset id to be viewed in Cesium Sandcastle. If not provided, the latest changeset will be used.",
       helpValue: '<string>',
       required: false
     }),
-    "imodel-id": CustomFlags.iModelIDFlag({
+    "imodel-id": customFlags.iModelIDFlag({
       description: "iModel id to be viewed in Cesium Sandcastle."
     }),
     "open": Flags.boolean({
@@ -65,15 +65,15 @@ export default class CesiumSandcastle extends BaseCommand {
     })
   };
 
-  async createExport(iModelId: string, changesetId: string): Promise<ExportInfo> {
+  private async createExport(iModelId: string, changesetId: string): Promise<ExportInfo> {
     const args = [
       "--method", "POST",
       "--path", "mesh-export",
       "--version-header", "application/vnd.bentley.itwin-platform.v1+json",
       "--body", JSON.stringify({
-          changesetId, 
-          exportType: "CESIUM", 
-          iModelId
+        changesetId, 
+        exportType: "CESIUM", 
+        iModelId
       }),
     ];
 
@@ -81,7 +81,7 @@ export default class CesiumSandcastle extends BaseCommand {
     return created.export;
   }
 
-  async getExports(iModelId: string) : Promise<ExportInfo[]> {
+  private async getExports(iModelId: string) : Promise<ExportInfo[]> {
     const exportArgs = [
       "--method", "GET", 
       "--path", "mesh-export/", 
@@ -93,7 +93,7 @@ export default class CesiumSandcastle extends BaseCommand {
     return response.exports;
   }
 
-  async getOrCreateExport(iModelId: string, changesetId: string): Promise<ExportInfo> {
+  private async getOrCreateExport(iModelId: string, changesetId: string): Promise<ExportInfo> {
     this.log(`Getting existing exports for iModel: ${iModelId} and changeset: ${changesetId}`);
     let existingExports = await this.getExports(iModelId);
     const existingExport = existingExports.find((exp) => exp.request.exportType === "CESIUM" && exp.request.changesetId === changesetId);
@@ -107,18 +107,23 @@ export default class CesiumSandcastle extends BaseCommand {
     let newExport = await this.createExport(iModelId, changesetId);
     while (newExport.status !== "Complete") {
       this.log(`Export status is ${newExport.status}. Waiting for export to complete...`);
-      // eslint-disable-next-line no-await-in-loop
+      
       existingExports = await this.getExports(iModelId);
-      newExport = existingExports.find((exp) => exp.id === newExport.id)!;
-      // eslint-disable-next-line no-await-in-loop
-      await new Promise((resolve) => {setTimeout(resolve, 5000)});
+
+      const foundExport = existingExports.find((exp) => exp.id === newExport.id);
+      if(foundExport === undefined)
+        this.error("Export creation has failed");
+
+      newExport = foundExport;
+       
+      await new Promise((resolve) => {setTimeout(resolve, 5000);});
     }
     
     this.log(`Export completed successfully`);
     return newExport;
   }
 
-  async run() {
+  public async run() {
     const { flags } = await this.parse(CesiumSandcastle);
 
     let changesetId = flags["changeset-id"] ?? "";
@@ -148,7 +153,7 @@ export default class CesiumSandcastle extends BaseCommand {
 
     if (flags.open) {
       this.log(`Opening URL in browser...`);
-      open(url);
+      await open(url);
     }
     
     return this.logAndReturnResult({ url });
@@ -156,16 +161,18 @@ export default class CesiumSandcastle extends BaseCommand {
 }
 
 
-type ExportResponse = {
+interface ExportResponse {
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   _links: Links
   exports: ExportInfo[],
 }
 
-type ExportCreateResponse = {
+interface ExportCreateResponse {
   export: ExportInfo
 }
 
-type ExportInfo = {
+interface ExportInfo {
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   _links: {
     mesh: Link
   },
@@ -177,7 +184,7 @@ type ExportInfo = {
   status: "Complete" | "InProgress" | "Invalid" | "NotStarted",
 }
 
-type ExportRequest = {
+interface ExportRequest {
   changesetId: string,
   exportType: "3DFT" | "3DTiles" | "CESIUM" | "IMODEL",
   iModelId: string,
@@ -189,14 +196,14 @@ function extractTileSetUrl(exportInfo: ExportInfo): string {
   }
 
   const urlParts = exportInfo._links.mesh.href.split("?");
-  return urlParts[0] + "/tileset.json?" + urlParts[1];
+  return `${urlParts[0]  }/tileset.json?${  urlParts[1]}`;
 }
 
 function makeCompressedBase64String(data: string[]) : string {
   let jsonString = JSON.stringify(data);
   jsonString = jsonString.slice(2, 2 + jsonString.length - 4);
   let base64String = Buffer.from(
-      deflate(jsonString, { raw: true })
+    deflate(jsonString, { raw: true })
   ).toString('base64');
   base64String = base64String.replace(/=+$/, ''); // remove padding
 
@@ -214,9 +221,9 @@ function htmlData() : string {
 }
 
 function jsData(tilesetUrl: string, terrain?: string) : string {
-  let viewerParams = ""
+  let viewerParams = "";
   if(terrain === 'cesiumWorldTerrain') {
-    viewerParams += "terrain: Cesium.Terrain.fromWorldTerrain(),"
+    viewerParams += "terrain: Cesium.Terrain.fromWorldTerrain(),";
   }
 
   return `

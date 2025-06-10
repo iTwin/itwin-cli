@@ -6,15 +6,16 @@
 import { Links } from "../../general-models/links.js";
 import { FileTyped } from "./file-typed.js";
 
-export type FileResponse = {
-    file?: FileTyped;
-};
-
-export type FilesResponse = {
-    files: FileTyped[];
+export interface FileResponse {
+  file?: FileTyped;
 }
 
-export type ItemsResponse = {
-    _links: Links
-    items: FileTyped[];
+export interface FilesResponse {
+  files: FileTyped[];
+}
+
+export interface ItemsResponse {
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  _links: Links
+  items: FileTyped[];
 }

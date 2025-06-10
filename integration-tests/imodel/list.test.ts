@@ -13,8 +13,8 @@ import runSuiteIfMainModule from '../utils/run-suite-if-main-module';
 const tests = () => describe('list', () => {
   const testIModelName1 = `1-cli-imodel-integration-test-${new Date().toISOString()}`;
   const testIModelName2 = `2-cli-imodel-integration-test-${new Date().toISOString()}`;
-  const testIModelDescription1 = 'First iModel description.'
-  const testIModelDescription2 = 'Second iModel description.'
+  const testIModelDescription1 = 'First iModel description.';
+  const testIModelDescription2 = 'Second iModel description.';
   let testIModelId1: string;
   let testIModelId2: string;
   let testITwinId: string;
@@ -77,13 +77,13 @@ const tests = () => describe('list', () => {
     const { result: iModelListAsc } = await runCommand<IModel[]>(`imodel list --itwin-id ${testITwinId} --order-by "createdDateTime asc"`);
     expect(iModelListAsc).to.not.be.undefined;
     expect(iModelListAsc).to.have.lengthOf(2);
-    expect(new Date(iModelListAsc![0].createdDateTime)).to.be.lessThanOrEqual(new Date(iModelListAsc![1].createdDateTime))
+    expect(new Date(iModelListAsc![0].createdDateTime)).to.be.lessThanOrEqual(new Date(iModelListAsc![1].createdDateTime));
     
     const { result: iModelListDesc } = await runCommand<IModel[]>(`imodel list --itwin-id ${testITwinId} --order-by "createdDateTime desc"`);
     expect(iModelListDesc).to.not.be.undefined;
     expect(iModelListDesc).to.have.lengthOf(2);
     expect(new Date(iModelListDesc![0].createdDateTime)).to.be.greaterThanOrEqual(new Date(iModelListDesc![1].createdDateTime));
-  })
+  });
 
   it('should search iModels by name', async() => {
     const { result: iModelList } = await runCommand<IModel[]>(`imodel list --itwin-id ${testITwinId} --search "1-cli-imodel-integration-test"`);

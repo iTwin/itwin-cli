@@ -3,4 +3,4 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-export {run} from '@oclif/core'
+export {run} from '@oclif/core';

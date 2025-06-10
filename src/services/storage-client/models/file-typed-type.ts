@@ -4,6 +4,6 @@
 *--------------------------------------------------------------------------------------------*/
 
 export enum FileTypedType {
-    FILE = 'file',
-    FOLDER = 'folder'
+  FILE = 'file',
+  FOLDER = 'folder'
 }

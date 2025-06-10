@@ -4,103 +4,103 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { ITwinPlatformApiClient } from "../iTwin-api-client.js";
-import { Group, GroupResponse, GroupUpdate, GroupsResponse } from "./models/group.js";
+import { Group, GroupResponse, GroupsResponse, GroupUpdate } from "./models/group.js";
 import { Permissions } from "./models/permissions.js";
 import { Role, RoleResponse, RolesResponse } from "./models/role.js";
 
 export class AccessControlClient {
-    apiVersionHeader = 'application/vnd.bentley.itwin-platform.v2+json';
-    iTwinPlatformApiClient: ITwinPlatformApiClient;
+  private _apiVersionHeader = 'application/vnd.bentley.itwin-platform.v2+json';
+  private _iTwinPlatformApiClient: ITwinPlatformApiClient;
 
-    constructor(apiUrl: string, authToken: string) {
-        this.iTwinPlatformApiClient = new ITwinPlatformApiClient(apiUrl, authToken, this.apiVersionHeader);
-    }
+  constructor(apiUrl: string, authToken: string) {
+    this._iTwinPlatformApiClient = new ITwinPlatformApiClient(apiUrl, authToken, this._apiVersionHeader);
+  }
 
-    createGroup(iTwinId: string, group: Group): Promise<GroupResponse> {
-        return this.iTwinPlatformApiClient.sendRequest({
-            apiPath: `accesscontrol/itwins/${iTwinId}/groups`,
-            body: group,
-            method: 'POST'
-        });
-    }
+  public async createGroup(iTwinId: string, group: Group): Promise<GroupResponse> {
+    return this._iTwinPlatformApiClient.sendRequest({
+      apiPath: `accesscontrol/itwins/${iTwinId}/groups`,
+      body: group,
+      method: 'POST'
+    });
+  }
 
-    createiTwinRole(iTwinId: string, role: Role): Promise<RoleResponse> {
-        return this.iTwinPlatformApiClient.sendRequest({
-            apiPath: `accesscontrol/itwins/${iTwinId}/roles`,
-            body: role,
-            method: 'POST'
-        });
-    }
+  public async createiTwinRole(iTwinId: string, role: Role): Promise<RoleResponse> {
+    return this._iTwinPlatformApiClient.sendRequest({
+      apiPath: `accesscontrol/itwins/${iTwinId}/roles`,
+      body: role,
+      method: 'POST'
+    });
+  }
 
-    async deleteGroup(iTwinId: string, groupId: string): Promise<void> {
-        await this.iTwinPlatformApiClient.sendRequestNoResponse({
-            apiPath: `accesscontrol/itwins/${iTwinId}/groups/${groupId}`,
-            method: 'DELETE'
-        });
-    }
+  public async deleteGroup(iTwinId: string, groupId: string): Promise<void> {
+    await this._iTwinPlatformApiClient.sendRequestNoResponse({
+      apiPath: `accesscontrol/itwins/${iTwinId}/groups/${groupId}`,
+      method: 'DELETE'
+    });
+  }
 
-    async deleteiTwinRole(iTwinId: string, roleId: string): Promise<void> {
-        await this.iTwinPlatformApiClient.sendRequestNoResponse({
-            apiPath: `accesscontrol/itwins/${iTwinId}/roles/${roleId}`,
-            method: 'DELETE'
-        });
-    }
+  public async deleteiTwinRole(iTwinId: string, roleId: string): Promise<void> {
+    await this._iTwinPlatformApiClient.sendRequestNoResponse({
+      apiPath: `accesscontrol/itwins/${iTwinId}/roles/${roleId}`,
+      method: 'DELETE'
+    });
+  }
 
-    getAllAvailableiTwinPermissions(): Promise<Permissions> {
-        return this.iTwinPlatformApiClient.sendRequest({
-            apiPath: `accesscontrol/itwins/permissions`,
-            method: 'GET'
-        });
-    }
+  public async getAllAvailableiTwinPermissions(): Promise<Permissions> {
+    return this._iTwinPlatformApiClient.sendRequest({
+      apiPath: `accesscontrol/itwins/permissions`,
+      method: 'GET'
+    });
+  }
 
-    getAlliTwinPermissions(iTwinId: string): Promise<Permissions> {
-        return this.iTwinPlatformApiClient.sendRequest({
-            apiPath: `accesscontrol/itwins/${iTwinId}/permissions`,
-            method: 'GET'
-        });
-    }
+  public async getAlliTwinPermissions(iTwinId: string): Promise<Permissions> {
+    return this._iTwinPlatformApiClient.sendRequest({
+      apiPath: `accesscontrol/itwins/${iTwinId}/permissions`,
+      method: 'GET'
+    });
+  }
 
-    getGroup(iTwinId: string, groupId: string): Promise<GroupResponse> {
-        return this.iTwinPlatformApiClient.sendRequest({
-            apiPath: `accesscontrol/itwins/${iTwinId}/groups/${groupId}`,
-            method: 'GET'
-        });
-    }
+  public async getGroup(iTwinId: string, groupId: string): Promise<GroupResponse> {
+    return this._iTwinPlatformApiClient.sendRequest({
+      apiPath: `accesscontrol/itwins/${iTwinId}/groups/${groupId}`,
+      method: 'GET'
+    });
+  }
 
-    getGroups(iTwinId: string): Promise<GroupsResponse> {
-        return this.iTwinPlatformApiClient.sendRequest({
-            apiPath: `accesscontrol/itwins/${iTwinId}/groups`,
-            method: 'GET'
-        });
-    }
+  public async getGroups(iTwinId: string): Promise<GroupsResponse> {
+    return this._iTwinPlatformApiClient.sendRequest({
+      apiPath: `accesscontrol/itwins/${iTwinId}/groups`,
+      method: 'GET'
+    });
+  }
 
-    getiTwinRole(iTwinId: string, roleId: string): Promise<RoleResponse> {
-        return this.iTwinPlatformApiClient.sendRequest({
-            apiPath: `accesscontrol/itwins/${iTwinId}/roles/${roleId}`,
-            method: 'GET'
-        });
-    }
+  public async getiTwinRole(iTwinId: string, roleId: string): Promise<RoleResponse> {
+    return this._iTwinPlatformApiClient.sendRequest({
+      apiPath: `accesscontrol/itwins/${iTwinId}/roles/${roleId}`,
+      method: 'GET'
+    });
+  }
 
-    getiTwinRoles(iTwinId: string): Promise<RolesResponse> {
-        return this.iTwinPlatformApiClient.sendRequest({
-            apiPath: `accesscontrol/itwins/${iTwinId}/roles`,
-            method: 'GET'
-        });
-    }
+  public async getiTwinRoles(iTwinId: string): Promise<RolesResponse> {
+    return this._iTwinPlatformApiClient.sendRequest({
+      apiPath: `accesscontrol/itwins/${iTwinId}/roles`,
+      method: 'GET'
+    });
+  }
 
-    updateGroup(iTwinId: string, groupId: string, group: GroupUpdate): Promise<GroupResponse> {
-        return this.iTwinPlatformApiClient.sendRequest({
-            apiPath: `accesscontrol/itwins/${iTwinId}/groups/${groupId}`,
-            body: group,
-            method: 'PATCH'
-        });
-    }
+  public async updateGroup(iTwinId: string, groupId: string, group: GroupUpdate): Promise<GroupResponse> {
+    return this._iTwinPlatformApiClient.sendRequest({
+      apiPath: `accesscontrol/itwins/${iTwinId}/groups/${groupId}`,
+      body: group,
+      method: 'PATCH'
+    });
+  }
 
-    updateiTwinRole(iTwinId: string, roleId: string, role: Role): Promise<RoleResponse> {
-        return this.iTwinPlatformApiClient.sendRequest({
-            apiPath: `accesscontrol/itwins/${iTwinId}/roles/${roleId}`,
-            body: role,
-            method: 'PATCH'
-        });
-    }
+  public async updateiTwinRole(iTwinId: string, roleId: string, role: Role): Promise<RoleResponse> {
+    return this._iTwinPlatformApiClient.sendRequest({
+      apiPath: `accesscontrol/itwins/${iTwinId}/roles/${roleId}`,
+      body: role,
+      method: 'PATCH'
+    });
+  }
 }

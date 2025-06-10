@@ -1,5 +1,3 @@
-/* eslint-disable unicorn/filename-case */
-
 /*---------------------------------------------------------------------------------------------
 * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
 * See LICENSE.md in the project root for license terms and full copyright notice.
@@ -20,18 +18,18 @@ export interface Query {
 }
 
 export class ITwinPlatformApiClient {
-  private readonly apiVersionHeader: string | undefined;
-  private readonly authToken: string;
-  private readonly iTwinPlatformApiBasePath: string;
+  private readonly _apiVersionHeader: string | undefined;
+  private readonly _authToken: string;
+  private readonly _iTwinPlatformApiBasePath: string;
 
   constructor(url: string, token: string, apiVersionHeader?: string | undefined)
   {
-      this.iTwinPlatformApiBasePath = url;
-      this.authToken = token;
-      this.apiVersionHeader = apiVersionHeader;
+    this._iTwinPlatformApiBasePath = url;
+    this._authToken = token;
+    this._apiVersionHeader = apiVersionHeader;
   }
   
-  async sendRequest<T>(options: RequestOption): Promise<T> {
+  public async sendRequest<T>(options: RequestOption): Promise<T> {
     const result = await this.request<T>(options);
     if(!result)
     {
@@ -41,13 +39,14 @@ export class ITwinPlatformApiClient {
     return result;
   }
 
-  async sendRequestNoResponse(options: RequestOption): Promise<void> {
+  public async sendRequestNoResponse(options: RequestOption): Promise<void> {
     await this.request(options);
   }
 
   private getHeadersList(headers: Record<string, string> | undefined, apiVersionHeader: string | undefined) {
     const headersList: Record<string, string> = {
-      'Authorization': this.authToken,
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      Authorization: this._authToken,
       'Content-Type': 'application/json',
       ...headers
     };
@@ -55,8 +54,8 @@ export class ITwinPlatformApiClient {
     if (apiVersionHeader) {
       headersList.Accept = apiVersionHeader;
     }
-    else if (this.apiVersionHeader) {
-      headersList.Accept = this.apiVersionHeader;
+    else if (this._apiVersionHeader) {
+      headersList.Accept = this._apiVersionHeader;
     }
 
     return headersList;
@@ -67,6 +66,7 @@ export class ITwinPlatformApiClient {
       return '';
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const queryString = query.filter(entry => Boolean(entry.value)).map(entry => `${encodeURIComponent(entry.key)}=${encodeURIComponent(entry.value!)}`).join('&');
     if(queryString.length === 0)
     {
@@ -90,18 +90,18 @@ export class ITwinPlatformApiClient {
       method
     };
 
-    const response = await fetch(`${this.iTwinPlatformApiBasePath}/${apiPath}${queryString}`, fetchOptions);
+    const response = await fetch(`${this._iTwinPlatformApiBasePath}/${apiPath}${queryString}`, fetchOptions);
     
     if(!response.ok)
     {
-      const responseData = await response.json();
+      const errorResponseData = await response.json();
       try
       {
-        const typedError = responseData as ErrorResponse;
+        const typedError = errorResponseData as ErrorResponse;
         const stringifiedError = JSON.stringify(typedError.error, Object.getOwnPropertyNames(typedError.error));
         throw new Error(`HTTP error! status: ${response.status}. Response data: ${stringifiedError}`);
       } catch {
-        throw new Error(`HTTP error! ${JSON.stringify(responseData)}`);
+        throw new Error(`HTTP error! ${JSON.stringify(errorResponseData)}`);
       }
     }
 
@@ -114,17 +114,17 @@ export class ITwinPlatformApiClient {
   }
 }
 
-type ErrorResponse = {
+interface ErrorResponse {
   error: Error
 }
 
-type Error = {
+interface Error {
   code: string,
   details: ErrorDetails[]
   message: string,
 }
 
-type ErrorDetails = {
+interface ErrorDetails {
   code: string
   message: string,
   target: string

@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import runSuiteIfMainModule from '../utils/run-suite-if-main-module';
-import changesetTests from "./changeset.test"
+import changesetTests from "./changeset.test";
 import connectionTests from './connection/connection.test';
 import createDeleteTests from "./create-delete.test";
 import infoTests from "./info.test";

@@ -3,62 +3,63 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { Links } from "../../general-models/links.js"
-import { Role } from "./role.js"
+import { Links } from "../../general-models/links.js";
+import { Role } from "./role.js";
 
-export type Group = {
-    description?: string,
-    id?: string,
-    imsGroups?: string[]
-    members?: GroupUser[],
-    name?: string,
+export interface Group {
+  description?: string,
+  id?: string,
+  imsGroups?: string[]
+  members?: GroupUser[],
+  name?: string,
 }
 
-export type GroupUser = {
-    email: string,
-    givenName: string,
-    organization: string
-    surname: string,
-    userId: string,
+export interface GroupUser {
+  email: string,
+  givenName: string,
+  organization: string
+  surname: string,
+  userId: string,
 }
 
-export type GroupUpdate = {
-    description?: string,
-    imsGroups?: string[]
-    members?: string[],
-    name?: string,
+export interface GroupUpdate {
+  description?: string,
+  imsGroups?: string[]
+  members?: string[],
+  name?: string,
 }
 
-export type GroupResponse = {
-    group: Group
+export interface GroupResponse {
+  group: Group
 }
 
-export type GroupsResponse = {
-    groups: Group[]
+export interface GroupsResponse {
+  groups: Group[]
 }
 
-export type GroupMember = {
-    groupId: string,
-    roleIds: string[]
+export interface GroupMember {
+  groupId: string,
+  roleIds: string[]
 }
 
-export type GroupMembersRequest = {
-    members: GroupMember[]
+export interface GroupMembersRequest {
+  members: GroupMember[]
 }
 
-export type GroupMembersResponse = {
-    _links: Links
-    members: GroupMemberInfo[]
+export interface GroupMembersResponse {
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  _links: Links
+  members: GroupMemberInfo[]
 }
 
-export type GroupMemberResponse = {
-    member: GroupMemberInfo
+export interface GroupMemberResponse {
+  member: GroupMemberInfo
 }
 
-export type GroupMemberInfo = {
-    groupDescription: string,
-    groupName: string,
-    id: string,
-    roles: Role[]
+export interface GroupMemberInfo {
+  groupDescription: string,
+  groupName: string,
+  id: string,
+  roles: Role[]
 }
 

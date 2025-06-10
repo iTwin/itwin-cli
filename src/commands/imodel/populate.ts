@@ -3,36 +3,37 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { IModel } from "@itwin/imodels-client-management"
-import { Flags } from "@oclif/core"
-import fs from "node:fs"
-import path from "node:path"
+import { IModel } from "@itwin/imodels-client-management";
+import { Flags } from "@oclif/core";
+import fs from "node:fs";
+import path from "node:path";
 
 import { ApiReference } from "../../extensions/api-reference.js";
-import BaseCommand from "../../extensions/base-command.js"
-import { CustomFlags } from "../../extensions/custom-flags.js"
-import { AuthorizationInformation } from "../../services/authorization-client/authorization-type.js"
-import { FileUpload } from "../../services/storage-client/models/file-upload.js"
-import { ItemsWithFolderLink } from "../../services/storage-client/models/items-with-folder-link.js"
-import { AuthInfo } from "../../services/synchronizationClient/models/connection-auth.js"
-import { ConnectorType } from "../../services/synchronizationClient/models/connector-type.js"
+import BaseCommand from "../../extensions/base-command.js";
+import { customFlags } from "../../extensions/custom-flags.js";
+import { AuthorizationInformation, AuthorizationType } from "../../services/authorization-client/authorization-type.js";
+import { FileUpload } from "../../services/storage-client/models/file-upload.js";
+import { ItemsWithFolderLink } from "../../services/storage-client/models/items-with-folder-link.js";
+import { AuthInfo } from "../../services/synchronizationClient/models/connection-auth.js";
+import { ConnectorType } from "../../services/synchronizationClient/models/connector-type.js";
 import { ExecutionResult } from "../../services/synchronizationClient/models/execution-result.js";
-import { ExecutionState } from "../../services/synchronizationClient/models/execution-state.js"
-import { SourceFile } from "../../services/synchronizationClient/models/source-file.js"
-import { StorageConnection } from "../../services/synchronizationClient/models/storage-connection.js"
-import { StorageConnectionListResponse } from "../../services/synchronizationClient/models/storage-connection-response.js"
-import { StorageRun } from "../../services/synchronizationClient/models/storage-run.js"
+import { ExecutionState } from "../../services/synchronizationClient/models/execution-state.js";
+import { SourceFile } from "../../services/synchronizationClient/models/source-file.js";
+import { StorageConnection } from "../../services/synchronizationClient/models/storage-connection.js";
+import { StorageConnectionListResponse } from "../../services/synchronizationClient/models/storage-connection-response.js";
+import { StorageRun } from "../../services/synchronizationClient/models/storage-run.js";
+import { FolderTypedType } from "../../services/storage-client/models/folder-typed.js";
 
 export default class PopulateIModel extends BaseCommand {    
-  static apiReference: ApiReference = {
+  public static apiReference: ApiReference = {
     link: "/docs/command-workflows/imodel-populate",
     name: "iModel Populate",
     sectionName: "Workflow Reference"
   };
 
-  static description = 'Synchronize design files into an iModel.'
+  public static description = 'Synchronize design files into an iModel.';
 
-	static examples = [
+  public static examples = [
     {
       command: `<%= config.bin %> <%= command.id %> --imodel-id b1a2c3d4-5678-90ab-cdef-1234567890ab --file file1.dwg --connector-type DWG --file file2.dwg --connector-type DWG`,
       description: 'Example 1: Synchronizing DWG Files'
@@ -51,52 +52,52 @@ export default class PopulateIModel extends BaseCommand {
     }
   ];
 
-  static flags = {
+  public static flags = {
     "connector-type": Flags.string({ 
-        char: 'c',
-        description: `Specify connectors to use for synchronization. This option can be provided multiple times. If no connector-type options are provided, they are selected automatically depending on file extensions of provided files. If only one connector is specified, it will be used for all files. If multiple connectors are specified, each connector will be used for the corresponding file in the files list (first connector for the first file, second connector for the second file, and so on).\n NOTE: .dgn and .dwg file types can be associated with multiple connector types. When no 'connector-type' options are provided, connectors for those file types are assigned as follows: .dgn => MSTN, .dwg => DWG `, 
-        helpValue: '<string>',
-        multiple: true,
-        options: [
-          'AUTOPLANT',
-          'CIVIL',
-          'CIVIL3D',
-          'DWG',
-          'GEOSPATIAL',
-          'IFC',
-          'MSTN',
-          'NWD',
-          'OBD',
-          'OPENTOWER',
-          'PROSTRUCTURES',
-          'REVIT',
-          'SPPID',
-          'SPXREVIEW' 
-        ],
-        required: false,
-        type: "option"
-      }),
+      char: 'c',
+      description: `Specify connectors to use for synchronization. This option can be provided multiple times. If no connector-type options are provided, they are selected automatically depending on file extensions of provided files. If only one connector is specified, it will be used for all files. If multiple connectors are specified, each connector will be used for the corresponding file in the files list (first connector for the first file, second connector for the second file, and so on).\n NOTE: .dgn and .dwg file types can be associated with multiple connector types. When no 'connector-type' options are provided, connectors for those file types are assigned as follows: .dgn => MSTN, .dwg => DWG `, 
+      helpValue: '<string>',
+      multiple: true,
+      options: [
+        'AUTOPLANT',
+        'CIVIL',
+        'CIVIL3D',
+        'DWG',
+        'GEOSPATIAL',
+        'IFC',
+        'MSTN',
+        'NWD',
+        'OBD',
+        'OPENTOWER',
+        'PROSTRUCTURES',
+        'REVIT',
+        'SPPID',
+        'SPXREVIEW' 
+      ],
+      required: false,
+      type: "option"
+    }),
     file: Flags.file({ 
-        char: 'f', 
-        description: 'Specify a list of source files to synchronize into the iModel.', 
-        helpValue: '<string>',
-        multiple: true,
-        required: true
-      }),
-    "imodel-id": CustomFlags.iModelIDFlag({
-        description: 'The ID of the iModel to populate.'
+      char: 'f', 
+      description: 'Specify a list of source files to synchronize into the iModel.', 
+      helpValue: '<string>',
+      multiple: true,
+      required: true
+    }),
+    "imodel-id": customFlags.iModelIDFlag({
+      description: 'The ID of the iModel to populate.'
     }),
     "no-wait": Flags.boolean({
-        description: 'Do not wait for the synchronization process to complete.',
-        required: false,
+      description: 'Do not wait for the synchronization process to complete.',
+      required: false,
     }),
-  }
+  };
 
-  async run() {
+  public async run() {
     const { flags } = await this.parse(PopulateIModel);
 
-    if(flags["connector-type"] && flags["connector-type"]!.length !== 1 && flags.file!.length !== flags["connector-type"]!.length) {
-      this.error("When multiple connector-type options are provided, their amount must match file option amount. Alternatively, you can provide a single connector-type option, which will then be applied to all file options. You can also provide no connector-type options, in which case the command will attempt automatic detection.")
+    if(flags["connector-type"] && flags["connector-type"].length !== 1 && flags.file.length !== flags["connector-type"].length) {
+      this.error("When multiple connector-type options are provided, their amount must match file option amount. Alternatively, you can provide a single connector-type option, which will then be applied to all file options. You can also provide no connector-type options, in which case the command will attempt automatic detection.");
     }
 
     const filesAndConnectorToImport = this.checkAndGetFilesWithConnectors(flags.file, flags["connector-type"]);
@@ -111,14 +112,14 @@ export default class PopulateIModel extends BaseCommand {
     }
 
     const files = await Promise.all(
-      filesAndConnectorToImport.map((newFileInfo) => this.processFile(topFolders, rootFolderId, newFileInfo))
+      filesAndConnectorToImport.map(async (newFileInfo) => this.processFile(topFolders, rootFolderId, newFileInfo))
     );
 
     this.log(`Checking existing connections for iModel ID: ${iModel.id}`);
     const existingConnections = await this.runCommand<StorageConnectionListResponse>('imodel:connection:list', ['--imodel-id', iModel.id]);
 
     const authInfo = await this.runCommand<AuthorizationInformation>('auth:info', []);
-    const authType = authInfo.authorizationType === 'Service' ? 'Service' : 'User';
+    const authType = authInfo.authorizationType === AuthorizationType.Service ? 'Service' : 'User';
 
     if(authType === 'User') {
       this.log("Authorizing...");
@@ -152,17 +153,17 @@ export default class PopulateIModel extends BaseCommand {
       iTwinId: iModel.iTwinId,
       rootFolderId,
       summary,
-    }
+    };
 
     return populateResponse;
   }
 
   private async addFileToConnectionIfItIsNotPresent(connectionId: string, sourceFiles: SourceFile[], file: { connectorType: ConnectorType, fileId: string, fileName: string }) {
     const fileExist = sourceFiles.find(f => f.storageFileId === file.fileId);
-      if (!fileExist) {
-        this.log(`Adding file: ${file.fileId} to default connection: ${connectionId}`);
-        await this.runCommand('imodel:connection:sourcefile:add', ['--connection-id', connectionId, '--connector-type', file.connectorType, '--storage-file-id', file.fileId]);
-      }
+    if (!fileExist) {
+      this.log(`Adding file: ${file.fileId} to default connection: ${connectionId}`);
+      await this.runCommand('imodel:connection:sourcefile:add', ['--connection-id', connectionId, '--connector-type', file.connectorType, '--storage-file-id', file.fileId]);
+    }
   }
 
   private checkAndGetFilesWithConnectors(files: string[], connectorTypes: string[] | undefined) : NewFileInfo[] {
@@ -183,7 +184,7 @@ export default class PopulateIModel extends BaseCommand {
       } 
       else if (!connectorTypes) {
         const splitedFile = file.split('.');
-  
+
         if(splitedFile.length === 1)
         {
           this.error(`${file} has no extension`);
@@ -193,20 +194,19 @@ export default class PopulateIModel extends BaseCommand {
           connector = getConnectorTypeFromFileExtension(`${splitedFile.at(-2)}.${splitedFile.at(-1)}`);
         }
   
-        connector ??= getConnectorTypeFromFileExtension(splitedFile.at(-1)!);
-  
-        if(!connector)
-          {
-            this.error(`Unable to get extension from file name: ${file}`);
-          }
+        connector ??= getConnectorTypeFromFileExtension(`${splitedFile.at(-1)}`);
       }
 
+      if(!connector)
+      {
+        this.error(`Unable to get extension from file name: ${file}`);
+      }
 
       resultArray.push({
-        connectorType: connector!,
+        connectorType: connector,
         fileName: path.basename(file),
         fullFilePath: file
-      })
+      });
     }
     
     return resultArray;
@@ -226,7 +226,7 @@ export default class PopulateIModel extends BaseCommand {
     let defaultConnection = existingConnections.find(connection => connection.displayName === 'Default iTwinCLI Connection');
     if (!defaultConnection) {
       const authInfo = await this.runCommand<AuthorizationInformation>('auth:info', []);
-      const authType = authInfo.authorizationType === 'Service' ? 'Service' : 'User';
+      const authType = authInfo.authorizationType === AuthorizationType.Service ? 'Service' : 'User';
 
       this.log(`Creating new default connection`);
       defaultConnection = await this.runCommand<StorageConnection>('imodel:connection:create', 
@@ -238,7 +238,7 @@ export default class PopulateIModel extends BaseCommand {
 
     const connectionSourceFiles = await this.runCommand<SourceFile[]>('imodel:connection:sourcefile:list', ['--connection-id', defaultConnection.id]);
     await Promise.all(
-      files.map((file) => this.addFileToConnectionIfItIsNotPresent(defaultConnection.id, connectionSourceFiles, file))
+      files.map(async (file) => this.addFileToConnectionIfItIsNotPresent(defaultConnection.id, connectionSourceFiles, file))
     );
 
     this.log(`Running connection for connection ID: ${defaultConnection.id}`);
@@ -248,7 +248,7 @@ export default class PopulateIModel extends BaseCommand {
 
   private async processFile(topFolders: ItemsWithFolderLink, rootFolderId: string, fileInfo: NewFileInfo): Promise<{connectorType: ConnectorType, fileId: string, fileName: string}> {
     this.log(`Processing file: ${fileInfo.fileName}`);
-    const fileExists = topFolders.items?.find(entry => entry.type === 'file' && entry.displayName === fileInfo.fileName);
+    const fileExists = topFolders.items?.find(entry => entry.type === FolderTypedType.FOLDER && entry.displayName === fileInfo.fileName);
     let fileId: string | undefined;
 
     if (fileExists?.id) {
@@ -274,12 +274,10 @@ export default class PopulateIModel extends BaseCommand {
     const runId = storageConnection?._links?.lastRun?.href.split("/")[8];
     let storageConnectionRun;
     do {
-      // eslint-disable-next-line no-await-in-loop
       storageConnectionRun = await this.runCommand<StorageRun>('imodel:connection:run:info', ['--connection-id', connectionId, '--connection-run-id', runId]);
-      // eslint-disable-next-line no-await-in-loop
-      await new Promise(resolve => { setTimeout(resolve, 10_000) });
+      
+      await new Promise(resolve => { setTimeout(resolve, 10_000); });
       this.log(`Waiting for synchronization to complete for run ID: ${runId} with state: ${storageConnectionRun?.state}`);
-    // eslint-disable-next-line no-unmodified-loop-condition
     } while (waitForCompletion && storageConnectionRun?.state !== ExecutionState.COMPLETED);
 
     if(waitForCompletion && storageConnectionRun.result !== ExecutionResult.SUCCESS) {
@@ -307,9 +305,9 @@ export interface PopulateResponse {
   summary: {
     connectionId: string;
     files: {
-        connectorType: ConnectorType;
-        fileId: string;
-        fileName: string;
+      connectorType: ConnectorType;
+      fileId: string;
+      fileName: string;
     }[];
     runId: string;
   }[]
@@ -321,7 +319,7 @@ interface NewFileInfo {
   fullFilePath: string;
 }
 
-const fileExtensionToConnectorType: { [key: string]: ConnectorType[] } = {
+const fileExtensionToConnectorType: Record<string, ConnectorType[]> = {
   "3dm": [ConnectorType.MSTN], 
   "3ds": [ConnectorType.MSTN],
   dae: [ConnectorType.MSTN],
@@ -349,6 +347,7 @@ const fileExtensionToConnectorType: { [key: string]: ConnectorType[] } = {
   stl: [ConnectorType.MSTN],
   stp: [ConnectorType.MSTN],
   vue: [ConnectorType.SPXREVIEW],
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   "x_t": [ConnectorType.MSTN],
   zip: [ConnectorType.SPPID],
 };
