@@ -48,7 +48,7 @@ export default abstract class BaseCommand extends Command {
 
   public static enableJsonFlag = true;
 
-  protected async clearContext() {
+  protected async clearContext(): Promise<void> {
     const contextPath = `${this.config.cacheDir  }/context.json`;
     if (fs.existsSync(contextPath)) {
       fs.rmSync(contextPath, { force: true });
@@ -57,13 +57,13 @@ export default abstract class BaseCommand extends Command {
     this.debug(`Cleared context file: ${contextPath}`);
   }
 
-  protected async getAccessControlApiClient() {
+  protected async getAccessControlApiClient(): Promise<AccessControlClient> {
     const token = await this.getAccessToken();
     const url = this.getBaseApiUrl();
     return new AccessControlClient(url, token);
   }
 
-  protected async getAccessControlMemberClient(){
+  protected async getAccessControlMemberClient(): Promise<AccessControlMemberClient> {
     const token = this.getAccessToken();
     const url = this.getBaseApiUrl();
     
@@ -90,16 +90,16 @@ export default abstract class BaseCommand extends Command {
     });
   }
 
-  protected getAuthorizationClient() {
+  protected getAuthorizationClient(): AuthorizationClient {
     return new AuthorizationClient(this.getConfig(), this.config);
   }
 
-  protected getBaseApiUrl() {
+  protected getBaseApiUrl(): string {
     const config = this.getConfig();
     return config?.apiUrl ?? 'https://api.bentley.com';
   }
 
-  protected async getChangeElementApiClient() {
+  protected async getChangedElementsApiClient(): Promise<ChangedElementsApiClient> {
     return new ChangedElementsApiClient(await this.getITwinApiClient());
   }
 
@@ -192,15 +192,15 @@ export default abstract class BaseCommand extends Command {
     return context?.iTwinId;
   }
 
-  protected async getStorageApiClient() {
+  protected async getStorageApiClient(): Promise<StorageApiClient> {
     return new StorageApiClient(await this.getITwinApiClient());
   }
 
-  protected async getSynchronizationClient() {
+  protected async getSynchronizationClient(): Promise<SynchronizationApiClient> {
     return new SynchronizationApiClient(await this.getITwinApiClient());
   }
 
-  protected async getUserApiClient() {
+  protected async getUserApiClient(): Promise<UserApiClient> {
     return new UserApiClient(await this.getITwinApiClient());
   }
 
@@ -218,7 +218,7 @@ export default abstract class BaseCommand extends Command {
     return result;
   }
 
-  protected logTable<T>(data: T) {
+  protected logTable<T>(data: T): void {
     if(Array.isArray(data))
     {
       const table = new Table();
@@ -270,7 +270,7 @@ export default abstract class BaseCommand extends Command {
     return this.config.runCommand<T>(command, mergedArgs);
   }
 
-  protected async setContext(iTwinId: string, iModelId?: string) {
+  protected async setContext(iTwinId: string, iModelId?: string): Promise<UserContext> {
     const contextPath = `${this.config.cacheDir  }/context.json`;
     
     const context: UserContext = {

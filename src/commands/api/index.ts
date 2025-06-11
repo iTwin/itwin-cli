@@ -79,7 +79,7 @@ export default class ApiRequest extends BaseCommand {
     }),
   };
   
-  public async run() {
+  public async run(): Promise<unknown> {
     const { flags } = await this.parse(ApiRequest);
   
     const mappedHeaders: Record<string, string> = flags.header?.reduce((acc, header) => {

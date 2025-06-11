@@ -12,6 +12,7 @@ import { AuthorizationInformation, AuthorizationType } from "../../../services/a
 import { AuthenticationType } from "../../../services/synchronizationClient/models/authentication-type.js";
 import { ConnectorType } from "../../../services/synchronizationClient/models/connector-type.js";
 import { StorageFileCreate } from "../../../services/synchronizationClient/models/storage-file-create.js";
+import { StorageConnection } from "../../../services/synchronizationClient/models/storage-connection.js";
 
 export default class CreateConnection extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -79,7 +80,7 @@ export default class CreateConnection extends BaseCommand {
     }),
   };
 
-  public async run() {
+  public async run(): Promise<StorageConnection | undefined> {
     const { flags } = await this.parse(CreateConnection);
 
     const client = await this.getSynchronizationClient();

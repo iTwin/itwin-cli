@@ -6,6 +6,7 @@
 import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
 import { customFlags } from "../../extensions/custom-flags.js";
+import { TrackingResponse } from "../../services/changed-elements-client/tracking.js";
 
 export default class ChangedElementsInfo extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -31,10 +32,10 @@ export default class ChangedElementsInfo extends BaseCommand {
     }),
   };
   
-  public async run() {
+  public async run(): Promise<TrackingResponse> {
     const { flags } = await this.parse(ChangedElementsInfo);
   
-    const client = await this.getChangeElementApiClient();
+    const client = await this.getChangedElementsApiClient();
     const result = await client.getTracking(flags["imodel-id"], flags["itwin-id"]);
   
     return this.logAndReturnResult(result);

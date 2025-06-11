@@ -139,7 +139,7 @@ export class StorageApiClient {
     });
   }
 
-  public async uploadFile(url: string, file: ArrayBuffer) {
+  public async uploadFile(url: string, file: ArrayBuffer): Promise<Response> {
     return fetch(url, {
       body: file,
       headers: { 'x-ms-blob-type': 'BlockBlob' },

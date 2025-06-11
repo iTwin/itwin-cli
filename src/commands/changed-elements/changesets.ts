@@ -8,6 +8,7 @@ import { Flags } from "@oclif/core";
 import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
 import { customFlags } from "../../extensions/custom-flags.js";
+import { Changeset } from "../../services/changed-elements-client/tracking.js";
 
 export default class GetChangesetStatus extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -49,10 +50,10 @@ export default class GetChangesetStatus extends BaseCommand {
     }),
   };
   
-  public async run() {
+  public async run(): Promise<Changeset[]> {
     const { flags } = await this.parse(GetChangesetStatus);
   
-    const client = await this.getChangeElementApiClient();
+    const client = await this.getChangedElementsApiClient();
     const result = await client.listChangesets(flags["imodel-id"], flags["itwin-id"], flags.top, flags.skip);
   
     return this.logAndReturnResult(result.changesetStatus);

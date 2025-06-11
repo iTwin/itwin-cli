@@ -8,6 +8,7 @@ import { Flags } from '@oclif/core';
 import BaseCommand from '../../extensions/base-command.js';
 import { customFlags } from '../../extensions/custom-flags.js';
 import { ApiReference } from '../../extensions/api-reference.js';
+import { ItemsWithFolderLink } from '../../services/storage-client/models/items-with-folder-link.js';
 
 export default class GetRootFolder extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -40,7 +41,7 @@ export default class GetRootFolder extends BaseCommand {
     }),
   };
 
-  public async run() {
+  public async run(): Promise<ItemsWithFolderLink> {
     const { flags } = await this.parse(GetRootFolder);
     
     const client = await this.getStorageApiClient();

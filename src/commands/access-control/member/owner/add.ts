@@ -8,6 +8,7 @@ import { Flags } from "@oclif/core";
 import { ApiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
 import { customFlags } from "../../../../extensions/custom-flags.js";
+import { OwnerResponse } from "../../../../services/access-control-client/models/owner.js";
 
 export default class AddOwner extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -35,7 +36,7 @@ export default class AddOwner extends BaseCommand {
     }),
   };
   
-  public async run() {
+  public async run(): Promise<OwnerResponse> {
     const { flags } = await this.parse(AddOwner);
   
     const client = await this.getAccessControlMemberClient();

@@ -7,6 +7,7 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
+import { User } from "../../services/user-client/models/user.js";
 
 export default class UserInfo extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -32,7 +33,7 @@ export default class UserInfo extends BaseCommand {
     }),
   };
   
-  public async run() {
+  public async run(): Promise<User[]> {
     const { flags } = await this.parse(UserInfo);
   
     if(flags["user-id"] !== undefined && flags["user-id"].length > 1000) {

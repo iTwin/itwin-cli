@@ -9,6 +9,7 @@ import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
 import { customFlags } from "../../extensions/custom-flags.js";
 import { validateFloat } from "../../extensions/validation/validate-float.js";
+import { IModel } from "@itwin/imodels-client-management";
 
 export default class CreateIModel extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -103,7 +104,7 @@ export default class CreateIModel extends BaseCommand {
     }),
   };
 
-  public async run() {
+  public async run(): Promise<IModel> {
     const { flags } = await this.parse(CreateIModel);
     
     if(flags["ne-latitude"] !== undefined && flags["ne-longitude"] !== undefined && flags["sw-latitude"] !== undefined && flags["sw-longitude"] !== undefined) {

@@ -1,6 +1,6 @@
 import { logoutFromCLI, serviceLoginToCli } from "./helpers";
 
-export async function mochaGlobalSetup() {
+export async function mochaGlobalSetup(): Promise<void> {
   await logoutFromCLI();
   await serviceLoginToCli();
 

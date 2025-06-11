@@ -8,6 +8,7 @@ import fs from "node:fs";
 
 import BaseCommand from "../../../extensions/base-command.js";
 import { ApiReference } from "../../../extensions/api-reference.js";
+import { ResultResponse } from "../../../services/general-models/result-response.js";
 
 export default class FileUpload extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -43,7 +44,7 @@ export default class FileUpload extends BaseCommand {
     }),
   };
   
-  public async run() {
+  public async run(): Promise<ResultResponse> {
     const { flags } = await this.parse(FileUpload);
   
     const client = await this.getStorageApiClient();
@@ -60,7 +61,7 @@ export default class FileUpload extends BaseCommand {
     return this.logAndReturnResult(returnObject);
   }
   
-  private toArrayBuffer(buffer: Buffer) {
+  private toArrayBuffer(buffer: Buffer): ArrayBuffer {
     const arrayBuffer = new ArrayBuffer(buffer.length);
     const view = new Uint8Array(arrayBuffer);
     for (const [i, element] of buffer.entries()) {

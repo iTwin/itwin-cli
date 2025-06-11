@@ -8,6 +8,7 @@ import { Flags } from "@oclif/core";
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { customFlags } from "../../../extensions/custom-flags.js";
+import { StorageConnectionListResponse } from "../../../services/synchronizationClient/models/storage-connection-response.js";
 
 export default class ListConnections extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -48,7 +49,7 @@ export default class ListConnections extends BaseCommand {
     }),
   };
   
-  public async run() {
+  public async run(): Promise<StorageConnectionListResponse> {
     const { flags } = await this.parse(ListConnections);
   
     const client = await this.getSynchronizationClient();

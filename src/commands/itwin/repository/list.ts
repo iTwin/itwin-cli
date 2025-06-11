@@ -8,6 +8,7 @@ import { Flags } from "@oclif/core";
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { customFlags } from "../../../extensions/custom-flags.js";
+import { Repository } from "@itwin/itwins-client";
 
 export default class ListRepositories extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -50,7 +51,7 @@ export default class ListRepositories extends BaseCommand {
     }),
   };
   
-  public async run() {
+  public async run(): Promise<Repository[] | undefined> {
     const { flags } = await this.parse(ListRepositories);
   
     const client = this.getITwinAccessClient();

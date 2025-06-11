@@ -7,6 +7,7 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
+import { SourceFile } from "../../../../services/synchronizationClient/models/source-file.js";
 
 export default class ConnectionSourceFileInfo extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -37,7 +38,7 @@ export default class ConnectionSourceFileInfo extends BaseCommand {
     }),
   };
   
-  public async run() {
+  public async run(): Promise<SourceFile> {
     const { flags } = await this.parse(ConnectionSourceFileInfo);
   
     const client = await this.getSynchronizationClient();

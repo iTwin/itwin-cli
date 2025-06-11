@@ -43,7 +43,7 @@ export class ITwinPlatformApiClient {
     await this.request(options);
   }
 
-  private getHeadersList(headers: Record<string, string> | undefined, apiVersionHeader: string | undefined) {
+  private getHeadersList(headers: Record<string, string> | undefined, apiVersionHeader: string | undefined): Record<string, string> {
     const headersList: Record<string, string> = {
       // eslint-disable-next-line @typescript-eslint/naming-convention
       Authorization: this._authToken,

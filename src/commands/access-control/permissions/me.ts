@@ -28,7 +28,7 @@ export default class MyPermissions extends BaseCommand {
     }),
   };
   
-  public async run() {
+  public async run(): Promise<string[]> {
     const { flags } = await this.parse(MyPermissions);
   
     const client = await this.getAccessControlApiClient();
