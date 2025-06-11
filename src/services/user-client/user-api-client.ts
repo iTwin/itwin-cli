@@ -13,14 +13,14 @@ export class UserApiClient {
     this._iTwinPlatformApiClient = client;
   }
 
-  public async getMe() : Promise<UserResponse> {
+  public async getMe(): Promise<UserResponse> {
     return this._iTwinPlatformApiClient.sendRequest({
       apiPath: 'users/me',
       method: 'GET'
     });
   }
 
-  public async getUsers(userIDs: string[]) : Promise<UsersResponse> {
+  public async getUsers(userIDs: string[]): Promise<UsersResponse> {
     return this._iTwinPlatformApiClient.sendRequest({
       apiPath: 'users/getbyidlist',
       body: userIDs,
@@ -28,8 +28,8 @@ export class UserApiClient {
     });
   }
 
-  public async searchUsers(search: string) : Promise<UsersResponse> {
-    const query : Query[] = [];
+  public async searchUsers(search: string): Promise<UsersResponse> {
+    const query: Query[] = [];
     query.push({
       key: "$search",
       value: search

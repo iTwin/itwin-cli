@@ -85,7 +85,7 @@ export default class CreateIModel extends BaseCommand {
       required: false,
     }),
     "sw-latitude": Flags.string({
-      dependsOn:['ne-latitude', 'ne-longitude', 'sw-longitude'],
+      dependsOn: ['ne-latitude', 'ne-longitude', 'sw-longitude'],
       description: 'Southwest latitude of the extent.',
       exclusive: ['extent'],
       helpValue: "<float>",
@@ -107,7 +107,7 @@ export default class CreateIModel extends BaseCommand {
   public async run(): Promise<IModel> {
     const { flags } = await this.parse(CreateIModel);
     
-    if(flags["ne-latitude"] !== undefined && flags["ne-longitude"] !== undefined && flags["sw-latitude"] !== undefined && flags["sw-longitude"] !== undefined) {
+    if (flags["ne-latitude"] !== undefined && flags["ne-longitude"] !== undefined && flags["sw-latitude"] !== undefined && flags["sw-longitude"] !== undefined) {
       flags.extent ??= {
         northEast: {
           latitude: Number.parseFloat(flags["ne-latitude"]),

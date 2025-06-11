@@ -96,7 +96,7 @@ export default class PopulateIModel extends BaseCommand {
   public async run(): Promise<PopulateResponse> {
     const { flags } = await this.parse(PopulateIModel);
 
-    if(flags["connector-type"] && flags["connector-type"].length !== 1 && flags.file.length !== flags["connector-type"].length) {
+    if (flags["connector-type"] && flags["connector-type"].length !== 1 && flags.file.length !== flags["connector-type"].length) {
       this.error("When multiple connector-type options are provided, their amount must match file option amount. Alternatively, you can provide a single connector-type option, which will then be applied to all file options. You can also provide no connector-type options, in which case the command will attempt automatic detection.");
     }
 
@@ -121,7 +121,7 @@ export default class PopulateIModel extends BaseCommand {
     const authInfo = await this.runCommand<AuthorizationInformation>('auth:info', []);
     const authType = authInfo.authorizationType === AuthorizationType.Service ? 'Service' : 'User';
 
-    if(authType === 'User') {
+    if (authType === 'User') {
       this.log("Authorizing...");
       const connectionAuth = await this.runCommand<AuthInfo>('imodel:connection:auth', []);
       if (connectionAuth.isUserAuthorized === undefined) {
@@ -140,7 +140,7 @@ export default class PopulateIModel extends BaseCommand {
       runId,
     }];
 
-    if(flags["no-wait"]) {
+    if (flags["no-wait"]) {
       this.log("Synchronization process started. Use the following command to check the status of the synchronization process:");
       this.log(`itp imodel connection run info --connection-id ${connectionId} --connection-run-id ${runId}`);
     }
@@ -166,38 +166,38 @@ export default class PopulateIModel extends BaseCommand {
     }
   }
 
-  private checkAndGetFilesWithConnectors(files: string[], connectorTypes: string[] | undefined) : NewFileInfo[] {
+  private checkAndGetFilesWithConnectors(files: string[], connectorTypes: string[] | undefined): NewFileInfo[] {
     const resultArray = new Array<NewFileInfo>;
   
     for (const [index, file] of files.entries()) {
-      if(!fs.existsSync(file))
+      if (!fs.existsSync(file))
       {
         this.error(`File at: '${file}' does not exist`);
       }
 
       let connector;
-      if(connectorTypes && connectorTypes.length === 1) {
+      if (connectorTypes && connectorTypes.length === 1) {
         connector = ConnectorType[connectorTypes[0] as keyof typeof ConnectorType];
       } 
-      else if(connectorTypes && connectorTypes.length === files.length) {
+      else if (connectorTypes && connectorTypes.length === files.length) {
         connector = ConnectorType[connectorTypes[index] as keyof typeof ConnectorType];
       } 
       else if (!connectorTypes) {
         const splitedFile = file.split('.');
 
-        if(splitedFile.length === 1)
+        if (splitedFile.length === 1)
         {
           this.error(`${file} has no extension`);
         }
   
-        if(splitedFile.length >= 3) {
+        if (splitedFile.length >= 3) {
           connector = getConnectorTypeFromFileExtension(`${splitedFile.at(-2)}.${splitedFile.at(-1)}`);
         }
   
         connector ??= getConnectorTypeFromFileExtension(`${splitedFile.at(-1)}`);
       }
 
-      if(!connector)
+      if (!connector)
       {
         this.error(`Unable to get extension from file name: ${file}`);
       }
@@ -246,7 +246,7 @@ export default class PopulateIModel extends BaseCommand {
     return defaultConnection.id;
   }
 
-  private async processFile(topFolders: ItemsWithFolderLink, rootFolderId: string, fileInfo: NewFileInfo): Promise<{connectorType: ConnectorType, fileId: string, fileName: string}> {
+  private async processFile(topFolders: ItemsWithFolderLink, rootFolderId: string, fileInfo: NewFileInfo): Promise<{ connectorType: ConnectorType, fileId: string, fileName: string }> {
     this.log(`Processing file: ${fileInfo.fileName}`);
     const fileExists = topFolders.items?.find(entry => entry.type === FolderTypedType.FOLDER && entry.displayName === fileInfo.fileName);
     let fileId: string | undefined;
@@ -280,7 +280,7 @@ export default class PopulateIModel extends BaseCommand {
       this.log(`Waiting for synchronization to complete for run ID: ${runId} with state: ${storageConnectionRun?.state}`);
     } while (waitForCompletion && storageConnectionRun?.state !== ExecutionState.COMPLETED);
 
-    if(waitForCompletion && storageConnectionRun.result !== ExecutionResult.SUCCESS) {
+    if (waitForCompletion && storageConnectionRun.result !== ExecutionResult.SUCCESS) {
       this.error(`Synchronization run ${runId} resulted in an error. Run 'itp imodel connection run info --connection-id ${connectionId} --connection-run-id ${runId}' for more info.`);
     }
 

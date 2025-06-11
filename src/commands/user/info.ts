@@ -36,7 +36,7 @@ export default class UserInfo extends BaseCommand {
   public async run(): Promise<User[]> {
     const { flags } = await this.parse(UserInfo);
   
-    if(flags["user-id"] !== undefined && flags["user-id"].length > 1000) {
+    if (flags["user-id"] !== undefined && flags["user-id"].length > 1000) {
       this.error("A maximum of 1000 user IDs can be provided.");
     }
 

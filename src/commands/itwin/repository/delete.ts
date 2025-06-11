@@ -43,7 +43,7 @@ export default class DeleteRepository extends BaseCommand {
     const accessToken = await this.getAccessToken();
       
     const response = await client.deleteRepository(accessToken, flags["itwin-id"], flags["repository-id"]);
-    if(response.error)
+    if (response.error)
     {
       this.error(JSON.stringify(response.error, null, 2));
     }

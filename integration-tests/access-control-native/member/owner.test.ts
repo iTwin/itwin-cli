@@ -26,7 +26,7 @@ const tests = () => describe('owner', () => {
   });
 
   after(async () => {
-    const { result: deleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${iTwinId}`);
+    const { result: deleteResult } = await runCommand<{ result: string }>(`itwin delete --itwin-id ${iTwinId}`);
     expect(deleteResult).to.have.property('result', 'deleted');
   });
 
@@ -45,7 +45,7 @@ const tests = () => describe('owner', () => {
     const joinedUser = usersInfo?.filter(user => user.email.toLowerCase() === emailToAdd!.toLowerCase())[0];
     expect(joinedUser).to.not.be.undefined;
 
-    const { result: deleteResult } = await runCommand<{result: string}>(`access-control member owner delete --itwin-id ${iTwinId} --member-id ${joinedUser?.id}`);
+    const { result: deleteResult } = await runCommand<{ result: string }>(`access-control member owner delete --itwin-id ${iTwinId} --member-id ${joinedUser?.id}`);
     expect(deleteResult).to.not.be.undefined;
     expect(deleteResult).to.have.property('result', "deleted");
   });

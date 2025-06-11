@@ -74,7 +74,7 @@ export default class AddUserMembers extends BaseCommand {
     for (const member of members)
       roleAssignmentCount += member.roleIds.length;
 
-    if(roleAssignmentCount > 50) {
+    if (roleAssignmentCount > 50) {
       this.error("A maximum of 50 role assignments can be performed.");
     }
 
@@ -90,7 +90,7 @@ export default class AddUserMembers extends BaseCommand {
       return members;
 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    if(roleIds!.length !== 1 && emails!.length !== roleIds!.length) {
+    if (roleIds!.length !== 1 && emails!.length !== roleIds!.length) {
       this.error("Number of `--role-ids` flags must match the amount of `--group-id` flags or be equal to 1.");
     }
 
@@ -98,7 +98,7 @@ export default class AddUserMembers extends BaseCommand {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     for (const [i, email] of emails!.entries()) {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const currentRoleIds = roleIds!.length === 1 ? roleIds![0].split(','): roleIds![i].split(',');
+      const currentRoleIds = roleIds!.length === 1 ? roleIds![0].split(',') : roleIds![i].split(',');
       members.push({email, roleIds: currentRoleIds});
     }
 

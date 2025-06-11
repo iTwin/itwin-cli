@@ -31,7 +31,7 @@ export class ITwinPlatformApiClient {
   
   public async sendRequest<T>(options: RequestOption): Promise<T> {
     const result = await this.request<T>(options);
-    if(!result)
+    if (!result)
     {
       throw new Error("Request returned undefined object");
     }
@@ -61,14 +61,14 @@ export class ITwinPlatformApiClient {
     return headersList;
   }
 
-  private getQueryString(query?: Query[]) : string {
-    if(!query || query.length === 0) {
+  private getQueryString(query?: Query[]): string {
+    if (!query || query.length === 0) {
       return '';
     }
 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const queryString = query.filter(entry => Boolean(entry.value)).map(entry => `${encodeURIComponent(entry.key)}=${encodeURIComponent(entry.value!)}`).join('&');
-    if(queryString.length === 0)
+    if (queryString.length === 0)
     {
       return '';
     }
@@ -84,7 +84,7 @@ export class ITwinPlatformApiClient {
     const queryString = this.getQueryString(query);
     const headersList: Record<string, string> = this.getHeadersList(headers, apiVersionHeader);
 
-    const fetchOptions : RequestInit = {
+    const fetchOptions: RequestInit = {
       body: body ? JSON.stringify(body) : undefined,
       headers: headersList,
       method
@@ -92,7 +92,7 @@ export class ITwinPlatformApiClient {
 
     const response = await fetch(`${this._iTwinPlatformApiBasePath}/${apiPath}${queryString}`, fetchOptions);
     
-    if(!response.ok)
+    if (!response.ok)
     {
       const errorResponseData = await response.json();
       try
@@ -105,7 +105,7 @@ export class ITwinPlatformApiClient {
       }
     }
 
-    if(response.headers.get('content-type') === null) {
+    if (response.headers.get('content-type') === null) {
       return;
     }
 

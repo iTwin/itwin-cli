@@ -14,14 +14,14 @@ import { CustomOptions, OptionFlag } from "@oclif/core/interfaces";
 export const customFlags = {
   extent,
   groupMembers,
-  iModelIDFlag: (config : CustomFlagConfig): OptionFlag<string, CustomOptions> => Flags.string({
+  iModelIDFlag: (config: CustomFlagConfig): OptionFlag<string, CustomOptions> => Flags.string({
     char: 'm',
     description: config.description,
     env: 'ITP_IMODEL_ID',
     helpValue: '<string>',
     required: true,
   }),
-  iTwinIDFlag: (config : CustomFlagConfig): OptionFlag<string, CustomOptions> => Flags.string({ 
+  iTwinIDFlag: (config: CustomFlagConfig): OptionFlag<string, CustomOptions> => Flags.string({ 
     char: 'i', 
     description: config.description,
     env: 'ITP_ITWIN_ID',

@@ -39,7 +39,7 @@ export async function createFile(folderId: string, displayName: string, filePath
   const fileId = completeUrl!.split('/').at(-2);
 
   // 2. Upload file
-  const { result: uploadedFile } = await runCommand<{result: string}>(`storage file upload --upload-url "${uploadUrl}" --file-path ${filePath}`);
+  const { result: uploadedFile } = await runCommand<{ result: string }>(`storage file upload --upload-url "${uploadUrl}" --file-path ${filePath}`);
 
   expect(uploadedFile).to.have.property('result', 'uploaded');
 
@@ -79,22 +79,22 @@ export async function createIModel(name: string, iTwinId: string): Promise<IMode
 }
 
 export async function deleteFile(fileId: string): Promise<void> {
-  const { result: deleteResult } = await runCommand<{result: string}>(`storage file delete --file-id ${fileId}`);
+  const { result: deleteResult } = await runCommand<{ result: string }>(`storage file delete --file-id ${fileId}`);
   expect(deleteResult).to.have.property('result', 'deleted');
 }
 
 export async function deleteFolder(folderId: string): Promise<void> {
-  const { result: deleteResult } = await runCommand<{result: string}>(`storage folder delete --folder-id ${folderId}`);
+  const { result: deleteResult } = await runCommand<{ result: string }>(`storage folder delete --folder-id ${folderId}`);
   expect(deleteResult).to.have.property('result', 'deleted');
 }
 
 export async function deleteITwin(id: string): Promise<void> {
-  const { result: deleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${id}`);
+  const { result: deleteResult } = await runCommand<{ result: string }>(`itwin delete --itwin-id ${id}`);
   expect(deleteResult).to.have.property('result', 'deleted');
 }
 
 export async function deleteIModel(id: string): Promise<void> {
-  const { result: deleteResult } = await runCommand<{result: string}>(`imodel delete --imodel-id ${id}`);
+  const { result: deleteResult } = await runCommand<{ result: string }>(`imodel delete --imodel-id ${id}`);
   expect(deleteResult).to.have.property('result', 'deleted');
 }
 
@@ -113,7 +113,7 @@ export async function getRootFolderId(iTwinId: string): Promise<string> {
  * @returns Invitation link for joining the iTwin.
  */
 export async function fetchEmailsAndGetInvitationLink(inbox: string, iTwinName: string): Promise<string> {
-  await new Promise<void>(resolve => {setTimeout(_ => resolve(), 45 * 1000);});
+  await new Promise<void>(resolve => { setTimeout(_ => resolve(), 45 * 1000); });
 
   expect(ITP_MAILINATOR_API_KEY).to.not.be.undefined;
 
@@ -143,7 +143,7 @@ export async function fetchEmailsAndGetInvitationLink(inbox: string, iTwinName: 
 }
 
 export async function nativeLoginToCli(): Promise<void> {
-  if(isNativeAuthAccessTokenCached())
+  if (isNativeAuthAccessTokenCached())
     return;
 
   const authTokenObject = {
@@ -186,7 +186,7 @@ const getNativeAuthAccessToken = async (): Promise<string> => {
 
 export const isNativeAuthAccessTokenCached = (): boolean => {
   const tokenPath = getTokenPathByOS();
-  if(fs.existsSync(tokenPath)) {
+  if (fs.existsSync(tokenPath)) {
     const tokenJson = fs.readFileSync(tokenPath, 'utf8');
     const tokenObj = JSON.parse(tokenJson);
     if (tokenObj.manuallyWritten !== undefined && new Date(tokenObj.expirationDate).getTime() > Date.now())
@@ -201,7 +201,7 @@ const getTokenPathByOS = (): string => {
   switch (os.type()) {
     case 'Linux': {
       const cachePath = `${os.homedir()}/.cache/itp`;
-      if(!fs.existsSync(cachePath))
+      if (!fs.existsSync(cachePath))
         fs.mkdirSync(cachePath, {recursive: true});
       return `${cachePath}/token.json`;
     }

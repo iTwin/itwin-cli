@@ -39,7 +39,7 @@ const tests = () => describe('update-content', () => {
   });
 
   after(async () => {
-    const { result: itwinDeleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinId}`);
+    const { result: itwinDeleteResult } = await runCommand<{ result: string }>(`itwin delete --itwin-id ${testITwinId}`);
     expect(itwinDeleteResult).to.have.property('result', 'deleted');
   });
 
@@ -54,7 +54,7 @@ const tests = () => describe('update-content', () => {
   });
 
   it('should upload a new file version', async () => {
-    const { result: uploadResult } = await runCommand<{result: string}>(`storage file upload --upload-url "${uploadUrl}" --file-path ${filePath}`);
+    const { result: uploadResult } = await runCommand<{ result: string }>(`storage file upload --upload-url "${uploadUrl}" --file-path ${filePath}`);
     expect(uploadResult?.result).to.be.equal('uploaded');
   });
 

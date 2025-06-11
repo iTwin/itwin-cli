@@ -22,7 +22,7 @@ const tests = () => describe("API Integration Tests", () => {
   });
 
   after(async () => {
-    const { result: itwinDeleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${iTwin.id}`);
+    const { result: itwinDeleteResult } = await runCommand<{ result: string }>(`itwin delete --itwin-id ${iTwin.id}`);
     expect(itwinDeleteResult).to.have.property('result', 'deleted');
   });
 

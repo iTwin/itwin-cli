@@ -19,7 +19,7 @@ export default Flags.custom<Extent>({
 
 const validationFunction = (input: Extent): string => {
   const result = extentSchema.safeParse(input);
-  if(result.error === undefined)
+  if (result.error === undefined)
     return '';
 
   return zodErrorToMessage(result.error);

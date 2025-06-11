@@ -18,7 +18,7 @@ const tests = () => describe('delete', () => {
   });
 
   it('should delete the iTwin', async () => {
-    const { result: deleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwin.id}`);
+    const { result: deleteResult } = await runCommand<{ result: string }>(`itwin delete --itwin-id ${testITwin.id}`);
     expect(deleteResult).to.have.property('result', 'deleted');
 
     const { error: errorResult } = await runCommand(`itwin info --itwin-id ${testITwin.id}`);

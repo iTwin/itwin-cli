@@ -30,7 +30,7 @@ const tests = () => describe('group', () => {
   });
 
   after(async () => {
-    const { result: deleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${iTwinId}`);
+    const { result: deleteResult } = await runCommand<{ result: string }>(`itwin delete --itwin-id ${iTwinId}`);
     expect(deleteResult).to.have.property('result', 'deleted');
   });
 

@@ -75,7 +75,7 @@ export default class ListNamedVersions extends BaseCommand {
     const client = this.getIModelClient();
     const authorization = await this.getAuthorizationCallback();
 
-    const orderBy : OrderBy<NamedVersion, NamedVersionOrderByProperty> | undefined = flags["order-by"] ? {
+    const orderBy: OrderBy<NamedVersion, NamedVersionOrderByProperty> | undefined = flags["order-by"] ? {
       operator: flags["order-by"].split(" ")[1] === "desc" ? OrderByOperator.Descending : OrderByOperator.Ascending,
       property: flags["order-by"].split(" ")[0] as NamedVersionOrderByProperty,
     } : undefined;

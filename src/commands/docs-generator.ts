@@ -33,9 +33,9 @@ export default class DocsGenerator extends BaseCommand {
           const multipleProperty = flag.type === "option" && flag.multiple ? "**Multiple:** Yes" : "";
           let type = "";
           let validValues = "";
-          if(flag.type === "option") {
-            type = `**Type:** \`${typeof flag.helpValue === 'string' ? flag.helpValue?.slice(1, -1): new Error("Not Implemented")}\``;
-            if(Array.isArray(flag.options)) {
+          if (flag.type === "option") {
+            type = `**Type:** \`${typeof flag.helpValue === 'string' ? flag.helpValue?.slice(1, -1) : new Error("Not Implemented")}\``;
+            if (Array.isArray(flag.options)) {
               validValues = `\n  **Valid Values:** \`"${flag.options.join('"`, `"')}"\``;
             }
           }
@@ -72,17 +72,17 @@ export default class DocsGenerator extends BaseCommand {
         
     examplesText = examplesText.replaceAll("<%= config.bin %>", "itp").replaceAll("<%= command.id %>", commandName).trimEnd();
 
-    const returnContent : string[] = [];
+    const returnContent: string[] = [];
 
     returnContent.push(`# itp ${commandName}`);
         
-    if(command.description) {
+    if (command.description) {
       returnContent.push(command.description);
     }
 
     returnContent.push('## Options');
         
-    if(options.length > 1) {
+    if (options.length > 1) {
       returnContent.push(options);
     }
     else {
@@ -92,8 +92,8 @@ export default class DocsGenerator extends BaseCommand {
     returnContent.push('## Examples', 
       `\`\`\`bash${examplesText}\n\`\`\``);
 
-    if(command.apiReference) {
-      if(Array.isArray(command.apiReference)) {
+    if (command.apiReference) {
+      if (Array.isArray(command.apiReference)) {
         const apiReferences = command.apiReference as ApiReference[]; 
         returnContent.push(`## ${command.apiReference[0].sectionName ?? 'API Reference'}`);
         for (const apiRef of apiReferences) {
@@ -111,13 +111,13 @@ export default class DocsGenerator extends BaseCommand {
     
   private async generateDocs(config: Config, basePath: string): Promise<void> {
     const filteredCommands = config.commands.filter(c => !c.id.includes("help") && !c.id.includes("plugins") && !c.hidden);
-    if(!filteredCommands) {
+    if (!filteredCommands) {
       return;
     }
 
     for (const command of filteredCommands) {
       this.log(`Generating docs for command: ${command.id}`);
-      if(command.customDocs) {
+      if (command.customDocs) {
         this.log(`Skipping command ${command.id} as it has custom docs`);
         continue;
       }

@@ -25,7 +25,7 @@ const tests = () => describe('view cesium-sandcastle', () => {
     const { result: filteredITwins } = await runCommand<ITwin[]>(`itwin list --name ${testITwinName}`);
     expect(filteredITwins).to.not.be.undefined;
 
-    if(filteredITwins!.length === 0) {
+    if (filteredITwins!.length === 0) {
       const testITwin = await createITwin(testITwinName, 'Thing', 'Asset');
       testITwinId = testITwin.id as string;
       const testIModel = await createIModel(testIModelName, testITwinId);
@@ -49,7 +49,7 @@ const tests = () => describe('view cesium-sandcastle', () => {
   });
 
   it('should not use terrain when no terrain is specified', async () => {
-    const { result } = await runCommand<{url: string}>(`imodel view cesium-sandcastle --imodel-id ${testIModelId}`);
+    const { result } = await runCommand<{ url: string }>(`imodel view cesium-sandcastle --imodel-id ${testIModelId}`);
     expect(result).to.not.be.undefined;
     expect(result!.url).to.not.be.undefined;
 
@@ -60,7 +60,7 @@ const tests = () => describe('view cesium-sandcastle', () => {
   });
 
   it(`should use cesium world terrain, when '--terrain cesiumWorldTerrain' is provided`, async () => {
-    const { result } = await runCommand<{url: string}>(`imodel view cesium-sandcastle --imodel-id ${testIModelId} --terrain cesiumWorldTerrain`);
+    const { result } = await runCommand<{ url: string }>(`imodel view cesium-sandcastle --imodel-id ${testIModelId} --terrain cesiumWorldTerrain`);
     expect(result).to.not.be.undefined;
     expect(result!.url).to.not.be.undefined;
 

@@ -7,7 +7,7 @@ import { ZodError, ZodIssue } from "zod";
 
 const zodErrorToMessage = (error: ZodError): string => {
   let message = "Following issues were found during schema validation:\n";
-  for(const issue of error.issues) {
+  for (const issue of error.issues) {
     message += zodIssueToErrorMessage(issue);
   }
 
@@ -16,7 +16,7 @@ const zodErrorToMessage = (error: ZodError): string => {
 
 const zodIssueToErrorMessage = (issue: ZodIssue): string => {
   const path = joinPath(issue.path);
-  switch(issue.code) {
+  switch (issue.code) {
     case "invalid_type": {
       return issue.received === 'undefined' 
         ? `\t- missing required property '${path}' of type '${issue.expected}'\n`
@@ -33,10 +33,10 @@ const zodIssueToErrorMessage = (issue: ZodIssue): string => {
   }
 };
 
-const joinPath = (path: (number|string)[]): string => {
+const joinPath = (path: (number | string)[]): string => {
   let builtPath = "";
   for (const token of path) {
-    if(typeof token === 'number') {
+    if (typeof token === 'number') {
       builtPath = builtPath.slice(0,-1);
     }
         

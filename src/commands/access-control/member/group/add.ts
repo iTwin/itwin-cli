@@ -68,7 +68,7 @@ export default class AddGroupMembers extends BaseCommand {
     for (const member of members)
       roleAssignmentCount += member.roleIds.length;
 
-    if(roleAssignmentCount > 50) {
+    if (roleAssignmentCount > 50) {
       this.error("A maximum of 50 role assignments can be performed.");
     }
 

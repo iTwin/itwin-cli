@@ -19,7 +19,7 @@ export default Flags.custom<GroupMember[]>({
 
 const validationFunction = (input: GroupMember[]): string => {
   const result = zod.array(groupMemberSchema).safeParse(input);
-  if(result.error === undefined)
+  if (result.error === undefined)
     return '';
 
   return zodErrorToMessage(result.error);

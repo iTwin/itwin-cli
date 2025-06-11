@@ -67,7 +67,7 @@ export default class CreateRepository extends BaseCommand {
       uri: flags.uri
     });
 
-    if(response.error)
+    if (response.error)
     {
       this.error(JSON.stringify(response.error, null, 2));
     }

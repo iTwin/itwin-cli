@@ -33,7 +33,7 @@ const tests = () => describe('create + upload + complete + delete', () => {
   });
 
   after(async () => {
-    const { result: itwinDeleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinId}`);
+    const { result: itwinDeleteResult } = await runCommand<{ result: string }>(`itwin delete --itwin-id ${testITwinId}`);
     expect(itwinDeleteResult).to.have.property('result', 'deleted');
   });
 
@@ -53,7 +53,7 @@ const tests = () => describe('create + upload + complete + delete', () => {
 
   it('should upload a file', async () => {
     const filePath = 'integration-tests/test.csv';
-    const { result: uploadResult } = await runCommand<{result: string}>(`storage file upload --upload-url "${uploadUrl}" --file-path ${filePath}`);
+    const { result: uploadResult } = await runCommand<{ result: string }>(`storage file upload --upload-url "${uploadUrl}" --file-path ${filePath}`);
 
     expect(uploadResult?.result).to.be.equal('uploaded');
   });

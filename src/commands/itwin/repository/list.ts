@@ -62,7 +62,7 @@ export default class ListRepositories extends BaseCommand {
       subClass: flags["sub-class"]
     });
 
-    if(response.error)
+    if (response.error)
     {
       this.error(JSON.stringify(response.error, null, 2));
     }

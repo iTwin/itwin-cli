@@ -123,7 +123,7 @@ export default class ListITwins extends BaseCommand {
       type: flags.type
     });
 
-    if(response.error)
+    if (response.error)
     {
       this.error(JSON.stringify(response.error, null, 2));
     }

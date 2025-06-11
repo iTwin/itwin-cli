@@ -64,11 +64,11 @@ export default class UpdateAccessControlGroup extends BaseCommand {
   public async run(): Promise<Group> {
     const { flags } = await this.parse(UpdateAccessControlGroup);
    
-    if(flags['ims-group'] !== undefined && flags["ims-group"].length > 50) {
+    if (flags['ims-group'] !== undefined && flags["ims-group"].length > 50) {
       this.error("A maximum of 50 ims groups can be provided.");
     }
 
-    if(flags.member !== undefined && flags.member.length > 50) {
+    if (flags.member !== undefined && flags.member.length > 50) {
       this.error("A maximum of 50 members can be provided.");
     }
 

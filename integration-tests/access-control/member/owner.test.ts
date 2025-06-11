@@ -25,7 +25,7 @@ const tests = () => {
   });
 
   after(async () => {
-    const { result: deleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${iTwinId}`);
+    const { result: deleteResult } = await runCommand<{ result: string }>(`itwin delete --itwin-id ${iTwinId}`);
     expect(deleteResult).to.have.property('result', 'deleted');
   });
 
@@ -43,7 +43,7 @@ const tests = () => {
 
     let usersInfo: GroupMember[];
     do {
-      await new Promise<void>(resolve => {setTimeout(_ => resolve(), 10 * 1000);});
+      await new Promise<void>(resolve => { setTimeout(_ => resolve(), 10 * 1000); });
       const { result: listResult } = await runCommand<GroupMember[]>(`access-control member owner list --itwin-id ${iTwinId}`);
       expect(listResult).to.not.be.undefined;
       usersInfo = listResult!;
@@ -52,7 +52,7 @@ const tests = () => {
     const joinedUser = usersInfo.find(user => user.email.toLowerCase() === emailToAdd!.toLowerCase());
     expect(joinedUser).to.not.be.undefined;
 
-    const { result: deletionResult } = await runCommand<{result: string}>(`access-control member owner delete --itwin-id ${iTwinId} --member-id ${joinedUser?.id}`);
+    const { result: deletionResult } = await runCommand<{ result: string }>(`access-control member owner delete --itwin-id ${iTwinId} --member-id ${joinedUser?.id}`);
     expect(deletionResult).to.not.be.undefined;
     expect(deletionResult).to.have.property('result', "deleted");
   }).timeout(180 * 1000);

@@ -32,11 +32,11 @@ export default class ConnectionAuth extends BaseCommand {
     let response = await client.authorizeUserForConnection();
     
     // User is already logged in, no need to check it again
-    if(response.authorizationInformation.isUserAuthorized) {
+    if (response.authorizationInformation.isUserAuthorized) {
       return this.logAndReturnResult(response.authorizationInformation);
     }
 
-    if(!response.authorizationInformation._links.authorizationUrl.href) {
+    if (!response.authorizationInformation._links.authorizationUrl.href) {
       this.error('Connection authorization for user provided empty url');
     }
 
@@ -68,7 +68,7 @@ export default class ConnectionAuth extends BaseCommand {
     {
       response = await client.authorizeUserForConnection();
       this.debug(`Current state of user connection authentication is ${response.authorizationInformation.isUserAuthorized}`);
-      await new Promise(r => {setTimeout(r, 3000 * index);});
+      await new Promise(r => { setTimeout(r, 3000 * index); });
     }
     
     server.close();

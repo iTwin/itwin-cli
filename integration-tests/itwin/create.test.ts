@@ -18,7 +18,7 @@ const tests = () => describe('create', () => {
   const testChildITwinName = `IntegrationTestITwinChild_${new Date().toISOString()}`;
   const testClass = 'Thing';
   const testSubClass = 'Asset';
-  const testGeographicLocation= 'San Francisco, CA';
+  const testGeographicLocation = 'San Francisco, CA';
   const testDataCenterLocation = 'UK South';
   const testStatus = 'Inactive';
   const testIanaTimeZone = 'America/Los_Angeles';
@@ -26,9 +26,9 @@ const tests = () => describe('create', () => {
   const testNumber = Math.random().toString(36).slice(2);
 
   after(async () => {
-    const { result: deleteResult1 } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinChildId}`);
-    const { result: deleteResult2 } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinId}`);
-    const { result: deleteResult3 } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinId2}`);
+    const { result: deleteResult1 } = await runCommand<{ result: string }>(`itwin delete --itwin-id ${testITwinChildId}`);
+    const { result: deleteResult2 } = await runCommand<{ result: string }>(`itwin delete --itwin-id ${testITwinId}`);
+    const { result: deleteResult3 } = await runCommand<{ result: string }>(`itwin delete --itwin-id ${testITwinId2}`);
 
     expect(deleteResult1).to.have.property('result', 'deleted');
     expect(deleteResult2).to.have.property('result', 'deleted');

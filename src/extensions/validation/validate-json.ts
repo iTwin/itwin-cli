@@ -12,7 +12,7 @@ export const validateJson = <T>(jsonString: string, validationFunc?: (input: T) 
     throw new Error(`'${jsonString}' is not valid serialized JSON.`);
   }
     
-  if(validationFunc === undefined)
+  if (validationFunc === undefined)
     return parsed;
 
   const validationError = validationFunc(parsed);

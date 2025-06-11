@@ -29,8 +29,8 @@ const tests = () => describe('populate', () => {
   });
 
   afterEach(async () => {
-    const { result: iModelDeleteResult } = await runCommand<{result: string}>(`imodel delete --imodel-id ${testIModelId}`);
-    const { result: iTwinDeleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinId}`);
+    const { result: iModelDeleteResult } = await runCommand<{ result: string }>(`imodel delete --imodel-id ${testIModelId}`);
+    const { result: iTwinDeleteResult } = await runCommand<{ result: string }>(`itwin delete --itwin-id ${testITwinId}`);
 
     expect(iModelDeleteResult).to.have.property('result', 'deleted');
     expect(iTwinDeleteResult).to.have.property('result', 'deleted');
@@ -69,8 +69,8 @@ const tests = () => describe('populate', () => {
 
     const {connectionId, runId} = populateResult!.summary[0];
     let { result: infoResult } = await runCommand<StorageRun>(`imodel connection run info -c ${connectionId} --connection-run-id ${runId}`);
-    while(infoResult?.state !== "Completed") {
-      await new Promise(r => {setTimeout(r, 10_000);});
+    while (infoResult?.state !== "Completed") {
+      await new Promise(r => { setTimeout(r, 10_000); });
       
       const { result } = await runCommand<StorageRun>(`imodel connection run info -c ${connectionId} --connection-run-id ${runId}`);
       infoResult = result;

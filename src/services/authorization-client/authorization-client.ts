@@ -24,9 +24,9 @@ export class AuthorizationClient {
     this._cliConfiguration = cliConfig;
   }
 
-  public async getTokenAsync() : Promise<string | undefined> {
+  public async getTokenAsync(): Promise<string | undefined> {
     const tokenInfo = this.getExistingAuthTokenInfo();
-    if(tokenInfo?.authToken && this.isExpirationDateValid(tokenInfo.expirationDate)) {
+    if (tokenInfo?.authToken && this.isExpirationDateValid(tokenInfo.expirationDate)) {
       return tokenInfo.authToken;
     }
 
@@ -35,11 +35,11 @@ export class AuthorizationClient {
     return newTokenInfo.authToken;
   }
 
-  public info() : AuthorizationInformation {
+  public info(): AuthorizationInformation {
     const existingTokenInfo = this.getExistingAuthTokenInfo();
 
     return {
-      apiUrl : this._environmentConfiguration.apiUrl,
+      apiUrl: this._environmentConfiguration.apiUrl,
       authorizationType: existingTokenInfo?.authenticationType ?? AuthorizationType.Interactive,
       clientId: this._environmentConfiguration.clientId,
       expirationDate: existingTokenInfo?.expirationDate,
@@ -47,14 +47,14 @@ export class AuthorizationClient {
     };
   }
 
-  public async login(clientId?: string, clientSecret?: string) : Promise<AuthTokenInfo> {
+  public async login(clientId?: string, clientSecret?: string): Promise<AuthTokenInfo> {
     let authType: AuthorizationType;
-    let usedToken : string;
+    let usedToken: string;
 
     const usedClientId = clientId ?? this._environmentConfiguration.clientId;
     const usedClientSecret = clientSecret ?? this._environmentConfiguration.clientSecret;
 
-    if(usedClientId && usedClientSecret) {
+    if (usedClientId && usedClientSecret) {
       usedToken = await this.getAccessTokenFromService(usedClientId, usedClientSecret, this._environmentConfiguration.issuerUrl);
       authType = AuthorizationType.Service;
     }
@@ -70,7 +70,7 @@ export class AuthorizationClient {
     const existingTokenInfo = this.getExistingAuthTokenInfo();
 
     // Login from IMS
-    if(existingTokenInfo?.authenticationType === AuthorizationType.Interactive) {
+    if (existingTokenInfo?.authenticationType === AuthorizationType.Interactive) {
       const {clientId, issuerUrl} = this._environmentConfiguration;
 
       const client = new NodeCliAuthorizationClient({
@@ -91,7 +91,7 @@ export class AuthorizationClient {
 
     // Remove token from cache
     const tokenPath = path.join(this._cliConfiguration.cacheDir, 'token.json');
-    if(fs.existsSync(tokenPath))
+    if (fs.existsSync(tokenPath))
     {
       fs.unlinkSync(tokenPath);
     }
@@ -133,7 +133,7 @@ export class AuthorizationClient {
   }
 
   private isExpirationDateValid(expirationDate: Date | undefined): boolean {
-    if(!expirationDate) {
+    if (!expirationDate) {
       return false;
     }
 
@@ -157,7 +157,7 @@ export class AuthorizationClient {
 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const expiration = new Date(parsedToken.exp! * 1000);
-    const tokenInfo : AuthTokenInfo = {
+    const tokenInfo: AuthTokenInfo = {
       authToken: fixedAccessToken,
       authenticationType,
       expirationDate: expiration

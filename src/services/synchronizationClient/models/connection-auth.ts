@@ -8,7 +8,7 @@ import { Link } from "../../general-models/links.js";
 export interface AuthInfo {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   _links: {
-    authorizationUrl : Link
+    authorizationUrl: Link
   }
   isUserAuthorized: boolean
 }

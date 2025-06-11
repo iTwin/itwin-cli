@@ -26,7 +26,7 @@ const tests = () => describe('user', () => {
   });
 
   after(async () => {
-    const { result: deleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${iTwinId}`);
+    const { result: deleteResult } = await runCommand<{ result: string }>(`itwin delete --itwin-id ${iTwinId}`);
     expect(deleteResult).to.have.property('result', 'deleted');
   });
 
@@ -53,7 +53,7 @@ const tests = () => describe('user', () => {
     expect(joinedUser?.roles).to.have.lengthOf(1);
     expect(joinedUser?.roles[0].id).to.be.equal(newRole!.id);
 
-    const { result: deleteResult } = await runCommand<{result: string}>(`access-control member user delete --itwin-id ${iTwinId} --member-id ${joinedUser?.id}`);
+    const { result: deleteResult } = await runCommand<{ result: string }>(`access-control member user delete --itwin-id ${iTwinId} --member-id ${joinedUser?.id}`);
     expect(deleteResult).to.not.be.undefined;
     expect(deleteResult).to.have.property('result', "deleted");
   });

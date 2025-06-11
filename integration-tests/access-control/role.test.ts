@@ -21,7 +21,7 @@ const tests = () => {
   });
 
   after(async () => {
-    const { result: deleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${iTwinId}`);
+    const { result: deleteResult } = await runCommand<{ result: string }>(`itwin delete --itwin-id ${iTwinId}`);
     expect(deleteResult).to.have.property('result', 'deleted');
   });
 
@@ -76,7 +76,7 @@ const tests = () => {
     expect(newRole).to.not.be.undefined;
     expect(newRole!.id).to.not.be.undefined;
 
-    const { result: deleteResult } = await runCommand<{result: string}>(`access-control role delete --itwin-id ${iTwinId} --role-id ${newRole!.id}`);
+    const { result: deleteResult } = await runCommand<{ result: string }>(`access-control role delete --itwin-id ${iTwinId} --role-id ${newRole!.id}`);
     expect(deleteResult).to.have.property('result', 'deleted');
   });
 };    

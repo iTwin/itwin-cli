@@ -9,11 +9,11 @@ import { ChangesetComparisonResponse, ChangesetsResponse, ChangeTrackingRequest,
 export class ChangedElementsApiClient {
   private _iTwinPlatformApiClient: ITwinPlatformApiClient;
 
-  constructor(client : ITwinPlatformApiClient) {
+  constructor(client: ITwinPlatformApiClient) {
     this._iTwinPlatformApiClient = client;
   }
 
-  public async changeTracking(request: ChangeTrackingRequest) : Promise<void> {
+  public async changeTracking(request: ChangeTrackingRequest): Promise<void> {
     await this._iTwinPlatformApiClient.sendRequestNoResponse({
       apiPath: 'changedelements/tracking',
       body: request,
@@ -21,7 +21,7 @@ export class ChangedElementsApiClient {
     });
   }
 
-  public async getComparison(iTwinId: string, iModelId: string, startChangesetId: string, endChangesetId: string) : Promise<ChangesetComparisonResponse> {
+  public async getComparison(iTwinId: string, iModelId: string, startChangesetId: string, endChangesetId: string): Promise<ChangesetComparisonResponse> {
     return this._iTwinPlatformApiClient.sendRequest({
       apiPath: 'changedelements/comparison',
       method: 'GET',
@@ -46,13 +46,13 @@ export class ChangedElementsApiClient {
     });
   }
 
-  public async getTracking(iModelId: string, iTwinId: string) : Promise<TrackingResponse> {
+  public async getTracking(iModelId: string, iTwinId: string): Promise<TrackingResponse> {
     return this._iTwinPlatformApiClient.sendRequest({
       apiPath: 'changedelements/tracking',
       method: 'GET',
       query: [
         {
-          key:'iModelId',
+          key: 'iModelId',
           value: iModelId
         },
         {
@@ -63,13 +63,13 @@ export class ChangedElementsApiClient {
     });
   }
 
-  public async listChangesets(iModelId: string, iTwinId: string, top?: number, skip?: number) : Promise<ChangesetsResponse> {
+  public async listChangesets(iModelId: string, iTwinId: string, top?: number, skip?: number): Promise<ChangesetsResponse> {
     return this._iTwinPlatformApiClient.sendRequest({
       apiPath: 'changedelements/changesets',
       method: 'GET',
       query: [
         {
-          key:'iModelId',
+          key: 'iModelId',
           value: iModelId
         },
         {

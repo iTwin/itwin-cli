@@ -37,7 +37,7 @@ export default class ITwinInfo extends BaseCommand {
   
     const response = await client.getAsync(accessToken, flags["itwin-id"], 'representation');
 
-    if(response.error)
+    if (response.error)
     {
       this.error(JSON.stringify(response.error, null, 2));
     }

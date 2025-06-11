@@ -33,7 +33,7 @@ const tests = () => describe('info', () => {
 
   it('should return an error for too many user IDs', async () => {
     let command = "user info";
-    for(let i = 0; i < 1001; i++) {
+    for (let i = 0; i < 1001; i++) {
       command += ` --user-id ${crypto.randomUUID()}`;
     }
 

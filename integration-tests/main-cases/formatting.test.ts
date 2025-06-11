@@ -7,7 +7,7 @@ import { Command, Config } from "@oclif/core";
 import { expect } from "chai";
 
 describe('Command formatting tests', async () => {
-  let allCommands : CommandWithFlags[] = [];
+  let allCommands: CommandWithFlags[] = [];
 
   const commandToExcludeFromTests = [
     "help",
@@ -41,7 +41,7 @@ describe('Command formatting tests', async () => {
       for (const [flagName, flag] of command.flags) {
         expect(flag.description, `Flag '${flagName}' in command '${command.cmd.id}' is missing a description`).to.be.a('string').and.not.be.empty;
                 
-        if(flag.type === 'option') {
+        if (flag.type === 'option') {
           expect(flag, `Flag '${flagName}' in command '${command.cmd.id}' is missing a valid 'helpValue'`).to.have.property('helpValue').to.be.a('string').and.not.be.empty;
         }
       }

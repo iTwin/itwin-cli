@@ -27,7 +27,7 @@ const tests = () => describe('root-folder', () => {
   });
 
   after(async () => {
-    const { result: itwinDeleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwin.id}`);
+    const { result: itwinDeleteResult } = await runCommand<{ result: string }>(`itwin delete --itwin-id ${testITwin.id}`);
     expect(itwinDeleteResult).to.have.property('result', 'deleted');
   });
 

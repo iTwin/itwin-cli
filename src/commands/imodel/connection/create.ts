@@ -85,9 +85,9 @@ export default class CreateConnection extends BaseCommand {
 
     const client = await this.getSynchronizationClient();
 
-    const sourceFiles : StorageFileCreate[] = [];
+    const sourceFiles: StorageFileCreate[] = [];
 
-    if(flags["connector-type"].length !== flags["file-id"].length && flags["connector-type"].length !== 1) {
+    if (flags["connector-type"].length !== flags["file-id"].length && flags["connector-type"].length !== 1) {
       this.error("When multiple connector-type options are provided, their amount must match file-id option amount. Alternatively, you can provide a single connector-type option, which will then be applied to all file-id options.");
     }
 
@@ -102,8 +102,8 @@ export default class CreateConnection extends BaseCommand {
 
     const authInfo = await this.runCommand<AuthorizationInformation>('auth:info',[]);
     let authType = flags["authentication-type"] as AuthenticationType;
-    if(authType === undefined) {
-      authType = authInfo.authorizationType === AuthorizationType.Service ? AuthenticationType.SERVICE: AuthenticationType.USER;
+    if (authType === undefined) {
+      authType = authInfo.authorizationType === AuthorizationType.Service ? AuthenticationType.SERVICE : AuthenticationType.USER;
     }
 
     const response = await client.createStorageConnection({

@@ -40,7 +40,7 @@ const tests = () => {
   });
 
   after(async () => {
-    const { result: deleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${iTwinId}`);
+    const { result: deleteResult } = await runCommand<{ result: string }>(`itwin delete --itwin-id ${iTwinId}`);
     expect(deleteResult).to.have.property('result', 'deleted');
   });
 
@@ -65,21 +65,21 @@ const tests = () => {
 
     let usersInfo: Member[];
     do {             
-      await new Promise<void>(resolve => {setTimeout(_ => resolve(), 10 * 1000);});    
+      await new Promise<void>(resolve => { setTimeout(_ => resolve(), 10 * 1000); });    
       
       const listResult = await runCommand<Member[]>(`access-control member user list --itwin-id ${iTwinId}`);
       expect(listResult.result).to.not.be.undefined;
       usersInfo = listResult.result!;
     } while (usersInfo.length !== 2);
 
-    await new Promise<void>(resolve => {setTimeout(_ => resolve(), 30 * 1000);});
+    await new Promise<void>(resolve => { setTimeout(_ => resolve(), 30 * 1000); });
 
     const joinedUser = usersInfo.find(user => user.email.toLowerCase() === emailToAdd!.toLowerCase());
     expect(joinedUser).to.not.be.undefined;
     expect(joinedUser?.roles).to.have.lengthOf(1);
     expect(joinedUser?.roles[0].id).to.be.equal(newRole!.id);
 
-    const { result: deleteResult } = await runCommand<{result: string}>(`access-control member user delete --itwin-id ${iTwinId} --member-id ${joinedUser?.id}`);
+    const { result: deleteResult } = await runCommand<{ result: string }>(`access-control member user delete --itwin-id ${iTwinId} --member-id ${joinedUser?.id}`);
     expect(deleteResult).to.not.be.undefined;
     expect(deleteResult).to.have.property('result', "deleted");
   }).timeout(180 * 1000);
@@ -269,8 +269,8 @@ const tests = () => {
   });
 
   it('Should fail to add iTwin user members, when there are too many role assignments', async () => {
-    const members: {email: string, roleIds:string[]}[] = [];
-    for(let i = 0; i < 11; i++) {
+    const members: { email: string, roleIds: string[] }[] = [];
+    for (let i = 0; i < 11; i++) {
       members.push({
         email: `email1${i}@example.com`,
         roleIds: [
@@ -296,7 +296,7 @@ const tests = () => {
     expect(usersInfo!).to.have.lengthOf(1);
 
     let command = `access-control member user update --itwin-id ${iTwinId} --member-id ${usersInfo![0].id}`;
-    for(let i = 0; i < 51; i++)
+    for (let i = 0; i < 51; i++)
       command += ` --role-id role${i}`;
 
     const result = await runCommand<MembersResponse>(command);

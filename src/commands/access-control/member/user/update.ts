@@ -45,7 +45,7 @@ export default class UpdateUserMember extends BaseCommand {
   public async run(): Promise<Member> {
     const { flags } = await this.parse(UpdateUserMember);
   
-    if(flags['role-id'] !== undefined && flags["role-id"].length > 50) {
+    if (flags['role-id'] !== undefined && flags["role-id"].length > 50) {
       this.error("A maximum of 50 roles can be assigned.");
     }
 

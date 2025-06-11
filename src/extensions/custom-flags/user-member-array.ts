@@ -19,7 +19,7 @@ export default Flags.custom<UserMember[]>({
 
 const validationFunction = (input: UserMember[]): string => {
   const result = zod.array(userMemberSchema).safeParse(input);
-  if(result.error === undefined)
+  if (result.error === undefined)
     return '';
 
   return zodErrorToMessage(result.error);

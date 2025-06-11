@@ -74,14 +74,14 @@ export default abstract class BaseCommand extends Command {
     const client = this.getAuthorizationClient();
 
     const token = await client.getTokenAsync();
-    if(!token) {
+    if (!token) {
       this.error('User token was not found. Make sure you are logged in using `itp auth login`');
     }
 
     return token;
   }
 
-  protected async getAuthorizationCallback(accessToken?: string) : Promise<AuthorizationCallback> {
+  protected async getAuthorizationCallback(accessToken?: string): Promise<AuthorizationCallback> {
     const parts = (accessToken ?? await this.getAccessToken()).split(" ");
 
     return async () => Promise.resolve<Authorization>({
@@ -103,42 +103,42 @@ export default abstract class BaseCommand extends Command {
     return new ChangedElementsApiClient(await this.getITwinApiClient());
   }
 
-  protected getConfig() : Configuration {
+  protected getConfig(): Configuration {
     const configPath = path.join(this.config.configDir, "config.json");
 
-    let config : Configuration = {
+    let config: Configuration = {
       apiUrl: 'https://api.bentley.com',
       clientId: 'native-QJi5VlgxoujsCRwcGHMUtLGMZ',
       clientSecret: undefined,
       issuerUrl: 'https://ims.bentley.com/'
     };
     
-    if(fs.existsSync(configPath))
+    if (fs.existsSync(configPath))
     {
       const file = fs.readFileSync(configPath, 'utf8');
       config = JSON.parse(file);
     }
 
-    if(process.env.ITP_SERVICE_CLIENT_ID) {
+    if (process.env.ITP_SERVICE_CLIENT_ID) {
       config.clientId = process.env.ITP_SERVICE_CLIENT_ID;
     }
 
-    if(process.env.ITP_SERVICE_CLIENT_SECRET) {
+    if (process.env.ITP_SERVICE_CLIENT_SECRET) {
       config.clientSecret = process.env.ITP_SERVICE_CLIENT_SECRET;
     }
 
-    if(process.env.ITP_ISSUER_URL) {
+    if (process.env.ITP_ISSUER_URL) {
       config.issuerUrl = process.env.ITP_ISSUER_URL;
     }
 
-    if(process.env.ITP_API_URL) {
+    if (process.env.ITP_API_URL) {
       config.apiUrl = process.env.ITP_API_URL;
     }
     
     return config;
   }
 
-  protected getContext() : UserContext | undefined {
+  protected getContext(): UserContext | undefined {
     const contextPath = `${this.config.cacheDir  }/context.json`;
     if (!fs.existsSync(contextPath)) {
       return;
@@ -148,7 +148,7 @@ export default abstract class BaseCommand extends Command {
       const contextFile = fs.readFileSync(contextPath, 'utf8');
       const context = JSON.parse(contextFile) as UserContext;
       
-      if(!context.iModelId && !context.iTwinId) {
+      if (!context.iModelId && !context.iTwinId) {
         return undefined;
       }
 
@@ -159,7 +159,7 @@ export default abstract class BaseCommand extends Command {
     }
   }
 
-  protected getIModelClient() : IModelsClient {
+  protected getIModelClient(): IModelsClient {
     const baseUrl = `${this.getBaseApiUrl()}/imodels`;
 
     return new IModelsClient({
@@ -169,7 +169,7 @@ export default abstract class BaseCommand extends Command {
     });
   }
 
-  protected getIModelId() : string | undefined {
+  protected getIModelId(): string | undefined {
     const context = this.getContext();
 
     return context?.iModelId;
@@ -186,7 +186,7 @@ export default abstract class BaseCommand extends Command {
     return new ITwinPlatformApiClient(this.getBaseApiUrl(), token);
   }
 
-  protected getITwinId() : string | undefined {
+  protected getITwinId(): string | undefined {
     const context = this.getContext();
 
     return context?.iTwinId;
@@ -204,8 +204,8 @@ export default abstract class BaseCommand extends Command {
     return new UserApiClient(await this.getITwinApiClient());
   }
 
-  protected logAndReturnResult<T>(result: T) : T  {
-    if(this.argv.includes('--silent') || this.argv.includes('-s')) {
+  protected logAndReturnResult<T>(result: T): T  {
+    if (this.argv.includes('--silent') || this.argv.includes('-s')) {
       return result;
     } 
     
@@ -219,7 +219,7 @@ export default abstract class BaseCommand extends Command {
   }
 
   protected logTable<T>(data: T): void {
-    if(Array.isArray(data))
+    if (Array.isArray(data))
     {
       const table = new Table();
       table.addRows(data);
@@ -241,7 +241,7 @@ export default abstract class BaseCommand extends Command {
     options?: Input<F, B, A>,
     argv?: string[]
   ): Promise<ParserOutput<F, B, A>> {
-    if(options?.flags) {
+    if (options?.flags) {
       const context = this.getContext();
       
       if (options.flags['itwin-id'] && !this.argv.includes('--itwin-id') && !this.argv.includes('-i') && context?.iTwinId) {
@@ -265,7 +265,7 @@ export default abstract class BaseCommand extends Command {
     return super.parse(options, argv);
   }
 
-  protected async runCommand<T>(command: string, args: string[]) : Promise<T> {
+  protected async runCommand<T>(command: string, args: string[]): Promise<T> {
     const mergedArgs = [...args, '--silent'];
     return this.config.runCommand<T>(command, mergedArgs);
   }

@@ -12,9 +12,9 @@ import {fileURLToPath} from 'node:url';
  * @param meta `import.meta` object of the current file.
  * @returns `true`, if the current file is not an import, otherwise `false`
  */
-function isMainModule(meta: {url: string}): boolean {
+function isMainModule(meta: { url: string }): boolean {
   for (const arg of process.argv) {
-    if(arg.match(/integration-tests(\/|\\).*\.test\.ts/) === null) {
+    if (arg.match(/integration-tests(\/|\\).*\.test\.ts/) === null) {
       continue;
     }
 
@@ -32,7 +32,7 @@ function isMainModule(meta: {url: string}): boolean {
       .replaceAll("**", ".*?")
       .replaceAll("*", ".*?");
         
-    if(currentFilePath.match(mainFilePathRegex) !== null)
+    if (currentFilePath.match(mainFilePathRegex) !== null)
       return true;
   }
 
@@ -44,7 +44,7 @@ function isMainModule(meta: {url: string}): boolean {
  * @param meta Provided `import.meta` object.
  * @param testSuite Test suite that should be executed.
  */
-export default function runSuiteIfMainModule(meta: {url: string}, testSuite: () => Mocha.Suite): void {
+export default function runSuiteIfMainModule(meta: { url: string }, testSuite: () => Mocha.Suite): void {
   if (isMainModule(meta)) {
     testSuite();
   }

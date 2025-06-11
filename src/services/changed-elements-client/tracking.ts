@@ -12,7 +12,7 @@ export interface ChangeTrackingRequest {
 }
 
 export interface TrackingResponse {
-  enabled : boolean
+  enabled: boolean
 }
 
 export interface ChangesetsResponse { 

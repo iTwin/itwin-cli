@@ -48,7 +48,7 @@ export default class ChangesetInfo extends BaseCommand {
     const client = this.getIModelClient();
     const authorization = await this.getAuthorizationCallback();
   
-    if(flags["changeset-id"]) {
+    if (flags["changeset-id"]) {
       const changesetInfo = await client.changesets.getSingle({
         authorization,
         changesetId: flags["changeset-id"],
@@ -58,7 +58,7 @@ export default class ChangesetInfo extends BaseCommand {
       return this.logAndReturnResult(changesetInfo);
     } 
 
-    if(flags["changeset-index"]) {
+    if (flags["changeset-index"]) {
       const changesetInfo = await client.changesets.getSingle({
         authorization,
         changesetIndex: flags["changeset-index"],

@@ -21,7 +21,19 @@ export default tseslint.config(
         {
           "allowedNames": ["tests", "sharedQuickUseCasesParallel"]
         }
-      ]
+      ],
+      '@stylistic/keyword-spacing': ['error'],
+      '@stylistic/key-spacing': ['error'],
+      '@stylistic/space-infix-ops': ['error'],
+      '@stylistic/arrow-spacing': ['error'],
+      '@stylistic/type-generic-spacing': ['error'],
+      '@stylistic/type-annotation-spacing': ['error'],
+      '@stylistic/switch-colon-spacing': ['error'],
+      '@stylistic/rest-spread-spacing': ['error'],
+      '@stylistic/block-spacing': ['error'],
+      '@stylistic/semi-spacing': ['error'],
+      '@stylistic/space-unary-ops': ['error'],
+      '@stylistic/space-before-blocks': ['error'],
     },
     languageOptions: {
       parser: tseslint.parser,

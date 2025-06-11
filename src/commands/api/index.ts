@@ -11,7 +11,7 @@ import { customFlags } from "../../extensions/custom-flags.js";
 import { Query } from "../../services/iTwin-api-client.js";
 
 export default class ApiRequest extends BaseCommand {
-  public static apiReference : ApiReference = {
+  public static apiReference: ApiReference = {
     link: "https://developer.bentley.com/apis/",
     name: "ITwin Platform APIs docs",
     sectionName: "APIs Docs Reference",

@@ -75,7 +75,7 @@ export default class ListChangesets extends BaseCommand {
     const client = this.getIModelClient();
     const authorization = await this.getAuthorizationCallback();
   
-    const orderBy: OrderBy<Changeset, ChangesetOrderByProperty> | undefined= flags["order-by"] ? {
+    const orderBy: OrderBy<Changeset, ChangesetOrderByProperty> | undefined = flags["order-by"] ? {
       operator: flags["order-by"] as OrderByOperator,
       property: ChangesetOrderByProperty.Index
     } : undefined;
@@ -94,7 +94,7 @@ export default class ListChangesets extends BaseCommand {
       urlParams
     });
 
-    const result : Changeset[] = await (flags.top ? take(changesetList, flags.top) : toArray(changesetList));
+    const result: Changeset[] = await (flags.top ? take(changesetList, flags.top) : toArray(changesetList));
 
     return this.logAndReturnResult(result);
   }

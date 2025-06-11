@@ -16,14 +16,14 @@ export class StorageApiClient {
     this._iTwinPlatformApiClient = client;
   }
 
-  public async completeFileUpload(fileId: string) : Promise<FileResponse> {
+  public async completeFileUpload(fileId: string): Promise<FileResponse> {
     return this._iTwinPlatformApiClient.sendRequest({
       apiPath: `storage/files/${fileId}/complete`,
       method: "POST"
     });
   }
 
-  public async createFile(folderId: string, displayName: string, description?: string) : Promise<FileUpload> {
+  public async createFile(folderId: string, displayName: string, description?: string): Promise<FileUpload> {
     return this._iTwinPlatformApiClient.sendRequest({
       apiPath: `storage/folders/${folderId}/files`,
       body: {
@@ -91,7 +91,7 @@ export class StorageApiClient {
     });
   }
 
-  public async getTopLevelFoldersAndFiles(iTwinId: string, top?: number, skip?: number) : Promise<ItemsWithFolderLink> {
+  public async getTopLevelFoldersAndFiles(iTwinId: string, top?: number, skip?: number): Promise<ItemsWithFolderLink> {
     return this._iTwinPlatformApiClient.sendRequest({
       apiPath: `storage/`,
       headers: { accept: "application/vnd.bentley.itwin-platform.v1+json" },
@@ -113,7 +113,7 @@ export class StorageApiClient {
     });
   }
 
-  public async updateFile(fileId: string, displayName?: string, description?: string) : Promise<FileResponse> {
+  public async updateFile(fileId: string, displayName?: string, description?: string): Promise<FileResponse> {
     return this._iTwinPlatformApiClient.sendRequest({
       apiPath: `storage/files/${fileId}`,
       body: {
@@ -124,7 +124,7 @@ export class StorageApiClient {
     });
   }
 
-  public async updateFileContent(fileId: string) : Promise<FileUpload> {
+  public async updateFileContent(fileId: string): Promise<FileUpload> {
     return this._iTwinPlatformApiClient.sendRequest({
       apiPath: `storage/files/${fileId}/updatecontent`,
       method: "POST"

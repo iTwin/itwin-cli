@@ -28,15 +28,15 @@ const tests = () => describe('run', () => {
     const testFile = await createFile(rootFolderId, 'ExtonCampus.dgn', 'examples/datasets/ExtonCampus.dgn');
     testFileId = testFile.id as string;
     
-    const authenticationType = isNativeAuthAccessTokenCached() ? 'User': 'Service';
+    const authenticationType = isNativeAuthAccessTokenCached() ? 'User' : 'Service';
     const { result: createdConnection} = await runCommand<StorageConnection>(`imodel connection create -m ${testIModelId} -f ${testFileId} --connector-type MSTN -n TestConnection --authentication-type ${authenticationType}`);
     expect(createdConnection).to.not.be.undefined;
     connectionId = createdConnection!.id!;
   });
 
   after(async () => {
-    const { result: imodelDeleteResult } = await runCommand<{result: string}>(`imodel delete --imodel-id ${testIModelId}`);
-    const { result: itwinDeleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinId}`);
+    const { result: imodelDeleteResult } = await runCommand<{ result: string }>(`imodel delete --imodel-id ${testIModelId}`);
+    const { result: itwinDeleteResult } = await runCommand<{ result: string }>(`itwin delete --itwin-id ${testITwinId}`);
 
     expect(imodelDeleteResult).to.have.property('result', 'deleted');
     expect(itwinDeleteResult).to.have.property('result', 'deleted');
@@ -53,8 +53,8 @@ const tests = () => describe('run', () => {
     
     let { result: infoResult } = await runCommand<StorageRun>(`imodel connection run info -c ${connectionId} --connection-run-id ${listResult?.runs[0].id}`);
 
-    while(infoResult?.state !== "Completed") {
-      await new Promise(r => {setTimeout(r, 10_000);});
+    while (infoResult?.state !== "Completed") {
+      await new Promise(r => { setTimeout(r, 10_000); });
       
       const { result } = await runCommand<StorageRun>(`imodel connection run info -c ${connectionId} --connection-run-id ${listResult?.runs[0].id}`);
       infoResult = result;

@@ -34,8 +34,8 @@ const tests = () => describe('create', () => {
   });
 
   after(async () => {
-    const { result: imodelDeleteResult } = await runCommand<{result: string}>(`imodel delete --imodel-id ${testIModelId}`);
-    const { result: itwinDeleteResult } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwinId}`);
+    const { result: imodelDeleteResult } = await runCommand<{ result: string }>(`imodel delete --imodel-id ${testIModelId}`);
+    const { result: itwinDeleteResult } = await runCommand<{ result: string }>(`itwin delete --itwin-id ${testITwinId}`);
 
     expect(imodelDeleteResult).to.have.property('result', 'deleted');
     expect(itwinDeleteResult).to.have.property('result', 'deleted');
@@ -54,7 +54,7 @@ const tests = () => describe('create', () => {
     expect(listResult!.some((sourceFile) => sourceFile.storageFileId === testFileId1 && sourceFile.connectorType === 'MSTN')).to.be.true;
     expect(listResult!.some((sourceFile) => sourceFile.storageFileId === testFileId3 && sourceFile.connectorType === 'SPPID')).to.be.true;
 
-    const { result } = await runCommand<{result: string}>(`imodel connection delete --connection-id ${createdConnection!.id}`);
+    const { result } = await runCommand<{ result: string }>(`imodel connection delete --connection-id ${createdConnection!.id}`);
     expect(result).to.have.property('result', 'deleted');
   });
 
@@ -71,7 +71,7 @@ const tests = () => describe('create', () => {
     expect(listResult!.some((sourceFile) => sourceFile.storageFileId === testFileId1 && sourceFile.connectorType === 'MSTN')).to.be.true;
     expect(listResult!.some((sourceFile) => sourceFile.storageFileId === testFileId2 && sourceFile.connectorType === 'MSTN')).to.be.true;
 
-    const { result: deleteResult } = await runCommand<{result: string}>(`imodel connection delete --connection-id ${createdConnection!.id}`);
+    const { result: deleteResult } = await runCommand<{ result: string }>(`imodel connection delete --connection-id ${createdConnection!.id}`);
     expect(deleteResult).to.have.property('result', 'deleted');
   });
 

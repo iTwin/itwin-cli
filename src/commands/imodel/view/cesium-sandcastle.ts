@@ -81,7 +81,7 @@ export default class CesiumSandcastle extends BaseCommand {
     return created.export;
   }
 
-  private async getExports(iModelId: string) : Promise<ExportInfo[]> {
+  private async getExports(iModelId: string): Promise<ExportInfo[]> {
     const exportArgs = [
       "--method", "GET", 
       "--path", "mesh-export/", 
@@ -111,12 +111,12 @@ export default class CesiumSandcastle extends BaseCommand {
       existingExports = await this.getExports(iModelId);
 
       const foundExport = existingExports.find((exp) => exp.id === newExport.id);
-      if(foundExport === undefined)
+      if (foundExport === undefined)
         this.error("Export creation has failed");
 
       newExport = foundExport;
        
-      await new Promise((resolve) => {setTimeout(resolve, 5000);});
+      await new Promise((resolve) => { setTimeout(resolve, 5000); });
     }
     
     this.log(`Export completed successfully`);
@@ -136,10 +136,10 @@ export default class CesiumSandcastle extends BaseCommand {
       changesetId = existingChangesets[0].id;
     }
 
-    const exportInfo : ExportInfo = await this.getOrCreateExport(flags["imodel-id"], changesetId);      
+    const exportInfo: ExportInfo = await this.getOrCreateExport(flags["imodel-id"], changesetId);      
     
     this.log(`Extracting tileset URL from export info`);
-    const tilesetUrl : string = extractTileSetUrl(exportInfo);
+    const tilesetUrl: string = extractTileSetUrl(exportInfo);
     
     const data = [
       jsData(tilesetUrl, flags.terrain),
@@ -191,7 +191,7 @@ interface ExportRequest {
 }
 
 function extractTileSetUrl(exportInfo: ExportInfo): string {
-  if(exportInfo._links.mesh.href === undefined) {
+  if (exportInfo._links.mesh.href === undefined) {
     throw new Error(`No tileset url found for export info id: ${exportInfo.id}`);
   }
 
@@ -199,7 +199,7 @@ function extractTileSetUrl(exportInfo: ExportInfo): string {
   return `${urlParts[0]  }/tileset.json?${  urlParts[1]}`;
 }
 
-function makeCompressedBase64String(data: string[]) : string {
+function makeCompressedBase64String(data: string[]): string {
   let jsonString = JSON.stringify(data);
   jsonString = jsonString.slice(2, 2 + jsonString.length - 4);
   let base64String = Buffer.from(
@@ -210,7 +210,7 @@ function makeCompressedBase64String(data: string[]) : string {
   return base64String;
 }
 
-function htmlData() : string {
+function htmlData(): string {
   return `
 <style>
 @import url(../templates/bucket.css);
@@ -220,9 +220,9 @@ function htmlData() : string {
 `;
 }
 
-function jsData(tilesetUrl: string, terrain?: string) : string {
+function jsData(tilesetUrl: string, terrain?: string): string {
   let viewerParams = "";
-  if(terrain === 'cesiumWorldTerrain') {
+  if (terrain === 'cesiumWorldTerrain') {
     viewerParams += "terrain: Cesium.Terrain.fromWorldTerrain(),";
   }
 

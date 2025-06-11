@@ -102,7 +102,7 @@ export class SynchronizationApiClient {
     });
   }
 
-  public async getStorageConnectionRun(connectionId: string, runId: string) : Promise<StorageRunResponse> {
+  public async getStorageConnectionRun(connectionId: string, runId: string): Promise<StorageRunResponse> {
     return this._iTwinPlatformApiClient.sendRequest({
       apiPath: `synchronization/imodels/storageconnections/${connectionId}/runs/${runId}`,
       method: "GET"

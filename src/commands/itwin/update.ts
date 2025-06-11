@@ -75,7 +75,7 @@ export default class UpdateCommand extends BaseCommand {
   public async run(): Promise<ITwin | undefined> {
     const { flags } = await this.parse(UpdateCommand);
   
-    const iTwinUpdate : ITwin = {
+    const iTwinUpdate: ITwin = {
       displayName: flags.name,
       geographicLocation: flags["geographic-location"],
       ianaTimeZone: flags["iana-time-zone"],   
@@ -90,7 +90,7 @@ export default class UpdateCommand extends BaseCommand {
   
     const response = await client.updateiTwin(accessToken, flags["itwin-id"], iTwinUpdate);
 
-    if(response.error)
+    if (response.error)
     {
       this.error(JSON.stringify(response.error, null, 2));
     }

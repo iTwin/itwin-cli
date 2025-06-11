@@ -24,9 +24,9 @@ const tests = () => describe('list', () => {
   });
 
   after(async () => {
-    const { result: deleteResult1 } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwin1Child.id}`);
-    const { result: deleteResult2 } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwin1.id}`);
-    const { result: deleteResult3 } = await runCommand<{result: string}>(`itwin delete --itwin-id ${testITwin2.id}`);
+    const { result: deleteResult1 } = await runCommand<{ result: string }>(`itwin delete --itwin-id ${testITwin1Child.id}`);
+    const { result: deleteResult2 } = await runCommand<{ result: string }>(`itwin delete --itwin-id ${testITwin1.id}`);
+    const { result: deleteResult3 } = await runCommand<{ result: string }>(`itwin delete --itwin-id ${testITwin2.id}`);
 
     expect(deleteResult1).to.have.property('result', 'deleted');
     expect(deleteResult2).to.have.property('result', 'deleted');

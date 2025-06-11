@@ -25,13 +25,13 @@ const tests = () => describe('changesets + comparison', () => {
     const { result: filteredITwins } = await runCommand<ITwin[]>(`itwin list --name ${testITwinName}`);
     expect(filteredITwins).to.not.be.undefined;
 
-    if(filteredITwins!.length === 0) {
+    if (filteredITwins!.length === 0) {
       const testITwin = await createITwin(testITwinName, 'Thing', 'Asset');
       testITwinId = testITwin.id as string;
       const testIModel = await createIModel(testIModelName, testITwinId);
       testIModelId = testIModel.id;
 
-      await runCommand<{result: string}>(`changed-elements enable --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
+      await runCommand<{ result: string }>(`changed-elements enable --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
 
       const rootFolderId = await getRootFolderId(testITwinId);
       await createFile(rootFolderId, testFileName, testFilePath);
