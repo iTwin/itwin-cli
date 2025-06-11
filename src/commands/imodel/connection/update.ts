@@ -8,6 +8,7 @@ import { Flags } from "@oclif/core";
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { AuthenticationType } from "../../../services/synchronizationClient/models/authentication-type.js";
+import { StorageConnection } from "../../../services/synchronizationClient/models/storage-connection.js";
 
 export default class UpdateStorageConnection extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -49,7 +50,7 @@ export default class UpdateStorageConnection extends BaseCommand {
     }),
   };
   
-  public async run() {
+  public async run(): Promise<StorageConnection | undefined> {
     const { flags } = await this.parse(UpdateStorageConnection);
   
     const client = await this.getSynchronizationClient();

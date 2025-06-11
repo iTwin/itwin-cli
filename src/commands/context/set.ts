@@ -8,6 +8,7 @@ import { ITwin } from "@itwin/itwins-client";
 import { Flags } from "@oclif/core";
 
 import BaseCommand from "../../extensions/base-command.js";
+import { UserContext } from "../../services/general-models/user-context.js";
 
 export default class SetContext extends BaseCommand {
   public static description = "Set a new cached context. This works by saving iModel and/or iTwin IDs to a file in CLI cache directory.\nNOTE: CLI cache directory can usually be found at: `%LOCALAPPDATA%/itp` on windows, `~/.cache/itp` on UNIX and `~/Library/Caches/itp` on macOS.\nNOTE2: CLI cache directory can be overriden by setting `XDG_CACHE_HOME` environment variable, which is useful in case there is a need to use context in multiple concurrent workflows.";
@@ -43,7 +44,7 @@ export default class SetContext extends BaseCommand {
     }),
   };
 
-  public async run() {
+  public async run(): Promise<UserContext> {
     const { flags } = await this.parseWithoutContext(SetContext);
     const iModelId = flags["imodel-id"];
     let iTwinId = flags["itwin-id"];

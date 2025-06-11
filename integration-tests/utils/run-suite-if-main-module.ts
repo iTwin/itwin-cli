@@ -12,7 +12,7 @@ import {fileURLToPath} from 'node:url';
  * @param meta `import.meta` object of the current file.
  * @returns `true`, if the current file is not an import, otherwise `false`
  */
-function isMainModule(meta: {url: string}) {
+function isMainModule(meta: {url: string}): boolean {
   for (const arg of process.argv) {
     if(arg.match(/integration-tests(\/|\\).*\.test\.ts/) === null) {
       continue;

@@ -109,7 +109,7 @@ export default class DocsGenerator extends BaseCommand {
     return returnContent.join("\n\n");
   }
     
-  private async generateDocs(config: Config, basePath: string) {
+  private async generateDocs(config: Config, basePath: string): Promise<void> {
     const filteredCommands = config.commands.filter(c => !c.id.includes("help") && !c.id.includes("plugins") && !c.hidden);
     if(!filteredCommands) {
       return;
@@ -134,7 +134,7 @@ export default class DocsGenerator extends BaseCommand {
     }        
   }
 
-  public async run() {
+  public async run(): Promise<void> {
     const {flags} = await this.parse(DocsGenerator);
 
     const config = await Config.load(
@@ -148,7 +148,7 @@ export default class DocsGenerator extends BaseCommand {
     await this.generateDocs(config, flags["output-dir"] ?? `${config.root}/docs`);
   }
     
-  private writeToFile(filePath: string, markdown: string) {
+  private writeToFile(filePath: string, markdown: string): void {
     const finalPath = `${filePath}.md`;
     this.log(`Writing to directory: ${finalPath}`);
 

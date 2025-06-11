@@ -69,7 +69,7 @@ export default class ListChangesets extends BaseCommand {
     }),
   };
   
-  public async run() {
+  public async run(): Promise<Changeset[]> {
     const { flags } = await this.parse(ListChangesets);
     
     const client = this.getIModelClient();

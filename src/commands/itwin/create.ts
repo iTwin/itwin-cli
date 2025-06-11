@@ -97,7 +97,7 @@ export default class CreateITwin extends BaseCommand {
     }),
   };
   
-  public async run() {
+  public async run(): Promise<ITwin | undefined> {
     const { flags } = await this.parse(CreateITwin);
   
     const iTwin : ITwin = {

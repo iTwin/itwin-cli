@@ -3,7 +3,7 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { ITwinSubClass } from "@itwin/itwins-client";
+import { ITwin, ITwinSubClass } from "@itwin/itwins-client";
 import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../extensions/api-reference.js";
@@ -101,7 +101,7 @@ export default class ListITwins extends BaseCommand {
     }),
   };
   
-  public async run() {
+  public async run(): Promise<ITwin[] | undefined> {
     const { flags } = await this.parse(ListITwins);
   
     const accessToken = await this.getAccessToken();

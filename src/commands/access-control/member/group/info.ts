@@ -8,6 +8,7 @@ import { Flags } from "@oclif/core";
 import { ApiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
 import { customFlags } from "../../../../extensions/custom-flags.js";
+import { GroupMemberInfo } from "../../../../services/access-control-client/models/group.js";
 
 export default class InfoGroupMember extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -36,7 +37,7 @@ export default class InfoGroupMember extends BaseCommand {
     }),
   };
   
-  public async run() {
+  public async run(): Promise<GroupMemberInfo> {
     const { flags } = await this.parse(InfoGroupMember);
   
     const client = await this.getAccessControlMemberClient();

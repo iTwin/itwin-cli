@@ -46,7 +46,7 @@ export class SynchronizationApiClient {
     });
   }
 
-  public async createStorageConnectionRun(connectionId: string) {
+  public async createStorageConnectionRun(connectionId: string): Promise<void> {
     await this._iTwinPlatformApiClient.sendRequestNoResponse({
       apiPath: `synchronization/imodels/storageconnections/${connectionId}/run`,
       method: "POST"

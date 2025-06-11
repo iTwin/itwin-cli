@@ -7,6 +7,7 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
+import { StorageRun } from "../../../../services/synchronizationClient/models/storage-run.js";
 
 export default class ConnectionRunInfo extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -36,7 +37,7 @@ export default class ConnectionRunInfo extends BaseCommand {
       required: true }),
   };
   
-  public async run() {
+  public async run(): Promise<StorageRun | undefined> {
     const { flags } = await this.parse(ConnectionRunInfo);
   
     const client = await this.getSynchronizationClient();

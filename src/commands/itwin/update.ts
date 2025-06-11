@@ -72,7 +72,7 @@ export default class UpdateCommand extends BaseCommand {
     }),
   };
   
-  public async run() {
+  public async run(): Promise<ITwin | undefined> {
     const { flags } = await this.parse(UpdateCommand);
   
     const iTwinUpdate : ITwin = {

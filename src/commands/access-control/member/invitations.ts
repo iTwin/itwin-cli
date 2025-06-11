@@ -6,6 +6,7 @@
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { customFlags } from "../../../extensions/custom-flags.js";
+import { Invitation } from "../../../services/access-control-client/models/invitations.js";
 
 export default class AccessControlMemberInvitations extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -28,7 +29,7 @@ export default class AccessControlMemberInvitations extends BaseCommand {
     }),
   };
   
-  public async run() {
+  public async run(): Promise<Invitation[]> {
     const { flags } = await this.parse(AccessControlMemberInvitations);
   
     const client = await this.getAccessControlMemberClient();

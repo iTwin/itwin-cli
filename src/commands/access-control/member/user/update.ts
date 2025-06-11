@@ -8,6 +8,7 @@ import { Flags } from "@oclif/core";
 import { ApiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
 import { customFlags } from "../../../../extensions/custom-flags.js";
+import { Member } from "../../../../services/access-control-client/models/members.js";
 
 export default class UpdateUserMember extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -41,7 +42,7 @@ export default class UpdateUserMember extends BaseCommand {
     }),
   };
   
-  public async run() {
+  public async run(): Promise<Member> {
     const { flags } = await this.parse(UpdateUserMember);
   
     if(flags['role-id'] !== undefined && flags["role-id"].length > 50) {

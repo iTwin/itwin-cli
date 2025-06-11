@@ -9,7 +9,7 @@ import { ApiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
 import { customFlags } from "../../../../extensions/custom-flags.js";
 import { validateUuidCSV } from "../../../../extensions/validation/validate-uuid-csv.js";
-import { UserMember } from "../../../../services/access-control-client/models/members.js";
+import { MembersResponse, UserMember } from "../../../../services/access-control-client/models/members.js";
 
 export default class AddUserMembers extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -63,7 +63,7 @@ export default class AddUserMembers extends BaseCommand {
     })
   };
 
-  public async run() {
+  public async run(): Promise<MembersResponse> {
     const { flags } = await this.parse(AddUserMembers);
 
     const client = await this.getAccessControlMemberClient();

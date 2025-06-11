@@ -75,7 +75,7 @@ export default class ListIModels extends BaseCommand {
     }),
   };
   
-  public async run() {
+  public async run(): Promise<IModel[]> {
     const { flags } = await this.parse(ListIModels);
   
     const client = this.getIModelClient();

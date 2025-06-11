@@ -8,6 +8,7 @@ import { Flags } from "@oclif/core";
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { customFlags } from "../../../extensions/custom-flags.js";
+import { Role } from "../../../services/access-control-client/models/role.js";
 
 export default class InfoRole extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -35,7 +36,7 @@ export default class InfoRole extends BaseCommand {
     }),
   };
   
-  public async run() {
+  public async run(): Promise<Role> {
     const { flags } = await this.parse(InfoRole);
   
     const client = await this.getAccessControlApiClient();

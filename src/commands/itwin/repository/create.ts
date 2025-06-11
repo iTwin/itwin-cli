@@ -3,7 +3,7 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { RepositoryClass, RepositorySubClass } from "@itwin/itwins-client";
+import { Repository, RepositoryClass, RepositorySubClass } from "@itwin/itwins-client";
 import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../extensions/api-reference.js";
@@ -55,7 +55,7 @@ export default class CreateRepository extends BaseCommand {
     }),
   };
   
-  public async run() {
+  public async run(): Promise<Repository | undefined> {
     const { flags } = await this.parse(CreateRepository);
   
     const accessToken = await this.getAccessToken();

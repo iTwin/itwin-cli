@@ -66,7 +66,7 @@ export class AuthorizationClient {
     return this.saveAccessToken(usedToken, authType);
   }
 
-  public async logout() {
+  public async logout(): Promise<void> {
     const existingTokenInfo = this.getExistingAuthTokenInfo();
 
     // Login from IMS
@@ -97,7 +97,7 @@ export class AuthorizationClient {
     }
   }
 
-  private async getAccessTokenFromService(clientId: string, clientSecret: string, issuerUrl: string) {
+  private async getAccessTokenFromService(clientId: string, clientSecret: string, issuerUrl: string): Promise<string> {
     const client = new ServiceAuthorizationClient({
       authority: issuerUrl,
       clientId,
@@ -108,7 +108,7 @@ export class AuthorizationClient {
     return client.getAccessToken();
   }
 
-  private async getAccessTokenFromWebsiteLogin(clientId: string, issuerUrl: string) {
+  private async getAccessTokenFromWebsiteLogin(clientId: string, issuerUrl: string): Promise<string> {
     const client = new NodeCliAuthorizationClient({
       clientId,
       expiryBuffer: 10 * 60,
@@ -122,7 +122,7 @@ export class AuthorizationClient {
     return client.getAccessToken();    
   }
 
-  private getExistingAuthTokenInfo() {
+  private getExistingAuthTokenInfo(): AuthTokenInfo | undefined {
     const tokenPath = path.join(this._cliConfiguration.cacheDir, 'token.json');
 
     if (!fs.existsSync(tokenPath)) {
@@ -132,7 +132,7 @@ export class AuthorizationClient {
     return JSON.parse(fs.readFileSync(tokenPath, 'utf8')) as AuthTokenInfo;
   }
 
-  private isExpirationDateValid(expirationDate: Date | undefined)  {
+  private isExpirationDateValid(expirationDate: Date | undefined): boolean {
     if(!expirationDate) {
       return false;
     }
@@ -145,7 +145,7 @@ export class AuthorizationClient {
     return expirationDateFixed > currentDate;      
   }
 
-  private saveAccessToken(accessToken: string, authenticationType: AuthorizationType) {
+  private saveAccessToken(accessToken: string, authenticationType: AuthorizationType): AuthTokenInfo {
     // Ensure the directory exists
     if (!fs.existsSync(this._cliConfiguration.cacheDir)) {
       fs.mkdirSync(this._cliConfiguration.cacheDir, { recursive: true });

@@ -93,7 +93,7 @@ export default class PopulateIModel extends BaseCommand {
     }),
   };
 
-  public async run() {
+  public async run(): Promise<PopulateResponse> {
     const { flags } = await this.parse(PopulateIModel);
 
     if(flags["connector-type"] && flags["connector-type"].length !== 1 && flags.file.length !== flags["connector-type"].length) {
@@ -158,7 +158,7 @@ export default class PopulateIModel extends BaseCommand {
     return populateResponse;
   }
 
-  private async addFileToConnectionIfItIsNotPresent(connectionId: string, sourceFiles: SourceFile[], file: { connectorType: ConnectorType, fileId: string, fileName: string }) {
+  private async addFileToConnectionIfItIsNotPresent(connectionId: string, sourceFiles: SourceFile[], file: { connectorType: ConnectorType, fileId: string, fileName: string }): Promise<void> {
     const fileExist = sourceFiles.find(f => f.storageFileId === file.fileId);
     if (!fileExist) {
       this.log(`Adding file: ${file.fileId} to default connection: ${connectionId}`);
