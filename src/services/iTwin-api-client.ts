@@ -65,6 +65,7 @@ export class ITwinPlatformApiClient {
 
     const queryString = query
       .filter((entry) => Boolean(entry.value))
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       .map((entry) => `${encodeURIComponent(entry.key)}=${encodeURIComponent(entry.value!)}`)
       .join("&");
     if (queryString.length === 0) {
