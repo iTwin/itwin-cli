@@ -123,7 +123,7 @@ export default class CesiumSandcastle extends BaseCommand {
     return newExport;
   }
 
-  public async run(): Promise<{url: string;}> {
+  public async run(): Promise<{ url: string; }> {
     const { flags } = await this.parse(CesiumSandcastle);
 
     let changesetId = flags["changeset-id"] ?? "";
