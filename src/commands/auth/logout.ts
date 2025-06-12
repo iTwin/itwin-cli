@@ -1,28 +1,29 @@
 /*---------------------------------------------------------------------------------------------
-* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
-* See LICENSE.md in the project root for license terms and full copyright notice.
-*--------------------------------------------------------------------------------------------*/
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
 
-import BaseCommand from '../../extensions/base-command.js';
+import BaseCommand from "../../extensions/base-command.js";
 
 export default class Logout extends BaseCommand {
-  public static description = 'Log out of the Bentley authentication session. This command clears the current authentication tokens and configuration.';
+  public static description =
+    "Log out of the Bentley authentication session. This command clears the current authentication tokens and configuration.";
 
   public static examples = [
     {
       command: `<%= config.bin %> <%= command.id %>`,
-      description: 'Example 1:'
-    }
+      description: "Example 1:",
+    },
   ];
 
   public static flags = {};
 
   public async run(): Promise<void> {
     const authClient = this.getAuthorizationClient();
-    
+
     try {
       await authClient.logout();
-      this.log('User successfully logged out');
+      this.log("User successfully logged out");
     } catch (error) {
       this.error(`User logout encountered an error: ${JSON.stringify(error)}`);
     }

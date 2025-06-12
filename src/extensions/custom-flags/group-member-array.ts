@@ -1,7 +1,7 @@
 /*---------------------------------------------------------------------------------------------
-* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
-* See LICENSE.md in the project root for license terms and full copyright notice.
-*--------------------------------------------------------------------------------------------*/
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
 
 import { Flags } from "@oclif/core";
 import zod from "zod";
@@ -12,15 +12,12 @@ import zodErrorToMessage from "../validation/zod-error-to-message.js";
 
 export default Flags.custom<GroupMember[]>({
   // eslint-disable-next-line @typescript-eslint/promise-function-async
-  parse: (input) => Promise.resolve(
-    validateJson<GroupMember[]>(input, validationFunction)
-  ),
+  parse: (input) => Promise.resolve(validateJson<GroupMember[]>(input, validationFunction)),
 });
 
 const validationFunction = (input: GroupMember[]): string => {
   const result = zod.array(groupMemberSchema).safeParse(input);
-  if (result.error === undefined)
-    return '';
+  if (result.error === undefined) return "";
 
   return zodErrorToMessage(result.error);
 };

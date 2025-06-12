@@ -1,7 +1,7 @@
 /*---------------------------------------------------------------------------------------------
-* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
-* See LICENSE.md in the project root for license terms and full copyright notice.
-*--------------------------------------------------------------------------------------------*/
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
 
 import { ITwinPlatformApiClient } from "../iTwin-api-client.js";
 import { ConnectionAuth } from "./models/connection-auth.js";
@@ -21,35 +21,35 @@ export class SynchronizationApiClient {
     return this._iTwinPlatformApiClient.sendRequest({
       apiPath: `synchronization/imodels/storageconnections/${connectionId}/sourcefiles`,
       body: sourceFile,
-      method: "POST"
+      method: "POST",
     });
   }
 
   public async authorizeUserForConnection(): Promise<ConnectionAuth> {
     return this._iTwinPlatformApiClient.sendRequest({
-      apiPath: 'synchronization/imodels/connections/authorizationinformation',
-      method: 'GET',
+      apiPath: "synchronization/imodels/connections/authorizationinformation",
+      method: "GET",
       query: [
         {
-          key: 'redirectUrl',
-          value: 'http://localhost:3301/callback'
-        }
-      ]
+          key: "redirectUrl",
+          value: "http://localhost:3301/callback",
+        },
+      ],
     });
   }
 
   public async createStorageConnection(connection: StorageConnectionCreate): Promise<StorageConnectionResponse> {
     return this._iTwinPlatformApiClient.sendRequest({
-      apiPath: 'synchronization/imodels/storageconnections',
+      apiPath: "synchronization/imodels/storageconnections",
       body: connection,
-      method: 'POST'
+      method: "POST",
     });
   }
 
   public async createStorageConnectionRun(connectionId: string): Promise<void> {
     await this._iTwinPlatformApiClient.sendRequestNoResponse({
       apiPath: `synchronization/imodels/storageconnections/${connectionId}/run`,
-      method: "POST"
+      method: "POST",
     });
   }
 
@@ -70,7 +70,7 @@ export class SynchronizationApiClient {
   public async getSourceFile(connectionId: string, sourceFileId: string): Promise<SourceFileResponse> {
     return this._iTwinPlatformApiClient.sendRequest({
       apiPath: `synchronization/imodels/storageconnections/${connectionId}/sourcefiles/${sourceFileId}`,
-      method: "GET"
+      method: "GET",
     });
   }
 
@@ -79,33 +79,33 @@ export class SynchronizationApiClient {
       apiPath: `synchronization/imodels/storageconnections/${connectionId}/sourcefiles`,
       headers: {
         // eslint-disable-next-line @typescript-eslint/naming-convention
-        Prefer: "return=representation"
+        Prefer: "return=representation",
       },
       method: "GET",
       query: [
         {
-          key: '$top',
-          value: top
+          key: "$top",
+          value: top,
         },
         {
-          key: '$skip',
-          value: skip
-        }
-      ]
+          key: "$skip",
+          value: skip,
+        },
+      ],
     });
   }
 
   public async getStorageConnection(connectionId: string): Promise<StorageConnectionResponse> {
     return this._iTwinPlatformApiClient.sendRequest({
       apiPath: `synchronization/imodels/storageconnections/${connectionId}`,
-      method: 'GET'
+      method: "GET",
     });
   }
 
   public async getStorageConnectionRun(connectionId: string, runId: string): Promise<StorageRunResponse> {
     return this._iTwinPlatformApiClient.sendRequest({
       apiPath: `synchronization/imodels/storageconnections/${connectionId}/runs/${runId}`,
-      method: "GET"
+      method: "GET",
     });
   }
 
@@ -115,36 +115,35 @@ export class SynchronizationApiClient {
       method: "GET",
       query: [
         {
-          key: '$top',
-          value: top
+          key: "$top",
+          value: top,
         },
         {
-          key: '$skip',
-          value: skip
-        }
-      ]
+          key: "$skip",
+          value: skip,
+        },
+      ],
     });
   }
 
   public async getStorageConnections(iModelId: string, top?: number, skip?: number): Promise<StorageConnectionListResponse> {
     return this._iTwinPlatformApiClient.sendRequest({
       apiPath: `synchronization/imodels/storageconnections`,
-      method: 'GET',
+      method: "GET",
       query: [
         {
-          key: 'imodelId',
-          value: iModelId
+          key: "imodelId",
+          value: iModelId,
         },
         {
-          key: '$top',
-          value: top
+          key: "$top",
+          value: top,
         },
         {
-          key: '$skip',
-          value: skip
-        }
-
-      ]
+          key: "$skip",
+          value: skip,
+        },
+      ],
     });
   }
 
@@ -152,7 +151,7 @@ export class SynchronizationApiClient {
     return this._iTwinPlatformApiClient.sendRequest({
       apiPath: `synchronization/imodels/storageconnections/${connectionId}/sourcefiles/${sourceFileId}`,
       body: update,
-      method: "PUT"
+      method: "PUT",
     });
   }
 
@@ -160,7 +159,7 @@ export class SynchronizationApiClient {
     return this._iTwinPlatformApiClient.sendRequest({
       apiPath: `synchronization/imodels/storageconnections/${connectionId}`,
       body: update,
-      method: "PUT"
+      method: "PUT",
     });
   }
 }

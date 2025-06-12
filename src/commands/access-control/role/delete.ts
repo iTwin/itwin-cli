@@ -1,7 +1,7 @@
 /*---------------------------------------------------------------------------------------------
-* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
-* See LICENSE.md in the project root for license terms and full copyright notice.
-*--------------------------------------------------------------------------------------------*/
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
 
 import { Flags } from "@oclif/core";
 
@@ -16,33 +16,33 @@ export default class DeleteRole extends BaseCommand {
     name: "Delete iTwin Role",
   };
 
-  public static description = 'Delete an existing role from an iTwin.';
+  public static description = "Delete an existing role from an iTwin.";
 
   public static examples = [
     {
       command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --role-id role1-id`,
-      description: 'Example 1:'
-    }
+      description: "Example 1:",
+    },
   ];
 
   public static flags = {
     "itwin-id": customFlags.iTwinIDFlag({
-      description: 'The ID of the iTwin where the role exists.'
+      description: "The ID of the iTwin where the role exists.",
     }),
     "role-id": Flags.string({
-      description: 'The ID of the role to be deleted.',
-      helpValue: '<string>',
+      description: "The ID of the role to be deleted.",
+      helpValue: "<string>",
       required: true,
     }),
   };
-  
+
   public async run(): Promise<ResultResponse> {
     const { flags } = await this.parse(DeleteRole);
-  
+
     const client = await this.getAccessControlApiClient();
-  
+
     await client.deleteiTwinRole(flags["itwin-id"], flags["role-id"]);
-  
-    return this.logAndReturnResult({ result: 'deleted' });
+
+    return this.logAndReturnResult({ result: "deleted" });
   }
 }

@@ -1,11 +1,11 @@
 /*---------------------------------------------------------------------------------------------
-* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
-* See LICENSE.md in the project root for license terms and full copyright notice.
-*--------------------------------------------------------------------------------------------*/
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
 
 import { Changeset } from "@itwin/imodels-client-management";
 import { Flags } from "@oclif/core";
-import open from 'open';
+import open from "open";
 import { deflate } from "pako";
 
 import { ApiReference } from "../../../extensions/api-reference.js";
@@ -20,60 +20,63 @@ export default class CesiumSandcastle extends BaseCommand {
     sectionName: "Workflow Reference",
   };
 
-  public static description = "> 🔬 This command is currently in Technical Preview.\nSetup iModel and get URL to view it in Cesium Sandcastle.";
+  public static description =
+    "> 🔬 This command is currently in Technical Preview.\nSetup iModel and get URL to view it in Cesium Sandcastle.";
 
   public static examples = [
     {
       command: `<%= config.bin %> <%= command.id %> --imodel-id 5e19bee0-3aea-4355-a9f0-c6df9989ee7d`,
-      description: 'Example 1: Get a link to an iModel in Cesium Sandcastle'
+      description: "Example 1: Get a link to an iModel in Cesium Sandcastle",
     },
     {
       command: `<%= config.bin %> <%= command.id %> --imodel-id 5e19bee0-3aea-4355-a9f0-c6df9989ee7d --changeset-id 2f3b4a8c92d747d5c8a8b2f9cde6742e5d74b3b5`,
-      description: 'Example 2: Get a link to a specific changeset of an iModel in Cesium Sandcastle'
+      description: "Example 2: Get a link to a specific changeset of an iModel in Cesium Sandcastle",
     },
     {
       command: `<%= config.bin %> <%= command.id %> --imodel-id 5e19bee0-3aea-4355-a9f0-c6df9989ee7d --changeset-id 2f3b4a8c92d747d5c8a8b2f9cde6742e5d74b3b5 --open`,
-      description: 'Example 3: Get a link to a specific changeset of an iModel in Cesium Sandcastle and open the URL in the browser'
+      description: "Example 3: Get a link to a specific changeset of an iModel in Cesium Sandcastle and open the URL in the browser",
     },
     {
       command: `<%= config.bin %> <%= command.id %> --imodel-id 5e19bee0-3aea-4355-a9f0-c6df9989ee7d --terrain cesiumWorldTerrain`,
-      description: 'Example 4: Get a link to a specific changeset of an iModel in Cesium Sandcastle and use cesium world terrain'
-    }
+      description: "Example 4: Get a link to a specific changeset of an iModel in Cesium Sandcastle and use cesium world terrain",
+    },
   ];
 
   public static flags = {
     "changeset-id": Flags.string({
       description: "Changeset id to be viewed in Cesium Sandcastle. If not provided, the latest changeset will be used.",
-      helpValue: '<string>',
-      required: false
+      helpValue: "<string>",
+      required: false,
     }),
     "imodel-id": customFlags.iModelIDFlag({
-      description: "iModel id to be viewed in Cesium Sandcastle."
+      description: "iModel id to be viewed in Cesium Sandcastle.",
     }),
-    "open": Flags.boolean({
+    open: Flags.boolean({
       description: "Open the URL in the browser.",
       required: false,
     }),
-    "terrain": Flags.string({
+    terrain: Flags.string({
       description: "Select which terrain should be used.",
-      helpValue: '<string>',
-      options: [
-        "cesiumWorldTerrain"
-      ],
+      helpValue: "<string>",
+      options: ["cesiumWorldTerrain"],
       required: false,
-      type: 'option',
-    })
+      type: "option",
+    }),
   };
 
   private async createExport(iModelId: string, changesetId: string): Promise<ExportInfo> {
     const args = [
-      "--method", "POST",
-      "--path", "mesh-export",
-      "--version-header", "application/vnd.bentley.itwin-platform.v1+json",
-      "--body", JSON.stringify({
-        changesetId, 
-        exportType: "CESIUM", 
-        iModelId
+      "--method",
+      "POST",
+      "--path",
+      "mesh-export",
+      "--version-header",
+      "application/vnd.bentley.itwin-platform.v1+json",
+      "--body",
+      JSON.stringify({
+        changesetId,
+        exportType: "CESIUM",
+        iModelId,
       }),
     ];
 
@@ -83,11 +86,16 @@ export default class CesiumSandcastle extends BaseCommand {
 
   private async getExports(iModelId: string): Promise<ExportInfo[]> {
     const exportArgs = [
-      "--method", "GET", 
-      "--path", "mesh-export/", 
-      "--version-header", "application/vnd.bentley.itwin-platform.v1+json", 
-      "--query", `iModelId: ${iModelId}`, 
-      "--header", "Prefer: return=representation"
+      "--method",
+      "GET",
+      "--path",
+      "mesh-export/",
+      "--version-header",
+      "application/vnd.bentley.itwin-platform.v1+json",
+      "--query",
+      `iModelId: ${iModelId}`,
+      "--header",
+      "Prefer: return=representation",
     ];
     const response = await this.runCommand<ExportResponse>("api", exportArgs);
     return response.exports;
@@ -107,28 +115,36 @@ export default class CesiumSandcastle extends BaseCommand {
     let newExport = await this.createExport(iModelId, changesetId);
     while (newExport.status !== "Complete") {
       this.log(`Export status is ${newExport.status}. Waiting for export to complete...`);
-      
+
       existingExports = await this.getExports(iModelId);
 
       const foundExport = existingExports.find((exp) => exp.id === newExport.id);
-      if (foundExport === undefined)
-        this.error("Export creation has failed");
+      if (foundExport === undefined) this.error("Export creation has failed");
 
       newExport = foundExport;
-       
-      await new Promise((resolve) => { setTimeout(resolve, 5000); });
+
+      await new Promise((resolve) => {
+        setTimeout(resolve, 5000);
+      });
     }
-    
+
     this.log(`Export completed successfully`);
     return newExport;
   }
 
-  public async run(): Promise<{ url: string; }> {
+  public async run(): Promise<{ url: string }> {
     const { flags } = await this.parse(CesiumSandcastle);
 
     let changesetId = flags["changeset-id"] ?? "";
     if (changesetId === undefined) {
-      const existingChangesets = await this.runCommand<Changeset[]>("imodel:changeset:list", ["-m", flags["imodel-id"], "--top", "1", "--order-by", "desc"]);
+      const existingChangesets = await this.runCommand<Changeset[]>("imodel:changeset:list", [
+        "-m",
+        flags["imodel-id"],
+        "--top",
+        "1",
+        "--order-by",
+        "desc",
+      ]);
       if (existingChangesets.length === 0) {
         this.error(`No changesets found for iModel: ${flags["imodel-id"]}`);
       }
@@ -136,18 +152,15 @@ export default class CesiumSandcastle extends BaseCommand {
       changesetId = existingChangesets[0].id;
     }
 
-    const exportInfo: ExportInfo = await this.getOrCreateExport(flags["imodel-id"], changesetId);      
-    
+    const exportInfo: ExportInfo = await this.getOrCreateExport(flags["imodel-id"], changesetId);
+
     this.log(`Extracting tileset URL from export info`);
     const tilesetUrl: string = extractTileSetUrl(exportInfo);
-    
-    const data = [
-      jsData(tilesetUrl, flags.terrain),
-      htmlData(),
-    ];
+
+    const data = [jsData(tilesetUrl, flags.terrain), htmlData()];
 
     const url = `https://sandcastle.cesium.com/#c=${makeCompressedBase64String(data)}`;
-    
+
     this.log(`Cesium Sandcastle URL:`);
     this.log(url);
 
@@ -155,39 +168,38 @@ export default class CesiumSandcastle extends BaseCommand {
       this.log(`Opening URL in browser...`);
       await open(url);
     }
-    
+
     return this.logAndReturnResult({ url });
   }
 }
 
-
 interface ExportResponse {
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  _links: Links
-  exports: ExportInfo[],
+  _links: Links;
+  exports: ExportInfo[];
 }
 
 interface ExportCreateResponse {
-  export: ExportInfo
+  export: ExportInfo;
 }
 
 interface ExportInfo {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   _links: {
-    mesh: Link
-  },
-  displayName: string,
-  error?: string,
-  id: string,
-  lastModified: Date,
-  request: ExportRequest,
-  status: "Complete" | "InProgress" | "Invalid" | "NotStarted",
+    mesh: Link;
+  };
+  displayName: string;
+  error?: string;
+  id: string;
+  lastModified: Date;
+  request: ExportRequest;
+  status: "Complete" | "InProgress" | "Invalid" | "NotStarted";
 }
 
 interface ExportRequest {
-  changesetId: string,
-  exportType: "3DFT" | "3DTiles" | "CESIUM" | "IMODEL",
-  iModelId: string,
+  changesetId: string;
+  exportType: "3DFT" | "3DTiles" | "CESIUM" | "IMODEL";
+  iModelId: string;
 }
 
 function extractTileSetUrl(exportInfo: ExportInfo): string {
@@ -196,16 +208,14 @@ function extractTileSetUrl(exportInfo: ExportInfo): string {
   }
 
   const urlParts = exportInfo._links.mesh.href.split("?");
-  return `${urlParts[0]  }/tileset.json?${  urlParts[1]}`;
+  return `${urlParts[0]}/tileset.json?${urlParts[1]}`;
 }
 
 function makeCompressedBase64String(data: string[]): string {
   let jsonString = JSON.stringify(data);
   jsonString = jsonString.slice(2, 2 + jsonString.length - 4);
-  let base64String = Buffer.from(
-    deflate(jsonString, { raw: true })
-  ).toString('base64');
-  base64String = base64String.replace(/=+$/, ''); // remove padding
+  let base64String = Buffer.from(deflate(jsonString, { raw: true })).toString("base64");
+  base64String = base64String.replace(/=+$/, ""); // remove padding
 
   return base64String;
 }
@@ -222,7 +232,7 @@ function htmlData(): string {
 
 function jsData(tilesetUrl: string, terrain?: string): string {
   let viewerParams = "";
-  if (terrain === 'cesiumWorldTerrain') {
+  if (terrain === "cesiumWorldTerrain") {
     viewerParams += "terrain: Cesium.Terrain.fromWorldTerrain(),";
   }
 

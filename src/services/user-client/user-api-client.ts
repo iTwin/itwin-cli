@@ -1,7 +1,7 @@
 /*---------------------------------------------------------------------------------------------
-* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
-* See LICENSE.md in the project root for license terms and full copyright notice.
-*--------------------------------------------------------------------------------------------*/
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
 
 import { ITwinPlatformApiClient, Query } from "../iTwin-api-client.js";
 import { UserResponse, UsersResponse } from "./models/user.js";
@@ -15,16 +15,16 @@ export class UserApiClient {
 
   public async getMe(): Promise<UserResponse> {
     return this._iTwinPlatformApiClient.sendRequest({
-      apiPath: 'users/me',
-      method: 'GET'
+      apiPath: "users/me",
+      method: "GET",
     });
   }
 
   public async getUsers(userIDs: string[]): Promise<UsersResponse> {
     return this._iTwinPlatformApiClient.sendRequest({
-      apiPath: 'users/getbyidlist',
+      apiPath: "users/getbyidlist",
       body: userIDs,
-      method: 'POST'
+      method: "POST",
     });
   }
 
@@ -32,13 +32,13 @@ export class UserApiClient {
     const query: Query[] = [];
     query.push({
       key: "$search",
-      value: search
+      value: search,
     });
 
     return this._iTwinPlatformApiClient.sendRequest({
-      apiPath: 'users/',
-      method: 'GET',
-      query
+      apiPath: "users/",
+      method: "GET",
+      query,
     });
   }
 }

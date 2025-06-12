@@ -1,7 +1,7 @@
 /*---------------------------------------------------------------------------------------------
-* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
-* See LICENSE.md in the project root for license terms and full copyright notice.
-*--------------------------------------------------------------------------------------------*/
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
 
 import { ITwin } from "@itwin/itwins-client";
 import { runCommand } from "@oclif/test";
@@ -14,7 +14,7 @@ import runSuiteIfMainModule from "../../utils/run-suite-if-main-module";
 
 const tests = () => {
   let iTwinId: string;
-    
+
   before(async () => {
     const iTwinName = `cli-itwin-integration-test-${new Date().toISOString()}`;
     const { result: iTwin } = await runCommand<ITwin>(`itwin create --class Thing --sub-class Asset --name ${iTwinName}`);
@@ -24,12 +24,14 @@ const tests = () => {
 
   after(async () => {
     const { result: deleteResult } = await runCommand<{ result: string }>(`itwin delete --itwin-id ${iTwinId}`);
-    expect(deleteResult).to.have.property('result', 'deleted');
+    expect(deleteResult).to.have.property("result", "deleted");
   });
 
-  it('Should get pending invitations', async () => {
+  it("Should get pending invitations", async () => {
     const emailToAdd = ITP_TEST_USER_EXTERNAL;
-    const { result: owner } = await runCommand<OwnerResponse>(`access-control member owner add --itwin-id ${iTwinId} --email ${emailToAdd}`);
+    const { result: owner } = await runCommand<OwnerResponse>(
+      `access-control member owner add --itwin-id ${iTwinId} --email ${emailToAdd}`
+    );
     expect(owner).to.not.be.undefined;
     expect(owner!.member).is.null;
     expect(owner!.invitation).to.not.be.undefined;
@@ -38,7 +40,7 @@ const tests = () => {
     const { result: invitationResults } = await runCommand<Invitation[]>(`access-control member invitations --itwin-id ${iTwinId}`);
     expect(invitationResults).to.not.be.undefined;
     expect(invitationResults!.length).to.be.greaterThanOrEqual(1);
-    expect(invitationResults!.some(invitation => invitation.email.toLowerCase() === emailToAdd!.toLowerCase())).to.be.true;
+    expect(invitationResults!.some((invitation) => invitation.email.toLowerCase() === emailToAdd!.toLowerCase())).to.be.true;
   });
 };
 

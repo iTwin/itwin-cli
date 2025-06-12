@@ -1,7 +1,7 @@
 /*---------------------------------------------------------------------------------------------
-* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
-* See LICENSE.md in the project root for license terms and full copyright notice.
-*--------------------------------------------------------------------------------------------*/
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
 
 import { Flags } from "@oclif/core";
 
@@ -16,46 +16,46 @@ export default class GetChangesetStatus extends BaseCommand {
     name: "Get Changeset Status",
   };
 
-  public static description = 'Get the processing status of changesets in an iModel to see which are ready for comparison.';
+  public static description = "Get the processing status of changesets in an iModel to see which are ready for comparison.";
 
   public static examples = [
     {
       command: `<%= config.bin %> <%= command.id %> --itwin-id 1a2b3c4d-5678-90ab-cdef-1234567890ab --imodel-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --top 10`,
-      description: 'Example 1: Retrieve the processing status of the first 10 changesets for a specific iModel'
+      description: "Example 1: Retrieve the processing status of the first 10 changesets for a specific iModel",
     },
     {
       command: `<%= config.bin %> <%= command.id %> --itwin-id 1a2b3c4d-5678-90ab-cdef-1234567890ab --imodel-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --skip 5 --top 10`,
-      description: 'Example 2: Skip the first 5 changesets and return the next set'
+      description: "Example 2: Skip the first 5 changesets and return the next set",
     },
     {
       command: `<%= config.bin %> <%= command.id %> --itwin-id 1a2b3c4d-5678-90ab-cdef-1234567890ab --imodel-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51`,
-      description: 'Example 3: Retrieve all changesets for a specific iModel'
-    }
+      description: "Example 3: Retrieve all changesets for a specific iModel",
+    },
   ];
 
   public static flags = {
     "imodel-id": customFlags.iModelIDFlag({
-      description: 'The ID of the iModel.'
+      description: "The ID of the iModel.",
     }),
     "itwin-id": customFlags.iTwinIDFlag({
-      description: 'The ID of the iTwin.' 
+      description: "The ID of the iTwin.",
     }),
-    skip: Flags.integer({ 
-      description: 'Skip a number of changesets in the result.',
-      helpValue: '<integer>'
+    skip: Flags.integer({
+      description: "Skip a number of changesets in the result.",
+      helpValue: "<integer>",
     }),
-    top: Flags.integer({ 
-      description: 'Limit the number of changesets returned.',
-      helpValue: '<integer>'
+    top: Flags.integer({
+      description: "Limit the number of changesets returned.",
+      helpValue: "<integer>",
     }),
   };
-  
+
   public async run(): Promise<Changeset[]> {
     const { flags } = await this.parse(GetChangesetStatus);
-  
+
     const client = await this.getChangedElementsApiClient();
     const result = await client.listChangesets(flags["imodel-id"], flags["itwin-id"], flags.top, flags.skip);
-  
+
     return this.logAndReturnResult(result.changesetStatus);
   }
 }

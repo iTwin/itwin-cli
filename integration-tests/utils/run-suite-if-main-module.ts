@@ -1,10 +1,10 @@
 /*---------------------------------------------------------------------------------------------
-* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
-* See LICENSE.md in the project root for license terms and full copyright notice.
-*--------------------------------------------------------------------------------------------*/
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
 
-import process from 'node:process';
-import {fileURLToPath} from 'node:url';
+import process from "node:process";
+import { fileURLToPath } from "node:url";
 
 /**
  * Checks whether the current test file being executed matches the file/pattern, that was provided as an argument to mocha.
@@ -21,19 +21,13 @@ function isMainModule(meta: { url: string }): boolean {
     if (!meta || !arg) {
       return false;
     }
-    
-    const currentFilePath = fileURLToPath(meta.url)
-      .replaceAll("\\", "/");
-    
+
+    const currentFilePath = fileURLToPath(meta.url).replaceAll("\\", "/");
+
     const mainFilePath = arg;
-    const mainFilePathRegex = mainFilePath
-      .replaceAll("\\", "/")
-      .replaceAll(".", "\\.")
-      .replaceAll("**", ".*?")
-      .replaceAll("*", ".*?");
-        
-    if (currentFilePath.match(mainFilePathRegex) !== null)
-      return true;
+    const mainFilePathRegex = mainFilePath.replaceAll("\\", "/").replaceAll(".", "\\.").replaceAll("**", ".*?").replaceAll("*", ".*?");
+
+    if (currentFilePath.match(mainFilePathRegex) !== null) return true;
   }
 
   return false;

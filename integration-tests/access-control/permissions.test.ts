@@ -1,7 +1,7 @@
 /*---------------------------------------------------------------------------------------------
-* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
-* See LICENSE.md in the project root for license terms and full copyright notice.
-*--------------------------------------------------------------------------------------------*/
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
 
 import { ITwin } from "@itwin/itwins-client";
 import { runCommand } from "@oclif/test";
@@ -20,17 +20,17 @@ const tests = () => {
   });
 
   after(async () => {
-    const { result: deleteResult} = await runCommand<{ result: string }>(`itwin delete --itwin-id ${iTwinId}`);
-    expect(deleteResult).to.have.property('result', 'deleted');
+    const { result: deleteResult } = await runCommand<{ result: string }>(`itwin delete --itwin-id ${iTwinId}`);
+    expect(deleteResult).to.have.property("result", "deleted");
   });
 
-  it('Should retrieve my permissions', async () => {
+  it("Should retrieve my permissions", async () => {
     const { result: myPermissions } = await runCommand<string[]>(`access-control permissions me --itwin-id ${iTwinId}`);
     expect(myPermissions).to.not.be.undefined;
     expect(myPermissions!.length).to.be.greaterThan(0);
   });
 
-  it('Should list all permissions', async () => {
+  it("Should list all permissions", async () => {
     const { result: allPermissions } = await runCommand<string[]>(`access-control permissions all`);
     expect(allPermissions).to.not.be.undefined;
     expect(allPermissions!.length).to.be.greaterThan(0);
