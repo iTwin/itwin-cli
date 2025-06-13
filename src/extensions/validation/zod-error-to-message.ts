@@ -1,13 +1,13 @@
 /*---------------------------------------------------------------------------------------------
-* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
-* See LICENSE.md in the project root for license terms and full copyright notice.
-*--------------------------------------------------------------------------------------------*/
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
 
 import { ZodError, ZodIssue } from "zod";
 
 const zodErrorToMessage = (error: ZodError): string => {
   let message = "Following issues were found during schema validation:\n";
-  for(const issue of error.issues) {
+  for (const issue of error.issues) {
     message += zodIssueToErrorMessage(issue);
   }
 
@@ -16,9 +16,9 @@ const zodErrorToMessage = (error: ZodError): string => {
 
 const zodIssueToErrorMessage = (issue: ZodIssue): string => {
   const path = joinPath(issue.path);
-  switch(issue.code) {
+  switch (issue.code) {
     case "invalid_type": {
-      return issue.received === 'undefined' 
+      return issue.received === "undefined"
         ? `\t- missing required property '${path}' of type '${issue.expected}'\n`
         : `\t- ${path}: expected type '${issue.expected}', received '${issue.received}'\n`;
     }
@@ -33,16 +33,16 @@ const zodIssueToErrorMessage = (issue: ZodIssue): string => {
   }
 };
 
-const joinPath = (path: (number|string)[]): string => {
+const joinPath = (path: (number | string)[]): string => {
   let builtPath = "";
   for (const token of path) {
-    if(typeof token === 'number') {
-      builtPath = builtPath.slice(0,-1);
+    if (typeof token === "number") {
+      builtPath = builtPath.slice(0, -1);
     }
-        
-    builtPath += typeof token === 'number' || /^\d+$/.test(token) ? `[${token}].` : `${token}.`;
+
+    builtPath += typeof token === "number" || /^\d+$/.test(token) ? `[${token}].` : `${token}.`;
   }
-    
+
   return builtPath.slice(0, -1);
 };
 

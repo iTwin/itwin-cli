@@ -1,10 +1,10 @@
 /*---------------------------------------------------------------------------------------------
-* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
-* See LICENSE.md in the project root for license terms and full copyright notice.
-*--------------------------------------------------------------------------------------------*/
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
 
-import process from 'node:process';
-import {fileURLToPath} from 'node:url';
+import process from "node:process";
+import { fileURLToPath } from "node:url";
 
 /**
  * Checks whether the current test file being executed matches the file/pattern, that was provided as an argument to mocha.
@@ -12,28 +12,22 @@ import {fileURLToPath} from 'node:url';
  * @param meta `import.meta` object of the current file.
  * @returns `true`, if the current file is not an import, otherwise `false`
  */
-function isMainModule(meta: {url: string}): boolean {
+function isMainModule(meta: { url: string }): boolean {
   for (const arg of process.argv) {
-    if(arg.match(/integration-tests(\/|\\).*\.test\.ts/) === null) {
+    if (arg.match(/integration-tests(\/|\\).*\.test\.ts/) === null) {
       continue;
     }
 
     if (!meta || !arg) {
       return false;
     }
-    
-    const currentFilePath = fileURLToPath(meta.url)
-      .replaceAll("\\", "/");
-    
+
+    const currentFilePath = fileURLToPath(meta.url).replaceAll("\\", "/");
+
     const mainFilePath = arg;
-    const mainFilePathRegex = mainFilePath
-      .replaceAll("\\", "/")
-      .replaceAll(".", "\\.")
-      .replaceAll("**", ".*?")
-      .replaceAll("*", ".*?");
-        
-    if(currentFilePath.match(mainFilePathRegex) !== null)
-      return true;
+    const mainFilePathRegex = mainFilePath.replaceAll("\\", "/").replaceAll(".", "\\.").replaceAll("**", ".*?").replaceAll("*", ".*?");
+
+    if (currentFilePath.match(mainFilePathRegex) !== null) return true;
   }
 
   return false;
@@ -44,7 +38,7 @@ function isMainModule(meta: {url: string}): boolean {
  * @param meta Provided `import.meta` object.
  * @param testSuite Test suite that should be executed.
  */
-export default function runSuiteIfMainModule(meta: {url: string}, testSuite: () => Mocha.Suite): void {
+export default function runSuiteIfMainModule(meta: { url: string }, testSuite: () => Mocha.Suite): void {
   if (isMainModule(meta)) {
     testSuite();
   }

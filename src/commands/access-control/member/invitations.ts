@@ -1,7 +1,7 @@
 /*---------------------------------------------------------------------------------------------
-* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
-* See LICENSE.md in the project root for license terms and full copyright notice.
-*--------------------------------------------------------------------------------------------*/
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
 
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
@@ -19,8 +19,8 @@ export default class AccessControlMemberInvitations extends BaseCommand {
   public static examples = [
     {
       command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51`,
-      description: 'Example 1:'
-    }
+      description: "Example 1:",
+    },
   ];
 
   public static flags = {
@@ -28,14 +28,14 @@ export default class AccessControlMemberInvitations extends BaseCommand {
       description: "The ID of the iTwin whose member invitations you want to retrieve.",
     }),
   };
-  
+
   public async run(): Promise<Invitation[]> {
     const { flags } = await this.parse(AccessControlMemberInvitations);
-  
+
     const client = await this.getAccessControlMemberClient();
-  
+
     const response = await client.getMemberInvitations(flags["itwin-id"]);
-  
+
     return this.logAndReturnResult(response.invitations);
   }
 }

@@ -1,7 +1,7 @@
 /*---------------------------------------------------------------------------------------------
-* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
-* See LICENSE.md in the project root for license terms and full copyright notice.
-*--------------------------------------------------------------------------------------------*/
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
 
 import { Command, Flags } from "@oclif/core";
 
@@ -11,13 +11,14 @@ import { customFlags } from "../../extensions/custom-flags.js";
 import { Query } from "../../services/iTwin-api-client.js";
 
 export default class ApiRequest extends BaseCommand {
-  public static apiReference : ApiReference = {
+  public static apiReference: ApiReference = {
     link: "https://developer.bentley.com/apis/",
     name: "ITwin Platform APIs docs",
     sectionName: "APIs Docs Reference",
   };
 
-  public static description = "Make direct HTTP requests to any iTwin Platform API endpoint. Useful for custom operations or accessing APIs without dedicated commands.";
+  public static description =
+    "Make direct HTTP requests to any iTwin Platform API endpoint. Useful for custom operations or accessing APIs without dedicated commands.";
 
   public static examples: Command.Example[] = [
     {
@@ -42,11 +43,11 @@ export default class ApiRequest extends BaseCommand {
       description: "Example 5: Sending a post request (Windows PowerShell)",
     },
   ];
-  
+
   public static flags = {
     body: customFlags.noSchemaJson({
       description: "The body to include in the request. It must be serialized JSON.",
-      helpValue: '<string>',
+      helpValue: "<string>",
     }),
     "empty-response": Flags.boolean({
       description: "Indicates the request will not return a response body.",
@@ -54,52 +55,57 @@ export default class ApiRequest extends BaseCommand {
     header: Flags.string({
       description: "Headers to include in the request. Use the format 'HeaderName: value'.",
       flag: "h",
-      helpValue: '<string>',
+      helpValue: "<string>",
       multiple: true,
     }),
     method: Flags.string({
       description: "HTTP method for the request.",
-      helpValue: '<string>',
+      helpValue: "<string>",
       options: ["GET", "POST", "PUT", "DELETE", "PATCH"],
       required: true,
     }),
     path: Flags.string({
       description: "API endpoint path to send the request to.",
-      helpValue: '<string>',
+      helpValue: "<string>",
       required: true,
     }),
     query: Flags.string({
       description: "URL query parameters for the request. Use format 'QueryKey:value'.",
-      helpValue: '<string>',
+      helpValue: "<string>",
       multiple: true,
     }),
     "version-header": Flags.string({
       description: "API version header for versioned endpoints.",
-      helpValue: '<string>',
+      helpValue: "<string>",
     }),
   };
-  
+
   public async run(): Promise<unknown> {
     const { flags } = await this.parse(ApiRequest);
-  
-    const mappedHeaders: Record<string, string> = flags.header?.reduce((acc, header) => {
-      const [key, value] = header.split(":");
-      acc[key] = value.trim();
-      return acc;
-    }, {} as Record<string, string>) || {};
 
-    const queries: Query[] | undefined = flags.query?.map((query) => {
-      const indexOfColon = query.indexOf(":");
-      if (indexOfColon === -1) {
-        this.error(`Invalid query format: ${query}. Expected format is 'key:value'.`);
-      }
-            
-      // Split the query string into key and value
-      const key = query.slice(0, indexOfColon).trim();
-      const value = query.slice(indexOfColon + 1).trim();
+    const mappedHeaders: Record<string, string> =
+      flags.header?.reduce(
+        (acc, header) => {
+          const [key, value] = header.split(":");
+          acc[key] = value.trim();
+          return acc;
+        },
+        {} as Record<string, string>,
+      ) || {};
 
-      return { key, value };
-    }) || undefined;
+    const queries: Query[] | undefined =
+      flags.query?.map((query) => {
+        const indexOfColon = query.indexOf(":");
+        if (indexOfColon === -1) {
+          this.error(`Invalid query format: ${query}. Expected format is 'key:value'.`);
+        }
+
+        // Split the query string into key and value
+        const key = query.slice(0, indexOfColon).trim();
+        const value = query.slice(indexOfColon + 1).trim();
+
+        return { key, value };
+      }) || undefined;
 
     const client = await this.getITwinApiClient();
 
@@ -109,12 +115,12 @@ export default class ApiRequest extends BaseCommand {
       body: flags.body,
       headers: mappedHeaders,
       method: flags.method as "DELETE" | "GET" | "PATCH" | "POST" | "PUT",
-      query: queries
+      query: queries,
     };
 
     if (flags["empty-response"]) {
       await client.sendRequestNoResponse(requestOptions);
-      return this.logAndReturnResult({result: "success"});
+      return this.logAndReturnResult({ result: "success" });
     }
 
     const response = await client.sendRequest<unknown>(requestOptions);
