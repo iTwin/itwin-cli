@@ -35,7 +35,7 @@ const tests = () =>
       const updatedType = "Type1";
 
       const { result: updatedITwin } = await runCommand<ITwin>(
-        `itwin update --itwin-id ${testITwinId} --geographic-location "${updatedGeographicLocation}" --iana-time-zone ${updatedIanaTimeZone} --name ${updatedDisplayName} --number ${updatedNumber} --status ${updatedStatus} --type ${updatedType}`
+        `itwin update --itwin-id ${testITwinId} --geographic-location "${updatedGeographicLocation}" --iana-time-zone ${updatedIanaTimeZone} --name ${updatedDisplayName} --number ${updatedNumber} --status ${updatedStatus} --type ${updatedType}`,
       );
 
       expect(updatedITwin).to.not.be.undefined;

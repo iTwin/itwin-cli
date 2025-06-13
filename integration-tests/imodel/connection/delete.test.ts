@@ -27,7 +27,7 @@ const tests = () =>
       const testFile = await createFile(rootFolderId, "test.zip", "integration-tests/test.zip");
       testFileId = testFile.id as string;
       const { result: createdConnection } = await runCommand<StorageConnection>(
-        `imodel connection create -m ${testIModelId} -f ${testFileId} --connector-type MSTN -n TestConnection`
+        `imodel connection create -m ${testIModelId} -f ${testFileId} --connector-type MSTN -n TestConnection`,
       );
       expect(createdConnection).to.not.be.undefined;
       connectionId = createdConnection!.id!;

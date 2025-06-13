@@ -24,11 +24,11 @@ const tests = () =>
       const testITwin = await createITwin(`cli-itwin-integration-test-${new Date().toISOString()}`, "Thing", "Asset");
       testITwinId = testITwin.id as string;
       const { result: testIModel1 } = await runCommand<IModel>(
-        `imodel create --itwin-id ${testITwinId} --name "${testIModelName1}" --description "${testIModelDescription1}"`
+        `imodel create --itwin-id ${testITwinId} --name "${testIModelName1}" --description "${testIModelDescription1}"`,
       );
       testIModelId1 = testIModel1!.id;
       const { result: testIModel2 } = await runCommand<IModel>(
-        `imodel create --itwin-id ${testITwinId} --name "${testIModelName2}" --description "${testIModelDescription2}"`
+        `imodel create --itwin-id ${testITwinId} --name "${testIModelName2}" --description "${testIModelDescription2}"`,
       );
       testIModelId2 = testIModel2!.id;
     });
@@ -79,25 +79,19 @@ const tests = () =>
     });
 
     it("should order returned results", async () => {
-      const { result: iModelListAsc } = await runCommand<IModel[]>(
-        `imodel list --itwin-id ${testITwinId} --order-by "createdDateTime asc"`
-      );
+      const { result: iModelListAsc } = await runCommand<IModel[]>(`imodel list --itwin-id ${testITwinId} --order-by "createdDateTime asc"`);
       expect(iModelListAsc).to.not.be.undefined;
       expect(iModelListAsc).to.have.lengthOf(2);
       expect(new Date(iModelListAsc![0].createdDateTime)).to.be.lessThanOrEqual(new Date(iModelListAsc![1].createdDateTime));
 
-      const { result: iModelListDesc } = await runCommand<IModel[]>(
-        `imodel list --itwin-id ${testITwinId} --order-by "createdDateTime desc"`
-      );
+      const { result: iModelListDesc } = await runCommand<IModel[]>(`imodel list --itwin-id ${testITwinId} --order-by "createdDateTime desc"`);
       expect(iModelListDesc).to.not.be.undefined;
       expect(iModelListDesc).to.have.lengthOf(2);
       expect(new Date(iModelListDesc![0].createdDateTime)).to.be.greaterThanOrEqual(new Date(iModelListDesc![1].createdDateTime));
     });
 
     it("should search iModels by name", async () => {
-      const { result: iModelList } = await runCommand<IModel[]>(
-        `imodel list --itwin-id ${testITwinId} --search "1-cli-imodel-integration-test"`
-      );
+      const { result: iModelList } = await runCommand<IModel[]>(`imodel list --itwin-id ${testITwinId} --search "1-cli-imodel-integration-test"`);
       expect(iModelList).to.not.be.undefined;
       expect(iModelList).to.have.lengthOf(1);
       expect(iModelList!.some((imodel) => imodel.id === testIModelId1)).to.be.true;
@@ -105,9 +99,7 @@ const tests = () =>
     });
 
     it("should search iModels by description", async () => {
-      const { result: iModelList } = await runCommand<IModel[]>(
-        `imodel list --itwin-id ${testITwinId} --search "${testIModelDescription2}"`
-      );
+      const { result: iModelList } = await runCommand<IModel[]>(`imodel list --itwin-id ${testITwinId} --search "${testIModelDescription2}"`);
       expect(iModelList).to.not.be.undefined;
       expect(iModelList).to.have.lengthOf(1);
       expect(iModelList!.some((imodel) => imodel.id === testIModelId1)).to.be.false;

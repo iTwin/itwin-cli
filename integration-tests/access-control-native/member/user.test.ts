@@ -32,16 +32,14 @@ const tests = () =>
     });
 
     it("Should add an internal member to an iTwin and remove user member", async () => {
-      const { result: newRole } = await runCommand<Role>(
-        `access-control role create -i ${iTwinId} -n "Test Role 1" -d "Test Role Description"`
-      );
+      const { result: newRole } = await runCommand<Role>(`access-control role create -i ${iTwinId} -n "Test Role 1" -d "Test Role Description"`);
       expect(newRole).to.not.be.undefined;
       expect(newRole!.id).to.not.be.undefined;
 
       const emailToAdd = ITP_TEST_USER_SAMEORG;
 
       const { result: invitedUser } = await runCommand<MembersResponse>(
-        `access-control member user add --itwin-id ${iTwinId} --members "[{"email": "${emailToAdd}", "roleIds": ["${newRole!.id}"]}]"`
+        `access-control member user add --itwin-id ${iTwinId} --members "[{"email": "${emailToAdd}", "roleIds": ["${newRole!.id}"]}]"`,
       );
 
       expect(invitedUser).to.not.be.undefined;
@@ -59,7 +57,7 @@ const tests = () =>
       expect(joinedUser?.roles[0].id).to.be.equal(newRole!.id);
 
       const { result: deleteResult } = await runCommand<{ result: string }>(
-        `access-control member user delete --itwin-id ${iTwinId} --member-id ${joinedUser?.id}`
+        `access-control member user delete --itwin-id ${iTwinId} --member-id ${joinedUser?.id}`,
       );
       expect(deleteResult).to.not.be.undefined;
       expect(deleteResult).to.have.property("result", "deleted");

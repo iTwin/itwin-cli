@@ -27,38 +27,32 @@ const tests = () => {
     iTwinId = iTwin!.id!;
 
     const { result: group1 } = await runCommand<Group>(
-      `access-control group create --itwin-id ${iTwinId} --name "Test Group #1" --description "Test Group Description"`
+      `access-control group create --itwin-id ${iTwinId} --name "Test Group #1" --description "Test Group Description"`,
     );
     expect(group1?.id).to.not.be.undefined;
     groupId1 = group1!.id!;
 
     const { result: group2 } = await runCommand<Group>(
-      `access-control group create --itwin-id ${iTwinId} --name "Test Group #2" --description "Test Group Description"`
+      `access-control group create --itwin-id ${iTwinId} --name "Test Group #2" --description "Test Group Description"`,
     );
     expect(group2?.id).to.not.be.undefined;
     groupId2 = group2!.id!;
 
     const { result: group3 } = await runCommand<Group>(
-      `access-control group create --itwin-id ${iTwinId} --name "Test Group #3" --description "Test Group Description"`
+      `access-control group create --itwin-id ${iTwinId} --name "Test Group #3" --description "Test Group Description"`,
     );
     expect(group3?.id).to.not.be.undefined;
     groupId3 = group3!.id!;
 
-    const { result: role1 } = await runCommand<Role>(
-      `access-control role create -i ${iTwinId} -n "Test Role #1" -d "Test Role Description"`
-    );
+    const { result: role1 } = await runCommand<Role>(`access-control role create -i ${iTwinId} -n "Test Role #1" -d "Test Role Description"`);
     expect(role1?.id).to.not.be.undefined;
     roleId1 = role1!.id!;
 
-    const { result: role2 } = await runCommand<Role>(
-      `access-control role create -i ${iTwinId} -n "Test Role #2" -d "Test Role Description"`
-    );
+    const { result: role2 } = await runCommand<Role>(`access-control role create -i ${iTwinId} -n "Test Role #2" -d "Test Role Description"`);
     expect(role2?.id).to.not.be.undefined;
     roleId2 = role2!.id!;
 
-    const { result: role3 } = await runCommand<Role>(
-      `access-control role create -i ${iTwinId} -n "Test Role #3" -d "Test Role Description"`
-    );
+    const { result: role3 } = await runCommand<Role>(`access-control role create -i ${iTwinId} -n "Test Role #3" -d "Test Role Description"`);
     expect(role3?.id).to.not.be.undefined;
     roleId3 = role3!.id!;
   });
@@ -77,7 +71,7 @@ const tests = () => {
     ]);
 
     const { result: createResult } = await runCommand<GroupMemberInfo[]>(
-      `access-control member group add --itwin-id ${iTwinId} --groups ${serializedGroupsInfo}`
+      `access-control member group add --itwin-id ${iTwinId} --groups ${serializedGroupsInfo}`,
     );
     expect(createResult).to.not.be.undefined;
     expect(createResult).to.have.lengthOf(1);
@@ -87,21 +81,19 @@ const tests = () => {
     expect(createResult![0].roles).to.have.lengthOf(1);
     expect(createResult![0].roles![0].id).to.be.equal(roleId1);
 
-    const { result: infoResult } = await runCommand<GroupMemberInfo>(
-      `access-control member group info --itwin-id ${iTwinId} --group-id ${groupId1}`
-    );
+    const { result: infoResult } = await runCommand<GroupMemberInfo>(`access-control member group info --itwin-id ${iTwinId} --group-id ${groupId1}`);
     expect(infoResult).to.not.be.undefined;
     expect(infoResult!.id).to.not.be.undefined;
     expect(infoResult!.id).to.be.equal(groupId1);
 
     const { result: additionalRole } = await runCommand<Role>(
-      `access-control role create -i ${iTwinId} -n "One More Test Role" -d "One More Test Role Description"`
+      `access-control role create -i ${iTwinId} -n "One More Test Role" -d "One More Test Role Description"`,
     );
     expect(additionalRole).to.not.be.undefined;
     expect(additionalRole!.id).to.not.be.undefined;
 
     const { result: updateResult } = await runCommand<GroupMemberInfo>(
-      `access-control member group update --itwin-id ${iTwinId} --group-id ${groupId1} --role-id ${roleId1} --role-id ${additionalRole!.id}`
+      `access-control member group update --itwin-id ${iTwinId} --group-id ${groupId1} --role-id ${roleId1} --role-id ${additionalRole!.id}`,
     );
     expect(updateResult).to.not.be.undefined;
     expect(updateResult!.id).to.not.be.undefined;
@@ -122,9 +114,7 @@ const tests = () => {
     expect(resultList![0].roles![0].id).to.be.equal(roleId1);
     expect(resultList![0].roles![1].id).to.be.equal(additionalRole!.id);
 
-    const { result: deleteResult } = await runCommand<{ result: string }>(
-      `access-control member group delete --itwin-id ${iTwinId} --group-id ${groupId1}`
-    );
+    const { result: deleteResult } = await runCommand<{ result: string }>(`access-control member group delete --itwin-id ${iTwinId} --group-id ${groupId1}`);
     expect(deleteResult).to.have.property("result", "deleted");
   });
 
@@ -145,7 +135,7 @@ const tests = () => {
     ];
 
     const { result: createResult } = await runCommand<GroupMemberInfo[]>(
-      `access-control member group add --itwin-id ${iTwinId} --groups ${JSON.stringify(groupsInfo)}`
+      `access-control member group add --itwin-id ${iTwinId} --groups ${JSON.stringify(groupsInfo)}`,
     );
     expect(createResult).to.not.be.undefined;
     expect(createResult).to.have.lengthOf(3);
@@ -154,19 +144,13 @@ const tests = () => {
       expect(createResult![i].roles.map((role) => role.id)).to.be.deep.equal(groupInfo.roleIds);
     }
 
-    const { result: deleteResult1 } = await runCommand<{ result: string }>(
-      `access-control member group delete --itwin-id ${iTwinId} --group-id ${groupId1}`
-    );
+    const { result: deleteResult1 } = await runCommand<{ result: string }>(`access-control member group delete --itwin-id ${iTwinId} --group-id ${groupId1}`);
     expect(deleteResult1).to.have.property("result", "deleted");
 
-    const { result: deleteResult2 } = await runCommand<{ result: string }>(
-      `access-control member group delete --itwin-id ${iTwinId} --group-id ${groupId2}`
-    );
+    const { result: deleteResult2 } = await runCommand<{ result: string }>(`access-control member group delete --itwin-id ${iTwinId} --group-id ${groupId2}`);
     expect(deleteResult2).to.have.property("result", "deleted");
 
-    const { result: deleteResult3 } = await runCommand<{ result: string }>(
-      `access-control member group delete --itwin-id ${iTwinId} --group-id ${groupId3}`
-    );
+    const { result: deleteResult3 } = await runCommand<{ result: string }>(`access-control member group delete --itwin-id ${iTwinId} --group-id ${groupId3}`);
     expect(deleteResult3).to.have.property("result", "deleted");
   });
 
@@ -175,7 +159,7 @@ const tests = () => {
     const roleIds = [roleId1, roleId2, roleId3];
 
     const { result: resultCreate } = await runCommand<GroupMemberInfo[]>(
-      `access-control member group add --itwin-id ${iTwinId} --group-id ${groupIds[0]} --group-id ${groupIds[1]} --group-id ${groupIds[2]} --role-ids ${roleIds.join(",")}`
+      `access-control member group add --itwin-id ${iTwinId} --group-id ${groupIds[0]} --group-id ${groupIds[1]} --group-id ${groupIds[2]} --role-ids ${roleIds.join(",")}`,
     );
     expect(resultCreate).to.not.be.undefined;
     expect(resultCreate).to.have.lengthOf(3);
@@ -185,17 +169,17 @@ const tests = () => {
     }
 
     const { result: deleteResult1 } = await runCommand<{ result: string }>(
-      `access-control member group delete --itwin-id ${iTwinId} --group-id ${groupIds[0]}`
+      `access-control member group delete --itwin-id ${iTwinId} --group-id ${groupIds[0]}`,
     );
     expect(deleteResult1).to.have.property("result", "deleted");
 
     const { result: deleteResult2 } = await runCommand<{ result: string }>(
-      `access-control member group delete --itwin-id ${iTwinId} --group-id ${groupIds[1]}`
+      `access-control member group delete --itwin-id ${iTwinId} --group-id ${groupIds[1]}`,
     );
     expect(deleteResult2).to.have.property("result", "deleted");
 
     const { result: deleteResult3 } = await runCommand<{ result: string }>(
-      `access-control member group delete --itwin-id ${iTwinId} --group-id ${groupIds[2]}`
+      `access-control member group delete --itwin-id ${iTwinId} --group-id ${groupIds[2]}`,
     );
     expect(deleteResult3).to.have.property("result", "deleted");
   });
@@ -219,13 +203,11 @@ const tests = () => {
     const roleIds = [roleId1, roleId2, roleId3];
 
     const { error: createError } = await runCommand<GroupMemberInfo[]>(
-      `access-control member group add --itwin-id ${iTwinId} --groups ${JSON.stringify(groupsInfo)} --group-id ${groupsInfo[0].groupId} --group-id ${groupsInfo[1].groupId} --group-id ${groupsInfo[2].groupId} --role-ids ${roleIds.join(",")}`
+      `access-control member group add --itwin-id ${iTwinId} --groups ${JSON.stringify(groupsInfo)} --group-id ${groupsInfo[0].groupId} --group-id ${groupsInfo[1].groupId} --group-id ${groupsInfo[2].groupId} --role-ids ${roleIds.join(",")}`,
     );
     expect(createError).to.not.be.undefined;
     expect(createError!.message).to.match(
-      new RegExp(
-        `--group-id=${groupsInfo[0].groupId},${groupsInfo[1].groupId},${groupsInfo[2].groupId} cannot also be provided when using --groups`
-      )
+      new RegExp(`--group-id=${groupsInfo[0].groupId},${groupsInfo[1].groupId},${groupsInfo[2].groupId} cannot also be provided when using --groups`),
     );
   });
 
@@ -249,7 +231,7 @@ const tests = () => {
     ];
 
     const { error: createError } = await runCommand<GroupMemberInfo[]>(
-      `access-control member group add --itwin-id ${iTwinId} --group-id ${groupsInfo[0].groupId} --group-id ${groupsInfo[1].groupId} --group-id ${groupsInfo[2].groupId}`
+      `access-control member group add --itwin-id ${iTwinId} --group-id ${groupsInfo[0].groupId} --group-id ${groupsInfo[1].groupId} --group-id ${groupsInfo[2].groupId}`,
     );
     expect(createError).to.not.be.undefined;
     expect(createError!.message).to.match(/All of the following must be provided when using --group-id: --role-ids/);
@@ -258,9 +240,7 @@ const tests = () => {
   it("should return an error when only `--role-ids` flag is provided", async () => {
     const roleIds = [roleId1, roleId2, roleId3];
 
-    const { error: createError } = await runCommand<GroupMemberInfo[]>(
-      `access-control member group add --itwin-id ${iTwinId} --role-ids ${roleIds.join(",")}`
-    );
+    const { error: createError } = await runCommand<GroupMemberInfo[]>(`access-control member group add --itwin-id ${iTwinId} --role-ids ${roleIds.join(",")}`);
     expect(createError).to.not.be.undefined;
     expect(createError?.message).to.match(/All of the following must be provided when using --role-ids: --group-id/);
   });
@@ -283,7 +263,7 @@ const tests = () => {
 
   it("should return an error when invalid JSON is provided to `--groups` flag", async () => {
     const { error: createError } = await runCommand<GroupMemberInfo[]>(
-      `access-control member group add --itwin-id ${iTwinId} --groups not-a-serialized-json-string`
+      `access-control member group add --itwin-id ${iTwinId} --groups not-a-serialized-json-string`,
     );
     expect(createError).to.not.be.undefined;
     expect(createError?.message).to.match(/'not-a-serialized-json-string' is not valid serialized JSON./);
@@ -305,7 +285,7 @@ const tests = () => {
     ];
 
     const { error: createError } = await runCommand<GroupMemberInfo[]>(
-      `access-control member group add --itwin-id ${iTwinId} --groups ${JSON.stringify(groupsInfo)}`
+      `access-control member group add --itwin-id ${iTwinId} --groups ${JSON.stringify(groupsInfo)}`,
     );
 
     expect(createError).to.not.be.undefined;
@@ -329,7 +309,7 @@ const tests = () => {
     const serializedGroupsInfo = JSON.stringify(groups);
 
     const { error: createError } = await runCommand<GroupMemberInfo[]>(
-      `access-control member group add --itwin-id ${iTwinId} --groups ${serializedGroupsInfo}`
+      `access-control member group add --itwin-id ${iTwinId} --groups ${serializedGroupsInfo}`,
     );
     expect(createError).to.not.be.undefined;
     expect(createError!.message).to.be.equal("A maximum of 50 role assignments can be performed.");

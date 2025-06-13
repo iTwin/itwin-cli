@@ -10,8 +10,7 @@ import BaseCommand from "../../extensions/base-command.js";
 export default class Login extends BaseCommand {
   public static customDocs = true;
 
-  public static description =
-    "Authenticate itp with Bentley. This command initiates the login process to obtain the necessary authentication tokens.";
+  public static description = "Authenticate itp with Bentley. This command initiates the login process to obtain the necessary authentication tokens.";
 
   public static examples = [
     {

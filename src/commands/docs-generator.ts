@@ -61,8 +61,7 @@ export default class DocsGenerator extends BaseCommand {
 
         if (typeof example === "object") {
           // Do not display description for examples where only "Example #<number>:" is present
-          examplesText +=
-            example.description.slice(0, -2) === "Example " ? `\n${example.command}\n` : `\n# ${example.description}\n${example.command}\n`;
+          examplesText += example.description.slice(0, -2) === "Example " ? `\n${example.command}\n` : `\n# ${example.description}\n${example.command}\n`;
         }
       }
     }

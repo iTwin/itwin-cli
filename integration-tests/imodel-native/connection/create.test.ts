@@ -37,7 +37,7 @@ const tests = () =>
 
     it(`should create a 'User' authentication-type connection by default`, async () => {
       const { result } = await runCommand<StorageConnection>(
-        `imodel connection create -m ${testIModelId} -f ${testFileId} --connector-type SPPID -n TestConnection`
+        `imodel connection create -m ${testIModelId} -f ${testFileId} --connector-type SPPID -n TestConnection`,
       );
       expect(result).to.not.be.undefined;
       expect(result?.authenticationType).to.be.equal(AuthenticationType.USER);

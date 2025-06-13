@@ -14,9 +14,7 @@ const tests = () =>
 
     before(async () => {
       const date = new Date();
-      const iTwinRespone = await runCommand<ITwin>(
-        `itwin create --class Thing --sub-class Asset --name itwin-cli-test-${date.toISOString()}`
-      );
+      const iTwinRespone = await runCommand<ITwin>(`itwin create --class Thing --sub-class Asset --name itwin-cli-test-${date.toISOString()}`);
       expect(iTwinRespone.error).to.be.undefined;
       iTwin = iTwinRespone.result!;
       const iModelResponse = await runCommand<IModel>(`imodel create --name imodel-cli-test-${date.toISOString()} --itwin-id ${iTwin.id}`);
@@ -93,9 +91,7 @@ const tests = () =>
     });
 
     it("should send the header to the API (iModel representation)", async () => {
-      const minimalApiResponse = await runCommand(
-        `api --method GET --path imodels/?iTwinId=${iTwin.id} --header "Prefer: return=representation"`
-      );
+      const minimalApiResponse = await runCommand(`api --method GET --path imodels/?iTwinId=${iTwin.id} --header "Prefer: return=representation"`);
       expect(minimalApiResponse.error).to.be.undefined;
       const minimalApiResponseJSON = JSON.parse(minimalApiResponse.stdout);
 
@@ -107,9 +103,7 @@ const tests = () =>
     });
 
     it("should handle version header correctly (Echo V1)", async () => {
-      const apiResponse = await runCommand(
-        `api --method GET --path echo/context --version-header application/vnd.bentley.itwin-platform.v1+json`
-      );
+      const apiResponse = await runCommand(`api --method GET --path echo/context --version-header application/vnd.bentley.itwin-platform.v1+json`);
       expect(apiResponse.error).to.be.undefined;
       const apiResponseJSON = JSON.parse(apiResponse.stdout);
 

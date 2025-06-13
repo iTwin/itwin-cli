@@ -18,13 +18,7 @@ import { FileTyped } from "../../src/services/storage-client/models/file-typed.j
 import { FileUpload } from "../../src/services/storage-client/models/file-upload.js";
 import { FolderTyped } from "../../src/services/storage-client/models/folder-typed.js";
 import { ItemsWithFolderLink } from "../../src/services/storage-client/models/items-with-folder-link.js";
-import {
-  ITP_ISSUER_URL,
-  ITP_MAILINATOR_API_KEY,
-  ITP_NATIVE_TEST_CLIENT_ID,
-  ITP_TEST_USER_EMAIL,
-  ITP_TEST_USER_PASSWORD,
-} from "./environment.js";
+import { ITP_ISSUER_URL, ITP_MAILINATOR_API_KEY, ITP_NATIVE_TEST_CLIENT_ID, ITP_TEST_USER_EMAIL, ITP_TEST_USER_PASSWORD } from "./environment.js";
 
 export async function serviceLoginToCli(): Promise<void> {
   const result = await runCommand("auth login");
@@ -34,7 +28,7 @@ export async function serviceLoginToCli(): Promise<void> {
 export async function createFile(folderId: string, displayName: string, filePath: string, description?: string): Promise<FileTyped> {
   // 1. Create meta data
   const { result: createdFile } = await runCommand<FileUpload>(
-    `storage file create --folder-id ${folderId} --name "${displayName}" --description "${description}"`
+    `storage file create --folder-id ${folderId} --name "${displayName}" --description "${description}"`,
   );
 
   expect(createdFile).to.have.property("_links");
@@ -47,9 +41,7 @@ export async function createFile(folderId: string, displayName: string, filePath
   const fileId = completeUrl!.split("/").at(-2);
 
   // 2. Upload file
-  const { result: uploadedFile } = await runCommand<{ result: string }>(
-    `storage file upload --upload-url "${uploadUrl}" --file-path ${filePath}`
-  );
+  const { result: uploadedFile } = await runCommand<{ result: string }>(`storage file upload --upload-url "${uploadUrl}" --file-path ${filePath}`);
 
   expect(uploadedFile).to.have.property("result", "uploaded");
 
@@ -64,7 +56,7 @@ export async function createFile(folderId: string, displayName: string, filePath
 
 export async function createFolder(parentFolderId: string, displayName: string, description?: string): Promise<FolderTyped> {
   const { result: createdFolder } = await runCommand<FolderTyped>(
-    `storage folder create --parent-folder-id ${parentFolderId} --name "${displayName}" --description "${description}"`
+    `storage folder create --parent-folder-id ${parentFolderId} --name "${displayName}" --description "${description}"`,
   );
 
   expect(createdFolder).to.not.be.undefined;
@@ -75,9 +67,7 @@ export async function createFolder(parentFolderId: string, displayName: string, 
 }
 
 export async function createITwin(displayName: string, classType: string, subClassType: string): Promise<ITwin> {
-  const { result: createdITwin } = await runCommand<ITwin>(
-    `itwin create --name "${displayName}" --class ${classType} --sub-class ${subClassType}`
-  );
+  const { result: createdITwin } = await runCommand<ITwin>(`itwin create --name "${displayName}" --class ${classType} --sub-class ${subClassType}`);
 
   expect(createdITwin).to.not.be.undefined;
   expect(createdITwin).to.have.property("id");

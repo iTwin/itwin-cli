@@ -58,22 +58,7 @@ export default class PopulateIModel extends BaseCommand {
       description: `Specify connectors to use for synchronization. This option can be provided multiple times. If no connector-type options are provided, they are selected automatically depending on file extensions of provided files. If only one connector is specified, it will be used for all files. If multiple connectors are specified, each connector will be used for the corresponding file in the files list (first connector for the first file, second connector for the second file, and so on).\n NOTE: .dgn and .dwg file types can be associated with multiple connector types. When no 'connector-type' options are provided, connectors for those file types are assigned as follows: .dgn => MSTN, .dwg => DWG `,
       helpValue: "<string>",
       multiple: true,
-      options: [
-        "AUTOPLANT",
-        "CIVIL",
-        "CIVIL3D",
-        "DWG",
-        "GEOSPATIAL",
-        "IFC",
-        "MSTN",
-        "NWD",
-        "OBD",
-        "OPENTOWER",
-        "PROSTRUCTURES",
-        "REVIT",
-        "SPPID",
-        "SPXREVIEW",
-      ],
+      options: ["AUTOPLANT", "CIVIL", "CIVIL3D", "DWG", "GEOSPATIAL", "IFC", "MSTN", "NWD", "OBD", "OPENTOWER", "PROSTRUCTURES", "REVIT", "SPPID", "SPXREVIEW"],
       required: false,
       type: "option",
     }),
@@ -98,7 +83,7 @@ export default class PopulateIModel extends BaseCommand {
 
     if (flags["connector-type"] && flags["connector-type"].length !== 1 && flags.file.length !== flags["connector-type"].length) {
       this.error(
-        "When multiple connector-type options are provided, their amount must match file option amount. Alternatively, you can provide a single connector-type option, which will then be applied to all file options. You can also provide no connector-type options, in which case the command will attempt automatic detection."
+        "When multiple connector-type options are provided, their amount must match file option amount. Alternatively, you can provide a single connector-type option, which will then be applied to all file options. You can also provide no connector-type options, in which case the command will attempt automatic detection.",
       );
     }
 
@@ -113,9 +98,7 @@ export default class PopulateIModel extends BaseCommand {
       this.error(`Unable to get root folder for iTwin: ${iModel.iTwinId}`);
     }
 
-    const files = await Promise.all(
-      filesAndConnectorToImport.map(async (newFileInfo) => this.processFile(topFolders, rootFolderId, newFileInfo))
-    );
+    const files = await Promise.all(filesAndConnectorToImport.map(async (newFileInfo) => this.processFile(topFolders, rootFolderId, newFileInfo)));
 
     this.log(`Checking existing connections for iModel ID: ${iModel.id}`);
     const existingConnections = await this.runCommand<StorageConnectionListResponse>("imodel:connection:list", ["--imodel-id", iModel.id]);
@@ -164,7 +147,7 @@ export default class PopulateIModel extends BaseCommand {
   private async addFileToConnectionIfItIsNotPresent(
     connectionId: string,
     sourceFiles: SourceFile[],
-    file: { connectorType: ConnectorType; fileId: string; fileName: string }
+    file: { connectorType: ConnectorType; fileId: string; fileName: string },
   ): Promise<void> {
     const fileExist = sourceFiles.find((f) => f.storageFileId === file.fileId);
     if (!fileExist) {
@@ -234,7 +217,7 @@ export default class PopulateIModel extends BaseCommand {
   private async findOrCreateDefaultConnection(
     existingConnections: StorageConnection[],
     files: { connectorType: ConnectorType; fileId: string; fileName: string }[],
-    iModelId: string
+    iModelId: string,
   ): Promise<string> {
     let defaultConnection = existingConnections.find((connection) => connection.displayName === "Default iTwinCLI Connection");
     if (!defaultConnection) {
@@ -259,13 +242,8 @@ export default class PopulateIModel extends BaseCommand {
       }
     }
 
-    const connectionSourceFiles = await this.runCommand<SourceFile[]>("imodel:connection:sourcefile:list", [
-      "--connection-id",
-      defaultConnection.id,
-    ]);
-    await Promise.all(
-      files.map(async (file) => this.addFileToConnectionIfItIsNotPresent(defaultConnection.id, connectionSourceFiles, file))
-    );
+    const connectionSourceFiles = await this.runCommand<SourceFile[]>("imodel:connection:sourcefile:list", ["--connection-id", defaultConnection.id]);
+    await Promise.all(files.map(async (file) => this.addFileToConnectionIfItIsNotPresent(defaultConnection.id, connectionSourceFiles, file)));
 
     this.log(`Running connection for connection ID: ${defaultConnection.id}`);
     await this.runCommand("imodel:connection:run:create", ["--connection-id", defaultConnection.id]);
@@ -275,7 +253,7 @@ export default class PopulateIModel extends BaseCommand {
   private async processFile(
     topFolders: ItemsWithFolderLink,
     rootFolderId: string,
-    fileInfo: NewFileInfo
+    fileInfo: NewFileInfo,
   ): Promise<{ connectorType: ConnectorType; fileId: string; fileName: string }> {
     this.log(`Processing file: ${fileInfo.fileName}`);
     const fileExists = topFolders.items?.find((entry) => entry.type === FolderTypedType.FOLDER && entry.displayName === fileInfo.fileName);
@@ -304,12 +282,7 @@ export default class PopulateIModel extends BaseCommand {
     const runId = storageConnection?._links?.lastRun?.href.split("/")[8];
     let storageConnectionRun;
     do {
-      storageConnectionRun = await this.runCommand<StorageRun>("imodel:connection:run:info", [
-        "--connection-id",
-        connectionId,
-        "--connection-run-id",
-        runId,
-      ]);
+      storageConnectionRun = await this.runCommand<StorageRun>("imodel:connection:run:info", ["--connection-id", connectionId, "--connection-run-id", runId]);
 
       await new Promise((resolve) => {
         setTimeout(resolve, 10_000);
@@ -319,7 +292,7 @@ export default class PopulateIModel extends BaseCommand {
 
     if (waitForCompletion && storageConnectionRun.result !== ExecutionResult.SUCCESS) {
       this.error(
-        `Synchronization run ${runId} resulted in an error. Run 'itp imodel connection run info --connection-id ${connectionId} --connection-run-id ${runId}' for more info.`
+        `Synchronization run ${runId} resulted in an error. Run 'itp imodel connection run info --connection-id ${connectionId} --connection-run-id ${runId}' for more info.`,
       );
     }
 

@@ -27,7 +27,7 @@ const tests = () =>
       const testFile = await createFile(rootFolderId, "test.zip", "integration-tests/test.zip");
       testFileId = testFile.id as string;
       const { result: createdConnection } = await runCommand<StorageConnection>(
-        `imodel connection create -m ${testIModelId} -f ${testFileId} --connector-type MSTN -n TestConnection --authentication-type User`
+        `imodel connection create -m ${testIModelId} -f ${testFileId} --connector-type MSTN -n TestConnection --authentication-type User`,
       );
       expect(createdConnection).to.not.be.undefined;
       connectionId = createdConnection!.id!;
@@ -42,9 +42,7 @@ const tests = () =>
     });
 
     it("should update the name of the connection", async () => {
-      const { result: connection } = await runCommand<StorageConnection>(
-        `imodel connection update -c ${connectionId} -n "New Connection Name"`
-      );
+      const { result: connection } = await runCommand<StorageConnection>(`imodel connection update -c ${connectionId} -n "New Connection Name"`);
 
       expect(connection).to.not.be.undefined;
       expect(connection).to.have.property("id");

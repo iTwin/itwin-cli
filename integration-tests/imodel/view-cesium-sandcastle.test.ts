@@ -37,7 +37,7 @@ const tests = () =>
         const rootFolderId = await getRootFolderId(testITwinId);
         await createFile(rootFolderId, testFileName, testFilePath);
         const { result: populateResult } = await runCommand<PopulateResponse>(
-          `imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type MSTN`
+          `imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type MSTN`,
         );
         expect(populateResult).to.have.property("iModelId", testIModelId);
         expect(populateResult).to.have.property("iTwinId", testITwinId);
@@ -58,15 +58,13 @@ const tests = () =>
       const base64String = result!.url.slice("https://sandcastle.cesium.com/#c=".length);
       const dataString = decodeCompressedBase64(base64String);
       const pattern = new RegExp(
-        'const viewer = new Cesium.Viewer("cesiumContainer",{})'.replaceAll("(", "\\(").replaceAll(")", "\\)").replaceAll('"', '\\\\"')
+        'const viewer = new Cesium.Viewer("cesiumContainer",{})'.replaceAll("(", "\\(").replaceAll(")", "\\)").replaceAll('"', '\\\\"'),
       );
       expect(dataString).to.match(pattern);
     });
 
     it(`should use cesium world terrain, when '--terrain cesiumWorldTerrain' is provided`, async () => {
-      const { result } = await runCommand<{ url: string }>(
-        `imodel view cesium-sandcastle --imodel-id ${testIModelId} --terrain cesiumWorldTerrain`
-      );
+      const { result } = await runCommand<{ url: string }>(`imodel view cesium-sandcastle --imodel-id ${testIModelId} --terrain cesiumWorldTerrain`);
       expect(result).to.not.be.undefined;
       expect(result!.url).to.not.be.undefined;
 
@@ -76,7 +74,7 @@ const tests = () =>
         'const viewer = new Cesium.Viewer("cesiumContainer",{terrain: Cesium.Terrain.fromWorldTerrain(),})'
           .replaceAll("(", "\\(")
           .replaceAll(")", "\\)")
-          .replaceAll('"', '\\\\"')
+          .replaceAll('"', '\\\\"'),
       );
       expect(dataString).to.match(pattern);
     });

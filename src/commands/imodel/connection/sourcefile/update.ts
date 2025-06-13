@@ -35,22 +35,7 @@ export default class ConnectionSourceFileUpdate extends BaseCommand {
     "connector-type": Flags.string({
       description: "The connector type for synchronization.",
       helpValue: "<string>",
-      options: [
-        "AUTOPLANT",
-        "CIVIL",
-        "CIVIL3D",
-        "DWG",
-        "GEOSPATIAL",
-        "IFC",
-        "MSTN",
-        "NWD",
-        "OBD",
-        "OPENTOWER",
-        "PROSTRUCTURES",
-        "REVIT",
-        "SPPID",
-        "SPXREVIEW",
-      ],
+      options: ["AUTOPLANT", "CIVIL", "CIVIL3D", "DWG", "GEOSPATIAL", "IFC", "MSTN", "NWD", "OBD", "OPENTOWER", "PROSTRUCTURES", "REVIT", "SPPID", "SPXREVIEW"],
       required: true,
     }),
     "source-file-id": Flags.string({

@@ -6,8 +6,7 @@
 import BaseCommand from "../../extensions/base-command.js";
 
 export default class Logout extends BaseCommand {
-  public static description =
-    "Log out of the Bentley authentication session. This command clears the current authentication tokens and configuration.";
+  public static description = "Log out of the Bentley authentication session. This command clears the current authentication tokens and configuration.";
 
   public static examples = [
     {

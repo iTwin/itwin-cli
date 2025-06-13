@@ -34,7 +34,7 @@ const tests = () =>
       const updatedDescription = "Updated test description";
 
       const { result: updatedFolder } = await runCommand<FolderTyped>(
-        `storage folder update --folder-id ${testFolderId} --name ${updatedDisplayName} --description "${updatedDescription}"`
+        `storage folder update --folder-id ${testFolderId} --name ${updatedDisplayName} --description "${updatedDescription}"`,
       );
 
       expect(updatedFolder).to.have.property("id", testFolderId);

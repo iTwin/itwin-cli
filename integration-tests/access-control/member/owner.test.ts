@@ -55,7 +55,7 @@ const tests = () => {
     expect(joinedUser).to.not.be.undefined;
 
     const { result: deletionResult } = await runCommand<{ result: string }>(
-      `access-control member owner delete --itwin-id ${iTwinId} --member-id ${joinedUser?.id}`
+      `access-control member owner delete --itwin-id ${iTwinId} --member-id ${joinedUser?.id}`,
     );
     expect(deletionResult).to.not.be.undefined;
     expect(deletionResult).to.have.property("result", "deleted");

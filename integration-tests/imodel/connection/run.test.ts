@@ -31,7 +31,7 @@ const tests = () =>
 
       const authenticationType = isNativeAuthAccessTokenCached() ? "User" : "Service";
       const { result: createdConnection } = await runCommand<StorageConnection>(
-        `imodel connection create -m ${testIModelId} -f ${testFileId} --connector-type MSTN -n TestConnection --authentication-type ${authenticationType}`
+        `imodel connection create -m ${testIModelId} -f ${testFileId} --connector-type MSTN -n TestConnection --authentication-type ${authenticationType}`,
       );
       expect(createdConnection).to.not.be.undefined;
       connectionId = createdConnection!.id!;
@@ -54,18 +54,14 @@ const tests = () =>
       expect(listResult?.runs).to.not.be.undefined;
       expect(listResult?.runs).to.have.lengthOf(1);
 
-      let { result: infoResult } = await runCommand<StorageRun>(
-        `imodel connection run info -c ${connectionId} --connection-run-id ${listResult?.runs[0].id}`
-      );
+      let { result: infoResult } = await runCommand<StorageRun>(`imodel connection run info -c ${connectionId} --connection-run-id ${listResult?.runs[0].id}`);
 
       while (infoResult?.state !== "Completed") {
         await new Promise((r) => {
           setTimeout(r, 10_000);
         });
 
-        const { result } = await runCommand<StorageRun>(
-          `imodel connection run info -c ${connectionId} --connection-run-id ${listResult?.runs[0].id}`
-        );
+        const { result } = await runCommand<StorageRun>(`imodel connection run info -c ${connectionId} --connection-run-id ${listResult?.runs[0].id}`);
         infoResult = result;
       }
 

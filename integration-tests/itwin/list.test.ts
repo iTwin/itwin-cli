@@ -17,15 +17,15 @@ const tests = () =>
 
     before(async () => {
       const result1 = await runCommand<ITwin>(
-        `itwin create --name IntegrationTestITwin_${new Date().toISOString()} --class Thing --sub-class Asset --type Type1 --number ${Math.random().toString(36).slice(2)}`
+        `itwin create --name IntegrationTestITwin_${new Date().toISOString()} --class Thing --sub-class Asset --type Type1 --number ${Math.random().toString(36).slice(2)}`,
       );
       testITwin1 = result1.result as ITwin;
       const result2 = await runCommand<ITwin>(
-        `itwin create --name IntegrationTestITwinChild_${new Date().toISOString()} --class Thing --sub-class Asset --parent-id ${testITwin1.id} --status Inactive`
+        `itwin create --name IntegrationTestITwinChild_${new Date().toISOString()} --class Thing --sub-class Asset --parent-id ${testITwin1.id} --status Inactive`,
       );
       testITwin1Child = result2.result as ITwin;
       const result3 = await runCommand<ITwin>(
-        `itwin create --name OtherIntegrationTestITwin_${new Date().toISOString()} --class Endeavor --sub-class Project --data-center-location "UK South" --iana-time-zone America/Los_Angeles --geographic-location "San Francisco, CA"`
+        `itwin create --name OtherIntegrationTestITwin_${new Date().toISOString()} --class Endeavor --sub-class Project --data-center-location "UK South" --iana-time-zone America/Los_Angeles --geographic-location "San Francisco, CA"`,
       );
       testITwin2 = result3.result as ITwin;
     });
@@ -89,9 +89,7 @@ const tests = () =>
     });
 
     it("should list itwin by type and number", async () => {
-      const { result: listResult } = await runCommand<ITwin[]>(
-        `itwin list --include-inactive --type ${testITwin1.type} --number ${testITwin1.number}`
-      );
+      const { result: listResult } = await runCommand<ITwin[]>(`itwin list --include-inactive --type ${testITwin1.type} --number ${testITwin1.number}`);
 
       expect(listResult).to.be.an("array").that.is.not.empty;
       expect(listResult!.some((itwin) => itwin.id === testITwin1.id!)).to.be.true;
@@ -100,9 +98,7 @@ const tests = () =>
     });
 
     it("should list itwin by parent and status", async () => {
-      const { result: listResult } = await runCommand<ITwin[]>(
-        `itwin list --parent-id ${testITwin1.id!} --status ${testITwin1Child.status}`
-      );
+      const { result: listResult } = await runCommand<ITwin[]>(`itwin list --parent-id ${testITwin1.id!} --status ${testITwin1Child.status}`);
 
       expect(listResult).to.be.an("array").that.is.not.empty;
       expect(listResult!.some((itwin) => itwin.id === testITwin1.id!)).to.be.false;

@@ -40,7 +40,7 @@ const tests = () =>
 
       const iModelName = `${testIModelName}-create1`;
       const { result: createdIModel } = await runCommand<IModel>(
-        `imodel create --itwin-id ${testITwinId} --name "${iModelName}" --description "${testIModelDescription}" --extent "${JSON.stringify(extent)}"`
+        `imodel create --itwin-id ${testITwinId} --name "${iModelName}" --description "${testIModelDescription}" --extent "${JSON.stringify(extent)}"`,
       );
 
       expect(createdIModel).to.not.be.undefined;
@@ -65,7 +65,7 @@ const tests = () =>
 
       const iModelName = `${testIModelName}-create2`;
       const { result: createdIModel } = await runCommand<IModel>(
-        `imodel create --itwin-id ${testITwinId} --name "${iModelName}" --description "${testIModelDescription}" --ne-latitude ${extent.northEast.latitude} --ne-longitude ${extent.northEast.longitude} --sw-latitude ${extent.southWest.latitude} --sw-longitude ${extent.southWest.longitude}`
+        `imodel create --itwin-id ${testITwinId} --name "${iModelName}" --description "${testIModelDescription}" --ne-latitude ${extent.northEast.latitude} --ne-longitude ${extent.northEast.longitude} --sw-latitude ${extent.southWest.latitude} --sw-longitude ${extent.southWest.longitude}`,
       );
 
       expect(createdIModel).to.not.be.undefined;
@@ -90,7 +90,7 @@ const tests = () =>
 
       const iModelName = `${testIModelName}-create2`;
       const { error: createError } = await runCommand<IModel>(
-        `imodel create --itwin-id ${testITwinId} --name "${iModelName}" --description "${testIModelDescription}" --extent "${JSON.stringify(extent)}" --ne-latitude ${extent.northEast.latitude} --ne-longitude ${extent.northEast.longitude} --sw-latitude ${extent.southWest.latitude} --sw-longitude ${extent.southWest.longitude}`
+        `imodel create --itwin-id ${testITwinId} --name "${iModelName}" --description "${testIModelDescription}" --extent "${JSON.stringify(extent)}" --ne-latitude ${extent.northEast.latitude} --ne-longitude ${extent.northEast.longitude} --sw-latitude ${extent.southWest.latitude} --sw-longitude ${extent.southWest.longitude}`,
       );
 
       expect(createError).to.not.be.undefined;
@@ -114,19 +114,17 @@ const tests = () =>
 
       const iModelName = `${testIModelName}-create2`;
       const { error: createError } = await runCommand<IModel>(
-        `imodel create --itwin-id ${testITwinId} --name "${iModelName}" --description "${testIModelDescription}" --ne-latitude ${extent.northEast.latitude} --ne-longitude ${extent.northEast.longitude} --sw-latitude ${extent.southWest.latitude}`
+        `imodel create --itwin-id ${testITwinId} --name "${iModelName}" --description "${testIModelDescription}" --ne-latitude ${extent.northEast.latitude} --ne-longitude ${extent.northEast.longitude} --sw-latitude ${extent.southWest.latitude}`,
       );
 
       expect(createError).to.not.be.undefined;
-      expect(createError?.message).to.match(
-        /All of the following must be provided when using --sw-latitude: --ne-latitude, --ne-longitude, --sw-longitude/
-      );
+      expect(createError?.message).to.match(/All of the following must be provided when using --sw-latitude: --ne-latitude, --ne-longitude, --sw-longitude/);
     });
 
     it("should return an error if a component of the provided extent is not a valid number", async () => {
       const iModelName = `${testIModelName}-create2`;
       const { error: createError } = await runCommand<IModel>(
-        `imodel create --itwin-id ${testITwinId} --name "${iModelName}" --description "${testIModelDescription}" --ne-latitude 46.302abc --ne-longitude 7.835 --sw-latitude 46.132 --sw-longitude 7.672`
+        `imodel create --itwin-id ${testITwinId} --name "${iModelName}" --description "${testIModelDescription}" --ne-latitude 46.302abc --ne-longitude 7.835 --sw-latitude 46.132 --sw-longitude 7.672`,
       );
 
       expect(createError).to.not.be.undefined;
@@ -136,7 +134,7 @@ const tests = () =>
     it("should return an error if a component of the provided extent is not valid JSON", async () => {
       const iModelName = `${testIModelName}-create2`;
       const { error: createError } = await runCommand<IModel>(
-        `imodel create --itwin-id ${testITwinId} --name "${iModelName}" --description "${testIModelDescription}" --extent not-valid-json`
+        `imodel create --itwin-id ${testITwinId} --name "${iModelName}" --description "${testIModelDescription}" --extent not-valid-json`,
       );
 
       expect(createError).to.not.be.undefined;
@@ -156,7 +154,7 @@ const tests = () =>
 
       const iModelName = `${testIModelName}-create2`;
       const { error: createError } = await runCommand<IModel>(
-        `imodel create --itwin-id ${testITwinId} --name "${iModelName}" --description "${testIModelDescription}" --extent ${JSON.stringify(extent)}`
+        `imodel create --itwin-id ${testITwinId} --name "${iModelName}" --description "${testIModelDescription}" --extent ${JSON.stringify(extent)}`,
       );
 
       expect(createError).to.not.be.undefined;

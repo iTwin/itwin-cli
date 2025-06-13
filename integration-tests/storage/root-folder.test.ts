@@ -51,9 +51,7 @@ const tests = () =>
     });
 
     it("should get the root folder with 2nd item only", async () => {
-      const { result: rootFolder } = await runCommand<ItemsWithFolderLink>(
-        `storage root-folder --itwin-id ${testITwin.id} --top 1 --skip 1`
-      );
+      const { result: rootFolder } = await runCommand<ItemsWithFolderLink>(`storage root-folder --itwin-id ${testITwin.id} --top 1 --skip 1`);
 
       expect(rootFolder).to.not.be.undefined;
       expect(rootFolder?.items).to.be.an("array").with.lengthOf(1);

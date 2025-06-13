@@ -37,17 +37,7 @@ export default class ListRepositories extends BaseCommand {
     class: Flags.string({
       description: "Specify a particular class of repositories to retrieve.",
       helpValue: "<string>",
-      options: [
-        "iModels",
-        "RealityData",
-        "Storage",
-        "Forms",
-        "Issues",
-        "SensorData",
-        "GeographicInformationSystem",
-        "Construction",
-        "Subsurface",
-      ],
+      options: ["iModels", "RealityData", "Storage", "Forms", "Issues", "SensorData", "GeographicInformationSystem", "Construction", "Subsurface"],
       required: false,
     }),
     "itwin-id": customFlags.iTwinIDFlag({

@@ -33,9 +33,7 @@ const tests = () =>
 
         await runCommand<ResultResponse>(`changed-elements enable --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
 
-        const { result } = await runCommand<PopulateResponse>(
-          `imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type MSTN`
-        );
+        const { result } = await runCommand<PopulateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type MSTN`);
         expect(result).to.have.property("iModelId", testIModelId);
         expect(result).to.have.property("iTwinId", testITwinId);
       } else {
@@ -58,9 +56,7 @@ const tests = () =>
       expect(listResult).to.not.be.undefined;
       expect(listResult).to.have.lengthOf(15);
 
-      const { result: infoResult } = await runCommand<Changeset>(
-        `imodel changeset info --imodel-id ${testIModelId} --changeset-id ${listResult![0].id}`
-      );
+      const { result: infoResult } = await runCommand<Changeset>(`imodel changeset info --imodel-id ${testIModelId} --changeset-id ${listResult![0].id}`);
       expect(infoResult).to.not.be.undefined;
     });
 
@@ -103,7 +99,7 @@ const tests = () =>
 
     it(`should return an error if both of 'changeset-id' and 'changeset-index' flags are provided`, async () => {
       const { error: infoError } = await runCommand<Changeset>(
-        `imodel changeset info --imodel-id ${testIModelId} --changeset-id a4139edd-d28d-4bb9-9260-0802dfda0413 --changeset-index 1`
+        `imodel changeset info --imodel-id ${testIModelId} --changeset-id a4139edd-d28d-4bb9-9260-0802dfda0413 --changeset-index 1`,
       );
       expect(infoError).to.not.be.undefined;
       expect(infoError!.message).to.contain("--changeset-index cannot also be provided when using --changeset-id");

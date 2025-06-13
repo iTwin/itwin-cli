@@ -21,12 +21,7 @@ export class ChangedElementsApiClient {
     });
   }
 
-  public async getComparison(
-    iTwinId: string,
-    iModelId: string,
-    startChangesetId: string,
-    endChangesetId: string
-  ): Promise<ChangesetComparisonResponse> {
+  public async getComparison(iTwinId: string, iModelId: string, startChangesetId: string, endChangesetId: string): Promise<ChangesetComparisonResponse> {
     return this._iTwinPlatformApiClient.sendRequest({
       apiPath: "changedelements/comparison",
       method: "GET",

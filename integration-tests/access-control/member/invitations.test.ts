@@ -29,9 +29,7 @@ const tests = () => {
 
   it("Should get pending invitations", async () => {
     const emailToAdd = ITP_TEST_USER_EXTERNAL;
-    const { result: owner } = await runCommand<OwnerResponse>(
-      `access-control member owner add --itwin-id ${iTwinId} --email ${emailToAdd}`
-    );
+    const { result: owner } = await runCommand<OwnerResponse>(`access-control member owner add --itwin-id ${iTwinId} --email ${emailToAdd}`);
     expect(owner).to.not.be.undefined;
     expect(owner!.member).is.null;
     expect(owner!.invitation).to.not.be.undefined;

@@ -44,7 +44,7 @@ const tests = () =>
 
     it("should create a connection with multiple files and equal amount of connector types", async () => {
       const { result: createdConnection } = await runCommand<StorageConnection>(
-        `imodel connection create -m ${testIModelId} -f ${testFileId1} -f ${testFileId3} --connector-type MSTN --connector-type SPPID -n TestConnection`
+        `imodel connection create -m ${testIModelId} -f ${testFileId1} -f ${testFileId3} --connector-type MSTN --connector-type SPPID -n TestConnection`,
       );
 
       expect(createdConnection).to.not.be.undefined;
@@ -63,7 +63,7 @@ const tests = () =>
 
     it("should create a connection with multiple files and a single connector type", async () => {
       const { result: createdConnection } = await runCommand<StorageConnection>(
-        `imodel connection create -m ${testIModelId} -f ${testFileId1} -f ${testFileId2} --connector-type MSTN -n TestConnection`
+        `imodel connection create -m ${testIModelId} -f ${testFileId1} -f ${testFileId2} --connector-type MSTN -n TestConnection`,
       );
 
       expect(createdConnection).to.not.be.undefined;
@@ -76,19 +76,17 @@ const tests = () =>
       expect(listResult!.some((sourceFile) => sourceFile.storageFileId === testFileId1 && sourceFile.connectorType === "MSTN")).to.be.true;
       expect(listResult!.some((sourceFile) => sourceFile.storageFileId === testFileId2 && sourceFile.connectorType === "MSTN")).to.be.true;
 
-      const { result: deleteResult } = await runCommand<{ result: string }>(
-        `imodel connection delete --connection-id ${createdConnection!.id}`
-      );
+      const { result: deleteResult } = await runCommand<{ result: string }>(`imodel connection delete --connection-id ${createdConnection!.id}`);
       expect(deleteResult).to.have.property("result", "deleted");
     });
 
     it(`should throw an error if file and connector-type amounts don't match and connector-type amount is > 1.`, async () => {
       const { error: createError } = await runCommand<StorageConnection>(
-        `imodel connection create -m ${testIModelId} -f ${testFileId1} -f ${testFileId2} -f ${testFileId3} --connector-type MSTN --connector-type SPPID -n TestConnection`
+        `imodel connection create -m ${testIModelId} -f ${testFileId1} -f ${testFileId2} -f ${testFileId3} --connector-type MSTN --connector-type SPPID -n TestConnection`,
       );
       expect(createError).to.not.be.undefined;
       expect(createError!.message).to.be.equal(
-        "When multiple connector-type options are provided, their amount must match file-id option amount. Alternatively, you can provide a single connector-type option, which will then be applied to all file-id options."
+        "When multiple connector-type options are provided, their amount must match file-id option amount. Alternatively, you can provide a single connector-type option, which will then be applied to all file-id options.",
       );
     });
   });

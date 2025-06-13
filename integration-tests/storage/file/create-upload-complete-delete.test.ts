@@ -36,7 +36,7 @@ const tests = () =>
 
     it("should create a new file meta data", async () => {
       const { result: createdFile } = await runCommand<FileUpload>(
-        `storage file create --folder-id ${testFolderId} --name ${displayName} --description "${description}"`
+        `storage file create --folder-id ${testFolderId} --name ${displayName} --description "${description}"`,
       );
 
       expect(createdFile).to.have.property("_links");
@@ -52,9 +52,7 @@ const tests = () =>
 
     it("should upload a file", async () => {
       const filePath = "integration-tests/test.csv";
-      const { result: uploadResult } = await runCommand<{ result: string }>(
-        `storage file upload --upload-url "${uploadUrl}" --file-path ${filePath}`
-      );
+      const { result: uploadResult } = await runCommand<{ result: string }>(`storage file upload --upload-url "${uploadUrl}" --file-path ${filePath}`);
 
       expect(uploadResult?.result).to.be.equal("uploaded");
     });

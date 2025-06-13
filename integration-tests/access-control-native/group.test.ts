@@ -26,7 +26,7 @@ const tests = () =>
       expect(iTwin?.id).to.not.be.undefined;
       iTwinId = iTwin!.id!;
       const { result: group } = await runCommand<Group>(
-        `access-control group create --itwin-id ${iTwinId} --name "${groupName}" --description "${groupDescription}"`
+        `access-control group create --itwin-id ${iTwinId} --name "${groupName}" --description "${groupDescription}"`,
       );
       expect(group).to.not.be.undefined;
       groupId = group!.id!;
@@ -40,7 +40,7 @@ const tests = () =>
     it("Should update group ims-group", async () => {
       const imsGroupName = "iTwin CLI Test Group";
       const { result: groupUpdate } = await runCommand<Group>(
-        `access-control group update --itwin-id ${iTwinId} --group-id ${groupId} --ims-group "${imsGroupName}"`
+        `access-control group update --itwin-id ${iTwinId} --group-id ${groupId} --ims-group "${imsGroupName}"`,
       );
       expect(groupUpdate).to.not.be.undefined;
       expect(groupUpdate!.id).to.not.be.undefined;

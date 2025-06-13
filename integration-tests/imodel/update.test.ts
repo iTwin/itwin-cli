@@ -45,7 +45,7 @@ const tests = () =>
       };
 
       const { result: updatedIModel } = await runCommand<IModel>(
-        `imodel update --imodel-id ${testIModelId} --name ${updatedName} --description "${updatedDescription}" --extent "${JSON.stringify(updatedExtent)}"`
+        `imodel update --imodel-id ${testIModelId} --name ${updatedName} --description "${updatedDescription}" --extent "${JSON.stringify(updatedExtent)}"`,
       );
 
       expect(updatedIModel).to.not.be.undefined;
@@ -71,7 +71,7 @@ const tests = () =>
       };
 
       const { result: updatedIModel } = await runCommand<IModel>(
-        `imodel update --imodel-id ${testIModelId} --name ${updatedName} --description "${updatedDescription}" --ne-latitude ${updatedExtent.northEast.latitude} --ne-longitude ${updatedExtent.northEast.longitude} --sw-latitude ${updatedExtent.southWest.latitude} --sw-longitude ${updatedExtent.southWest.longitude}`
+        `imodel update --imodel-id ${testIModelId} --name ${updatedName} --description "${updatedDescription}" --ne-latitude ${updatedExtent.northEast.latitude} --ne-longitude ${updatedExtent.northEast.longitude} --sw-latitude ${updatedExtent.southWest.latitude} --sw-longitude ${updatedExtent.southWest.longitude}`,
       );
 
       expect(updatedIModel).to.not.be.undefined;
@@ -97,7 +97,7 @@ const tests = () =>
       };
 
       const { error: updateError } = await runCommand<IModel>(
-        `imodel update --imodel-id ${testIModelId} --name ${updatedName} --description "${updatedDescription}" --extent "${JSON.stringify(updatedExtent)}" --ne-latitude ${updatedExtent.northEast.latitude} --ne-longitude ${updatedExtent.northEast.longitude} --sw-latitude ${updatedExtent.southWest.latitude} --sw-longitude ${updatedExtent.southWest.longitude}`
+        `imodel update --imodel-id ${testIModelId} --name ${updatedName} --description "${updatedDescription}" --extent "${JSON.stringify(updatedExtent)}" --ne-latitude ${updatedExtent.northEast.latitude} --ne-longitude ${updatedExtent.northEast.longitude} --sw-latitude ${updatedExtent.southWest.latitude} --sw-longitude ${updatedExtent.southWest.longitude}`,
       );
 
       expect(updateError).to.not.be.undefined;
@@ -122,18 +122,16 @@ const tests = () =>
       };
 
       const { error: updateError } = await runCommand<IModel>(
-        `imodel update --imodel-id ${testIModelId} --name ${updatedName} --description "${updatedDescription}" --ne-latitude ${updatedExtent.northEast.latitude} --ne-longitude ${updatedExtent.northEast.longitude} --sw-latitude ${updatedExtent.southWest.latitude}`
+        `imodel update --imodel-id ${testIModelId} --name ${updatedName} --description "${updatedDescription}" --ne-latitude ${updatedExtent.northEast.latitude} --ne-longitude ${updatedExtent.northEast.longitude} --sw-latitude ${updatedExtent.southWest.latitude}`,
       );
 
       expect(updateError).to.not.be.undefined;
-      expect(updateError?.message).to.match(
-        /All of the following must be provided when using --sw-latitude: --ne-latitude, --ne-longitude, --sw-longitude/
-      );
+      expect(updateError?.message).to.match(/All of the following must be provided when using --sw-latitude: --ne-latitude, --ne-longitude, --sw-longitude/);
     });
 
     it("should return an error if a component of the provided extent is not a valid number", async () => {
       const { error: createError } = await runCommand<IModel>(
-        `imodel update --imodel-id ${testIModelId} --ne-latitude 46.302abc --ne-longitude 7.835 --sw-latitude 46.132 --sw-longitude 7.672`
+        `imodel update --imodel-id ${testIModelId} --ne-latitude 46.302abc --ne-longitude 7.835 --sw-latitude 46.132 --sw-longitude 7.672`,
       );
 
       expect(createError).to.not.be.undefined;

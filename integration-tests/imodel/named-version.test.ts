@@ -31,9 +31,7 @@ const tests = () =>
 
       await runCommand<ResultResponse>(`changed-elements enable --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
 
-      const { result } = await runCommand<PopulateResponse>(
-        `imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type MSTN`
-      );
+      const { result } = await runCommand<PopulateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath} --connector-type MSTN`);
       expect(result).to.have.property("iModelId", testIModelId);
       expect(result).to.have.property("iTwinId", testITwinId);
     });
@@ -47,14 +45,12 @@ const tests = () =>
     });
 
     it("should create a new named version with specified changeset", async () => {
-      const { result: changesets } = await runCommand<Changeset[]>(
-        `changed-elements changesets --imodel-id ${testIModelId} --itwin-id ${testITwinId}`
-      );
+      const { result: changesets } = await runCommand<Changeset[]>(`changed-elements changesets --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
       expect(changesets).to.not.be.undefined;
       expect(changesets).to.have.lengthOf(15);
 
       const { result: createResult } = await runCommand<NamedVersion>(
-        `imodel named-version create --imodel-id ${testIModelId} --changeset-id ${changesets![0].id} -n "Version 1.0" -d "Some description of the version"`
+        `imodel named-version create --imodel-id ${testIModelId} --changeset-id ${changesets![0].id} -n "Version 1.0" -d "Some description of the version"`,
       );
       expect(createResult).to.not.be.undefined;
       expect(createResult?.displayName).to.be.equal("Version 1.0");
@@ -63,7 +59,7 @@ const tests = () =>
 
     it("should create a new named version with latest changeset", async () => {
       const { result: createResult } = await runCommand<NamedVersion>(
-        `imodel named-version create --imodel-id ${testIModelId} -n "Version 2.0" -d "Some description of the version"`
+        `imodel named-version create --imodel-id ${testIModelId} -n "Version 2.0" -d "Some description of the version"`,
       );
       expect(createResult).to.not.be.undefined;
       expect(createResult?.displayName).to.be.equal("Version 2.0");

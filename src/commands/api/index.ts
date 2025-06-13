@@ -90,7 +90,7 @@ export default class ApiRequest extends BaseCommand {
           acc[key] = value.trim();
           return acc;
         },
-        {} as Record<string, string>
+        {} as Record<string, string>,
       ) || {};
 
     const queries: Query[] | undefined =

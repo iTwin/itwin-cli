@@ -38,7 +38,7 @@ const tests = () =>
 
     it("should create a new iTwin", async () => {
       const { result: iTwin } = await runCommand<ITwin>(
-        `itwin create --name "${testITwinName1}" --class ${testClass} --sub-class ${testSubClass} --type ${testType} --number ${testNumber}`
+        `itwin create --name "${testITwinName1}" --class ${testClass} --sub-class ${testSubClass} --type ${testType} --number ${testNumber}`,
       );
       expect(iTwin).to.have.property("id");
       expect(iTwin!.displayName).to.be.equal(testITwinName1);
@@ -51,7 +51,7 @@ const tests = () =>
 
     it("should create a new child iTwin", async () => {
       const { result: iTwinChild } = await runCommand<ITwin>(
-        `itwin create --name "${testChildITwinName}" --class ${testClass} --sub-class ${testSubClass} --parent-id ${testITwinId} --status ${testStatus}`
+        `itwin create --name "${testChildITwinName}" --class ${testClass} --sub-class ${testSubClass} --parent-id ${testITwinId} --status ${testStatus}`,
       );
       expect(iTwinChild).to.have.property("id");
       expect(iTwinChild!.displayName).to.be.equal(testChildITwinName);
@@ -64,7 +64,7 @@ const tests = () =>
 
     it("should create a new iTwin with location information", async () => {
       const { result: iTwin } = await runCommand<ITwin>(
-        `itwin create --name "${testITwinName2}" --class ${testClass} --sub-class ${testSubClass} --data-center-location "${testDataCenterLocation}" --iana-time-zone ${testIanaTimeZone} --geographic-location "${testGeographicLocation}"`
+        `itwin create --name "${testITwinName2}" --class ${testClass} --sub-class ${testSubClass} --data-center-location "${testDataCenterLocation}" --iana-time-zone ${testIanaTimeZone} --geographic-location "${testGeographicLocation}"`,
       );
       expect(iTwin).to.have.property("id");
       expect(iTwin!.displayName).to.be.equal(testITwinName2);

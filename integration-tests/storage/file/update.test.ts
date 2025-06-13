@@ -39,7 +39,7 @@ const tests = () =>
       const updatedDisplayName = "Updated Display Name";
       const updatedDescription = "Updated description";
       const { result: fileInfo } = await runCommand<FileTyped>(
-        `storage file update --file-id ${testFileId} --name "${updatedDisplayName}" --description "${updatedDescription}"`
+        `storage file update --file-id ${testFileId} --name "${updatedDisplayName}" --description "${updatedDescription}"`,
       );
 
       expect(fileInfo).to.have.property("id", testFileId);

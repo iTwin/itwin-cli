@@ -50,9 +50,7 @@ const tests = () =>
     });
 
     it("should upload a new file version", async () => {
-      const { result: uploadResult } = await runCommand<{ result: string }>(
-        `storage file upload --upload-url "${uploadUrl}" --file-path ${filePath}`
-      );
+      const { result: uploadResult } = await runCommand<{ result: string }>(`storage file upload --upload-url "${uploadUrl}" --file-path ${filePath}`);
       expect(uploadResult?.result).to.be.equal("uploaded");
     });
 

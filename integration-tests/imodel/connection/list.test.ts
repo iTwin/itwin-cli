@@ -32,11 +32,11 @@ const tests = () =>
       const testFile2 = await createFile(rootFolderId, "test.csv", "integration-tests/test.csv");
       testFileId2 = testFile2.id as string;
       const { result: createdConnection1 } = await runCommand<StorageConnection>(
-        `imodel connection create -m ${testIModelId} -f ${testFileId1} --connector-type MSTN -n TestConnection`
+        `imodel connection create -m ${testIModelId} -f ${testFileId1} --connector-type MSTN -n TestConnection`,
       );
       connectionId1 = createdConnection1!.id!;
       const { result: createdConnection2 } = await runCommand<StorageConnection>(
-        `imodel connection create -m ${testIModelId} -f ${testFileId2} --connector-type MSTN -n TestConnection`
+        `imodel connection create -m ${testIModelId} -f ${testFileId2} --connector-type MSTN -n TestConnection`,
       );
       connectionId2 = createdConnection2!.id!;
     });
@@ -62,9 +62,7 @@ const tests = () =>
       expect(allConnections).to.not.be.undefined;
       expect(allConnections!.connections).to.have.lengthOf(2);
 
-      const { result: filteredConnections } = await runCommand<StorageConnectionListResponse>(
-        `imodel connection list -m ${testIModelId} --top 1`
-      );
+      const { result: filteredConnections } = await runCommand<StorageConnectionListResponse>(`imodel connection list -m ${testIModelId} --top 1`);
       expect(filteredConnections).to.not.be.undefined;
       expect(filteredConnections!.connections).to.have.lengthOf(1);
       expect(filteredConnections!.connections[0].id).to.be.equal(allConnections!.connections[0].id);
@@ -75,9 +73,7 @@ const tests = () =>
       expect(allConnections).to.not.be.undefined;
       expect(allConnections!.connections).to.have.lengthOf(2);
 
-      const { result: filteredConnections } = await runCommand<StorageConnectionListResponse>(
-        `imodel connection list -m ${testIModelId} --skip 1`
-      );
+      const { result: filteredConnections } = await runCommand<StorageConnectionListResponse>(`imodel connection list -m ${testIModelId} --skip 1`);
       expect(filteredConnections).to.not.be.undefined;
       expect(filteredConnections!.connections).to.have.lengthOf(1);
       expect(filteredConnections!.connections[0].id).to.be.equal(allConnections!.connections[1].id);

@@ -20,8 +20,7 @@ export default class CesiumSandcastle extends BaseCommand {
     sectionName: "Workflow Reference",
   };
 
-  public static description =
-    "> 🔬 This command is currently in Technical Preview.\nSetup iModel and get URL to view it in Cesium Sandcastle.";
+  public static description = "> 🔬 This command is currently in Technical Preview.\nSetup iModel and get URL to view it in Cesium Sandcastle.";
 
   public static examples = [
     {
@@ -137,14 +136,7 @@ export default class CesiumSandcastle extends BaseCommand {
 
     let changesetId = flags["changeset-id"] ?? "";
     if (changesetId === undefined) {
-      const existingChangesets = await this.runCommand<Changeset[]>("imodel:changeset:list", [
-        "-m",
-        flags["imodel-id"],
-        "--top",
-        "1",
-        "--order-by",
-        "desc",
-      ]);
+      const existingChangesets = await this.runCommand<Changeset[]>("imodel:changeset:list", ["-m", flags["imodel-id"], "--top", "1", "--order-by", "desc"]);
       if (existingChangesets.length === 0) {
         this.error(`No changesets found for iModel: ${flags["imodel-id"]}`);
       }

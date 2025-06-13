@@ -45,22 +45,7 @@ export default class CreateConnection extends BaseCommand {
         "Specify connectors to use for synchronization. This option can be provided multiple times. If a single connector-type option is provided, it will be matched to all file-id options. If multiple connectors are provided, each of them will be matched to a file by position: the first connector will be used for the first file, the second connector for the second file, and so on.",
       helpValue: "<string>",
       multiple: true,
-      options: [
-        "AUTOPLANT",
-        "CIVIL",
-        "CIVIL3D",
-        "DWG",
-        "GEOSPATIAL",
-        "IFC",
-        "MSTN",
-        "NWD",
-        "OBD",
-        "OPENTOWER",
-        "PROSTRUCTURES",
-        "REVIT",
-        "SPPID",
-        "SPXREVIEW",
-      ],
+      options: ["AUTOPLANT", "CIVIL", "CIVIL3D", "DWG", "GEOSPATIAL", "IFC", "MSTN", "NWD", "OBD", "OPENTOWER", "PROSTRUCTURES", "REVIT", "SPPID", "SPXREVIEW"],
       required: true,
     }),
     "file-id": Flags.string({
@@ -90,15 +75,13 @@ export default class CreateConnection extends BaseCommand {
 
     if (flags["connector-type"].length !== flags["file-id"].length && flags["connector-type"].length !== 1) {
       this.error(
-        "When multiple connector-type options are provided, their amount must match file-id option amount. Alternatively, you can provide a single connector-type option, which will then be applied to all file-id options."
+        "When multiple connector-type options are provided, their amount must match file-id option amount. Alternatively, you can provide a single connector-type option, which will then be applied to all file-id options.",
       );
     }
 
     const isSingleConnectorTypeProvided = flags["connector-type"].length === 1;
     for (let i = 0; i < flags["file-id"].length; i++) {
-      const connectorType = isSingleConnectorTypeProvided
-        ? (flags["connector-type"][0] as ConnectorType)
-        : (flags["connector-type"][i] as ConnectorType);
+      const connectorType = isSingleConnectorTypeProvided ? (flags["connector-type"][0] as ConnectorType) : (flags["connector-type"][i] as ConnectorType);
       sourceFiles.push({
         connectorType,
         storageFileId: flags["file-id"][i],

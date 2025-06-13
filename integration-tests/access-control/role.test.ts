@@ -30,7 +30,7 @@ const tests = () => {
     const roleDescription = "Test Role Description";
 
     const { result: roleCreate } = await runCommand<Role>(
-      `access-control role create --itwin-id ${iTwinId} --name "${roleName}" --description "${roleDescription}"`
+      `access-control role create --itwin-id ${iTwinId} --name "${roleName}" --description "${roleDescription}"`,
     );
 
     expect(roleCreate).to.not.be.undefined;
@@ -51,7 +51,7 @@ const tests = () => {
     const permissions = ["administration_invite_member"];
 
     const { result: roleUpdate } = await runCommand<Role>(
-      `access-control role update --itwin-id ${iTwinId} --role-id ${roleCreate!.id} --name "${updatedRoleName}" --description "${updatedRoleDescription}" --permission ${permissions[0]}`
+      `access-control role update --itwin-id ${iTwinId} --role-id ${roleCreate!.id} --name "${updatedRoleName}" --description "${updatedRoleDescription}" --permission ${permissions[0]}`,
     );
     expect(roleUpdate).to.not.be.undefined;
     expect(roleUpdate!.id).to.not.be.undefined;
@@ -62,9 +62,7 @@ const tests = () => {
   });
 
   it("Should list roles", async () => {
-    const { result: newRole } = await runCommand<Role>(
-      `access-control role create --itwin-id ${iTwinId} --name Test2 --description Description2`
-    );
+    const { result: newRole } = await runCommand<Role>(`access-control role create --itwin-id ${iTwinId} --name Test2 --description Description2`);
     expect(newRole).to.not.be.undefined;
     expect(newRole!.id).to.not.be.undefined;
     expect(newRole!.displayName).to.be.equal("Test2");
@@ -78,15 +76,11 @@ const tests = () => {
   });
 
   it("Should delete role", async () => {
-    const { result: newRole } = await runCommand<Role>(
-      `access-control role create --itwin-id ${iTwinId} --name Test3 --description Description3`
-    );
+    const { result: newRole } = await runCommand<Role>(`access-control role create --itwin-id ${iTwinId} --name Test3 --description Description3`);
     expect(newRole).to.not.be.undefined;
     expect(newRole!.id).to.not.be.undefined;
 
-    const { result: deleteResult } = await runCommand<{ result: string }>(
-      `access-control role delete --itwin-id ${iTwinId} --role-id ${newRole!.id}`
-    );
+    const { result: deleteResult } = await runCommand<{ result: string }>(`access-control role delete --itwin-id ${iTwinId} --role-id ${newRole!.id}`);
     expect(deleteResult).to.have.property("result", "deleted");
   });
 };

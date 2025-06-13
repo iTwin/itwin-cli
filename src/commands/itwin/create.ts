@@ -44,17 +44,7 @@ export default class CreateITwin extends BaseCommand {
     "data-center-location": Flags.string({
       description: "Data center for iTwin data. Defaults to East US.",
       helpValue: "<string>",
-      options: [
-        "East US",
-        "North Europe",
-        "West Europe",
-        "Southeast Asia",
-        "Australia East",
-        "UK South",
-        "Canada Central",
-        "Central India",
-        "Japan East",
-      ],
+      options: ["East US", "North Europe", "West Europe", "Southeast Asia", "Australia East", "UK South", "Canada Central", "Central India", "Japan East"],
       required: false,
     }),
     "geographic-location": Flags.string({

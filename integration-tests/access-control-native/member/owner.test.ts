@@ -34,9 +34,7 @@ const tests = () =>
     it("Should add an internal member to an iTwin and remove owner member", async () => {
       const emailToAdd = ITP_TEST_USER_SAMEORG;
 
-      const { result: invitedUser } = await runCommand<OwnerResponse>(
-        `access-control member owner add --itwin-id ${iTwinId} --email ${emailToAdd}`
-      );
+      const { result: invitedUser } = await runCommand<OwnerResponse>(`access-control member owner add --itwin-id ${iTwinId} --email ${emailToAdd}`);
 
       expect(invitedUser).to.not.be.undefined;
       expect(invitedUser!.member).to.not.be.undefined;
@@ -49,7 +47,7 @@ const tests = () =>
       expect(joinedUser).to.not.be.undefined;
 
       const { result: deleteResult } = await runCommand<{ result: string }>(
-        `access-control member owner delete --itwin-id ${iTwinId} --member-id ${joinedUser?.id}`
+        `access-control member owner delete --itwin-id ${iTwinId} --member-id ${joinedUser?.id}`,
       );
       expect(deleteResult).to.not.be.undefined;
       expect(deleteResult).to.have.property("result", "deleted");

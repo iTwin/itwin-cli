@@ -235,7 +235,7 @@ export default abstract class BaseCommand extends Command {
 
   protected override async parse<F extends FlagOutput, B extends FlagOutput, A extends ArgOutput>(
     options?: Input<F, B, A>,
-    argv?: string[]
+    argv?: string[],
   ): Promise<ParserOutput<F, B, A>> {
     if (options?.flags) {
       const context = this.getContext();
@@ -256,7 +256,7 @@ export default abstract class BaseCommand extends Command {
 
   protected async parseWithoutContext<F extends FlagOutput, B extends FlagOutput, A extends ArgOutput>(
     options?: Input<F, B, A>,
-    argv?: string[]
+    argv?: string[],
   ): Promise<ParserOutput<F, B, A>> {
     return super.parse(options, argv);
   }
