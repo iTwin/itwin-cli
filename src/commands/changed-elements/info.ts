@@ -1,7 +1,7 @@
 /*---------------------------------------------------------------------------------------------
-* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
-* See LICENSE.md in the project root for license terms and full copyright notice.
-*--------------------------------------------------------------------------------------------*/
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
 
 import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
@@ -19,25 +19,25 @@ export default class ChangedElementsInfo extends BaseCommand {
   public static examples = [
     {
       command: `<%= config.bin %> <%= command.id %> --itwin-id 1a2b3c4d-5678-90ab-cdef-1234567890ab --imodel-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51`,
-      description: 'Example 1:'
-    }
+      description: "Example 1:",
+    },
   ];
 
   public static flags = {
-    "imodel-id": customFlags.iModelIDFlag({  
-      description: "The ID of the iModel to retrieve tracking information for."
+    "imodel-id": customFlags.iModelIDFlag({
+      description: "The ID of the iModel to retrieve tracking information for.",
     }),
-    "itwin-id": customFlags.iTwinIDFlag({ 
-      description: "The ID of the iTwin associated with the iModel."
+    "itwin-id": customFlags.iTwinIDFlag({
+      description: "The ID of the iTwin associated with the iModel.",
     }),
   };
-  
+
   public async run(): Promise<TrackingResponse> {
     const { flags } = await this.parse(ChangedElementsInfo);
-  
+
     const client = await this.getChangedElementsApiClient();
     const result = await client.getTracking(flags["imodel-id"], flags["itwin-id"]);
-  
+
     return this.logAndReturnResult(result);
   }
 }

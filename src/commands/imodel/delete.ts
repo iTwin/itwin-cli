@@ -1,7 +1,7 @@
 /*---------------------------------------------------------------------------------------------
-* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
-* See LICENSE.md in the project root for license terms and full copyright notice.
-*--------------------------------------------------------------------------------------------*/
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
 
 import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
@@ -14,18 +14,18 @@ export default class DeleteIModel extends BaseCommand {
     name: "Delete iModel",
   };
 
-  public static description = 'Delete an existing iModel.';
+  public static description = "Delete an existing iModel.";
 
   public static examples = [
     {
       command: `<%= config.bin %> <%= command.id %> --imodel-id 5e19bee0-3aea-4355-a9f0-c6df9989ee7d`,
-      description: 'Example 1:'
-    }
+      description: "Example 1:",
+    },
   ];
 
   public static flags = {
     "imodel-id": customFlags.iModelIDFlag({
-      description: 'The ID of the iModel to delete.'
+      description: "The ID of the iModel to delete.",
     }),
   };
 
@@ -40,7 +40,6 @@ export default class DeleteIModel extends BaseCommand {
       iModelId: flags["imodel-id"],
     });
 
-    return this.logAndReturnResult({ result: 'deleted' });
+    return this.logAndReturnResult({ result: "deleted" });
   }
 }
-  

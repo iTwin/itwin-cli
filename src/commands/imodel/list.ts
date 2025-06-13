@@ -1,7 +1,7 @@
 /*---------------------------------------------------------------------------------------------
-* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
-* See LICENSE.md in the project root for license terms and full copyright notice.
-*--------------------------------------------------------------------------------------------*/
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
 
 import { IModel, IModelOrderByProperty, OrderBy, take, toArray } from "@itwin/imodels-client-management";
 import { Flags } from "@oclif/core";
@@ -16,50 +16,50 @@ export default class ListIModels extends BaseCommand {
     name: "List iModels",
   };
 
-  public static description = 'Retrieve a list of iModels belonging to the specified iTwin.';
+  public static description = "Retrieve a list of iModels belonging to the specified iTwin.";
 
   public static examples = [
     {
       command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51`,
-      description: 'Example 1: List all iModels for a specific iTwin'
+      description: "Example 1: List all iModels for a specific iTwin",
     },
     {
       command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --top 10 --order-by "name desc"`,
-      description: 'Example 2: List the first 10 iModels, ordered by name in descending order'
+      description: "Example 2: List the first 10 iModels, ordered by name in descending order",
     },
     {
       command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --search "Sun City"`,
-      description: 'Example 3: Search for iModels with "Sun City" in their name or description'
+      description: 'Example 3: Search for iModels with "Sun City" in their name or description',
     },
     {
       command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --state initialized`,
-      description: 'Example 4: List only initialized iModels'
-    }
+      description: "Example 4: List only initialized iModels",
+    },
   ];
 
   public static flags = {
     "itwin-id": customFlags.iTwinIDFlag({
-      description: 'The ID of the iTwin to list iModels for.'
+      description: "The ID of the iTwin to list iModels for.",
     }),
     name: Flags.string({
-      char: 'n',
-      description: 'Filter iModels by their exact name.',
-      helpValue: '<string>',
+      char: "n",
+      description: "Filter iModels by their exact name.",
+      helpValue: "<string>",
       required: false,
     }),
     "order-by": Flags.string({
       description: "Order the results by 'name' or 'createdDateTime'. Use 'asc' for ascending or 'desc' for descending order.",
-      helpValue: '<string>',
+      helpValue: "<string>",
       required: false,
     }),
     search: Flags.string({
-      description: 'Filter iModels by a string in their name or description.',
-      helpValue: '<string>',
+      description: "Filter iModels by a string in their name or description.",
+      helpValue: "<string>",
       required: false,
     }),
     skip: Flags.integer({
-      description: 'Skip a number of items in the result.',
-      helpValue: '<integer>',
+      description: "Skip a number of items in the result.",
+      helpValue: "<integer>",
       required: false,
     }),
     // state: Flags.string({
@@ -69,18 +69,18 @@ export default class ListIModels extends BaseCommand {
     //   required: false,
     // }),
     top: Flags.integer({
-      description: 'Limit the number of items returned.',
-      helpValue: '<integer>',
+      description: "Limit the number of items returned.",
+      helpValue: "<integer>",
       required: false,
     }),
   };
-  
+
   public async run(): Promise<IModel[]> {
     const { flags } = await this.parse(ListIModels);
-  
+
     const client = this.getIModelClient();
     const authorization = await this.getAuthorizationCallback();
-  
+
     const iModels = client.iModels.getRepresentationList({
       authorization,
       urlParams: {
@@ -92,9 +92,9 @@ export default class ListIModels extends BaseCommand {
         name: flags.name,
       },
     });
-  
+
     const result: IModel[] = await (flags.top ? take(iModels, flags.top) : toArray(iModels));
-  
+
     return this.logAndReturnResult(result);
   }
 }

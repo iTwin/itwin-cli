@@ -1,7 +1,7 @@
 /*---------------------------------------------------------------------------------------------
-* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
-* See LICENSE.md in the project root for license terms and full copyright notice.
-*--------------------------------------------------------------------------------------------*/
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
 
 import { Flags } from "@oclif/core";
 
@@ -16,33 +16,33 @@ export default class InfoUserMember extends BaseCommand {
     name: "Get iTwin User Member",
   };
 
-  public static description = 'Retrieve details about a specific user member in an iTwin.';
+  public static description = "Retrieve details about a specific user member in an iTwin.";
 
   public static examples = [
     {
       command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --member-id user1-id`,
-      description: 'Example 1:'
-    }
+      description: "Example 1:",
+    },
   ];
 
   public static flags = {
     "itwin-id": customFlags.iTwinIDFlag({
-      description: 'The ID of the iTwin where the user is a member.'
+      description: "The ID of the iTwin where the user is a member.",
     }),
     "member-id": Flags.string({
-      description: 'The ID of the user to retrieve information about.',
-      helpValue: '<string>',
+      description: "The ID of the user to retrieve information about.",
+      helpValue: "<string>",
       required: true,
     }),
   };
-  
+
   public async run(): Promise<Member> {
     const { flags } = await this.parse(InfoUserMember);
-  
+
     const client = await this.getAccessControlMemberClient();
-  
+
     const result = await client.getUserMember(flags["itwin-id"], flags["member-id"]);
-  
+
     return this.logAndReturnResult(result.member);
   }
 }

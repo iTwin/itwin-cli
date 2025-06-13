@@ -1,7 +1,7 @@
 /*---------------------------------------------------------------------------------------------
-* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
-* See LICENSE.md in the project root for license terms and full copyright notice.
-*--------------------------------------------------------------------------------------------*/
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
 
 import { Flags } from "@oclif/core";
 
@@ -19,7 +19,7 @@ export default class ListFolders extends BaseCommand {
     {
       link: "https://developer.bentley.com/apis/storage/operations/get-folders-and-files-in-folder/",
       name: "List Folders and Files in Folder",
-    }
+    },
   ];
 
   public static description = "List folders in a parent folder of an iTwin's storage. Optionally, include files in the result.";
@@ -27,38 +27,37 @@ export default class ListFolders extends BaseCommand {
   public static examples = [
     {
       command: `<%= config.bin %> <%= command.id %> --folder-id a1b2c3d4-5678-90ab-cdef-1234567890ab`,
-      description: 'Example 1: List all folders in a parent folder'
+      description: "Example 1: List all folders in a parent folder",
     },
     {
       command: `<%= config.bin %> <%= command.id %> --folder-id a1b2c3d4-5678-90ab-cdef-1234567890ab --include-files`,
-      description: 'Example 2: List all folders and files in a parent folder'
-    }
+      description: "Example 2: List all folders and files in a parent folder",
+    },
   ];
 
   public static flags = {
-    "folder-id": Flags.string({ 
-      char: 'f',
+    "folder-id": Flags.string({
+      char: "f",
       description: "The ID of the parent folder whose contents you want to list.",
-      helpValue: '<string>',
-      required: true 
+      helpValue: "<string>",
+      required: true,
     }),
-    "include-files": Flags.boolean({ 
+    "include-files": Flags.boolean({
       description: "Whether to include files in the result.",
     }),
   };
-  
+
   public async run(): Promise<FileTyped[] | FolderTyped[]> {
     const { flags } = await this.parse(ListFolders);
-  
+
     const client = await this.getStorageApiClient();
-  
+
     if (flags["include-files"]) {
       const result = await client.getFilesAndFolders(flags["folder-id"]);
       return this.logAndReturnResult(result.items);
     }
- 
+
     const response = await client.getFolders(flags["folder-id"]);
     return this.logAndReturnResult(response.folders);
-      
   }
 }

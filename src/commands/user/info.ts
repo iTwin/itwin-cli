@@ -1,7 +1,7 @@
 /*---------------------------------------------------------------------------------------------
-* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
-* See LICENSE.md in the project root for license terms and full copyright notice.
-*--------------------------------------------------------------------------------------------*/
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
 
 import { Flags } from "@oclif/core";
 
@@ -20,29 +20,29 @@ export default class UserInfo extends BaseCommand {
   public static examples = [
     {
       command: `<%= config.bin %> <%= command.id %> --user-id user1-id --user-id user2-id --user-id user3-id`,
-      description: 'Example 1: Retrieve information about specific users by their user IDs'
-    }
+      description: "Example 1: Retrieve information about specific users by their user IDs",
+    },
   ];
 
   public static flags = {
-    "user-id": Flags.string({ 
-      description: "User IDs to retrieve information for. Max amount of 1000.", 
-      helpValue: '<string>',
+    "user-id": Flags.string({
+      description: "User IDs to retrieve information for. Max amount of 1000.",
+      helpValue: "<string>",
       multiple: true,
-      required: true
+      required: true,
     }),
   };
-  
+
   public async run(): Promise<User[]> {
     const { flags } = await this.parse(UserInfo);
-  
-    if(flags["user-id"] !== undefined && flags["user-id"].length > 1000) {
+
+    if (flags["user-id"] !== undefined && flags["user-id"].length > 1000) {
       this.error("A maximum of 1000 user IDs can be provided.");
     }
 
     const client = await this.getUserApiClient();
     const response = await client.getUsers(flags["user-id"]);
-  
+
     return this.logAndReturnResult(response.users);
   }
 }

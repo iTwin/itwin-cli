@@ -1,29 +1,28 @@
 /*---------------------------------------------------------------------------------------------
-* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
-* See LICENSE.md in the project root for license terms and full copyright notice.
-*--------------------------------------------------------------------------------------------*/
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
 
-import runTestSuiteIfMainModule from '../../utils/run-suite-if-main-module';
-import groupMemberTests from './group.test';
-import invitationsMemberTests from './invitations.test';
-import ownerMemberTests from './owner.test';
-import userMemberTests from './user.test';
+import runTestSuiteIfMainModule from "../../utils/run-suite-if-main-module";
+import groupMemberTests from "./group.test";
+import invitationsMemberTests from "./invitations.test";
+import ownerMemberTests from "./owner.test";
+import userMemberTests from "./user.test";
 
-const tests = () => 
-{ 
-  describe('group', () => {
+const tests = () => {
+  describe("group", () => {
     groupMemberTests();
   });
 
-  describe('user', () => {
+  describe("user", () => {
     userMemberTests();
   });
 
-  describe('invitations', () => {
+  describe("invitations", () => {
     invitationsMemberTests();
   });
 
-  describe('owner', () => {
+  describe("owner", () => {
     ownerMemberTests();
   });
 };

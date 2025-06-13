@@ -1,7 +1,7 @@
 /*---------------------------------------------------------------------------------------------
-* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
-* See LICENSE.md in the project root for license terms and full copyright notice.
-*--------------------------------------------------------------------------------------------*/
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
 
 import { Flags } from "@oclif/core";
 
@@ -16,38 +16,37 @@ export default class DeleteRepository extends BaseCommand {
     name: "Delete Repository",
   };
 
-  public static description = 'Delete a specified repository from an iTwin.';
+  public static description = "Delete a specified repository from an iTwin.";
 
   public static examples = [
     {
       command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --repository-id bf4d8b36-25d7-4b72-b38b-12c1f0325f42`,
-      description: 'Example 1:'
-    }
+      description: "Example 1:",
+    },
   ];
 
   public static flags = {
     "itwin-id": customFlags.iTwinIDFlag({
-      description: 'The ID of the iTwin that the repository belongs to.'
+      description: "The ID of the iTwin that the repository belongs to.",
     }),
     "repository-id": Flags.string({
-      description: 'The ID of the repository to delete.',
-      helpValue: '<string>',
+      description: "The ID of the repository to delete.",
+      helpValue: "<string>",
       required: true,
     }),
   };
-  
+
   public async run(): Promise<ResultResponse> {
     const { flags } = await this.parse(DeleteRepository);
-  
+
     const client = this.getITwinAccessClient();
     const accessToken = await this.getAccessToken();
-      
+
     const response = await client.deleteRepository(accessToken, flags["itwin-id"], flags["repository-id"]);
-    if(response.error)
-    {
+    if (response.error) {
       this.error(JSON.stringify(response.error, null, 2));
     }
-  
-    return this.logAndReturnResult({ result: 'deleted' });
+
+    return this.logAndReturnResult({ result: "deleted" });
   }
 }
