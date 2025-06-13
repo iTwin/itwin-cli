@@ -3,10 +3,11 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { Changeset } from "@itwin/imodels-client-management";
-import { Flags } from "@oclif/core";
 import open from "open";
 import { deflate } from "pako";
+
+import { Changeset } from "@itwin/imodels-client-management";
+import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";

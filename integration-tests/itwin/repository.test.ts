@@ -3,10 +3,12 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { Repository } from "@itwin/itwins-client";
-import { runCommand } from "@oclif/test";
 import { expect } from "chai";
 
+import { Repository } from "@itwin/itwins-client";
+import { runCommand } from "@oclif/test";
+
+import { ResultResponse } from "../../src/services/general-models/result-response";
 import { createITwin } from "../utils/helpers";
 import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
 
@@ -24,7 +26,7 @@ const tests = () =>
     });
 
     after(async () => {
-      const { result: deleteResult } = await runCommand<{ result: string }>(`itwin delete --itwin-id ${testITwinId}`);
+      const { result: deleteResult } = await runCommand<ResultResponse>(`itwin delete --itwin-id ${testITwinId}`);
       expect(deleteResult).to.have.property("result", "deleted");
     });
 
@@ -68,7 +70,7 @@ const tests = () =>
     });
 
     it("should delete the iTwin repository", async () => {
-      const { result: deleteResult } = await runCommand<{ result: string }>(
+      const { result: deleteResult } = await runCommand<ResultResponse>(
         `itwin repository delete --itwin-id ${testITwinId} --repository-id ${testRepositoryId}`,
       );
       expect(deleteResult).to.have.property("result", "deleted");

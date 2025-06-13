@@ -3,8 +3,9 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { Command, Config } from "@oclif/core";
 import { expect } from "chai";
+
+import { Command, Config } from "@oclif/core";
 
 describe("Command formatting tests", async () => {
   let allCommands: CommandWithFlags[] = [];

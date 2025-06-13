@@ -3,13 +3,13 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
+import { IModel } from "@itwin/imodels-client-management";
 import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
 import { customFlags } from "../../extensions/custom-flags.js";
 import { validateFloat } from "../../extensions/validation/validate-float.js";
-import { IModel } from "@itwin/imodels-client-management";
 
 export default class UpdateCommand extends BaseCommand {
   public static apiReference: ApiReference = {

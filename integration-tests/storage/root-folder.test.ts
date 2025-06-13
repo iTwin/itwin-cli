@@ -3,10 +3,12 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { ITwin } from "@itwin/itwins-client";
-import { runCommand } from "@oclif/test";
 import { expect } from "chai";
 
+import { ITwin } from "@itwin/itwins-client";
+import { runCommand } from "@oclif/test";
+
+import { ResultResponse } from "../../src/services/general-models/result-response.js";
 import { FileTyped } from "../../src/services/storage-client/models/file-typed.js";
 import { FolderTyped } from "../../src/services/storage-client/models/folder-typed.js";
 import { ItemsWithFolderLink } from "../../src/services/storage-client/models/items-with-folder-link.js";
@@ -28,7 +30,7 @@ const tests = () =>
     });
 
     after(async () => {
-      const { result: itwinDeleteResult } = await runCommand<{ result: string }>(`itwin delete --itwin-id ${testITwin.id}`);
+      const { result: itwinDeleteResult } = await runCommand<ResultResponse>(`itwin delete --itwin-id ${testITwin.id}`);
       expect(itwinDeleteResult).to.have.property("result", "deleted");
     });
 

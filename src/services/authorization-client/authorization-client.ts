@@ -3,12 +3,13 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { NodeCliAuthorizationClient } from "@itwin/node-cli-authorization";
-import { ServiceAuthorizationClient } from "@itwin/service-authorization";
-import { Config } from "@oclif/core";
 import { jwtDecode } from "jwt-decode";
 import * as fs from "node:fs";
 import path from "node:path";
+
+import { NodeCliAuthorizationClient } from "@itwin/node-cli-authorization";
+import { ServiceAuthorizationClient } from "@itwin/service-authorization";
+import { Config } from "@oclif/core";
 
 import { Configuration } from "../../extensions/configuration.js";
 import { AuthTokenInfo } from "./auth-token-info.js";

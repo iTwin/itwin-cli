@@ -3,26 +3,27 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { IModel } from "@itwin/imodels-client-management";
-import { Flags } from "@oclif/core";
 import fs from "node:fs";
 import path from "node:path";
+
+import { IModel } from "@itwin/imodels-client-management";
+import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
 import { customFlags } from "../../extensions/custom-flags.js";
 import { AuthorizationInformation, AuthorizationType } from "../../services/authorization-client/authorization-type.js";
 import { FileUpload } from "../../services/storage-client/models/file-upload.js";
+import { FolderTypedType } from "../../services/storage-client/models/folder-typed.js";
 import { ItemsWithFolderLink } from "../../services/storage-client/models/items-with-folder-link.js";
 import { AuthInfo } from "../../services/synchronizationClient/models/connection-auth.js";
 import { ConnectorType } from "../../services/synchronizationClient/models/connector-type.js";
 import { ExecutionResult } from "../../services/synchronizationClient/models/execution-result.js";
 import { ExecutionState } from "../../services/synchronizationClient/models/execution-state.js";
 import { SourceFile } from "../../services/synchronizationClient/models/source-file.js";
-import { StorageConnection } from "../../services/synchronizationClient/models/storage-connection.js";
 import { StorageConnectionListResponse } from "../../services/synchronizationClient/models/storage-connection-response.js";
+import { StorageConnection } from "../../services/synchronizationClient/models/storage-connection.js";
 import { StorageRun } from "../../services/synchronizationClient/models/storage-run.js";
-import { FolderTypedType } from "../../services/storage-client/models/folder-typed.js";
 
 export default class PopulateIModel extends BaseCommand {
   public static apiReference: ApiReference = {

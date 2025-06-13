@@ -3,12 +3,12 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
+import { Changeset } from "@itwin/imodels-client-management";
 import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { customFlags } from "../../../extensions/custom-flags.js";
-import { Changeset } from "@itwin/imodels-client-management";
 
 export default class ChangesetInfo extends BaseCommand {
   public static apiReference: ApiReference = {

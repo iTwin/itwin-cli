@@ -3,8 +3,9 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { runCommand } from "@oclif/test";
 import { expect } from "chai";
+
+import { runCommand } from "@oclif/test";
 
 import { AuthorizationInformation } from "../../src/services/authorization-client/authorization-type";
 import { ITP_API_URL, ITP_ISSUER_URL, ITP_SERVICE_CLIENT_ID } from "../utils/environment";

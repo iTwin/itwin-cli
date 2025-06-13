@@ -11,8 +11,8 @@ import { customFlags } from "../../../extensions/custom-flags.js";
 import { AuthorizationInformation, AuthorizationType } from "../../../services/authorization-client/authorization-type.js";
 import { AuthenticationType } from "../../../services/synchronizationClient/models/authentication-type.js";
 import { ConnectorType } from "../../../services/synchronizationClient/models/connector-type.js";
-import { StorageFileCreate } from "../../../services/synchronizationClient/models/storage-file-create.js";
 import { StorageConnection } from "../../../services/synchronizationClient/models/storage-connection.js";
+import { StorageFileCreate } from "../../../services/synchronizationClient/models/storage-file-create.js";
 
 export default class CreateConnection extends BaseCommand {
   public static apiReference: ApiReference = {

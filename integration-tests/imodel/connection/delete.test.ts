@@ -3,9 +3,11 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { runCommand } from "@oclif/test";
 import { expect } from "chai";
 
+import { runCommand } from "@oclif/test";
+
+import { ResultResponse } from "../../../src/services/general-models/result-response";
 import { StorageConnection } from "../../../src/services/synchronizationClient/models/storage-connection";
 import { createFile, createIModel, createITwin, getRootFolderId } from "../../utils/helpers";
 import runSuiteIfMainModule from "../../utils/run-suite-if-main-module";
@@ -34,15 +36,15 @@ const tests = () =>
     });
 
     after(async () => {
-      const { result: imodelDeleteResult } = await runCommand<{ result: string }>(`imodel delete --imodel-id ${testIModelId}`);
-      const { result: itwinDeleteResult } = await runCommand<{ result: string }>(`itwin delete --itwin-id ${testITwinId}`);
+      const { result: imodelDeleteResult } = await runCommand<ResultResponse>(`imodel delete --imodel-id ${testIModelId}`);
+      const { result: itwinDeleteResult } = await runCommand<ResultResponse>(`itwin delete --itwin-id ${testITwinId}`);
 
       expect(imodelDeleteResult).to.have.property("result", "deleted");
       expect(itwinDeleteResult).to.have.property("result", "deleted");
     });
 
     it("should delete a connection", async () => {
-      const { result: deleteResult } = await runCommand<{ result: string }>(`imodel connection delete --connection-id ${connectionId}`);
+      const { result: deleteResult } = await runCommand<ResultResponse>(`imodel connection delete --connection-id ${connectionId}`);
       expect(deleteResult).to.have.property("result", "deleted");
     });
   });

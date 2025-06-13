@@ -5,9 +5,9 @@
 
 import { Flags } from "@oclif/core";
 
+import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
 import { customFlags } from "../../extensions/custom-flags.js";
-import { ApiReference } from "../../extensions/api-reference.js";
 import { ItemsWithFolderLink } from "../../services/storage-client/models/items-with-folder-link.js";
 
 export default class GetRootFolder extends BaseCommand {

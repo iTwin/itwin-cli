@@ -3,11 +3,13 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { ITwin } from "@itwin/itwins-client";
-import { runCommand } from "@oclif/test";
 import { expect } from "chai";
 
+import { ITwin } from "@itwin/itwins-client";
+import { runCommand } from "@oclif/test";
+
 import { Group } from "../../src/services/access-control-client/models/group";
+import { ResultResponse } from "../../src/services/general-models/result-response.js";
 import { ITP_TEST_USER_SAMEORG } from "../utils/environment";
 import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
 
@@ -22,7 +24,7 @@ const tests = () => {
   });
 
   after(async () => {
-    const { result: deleteResult } = await runCommand<{ result: string }>(`itwin delete --itwin-id ${iTwinId}`);
+    const { result: deleteResult } = await runCommand<ResultResponse>(`itwin delete --itwin-id ${iTwinId}`);
     expect(deleteResult).to.have.property("result", "deleted");
   });
 
@@ -84,7 +86,7 @@ const tests = () => {
     expect(createResult).to.not.be.undefined;
     expect(createResult!.id).to.not.be.undefined;
 
-    const { result: deleteResult } = await runCommand<{ result: string }>(`access-control group delete --itwin-id ${iTwinId} --group-id ${createResult!.id}`);
+    const { result: deleteResult } = await runCommand<ResultResponse>(`access-control group delete --itwin-id ${iTwinId} --group-id ${createResult!.id}`);
     expect(deleteResult).to.have.property("result", "deleted");
 
     const { error: infoError } = await runCommand<Group>(`access-control group info --itwin-id ${iTwinId} -g ${createResult!.id}`);
@@ -102,7 +104,7 @@ const tests = () => {
     }
 
     const { error: updateError } = await runCommand(updateCommand);
-    const { result: deleteResult } = await runCommand<{ result: string }>(`access-control group delete --itwin-id ${iTwinId} --group-id ${newGroup!.id}`);
+    const { result: deleteResult } = await runCommand<ResultResponse>(`access-control group delete --itwin-id ${iTwinId} --group-id ${newGroup!.id}`);
     expect(deleteResult).to.have.property("result", "deleted");
 
     expect(updateError).to.not.be.undefined;
@@ -120,7 +122,7 @@ const tests = () => {
     }
 
     const { error: updateError } = await runCommand(updateCommand);
-    const { result: deleteResult } = await runCommand<{ result: string }>(`access-control group delete --itwin-id ${iTwinId} --group-id ${newGroup!.id}`);
+    const { result: deleteResult } = await runCommand<ResultResponse>(`access-control group delete --itwin-id ${iTwinId} --group-id ${newGroup!.id}`);
     expect(deleteResult).to.have.property("result", "deleted");
 
     expect(updateError).to.not.be.undefined;
