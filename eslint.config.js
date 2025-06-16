@@ -1,3 +1,8 @@
+/*---------------------------------------------------------------------------------------------
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
+
 import eslint from "@eslint/js";
 import tseslint from "typescript-eslint";
 import prettier from "eslint-plugin-prettier/recommended";
