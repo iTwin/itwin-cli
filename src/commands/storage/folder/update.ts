@@ -19,11 +19,11 @@ export default class UpdateFolder extends BaseCommand {
 
   public static examples = [
     {
-      command: `<%= config.bin %> <%= command.id %> --folder-id a1b2c3d4-5678-90ab-cdef-1234567890ab --name "Updated Project Documents"`,
+      command: `<%= config.bin %> <%= command.id %> --folder-id TYJsPN0xtkWId0yUrXkS5pN5AQzuullIkxz5aDnDJSI --name "Updated Project Documents"`,
       description: "Example 1: Update folder display name",
     },
     {
-      command: `<%= config.bin %> <%= command.id %> --folder-id b2c3d4e5-6789-01ab-cdef-2345678901bc --name "Updated Design Files" --description "Folder containing updated design documents"`,
+      command: `<%= config.bin %> <%= command.id %> --folder-id TYJsPN0xtkWId0yUrXkS5pN5AQzuullIkxz5aDnDJSI --name "Updated Design Files" --description "Folder containing updated design documents"`,
       description: "Example 2: Update folder display name and description",
     },
   ];

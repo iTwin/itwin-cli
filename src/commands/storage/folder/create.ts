@@ -23,7 +23,7 @@ export default class CreateFolder extends BaseCommand {
       description: `Example 1: Create a folder inside the root folder with a description\n#Note: You can retrieve the root folder ID using the 'itp storage root-folder' command.`,
     },
     {
-      command: `<%= config.bin %> <%= command.id %> --parent-folder-id b2c3d4e5-6789-01ab-cdef-2345678901bc --name "Design Files"`,
+      command: `<%= config.bin %> <%= command.id %> --parent-folder-id TYJsPN0xtkWId0yUrXkS5pN5AQzuullIkxz5aDnDJSI --name "Design Files"`,
       description: "Example 2: Create a subfolder inside an existing folder",
     },
   ];

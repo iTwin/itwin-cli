@@ -24,4 +24,4 @@ itp storage file upload --upload-url https://example.com/image-upload-url --file
 
 ## API Reference
 
-[Upload File](https://developer.bentley.com/apis/storage/operations/upload-file/)
+[Create File](https://developer.bentley.com/apis/storage/operations/create-file/)

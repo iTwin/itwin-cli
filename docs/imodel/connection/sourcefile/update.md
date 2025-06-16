@@ -24,7 +24,7 @@ Update an existing source file in a storage connection of an iModel.
 ## Examples
 
 ```bash
-itp imodel connection sourcefile update --connection-id bf4d8b36-25d7-4b72-b38b-12c1f0325f42 --source-file-id 297c8ab9-53a3-4fe5-adf8-79b4c1a95cbb --connector-type DWG --storage-file-id b67d9839-2663-4465-a425-d1541d32e4c7
+itp imodel connection sourcefile update --connection-id MWplZe9Uf0iR1IDMqyOMLqBN0_wHEVBGg_CzJmXdmE4 --source-file-id 297c8ab9-53a3-4fe5-adf8-79b4c1a95cbb --connector-type DWG --storage-file-id u9E_00ckVU6sdWnH_vnk-bPJEu3c_VVItnIkNDWlTy0
 ```
 
 ## API Reference

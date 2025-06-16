@@ -20,10 +20,10 @@ Update the metadata of a file in an iTwin's storage, such as display name or des
 
 ```bash
 # Example 1: Update file display name
-itp storage file update --file-id bf4d8b36-25d7-4b72-b38b-12c1f0325f42 --name "Updated Design File"
+itp storage file update --file-id TYJsPN0xtkWId0yUrXkS5pN5AQzuullIkxz5aDnDJSI --name "Updated Design File"
 
 # Example 2: Update file description and display name
-itp storage file update --file-id c9f2b8a5-345d-4cfa-b3e5-123456789abc --name "New Model File" --description "Updated model with new specifications"
+itp storage file update --file-id TYJsPN0xtkWId0yUrXkS5pN5AQzuullIkxz5aDnDJSI --name "New Model File" --description "Updated model with new specifications"
 ```
 
 ## API Reference

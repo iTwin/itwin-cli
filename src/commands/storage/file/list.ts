@@ -25,11 +25,11 @@ export default class ListFiles extends BaseCommand {
 
   public static examples = [
     {
-      command: `<%= config.bin %> <%= command.id %> --folder-id b1a2c3d4-5678-90ab-cdef-1234567890ab`,
+      command: `<%= config.bin %> <%= command.id %> --folder-id TYJsPN0xtkWId0yUrXkS5pN5AQzuullIkxz5aDnDJSI`,
       description: "Example 1: List files in a specific folder",
     },
     {
-      command: `<%= config.bin %> <%= command.id %> --folder-id b1a2c3d4-5678-90ab-cdef-1234567890ab --include-folders`,
+      command: `<%= config.bin %> <%= command.id %> --folder-id TYJsPN0xtkWId0yUrXkS5pN5AQzuullIkxz5aDnDJSI --include-folders`,
       description: "Example 2: List files and include subfolders in the result",
     },
   ];

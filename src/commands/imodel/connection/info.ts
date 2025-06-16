@@ -19,7 +19,7 @@ export default class ConnectionInfo extends BaseCommand {
 
   public static examples = [
     {
-      command: `<%= config.bin %> <%= command.id %> --connection-id bf4d8b36-25d7-4b72-b38b-12c1f0325f42`,
+      command: `<%= config.bin %> <%= command.id %> --connection-id MWplZe9Uf0iR1IDMqyOMLuL24kbZK4VNvgn4ev3etXI`,
       description: "Example 1:",
     },
   ];

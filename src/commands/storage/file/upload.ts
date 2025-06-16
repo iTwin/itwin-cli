@@ -13,8 +13,8 @@ import { ResultResponse } from "../../../services/general-models/result-response
 
 export default class FileUpload extends BaseCommand {
   public static apiReference: ApiReference = {
-    link: "https://developer.bentley.com/apis/storage/operations/upload-file/",
-    name: "Upload File",
+    link: "https://developer.bentley.com/apis/storage/operations/create-file/",
+    name: "Create File",
   };
 
   public static description = "Upload a new file to a specified URL within iTwin storage.";

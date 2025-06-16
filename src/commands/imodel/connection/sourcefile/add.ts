@@ -20,7 +20,7 @@ export default class CreateConnectionSourceFile extends BaseCommand {
 
   public static examples = [
     {
-      command: `<%= config.bin %> <%= command.id %> --connection-id bf4d8b36-25d7-4b72-b38b-12c1f0325f42 --storage-file-id t5bDFuN4qUa9ojVw1E5FGtldp8BgSbNCiJ2XMdiT-cA --connector-type MSTN`,
+      command: `<%= config.bin %> <%= command.id %> --connection-id MWplZe9Uf0iR1IDMqyOMLqBN0_wHEVBGg_CzJmXdmE4 --storage-file-id t5bDFuN4qUa9ojVw1E5FGtldp8BgSbNCiJ2XMdiT-cA --connector-type MSTN`,
       description: "Example 1: Add a source file to a storage connection",
     },
   ];

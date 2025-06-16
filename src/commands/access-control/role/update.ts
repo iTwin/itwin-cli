@@ -20,11 +20,11 @@ export default class UpdateRole extends BaseCommand {
 
   public static examples = [
     {
-      command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --role-id role1-id --name "Lead Engineer" --description "Oversees engineering tasks"`,
+      command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --role-id f2f5603d-c445-471d-a112-a1f61f0af3c5 --name "Lead Engineer" --description "Oversees engineering tasks"`,
       description: "Example 1: Update role name and description",
     },
     {
-      command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --role-id role1-id --name "Admin Role" --permission Permission1 --permission Permission2 --permission Permission3`,
+      command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --role-id f2f5603d-c445-471d-a112-a1f61f0af3c5 --name "Admin Role" --permission Permission1 --permission Permission2 --permission Permission3`,
       description: "Example 2: Update role permissions along with the name",
     },
   ];

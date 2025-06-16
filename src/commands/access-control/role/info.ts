@@ -20,7 +20,7 @@ export default class InfoRole extends BaseCommand {
 
   public static examples = [
     {
-      command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --role-id role1-id`,
+      command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --role-id 752b5a3d-b9f2-4845-824a-99dd310b4898`,
       description: "Example 1:",
     },
   ];

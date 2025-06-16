@@ -20,10 +20,10 @@ Create a new file in a specified folder in iTwin's storage.
 
 ```bash
 # Example 1: Creating a file with display name only
-itp storage file create --folder-id abc12345-6789-4321-abcd-9876543210ef --name design.dwg
+itp storage file create --folder-id TYJsPN0xtkWId0yUrXkS5pN5AQzuullIkxz5aDnDJSI --name design.dwg
 
 # Example 2: Creating a file with display name and description
-itp storage file create --folder-id abc12345-6789-4321-abcd-9876543210ef --name model.ifc --description "Model file for the building design"
+itp storage file create --folder-id TYJsPN0xtkWId0yUrXkS5pN5AQzuullIkxz5aDnDJSI --name model.ifc --description "Model file for the building design"
 ```
 
 ## API Reference

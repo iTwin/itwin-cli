@@ -12,7 +12,7 @@ import { ItemsWithFolderLink } from "../../services/storage-client/models/items-
 
 export default class GetRootFolder extends BaseCommand {
   public static apiReference: ApiReference = {
-    link: "https://developer.bentley.com/apis/storage/operations/get-top-level-folders-and-files-by-project/",
+    link: "https://developer.bentley.com/apis/storage/operations/get-top-level-folders-and-files-by-itwin/",
     name: "Get Top-Level Folders and Files",
   };
 
