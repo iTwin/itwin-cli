@@ -3,8 +3,9 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { Flags } from "@oclif/core";
 import zod from "zod";
+
+import { Flags } from "@oclif/core";
 
 import { GroupMember } from "../../services/access-control-client/models/group.js";
 import { validateJson } from "../validation/validate-json.js";

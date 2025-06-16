@@ -3,8 +3,9 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { runCommand } from "@oclif/test";
 import { expect } from "chai";
+
+import { runCommand } from "@oclif/test";
 
 import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
 

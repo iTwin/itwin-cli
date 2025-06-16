@@ -3,10 +3,12 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { ITwin } from "@itwin/itwins-client";
-import { runCommand } from "@oclif/test";
 import { expect } from "chai";
 
+import { ITwin } from "@itwin/itwins-client";
+import { runCommand } from "@oclif/test";
+
+import { ResultResponse } from "../../src/services/general-models/result-response.js";
 import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
 
 const tests = () => {
@@ -20,7 +22,7 @@ const tests = () => {
   });
 
   after(async () => {
-    const { result: deleteResult } = await runCommand<{ result: string }>(`itwin delete --itwin-id ${iTwinId}`);
+    const { result: deleteResult } = await runCommand<ResultResponse>(`itwin delete --itwin-id ${iTwinId}`);
     expect(deleteResult).to.have.property("result", "deleted");
   });
 

@@ -3,9 +3,10 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
+import zod from "zod";
+
 import { Extent } from "@itwin/imodels-client-management";
 import { Flags } from "@oclif/core";
-import zod from "zod";
 
 import { validateJson } from "../validation/validate-json.js";
 import zodErrorToMessage from "../validation/zod-error-to-message.js";

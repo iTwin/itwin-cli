@@ -3,10 +3,12 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { ITwin } from "@itwin/itwins-client";
-import { runCommand } from "@oclif/test";
 import { expect } from "chai";
 
+import { ITwin } from "@itwin/itwins-client";
+import { runCommand } from "@oclif/test";
+
+import { ResultResponse } from "../../src/services/general-models/result-response";
 import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
 
 const tests = () =>
@@ -31,9 +33,9 @@ const tests = () =>
     });
 
     after(async () => {
-      const { result: deleteResult1 } = await runCommand<{ result: string }>(`itwin delete --itwin-id ${testITwin1Child.id}`);
-      const { result: deleteResult2 } = await runCommand<{ result: string }>(`itwin delete --itwin-id ${testITwin1.id}`);
-      const { result: deleteResult3 } = await runCommand<{ result: string }>(`itwin delete --itwin-id ${testITwin2.id}`);
+      const { result: deleteResult1 } = await runCommand<ResultResponse>(`itwin delete --itwin-id ${testITwin1Child.id}`);
+      const { result: deleteResult2 } = await runCommand<ResultResponse>(`itwin delete --itwin-id ${testITwin1.id}`);
+      const { result: deleteResult3 } = await runCommand<ResultResponse>(`itwin delete --itwin-id ${testITwin2.id}`);
 
       expect(deleteResult1).to.have.property("result", "deleted");
       expect(deleteResult2).to.have.property("result", "deleted");

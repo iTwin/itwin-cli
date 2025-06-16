@@ -3,14 +3,15 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
+import { expect } from "chai";
+
 import { NamedVersion } from "@itwin/imodels-client-management";
 import { runCommand } from "@oclif/test";
-import { expect } from "chai";
 
 import { PopulateResponse } from "../../src/commands/imodel/populate";
 import { Changeset } from "../../src/services/changed-elements-client/tracking";
+import { ResultResponse } from "../../src/services/general-models/result-response";
 import { createIModel, createITwin } from "../utils/helpers";
-import { ResultResponse } from "../utils/result-response";
 import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
 
 const tests = () =>
@@ -37,8 +38,8 @@ const tests = () =>
     });
 
     after(async () => {
-      const { result: imodelDeleteResult } = await runCommand<{ result: string }>(`imodel delete --imodel-id ${testIModelId}`);
-      const { result: itwinDeleteResult } = await runCommand<{ result: string }>(`itwin delete --itwin-id ${testITwinId}`);
+      const { result: imodelDeleteResult } = await runCommand<ResultResponse>(`imodel delete --imodel-id ${testIModelId}`);
+      const { result: itwinDeleteResult } = await runCommand<ResultResponse>(`itwin delete --itwin-id ${testITwinId}`);
 
       expect(imodelDeleteResult).to.have.property("result", "deleted");
       expect(itwinDeleteResult).to.have.property("result", "deleted");

@@ -3,9 +3,11 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { runCommand } from "@oclif/test";
 import { expect } from "chai";
 
+import { runCommand } from "@oclif/test";
+
+import { ResultResponse } from "../../../src/services/general-models/result-response";
 import { FileTyped } from "../../../src/services/storage-client/models/file-typed";
 import { FileUpload } from "../../../src/services/storage-client/models/file-upload";
 import { createFile, createFolder, createITwin, getRootFolderId } from "../../utils/helpers";
@@ -35,7 +37,7 @@ const tests = () =>
     });
 
     after(async () => {
-      const { result: itwinDeleteResult } = await runCommand<{ result: string }>(`itwin delete --itwin-id ${testITwinId}`);
+      const { result: itwinDeleteResult } = await runCommand<ResultResponse>(`itwin delete --itwin-id ${testITwinId}`);
       expect(itwinDeleteResult).to.have.property("result", "deleted");
     });
 
@@ -50,7 +52,7 @@ const tests = () =>
     });
 
     it("should upload a new file version", async () => {
-      const { result: uploadResult } = await runCommand<{ result: string }>(`storage file upload --upload-url "${uploadUrl}" --file-path ${filePath}`);
+      const { result: uploadResult } = await runCommand<ResultResponse>(`storage file upload --upload-url "${uploadUrl}" --file-path ${filePath}`);
       expect(uploadResult?.result).to.be.equal("uploaded");
     });
 

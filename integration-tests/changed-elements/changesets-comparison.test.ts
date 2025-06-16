@@ -3,13 +3,15 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
+import { expect } from "chai";
+
 import { IModel } from "@itwin/imodels-client-management";
 import { ITwin } from "@itwin/itwins-client";
 import { runCommand } from "@oclif/test";
-import { expect } from "chai";
 
 import { PopulateResponse } from "../../src/commands/imodel/populate";
 import { Changeset, ChangesetComparison } from "../../src/services/changed-elements-client/tracking";
+import { ResultResponse } from "../../src/services/general-models/result-response";
 import { createFile, createIModel, createITwin, getRootFolderId } from "../utils/helpers";
 import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
 
@@ -32,7 +34,7 @@ const tests = () =>
         const testIModel = await createIModel(testIModelName, testITwinId);
         testIModelId = testIModel.id;
 
-        await runCommand<{ result: string }>(`changed-elements enable --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
+        await runCommand<ResultResponse>(`changed-elements enable --imodel-id ${testIModelId} --itwin-id ${testITwinId}`);
 
         const rootFolderId = await getRootFolderId(testITwinId);
         await createFile(rootFolderId, testFileName, testFilePath);

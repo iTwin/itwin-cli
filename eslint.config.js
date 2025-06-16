@@ -17,6 +17,7 @@ export default tseslint.config(
           allowedNames: ["tests", "sharedQuickUseCasesParallel"],
         },
       ],
+      "prettier/prettier": ["warn", { endOfLine: "auto" }],
     },
     languageOptions: {
       parser: tseslint.parser,

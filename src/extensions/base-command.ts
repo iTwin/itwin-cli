@@ -3,14 +3,16 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
+import "dotenv/config";
+
+import { Table } from "console-table-printer";
+import * as fs from "node:fs";
+import * as path from "node:path";
+
 import { Authorization, AuthorizationCallback, IModelsClient } from "@itwin/imodels-client-management";
 import { ITwinsAccessClient } from "@itwin/itwins-client";
 import { Command, Flags } from "@oclif/core";
 import { Input, ParserOutput } from "@oclif/core/interfaces";
-import { Table } from "console-table-printer";
-import "dotenv/config";
-import * as fs from "node:fs";
-import * as path from "node:path";
 
 import { ArgOutput, FlagOutput } from "../../node_modules/@oclif/core/lib/interfaces/parser.js";
 import { AccessControlClient } from "../services/access-control-client/access-control-client.js";

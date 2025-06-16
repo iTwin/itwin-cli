@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { ITwin } from "@itwin/itwins-client";
+
 import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
 import { customFlags } from "../../extensions/custom-flags.js";

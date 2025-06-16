@@ -3,14 +3,15 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
+import { expect } from "chai";
+
 import { Changeset, IModel } from "@itwin/imodels-client-management";
 import { ITwin } from "@itwin/itwins-client";
 import { runCommand } from "@oclif/test";
-import { expect } from "chai";
 
 import { PopulateResponse } from "../../src/commands/imodel/populate";
+import { ResultResponse } from "../../src/services/general-models/result-response";
 import { createIModel, createITwin } from "../utils/helpers";
-import { ResultResponse } from "../utils/result-response";
 import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
 
 const tests = () =>
