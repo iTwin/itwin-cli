@@ -29,6 +29,14 @@ Check your user details to verify authentication:
 itp user me
 ```
 
+### **4. Setup Command Autocomplete (Optional)**
+Install a plugin and run the added command for further instructions.
+NOTE: As of June 16th, 2025 only `bash`, `zsh` and `powershell` are supported.
+```bash
+itp plugins install @oclif/plugin-autocomplete
+itp autocomplete
+```
+
 For a step-by-step guide on getting started with an iTwin, see the **[Quickstart](https://cuddly-engine-j746ov3.pages.github.io/#/quickstart)**. For a complete list of commands and usage examples, visit the **[iTwin CLI Manual](https://cuddly-engine-j746ov3.pages.github.io/#/)**.
 
 ---
