@@ -19,11 +19,11 @@ export default class FileCreate extends BaseCommand {
 
   public static examples = [
     {
-      command: `<%= config.bin %> <%= command.id %> --folder-id abc12345-6789-4321-abcd-9876543210ef --name design.dwg`,
+      command: `<%= config.bin %> <%= command.id %> --folder-id TYJsPN0xtkWId0yUrXkS5pN5AQzuullIkxz5aDnDJSI --name design.dwg`,
       description: "Example 1: Creating a file with display name only",
     },
     {
-      command: `<%= config.bin %> <%= command.id %> --folder-id abc12345-6789-4321-abcd-9876543210ef --name model.ifc --description "Model file for the building design"`,
+      command: `<%= config.bin %> <%= command.id %> --folder-id TYJsPN0xtkWId0yUrXkS5pN5AQzuullIkxz5aDnDJSI --name model.ifc --description "Model file for the building design"`,
       description: "Example 2: Creating a file with display name and description",
     },
   ];

@@ -15,7 +15,7 @@ Retrieve details about a specific user member in an iTwin.
 ## Examples
 
 ```bash
-itp access-control member user info --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --member-id user1-id
+itp access-control member user info --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --member-id 69e0284a-1331-4462-9c83-9cdbe2bdaa7f
 ```
 
 ## API Reference

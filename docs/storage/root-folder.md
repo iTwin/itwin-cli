@@ -24,4 +24,4 @@ itp storage root-folder --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51
 
 ## API Reference
 
-[Get Top-Level Folders and Files](https://developer.bentley.com/apis/storage/operations/get-top-level-folders-and-files-by-project/)
+[Get Top-Level Folders and Files](https://developer.bentley.com/apis/storage/operations/get-top-level-folders-and-files-by-itwin/)

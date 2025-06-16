@@ -19,7 +19,7 @@ export default class ConnectionRunInfo extends BaseCommand {
 
   public static examples = [
     {
-      command: `<%= config.bin %> <%= command.id %> --connection-id abc12345-6789-4321-abcd-9876543210ef --connection-run-id run98765-4321-abcd-1234-567890abcdef`,
+      command: `<%= config.bin %> <%= command.id %> --connection-id MWplZe9Uf0iR1IDMqyOMLqBN0_wHEVBGg_CzJmXdmE4 --connection-run-id a1ecbdc8c4f6173004f9f881914a57c5511a362b`,
       description: "Example 1:",
     },
   ];

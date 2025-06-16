@@ -19,11 +19,11 @@ export default class UpdateCommand extends BaseCommand {
 
   public static examples = [
     {
-      command: `<%= config.bin %> <%= command.id %> --file-id bf4d8b36-25d7-4b72-b38b-12c1f0325f42 --name "Updated Design File"`,
+      command: `<%= config.bin %> <%= command.id %> --file-id TYJsPN0xtkWId0yUrXkS5pN5AQzuullIkxz5aDnDJSI --name "Updated Design File"`,
       description: "Example 1: Update file display name",
     },
     {
-      command: `<%= config.bin %> <%= command.id %> --file-id c9f2b8a5-345d-4cfa-b3e5-123456789abc --name "New Model File" --description "Updated model with new specifications"`,
+      command: `<%= config.bin %> <%= command.id %> --file-id TYJsPN0xtkWId0yUrXkS5pN5AQzuullIkxz5aDnDJSI --name "New Model File" --description "Updated model with new specifications"`,
       description: "Example 2: Update file description and display name",
     },
   ];

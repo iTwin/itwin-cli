@@ -12,7 +12,7 @@ Complete the file creation or content update process by marking the operation as
 
 ```bash
 # Example 1: Complete the file creation or update process
-itp storage file update-complete --file-id bf4d8b36-25d7-4b72-b38b-12c1f0325f42
+itp storage file update-complete --file-id TYJsPN0xtkWId0yUrXkS5pN5AQzuullIkxz5aDnDJSI
 ```
 
 ## API Reference

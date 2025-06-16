@@ -20,11 +20,11 @@ export default class UpdateStorageConnection extends BaseCommand {
 
   public static examples = [
     {
-      command: `<%= config.bin %> <%= command.id %> --connection-id bf4d8b36-25d7-4b72-b38b-12c1f0325f42 --name "Updated Project Files"`,
+      command: `<%= config.bin %> <%= command.id %> --connection-id MWplZe9Uf0iR1IDMqyOMLuL24kbZK4VNvgn4ev3etXI --name "Updated Project Files"`,
       description: "Example 1: Updating a connection with a new display name",
     },
     {
-      command: `<%= config.bin %> <%= command.id %> --connection-id bf4d8b36-25d7-4b72-b38b-12c1f0325f42 --authentication-type Service`,
+      command: `<%= config.bin %> <%= command.id %> --connection-id MWplZe9Uf0iR1IDMqyOMLuL24kbZK4VNvgn4ev3etXI --authentication-type Service`,
       description: "Example 2: Changing authentication type for a connection",
     },
   ];

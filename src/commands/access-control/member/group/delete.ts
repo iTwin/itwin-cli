@@ -20,7 +20,7 @@ export default class DeleteGroupMember extends BaseCommand {
 
   public static examples = [
     {
-      command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --group-id group1-id`,
+      command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --group-id 10f1209f-ecc2-4457-9cb0-39c99d7c4414`,
       description: "Example 1:",
     },
   ];
