@@ -60,6 +60,9 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      - name: Copyright Lint
+        run: npm run lint:copyright
+
       - name: Test (Formatting)
         run: npm run test:formatting
 
