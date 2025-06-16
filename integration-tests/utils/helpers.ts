@@ -3,10 +3,6 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { IModel } from "@itwin/imodels-client-management";
-import { ITwin } from "@itwin/itwins-client";
-import { getTestAccessToken, TestBrowserAuthorizationClientConfiguration, TestUserCredentials } from "@itwin/oidc-signin-tool";
-import { runCommand } from "@oclif/test";
 import { expect } from "chai";
 import * as dotenv from "dotenv";
 import { GetInboxRequest, GetMessageRequest, MailinatorClient } from "mailinator-client";
@@ -14,6 +10,12 @@ import fs from "node:fs";
 import os from "node:os";
 import { inflate } from "pako";
 
+import { IModel } from "@itwin/imodels-client-management";
+import { ITwin } from "@itwin/itwins-client";
+import { getTestAccessToken, TestBrowserAuthorizationClientConfiguration, TestUserCredentials } from "@itwin/oidc-signin-tool";
+import { runCommand } from "@oclif/test";
+
+import { ResultResponse } from "../../src/services/general-models/result-response.js";
 import { FileTyped } from "../../src/services/storage-client/models/file-typed.js";
 import { FileUpload } from "../../src/services/storage-client/models/file-upload.js";
 import { FolderTyped } from "../../src/services/storage-client/models/folder-typed.js";
@@ -41,7 +43,7 @@ export async function createFile(folderId: string, displayName: string, filePath
   const fileId = completeUrl!.split("/").at(-2);
 
   // 2. Upload file
-  const { result: uploadedFile } = await runCommand<{ result: string }>(`storage file upload --upload-url "${uploadUrl}" --file-path ${filePath}`);
+  const { result: uploadedFile } = await runCommand<ResultResponse>(`storage file upload --upload-url "${uploadUrl}" --file-path ${filePath}`);
 
   expect(uploadedFile).to.have.property("result", "uploaded");
 
@@ -83,22 +85,22 @@ export async function createIModel(name: string, iTwinId: string): Promise<IMode
 }
 
 export async function deleteFile(fileId: string): Promise<void> {
-  const { result: deleteResult } = await runCommand<{ result: string }>(`storage file delete --file-id ${fileId}`);
+  const { result: deleteResult } = await runCommand<ResultResponse>(`storage file delete --file-id ${fileId}`);
   expect(deleteResult).to.have.property("result", "deleted");
 }
 
 export async function deleteFolder(folderId: string): Promise<void> {
-  const { result: deleteResult } = await runCommand<{ result: string }>(`storage folder delete --folder-id ${folderId}`);
+  const { result: deleteResult } = await runCommand<ResultResponse>(`storage folder delete --folder-id ${folderId}`);
   expect(deleteResult).to.have.property("result", "deleted");
 }
 
 export async function deleteITwin(id: string): Promise<void> {
-  const { result: deleteResult } = await runCommand<{ result: string }>(`itwin delete --itwin-id ${id}`);
+  const { result: deleteResult } = await runCommand<ResultResponse>(`itwin delete --itwin-id ${id}`);
   expect(deleteResult).to.have.property("result", "deleted");
 }
 
 export async function deleteIModel(id: string): Promise<void> {
-  const { result: deleteResult } = await runCommand<{ result: string }>(`imodel delete --imodel-id ${id}`);
+  const { result: deleteResult } = await runCommand<ResultResponse>(`imodel delete --imodel-id ${id}`);
   expect(deleteResult).to.have.property("result", "deleted");
 }
 

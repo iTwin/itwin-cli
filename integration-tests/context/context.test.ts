@@ -1,8 +1,10 @@
+import { expect } from "chai";
+
 import { IModel } from "@itwin/imodels-client-management";
 import { ITwin } from "@itwin/itwins-client";
 import { runCommand } from "@oclif/test";
-import { expect } from "chai";
 
+import { ResultResponse } from "../../src/services/general-models/result-response";
 import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
 
 const tests = () =>
@@ -32,8 +34,8 @@ const tests = () =>
     });
 
     after(async () => {
-      const { result: deleteResult1 } = await runCommand<{ result: string }>(`itwin delete -i ${iTwin.id}`);
-      const { result: deleteResult2 } = await runCommand<{ result: string }>(`itwin delete -i ${anotherITwin.id}`);
+      const { result: deleteResult1 } = await runCommand<ResultResponse>(`itwin delete -i ${iTwin.id}`);
+      const { result: deleteResult2 } = await runCommand<ResultResponse>(`itwin delete -i ${anotherITwin.id}`);
 
       expect(deleteResult1).to.have.property("result", "deleted");
       expect(deleteResult2).to.have.property("result", "deleted");

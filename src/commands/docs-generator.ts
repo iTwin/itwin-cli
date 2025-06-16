@@ -1,6 +1,7 @@
-import { Command, Config, Flags } from "@oclif/core";
 import fs from "node:fs";
 import path from "node:path";
+
+import { Command, Config, Flags } from "@oclif/core";
 
 import { ApiReference } from "../extensions/api-reference.js";
 import BaseCommand from "../extensions/base-command.js";

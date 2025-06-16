@@ -1,8 +1,10 @@
+import { expect } from "chai";
+
 import { IModel } from "@itwin/imodels-client-management";
 import { ITwin } from "@itwin/itwins-client";
 import { runCommand } from "@oclif/test";
-import { expect } from "chai";
 
+import { ResultResponse } from "../src/services/general-models/result-response.js";
 import { User } from "../src/services/user-client/models/user.js";
 import { createITwin } from "./utils/helpers.js";
 import runSuiteIfMainModule from "./utils/run-suite-if-main-module.js";
@@ -23,7 +25,7 @@ const tests = () =>
     });
 
     after(async () => {
-      const { result: itwinDeleteResult } = await runCommand<{ result: string }>(`itwin delete --itwin-id ${iTwin.id}`);
+      const { result: itwinDeleteResult } = await runCommand<ResultResponse>(`itwin delete --itwin-id ${iTwin.id}`);
       expect(itwinDeleteResult).to.have.property("result", "deleted");
     });
 

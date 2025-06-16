@@ -3,12 +3,14 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
+import { expect } from "chai";
+
 import { ITwin } from "@itwin/itwins-client";
 import { runCommand } from "@oclif/test";
-import { expect } from "chai";
 
 import { GroupMember } from "../../../src/services/access-control-client/models/group-members";
 import { OwnerResponse } from "../../../src/services/access-control-client/models/owner";
+import { ResultResponse } from "../../../src/services/general-models/result-response.js";
 import { User } from "../../../src/services/user-client/models/user";
 import { ITP_TEST_USER_EXTERNAL } from "../../utils/environment";
 import { fetchEmailsAndGetInvitationLink } from "../../utils/helpers";
@@ -25,7 +27,7 @@ const tests = () => {
   });
 
   after(async () => {
-    const { result: deleteResult } = await runCommand<{ result: string }>(`itwin delete --itwin-id ${iTwinId}`);
+    const { result: deleteResult } = await runCommand<ResultResponse>(`itwin delete --itwin-id ${iTwinId}`);
     expect(deleteResult).to.have.property("result", "deleted");
   });
 
@@ -54,7 +56,7 @@ const tests = () => {
     const joinedUser = usersInfo.find((user) => user.email.toLowerCase() === emailToAdd!.toLowerCase());
     expect(joinedUser).to.not.be.undefined;
 
-    const { result: deletionResult } = await runCommand<{ result: string }>(
+    const { result: deletionResult } = await runCommand<ResultResponse>(
       `access-control member owner delete --itwin-id ${iTwinId} --member-id ${joinedUser?.id}`,
     );
     expect(deletionResult).to.not.be.undefined;
