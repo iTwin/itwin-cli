@@ -58,7 +58,7 @@ stages:
       pool:
         name: "Release Services MacOS Build"
         demands:
-          - Agent.Name -equals prgmac06-c
+          - Agent.Name -equals PrgMac08-ARM1
       steps:
         - template: installer-packaging.yml
           parameters:
@@ -70,7 +70,7 @@ stages:
       pool:
         name: "Release Services MacOS Build"
         demands:
-          - Agent.Name -equals prgmac06-c
+          - Agent.Name -equals PrgMac08-ARM1
       steps:
         - template: notarization.yml
           parameters:
