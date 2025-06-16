@@ -24,7 +24,7 @@ Create a new folder in a specified parent folder in iTwin's storage.
 itp storage folder create --parent-folder-id ROOT_FOLDER_ID_HERE --name "Project Documents" --description "Folder for all project-related documents"
 
 # Example 2: Create a subfolder inside an existing folder
-itp storage folder create --parent-folder-id b2c3d4e5-6789-01ab-cdef-2345678901bc --name "Design Files"
+itp storage folder create --parent-folder-id TYJsPN0xtkWId0yUrXkS5pN5AQzuullIkxz5aDnDJSI --name "Design Files"
 ```
 
 ## API Reference

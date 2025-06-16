@@ -20,7 +20,7 @@ export default class UpdateGroupMember extends BaseCommand {
 
   public static examples = [
     {
-      command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --group-id group1-id --role-id role1-id --role-id role2-id`,
+      command: `<%= config.bin %> <%= command.id %> --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --group-id 10f1209f-ecc2-4457-9cb0-39c99d7c4414 --role-id e968b640-02c4-41ef-b4f0-935918a82af3 --role-id 63e3533c-eb6d-48ee-a2b3-3a6c724340f2`,
       description: "Example 1:",
     },
   ];

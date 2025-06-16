@@ -20,10 +20,10 @@ Update the metadata of a folder in an iTwin's storage, such as its display name 
 
 ```bash
 # Example 1: Update folder display name
-itp storage folder update --folder-id a1b2c3d4-5678-90ab-cdef-1234567890ab --name "Updated Project Documents"
+itp storage folder update --folder-id TYJsPN0xtkWId0yUrXkS5pN5AQzuullIkxz5aDnDJSI --name "Updated Project Documents"
 
 # Example 2: Update folder display name and description
-itp storage folder update --folder-id b2c3d4e5-6789-01ab-cdef-2345678901bc --name "Updated Design Files" --description "Folder containing updated design documents"
+itp storage folder update --folder-id TYJsPN0xtkWId0yUrXkS5pN5AQzuullIkxz5aDnDJSI --name "Updated Design Files" --description "Folder containing updated design documents"
 ```
 
 ## API Reference

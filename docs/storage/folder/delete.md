@@ -11,7 +11,7 @@ Delete a folder from an iTwin's storage.
 ## Examples
 
 ```bash
-itp storage folder delete --folder-id a1b2c3d4-5678-90ab-cdef-1234567890ab
+itp storage folder delete --folder-id TYJsPN0xtkWId0yUrXkS5pN5AQzuullIkxz5aDnDJSI
 ```
 
 ## API Reference
