@@ -7,16 +7,10 @@ import fs from "node:fs";
 
 import { Flags } from "@oclif/core";
 
-import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { ResultResponse } from "../../../services/general-models/result-response.js";
 
 export default class FileUpload extends BaseCommand {
-  public static apiReference: ApiReference = {
-    link: "https://developer.bentley.com/apis/storage/operations/upload-file/",
-    name: "Upload File",
-  };
-
   public static description = "Upload a new file to a specified URL within iTwin storage.";
 
   public static examples = [

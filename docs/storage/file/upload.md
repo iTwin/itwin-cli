@@ -21,7 +21,3 @@ itp storage file upload --upload-url https://example.com/upload-url --file-path 
 # Example 2: Upload an image file to the storage
 itp storage file upload --upload-url https://example.com/image-upload-url --file-path /path/to/your/image.jpg
 ```
-
-## API Reference
-
-[Upload File](https://developer.bentley.com/apis/storage/operations/upload-file/)
