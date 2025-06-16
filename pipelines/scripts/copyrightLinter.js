@@ -61,3 +61,7 @@ if (filePaths) {
     }
   });
 }
+
+if (process.exitCode === 1) {
+  console.log("\nRun 'npm run lint:copyright:fix' to fix the issues.");
+}
