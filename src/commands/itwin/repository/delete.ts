@@ -7,7 +7,7 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
-import { customFlags } from "../../../extensions/custom-flags.js";
+import { CustomFlags } from "../../../extensions/custom-flags.js";
 import { ResultResponse } from "../../../services/general-models/result-response.js";
 
 export default class DeleteRepository extends BaseCommand {
@@ -26,7 +26,7 @@ export default class DeleteRepository extends BaseCommand {
   ];
 
   public static flags = {
-    "itwin-id": customFlags.iTwinIDFlag({
+    "itwin-id": CustomFlags.iTwinIDFlag({
       description: "The ID of the iTwin that the repository belongs to.",
     }),
     "repository-id": Flags.string({

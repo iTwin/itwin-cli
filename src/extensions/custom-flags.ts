@@ -11,7 +11,8 @@ import noSchemaJson from "./custom-flags/no-schema-json.js";
 import userMembers from "./custom-flags/user-member-array.js";
 import uuid from "./custom-flags/uuid.js";
 
-export const customFlags = {
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export const CustomFlags = {
   extent,
   groupMembers,
   iModelIDFlag: (config: CustomFlagConfig): OptionFlag<string, CustomOptions> =>

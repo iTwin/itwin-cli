@@ -7,7 +7,7 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
-import { customFlags } from "../../extensions/custom-flags.js";
+import { CustomFlags } from "../../extensions/custom-flags.js";
 import { ItemsWithFolderLink } from "../../services/storage-client/models/items-with-folder-link.js";
 
 export default class GetRootFolder extends BaseCommand {
@@ -26,7 +26,7 @@ export default class GetRootFolder extends BaseCommand {
   ];
 
   public static flags = {
-    "itwin-id": customFlags.iTwinIDFlag({
+    "itwin-id": CustomFlags.iTwinIDFlag({
       description: "The ID of the iTwin whose top-level folders and files you want to retrieve.",
     }),
     skip: Flags.integer({

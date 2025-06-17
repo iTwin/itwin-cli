@@ -7,7 +7,7 @@ import { Command, Flags } from "@oclif/core";
 
 import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
-import { customFlags } from "../../extensions/custom-flags.js";
+import { CustomFlags } from "../../extensions/custom-flags.js";
 import { Query } from "../../services/iTwin-api-client.js";
 
 export default class ApiRequest extends BaseCommand {
@@ -45,7 +45,7 @@ export default class ApiRequest extends BaseCommand {
   ];
 
   public static flags = {
-    body: customFlags.noSchemaJson({
+    body: CustomFlags.noSchemaJson({
       description: "The body to include in the request. It must be serialized JSON.",
       helpValue: "<string>",
     }),

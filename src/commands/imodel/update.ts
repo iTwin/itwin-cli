@@ -8,7 +8,7 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
-import { customFlags } from "../../extensions/custom-flags.js";
+import { CustomFlags } from "../../extensions/custom-flags.js";
 import { validateFloat } from "../../extensions/validation/validate-float.js";
 
 export default class UpdateCommand extends BaseCommand {
@@ -44,13 +44,13 @@ export default class UpdateCommand extends BaseCommand {
       helpValue: "<string>",
       required: false,
     }),
-    extent: customFlags.extent({
+    extent: CustomFlags.extent({
       description:
         "The new maximum rectangular area on Earth that encloses the iModel, defined by its southwest and northeast corners and provided in serialized JSON format.",
       helpValue: "<string>",
       required: false,
     }),
-    "imodel-id": customFlags.iModelIDFlag({
+    "imodel-id": CustomFlags.iModelIDFlag({
       description: "The ID of the iModel to update.",
     }),
     name: Flags.string({

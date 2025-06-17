@@ -7,7 +7,7 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
-import { customFlags } from "../../extensions/custom-flags.js";
+import { CustomFlags } from "../../extensions/custom-flags.js";
 import { ChangesetComparison } from "../../services/changed-elements-client/tracking.js";
 
 export default class ChangedElementsComparison extends BaseCommand {
@@ -40,10 +40,10 @@ export default class ChangedElementsComparison extends BaseCommand {
       helpValue: "<string>",
       required: true,
     }),
-    "imodel-id": customFlags.iModelIDFlag({
+    "imodel-id": CustomFlags.iModelIDFlag({
       description: "The ID of the iModel to compare changesets for.",
     }),
-    "itwin-id": customFlags.iTwinIDFlag({
+    "itwin-id": CustomFlags.iTwinIDFlag({
       description: "The ID of the iTwin associated with the iModel.",
     }),
   };

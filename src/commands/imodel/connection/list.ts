@@ -7,7 +7,7 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
-import { customFlags } from "../../../extensions/custom-flags.js";
+import { CustomFlags } from "../../../extensions/custom-flags.js";
 import { StorageConnectionListResponse } from "../../../services/synchronizationClient/models/storage-connection-response.js";
 
 export default class ListConnections extends BaseCommand {
@@ -34,7 +34,7 @@ export default class ListConnections extends BaseCommand {
   ];
 
   public static flags = {
-    "imodel-id": customFlags.iModelIDFlag({
+    "imodel-id": CustomFlags.iModelIDFlag({
       description: "The ID of the iModel whose storage connections you want to list.",
     }),
     skip: Flags.integer({
