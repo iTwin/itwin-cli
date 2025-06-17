@@ -10,12 +10,22 @@ import BaseCommand from "../../../extensions/base-command.js";
 import { FileTyped } from "../../../services/storage-client/models/file-typed.js";
 
 export default class FileUpdateComplete extends BaseCommand {
-  public static apiReference: ApiReference = {
-    link: "https://developer.bentley.com/apis/storage/operations/complete-file-creation/",
-    name: "Complete File Creation",
-  };
+  public static apiReference: ApiReference[] = [
+    {
+      link: "https://developer.bentley.com/apis/storage/operations/complete-file-creation/",
+      name: "Complete File Creation",
+    },
+    {
+      link: "/docs/workflows/itwin-upload-files-storage",
+      name: "Upload File to iTwin storage",
+      sectionName: "Workflow Reference",
+    },
+  ];
 
-  public static description = "Complete the file creation or content update process by marking the operation as done.";
+  public static description =
+    "Complete the file creation or content update process by marking the operation as done. This command is part of the following workflows:\n\n" +
+    "'Upload File to iTwin storage' workflow:\n1) Create an empty file with provided metadata using 'itp storage file create' command.\n2) Upload the file using 'itp storage file upload' command.\n3) Confirm file upload using 'itp storage file update-complete' command.\n\n" +
+    "'Update iTwin storage file content' workflow:\n1) Specify which file needs to have its content updated using 'itp storage file update-content' command.\n2) Upload the updated file using 'itp storage file upload' command.\n3) Confirm file content update using 'itp storage file update-complete' command.";
 
   public static examples = [
     {
