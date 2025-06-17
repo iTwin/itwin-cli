@@ -3,8 +3,6 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { Flags } from "@oclif/core";
-
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { CustomFlags } from "../../../extensions/custom-flags.js";
@@ -29,7 +27,7 @@ export default class DeleteRole extends BaseCommand {
     "itwin-id": CustomFlags.iTwinIDFlag({
       description: "The ID of the iTwin where the role exists.",
     }),
-    "role-id": Flags.string({
+    "role-id": CustomFlags.uuid({
       description: "The ID of the role to be deleted.",
       helpValue: "<string>",
       required: true,

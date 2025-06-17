@@ -35,7 +35,7 @@ export default class UpdateAccessControlGroup extends BaseCommand {
       description: "The updated description of the group.",
       helpValue: "<string>",
     }),
-    "group-id": Flags.string({
+    "group-id": CustomFlags.uuid({
       char: "g",
       description: "The ID of the group to be updated.",
       helpValue: "<string>",

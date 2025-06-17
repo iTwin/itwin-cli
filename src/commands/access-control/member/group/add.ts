@@ -34,7 +34,8 @@ export default class AddGroupMembers extends BaseCommand {
   ];
 
   public static flags = {
-    "group-id": Flags.string({
+    "group-id": CustomFlags.uuid({
+      char: "g",
       dependsOn: ["role-ids"],
       description: "Specify id of the group to add roles to. This flag can be provided multiple times.",
       helpValue: "<string>",

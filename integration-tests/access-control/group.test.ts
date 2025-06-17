@@ -128,6 +128,30 @@ const tests = () => {
     expect(updateError).to.not.be.undefined;
     expect(updateError?.message).to.be.equal("A maximum of 50 ims groups can be provided.");
   });
+
+  it("Should return an error when invalid uuid is provided as --itwin-id", async () => {
+    const { error: infoError } = await runCommand<Group>(`access-control group info -i an-invalid-uuid -g ${crypto.randomUUID()}`);
+    expect(infoError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+
+    const { error: updateError } = await runCommand<Group>(`access-control group update -i an-invalid-uuid -g ${crypto.randomUUID()}`);
+    expect(updateError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+
+    const { error: deleteError } = await runCommand<ResultResponse>(`access-control group delete --itwin-id an-invalid-uuid --group-id ${crypto.randomUUID()}`);
+    expect(deleteError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+  });
+
+  it("Should return an error when invalid uuid is provided as --group-id", async () => {
+    const { error: infoError } = await runCommand<Group>(`access-control group info -i ${crypto.randomUUID()} -g another-invalid-uuid`);
+    expect(infoError?.message).to.contain("'another-invalid-uuid' is not a valid UUID.");
+
+    const { error: updateError } = await runCommand<Group>(`access-control group update -i ${crypto.randomUUID()} -g another-invalid-uuid`);
+    expect(updateError?.message).to.contain("'another-invalid-uuid' is not a valid UUID.");
+
+    const { error: deleteError } = await runCommand<ResultResponse>(
+      `access-control group delete --itwin-id ${crypto.randomUUID()} --group-id another-invalid-uuid`,
+    );
+    expect(deleteError?.message).to.contain("'another-invalid-uuid' is not a valid UUID.");
+  });
 };
 
 export default tests;

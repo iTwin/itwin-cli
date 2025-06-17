@@ -3,8 +3,6 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { Flags } from "@oclif/core";
-
 import { ApiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
 import { CustomFlags } from "../../../../extensions/custom-flags.js";
@@ -26,7 +24,7 @@ export default class UpdateGroupMember extends BaseCommand {
   ];
 
   public static flags = {
-    "group-id": Flags.string({
+    "group-id": CustomFlags.uuid({
       char: "g",
       description: "The ID of the group whose roles will be updated.",
       helpValue: "<string>",
@@ -35,7 +33,7 @@ export default class UpdateGroupMember extends BaseCommand {
     "itwin-id": CustomFlags.iTwinIDFlag({
       description: "The ID of the iTwin to which the groups will be added.",
     }),
-    "role-id": Flags.string({
+    "role-id": CustomFlags.uuid({
       description: "A list of role IDs to assign to the group. Max amount of 50.",
       helpValue: "<string>",
       multiple: true,

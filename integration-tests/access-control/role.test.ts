@@ -85,6 +85,34 @@ const tests = () => {
     const { result: deleteResult } = await runCommand<ResultResponse>(`access-control role delete --itwin-id ${iTwinId} --role-id ${newRole!.id}`);
     expect(deleteResult).to.have.property("result", "deleted");
   });
+
+  it("Should return an error when invalid uuid is provided as --itwin-id", async () => {
+    const { error: addError } = await runCommand<Role>(`access-control role create -i an-invalid-uuid -n Name -d Description`);
+    expect(addError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+
+    const { error: infoError } = await runCommand<Role>(`access-control role info -i an-invalid-uuid --role-id ${crypto.randomUUID()}`);
+    expect(infoError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+
+    const { error: listError } = await runCommand<Role>(`access-control role list -i an-invalid-uuid`);
+    expect(listError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+
+    const { error: updateError } = await runCommand<Role>(`access-control role update -i an-invalid-uuid  --role-id ${crypto.randomUUID()} --name NewName`);
+    expect(updateError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+
+    const { error: deleteError } = await runCommand<ResultResponse>(`access-control role delete --itwin-id an-invalid-uuid --role-id ${crypto.randomUUID()}`);
+    expect(deleteError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+  });
+
+  it("Should return an error when invalid uuid is provided as --role-id", async () => {
+    const { error: infoError } = await runCommand<Role>(`access-control role info -i ${crypto.randomUUID()} --role-id an-invalid-uuid`);
+    expect(infoError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+
+    const { error: updateError } = await runCommand<Role>(`access-control role update -i ${crypto.randomUUID()} --role-id an-invalid-uuid --name NewName`);
+    expect(updateError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+
+    const { error: deleteError } = await runCommand<ResultResponse>(`access-control role delete --itwin-id ${crypto.randomUUID()} --role-id an-invalid-uuid`);
+    expect(deleteError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+  });
 };
 
 export default tests;

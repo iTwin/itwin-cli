@@ -66,6 +66,22 @@ const tests = () =>
       expect(createResult?.displayName).to.be.equal("Version 2.0");
       expect(createResult?.description).to.be.equal("Some description of the version");
     });
+
+    it("should return an error when invalid uuid is provided as --imodel-id", async () => {
+      const { error: createError } = await runCommand<NamedVersion>(`imodel named-version create -m an-invalid-uuid -n Name`);
+      expect(createError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+
+      const { error: infoError } = await runCommand<NamedVersion>(`imodel named-version info -m an-invalid-uuid --named-version-id ${crypto.randomUUID()}`);
+      expect(infoError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+
+      const { error: listError } = await runCommand<NamedVersion>(`imodel named-version list -m an-invalid-uuid`);
+      expect(listError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+    });
+
+    it("should return an error when invalid uuid is provided as --named-version-id", async () => {
+      const { error: infoError } = await runCommand<NamedVersion>(`imodel named-version info -m ${crypto.randomUUID()} --named-version-id an-invalid-uuid`);
+      expect(infoError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+    });
   });
 
 export default tests;

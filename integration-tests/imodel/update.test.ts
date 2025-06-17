@@ -139,6 +139,11 @@ const tests = () =>
       expect(createError).to.not.be.undefined;
       expect(createError?.message).to.match(/46.302abc is not a valid number./);
     });
+
+    it("should return an error when invalid uuid is provided as --imodel-id", async () => {
+      const { error } = await runCommand<IModel>(`imodel update -m an-invalid-uuid`);
+      expect(error?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+    });
   });
 
 export default tests;

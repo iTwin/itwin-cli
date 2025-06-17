@@ -3,8 +3,6 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { Flags } from "@oclif/core";
-
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { CustomFlags } from "../../../extensions/custom-flags.js";
@@ -26,7 +24,7 @@ export default class DeleteAccessControlGroup extends BaseCommand {
   ];
 
   public static flags = {
-    "group-id": Flags.string({
+    "group-id": CustomFlags.uuid({
       char: "g",
       description: "The ID of the group to be deleted.",
       helpValue: "<string>",

@@ -4,7 +4,6 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { NamedVersion } from "@itwin/imodels-client-management";
-import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
@@ -29,7 +28,7 @@ export default class NamedVersionInfo extends BaseCommand {
     "imodel-id": CustomFlags.iModelIDFlag({
       description: "The ID of the iModel whose named version you want to retrieve.",
     }),
-    "named-version-id": Flags.string({
+    "named-version-id": CustomFlags.uuid({
       description: "The ID of the named version.",
       helpValue: "<string>",
       required: true,

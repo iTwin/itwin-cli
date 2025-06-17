@@ -28,9 +28,14 @@ const tests = () =>
     });
 
     it("should return an error for invalid user IDs", async () => {
-      const { error } = await runCommand<User[]>("user info --user-id invalid-user-id");
+      const { error } = await runCommand<User[]>("user info --user-id an-invalid-uuid");
       expect(error).to.be.not.undefined;
-      expect(error!.message).to.include("Invalid request body");
+      expect(error!.message).to.include("'an-invalid-uuid' is not a valid UUID.");
+    });
+
+    it("should return an empty array for not found user IDs", async () => {
+      const { result } = await runCommand<User[]>(`user info --user-id ${crypto.randomUUID()}`);
+      expect(result).to.be.an("array").that.is.empty;
     });
 
     it("should return an error for too many user IDs", async () => {
@@ -42,6 +47,11 @@ const tests = () =>
       const { error } = await runCommand(command);
       expect(error).to.be.not.undefined;
       expect(error?.message).to.be.equal("A maximum of 1000 user IDs can be provided.");
+    });
+
+    it("should return an error when invalid uuid is provided as --user-id", async () => {
+      const { error } = await runCommand<User>(`user info --user-id an-invalid-uuid`);
+      expect(error?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
     });
   });
 

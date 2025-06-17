@@ -51,7 +51,7 @@ export default class UpdateRole extends BaseCommand {
       multiple: true,
       required: false,
     }),
-    "role-id": Flags.string({
+    "role-id": CustomFlags.uuid({
       description: "The ID of the role to be updated.",
       helpValue: "<string>",
       required: true,

@@ -72,7 +72,7 @@ const tests = () =>
     });
 
     it("should fail to set context with invalid iTwin ID", async () => {
-      const invalidITwinId = "invalid-id";
+      const invalidITwinId = crypto.randomUUID();
       const output = await runCommand(`context set --itwin-id ${invalidITwinId}`);
       expect(output.error).to.not.be.undefined;
       expect(output.error?.message).to.contain("Requested iTwin is not available.");
@@ -124,10 +124,20 @@ const tests = () =>
     });
 
     it("should fail to set context with only an iModel ID if the iModel does not exist", async () => {
-      const invalidIModelId = "invalid-id";
+      const invalidIModelId = crypto.randomUUID();
       const output = await runCommand(`context set --imodel-id ${invalidIModelId}`);
       expect(output.error).to.not.be.undefined;
       expect(output.error?.message).to.contain("Requested iModel is not available.");
+    });
+
+    it("should fail to set context when --itwin-id or --imodel-id in not a valid uuid", async () => {
+      const { error: iModelIdError } = await runCommand(`context set --imodel-id an-invalid-uuid`);
+      expect(iModelIdError).to.not.be.undefined;
+      expect(iModelIdError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+
+      const { error: iTwinIdError } = await runCommand(`context set --itwin-id an-invalid-uuid`);
+      expect(iTwinIdError).to.not.be.undefined;
+      expect(iTwinIdError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
     });
   });
 

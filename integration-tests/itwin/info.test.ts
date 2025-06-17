@@ -37,6 +37,11 @@ const tests = () =>
       expect(iTwin).to.have.property("class", classType);
       expect(iTwin).to.have.property("subClass", subClass);
     });
+
+    it("should return an error when invalid uuid is provided as --itwin-id", async () => {
+      const { error } = await runCommand<ITwin>(`itwin info --itwin-id an-invalid-uuid`);
+      expect(error?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+    });
   });
 
 export default tests;

@@ -8,6 +8,7 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
+import { CustomFlags } from "../../extensions/custom-flags.js";
 
 export default class CreateITwin extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -69,7 +70,7 @@ export default class CreateITwin extends BaseCommand {
       helpValue: "<string>",
       required: false,
     }),
-    "parent-id": Flags.string({
+    "parent-id": CustomFlags.uuid({
       description: "Optional parent iTwin Id. Defaults to user's Account iTwin.",
       helpValue: "<string>",
       required: false,
