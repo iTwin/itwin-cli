@@ -12,7 +12,7 @@ Groups and their roles can be provided to this command in multiple ways:
   The ID of the iTwin to which the groups will be added.  
   **Type:** `string` **Required:** Yes
 
-- **`--group-id`**  
+- **`-g, --group-id`**  
   Specify id of the group to add roles to. This flag can be provided multiple times.  
   **Type:** `string` **Required:** No **Multiple:** Yes
 
