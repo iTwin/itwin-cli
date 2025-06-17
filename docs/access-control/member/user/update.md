@@ -19,7 +19,7 @@ Update the role assignments for a user in an iTwin.
 ## Examples
 
 ```bash
-itp access-control member user update --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --member-id user1-id --role-id role1-id --role-id role2-id
+itp access-control member user update --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --member-id 69e0284a-1331-4462-9c83-9cdbe2bdaa7f --role-id 63e3533c-eb6d-48ee-a2b3-3a6c724340f2 --role-id e968b640-02c4-41ef-b4f0-935918a82af3
 ```
 
 ## API Reference

@@ -1,7 +1,7 @@
 /*---------------------------------------------------------------------------------------------
-* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
-* See LICENSE.md in the project root for license terms and full copyright notice.
-*--------------------------------------------------------------------------------------------*/
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
 
 import { Links } from "../../general-models/links.js";
 import { StorageConnection } from "./storage-connection.js";
@@ -17,6 +17,6 @@ export interface StorageConnectionListResponse {
 }
 
 export interface StorageConnectionUpdate {
-  authenticationType?: 'Service' | 'User';
+  authenticationType?: "Service" | "User";
   displayName?: string;
 }

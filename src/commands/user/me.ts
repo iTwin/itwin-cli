@@ -1,7 +1,7 @@
 /*---------------------------------------------------------------------------------------------
-* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
-* See LICENSE.md in the project root for license terms and full copyright notice.
-*--------------------------------------------------------------------------------------------*/
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
 
 import { ApiReference } from "../../extensions/api-reference.js"; // Added import
 import BaseCommand from "../../extensions/base-command.js";
@@ -15,13 +15,13 @@ export default class Me extends BaseCommand {
 
   public static args = {};
 
-  public static description = 'Retrieve information about the currently authenticated user.';
+  public static description = "Retrieve information about the currently authenticated user.";
 
   public static examples = [
     {
       command: `<%= config.bin %> <%= command.id %>`,
-      description: 'Example 1:'
-    }
+      description: "Example 1:",
+    },
   ];
 
   public static flags = {};

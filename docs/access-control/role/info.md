@@ -15,7 +15,7 @@ Retrieve details about a specific role in an iTwin.
 ## Examples
 
 ```bash
-itp access-control role info --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --role-id role1-id
+itp access-control role info --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --role-id 752b5a3d-b9f2-4845-824a-99dd310b4898
 ```
 
 ## API Reference

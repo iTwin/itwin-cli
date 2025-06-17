@@ -1,10 +1,10 @@
 /*---------------------------------------------------------------------------------------------
-* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
-* See LICENSE.md in the project root for license terms and full copyright notice.
-*--------------------------------------------------------------------------------------------*/
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
 
-import iModelPopulateTests from '../../imodel/populate.test';
+import iModelPopulateTests from "../../imodel/populate.test";
 
-describe('Native Client Tests (imodel populate)', async () => {
+describe("Native Client Tests (imodel populate)", async () => {
   iModelPopulateTests();
 });

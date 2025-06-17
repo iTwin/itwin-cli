@@ -11,7 +11,7 @@ Retrieve metadata for a specific folder in an iTwin's storage.
 ## Examples
 
 ```bash
-itp storage folder info --folder-id a1b2c3d4-5678-90ab-cdef-1234567890ab
+itp storage folder info --folder-id TYJsPN0xtkWId0yUrXkS5pN5AQzuullIkxz5aDnDJSI
 ```
 
 ## API Reference

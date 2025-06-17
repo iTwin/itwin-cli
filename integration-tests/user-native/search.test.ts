@@ -1,32 +1,34 @@
 /*---------------------------------------------------------------------------------------------
-* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
-* See LICENSE.md in the project root for license terms and full copyright notice.
-*--------------------------------------------------------------------------------------------*/
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
 
-import { runCommand } from '@oclif/test';
-import { expect } from 'chai';
+import { expect } from "chai";
 
-import { User } from '../../src/services/user-client/models/user';
-import runSuiteIfMainModule from '../utils/run-suite-if-main-module';
+import { runCommand } from "@oclif/test";
 
-const tests = () => describe('user search (Native Client Tests)', () => {
-  it('should search for users with a valid query', async () => {
-    const { result: meResult } = await runCommand<User>('user me');
-    expect(meResult?.id).to.not.be.undefined;
-    expect(meResult?.email).to.not.be.undefined;
+import { User } from "../../src/services/user-client/models/user";
+import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
 
-    const testUserId = meResult!.id;
-    const testUserEmail = meResult!.email;
+const tests = () =>
+  describe("user search (Native Client Tests)", () => {
+    it("should search for users with a valid query", async () => {
+      const { result: meResult } = await runCommand<User>("user me");
+      expect(meResult?.id).to.not.be.undefined;
+      expect(meResult?.email).to.not.be.undefined;
 
-    const { result: users } = await runCommand<User[]>(`user search --search ${testUserEmail}`);
+      const testUserId = meResult!.id;
+      const testUserEmail = meResult!.email;
 
-    expect(users).to.be.an('array').that.is.not.empty;
-    const userInfo = users![0];
-    
-    expect(userInfo).to.have.property('id', testUserId);
-    expect(userInfo).to.have.property('email', testUserEmail);
+      const { result: users } = await runCommand<User[]>(`user search --search ${testUserEmail}`);
+
+      expect(users).to.be.an("array").that.is.not.empty;
+      const userInfo = users![0];
+
+      expect(userInfo).to.have.property("id", testUserId);
+      expect(userInfo).to.have.property("email", testUserEmail);
+    });
   });
-});
 
 export default tests;
 

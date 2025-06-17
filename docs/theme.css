@@ -36,6 +36,10 @@
   border-right-color: #1e293b;
 }
 
+[data-theme="dark"] .sidebar-toggle {
+  background-color: hsla(222, 47%, 11%, 0.8);
+}
+
 [data-theme="dark"] .sidebar ul li a {
   color: #e2e8f0;
 }

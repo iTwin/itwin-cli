@@ -1,6 +1,16 @@
 # itp storage file upload
 
-Upload a new file to a specified URL within iTwin storage.
+Upload a new or updated file to the specified URL within iTwin storage. This command is part of the following workflows:
+
+'Upload File to iTwin storage' workflow:
+1) Create an empty file with provided metadata using 'itp storage file create' command.
+2) Upload the file using 'itp storage file upload' command.
+3) Confirm file upload using 'itp storage file update-complete' command.
+
+'Update iTwin storage file content' workflow:
+1) Specify which file needs to have its content updated using 'itp storage file update-content' command.
+2) Upload the updated file using 'itp storage file upload' command.
+3) Confirm file content update using 'itp storage file update-complete' command.
 
 ## Options
 
@@ -24,4 +34,6 @@ itp storage file upload --upload-url https://example.com/image-upload-url --file
 
 ## API Reference
 
-[Upload File](https://developer.bentley.com/apis/storage/operations/upload-file/)
+[Create File](https://developer.bentley.com/apis/storage/operations/create-file/)
+
+[Upload File to iTwin storage](/docs/workflows/itwin-upload-files-storage)
