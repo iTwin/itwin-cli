@@ -10,12 +10,21 @@ import BaseCommand from "../../../extensions/base-command.js";
 import { FileUpload } from "../../../services/storage-client/models/file-upload.js";
 
 export default class FileCreate extends BaseCommand {
-  public static apiReference: ApiReference = {
-    link: "https://developer.bentley.com/apis/storage/operations/create-file/",
-    name: "Create File",
-  };
+  public static apiReference: ApiReference[] = [
+    {
+      link: "https://developer.bentley.com/apis/storage/operations/create-file/",
+      name: "Create File",
+    },
+    {
+      link: "/docs/workflows/itwin-upload-files-storage",
+      name: "Upload File to iTwin storage",
+      sectionName: "Workflow Reference",
+    },
+  ];
 
-  public static description = "Create a new file in a specified folder in iTwin's storage.";
+  public static description =
+    "Create an empty file with provided metadata in a specified folder in iTwin storage. This command is part of the 'Upload File to iTwin storage' workflow:\n" +
+    "1) Create an empty file with provided metadata using 'itp storage file create' command.\n2) Upload the file using 'itp storage file upload' command.\n3) Confirm file upload using 'itp storage file update-complete' command.";
 
   public static examples = [
     {

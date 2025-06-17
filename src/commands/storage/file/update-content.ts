@@ -15,7 +15,9 @@ export default class UpdateContent extends BaseCommand {
     name: "Update File Content",
   };
 
-  public static description = "Update the content of an existing file. A URL is returned to upload the file content.";
+  public static description =
+    "Specify which file in iTwin storage needs to have its content updated. This command is part of the 'Update iTwin storage file content' workflow:\n" +
+    "1) Specify which file needs to have its content updated using 'itp storage file update-content' command.\n2) Upload the updated file using 'itp storage file upload' command.\n3) Confirm file content update using 'itp storage file update-complete' command.";
 
   public static examples = [
     {

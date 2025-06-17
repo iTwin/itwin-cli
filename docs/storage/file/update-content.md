@@ -1,6 +1,9 @@
 # itp storage file update-content
 
-Update the content of an existing file. A URL is returned to upload the file content.
+Specify which file in iTwin storage needs to have its content updated. This command is part of the 'Update iTwin storage file content' workflow:
+1) Specify which file needs to have its content updated using 'itp storage file update-content' command.
+2) Upload the updated file using 'itp storage file upload' command.
+3) Confirm file content update using 'itp storage file update-complete' command.
 
 ## Options
 
