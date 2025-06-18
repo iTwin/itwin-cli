@@ -3,11 +3,9 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { Flags } from "@oclif/core";
-
 import { ApiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
-import { customFlags } from "../../../../extensions/custom-flags.js";
+import { CustomFlags } from "../../../../extensions/custom-flags.js";
 import { ResultResponse } from "../../../../services/general-models/result-response.js";
 
 export default class DeleteGroupMember extends BaseCommand {
@@ -26,13 +24,13 @@ export default class DeleteGroupMember extends BaseCommand {
   ];
 
   public static flags = {
-    "group-id": Flags.string({
+    "group-id": CustomFlags.uuid({
       char: "g",
       description: "The ID of the group to remove from the iTwin.",
       helpValue: "<string>",
       required: true,
     }),
-    "itwin-id": customFlags.iTwinIDFlag({
+    "itwin-id": CustomFlags.iTwinIDFlag({
       description: "The ID of the iTwin where the group is a member.",
     }),
   };

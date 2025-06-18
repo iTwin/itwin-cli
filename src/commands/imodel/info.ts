@@ -7,7 +7,7 @@ import { IModel } from "@itwin/imodels-client-management";
 
 import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
-import { customFlags } from "../../extensions/custom-flags.js";
+import { CustomFlags } from "../../extensions/custom-flags.js";
 
 export class IModelInfo extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -25,7 +25,7 @@ export class IModelInfo extends BaseCommand {
   ];
 
   public static flags = {
-    "imodel-id": customFlags.iModelIDFlag({
+    "imodel-id": CustomFlags.iModelIDFlag({
       description: "The ID of the iModel to retrieve information for.",
     }),
   };

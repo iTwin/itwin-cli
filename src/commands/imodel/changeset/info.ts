@@ -8,7 +8,7 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
-import { customFlags } from "../../../extensions/custom-flags.js";
+import { CustomFlags } from "../../../extensions/custom-flags.js";
 
 export default class ChangesetInfo extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -37,7 +37,7 @@ export default class ChangesetInfo extends BaseCommand {
       helpValue: "<number>",
       required: false,
     }),
-    "imodel-id": customFlags.iModelIDFlag({
+    "imodel-id": CustomFlags.iModelIDFlag({
       description: "The ID of the iModel whose changeset you want to retrieve.",
     }),
   };

@@ -40,6 +40,11 @@ const tests = () =>
       expect(iModelInfo).to.have.property("name", testIModelName);
       expect(iModelInfo).to.have.property("iTwinId", testITwinId);
     });
+
+    it("should return an error when invalid uuid is provided as --imodel-id", async () => {
+      const { error } = await runCommand<IModel>(`imodel info -m an-invalid-uuid`);
+      expect(error?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+    });
   });
 
 export default tests;

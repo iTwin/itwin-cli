@@ -142,6 +142,11 @@ const tests = () =>
         "When multiple connector-type options are provided, their amount must match file option amount. Alternatively, you can provide a single connector-type option, which will then be applied to all file options. You can also provide no connector-type options, in which case the command will attempt automatic detection.",
       );
     });
+
+    it("should return an error when invalid uuid is provided as --imodel-id", async () => {
+      const { error } = await runCommand<PopulateResponse>(`imodel populate -m an-invalid-uuid --file ${testFilePath1} --connector-type MSTN`);
+      expect(error?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+    });
   });
 
 export default tests;

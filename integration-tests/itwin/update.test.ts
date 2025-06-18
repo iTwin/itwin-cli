@@ -50,6 +50,11 @@ const tests = () =>
       expect(updatedITwin!.status).to.be.equal(updatedStatus);
       expect(updatedITwin!.type).to.be.equal(updatedType);
     });
+
+    it("should return an error when invalid uuid is provided as --itwin-id", async () => {
+      const { error } = await runCommand<ITwin>(`itwin update --itwin-id an-invalid-uuid`);
+      expect(error?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+    });
   });
 
 export default tests;

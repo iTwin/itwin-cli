@@ -8,6 +8,7 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
+import { CustomFlags } from "../../extensions/custom-flags.js";
 
 export default class ListITwins extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -45,7 +46,7 @@ export default class ListITwins extends BaseCommand {
       description: "Include Inactive iTwins in the result.",
       required: false,
     }),
-    "itwin-account-id": Flags.string({
+    "itwin-account-id": CustomFlags.uuid({
       description: "Filter by the iTwin Account ID.",
       helpValue: "<string>",
       required: false,
@@ -62,7 +63,7 @@ export default class ListITwins extends BaseCommand {
       helpValue: "<string>",
       required: false,
     }),
-    "parent-id": Flags.string({
+    "parent-id": CustomFlags.uuid({
       description: "Filter by the parent iTwin ID.",
       helpValue: "<string>",
       required: false,

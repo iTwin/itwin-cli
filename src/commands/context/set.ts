@@ -5,9 +5,9 @@
 
 import { IModel } from "@itwin/imodels-client-management";
 import { ITwin } from "@itwin/itwins-client";
-import { Flags } from "@oclif/core";
 
 import BaseCommand from "../../extensions/base-command.js";
+import { CustomFlags } from "../../extensions/custom-flags.js";
 import { UserContext } from "../../services/general-models/user-context.js";
 
 export default class SetContext extends BaseCommand {
@@ -30,14 +30,14 @@ export default class SetContext extends BaseCommand {
   ];
 
   public static flags = {
-    "imodel-id": Flags.string({
+    "imodel-id": CustomFlags.uuid({
       atLeastOne: ["imodel-id", "itwin-id"],
       char: "m",
       description: "The ID of the iModel to create a context for.",
       helpValue: "<string>",
       required: false,
     }),
-    "itwin-id": Flags.string({
+    "itwin-id": CustomFlags.uuid({
       char: "i",
       description: "The ID of the iTwin to create a context for.",
       helpValue: "<string>",

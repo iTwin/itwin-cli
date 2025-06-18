@@ -3,11 +3,9 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { Flags } from "@oclif/core";
-
 import { ApiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
-import { customFlags } from "../../../../extensions/custom-flags.js";
+import { CustomFlags } from "../../../../extensions/custom-flags.js";
 import { Member } from "../../../../services/access-control-client/models/members.js";
 
 export default class InfoUserMember extends BaseCommand {
@@ -26,10 +24,10 @@ export default class InfoUserMember extends BaseCommand {
   ];
 
   public static flags = {
-    "itwin-id": customFlags.iTwinIDFlag({
+    "itwin-id": CustomFlags.iTwinIDFlag({
       description: "The ID of the iTwin where the user is a member.",
     }),
-    "member-id": Flags.string({
+    "member-id": CustomFlags.uuid({
       description: "The ID of the user to retrieve information about.",
       helpValue: "<string>",
       required: true,

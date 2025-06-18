@@ -11,7 +11,7 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
-import { customFlags } from "../../../extensions/custom-flags.js";
+import { CustomFlags } from "../../../extensions/custom-flags.js";
 import { Link, Links } from "../../../services/general-models/links.js";
 
 export default class CesiumSandcastle extends BaseCommand {
@@ -48,7 +48,7 @@ export default class CesiumSandcastle extends BaseCommand {
       helpValue: "<string>",
       required: false,
     }),
-    "imodel-id": customFlags.iModelIDFlag({
+    "imodel-id": CustomFlags.iModelIDFlag({
       description: "iModel id to be viewed in Cesium Sandcastle.",
     }),
     open: Flags.boolean({

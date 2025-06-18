@@ -5,7 +5,7 @@
 
 import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
-import { customFlags } from "../../extensions/custom-flags.js";
+import { CustomFlags } from "../../extensions/custom-flags.js";
 import { TrackingResponse } from "../../services/changed-elements-client/tracking.js";
 
 export default class ChangedElementsInfo extends BaseCommand {
@@ -24,10 +24,10 @@ export default class ChangedElementsInfo extends BaseCommand {
   ];
 
   public static flags = {
-    "imodel-id": customFlags.iModelIDFlag({
+    "imodel-id": CustomFlags.iModelIDFlag({
       description: "The ID of the iModel to retrieve tracking information for.",
     }),
-    "itwin-id": customFlags.iTwinIDFlag({
+    "itwin-id": CustomFlags.iTwinIDFlag({
       description: "The ID of the iTwin associated with the iModel.",
     }),
   };

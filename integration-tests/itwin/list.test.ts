@@ -136,6 +136,16 @@ const tests = () =>
       expect(filteredITwinIds).to.be.an("array").that.is.not.empty;
       expect(filteredITwinIds.toString()).to.be.equal(itwinIds.slice(1, 3).toString());
     });
+
+    it("should return an error when invalid uuid is provided as --itwin-account-id", async () => {
+      const { error } = await runCommand<ITwin>(`itwin list --itwin-account-id an-invalid-uuid`);
+      expect(error?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+    });
+
+    it("should return an error when invalid uuid is provided as --parent-id", async () => {
+      const { error } = await runCommand<ITwin>(`itwin list --parent-id an-invalid-uuid`);
+      expect(error?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+    });
   });
 
 export default tests;

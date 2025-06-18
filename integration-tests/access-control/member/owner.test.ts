@@ -73,6 +73,26 @@ const tests = () => {
     expect(userInfo!.id).to.not.be.undefined;
     expect(owners!.some((owner) => owner.id === userInfo!.id)).to.be.true;
   });
+
+  it("Should return an error when invalid uuid is provided as --itwin-id", async () => {
+    const { error: addError } = await runCommand<GroupMember>(`access-control member owner add -i an-invalid-uuid --email email@example.com`);
+    expect(addError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+
+    const { error: listError } = await runCommand<GroupMember>(`access-control member owner list -i an-invalid-uuid`);
+    expect(listError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+
+    const { error: deleteError } = await runCommand<ResultResponse>(
+      `access-control member owner delete --itwin-id an-invalid-uuid --member-id ${crypto.randomUUID()}`,
+    );
+    expect(deleteError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+  });
+
+  it("Should return an error when invalid uuid is provided as --member-id", async () => {
+    const { error: deleteError } = await runCommand<ResultResponse>(
+      `access-control member owner delete --itwin-id ${crypto.randomUUID()} --member-id an-invalid-uuid`,
+    );
+    expect(deleteError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+  });
 };
 
 export default tests;

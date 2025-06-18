@@ -7,7 +7,7 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
-import { customFlags } from "../../../extensions/custom-flags.js";
+import { CustomFlags } from "../../../extensions/custom-flags.js";
 import { Role } from "../../../services/access-control-client/models/role.js";
 
 export default class UpdateRole extends BaseCommand {
@@ -36,7 +36,7 @@ export default class UpdateRole extends BaseCommand {
       helpValue: "<string>",
       required: false,
     }),
-    "itwin-id": customFlags.iTwinIDFlag({
+    "itwin-id": CustomFlags.iTwinIDFlag({
       description: "The ID of the iTwin where the role exists.",
     }),
     name: Flags.string({
@@ -51,7 +51,7 @@ export default class UpdateRole extends BaseCommand {
       multiple: true,
       required: false,
     }),
-    "role-id": Flags.string({
+    "role-id": CustomFlags.uuid({
       description: "The ID of the role to be updated.",
       helpValue: "<string>",
       required: true,

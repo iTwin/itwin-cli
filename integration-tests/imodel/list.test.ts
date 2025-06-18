@@ -107,6 +107,12 @@ const tests = () =>
       expect(iModelList!.some((imodel) => imodel.id === testIModelId1)).to.be.false;
       expect(iModelList!.some((imodel) => imodel.id === testIModelId2)).to.be.true;
     });
+
+    it("should return an error when invalid uuid is provided as --itwin-id", async () => {
+      const { error: listError } = await runCommand<IModel[]>(`imodel list --itwin-id an-invalid-uuid"`);
+      expect(listError).to.not.be.undefined;
+      expect(listError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+    });
   });
 
 export default tests;
