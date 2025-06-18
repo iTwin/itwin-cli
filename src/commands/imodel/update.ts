@@ -59,40 +59,32 @@ export default class UpdateCommand extends BaseCommand {
       helpValue: "<string>",
       required: false,
     }),
-    "ne-latitude": Flags.string({
+    "ne-latitude": CustomFlags.float({
       dependsOn: ["ne-longitude", "sw-latitude", "sw-longitude"],
       description: "Northeast latitude of the extent.",
       exclusive: ["extent"],
       helpValue: "<float>",
-      // eslint-disable-next-line @typescript-eslint/promise-function-async
-      parse: (input) => validateFloat(input),
       required: false,
     }),
-    "ne-longitude": Flags.string({
+    "ne-longitude": CustomFlags.float({
       dependsOn: ["ne-latitude", "sw-latitude", "sw-longitude"],
       description: "Northeast longitude of the extent.",
       exclusive: ["extent"],
       helpValue: "<float>",
-      // eslint-disable-next-line @typescript-eslint/promise-function-async
-      parse: (input) => validateFloat(input),
       required: false,
     }),
-    "sw-latitude": Flags.string({
+    "sw-latitude": CustomFlags.float({
       dependsOn: ["ne-latitude", "ne-longitude", "sw-longitude"],
       description: "Southwest latitude of the extent.",
       exclusive: ["extent"],
       helpValue: "<float>",
-      // eslint-disable-next-line @typescript-eslint/promise-function-async
-      parse: (input) => validateFloat(input),
       required: false,
     }),
-    "sw-longitude": Flags.string({
+    "sw-longitude": CustomFlags.float({
       dependsOn: ["ne-latitude", "ne-longitude", "sw-latitude"],
       description: "Southwest longitude of the extent.",
       exclusive: ["extent"],
       helpValue: "<float>",
-      // eslint-disable-next-line @typescript-eslint/promise-function-async
-      parse: (input) => validateFloat(input),
       required: false,
     }),
   };

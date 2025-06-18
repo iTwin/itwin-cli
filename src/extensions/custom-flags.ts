@@ -6,6 +6,7 @@
 import { CustomOptions, OptionFlag } from "@oclif/core/interfaces";
 
 import extent from "./custom-flags/extent.js";
+import float from "./custom-flags/float.js";
 import groupMembers from "./custom-flags/group-member-array.js";
 import noSchemaJson from "./custom-flags/no-schema-json.js";
 import userMembers from "./custom-flags/user-member-array.js";
@@ -14,6 +15,7 @@ import uuid from "./custom-flags/uuid.js";
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const CustomFlags = {
   extent,
+  float,
   groupMembers,
   iModelIDFlag: (config: CustomFlagConfig): OptionFlag<string, CustomOptions> =>
     uuid({
