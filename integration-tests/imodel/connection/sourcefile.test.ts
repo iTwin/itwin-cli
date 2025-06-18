@@ -136,6 +136,21 @@ const tests = () =>
       );
       expect(deleteResult2).to.have.property("result", "deleted");
     });
+
+    it("Should return an error when invalid uuid is provided as --source-file-id", async () => {
+      const { error: infoError } = await runCommand<SourceFile>(`imodel connection sourcefile info -c some-connection-id --source-file-id an-invalid-uuid`);
+      expect(infoError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+
+      const { error: updateError } = await runCommand<SourceFile>(
+        `imodel connection sourcefile update -c some-connection-id --connector-type MSTN --storage-file-id some-id --source-file-id an-invalid-uuid`,
+      );
+      expect(updateError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+
+      const { error: deleteError } = await runCommand<ResultResponse>(
+        `imodel connection sourcefile delete -c some-connection-id --source-file-id an-invalid-uuid`,
+      );
+      expect(deleteError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+    });
   });
 
 export default tests;

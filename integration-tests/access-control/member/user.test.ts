@@ -314,11 +314,56 @@ const tests = () => {
     expect(usersInfo!).to.have.lengthOf(1);
 
     let command = `access-control member user update --itwin-id ${iTwinId} --member-id ${usersInfo![0].id}`;
-    for (let i = 0; i < 51; i++) command += ` --role-id role${i}`;
+    for (let i = 0; i < 51; i++) command += ` --role-id ${crypto.randomUUID()}`;
 
     const result = await runCommand<MembersResponse>(command);
     expect(result.error).to.not.be.undefined;
     expect(result.error?.message).to.be.equal("A maximum of 50 roles can be assigned.");
+  });
+
+  it("Should return an error when invalid uuid is provided as --itwin-id", async () => {
+    const { error: addError } = await runCommand<Member>(
+      `access-control member user add -i an-invalid-uuid --email email@example.com --role-ids ${crypto.randomUUID()},${crypto.randomUUID()}`,
+    );
+    expect(addError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+
+    const { error: infoError } = await runCommand<Member>(`access-control member user info -i an-invalid-uuid --member-id ${crypto.randomUUID()}`);
+    expect(infoError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+
+    const { error: listError } = await runCommand<Member>(`access-control member user list -i an-invalid-uuid`);
+    expect(listError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+
+    const { error: updateError } = await runCommand<Member>(
+      `access-control member user update -i an-invalid-uuid --member-id ${crypto.randomUUID()} --role-id ${crypto.randomUUID()}`,
+    );
+    expect(updateError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+
+    const { error: deleteError } = await runCommand<ResultResponse>(
+      `access-control member user delete --itwin-id an-invalid-uuid --member-id ${crypto.randomUUID()}`,
+    );
+    expect(deleteError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+  });
+
+  it("Should return an error when invalid uuid is provided as --member-id", async () => {
+    const { error: infoError } = await runCommand<Member>(`access-control member user info -i ${crypto.randomUUID()} --member-id an-invalid-uuid`);
+    expect(infoError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+
+    const { error: updateError } = await runCommand<Member>(
+      `access-control member user update -i ${crypto.randomUUID()} --member-id an-invalid-uuid --role-id ${crypto.randomUUID()}`,
+    );
+    expect(updateError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+
+    const { error: deleteError } = await runCommand<ResultResponse>(
+      `access-control member user delete --itwin-id ${crypto.randomUUID()} --member-id an-invalid-uuid`,
+    );
+    expect(deleteError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+  });
+
+  it("Should return an error when invalid uuid is provided as --role-id", async () => {
+    const { error: updateError } = await runCommand<Member>(
+      `access-control member user update -i ${crypto.randomUUID()} --member-id ${crypto.randomUUID()} --role-id an-invalid-uuid`,
+    );
+    expect(updateError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
   });
 };
 

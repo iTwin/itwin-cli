@@ -7,6 +7,7 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
+import { CustomFlags } from "../../../../extensions/custom-flags.js";
 import { ConnectorType } from "../../../../services/synchronizationClient/models/connector-type.js";
 import { SourceFile } from "../../../../services/synchronizationClient/models/source-file.js";
 
@@ -38,7 +39,7 @@ export default class ConnectionSourceFileUpdate extends BaseCommand {
       options: ["AUTOPLANT", "CIVIL", "CIVIL3D", "DWG", "GEOSPATIAL", "IFC", "MSTN", "NWD", "OBD", "OPENTOWER", "PROSTRUCTURES", "REVIT", "SPPID", "SPXREVIEW"],
       required: true,
     }),
-    "source-file-id": Flags.string({
+    "source-file-id": CustomFlags.uuid({
       description: "The source file ID to update.",
       helpValue: "<string>",
       required: true,

@@ -67,6 +67,11 @@ const tests = () =>
       const fetchedRootFolderId = await getRootFolderId(testITwin.id!);
       expect(rootFolder!._links!.folder!.href).to.contain(fetchedRootFolderId);
     });
+
+    it("should return an error when invalid uuid is provided as --itwin-id", async () => {
+      const { error } = await runCommand<ITwin>(`storage root-folder --itwin-id an-invalid-uuid`);
+      expect(error?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+    });
   });
 
 export default tests;

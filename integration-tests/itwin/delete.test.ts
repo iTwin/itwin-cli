@@ -28,6 +28,11 @@ const tests = () =>
       expect(errorResult).to.be.not.undefined;
       expect(errorResult!.message).to.include("iTwinNotFound");
     });
+
+    it("should return an error when invalid uuid is provided as --itwin-id", async () => {
+      const { error } = await runCommand<ITwin>(`itwin delete --itwin-id an-invalid-uuid`);
+      expect(error?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+    });
   });
 
 export default tests;

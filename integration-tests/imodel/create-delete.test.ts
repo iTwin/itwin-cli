@@ -173,6 +173,16 @@ const tests = () =>
       expect(result.error).to.be.not.undefined;
       expect(result.error!.code).to.be.equal("iModelNotFound");
     });
+
+    it("should return an error when invalid uuid is provided as --itwin-id", async () => {
+      const { error: createError } = await runCommand<IModel>(`imodel create --itwin-id an-invalid-uuid --name Name --description "${testIModelDescription}"`);
+      expect(createError).to.not.be.undefined;
+      expect(createError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+
+      const { error: deleteError } = await runCommand<ResultResponse>(`imodel delete --imodel-id an-invalid-uuid`);
+      expect(deleteError).to.not.be.undefined;
+      expect(deleteError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+    });
   });
 
 export default tests;

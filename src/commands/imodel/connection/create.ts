@@ -7,7 +7,7 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
-import { customFlags } from "../../../extensions/custom-flags.js";
+import { CustomFlags } from "../../../extensions/custom-flags.js";
 import { AuthorizationInformation, AuthorizationType } from "../../../services/authorization-client/authorization-type.js";
 import { AuthenticationType } from "../../../services/synchronizationClient/models/authentication-type.js";
 import { ConnectorType } from "../../../services/synchronizationClient/models/connector-type.js";
@@ -55,7 +55,7 @@ export default class CreateConnection extends BaseCommand {
       multiple: true,
       required: true,
     }),
-    "imodel-id": customFlags.iModelIDFlag({
+    "imodel-id": CustomFlags.iModelIDFlag({
       description: "The ID of the iModel.",
     }),
     name: Flags.string({

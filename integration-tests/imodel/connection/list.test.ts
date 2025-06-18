@@ -80,6 +80,11 @@ const tests = () =>
       expect(filteredConnections!.connections).to.have.lengthOf(1);
       expect(filteredConnections!.connections[0].id).to.be.equal(allConnections!.connections[1].id);
     });
+
+    it("should return an error when invalid uuid is provided as --imodel-id", async () => {
+      const { error } = await runCommand<StorageConnectionListResponse>(`imodel connection list -m an-invalid-uuid`);
+      expect(error?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+    });
   });
 
 export default tests;

@@ -75,6 +75,24 @@ const tests = () =>
       );
       expect(deleteResult).to.have.property("result", "deleted");
     });
+
+    it("should return an error when invalid uuid is provided as --itwin-id", async () => {
+      const { error: createError } = await runCommand<Repository>(
+        `itwin repository create -i an-invalid-uuid --class Construction --uri https://example.com/some/path`,
+      );
+      expect(createError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+
+      const { error: listError } = await runCommand<Repository>(`itwin repository list -i an-invalid-uuid`);
+      expect(listError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+
+      const { error: deleteError } = await runCommand<Repository>(`itwin repository delete -i an-invalid-uuid --repository-id ${crypto.randomUUID()}`);
+      expect(deleteError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+    });
+
+    it("should return an error when invalid uuid is provided as --repository-id", async () => {
+      const { error: deleteError } = await runCommand<Repository>(`itwin repository delete -i ${crypto.randomUUID()} --repository-id an-invalid-uuid`);
+      expect(deleteError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+    });
   });
 
 export default tests;

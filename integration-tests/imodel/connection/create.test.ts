@@ -91,6 +91,14 @@ const tests = () =>
         "When multiple connector-type options are provided, their amount must match file-id option amount. Alternatively, you can provide a single connector-type option, which will then be applied to all file-id options.",
       );
     });
+
+    it(`should return an error when invalid uuid is provided as --imodel-id`, async () => {
+      const { error: createError } = await runCommand<StorageConnection>(
+        `imodel connection create -m an-invalid-uuid -f ${testFileId1} --connector-type MSTN -n TestConnection`,
+      );
+      expect(createError).to.not.be.undefined;
+      expect(createError!.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+    });
   });
 
 export default tests;

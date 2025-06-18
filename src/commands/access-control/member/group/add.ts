@@ -7,7 +7,7 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
-import { customFlags } from "../../../../extensions/custom-flags.js";
+import { CustomFlags } from "../../../../extensions/custom-flags.js";
 import { validateUuidCSV } from "../../../../extensions/validation/validate-uuid-csv.js";
 import { GroupMember, GroupMemberInfo } from "../../../../services/access-control-client/models/group.js";
 
@@ -34,14 +34,15 @@ export default class AddGroupMembers extends BaseCommand {
   ];
 
   public static flags = {
-    "group-id": Flags.string({
+    "group-id": CustomFlags.uuid({
+      char: "g",
       dependsOn: ["role-ids"],
       description: "Specify id of the group to add roles to. This flag can be provided multiple times.",
       helpValue: "<string>",
       multiple: true,
       required: false,
     }),
-    groups: customFlags.groupMembers({
+    groups: CustomFlags.groupMembers({
       description:
         "A list of groups to add, each with a groupId and roleIds. A maximum of 50 role assignments can be performed. Provided in serialized JSON format.",
       exactlyOne: ["groups", "group-id"],
@@ -49,7 +50,7 @@ export default class AddGroupMembers extends BaseCommand {
       helpValue: "<string>",
       required: false,
     }),
-    "itwin-id": customFlags.iTwinIDFlag({
+    "itwin-id": CustomFlags.iTwinIDFlag({
       description: "The ID of the iTwin to which the groups will be added.",
     }),
     "role-ids": Flags.string({

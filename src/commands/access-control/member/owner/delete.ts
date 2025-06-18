@@ -3,11 +3,9 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { Flags } from "@oclif/core";
-
 import { ApiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
-import { customFlags } from "../../../../extensions/custom-flags.js";
+import { CustomFlags } from "../../../../extensions/custom-flags.js";
 import { ResultResponse } from "../../../../services/general-models/result-response.js";
 
 export default class DeleteOwner extends BaseCommand {
@@ -26,10 +24,10 @@ export default class DeleteOwner extends BaseCommand {
   ];
 
   public static flags = {
-    "itwin-id": customFlags.iTwinIDFlag({
+    "itwin-id": CustomFlags.iTwinIDFlag({
       description: "The ID of the iTwin from which the owner will be removed.",
     }),
-    "member-id": Flags.string({
+    "member-id": CustomFlags.uuid({
       description: "The ID of the owner to be removed.",
       helpValue: "<string>",
       required: true,

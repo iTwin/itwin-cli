@@ -7,7 +7,7 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
-import { customFlags } from "../../../../extensions/custom-flags.js";
+import { CustomFlags } from "../../../../extensions/custom-flags.js";
 import { validateUuidCSV } from "../../../../extensions/validation/validate-uuid-csv.js";
 import { MembersResponse, UserMember } from "../../../../services/access-control-client/models/members.js";
 
@@ -44,10 +44,10 @@ export default class AddUserMembers extends BaseCommand {
       multiple: true,
       required: false,
     }),
-    "itwin-id": customFlags.iTwinIDFlag({
+    "itwin-id": CustomFlags.iTwinIDFlag({
       description: "The ID of the iTwin to which the users will be added.",
     }),
-    members: customFlags.userMembers({
+    members: CustomFlags.userMembers({
       description:
         "A list of members to add, each with an email and a list of role IDs. A maximum of 50 role assignments can be performed. Provided in serialized JSON format.",
       exactlyOne: ["members", "email"],

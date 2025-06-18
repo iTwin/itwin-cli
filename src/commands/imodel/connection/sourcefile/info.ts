@@ -7,6 +7,7 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
+import { CustomFlags } from "../../../../extensions/custom-flags.js";
 import { SourceFile } from "../../../../services/synchronizationClient/models/source-file.js";
 
 export default class ConnectionSourceFileInfo extends BaseCommand {
@@ -31,7 +32,7 @@ export default class ConnectionSourceFileInfo extends BaseCommand {
       helpValue: "<string>",
       required: true,
     }),
-    "source-file-id": Flags.string({
+    "source-file-id": CustomFlags.uuid({
       description: "The ID of the source file to retrieve.",
       helpValue: "<string>",
       required: true,

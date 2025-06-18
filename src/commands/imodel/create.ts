@@ -8,7 +8,7 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
-import { customFlags } from "../../extensions/custom-flags.js";
+import { CustomFlags } from "../../extensions/custom-flags.js";
 import { validateFloat } from "../../extensions/validation/validate-float.js";
 
 export default class CreateIModel extends BaseCommand {
@@ -48,13 +48,13 @@ export default class CreateIModel extends BaseCommand {
       helpValue: "<string>",
       required: false,
     }),
-    extent: customFlags.extent({
+    extent: CustomFlags.extent({
       description:
         "The maximum rectangular area on Earth that encloses the iModel, defined by its southwest and northeast corners and provided in serialized JSON format.",
       helpValue: "<string>",
       required: false,
     }),
-    "itwin-id": customFlags.iTwinIDFlag({
+    "itwin-id": CustomFlags.iTwinIDFlag({
       description: "The ID of the iTwin where the iModel should be created.",
     }),
     name: Flags.string({

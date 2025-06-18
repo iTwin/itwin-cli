@@ -77,6 +77,11 @@ const tests = () =>
       expect(iTwin!.geographicLocation).to.be.equal(testGeographicLocation);
       testITwinId2 = iTwin!.id!;
     });
+
+    it("should return an error when invalid uuid is provided as --parent-id", async () => {
+      const { error } = await runCommand<ITwin>(`itwin create --class Thing --name Name --sub-class Asset --parent-id an-invalid-uuid`);
+      expect(error?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+    });
   });
 
 export default tests;

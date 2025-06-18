@@ -11,7 +11,7 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
-import { customFlags } from "../../extensions/custom-flags.js";
+import { CustomFlags } from "../../extensions/custom-flags.js";
 import { AuthorizationInformation, AuthorizationType } from "../../services/authorization-client/authorization-type.js";
 import { FileUpload } from "../../services/storage-client/models/file-upload.js";
 import { FolderTypedType } from "../../services/storage-client/models/folder-typed.js";
@@ -70,7 +70,7 @@ export default class PopulateIModel extends BaseCommand {
       multiple: true,
       required: true,
     }),
-    "imodel-id": customFlags.iModelIDFlag({
+    "imodel-id": CustomFlags.iModelIDFlag({
       description: "The ID of the iModel to populate.",
     }),
     "no-wait": Flags.boolean({

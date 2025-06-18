@@ -79,6 +79,11 @@ const tests = () =>
       );
       expect(dataString).to.match(pattern);
     });
+
+    it("should return an error when invalid uuid is provided as --imodel-id", async () => {
+      const { error } = await runCommand<{ url: string }>(`imodel view cesium-sandcastle -m an-invalid-uuid`);
+      expect(error?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+    });
   });
 
 export default tests;

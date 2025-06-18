@@ -314,11 +314,53 @@ const tests = () => {
   it("Should return an error when there are too many roles assigned", async () => {
     let command = `access-control member group update --itwin-id ${iTwinId} --group-id ${groupId1}`;
 
-    for (let i = 0; i < 51; i++) command += ` --role-id role${i}`;
+    for (let i = 0; i < 51; i++) command += ` --role-id ${crypto.randomUUID()}`;
 
     const { error: createError } = await runCommand<GroupMemberInfo[]>(command);
     expect(createError).to.not.be.undefined;
     expect(createError?.message).to.be.equal("A maximum of 50 roles can be assigned.");
+  });
+
+  it("Should return an error when invalid uuid is provided as --itwin-id", async () => {
+    const { error: addError } = await runCommand<Group>(`access-control member group add -i an-invalid-uuid -g ${crypto.randomUUID()}`);
+    expect(addError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+
+    const { error: infoError } = await runCommand<Group>(`access-control member group info -i an-invalid-uuid -g ${crypto.randomUUID()}`);
+    expect(infoError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+
+    const { error: listError } = await runCommand<Group>(`access-control member group list -i an-invalid-uuid -g ${crypto.randomUUID()}`);
+    expect(listError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+
+    const { error: updateError } = await runCommand<Group>(`access-control member group update -i an-invalid-uuid -g ${crypto.randomUUID()}`);
+    expect(updateError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+
+    const { error: deleteError } = await runCommand<ResultResponse>(
+      `access-control member group delete --itwin-id an-invalid-uuid --group-id ${crypto.randomUUID()}`,
+    );
+    expect(deleteError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
+  });
+
+  it("Should return an error when invalid uuid is provided as --group-id", async () => {
+    const { error: addError } = await runCommand<Group>(`access-control member group add -i ${crypto.randomUUID()} -g another-invalid-uuid`);
+    expect(addError?.message).to.contain("'another-invalid-uuid' is not a valid UUID.");
+
+    const { error: infoError } = await runCommand<Group>(`access-control member group info -i ${crypto.randomUUID()} -g another-invalid-uuid`);
+    expect(infoError?.message).to.contain("'another-invalid-uuid' is not a valid UUID.");
+
+    const { error: updateError } = await runCommand<Group>(`access-control member group update -i ${crypto.randomUUID()} -g another-invalid-uuid`);
+    expect(updateError?.message).to.contain("'another-invalid-uuid' is not a valid UUID.");
+
+    const { error: deleteError } = await runCommand<ResultResponse>(
+      `access-control member group delete --itwin-id ${crypto.randomUUID()} --group-id another-invalid-uuid`,
+    );
+    expect(deleteError?.message).to.contain("'another-invalid-uuid' is not a valid UUID.");
+  });
+
+  it("Should return an error when invalid uuid is provided as --role-id", async () => {
+    const { error: updateError } = await runCommand<Group>(
+      `access-control member group update -i ${crypto.randomUUID()} -g ${crypto.randomUUID()} --role-id ${crypto.randomUUID()} --role-id an-invalid-uuid`,
+    );
+    expect(updateError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
   });
 };
 
