@@ -71,7 +71,7 @@ const tests = () =>
       expect(output2.result).to.deep.equal({ iModelId: undefined, iTwinId: anotherITwin.id });
     });
 
-    it("should fail to set context with invalid iTwin ID", async () => {
+    it("should fail to set context with not found iTwin ID", async () => {
       const invalidITwinId = crypto.randomUUID();
       const output = await runCommand(`context set --itwin-id ${invalidITwinId}`);
       expect(output.error).to.not.be.undefined;
