@@ -99,12 +99,12 @@ export default class UpdateCommand extends BaseCommand {
     ) {
       flags.extent ??= {
         northEast: {
-          latitude: Number.parseFloat(flags["ne-latitude"]),
-          longitude: Number.parseFloat(flags["ne-longitude"]),
+          latitude: flags["ne-latitude"],
+          longitude: flags["ne-longitude"],
         },
         southWest: {
-          latitude: Number.parseFloat(flags["sw-latitude"]),
-          longitude: Number.parseFloat(flags["sw-longitude"]),
+          latitude: flags["sw-latitude"],
+          longitude: flags["sw-longitude"],
         },
       };
     }
