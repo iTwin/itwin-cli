@@ -9,7 +9,6 @@ import { Flags } from "@oclif/core";
 import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
 import { CustomFlags } from "../../extensions/custom-flags.js";
-import { validateFloat } from "../../extensions/validation/validate-float.js";
 
 export default class CreateIModel extends BaseCommand {
   public static apiReference: ApiReference = {
