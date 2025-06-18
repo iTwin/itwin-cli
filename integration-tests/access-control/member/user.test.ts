@@ -365,6 +365,13 @@ const tests = () => {
     );
     expect(updateError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
   });
+
+  it("Should return an error when invalid email is provided as --email", async () => {
+    const { error: updateError } = await runCommand<Member>(
+      `access-control member user add -i ${crypto.randomUUID()} --email not-a-valid-email --role-ids ${crypto.randomUUID()}`,
+    );
+    expect(updateError?.message).to.contain("'not-a-valid-email' is not a valid email.");
+  });
 };
 
 export default tests;

@@ -49,7 +49,7 @@ export default class UpdateAccessControlGroup extends BaseCommand {
     "itwin-id": CustomFlags.iTwinIDFlag({
       description: "The ID of the iTwin where the group exists.",
     }),
-    member: Flags.string({
+    member: CustomFlags.email({
       description: "A list of members (emails) to be assigned to the group. Max amount of 50.",
       helpValue: "<string>",
       multiple: true,

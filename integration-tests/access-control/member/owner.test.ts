@@ -93,6 +93,11 @@ const tests = () => {
     );
     expect(deleteError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
   });
+
+  it("Should return an error when invalid email is provided as --email", async () => {
+    const { error: updateError } = await runCommand<OwnerResponse>(`access-control member owner add -i ${crypto.randomUUID()} --email not-a-valid-email`);
+    expect(updateError?.message).to.contain("'not-a-valid-email' is not a valid email.");
+  });
 };
 
 export default tests;

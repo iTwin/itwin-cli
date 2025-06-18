@@ -152,6 +152,13 @@ const tests = () => {
     );
     expect(deleteError?.message).to.contain("'another-invalid-uuid' is not a valid UUID.");
   });
+
+  it("Should return an error when invalid email is provided as --member", async () => {
+    const { error: updateError } = await runCommand<Group>(
+      `access-control group update -i ${crypto.randomUUID()} -g ${crypto.randomUUID()} --member not-a-valid-email`,
+    );
+    expect(updateError?.message).to.contain("'not-a-valid-email' is not a valid email.");
+  });
 };
 
 export default tests;

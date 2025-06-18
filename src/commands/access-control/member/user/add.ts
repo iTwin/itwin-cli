@@ -3,12 +3,9 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { Flags } from "@oclif/core";
-
 import { ApiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
 import { CustomFlags } from "../../../../extensions/custom-flags.js";
-import { validateUuidCSV } from "../../../../extensions/validation/validate-uuid-csv.js";
 import { MembersResponse, UserMember } from "../../../../services/access-control-client/models/members.js";
 
 export default class AddUserMembers extends BaseCommand {
@@ -37,7 +34,7 @@ export default class AddUserMembers extends BaseCommand {
   ];
 
   public static flags = {
-    email: Flags.string({
+    email: CustomFlags.email({
       dependsOn: ["role-ids"],
       description: "Specify emails of the user to add roles to. This flag can be provided multiple times.",
       helpValue: "<string>",
@@ -55,14 +52,12 @@ export default class AddUserMembers extends BaseCommand {
       helpValue: "<string>",
       required: false,
     }),
-    "role-ids": Flags.string({
+    "role-ids": CustomFlags.uuidCsv({
       dependsOn: ["email"],
       description:
         "Specify IDs of roles to be assigned to a user in CSV format without any whitespaces. This flag can be provided multiple times. If the flag is provided only once, the contained list of role IDs will be assigned to all provided group-ids list. If flag is provided multiple times, each role-ids will be used for the corresponding group-id (fist role-ids list for the first group-id, second role-ids list for the second group-id and so on).",
       helpValue: "<string>",
       multiple: true,
-      // eslint-disable-next-line @typescript-eslint/promise-function-async
-      parse: (input) => validateUuidCSV(input),
       required: false,
     }),
   };
