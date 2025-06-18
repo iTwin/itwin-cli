@@ -72,8 +72,7 @@ const tests = () =>
     });
 
     it("should fail to set context with not found iTwin ID", async () => {
-      const invalidITwinId = crypto.randomUUID();
-      const output = await runCommand(`context set --itwin-id ${invalidITwinId}`);
+      const output = await runCommand(`context set --itwin-id ${crypto.randomUUID()}`);
       expect(output.error).to.not.be.undefined;
       expect(output.error?.message).to.contain("Requested iTwin is not available.");
     });
