@@ -10,7 +10,7 @@ export default Flags.custom<string>({
   parse: (input) => Promise.resolve(validateFloat(input)),
 });
 
-export const validateFloat = async (floatString: string): Promise<string> => {
+const validateFloat = async (floatString: string): Promise<string> => {
   if (!/^-?\d*(\.\d+)?$/.test(floatString)) {
     throw new TypeError(`${floatString} is not a valid number.`);
   }
