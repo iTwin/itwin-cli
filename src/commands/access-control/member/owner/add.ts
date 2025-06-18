@@ -3,8 +3,6 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { Flags } from "@oclif/core";
-
 import { ApiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
 import { CustomFlags } from "../../../../extensions/custom-flags.js";
@@ -27,7 +25,7 @@ export default class AddOwner extends BaseCommand {
   ];
 
   public static flags = {
-    email: Flags.string({
+    email: CustomFlags.email({
       description: "The email address of the new owner.",
       helpValue: "<string>",
       required: true,

@@ -3,12 +3,9 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { Flags } from "@oclif/core";
-
 import { ApiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
 import { CustomFlags } from "../../../../extensions/custom-flags.js";
-import { validateUuidCSV } from "../../../../extensions/validation/validate-uuid-csv.js";
 import { GroupMember, GroupMemberInfo } from "../../../../services/access-control-client/models/group.js";
 
 export default class AddGroupMembers extends BaseCommand {
@@ -53,11 +50,10 @@ export default class AddGroupMembers extends BaseCommand {
     "itwin-id": CustomFlags.iTwinIDFlag({
       description: "The ID of the iTwin to which the groups will be added.",
     }),
-    "role-ids": Flags.string({
+    "role-ids": CustomFlags.uuidCsv({
       dependsOn: ["group-id"],
       description: `Specify a list of role IDs to be assigned to all of 'group-id' groups. Provided in CSV format without whitespaces.`,
       helpValue: "<string>",
-      parse: async (input) => validateUuidCSV(input),
       required: false,
     }),
   };

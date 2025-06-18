@@ -9,7 +9,6 @@ import { Flags } from "@oclif/core";
 import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
 import { CustomFlags } from "../../extensions/custom-flags.js";
-import { validateFloat } from "../../extensions/validation/validate-float.js";
 
 export default class UpdateCommand extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -59,40 +58,32 @@ export default class UpdateCommand extends BaseCommand {
       helpValue: "<string>",
       required: false,
     }),
-    "ne-latitude": Flags.string({
+    "ne-latitude": CustomFlags.float({
       dependsOn: ["ne-longitude", "sw-latitude", "sw-longitude"],
       description: "Northeast latitude of the extent.",
       exclusive: ["extent"],
       helpValue: "<float>",
-      // eslint-disable-next-line @typescript-eslint/promise-function-async
-      parse: (input) => validateFloat(input),
       required: false,
     }),
-    "ne-longitude": Flags.string({
+    "ne-longitude": CustomFlags.float({
       dependsOn: ["ne-latitude", "sw-latitude", "sw-longitude"],
       description: "Northeast longitude of the extent.",
       exclusive: ["extent"],
       helpValue: "<float>",
-      // eslint-disable-next-line @typescript-eslint/promise-function-async
-      parse: (input) => validateFloat(input),
       required: false,
     }),
-    "sw-latitude": Flags.string({
+    "sw-latitude": CustomFlags.float({
       dependsOn: ["ne-latitude", "ne-longitude", "sw-longitude"],
       description: "Southwest latitude of the extent.",
       exclusive: ["extent"],
       helpValue: "<float>",
-      // eslint-disable-next-line @typescript-eslint/promise-function-async
-      parse: (input) => validateFloat(input),
       required: false,
     }),
-    "sw-longitude": Flags.string({
+    "sw-longitude": CustomFlags.float({
       dependsOn: ["ne-latitude", "ne-longitude", "sw-latitude"],
       description: "Southwest longitude of the extent.",
       exclusive: ["extent"],
       helpValue: "<float>",
-      // eslint-disable-next-line @typescript-eslint/promise-function-async
-      parse: (input) => validateFloat(input),
       required: false,
     }),
   };
@@ -108,12 +99,12 @@ export default class UpdateCommand extends BaseCommand {
     ) {
       flags.extent ??= {
         northEast: {
-          latitude: Number.parseFloat(flags["ne-latitude"]),
-          longitude: Number.parseFloat(flags["ne-longitude"]),
+          latitude: flags["ne-latitude"],
+          longitude: flags["ne-longitude"],
         },
         southWest: {
-          latitude: Number.parseFloat(flags["sw-latitude"]),
-          longitude: Number.parseFloat(flags["sw-longitude"]),
+          latitude: flags["sw-latitude"],
+          longitude: flags["sw-longitude"],
         },
       };
     }

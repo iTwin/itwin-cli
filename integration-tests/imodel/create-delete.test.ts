@@ -96,10 +96,10 @@ const tests = () =>
       );
 
       expect(createError).to.not.be.undefined;
-      expect(createError?.message).to.match(/--extent=\[object Object] cannot also be provided when using --ne-latitude/);
-      expect(createError?.message).to.match(/--extent=\[object Object] cannot also be provided when using --ne-longitude/);
-      expect(createError?.message).to.match(/--extent=\[object Object] cannot also be provided when using --sw-latitude/);
-      expect(createError?.message).to.match(/--extent=\[object Object] cannot also be provided when using --sw-longitude/);
+      expect(createError?.message).to.contain("--extent=[object Object] cannot also be provided when using --ne-latitude");
+      expect(createError?.message).to.contain("--extent=[object Object] cannot also be provided when using --ne-longitude");
+      expect(createError?.message).to.contain("--extent=[object Object] cannot also be provided when using --sw-latitude");
+      expect(createError?.message).to.contain("--extent=[object Object] cannot also be provided when using --sw-longitude");
     });
 
     it("should return an error if user does not provide all extent flags", async () => {
@@ -120,7 +120,7 @@ const tests = () =>
       );
 
       expect(createError).to.not.be.undefined;
-      expect(createError?.message).to.match(/All of the following must be provided when using --sw-latitude: --ne-latitude, --ne-longitude, --sw-longitude/);
+      expect(createError?.message).to.contain("All of the following must be provided when using --sw-latitude: --ne-latitude, --ne-longitude, --sw-longitude");
     });
 
     it("should return an error if a component of the provided extent is not a valid number", async () => {
@@ -130,7 +130,7 @@ const tests = () =>
       );
 
       expect(createError).to.not.be.undefined;
-      expect(createError?.message).to.match(/46.302abc is not a valid number./);
+      expect(createError?.message).to.contain("46.302abc is not a valid number. Expected format: '1234.56'.");
     });
 
     it("should return an error if a component of the provided extent is not valid JSON", async () => {
@@ -140,7 +140,7 @@ const tests = () =>
       );
 
       expect(createError).to.not.be.undefined;
-      expect(createError?.message).to.match(/'not-valid-json' is not valid serialized JSON./);
+      expect(createError?.message).to.contain("'not-valid-json' is not valid serialized JSON.");
     });
 
     it("should return an error if a component of the provided extent is not of valid JSON schema", async () => {
@@ -160,8 +160,8 @@ const tests = () =>
       );
 
       expect(createError).to.not.be.undefined;
-      expect(createError?.message).to.match(/missing required property 'southWest.latitude' of type 'number'/);
-      expect(createError?.message).to.match(/northEast.longitude: expected type 'number', received 'string'/);
+      expect(createError?.message).to.contain("missing required property 'southWest.latitude' of type 'number'");
+      expect(createError?.message).to.contain("northEast.longitude: expected type 'number', received 'string'");
     });
 
     it("should delete the iModel", async () => {
