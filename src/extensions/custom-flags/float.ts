@@ -12,7 +12,7 @@ export default Flags.custom<number>({
 
 const validateFloat = async (floatString: string): Promise<number> => {
   if (!/^-?\d*(\.\d+)?$/.test(floatString)) {
-    throw new TypeError(`${floatString} is not a valid number.`);
+    throw new TypeError(`${floatString} is not a valid number. Expected format: '1234.56'.`);
   }
 
   return Number.parseFloat(floatString);
