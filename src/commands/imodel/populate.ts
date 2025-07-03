@@ -107,13 +107,13 @@ export default class PopulateIModel extends BaseCommand {
     const authInfo = await this.runCommand<AuthorizationInformation>("auth:info", []);
     const authType = authInfo.authorizationType === AuthorizationType.Service ? "Service" : "User";
 
-    if (authType === "User") {
-      this.log("Authorizing...");
-      const connectionAuth = await this.runCommand<AuthInfo>("imodel:connection:auth", []);
-      if (connectionAuth.isUserAuthorized === undefined) {
-        this.error("User is not authenticated for connection run");
-      }
-    }
+    // if (authType === "User") {
+    //   this.log("Authorizing...");
+    //   const connectionAuth = await this.runCommand<AuthInfo>("imodel:connection:auth", []);
+    //   if (connectionAuth.isUserAuthorized === undefined) {
+    //     this.error("User is not authenticated for connection run");
+    //   }
+    // }
 
     const connectionId = await this.findOrCreateDefaultConnection(existingConnections.connections, files, iModel.id);
 
