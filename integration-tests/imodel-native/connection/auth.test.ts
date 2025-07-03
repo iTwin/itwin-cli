@@ -12,10 +12,10 @@ import runSuiteIfMainModule from "../../utils/run-suite-if-main-module";
 
 const tests = () =>
   describe("imodel connection auth", () => {
-    // it.skip("should get connection auth info", async () => {
-    //   const { result } = await runCommand<AuthInfo>(`imodel connection auth`);
-    //   expect(result?.isUserAuthorized).to.be.equal(true);
-    // });
+    it("should get connection auth info", async () => {
+      const { result } = await runCommand<AuthInfo>(`imodel connection auth`);
+      expect(result?.isUserAuthorized).to.be.equal(true);
+    });
   });
 
 export default tests;
