@@ -16,6 +16,7 @@ import { AuthorizationInformation, AuthorizationType } from "../../services/auth
 import { FileUpload } from "../../services/storage-client/models/file-upload.js";
 import { FolderTypedType } from "../../services/storage-client/models/folder-typed.js";
 import { ItemsWithFolderLink } from "../../services/storage-client/models/items-with-folder-link.js";
+import { AuthInfo } from "../../services/synchronizationClient/models/connection-auth.js";
 import { ConnectorType } from "../../services/synchronizationClient/models/connector-type.js";
 import { ExecutionResult } from "../../services/synchronizationClient/models/execution-result.js";
 import { ExecutionState } from "../../services/synchronizationClient/models/execution-state.js";
@@ -102,6 +103,17 @@ export default class PopulateIModel extends BaseCommand {
 
     this.log(`Checking existing connections for iModel ID: ${iModel.id}`);
     const existingConnections = await this.runCommand<StorageConnectionListResponse>("imodel:connection:list", ["--imodel-id", iModel.id]);
+
+    const authInfo = await this.runCommand<AuthorizationInformation>("auth:info", []);
+    const authType = authInfo.authorizationType === AuthorizationType.Service ? "Service" : "User";
+
+    if (authType === "User") {
+      this.log("Authorizing...");
+      const connectionAuth = await this.runCommand<AuthInfo>("imodel:connection:auth", []);
+      if (connectionAuth.isUserAuthorized === undefined) {
+        this.error("User is not authenticated for connection run");
+      }
+    }
 
     const connectionId = await this.findOrCreateDefaultConnection(existingConnections.connections, files, iModel.id);
 
