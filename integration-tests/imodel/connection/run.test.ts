@@ -47,7 +47,8 @@ const tests = () =>
       expect(itwinDeleteResult).to.have.property("result", "deleted");
     });
 
-    it("should create a connection run and wait for it to complete", async () => {
+    // temporary skip due to user config for long running connections in synchronization service
+    it.skip("should create a connection run and wait for it to complete", async () => {
       const { result: createResult } = await runCommand(`imodel connection run create -c ${connectionId}`);
       expect(createResult).to.not.be.undefined;
 
