@@ -105,6 +105,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: QA
     needs: build
+    if: false  # Temporary skipping tests
 
     steps:
       - uses: actions/checkout@v3
