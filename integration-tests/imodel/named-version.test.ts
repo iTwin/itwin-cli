@@ -15,8 +15,7 @@ import { createIModel, createITwin } from "../utils/helpers";
 import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
 
 const tests = () =>
-  // temporary skip due to user config for long running connections in synchronization service
-  describe.skip("named-version", () => {
+  describe("named-version", () => {
     const testITwinName = "ITwinCLI_IntegrationTestITwin_iModelNamedVersion";
     const testIModelName = "ITwinCLI_IntegrationTestIModel_iModelNamedVersion";
     const testFilePath = "examples/datasets/ExtonCampus.dgn";

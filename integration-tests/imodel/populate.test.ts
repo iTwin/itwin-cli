@@ -39,8 +39,7 @@ const tests = () =>
       expect(iTwinDeleteResult).to.have.property("result", "deleted");
     });
 
-    // temporary skip due to user config for long running connections in synchronization service
-    it.skip("should populate the iModel with the uploaded file", async () => {
+    it("should populate the iModel with the uploaded file", async () => {
       const { result: populateResult } = await runCommand<PopulateResponse>(
         `imodel populate --imodel-id ${testIModelId} --file ${testFilePath1} --file ${testFilePath2} --connector-type MSTN`,
       );
@@ -62,8 +61,7 @@ const tests = () =>
       expect(infoResult?.jobs![0].tasks!.every((task) => task.result === "Success"));
     }).timeout(30 * 60 * 1000);
 
-    // temporary skip due to user config for long running connections in synchronization service
-    it.skip("should populate the iModel with the uploaded file (no-wait flag with polling)", async () => {
+    it("should populate the iModel with the uploaded file (no-wait flag with polling)", async () => {
       const { result: populateResult } = await runCommand<PopulateResponse>(
         `imodel populate --imodel-id ${testIModelId} --file ${testFilePath1} --connector-type MSTN --no-wait`,
       );
@@ -94,8 +92,7 @@ const tests = () =>
       expect(infoResult?.jobs![0].tasks!.every((task) => task.result === "Success"));
     }).timeout(30 * 60 * 1000);
 
-    // temporary skip due to user config for long running connections in synchronization service
-    it.skip("should return an error message if synchronization run completes with a non-success state", async () => {
+    it("should return an error message if synchronization run completes with a non-success state", async () => {
       const { error: populateError } = await runCommand<PopulateResponse>(
         `imodel populate --imodel-id ${testIModelId} --file ${failingTestFilePath1} --connector-type MSTN`,
       );
@@ -115,8 +112,7 @@ const tests = () =>
       expect(infoResult?.jobs![0].tasks!.every((task) => task.result === "Error"));
     }).timeout(30 * 60 * 1000);
 
-    // temporary skip due to user config for long running connections in synchronization service
-    it.skip("should pick correct connector-types according to file extensions, when no connector-types are provided", async () => {
+    it("should pick correct connector-types according to file extensions, when no connector-types are provided", async () => {
       const { result: populateResult } = await runCommand<PopulateResponse>(`imodel populate --imodel-id ${testIModelId} --file ${testFilePath1}`);
       expect(populateResult).to.not.be.undefined;
       expect(populateResult).to.have.property("iTwinId", testITwinId);
