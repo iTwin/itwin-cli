@@ -1,21 +1,19 @@
-> **⚠️ Note:**  
-> The iTwin CLI is in active development and is **not intended for production workflows**. It is pre-release and may contain breaking changes in the future.
-
-
 # iTwin Platform CLI
 
 The **iTwin Platform CLI** is a command-line tool for interacting with the [iTwin Platform](https://developer.bentley.com). It enables automation of common workflows such as managing iTwins and iModels, synchronizing design data, handling storage, and controlling user access.
 
 🚀 **Why use the iTwin CLI?**
-- Automate iTwin and iModel creation, updates, and management.
+- Automate creation of iTwins and iModels, updates and management.
 - Streamline design data synchronization and versioning.
 - Manage users, roles, and permissions efficiently.
 - Automate workflows with scripts, scheduled tasks, and data pipelines.
 
+For a step-by-step guide on getting started with an iTwin, see the **[Quickstart](https://itwin.github.io/itwin-cli/#/quickstart)**. For a complete list of commands and usage examples, visit the **[iTwin CLI Manual](https://itwin.github.io/itwin-cli)**.
+
 ## **Getting Started**
 
 ### **1. Install the CLI**
-Download the latest version for your operating system from the **[Releases](https://github.com/itwin/itwin-cli/releases)** page.
+Download the latest version for your operating system from the **[Releases](https://github.com/itwin/itwin-cli/releases)** page and install it.
 
 ### **2. Authenticate with the iTwin Platform**
 Before using the CLI, sign in:
@@ -36,9 +34,6 @@ NOTE: As of June 16th, 2025 only `bash`, `zsh` and `powershell` are supported.
 itp plugins install @oclif/plugin-autocomplete
 itp autocomplete
 ```
-
-For a step-by-step guide on getting started with an iTwin, see the **[Quickstart](https://cuddly-engine-j746ov3.pages.github.io/#/quickstart)**. For a complete list of commands and usage examples, visit the **[iTwin CLI Manual](https://cuddly-engine-j746ov3.pages.github.io/#/)**.
-
 ---
 
 ## **Contributing**
