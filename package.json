@@ -1,7 +1,7 @@
 {
   "name": "itp",
   "description": "Work seamlessly with the iTwin Platform",
-  "version": "0.0.5",
+  "version": "1.0.0",
   "author": "Bentley systems, Incorporated",
   "bin": {
     "itp": "./bin/run.js"
