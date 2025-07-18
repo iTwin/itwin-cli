@@ -108,18 +108,6 @@ const tests = () =>
       expect(iModelList!.some((imodel) => imodel.id === testIModelId2)).to.be.true;
     });
 
-    it("should filter iModels by state", async () => {
-      const { result: iModelListInitialized } = await runCommand<IModel[]>(`imodel list --itwin-id ${testITwinId} --state initialized`);
-      expect(iModelListInitialized).to.not.be.undefined;
-      expect(iModelListInitialized).to.be.an("array").with.lengthOf(2);
-      expect(iModelListInitialized!.some((imodel) => imodel.id === testIModelId1)).to.be.true;
-      expect(iModelListInitialized!.some((imodel) => imodel.id === testIModelId2)).to.be.true;
-
-      const { result: iModelListNotInitialized } = await runCommand<IModel[]>(`imodel list --itwin-id ${testITwinId} --state notInitialized`);
-      expect(iModelListNotInitialized).to.not.be.undefined;
-      expect(iModelListNotInitialized).to.be.an("array").with.lengthOf(0);
-    });
-
     it("should return an error when invalid uuid is provided as --itwin-id", async () => {
       const { error: listError } = await runCommand<IModel[]>(`imodel list --itwin-id an-invalid-uuid"`);
       expect(listError).to.not.be.undefined;

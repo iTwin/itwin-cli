@@ -3,7 +3,7 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { IModel, IModelOrderByProperty, IModelState, OrderBy, take, toArray } from "@itwin/imodels-client-management";
+import { IModel, IModelOrderByProperty, OrderBy, take, toArray } from "@itwin/imodels-client-management";
 import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../extensions/api-reference.js";
@@ -62,12 +62,6 @@ export default class ListIModels extends BaseCommand {
       helpValue: "<integer>",
       required: false,
     }),
-    state: Flags.string({
-      description: "Filter iModels by their state.",
-      helpValue: "<string>",
-      options: ["initialized", "notInitialized"],
-      required: false,
-    }),
     top: Flags.integer({
       description: "Limit the number of items returned.",
       helpValue: "<integer>",
@@ -90,7 +84,6 @@ export default class ListIModels extends BaseCommand {
         $top: flags.top,
         iTwinId: flags["itwin-id"],
         name: flags.name,
-        state: flags.state as IModelState,
       },
     });
 
