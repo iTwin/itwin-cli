@@ -1,6 +1,6 @@
-import { LoggingCallbacks } from "../general-models/logging-callbacks.js";
-import { User } from "./models/user.js";
-import { UserApiClient } from "./user-api-client.js";
+import { LoggingCallbacks } from "./general-models/logging-callbacks.js";
+import { User } from "./user-client/models/user.js";
+import { UserApiClient } from "./user-client/user-api-client.js";
 
 export class UserApiService {
   private _client: UserApiClient;
@@ -11,12 +11,12 @@ export class UserApiService {
     this._callbacks = callbacks;
   }
 
-  public async me(): Promise<User> {
+  public async getMe(): Promise<User> {
     const userResponse = await this._client.getMe();
     return userResponse.user;
   }
 
-  public async info(userIds: string[]): Promise<User[]> {
+  public async getUsers(userIds: string[]): Promise<User[]> {
     if (userIds !== undefined && userIds.length > 1000) {
       this._callbacks.error("A maximum of 1000 user IDs can be provided.");
     }
@@ -26,7 +26,7 @@ export class UserApiService {
     return response.users;
   }
 
-  public async search(search: string): Promise<User[]> {
+  public async searchUsers(search: string): Promise<User[]> {
     const response = await this._client.searchUsers(search);
 
     return response.users;

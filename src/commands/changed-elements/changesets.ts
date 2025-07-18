@@ -53,9 +53,9 @@ export default class GetChangesetStatus extends BaseCommand {
   public async run(): Promise<Changeset[]> {
     const { flags } = await this.parse(GetChangesetStatus);
 
-    const client = await this.getChangedElementsApiClient();
-    const result = await client.listChangesets(flags["imodel-id"], flags["itwin-id"], flags.top, flags.skip);
+    const client = await this.getChangedElementsApiService();
+    const result = await client.listChangesets(flags["itwin-id"], flags["imodel-id"], flags.skip, flags.top);
 
-    return this.logAndReturnResult(result.changesetStatus);
+    return this.logAndReturnResult(result);
   }
 }

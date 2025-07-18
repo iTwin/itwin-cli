@@ -28,7 +28,7 @@ export default class Me extends BaseCommand {
 
   public async run(): Promise<User> {
     const userApiService = await this.getUserApiService();
-    const result = userApiService.me();
+    const result = userApiService.getMe();
 
     return this.logAndReturnResult(result);
   }

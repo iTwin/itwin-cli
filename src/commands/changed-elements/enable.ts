@@ -35,14 +35,9 @@ export default class ChangedElementsEnable extends BaseCommand {
   public async run(): Promise<ResultResponse> {
     const { flags } = await this.parse(ChangedElementsEnable);
 
-    const client = await this.getChangedElementsApiClient();
+    const client = await this.getChangedElementsApiService();
+    const result = await client.changeTracking(flags["itwin-id"], flags["imodel-id"], true);
 
-    await client.changeTracking({
-      enable: true,
-      iModelId: flags["imodel-id"],
-      iTwinId: flags["itwin-id"],
-    });
-
-    return this.logAndReturnResult({ result: "enabled" });
+    return this.logAndReturnResult(result);
   }
 }

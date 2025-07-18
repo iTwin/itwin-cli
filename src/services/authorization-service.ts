@@ -1,6 +1,6 @@
-import { LoggingCallbacks } from "../general-models/logging-callbacks.js";
-import { AuthorizationClient } from "./authorization-client.js";
-import { AuthorizationInformation } from "./authorization-type.js";
+import { AuthorizationClient } from "./authorization-client/authorization-client.js";
+import { AuthorizationInformation } from "./authorization-client/authorization-type.js";
+import { LoggingCallbacks } from "./general-models/logging-callbacks.js";
 
 export class AuthorizationService {
   private _client: AuthorizationClient;

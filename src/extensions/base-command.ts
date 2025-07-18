@@ -18,14 +18,15 @@ import { ArgOutput, FlagOutput } from "../../node_modules/@oclif/core/lib/interf
 import { AccessControlClient } from "../services/access-control-client/access-control-client.js";
 import { AccessControlMemberClient } from "../services/access-control-client/access-control-member-client.js";
 import { AuthorizationClient } from "../services/authorization-client/authorization-client.js";
-import { AuthorizationService } from "../services/authorization-client/authorization-service.js";
+import { AuthorizationService } from "../services/authorization-service.js";
+import { ChangedElementsApiService } from "../services/changed-elements-api-service.js";
 import { ChangedElementsApiClient } from "../services/changed-elements-client/changed-elements-api-client.js";
 import { UserContext } from "../services/general-models/user-context.js";
 import { ITwinPlatformApiClient } from "../services/iTwin-api-client.js";
 import { StorageApiClient } from "../services/storage-client/storage-api-client.js";
 import { SynchronizationApiClient } from "../services/synchronizationClient/synchronization-api-client.js";
+import { UserApiService } from "../services/user-api-service.js";
 import { UserApiClient } from "../services/user-client/user-api-client.js";
-import { UserApiService } from "../services/user-client/user-api-service.js";
 import { Configuration } from "./configuration.js";
 
 export default abstract class BaseCommand extends Command {
@@ -109,8 +110,13 @@ export default abstract class BaseCommand extends Command {
     return config?.apiUrl ?? "https://api.bentley.com";
   }
 
-  protected async getChangedElementsApiClient(): Promise<ChangedElementsApiClient> {
-    return new ChangedElementsApiClient(await this.getITwinApiClient());
+  protected async getChangedElementsApiService(): Promise<ChangedElementsApiService> {
+    const changedElementsApiClient = new ChangedElementsApiClient(await this.getITwinApiClient());
+
+    return new ChangedElementsApiService(changedElementsApiClient, {
+      error: (input) => this.error(input),
+      log: (message) => this.log(message),
+    });
   }
 
   protected getEnvConfig(): Configuration {

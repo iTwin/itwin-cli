@@ -35,8 +35,8 @@ export default class ChangedElementsInfo extends BaseCommand {
   public async run(): Promise<TrackingResponse> {
     const { flags } = await this.parse(ChangedElementsInfo);
 
-    const client = await this.getChangedElementsApiClient();
-    const result = await client.getTracking(flags["imodel-id"], flags["itwin-id"]);
+    const client = await this.getChangedElementsApiService();
+    const result = await client.getTracking(flags["itwin-id"], flags["imodel-id"]);
 
     return this.logAndReturnResult(result);
   }
