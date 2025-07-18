@@ -24,6 +24,11 @@ Retrieve a list of iModels belonging to the specified iTwin.
   Skip a number of items in the result.  
   **Type:** `integer` **Required:** No
 
+- **`--state`**  
+  Filter iModels by their state.  
+  **Type:** `string` **Required:** No  
+  **Valid Values:** `"initialized"`, `"notInitialized"`
+
 - **`--top`**  
   Limit the number of items returned.  
   **Type:** `integer` **Required:** No
