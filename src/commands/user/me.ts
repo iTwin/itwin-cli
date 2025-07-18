@@ -27,9 +27,9 @@ export default class Me extends BaseCommand {
   public static flags = {};
 
   public async run(): Promise<User> {
-    const userApiClient = await this.getUserApiClient();
-    const userInfo = await userApiClient.getMe();
+    const userApiService = await this.getUserApiService();
+    const result = userApiService.me();
 
-    return this.logAndReturnResult(userInfo.user);
+    return this.logAndReturnResult(result);
   }
 }

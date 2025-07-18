@@ -40,9 +40,9 @@ export default class UserSearch extends BaseCommand {
   public async run(): Promise<User[]> {
     const { flags } = await this.parse(UserSearch);
 
-    const client = await this.getUserApiClient();
-    const response = await client.searchUsers(flags.search);
+    const client = await this.getUserApiService();
+    const result = await client.search(flags.search);
 
-    return this.logAndReturnResult(response.users);
+    return this.logAndReturnResult(result);
   }
 }

@@ -25,6 +25,7 @@ import { ITwinPlatformApiClient } from "../services/iTwin-api-client.js";
 import { StorageApiClient } from "../services/storage-client/storage-api-client.js";
 import { SynchronizationApiClient } from "../services/synchronizationClient/synchronization-api-client.js";
 import { UserApiClient } from "../services/user-client/user-api-client.js";
+import { UserApiService } from "../services/user-client/user-api-service.js";
 import { Configuration } from "./configuration.js";
 
 export default abstract class BaseCommand extends Command {
@@ -207,8 +208,13 @@ export default abstract class BaseCommand extends Command {
     return new SynchronizationApiClient(await this.getITwinApiClient());
   }
 
-  protected async getUserApiClient(): Promise<UserApiClient> {
-    return new UserApiClient(await this.getITwinApiClient());
+  protected async getUserApiService(): Promise<UserApiService> {
+    const userApiClient = new UserApiClient(await this.getITwinApiClient());
+
+    return new UserApiService(userApiClient, {
+      error: (input) => this.error(input),
+      log: (message) => this.log(message),
+    });
   }
 
   protected logAndReturnResult<T>(result: T): T {
