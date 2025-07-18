@@ -18,6 +18,7 @@ import { ArgOutput, FlagOutput } from "../../node_modules/@oclif/core/lib/interf
 import { AccessControlClient } from "../services/access-control-client/access-control-client.js";
 import { AccessControlMemberClient } from "../services/access-control-client/access-control-member-client.js";
 import { AuthorizationClient } from "../services/authorization-client/authorization-client.js";
+import { AuthorizationService } from "../services/authorization-client/authorization-service.js";
 import { ChangedElementsApiClient } from "../services/changed-elements-client/changed-elements-api-client.js";
 import { UserContext } from "../services/general-models/user-context.js";
 import { ITwinPlatformApiClient } from "../services/iTwin-api-client.js";
@@ -73,7 +74,7 @@ export default abstract class BaseCommand extends Command {
   }
 
   protected async getAccessToken(): Promise<string> {
-    const client = this.getAuthorizationClient();
+    const client = new AuthorizationClient(this.getEnvConfig(), this.config);
 
     const token = await client.getTokenAsync();
     if (!token) {
@@ -93,12 +94,17 @@ export default abstract class BaseCommand extends Command {
       });
   }
 
-  protected getAuthorizationClient(): AuthorizationClient {
-    return new AuthorizationClient(this.getConfig(), this.config);
+  protected getAuthorizationService(): AuthorizationService {
+    const authorizationClient = new AuthorizationClient(this.getEnvConfig(), this.config);
+
+    return new AuthorizationService(authorizationClient, {
+      error: (input) => this.error(input),
+      log: (message) => this.log(message),
+    });
   }
 
   protected getBaseApiUrl(): string {
-    const config = this.getConfig();
+    const config = this.getEnvConfig();
     return config?.apiUrl ?? "https://api.bentley.com";
   }
 
@@ -106,7 +112,7 @@ export default abstract class BaseCommand extends Command {
     return new ChangedElementsApiClient(await this.getITwinApiClient());
   }
 
-  protected getConfig(): Configuration {
+  protected getEnvConfig(): Configuration {
     const configPath = path.join(this.config.configDir, "config.json");
 
     let config: Configuration = {
