@@ -106,9 +106,9 @@ const tests = () =>
       const { error: listError2 } = await runCommand<Repository[]>(`itwin repository list -i ${testITwinId} --class Storage --sub-class ${iModelSubclass}`);
 
       expect(createError).to.not.be.undefined;
-      expect(createError?.message).to.be.equal("'Construction' class must have one of the following subClasses: ['Performance'].");
+      expect(createError?.message).to.be.equal("'Construction' class may only have one of the following subClasses: ['Performance'].");
       expect(listError1).to.not.be.undefined;
-      expect(listError1?.message).to.be.equal("'Subsurface' class must have one of the following subClasses: ['EvoWorkspace'].");
+      expect(listError1?.message).to.be.equal("'Subsurface' class may only have one of the following subClasses: ['EvoWorkspace'].");
       expect(listError2).to.not.be.undefined;
       expect(listError2?.message).to.be.equal("'Storage' class must not have a subClass.");
     });
