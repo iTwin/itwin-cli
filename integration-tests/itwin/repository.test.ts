@@ -93,6 +93,25 @@ const tests = () =>
       const { error: deleteError } = await runCommand<Repository>(`itwin repository delete -i ${crypto.randomUUID()} --repository-id an-invalid-uuid`);
       expect(deleteError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
     });
+
+    it("should return an error when invalid class-subclass combination is provided", async () => {
+      const { error: createError } = await runCommand<Repository>(
+        `itwin repository create --itwin-id ${testITwinId} --class ${iModelClass} --sub-class ${anotheriModelSubclass} --uri ${iModelUri}`,
+      );
+
+      const { error: listError1 } = await runCommand<Repository[]>(
+        `itwin repository list -i ${testITwinId} --class ${anotheriModelClass} --sub-class ${iModelSubclass}`,
+      );
+
+      const { error: listError2 } = await runCommand<Repository[]>(`itwin repository list -i ${testITwinId} --class Storage --sub-class ${iModelSubclass}`);
+
+      expect(createError).to.not.be.undefined;
+      expect(createError?.message).to.be.equal("'Construction' class must have one of the following subClasses: ['Performance'].");
+      expect(listError1).to.not.be.undefined;
+      expect(listError1?.message).to.be.equal("'Subsurface' class must have one of the following subClasses: ['EvoWorkspace'].");
+      expect(listError2).to.not.be.undefined;
+      expect(listError2?.message).to.be.equal("'Storage' class must not have a subClass.");
+    });
   });
 
 export default tests;
