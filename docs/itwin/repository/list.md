@@ -16,7 +16,7 @@ Retrieve a list of repositories for a specified iTwin.
 - **`--sub-class`**  
   Specify a subClass of repositories. Only applicable for **`GeographicInformationSystem`** class.   
   **Type:** `string` **Required:** No  
-  **Valid Values:** `"WebMapService"`, `"WebMapTileService"`, `"MapServer"`
+  **Valid Values:** `"WebMapService"`, `"WebMapTileService"`, `"MapServer"`, `"Performance"`, `"EvoWorkspace"`
 
 ## Examples
 
