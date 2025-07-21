@@ -46,7 +46,7 @@ export default class CreateRepository extends BaseCommand {
     }),
     "sub-class": Flags.string({
       description:
-        "The subClass of your repository. 'WebMapService', 'WebMapTileService' and 'MapServer' subclasses are only applicable to 'GeographicInformationSystem' class. 'Performance' subclass is only applicable to 'Construction' class. 'EvoWorkspace' subclass is only applicable to 'Subsurface' class.",
+        "The subclass of your repository. 'WebMapService', 'WebMapTileService' and 'MapServer' subclasses are only applicable to 'GeographicInformationSystem' class. 'Performance' subclass is only applicable to 'Construction' class. 'EvoWorkspace' subclass is only applicable to 'Subsurface' class.",
       helpValue: "<string>",
       options: ["WebMapService", "WebMapTileService", "MapServer", "Performance", "EvoWorkspace"],
     }),

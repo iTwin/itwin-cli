@@ -14,7 +14,7 @@ Retrieve a list of repositories for a specified iTwin.
   **Valid Values:** `"iModels"`, `"RealityData"`, `"Storage"`, `"Forms"`, `"Issues"`, `"SensorData"`, `"GeographicInformationSystem"`, `"Construction"`, `"Subsurface"`
 
 - **`--sub-class`**  
-  Specify a subClass of repositories. 'WebMapService', 'WebMapTileService' and 'MapServer' subclasses are only applicable to 'GeographicInformationSystem' class. 'Performance' subclass is only applicable to 'Construction' class. 'EvoWorkspace' subclass is only applicable to 'Subsurface' class.  
+  Specify a subclass of repositories. 'WebMapService', 'WebMapTileService' and 'MapServer' subclasses are only applicable to 'GeographicInformationSystem' class. 'Performance' subclass is only applicable to 'Construction' class. 'EvoWorkspace' subclass is only applicable to 'Subsurface' class.  
   **Type:** `string` **Required:** No  
   **Valid Values:** `"WebMapService"`, `"WebMapTileService"`, `"MapServer"`, `"Performance"`, `"EvoWorkspace"`
 
