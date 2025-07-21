@@ -45,7 +45,8 @@ export default class CreateRepository extends BaseCommand {
       description: "The ID of the iTwin to which the repository belongs.",
     }),
     "sub-class": Flags.string({
-      description: "The subClass of your repository.",
+      description:
+        "The subClass of your repository. 'WebMapService', 'WebMapTileService' and 'MapServer' subclasses are only applicable to 'GeographicInformationSystem' class. 'Performance' subclass is only applicable to 'Construction' class. 'EvoWorkspace' subclass is only applicable to 'Subsurface' class.",
       helpValue: "<string>",
       options: ["WebMapService", "WebMapTileService", "MapServer", "Performance", "EvoWorkspace"],
     }),
@@ -59,9 +60,11 @@ export default class CreateRepository extends BaseCommand {
   public async run(): Promise<Repository | undefined> {
     const { flags } = await this.parse(CreateRepository);
 
-    const error = checkIfRepositoryClassMatchSubclass(flags.class, flags["sub-class"]);
-    if (error !== "") {
-      this.error(error);
+    if (flags["sub-class"] !== undefined) {
+      const error = checkIfRepositoryClassMatchSubclass(flags.class, flags["sub-class"]);
+      if (error !== "") {
+        this.error(error);
+      }
     }
 
     const accessToken = await this.getAccessToken();

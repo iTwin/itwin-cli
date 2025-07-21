@@ -45,18 +45,18 @@ export default class ListRepositories extends BaseCommand {
       description: "The ID of the iTwin whose repositories should be retrieved.",
     }),
     "sub-class": Flags.string({
-      description: "Specify a subClass of repositories.",
+      description:
+        "Specify a subClass of repositories. 'WebMapService', 'WebMapTileService' and 'MapServer' subclasses are only applicable to 'GeographicInformationSystem' class. 'Performance' subclass is only applicable to 'Construction' class. 'EvoWorkspace' subclass is only applicable to 'Subsurface' class.",
       helpValue: "<string>",
       options: ["WebMapService", "WebMapTileService", "MapServer", "Performance", "EvoWorkspace"],
       required: false,
-      dependsOn: ["class"],
     }),
   };
 
   public async run(): Promise<Repository[] | undefined> {
     const { flags } = await this.parse(ListRepositories);
 
-    if (flags.class !== undefined) {
+    if (flags.class !== undefined && flags["sub-class"] !== undefined) {
       const error = checkIfRepositoryClassMatchSubclass(flags.class, flags["sub-class"]);
       if (error !== "") {
         this.error(error);
