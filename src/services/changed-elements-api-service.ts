@@ -1,15 +1,12 @@
 import { ChangedElementsApiClient } from "./changed-elements-client/changed-elements-api-client.js";
 import { Changeset, ChangesetComparison, TrackingResponse } from "./changed-elements-client/tracking.js";
-import { LoggingCallbacks } from "./general-models/logging-callbacks.js";
 import { ResultResponse } from "./general-models/result-response.js";
 
 export class ChangedElementsApiService {
   private _client: ChangedElementsApiClient;
-  private _callbacks: LoggingCallbacks;
 
-  constructor(changedElementsApiClient: ChangedElementsApiClient, callbacks: LoggingCallbacks) {
+  constructor(changedElementsApiClient: ChangedElementsApiClient) {
     this._client = changedElementsApiClient;
-    this._callbacks = callbacks;
   }
 
   public async listChangesets(iTwinId: string, iModelId: string, skip?: number, top?: number): Promise<Changeset[]> {

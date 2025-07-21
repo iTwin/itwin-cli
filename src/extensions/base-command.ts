@@ -113,10 +113,7 @@ export default abstract class BaseCommand extends Command {
   protected async getChangedElementsApiService(): Promise<ChangedElementsApiService> {
     const changedElementsApiClient = new ChangedElementsApiClient(await this.getITwinApiClient());
 
-    return new ChangedElementsApiService(changedElementsApiClient, {
-      error: (input) => this.error(input),
-      log: (message) => this.log(message),
-    });
+    return new ChangedElementsApiService(changedElementsApiClient);
   }
 
   protected getEnvConfig(): Configuration {
