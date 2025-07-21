@@ -46,7 +46,7 @@ export default class ListRepositories extends BaseCommand {
     "sub-class": Flags.string({
       description: "Specify a subClass of repositories. Only applicable for **`GeographicInformationSystem`** class. ",
       helpValue: "<string>",
-      options: ["WebMapService", "WebMapTileService", "MapServer"],
+      options: ["WebMapService", "WebMapTileService", "MapServer", "Performance", "EvoWorkspace"],
       required: false,
     }),
   };

@@ -16,9 +16,11 @@ const tests = () =>
   describe("repository", () => {
     let testRepositoryId: string;
     let testITwinId: string;
-    let iModelClass: string;
-    let iModelSubclass: string;
-    let iModelUri: string;
+    const iModelClass = "Construction";
+    const iModelSubclass = "Performance";
+    const anotheriModelClass = "Subsurface";
+    const anotheriModelSubclass = "EvoWorkspace";
+    const iModelUri = "https://example.com/gis-repo";
 
     before(async () => {
       const testITwin = await createITwin(`cli-itwin-integration-test-${new Date().toISOString()}`, "Thing", "Asset");
@@ -31,10 +33,6 @@ const tests = () =>
     });
 
     it("should create a new iTwin repository", async () => {
-      iModelClass = "GeographicInformationSystem";
-      iModelSubclass = "WebMapService";
-      iModelUri = "https://example.com/gis-repo";
-
       const { result: createdITwinRepository } = await runCommand<Repository>(
         `itwin repository create --itwin-id ${testITwinId} --class ${iModelClass} --sub-class ${iModelSubclass} --uri ${iModelUri}`,
       );
@@ -64,7 +62,9 @@ const tests = () =>
     });
 
     it("should list iTwin repositories for the specified iTwin (class/subclass not found)", async () => {
-      const { result: repositories } = await runCommand<Repository[]>(`itwin repository list -i ${testITwinId} --class ${iModelClass} --sub-class MapServer`);
+      const { result: repositories } = await runCommand<Repository[]>(
+        `itwin repository list -i ${testITwinId} --class ${anotheriModelClass} --sub-class ${anotheriModelSubclass}`,
+      );
 
       expect(repositories).to.be.an("array").that.is.empty;
     });
