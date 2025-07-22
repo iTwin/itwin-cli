@@ -1,3 +1,8 @@
+/*---------------------------------------------------------------------------------------------
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
+
 import { LoggingCallbacks } from "./general-models/logging-callbacks.js";
 import { User } from "./user-client/models/user.js";
 import { UserApiClient } from "./user-client/user-api-client.js";

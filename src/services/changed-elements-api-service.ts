@@ -1,3 +1,8 @@
+/*---------------------------------------------------------------------------------------------
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
+
 import { ChangedElementsApiClient } from "./changed-elements-client/changed-elements-api-client.js";
 import { Changeset, ChangesetComparison, TrackingResponse } from "./changed-elements-client/tracking.js";
 import { ResultResponse } from "./general-models/result-response.js";
