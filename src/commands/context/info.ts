@@ -17,7 +17,8 @@ export default class InfoContext extends BaseCommand {
   ];
 
   public async run(): Promise<UserContext | undefined> {
-    const context = this.getContext();
+    const contextService = this.getContextService();
+    const context = contextService.getContext();
     return this.logAndReturnResult(context);
   }
 }

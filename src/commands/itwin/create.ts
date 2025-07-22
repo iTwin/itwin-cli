@@ -127,7 +127,8 @@ export default class CreateITwin extends BaseCommand {
       if (creatediTwin.data?.id === undefined) {
         this.log("iTwin Id not found in response. Cannot save to context.");
       } else {
-        await this.setContext(creatediTwin.data.id);
+        const contextService = this.getContextService();
+        await contextService.setContext(creatediTwin.data.id);
       }
     }
 

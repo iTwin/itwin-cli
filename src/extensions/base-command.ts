@@ -21,7 +21,9 @@ import { AuthorizationClient } from "../services/authorization-client/authorizat
 import { AuthorizationService } from "../services/authorization-service.js";
 import { ChangedElementsApiService } from "../services/changed-elements-api-service.js";
 import { ChangedElementsApiClient } from "../services/changed-elements-client/changed-elements-api-client.js";
-import { UserContext } from "../services/general-models/user-context.js";
+import { ContextService } from "../services/context-service.js";
+import { LoggingCallbacks } from "../services/general-models/logging-callbacks.js";
+import { IModelApiService } from "../services/iModel-api-service.js";
 import { ITwinPlatformApiClient } from "../services/iTwin-api-client.js";
 import { StorageApiClient } from "../services/storage-client/storage-api-client.js";
 import { SynchronizationApiClient } from "../services/synchronizationClient/synchronization-api-client.js";
@@ -53,28 +55,6 @@ export default abstract class BaseCommand extends Command {
 
   public static enableJsonFlag = true;
 
-  protected async clearContext(): Promise<void> {
-    const contextPath = `${this.config.cacheDir}/context.json`;
-    if (fs.existsSync(contextPath)) {
-      fs.rmSync(contextPath, { force: true });
-    }
-
-    this.debug(`Cleared context file: ${contextPath}`);
-  }
-
-  protected async getAccessControlApiClient(): Promise<AccessControlClient> {
-    const token = await this.getAccessToken();
-    const url = this.getBaseApiUrl();
-    return new AccessControlClient(url, token);
-  }
-
-  protected async getAccessControlMemberClient(): Promise<AccessControlMemberClient> {
-    const token = this.getAccessToken();
-    const url = this.getBaseApiUrl();
-
-    return new AccessControlMemberClient(url, await token);
-  }
-
   protected async getAccessToken(): Promise<string> {
     const client = new AuthorizationClient(this.getEnvConfig(), this.config);
 
@@ -96,24 +76,17 @@ export default abstract class BaseCommand extends Command {
       });
   }
 
-  protected getAuthorizationService(): AuthorizationService {
-    const authorizationClient = new AuthorizationClient(this.getEnvConfig(), this.config);
-
-    return new AuthorizationService(authorizationClient, {
+  private getLoggingCallbacks(): LoggingCallbacks {
+    return {
       error: (input) => this.error(input),
       log: (message) => this.log(message),
-    });
+      debug: (...args: any[]) => this.debug(args),
+    };
   }
 
   protected getBaseApiUrl(): string {
     const config = this.getEnvConfig();
     return config?.apiUrl ?? "https://api.bentley.com";
-  }
-
-  protected async getChangedElementsApiService(): Promise<ChangedElementsApiService> {
-    const changedElementsApiClient = new ChangedElementsApiClient(await this.getITwinApiClient());
-
-    return new ChangedElementsApiService(changedElementsApiClient);
   }
 
   protected getEnvConfig(): Configuration {
@@ -150,24 +123,37 @@ export default abstract class BaseCommand extends Command {
     return config;
   }
 
-  protected getContext(): UserContext | undefined {
-    const contextPath = `${this.config.cacheDir}/context.json`;
-    if (!fs.existsSync(contextPath)) {
-      return;
-    }
+  // #region Services
 
-    try {
-      const contextFile = fs.readFileSync(contextPath, "utf8");
-      const context = JSON.parse(contextFile) as UserContext;
+  protected async getAccessControlApiClient(): Promise<AccessControlClient> {
+    const token = await this.getAccessToken();
+    const url = this.getBaseApiUrl();
+    return new AccessControlClient(url, token);
+  }
 
-      if (!context.iModelId && !context.iTwinId) {
-        return undefined;
-      }
+  protected async getAccessControlMemberClient(): Promise<AccessControlMemberClient> {
+    const token = this.getAccessToken();
+    const url = this.getBaseApiUrl();
 
-      return context;
-    } catch (error) {
-      this.debug("Error parsing context file:", error);
-    }
+    return new AccessControlMemberClient(url, await token);
+  }
+
+  protected getContextService(): ContextService {
+    return new ContextService(this.config.cacheDir, this.getLoggingCallbacks());
+  }
+
+  protected getAuthorizationService(): AuthorizationService {
+    const authorizationClient = new AuthorizationClient(this.getEnvConfig(), this.config);
+
+    return new AuthorizationService(authorizationClient, this.getLoggingCallbacks());
+  }
+
+  protected async getIModelService(): Promise<IModelApiService> {
+    const iModelsClient = this.getIModelClient();
+    const contextService = this.getContextService();
+    const callback = await this.getAuthorizationCallback();
+
+    return new IModelApiService(iModelsClient, contextService, callback);
   }
 
   protected getIModelClient(): IModelsClient {
@@ -180,10 +166,10 @@ export default abstract class BaseCommand extends Command {
     });
   }
 
-  protected getIModelId(): string | undefined {
-    const context = this.getContext();
+  protected async getChangedElementsApiService(): Promise<ChangedElementsApiService> {
+    const changedElementsApiClient = new ChangedElementsApiClient(await this.getITwinApiClient());
 
-    return context?.iModelId;
+    return new ChangedElementsApiService(changedElementsApiClient);
   }
 
   protected getITwinAccessClient(): ITwinsAccessClient {
@@ -197,12 +183,6 @@ export default abstract class BaseCommand extends Command {
     return new ITwinPlatformApiClient(this.getBaseApiUrl(), token);
   }
 
-  protected getITwinId(): string | undefined {
-    const context = this.getContext();
-
-    return context?.iTwinId;
-  }
-
   protected async getStorageApiClient(): Promise<StorageApiClient> {
     return new StorageApiClient(await this.getITwinApiClient());
   }
@@ -214,11 +194,10 @@ export default abstract class BaseCommand extends Command {
   protected async getUserApiService(): Promise<UsersApiService> {
     const userApiClient = new UsersApiClient(await this.getITwinApiClient());
 
-    return new UsersApiService(userApiClient, {
-      error: (input) => this.error(input),
-      log: (message) => this.log(message),
-    });
+    return new UsersApiService(userApiClient, this.getLoggingCallbacks());
   }
+
+  // #endregion
 
   protected logAndReturnResult<T>(result: T): T {
     if (this.argv.includes("--silent") || this.argv.includes("-s")) {
@@ -255,7 +234,8 @@ export default abstract class BaseCommand extends Command {
     argv?: string[],
   ): Promise<ParserOutput<F, B, A>> {
     if (options?.flags) {
-      const context = this.getContext();
+      const contextService = this.getContextService();
+      const context = contextService.getContext();
 
       if (options.flags["itwin-id"] && !this.argv.includes("--itwin-id") && !this.argv.includes("-i") && context?.iTwinId) {
         this.argv.push("--itwin-id", context.iTwinId);
@@ -281,24 +261,5 @@ export default abstract class BaseCommand extends Command {
   protected async runCommand<T>(command: string, args: string[]): Promise<T> {
     const mergedArgs = [...args, "--silent"];
     return this.config.runCommand<T>(command, mergedArgs);
-  }
-
-  protected async setContext(iTwinId: string, iModelId?: string): Promise<UserContext> {
-    const contextPath = `${this.config.cacheDir}/context.json`;
-
-    const context: UserContext = {
-      iModelId,
-      iTwinId,
-    };
-
-    if (!fs.existsSync(this.config.cacheDir)) {
-      fs.mkdirSync(this.config.cacheDir, { recursive: true });
-    }
-
-    fs.writeFileSync(contextPath, JSON.stringify(context, null, 2), "utf8");
-
-    this.log(`Context set to iTwinId: ${iTwinId}, iModelId: ${iModelId}`);
-
-    return context;
   }
 }
