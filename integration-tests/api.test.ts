@@ -10,7 +10,7 @@ import { ITwin } from "@itwin/itwins-client";
 import { runCommand } from "@oclif/test";
 
 import { ResultResponse } from "../src/services/general-models/result-response.js";
-import { User } from "../src/services/user-client/models/user.js";
+import { User } from "../src/services/users-client/models/user.js";
 import { createITwin } from "./utils/helpers.js";
 import runSuiteIfMainModule from "./utils/run-suite-if-main-module.js";
 

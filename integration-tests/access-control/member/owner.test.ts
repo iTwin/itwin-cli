@@ -11,7 +11,7 @@ import { runCommand } from "@oclif/test";
 import { GroupMember } from "../../../src/services/access-control-client/models/group-members";
 import { OwnerResponse } from "../../../src/services/access-control-client/models/owner";
 import { ResultResponse } from "../../../src/services/general-models/result-response.js";
-import { User } from "../../../src/services/user-client/models/user";
+import { User } from "../../../src/services/users-client/models/user";
 import { ITP_TEST_USER_EXTERNAL } from "../../utils/environment";
 import { fetchEmailsAndGetInvitationLink } from "../../utils/helpers";
 import runSuiteIfMainModule from "../../utils/run-suite-if-main-module";
