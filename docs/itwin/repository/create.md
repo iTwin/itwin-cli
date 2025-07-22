@@ -18,7 +18,7 @@ Create a new repository URI for iTwin data.
   **Type:** `string` **Required:** Yes
 
 - **`--sub-class`**  
-  The subClass of your repository.  
+  The subclass of your repository. 'WebMapService', 'WebMapTileService' and 'MapServer' subclasses are only applicable to 'GeographicInformationSystem' class. 'Performance' subclass is only applicable to 'Construction' class. 'EvoWorkspace' subclass is only applicable to 'Subsurface' class.  
   **Type:** `string` **Required:** No  
   **Valid Values:** `"WebMapService"`, `"WebMapTileService"`, `"MapServer"`, `"Performance"`, `"EvoWorkspace"`
 

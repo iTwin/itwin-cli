@@ -62,12 +62,6 @@ export default class ListIModels extends BaseCommand {
       helpValue: "<integer>",
       required: false,
     }),
-    // state: Flags.string({
-    //   description: 'Filter iModels by their state.',
-    //   helpValue: '<string>',
-    //   options: ['initialized', 'notInitialized'],
-    //   required: false,
-    // }),
     top: Flags.integer({
       description: "Limit the number of items returned.",
       helpValue: "<integer>",
