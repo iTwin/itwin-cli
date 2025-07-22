@@ -5,13 +5,13 @@
 
 import { LoggingCallbacks } from "./general-models/logging-callbacks.js";
 import { User } from "./user-client/models/user.js";
-import { UserApiClient } from "./user-client/user-api-client.js";
+import { UsersApiClient } from "./user-client/users-api-client.js";
 
-export class UserApiService {
-  private _client: UserApiClient;
+export class UsersApiService {
+  private _client: UsersApiClient;
   private _callbacks: LoggingCallbacks;
 
-  constructor(userApiClient: UserApiClient, callbacks: LoggingCallbacks) {
+  constructor(userApiClient: UsersApiClient, callbacks: LoggingCallbacks) {
     this._client = userApiClient;
     this._callbacks = callbacks;
   }
