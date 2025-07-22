@@ -36,7 +36,7 @@ export default class UserInfo extends BaseCommand {
     const { flags } = await this.parse(UserInfo);
 
     const userApiService = await this.getUserApiService();
-    const result = userApiService.getUsers(flags["user-id"]);
+    const result = await userApiService.getUsers(flags["user-id"]);
 
     return this.logAndReturnResult(result);
   }
