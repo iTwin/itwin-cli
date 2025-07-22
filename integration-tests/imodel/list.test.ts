@@ -57,17 +57,17 @@ const tests = () =>
     it("should skip iModels and should top results", async () => {
       const { result: iModelList } = await runCommand<IModel[]>(`imodel list --itwin-id ${testITwinId}`);
       expect(iModelList).to.not.be.undefined;
-      expect(iModelList).to.have.lengthOf(2);
+      expect(iModelList).to.be.an("array").with.lengthOf(2);
 
       const { result: iModelListSkip } = await runCommand<IModel[]>(`imodel list --itwin-id ${testITwinId} --skip 1`);
       expect(iModelListSkip).to.not.be.undefined;
-      expect(iModelListSkip).to.have.lengthOf(1);
+      expect(iModelListSkip).to.be.an("array").with.lengthOf(1);
       expect(iModelListSkip!.some((imodel) => imodel.id === iModelList![0].id)).to.be.false;
       expect(iModelListSkip!.some((imodel) => imodel.id === iModelList![1].id)).to.be.true;
 
       const { result: iModelListTop } = await runCommand<IModel[]>(`imodel list --itwin-id ${testITwinId} --top 1`);
       expect(iModelListTop).to.not.be.undefined;
-      expect(iModelListTop).to.have.lengthOf(1);
+      expect(iModelListTop).to.be.an("array").with.lengthOf(1);
       expect(iModelListTop!.some((imodel) => imodel.id === iModelList![0].id)).to.be.true;
       expect(iModelListTop!.some((imodel) => imodel.id === iModelList![1].id)).to.be.false;
     });
@@ -75,7 +75,7 @@ const tests = () =>
     it("should list iModels by name", async () => {
       const { result: iModelList } = await runCommand<IModel[]>(`imodel list --itwin-id ${testITwinId} --name ${testIModelName1}`);
       expect(iModelList).to.not.be.undefined;
-      expect(iModelList).to.have.lengthOf(1);
+      expect(iModelList).to.be.an("array").with.lengthOf(1);
       expect(iModelList!.some((imodel) => imodel.id === testIModelId1)).to.be.true;
       expect(iModelList!.some((imodel) => imodel.id === testIModelId2)).to.be.false;
     });
@@ -83,19 +83,19 @@ const tests = () =>
     it("should order returned results", async () => {
       const { result: iModelListAsc } = await runCommand<IModel[]>(`imodel list --itwin-id ${testITwinId} --order-by "createdDateTime asc"`);
       expect(iModelListAsc).to.not.be.undefined;
-      expect(iModelListAsc).to.have.lengthOf(2);
+      expect(iModelListAsc).to.be.an("array").with.lengthOf(2);
       expect(new Date(iModelListAsc![0].createdDateTime)).to.be.lessThanOrEqual(new Date(iModelListAsc![1].createdDateTime));
 
       const { result: iModelListDesc } = await runCommand<IModel[]>(`imodel list --itwin-id ${testITwinId} --order-by "createdDateTime desc"`);
       expect(iModelListDesc).to.not.be.undefined;
-      expect(iModelListDesc).to.have.lengthOf(2);
+      expect(iModelListDesc).to.be.an("array").with.lengthOf(2);
       expect(new Date(iModelListDesc![0].createdDateTime)).to.be.greaterThanOrEqual(new Date(iModelListDesc![1].createdDateTime));
     });
 
     it("should search iModels by name", async () => {
       const { result: iModelList } = await runCommand<IModel[]>(`imodel list --itwin-id ${testITwinId} --search "1-cli-imodel-integration-test"`);
       expect(iModelList).to.not.be.undefined;
-      expect(iModelList).to.have.lengthOf(1);
+      expect(iModelList).to.be.an("array").with.lengthOf(1);
       expect(iModelList!.some((imodel) => imodel.id === testIModelId1)).to.be.true;
       expect(iModelList!.some((imodel) => imodel.id === testIModelId2)).to.be.false;
     });
@@ -103,7 +103,7 @@ const tests = () =>
     it("should search iModels by description", async () => {
       const { result: iModelList } = await runCommand<IModel[]>(`imodel list --itwin-id ${testITwinId} --search "${testIModelDescription2}"`);
       expect(iModelList).to.not.be.undefined;
-      expect(iModelList).to.have.lengthOf(1);
+      expect(iModelList).to.be.an("array").with.lengthOf(1);
       expect(iModelList!.some((imodel) => imodel.id === testIModelId1)).to.be.false;
       expect(iModelList!.some((imodel) => imodel.id === testIModelId2)).to.be.true;
     });

@@ -9,6 +9,7 @@ import { Flags } from "@oclif/core";
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { CustomFlags } from "../../../extensions/custom-flags.js";
+import { checkIfRepositoryClassMatchSubclass } from "../../../extensions/validation/itwin-repository-classes.js";
 
 export default class CreateRepository extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -44,7 +45,8 @@ export default class CreateRepository extends BaseCommand {
       description: "The ID of the iTwin to which the repository belongs.",
     }),
     "sub-class": Flags.string({
-      description: "The subClass of your repository.",
+      description:
+        "The subclass of your repository. 'WebMapService', 'WebMapTileService' and 'MapServer' subclasses are only applicable to 'GeographicInformationSystem' class. 'Performance' subclass is only applicable to 'Construction' class. 'EvoWorkspace' subclass is only applicable to 'Subsurface' class.",
       helpValue: "<string>",
       options: ["WebMapService", "WebMapTileService", "MapServer", "Performance", "EvoWorkspace"],
     }),
@@ -57,6 +59,13 @@ export default class CreateRepository extends BaseCommand {
 
   public async run(): Promise<Repository | undefined> {
     const { flags } = await this.parse(CreateRepository);
+
+    if (flags["sub-class"] !== undefined) {
+      const error = checkIfRepositoryClassMatchSubclass(flags.class, flags["sub-class"]);
+      if (error !== "") {
+        this.error(error);
+      }
+    }
 
     const accessToken = await this.getAccessToken();
     const client = this.getITwinAccessClient();
