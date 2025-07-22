@@ -43,18 +43,7 @@ export default class Login extends BaseCommand {
   public async run(): Promise<void> {
     const { flags } = await this.parse(Login);
 
-    const authClient = this.getAuthorizationClient();
-
-    try {
-      const authInfo = await authClient.login(flags["client-id"], flags["client-secret"]);
-
-      if (!authInfo.authToken) {
-        this.error("User login was not successful");
-      }
-
-      this.log(`User successfully logged in using ${authInfo.authenticationType} login`);
-    } catch {
-      this.error("User login was not successful");
-    }
+    const authorizationService = this.getAuthorizationService();
+    await authorizationService.login(flags["client-id"], flags["client-secret"]);
   }
 }

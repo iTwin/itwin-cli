@@ -18,12 +18,15 @@ import { ArgOutput, FlagOutput } from "../../node_modules/@oclif/core/lib/interf
 import { AccessControlClient } from "../services/access-control-client/access-control-client.js";
 import { AccessControlMemberClient } from "../services/access-control-client/access-control-member-client.js";
 import { AuthorizationClient } from "../services/authorization-client/authorization-client.js";
+import { AuthorizationService } from "../services/authorization-service.js";
+import { ChangedElementsApiService } from "../services/changed-elements-api-service.js";
 import { ChangedElementsApiClient } from "../services/changed-elements-client/changed-elements-api-client.js";
 import { UserContext } from "../services/general-models/user-context.js";
 import { ITwinPlatformApiClient } from "../services/iTwin-api-client.js";
 import { StorageApiClient } from "../services/storage-client/storage-api-client.js";
 import { SynchronizationApiClient } from "../services/synchronizationClient/synchronization-api-client.js";
-import { UserApiClient } from "../services/user-client/user-api-client.js";
+import { UsersApiService } from "../services/users-api-service.js";
+import { UsersApiClient } from "../services/users-client/users-api-client.js";
 import { Configuration } from "./configuration.js";
 
 export default abstract class BaseCommand extends Command {
@@ -73,7 +76,7 @@ export default abstract class BaseCommand extends Command {
   }
 
   protected async getAccessToken(): Promise<string> {
-    const client = this.getAuthorizationClient();
+    const client = new AuthorizationClient(this.getEnvConfig(), this.config);
 
     const token = await client.getTokenAsync();
     if (!token) {
@@ -93,20 +96,27 @@ export default abstract class BaseCommand extends Command {
       });
   }
 
-  protected getAuthorizationClient(): AuthorizationClient {
-    return new AuthorizationClient(this.getConfig(), this.config);
+  protected getAuthorizationService(): AuthorizationService {
+    const authorizationClient = new AuthorizationClient(this.getEnvConfig(), this.config);
+
+    return new AuthorizationService(authorizationClient, {
+      error: (input) => this.error(input),
+      log: (message) => this.log(message),
+    });
   }
 
   protected getBaseApiUrl(): string {
-    const config = this.getConfig();
+    const config = this.getEnvConfig();
     return config?.apiUrl ?? "https://api.bentley.com";
   }
 
-  protected async getChangedElementsApiClient(): Promise<ChangedElementsApiClient> {
-    return new ChangedElementsApiClient(await this.getITwinApiClient());
+  protected async getChangedElementsApiService(): Promise<ChangedElementsApiService> {
+    const changedElementsApiClient = new ChangedElementsApiClient(await this.getITwinApiClient());
+
+    return new ChangedElementsApiService(changedElementsApiClient);
   }
 
-  protected getConfig(): Configuration {
+  protected getEnvConfig(): Configuration {
     const configPath = path.join(this.config.configDir, "config.json");
 
     let config: Configuration = {
@@ -201,8 +211,13 @@ export default abstract class BaseCommand extends Command {
     return new SynchronizationApiClient(await this.getITwinApiClient());
   }
 
-  protected async getUserApiClient(): Promise<UserApiClient> {
-    return new UserApiClient(await this.getITwinApiClient());
+  protected async getUserApiService(): Promise<UsersApiService> {
+    const userApiClient = new UsersApiClient(await this.getITwinApiClient());
+
+    return new UsersApiService(userApiClient, {
+      error: (input) => this.error(input),
+      log: (message) => this.log(message),
+    });
   }
 
   protected logAndReturnResult<T>(result: T): T {

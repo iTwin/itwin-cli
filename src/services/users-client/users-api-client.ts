@@ -6,7 +6,7 @@
 import { ITwinPlatformApiClient, Query } from "../iTwin-api-client.js";
 import { UserResponse, UsersResponse } from "./models/user.js";
 
-export class UserApiClient {
+export class UsersApiClient {
   private _iTwinPlatformApiClient: ITwinPlatformApiClient;
 
   constructor(client: ITwinPlatformApiClient) {

@@ -18,13 +18,7 @@ export default class Logout extends BaseCommand {
   public static flags = {};
 
   public async run(): Promise<void> {
-    const authClient = this.getAuthorizationClient();
-
-    try {
-      await authClient.logout();
-      this.log("User successfully logged out");
-    } catch (error) {
-      this.error(`User logout encountered an error: ${JSON.stringify(error)}`);
-    }
+    const authorizationService = this.getAuthorizationService();
+    await authorizationService.logout();
   }
 }
