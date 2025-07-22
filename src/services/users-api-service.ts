@@ -4,8 +4,8 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { LoggingCallbacks } from "./general-models/logging-callbacks.js";
-import { User } from "./user-client/models/user.js";
-import { UsersApiClient } from "./user-client/users-api-client.js";
+import { User } from "./users-client/models/user.js";
+import { UsersApiClient } from "./users-client/users-api-client.js";
 
 export class UsersApiService {
   private _client: UsersApiClient;

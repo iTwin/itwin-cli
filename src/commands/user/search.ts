@@ -7,7 +7,7 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
-import { User } from "../../services/user-client/models/user.js";
+import { User } from "../../services/users-client/models/user.js";
 
 export default class UserSearch extends BaseCommand {
   public static apiReference: ApiReference = {

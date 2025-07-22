@@ -25,8 +25,8 @@ import { UserContext } from "../services/general-models/user-context.js";
 import { ITwinPlatformApiClient } from "../services/iTwin-api-client.js";
 import { StorageApiClient } from "../services/storage-client/storage-api-client.js";
 import { SynchronizationApiClient } from "../services/synchronizationClient/synchronization-api-client.js";
-import { UsersApiClient } from "../services/user-client/users-api-client.js";
 import { UsersApiService } from "../services/users-api-service.js";
+import { UsersApiClient } from "../services/users-client/users-api-client.js";
 import { Configuration } from "./configuration.js";
 
 export default abstract class BaseCommand extends Command {
