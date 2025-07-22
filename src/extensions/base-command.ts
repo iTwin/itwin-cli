@@ -123,7 +123,7 @@ export default abstract class BaseCommand extends Command {
     return config;
   }
 
-  // #region Services
+  // #region Clients & Services
 
   protected async getAccessControlApiClient(): Promise<AccessControlClient> {
     const token = await this.getAccessToken();
@@ -153,7 +153,7 @@ export default abstract class BaseCommand extends Command {
     const contextService = this.getContextService();
     const callback = await this.getAuthorizationCallback();
 
-    return new IModelApiService(iModelsClient, contextService, callback);
+    return new IModelApiService(iModelsClient, contextService, callback, this.getLoggingCallbacks());
   }
 
   protected getIModelClient(): IModelsClient {
