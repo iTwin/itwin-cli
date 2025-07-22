@@ -51,9 +51,9 @@ export default class ChangedElementsComparison extends BaseCommand {
   public async run(): Promise<ChangesetComparison> {
     const { flags } = await this.parse(ChangedElementsComparison);
 
-    const client = await this.getChangedElementsApiClient();
-    const result = await client.getComparison(flags["itwin-id"], flags["imodel-id"], flags["changeset-id1"], flags["changeset-id2"]);
+    const changedElementsApiService = await this.getChangedElementsApiService();
+    const result = await changedElementsApiService.getComparison(flags["itwin-id"], flags["imodel-id"], flags["changeset-id1"], flags["changeset-id2"]);
 
-    return this.logAndReturnResult(result.changedElements);
+    return this.logAndReturnResult(result);
   }
 }

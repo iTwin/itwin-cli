@@ -7,7 +7,7 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
-import { User } from "../../services/user-client/models/user.js";
+import { User } from "../../services/users-client/models/user.js";
 
 export default class UserSearch extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -40,9 +40,9 @@ export default class UserSearch extends BaseCommand {
   public async run(): Promise<User[]> {
     const { flags } = await this.parse(UserSearch);
 
-    const client = await this.getUserApiClient();
-    const response = await client.searchUsers(flags.search);
+    const userApiService = await this.getUserApiService();
+    const result = await userApiService.searchUsers(flags.search);
 
-    return this.logAndReturnResult(response.users);
+    return this.logAndReturnResult(result);
   }
 }
