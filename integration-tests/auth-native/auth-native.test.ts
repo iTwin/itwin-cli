@@ -9,32 +9,29 @@ import fs from "node:fs";
 import { runCommand } from "@oclif/test";
 
 import { AuthorizationInformation } from "../../src/services/authorization-client/authorization-type";
-import { ITP_API_URL, ITP_ISSUER_URL, ITP_SERVICE_CLIENT_ID, ITP_SERVICE_CLIENT_SECRET } from "../utils/environment";
-import { getTokenPathByOS, serviceLoginToCli } from "../utils/helpers";
+import { ITP_API_URL, ITP_ISSUER_URL } from "../utils/environment";
+import { getTokenPathByOS, nativeLoginToCli } from "../utils/helpers";
 import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
 
 const tests = () =>
-  describe("Authentication Integration Tests (Service Client)", () => {
-    const serviceClientId = ITP_SERVICE_CLIENT_ID;
-    const serviceClientSecret = ITP_SERVICE_CLIENT_SECRET;
-
-    it("should log in successfully using service authentication", async () => {
-      await serviceLoginToCli();
+  describe("Authentication Integration Tests (Native Client)", () => {
+    before(async () => {
+      await nativeLoginToCli();
     });
 
     it("should return auth info", async () => {
       const { result: infoResult } = await runCommand<AuthorizationInformation>("auth info");
       expect(infoResult).to.be.not.undefined;
       expect(infoResult!.apiUrl).to.be.equal(ITP_API_URL);
-      expect(infoResult!.authorizationType).to.be.equal("Service");
-      expect(infoResult!.clientId).to.be.equal(ITP_SERVICE_CLIENT_ID);
+      expect(infoResult!.authorizationType).to.be.equal("Interactive");
+      expect(infoResult!.clientId).to.be.undefined;
       expect(infoResult!.issuerUrl).to.be.equal(ITP_ISSUER_URL);
     });
 
-    it("should return an error if service auth token is expired and no service credentials are available.", async () => {
+    it("should return an error if interactive auth token is expired.", async () => {
       const authTokenObject = {
         authToken: "some-expired-token",
-        authenticationType: "Service",
+        authenticationType: "Interactive",
         expirationDate: new Date(Date.now() - 1000),
         manuallyWritten: true,
       };
@@ -44,16 +41,11 @@ const tests = () =>
       delete process.env.ITP_SERVICE_CLIENT_SECRET;
       const { error } = await runCommand<AuthorizationInformation>("user me");
       expect(error).to.not.be.undefined;
-      expect(error?.message).to.be.equal(
-        "Service auth token has expired and no client credentials are available. Please run 'itp auth login' command with client credentials to re-authenticate. Alternatively, you may save your client credentials to ITP_SERVICE_CLIENT_ID and ITP_SERVICE_CLIENT_SECRET environment variables and re-run this command.",
-      );
+      expect(error?.message).to.be.equal("Interactive auth token has expired. Please run 'itp auth login' command to re-authenticate.");
     });
 
     after(async () => {
-      process.env.ITP_SERVICE_CLIENT_ID = serviceClientId;
-      process.env.ITP_SERVICE_CLIENT_SECRET = serviceClientSecret;
-
-      await serviceLoginToCli();
+      await nativeLoginToCli();
     });
   });
 

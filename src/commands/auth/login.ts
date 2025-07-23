@@ -32,11 +32,13 @@ export default class Login extends BaseCommand {
       description: "Provided client id that will be used for service or website login",
       helpValue: "<string>",
       required: false,
+      dependsOn: ["client-secret"],
     }),
     "client-secret": Flags.string({
       description: "Provided client secret that will be user for service type authentication login",
       helpValue: "<string>",
       required: false,
+      dependsOn: ["client-id"],
     }),
   };
 

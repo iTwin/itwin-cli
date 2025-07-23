@@ -30,6 +30,19 @@ export class AuthorizationClient {
       return tokenInfo.authToken;
     }
 
+    if (tokenInfo?.authenticationType === AuthorizationType.Interactive) {
+      throw new Error("Interactive auth token has expired. Please run 'itp auth login' command to re-authenticate.");
+    }
+
+    if (
+      tokenInfo?.authenticationType === AuthorizationType.Service &&
+      (this._environmentConfiguration.clientId === undefined || this._environmentConfiguration.clientSecret === undefined)
+    ) {
+      throw new Error(
+        "Service auth token has expired and no client credentials are available. Please run 'itp auth login' command with client credentials to re-authenticate. Alternatively, you may save your client credentials to ITP_SERVICE_CLIENT_ID and ITP_SERVICE_CLIENT_SECRET environment variables and re-run this command.",
+      );
+    }
+
     const newTokenInfo = await this.login();
 
     return newTokenInfo.authToken;
@@ -41,7 +54,7 @@ export class AuthorizationClient {
     return {
       apiUrl: this._environmentConfiguration.apiUrl,
       authorizationType: existingTokenInfo?.authenticationType ?? AuthorizationType.Interactive,
-      clientId: this._environmentConfiguration.clientId,
+      clientId: existingTokenInfo?.authenticationType === AuthorizationType.Service ? this._environmentConfiguration.clientId : undefined,
       expirationDate: existingTokenInfo?.expirationDate,
       issuerUrl: this._environmentConfiguration.issuerUrl,
     };

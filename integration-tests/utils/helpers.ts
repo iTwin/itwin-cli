@@ -200,7 +200,7 @@ export const isNativeAuthAccessTokenCached = (): boolean => {
   return false;
 };
 
-const getTokenPathByOS = (): string => {
+export const getTokenPathByOS = (): string => {
   switch (os.type()) {
     case "Linux": {
       const cachePath = `${os.homedir()}/.cache/itp`;
