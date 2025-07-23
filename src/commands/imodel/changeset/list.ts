@@ -3,7 +3,7 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { Changeset, ChangesetOrderByProperty, OrderBy, OrderByOperator } from "@itwin/imodels-client-management";
+import { Changeset, OrderByOperator } from "@itwin/imodels-client-management";
 import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../extensions/api-reference.js";

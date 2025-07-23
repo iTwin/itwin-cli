@@ -3,7 +3,6 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { IModel } from "@itwin/imodels-client-management";
 import { ITwin } from "@itwin/itwins-client";
 
 import BaseCommand from "../../extensions/base-command.js";

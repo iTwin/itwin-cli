@@ -5,8 +5,7 @@
 
 // prettier-ignore
 import {
-    AuthorizationCallback, Changeset, ChangesetOrderByProperty, Extent, GetChangesetListUrlParams, GetIModelListUrlParams, IModel, IModelsClient,
-    OrderByOperator, take, toArray
+    AuthorizationCallback, Changeset, ChangesetOrderByProperty, Extent, GetIModelListUrlParams, IModel, IModelsClient, OrderByOperator, take, toArray
 } from "@itwin/imodels-client-management";
 
 import { ContextService } from "./context-service.js";

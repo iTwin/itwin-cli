@@ -6,7 +6,7 @@
 import open from "open";
 import { deflate } from "pako";
 
-import { ChangesetOrderByProperty, OrderByOperator } from "@itwin/imodels-client-management";
+import { OrderByOperator } from "@itwin/imodels-client-management";
 import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../extensions/api-reference.js";
