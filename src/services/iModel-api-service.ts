@@ -5,7 +5,8 @@
 
 // prettier-ignore
 import {
-    AuthorizationCallback, Changeset, Extent, GetChangesetListUrlParams, GetIModelListUrlParams, IModel, IModelsClient, take, toArray
+    AuthorizationCallback, Changeset, ChangesetOrderByProperty, Extent, GetChangesetListUrlParams, GetIModelListUrlParams, IModel, IModelsClient,
+    OrderByOperator, take, toArray
 } from "@itwin/imodels-client-management";
 
 import { ContextService } from "./context-service.js";
@@ -117,14 +118,30 @@ export class IModelApiService {
     }
   }
 
-  public async getChangesets(iModelId: string, urlParams: GetChangesetListUrlParams): Promise<Changeset[]> {
+  public async getChangesets(
+    iModelId: string,
+    orderBy?: OrderByOperator,
+    skip?: number,
+    top?: number,
+    afterIndex?: number,
+    lastIndex?: number,
+  ): Promise<Changeset[]> {
     const changesetList = this._iModelsClient.changesets.getRepresentationList({
       authorization: this._authorizationCallback,
       iModelId,
-      urlParams,
+      urlParams: {
+        $orderBy: {
+          operator: orderBy,
+          property: ChangesetOrderByProperty.Index,
+        },
+        $skip: skip,
+        $top: top,
+        afterIndex,
+        lastIndex,
+      },
     });
 
-    const result: Changeset[] = await (urlParams.$top ? take(changesetList, urlParams.$top) : toArray(changesetList));
+    const result: Changeset[] = await (top ? take(changesetList, top) : toArray(changesetList));
 
     return result;
   }
