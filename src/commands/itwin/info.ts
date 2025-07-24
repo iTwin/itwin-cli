@@ -34,9 +34,8 @@ export default class ITwinInfo extends BaseCommand {
     const { flags } = await this.parse(ITwinInfo);
 
     const accessToken = await this.getAccessToken();
-    const client = this.getITwinAccessClient();
 
-    const response = await client.getAsync(accessToken, flags["itwin-id"], "representation");
+    const response = await this.iTwinAccessClient.getAsync(accessToken, flags["itwin-id"], "representation");
 
     if (response.error) {
       this.error(JSON.stringify(response.error, null, 2));

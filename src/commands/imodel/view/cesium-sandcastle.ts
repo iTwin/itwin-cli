@@ -6,7 +6,7 @@
 import open from "open";
 import { deflate } from "pako";
 
-import { Changeset } from "@itwin/imodels-client-management";
+import { OrderByOperator } from "@itwin/imodels-client-management";
 import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../extensions/api-reference.js";
@@ -137,7 +137,8 @@ export default class CesiumSandcastle extends BaseCommand {
 
     let changesetId = flags["changeset-id"] ?? "";
     if (changesetId === undefined) {
-      const existingChangesets = await this.runCommand<Changeset[]>("imodel:changeset:list", ["-m", flags["imodel-id"], "--top", "1", "--order-by", "desc"]);
+      const iModelService = await this.getIModelService();
+      const existingChangesets = await iModelService.getChangesets(flags["imodel-id"], OrderByOperator.Descending, undefined, 1);
       if (existingChangesets.length === 0) {
         this.error(`No changesets found for iModel: ${flags["imodel-id"]}`);
       }

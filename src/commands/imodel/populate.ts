@@ -12,7 +12,7 @@ import { Flags } from "@oclif/core";
 import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
 import { CustomFlags } from "../../extensions/custom-flags.js";
-import { AuthorizationInformation, AuthorizationType } from "../../services/authorization-client/authorization-type.js";
+import { AuthorizationType } from "../../services/authorization-client/authorization-type.js";
 import { FileUpload } from "../../services/storage-client/models/file-upload.js";
 import { FolderTypedType } from "../../services/storage-client/models/folder-typed.js";
 import { ItemsWithFolderLink } from "../../services/storage-client/models/items-with-folder-link.js";
@@ -104,7 +104,7 @@ export default class PopulateIModel extends BaseCommand {
     this.log(`Checking existing connections for iModel ID: ${iModel.id}`);
     const existingConnections = await this.runCommand<StorageConnectionListResponse>("imodel:connection:list", ["--imodel-id", iModel.id]);
 
-    const authInfo = await this.runCommand<AuthorizationInformation>("auth:info", []);
+    const authInfo = await this.authorizationService.info();
     const authType = authInfo.authorizationType === AuthorizationType.Service ? "Service" : "User";
 
     if (authType === "User") {
@@ -222,7 +222,7 @@ export default class PopulateIModel extends BaseCommand {
   ): Promise<string> {
     let defaultConnection = existingConnections.find((connection) => connection.displayName === "Default iTwinCLI Connection");
     if (!defaultConnection) {
-      const authInfo = await this.runCommand<AuthorizationInformation>("auth:info", []);
+      const authInfo = await this.authorizationService.info();
       const authType = authInfo.authorizationType === AuthorizationType.Service ? "Service" : "User";
 
       this.log(`Creating new default connection`);

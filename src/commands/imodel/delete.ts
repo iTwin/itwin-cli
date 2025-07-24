@@ -32,14 +32,9 @@ export default class DeleteIModel extends BaseCommand {
   public async run(): Promise<ResultResponse> {
     const { flags } = await this.parse(DeleteIModel);
 
-    const client = this.getIModelClient();
-    const authorization = await this.getAuthorizationCallback();
+    const iModelApiService = await this.getIModelService();
+    const result = await iModelApiService.deleteIModel(flags["imodel-id"]);
 
-    await client.iModels.delete({
-      authorization,
-      iModelId: flags["imodel-id"],
-    });
-
-    return this.logAndReturnResult({ result: "deleted" });
+    return this.logAndReturnResult(result);
   }
 }

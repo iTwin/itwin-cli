@@ -33,13 +33,9 @@ export class IModelInfo extends BaseCommand {
   public async run(): Promise<IModel> {
     const { flags } = await this.parse(IModelInfo);
 
-    const iModelClient = this.getIModelClient();
+    const iModelService = await this.getIModelService();
+    const result = await iModelService.getIModel(flags["imodel-id"]);
 
-    const iModel = await iModelClient.iModels.getSingle({
-      authorization: await this.getAuthorizationCallback(),
-      iModelId: flags["imodel-id"],
-    });
-
-    return this.logAndReturnResult(iModel);
+    return this.logAndReturnResult(result);
   }
 }

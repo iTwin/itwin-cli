@@ -18,7 +18,6 @@ export default class Logout extends BaseCommand {
   public static flags = {};
 
   public async run(): Promise<void> {
-    const authorizationService = this.getAuthorizationService();
-    await authorizationService.logout();
+    await this.authorizationService.logout();
   }
 }

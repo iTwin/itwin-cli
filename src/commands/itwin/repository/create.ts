@@ -68,9 +68,8 @@ export default class CreateRepository extends BaseCommand {
     }
 
     const accessToken = await this.getAccessToken();
-    const client = this.getITwinAccessClient();
 
-    const response = await client.createRepository(accessToken, flags["itwin-id"], {
+    const response = await this.iTwinAccessClient.createRepository(accessToken, flags["itwin-id"], {
       class: flags.class as RepositoryClass,
       subClass: flags["sub-class"] as RepositorySubClass,
       uri: flags.uri,

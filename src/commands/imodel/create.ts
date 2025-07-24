@@ -117,21 +117,9 @@ export default class CreateIModel extends BaseCommand {
       };
     }
 
-    const client = this.getIModelClient();
-    const authorization = await this.getAuthorizationCallback();
+    const service = await this.getIModelService();
+    const result = await service.createIModel(flags["itwin-id"], flags.name, flags.save, flags.description, flags.extent);
 
-    const iModel = await client.iModels.createEmpty({
-      authorization,
-      iModelProperties: {
-        description: flags.description,
-        extent: flags.extent,
-        iTwinId: flags["itwin-id"],
-        name: flags.name,
-      },
-    });
-
-    await this.setContext(iModel.iTwinId, iModel.id);
-
-    return this.logAndReturnResult(iModel);
+    return this.logAndReturnResult(result);
   }
 }

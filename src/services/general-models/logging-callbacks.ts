@@ -6,4 +6,5 @@
 export interface LoggingCallbacks {
   log: (message?: string) => void;
   error: (input: Error | string) => void;
+  debug: (...args: any[]) => void;
 }

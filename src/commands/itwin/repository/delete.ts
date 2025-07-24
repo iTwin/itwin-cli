@@ -37,10 +37,9 @@ export default class DeleteRepository extends BaseCommand {
   public async run(): Promise<ResultResponse> {
     const { flags } = await this.parse(DeleteRepository);
 
-    const client = this.getITwinAccessClient();
     const accessToken = await this.getAccessToken();
 
-    const response = await client.deleteRepository(accessToken, flags["itwin-id"], flags["repository-id"]);
+    const response = await this.iTwinAccessClient.deleteRepository(accessToken, flags["itwin-id"], flags["repository-id"]);
     if (response.error) {
       this.error(JSON.stringify(response.error, null, 2));
     }

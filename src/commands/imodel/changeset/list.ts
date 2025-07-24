@@ -3,7 +3,7 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { Changeset, ChangesetOrderByProperty, OrderBy, OrderByOperator, take, toArray } from "@itwin/imodels-client-management";
+import { Changeset, OrderByOperator } from "@itwin/imodels-client-management";
 import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../extensions/api-reference.js";
@@ -72,31 +72,15 @@ export default class ListChangesets extends BaseCommand {
   public async run(): Promise<Changeset[]> {
     const { flags } = await this.parse(ListChangesets);
 
-    const client = this.getIModelClient();
-    const authorization = await this.getAuthorizationCallback();
-
-    const orderBy: OrderBy<Changeset, ChangesetOrderByProperty> | undefined = flags["order-by"]
-      ? {
-          operator: flags["order-by"] as OrderByOperator,
-          property: ChangesetOrderByProperty.Index,
-        }
-      : undefined;
-
-    const urlParams = {
-      $orderBy: orderBy,
-      $skip: flags.skip,
-      $top: flags.top,
-      afterIndex: flags["after-index"],
-      lastIndex: flags["last-index"],
-    };
-
-    const changesetList = client.changesets.getRepresentationList({
-      authorization,
-      iModelId: flags["imodel-id"],
-      urlParams,
-    });
-
-    const result: Changeset[] = await (flags.top ? take(changesetList, flags.top) : toArray(changesetList));
+    const iModelService = await this.getIModelService();
+    const result = await iModelService.getChangesets(
+      flags["imodel-id"],
+      flags["order-by"] as OrderByOperator,
+      flags.skip,
+      flags.top,
+      flags["after-index"],
+      flags["last-index"],
+    );
 
     return this.logAndReturnResult(result);
   }

@@ -63,10 +63,9 @@ export default class ListRepositories extends BaseCommand {
       }
     }
 
-    const client = this.getITwinAccessClient();
     const accessToken = await this.getAccessToken();
 
-    const response = await client.queryRepositoriesAsync(accessToken, flags["itwin-id"], {
+    const response = await this.iTwinAccessClient.queryRepositoriesAsync(accessToken, flags["itwin-id"], {
       class: flags.class,
       subClass: flags["sub-class"],
     });

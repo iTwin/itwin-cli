@@ -109,28 +109,9 @@ export default class UpdateCommand extends BaseCommand {
       };
     }
 
-    if (flags.description === undefined && flags.name === undefined && flags.extent === undefined) {
-      this.error("At least one of the update parameters must be provided");
-    }
+    const iModelService = await this.getIModelService();
+    const result = await iModelService.updateIModel(flags["imodel-id"], flags.name, flags.description, flags.extent);
 
-    const client = this.getIModelClient();
-    const authorization = await this.getAuthorizationCallback();
-
-    const iModelInfo = await client.iModels.getSingle({
-      authorization,
-      iModelId: flags["imodel-id"],
-    });
-
-    const iModel = await client.iModels.update({
-      authorization,
-      iModelId: flags["imodel-id"],
-      iModelProperties: {
-        description: flags.description,
-        extent: flags.extent,
-        name: flags.name ?? iModelInfo.name,
-      },
-    });
-
-    return this.logAndReturnResult(iModel);
+    return this.logAndReturnResult(result);
   }
 }

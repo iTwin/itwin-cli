@@ -43,7 +43,6 @@ export default class Login extends BaseCommand {
   public async run(): Promise<void> {
     const { flags } = await this.parse(Login);
 
-    const authorizationService = this.getAuthorizationService();
-    await authorizationService.login(flags["client-id"], flags["client-secret"]);
+    await this.authorizationService.login(flags["client-id"], flags["client-secret"]);
   }
 }
