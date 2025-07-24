@@ -51,8 +51,6 @@ export default abstract class BaseCommand extends Command {
     }),
   };
 
-  public static enableJsonFlag = true;
-
   private readonly _envConfig: Configuration;
   private readonly _baseApiUrl: string;
   private readonly _logger: LoggingCallbacks;
