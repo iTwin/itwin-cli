@@ -73,7 +73,7 @@ export default abstract class BaseCommand extends Command {
       debug: (...args: any[]) => this.debug(args),
     } as LoggingCallbacks;
 
-    this._authorizationClient = new AuthorizationClient(this._envConfig, config);
+    this._authorizationClient = new AuthorizationClient(this._envConfig, config.cacheDir);
 
     this.iTwinAccessClient = new ITwinsAccessClient(`${this._baseApiUrl}/itwins`);
     this.iModelClient = new IModelsClient({

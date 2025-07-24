@@ -15,6 +15,8 @@ import { ITwin } from "@itwin/itwins-client";
 import { getTestAccessToken, TestBrowserAuthorizationClientConfiguration, TestUserCredentials } from "@itwin/oidc-signin-tool";
 import { runCommand } from "@oclif/test";
 
+import { AuthTokenInfo } from "../../src/services/authorization-client/auth-token-info.js";
+import { AuthorizationType } from "../../src/services/authorization-client/authorization-type.js";
 import { ResultResponse } from "../../src/services/general-models/result-response.js";
 import { FileTyped } from "../../src/services/storage-client/models/file-typed.js";
 import { FileUpload } from "../../src/services/storage-client/models/file-upload.js";
@@ -151,10 +153,10 @@ export async function nativeLoginToCli(): Promise<void> {
   if (isNativeAuthAccessTokenCached()) return;
 
   const authTokenObject = {
+    clientId: ITP_NATIVE_TEST_CLIENT_ID,
     authToken: await getNativeAuthAccessToken(),
     authenticationType: "Interactive",
     expirationDate: new Date(Date.now() + 1000 * 60 * 59),
-    manuallyWritten: true,
   };
 
   fs.writeFileSync(getTokenPathByOS(), JSON.stringify(authTokenObject), "utf8");
@@ -192,8 +194,8 @@ export const isNativeAuthAccessTokenCached = (): boolean => {
   const tokenPath = getTokenPathByOS();
   if (fs.existsSync(tokenPath)) {
     const tokenJson = fs.readFileSync(tokenPath, "utf8");
-    const tokenObj = JSON.parse(tokenJson);
-    if (tokenObj.manuallyWritten !== undefined && new Date(tokenObj.expirationDate).getTime() > Date.now()) return true;
+    const tokenObj: AuthTokenInfo = JSON.parse(tokenJson);
+    if (tokenObj.authenticationType === AuthorizationType.Interactive && new Date(tokenObj.expirationDate).getTime() > Date.now()) return true;
     fs.rmSync(tokenPath);
   }
 

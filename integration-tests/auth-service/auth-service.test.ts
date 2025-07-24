@@ -15,28 +15,39 @@ import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
 
 const tests = () =>
   describe("Authentication Integration Tests (Service Client)", () => {
-    const serviceClientId = ITP_SERVICE_CLIENT_ID;
-    const serviceClientSecret = ITP_SERVICE_CLIENT_SECRET;
-
-    it("should log in successfully using service authentication", async () => {
+    it("auth info get full auth info from token when logged in", async () => {
       await serviceLoginToCli();
-    });
 
-    it("should return auth info", async () => {
+      const apiUrl = ITP_API_URL;
+      const issuerUrl = ITP_ISSUER_URL;
+      const clientId = ITP_SERVICE_CLIENT_ID;
+
+      process.env.ITP_API_URL = "changed-api-url";
+      process.env.ITP_ISSUER_URL = "changed-issuer-url";
+      process.env.ITP_SERVICE_CLIENT_ID = "a-different-client-id";
+
       const { result: infoResult } = await runCommand<AuthorizationInformation>("auth info");
       expect(infoResult).to.be.not.undefined;
-      expect(infoResult!.apiUrl).to.be.equal(ITP_API_URL);
+      expect(infoResult!.apiUrl).to.be.equal(apiUrl);
       expect(infoResult!.authorizationType).to.be.equal("Service");
-      expect(infoResult!.clientId).to.be.equal(ITP_SERVICE_CLIENT_ID);
-      expect(infoResult!.issuerUrl).to.be.equal(ITP_ISSUER_URL);
+      expect(infoResult!.clientId).to.be.equal(clientId);
+      expect(infoResult?.expirationDate).not.to.be.undefined;
+      expect(infoResult!.issuerUrl).to.be.equal(issuerUrl);
+
+      process.env.ITP_API_URL = apiUrl;
+      process.env.ITP_ISSUER_URL = issuerUrl;
+      process.env.ITP_SERVICE_CLIENT_ID = clientId;
     });
 
     it("should return an error if service auth token is expired and no service credentials are available.", async () => {
+      const serviceClientId = ITP_SERVICE_CLIENT_ID;
+      const serviceClientSecret = ITP_SERVICE_CLIENT_SECRET;
+
       const authTokenObject = {
+        clientId: ITP_SERVICE_CLIENT_ID,
         authToken: "some-expired-token",
         authenticationType: "Service",
         expirationDate: new Date(Date.now() - 1000),
-        manuallyWritten: true,
       };
       fs.writeFileSync(getTokenPathByOS(), JSON.stringify(authTokenObject), "utf8");
 
@@ -47,12 +58,12 @@ const tests = () =>
       expect(error?.message).to.be.equal(
         "Service auth token has expired and no client credentials are available. Please run 'itp auth login' command with client credentials to re-authenticate. Alternatively, you may save your client credentials to ITP_SERVICE_CLIENT_ID and ITP_SERVICE_CLIENT_SECRET environment variables and re-run this command.",
       );
+
+      process.env.ITP_SERVICE_CLIENT_ID = serviceClientId;
+      process.env.ITP_SERVICE_CLIENT_SECRET = serviceClientSecret;
     });
 
     after(async () => {
-      process.env.ITP_SERVICE_CLIENT_ID = serviceClientId;
-      process.env.ITP_SERVICE_CLIENT_SECRET = serviceClientSecret;
-
       await serviceLoginToCli();
     });
   });

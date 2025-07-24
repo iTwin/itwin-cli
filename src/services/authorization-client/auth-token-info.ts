@@ -6,7 +6,10 @@
 import { AuthorizationType } from "./authorization-type.js";
 
 export interface AuthTokenInfo {
-  authToken?: string;
-  authenticationType?: AuthorizationType;
-  expirationDate?: Date;
+  apiUrl: string;
+  issuerUrl: string;
+  clientId: string;
+  authToken: string;
+  authenticationType: AuthorizationType;
+  expirationDate: Date;
 }

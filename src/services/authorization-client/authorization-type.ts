@@ -10,7 +10,7 @@ export enum AuthorizationType {
 
 export interface AuthorizationInformation {
   apiUrl: string;
-  authorizationType: AuthorizationType;
+  authorizationType?: AuthorizationType;
   clientId?: string;
   expirationDate?: Date;
   issuerUrl: string;

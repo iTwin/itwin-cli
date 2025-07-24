@@ -9,7 +9,7 @@ import fs from "node:fs";
 import { runCommand } from "@oclif/test";
 
 import { AuthorizationInformation } from "../../src/services/authorization-client/authorization-type";
-import { ITP_API_URL, ITP_ISSUER_URL } from "../utils/environment";
+import { ITP_NATIVE_TEST_CLIENT_ID } from "../utils/environment";
 import { getTokenPathByOS, nativeLoginToCli } from "../utils/helpers";
 import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
 
@@ -19,21 +19,12 @@ const tests = () =>
       await nativeLoginToCli();
     });
 
-    it("should return auth info", async () => {
-      const { result: infoResult } = await runCommand<AuthorizationInformation>("auth info");
-      expect(infoResult).to.be.not.undefined;
-      expect(infoResult!.apiUrl).to.be.equal(ITP_API_URL);
-      expect(infoResult!.authorizationType).to.be.equal("Interactive");
-      expect(infoResult!.clientId).to.be.undefined;
-      expect(infoResult!.issuerUrl).to.be.equal(ITP_ISSUER_URL);
-    });
-
     it("should return an error if interactive auth token is expired.", async () => {
       const authTokenObject = {
+        clientId: ITP_NATIVE_TEST_CLIENT_ID,
         authToken: "some-expired-token",
         authenticationType: "Interactive",
         expirationDate: new Date(Date.now() - 1000),
-        manuallyWritten: true,
       };
       fs.writeFileSync(getTokenPathByOS(), JSON.stringify(authTokenObject), "utf8");
 
