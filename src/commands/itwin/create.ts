@@ -116,9 +116,8 @@ export default class CreateITwin extends BaseCommand {
     };
 
     const accessToken = await this.getAccessToken();
-    const client = this.getITwinAccessClient();
 
-    const creatediTwin = await client.createiTwin(accessToken, iTwin);
+    const creatediTwin = await this.iTwinAccessClient.createiTwin(accessToken, iTwin);
     if (creatediTwin.error) {
       this.error(JSON.stringify(creatediTwin.error, null, 2));
     }
@@ -127,7 +126,7 @@ export default class CreateITwin extends BaseCommand {
       if (creatediTwin.data?.id === undefined) {
         this.log("iTwin Id not found in response. Cannot save to context.");
       } else {
-        await this.setContext(creatediTwin.data.id);
+        await this.contextService.setContext(creatediTwin.data.id);
       }
     }
 

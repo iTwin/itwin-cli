@@ -8,7 +8,7 @@ import { Flags } from "@oclif/core";
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { CustomFlags } from "../../../extensions/custom-flags.js";
-import { AuthorizationInformation, AuthorizationType } from "../../../services/authorization-client/authorization-type.js";
+import { AuthorizationType } from "../../../services/authorization-client/authorization-type.js";
 import { AuthenticationType } from "../../../services/synchronizationClient/models/authentication-type.js";
 import { ConnectorType } from "../../../services/synchronizationClient/models/connector-type.js";
 import { StorageConnection } from "../../../services/synchronizationClient/models/storage-connection.js";
@@ -88,7 +88,7 @@ export default class CreateConnection extends BaseCommand {
       });
     }
 
-    const authInfo = await this.runCommand<AuthorizationInformation>("auth:info", []);
+    const authInfo = await this.authorizationService.info();
     let authType = flags["authentication-type"] as AuthenticationType;
     if (authType === undefined) {
       authType = authInfo.authorizationType === AuthorizationType.Service ? AuthenticationType.SERVICE : AuthenticationType.USER;

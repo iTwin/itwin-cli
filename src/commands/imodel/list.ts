@@ -3,7 +3,7 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { IModel, IModelOrderByProperty, OrderBy, take, toArray } from "@itwin/imodels-client-management";
+import { GetIModelListUrlParams, IModel, IModelOrderByProperty, OrderBy } from "@itwin/imodels-client-management";
 import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../extensions/api-reference.js";
@@ -72,22 +72,17 @@ export default class ListIModels extends BaseCommand {
   public async run(): Promise<IModel[]> {
     const { flags } = await this.parse(ListIModels);
 
-    const client = this.getIModelClient();
-    const authorization = await this.getAuthorizationCallback();
+    const urlParams: GetIModelListUrlParams = {
+      $orderBy: flags["order-by"] as unknown as OrderBy<IModel, IModelOrderByProperty>,
+      $search: flags.search,
+      $skip: flags.skip,
+      $top: flags.top,
+      iTwinId: flags["itwin-id"],
+      name: flags.name,
+    };
 
-    const iModels = client.iModels.getRepresentationList({
-      authorization,
-      urlParams: {
-        $orderBy: flags["order-by"] as unknown as OrderBy<IModel, IModelOrderByProperty>,
-        $search: flags.search,
-        $skip: flags.skip,
-        $top: flags.top,
-        iTwinId: flags["itwin-id"],
-        name: flags.name,
-      },
-    });
-
-    const result: IModel[] = await (flags.top ? take(iModels, flags.top) : toArray(iModels));
+    const iModelService = await this.getIModelService();
+    const result = await iModelService.getIModels(urlParams);
 
     return this.logAndReturnResult(result);
   }

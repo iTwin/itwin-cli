@@ -59,10 +59,9 @@ export default class CreateNamedVersion extends BaseCommand {
   public async run(): Promise<NamedVersion> {
     const { flags } = await this.parse(CreateNamedVersion);
 
-    const client = this.getIModelClient();
     const authorization = await this.getAuthorizationCallback();
 
-    const createdNameVersion = await client.namedVersions.create({
+    const createdNameVersion = await this.iModelClient.namedVersions.create({
       authorization,
       iModelId: flags["imodel-id"],
       namedVersionProperties: {

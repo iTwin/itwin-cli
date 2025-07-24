@@ -106,9 +106,8 @@ export default class ListITwins extends BaseCommand {
     const { flags } = await this.parse(ListITwins);
 
     const accessToken = await this.getAccessToken();
-    const client = this.getITwinAccessClient();
 
-    const response = await client.queryAsync(accessToken, undefined, {
+    const response = await this.iTwinAccessClient.queryAsync(accessToken, undefined, {
       displayName: flags.name,
       iTwinAccountId: flags["itwin-account-id"],
       includeInactive: flags["include-inactive"],

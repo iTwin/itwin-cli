@@ -22,8 +22,7 @@ export default class Info extends BaseCommand {
   public static flags = {};
 
   public async run(): Promise<AuthorizationInformation> {
-    const authorizationService = this.getAuthorizationService();
-    const result = await authorizationService.info();
+    const result = await this.authorizationService.info();
 
     return this.logAndReturnResult(result);
   }

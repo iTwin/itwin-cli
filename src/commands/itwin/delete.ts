@@ -33,9 +33,8 @@ export default class DeleteITwin extends BaseCommand {
     const { flags } = await this.parse(DeleteITwin);
 
     const accessToken = await this.getAccessToken();
-    const client = this.getITwinAccessClient();
 
-    const response = await client.deleteiTwin(accessToken, flags["itwin-id"]);
+    const response = await this.iTwinAccessClient.deleteiTwin(accessToken, flags["itwin-id"]);
     if (response.error) {
       this.error(JSON.stringify(response.error, null, 2));
     }
