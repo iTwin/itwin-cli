@@ -104,8 +104,7 @@ export default class PopulateIModel extends BaseCommand {
     this.log(`Checking existing connections for iModel ID: ${iModel.id}`);
     const existingConnections = await this.runCommand<StorageConnectionListResponse>("imodel:connection:list", ["--imodel-id", iModel.id]);
 
-    const authorizationService = this.getAuthorizationService();
-    const authInfo = await authorizationService.info();
+    const authInfo = await this.authorizationService.info();
     const authType = authInfo.authorizationType === AuthorizationType.Service ? "Service" : "User";
 
     if (authType === "User") {
@@ -223,8 +222,7 @@ export default class PopulateIModel extends BaseCommand {
   ): Promise<string> {
     let defaultConnection = existingConnections.find((connection) => connection.displayName === "Default iTwinCLI Connection");
     if (!defaultConnection) {
-      const authorizationService = this.getAuthorizationService();
-      const authInfo = await authorizationService.info();
+      const authInfo = await this.authorizationService.info();
       const authType = authInfo.authorizationType === AuthorizationType.Service ? "Service" : "User";
 
       this.log(`Creating new default connection`);

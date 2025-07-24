@@ -86,9 +86,8 @@ export default class UpdateCommand extends BaseCommand {
     };
 
     const accessToken = await this.getAccessToken();
-    const client = this.getITwinAccessClient();
 
-    const response = await client.updateiTwin(accessToken, flags["itwin-id"], iTwinUpdate);
+    const response = await this.iTwinAccessClient.updateiTwin(accessToken, flags["itwin-id"], iTwinUpdate);
 
     if (response.error) {
       this.error(JSON.stringify(response.error, null, 2));

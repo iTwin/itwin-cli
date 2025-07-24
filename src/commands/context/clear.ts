@@ -17,8 +17,7 @@ export default class ClearContext extends BaseCommand {
   ];
 
   public async run(): Promise<ResultResponse> {
-    const contextService = this.getContextService();
-    await contextService.clearContext();
+    await this.contextService.clearContext();
     return this.logAndReturnResult({ result: "Context cleared." });
   }
 }

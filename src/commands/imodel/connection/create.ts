@@ -88,8 +88,7 @@ export default class CreateConnection extends BaseCommand {
       });
     }
 
-    const authorizationService = this.getAuthorizationService();
-    const authInfo = await authorizationService.info();
+    const authInfo = await this.authorizationService.info();
     let authType = flags["authentication-type"] as AuthenticationType;
     if (authType === undefined) {
       authType = authInfo.authorizationType === AuthorizationType.Service ? AuthenticationType.SERVICE : AuthenticationType.USER;

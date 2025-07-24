@@ -6,12 +6,10 @@
 import "dotenv/config";
 
 import { Table } from "console-table-printer";
-import * as fs from "node:fs";
-import * as path from "node:path";
 
 import { Authorization, AuthorizationCallback, IModelsClient } from "@itwin/imodels-client-management";
 import { ITwinsAccessClient } from "@itwin/itwins-client";
-import { Command, Flags } from "@oclif/core";
+import { Command, Config, Flags } from "@oclif/core";
 import { Input, ParserOutput } from "@oclif/core/interfaces";
 
 import { ArgOutput, FlagOutput } from "../../node_modules/@oclif/core/lib/interfaces/parser.js";
@@ -53,20 +51,44 @@ export default abstract class BaseCommand extends Command {
     }),
   };
 
-  protected get logger(): LoggingCallbacks {
-    return {
+  public static enableJsonFlag = true;
+
+  private readonly _envConfig: Configuration;
+  private readonly _baseApiUrl: string;
+  private readonly _logger: LoggingCallbacks;
+
+  private readonly _authorizationClient: AuthorizationClient;
+
+  protected readonly iTwinAccessClient: ITwinsAccessClient;
+  protected readonly iModelClient: IModelsClient;
+  protected readonly contextService: ContextService;
+  protected readonly authorizationService: AuthorizationService;
+
+  constructor(argv: string[], config: Config) {
+    super(argv, config);
+
+    this._envConfig = new Configuration(config.configDir);
+    this._baseApiUrl = this._envConfig?.apiUrl ?? "https://api.bentley.com";
+    this._logger = {
       error: (input) => this.error(input),
       log: (message) => this.log(message),
       debug: (...args: any[]) => this.debug(args),
-    };
+    } as LoggingCallbacks;
+
+    this._authorizationClient = new AuthorizationClient(this._envConfig, config);
+
+    this.iTwinAccessClient = new ITwinsAccessClient(`${this._baseApiUrl}/itwins`);
+    this.iModelClient = new IModelsClient({
+      api: {
+        baseUrl: `${this._baseApiUrl}/imodels`,
+      },
+    });
+    this.contextService = new ContextService(config.cacheDir, this._logger);
+    this.authorizationService = new AuthorizationService(this._authorizationClient, this._logger);
   }
 
-  public static enableJsonFlag = true;
-
   protected async getAccessToken(): Promise<string> {
-    const client = new AuthorizationClient(this.getEnvConfig(), this.config);
-
-    const token = await client.getTokenAsync();
+    const token = await this._authorizationClient.getTokenAsync();
     if (!token) {
       this.error("User token was not found. Make sure you are logged in using `itp auth login`");
     }
@@ -84,120 +106,54 @@ export default abstract class BaseCommand extends Command {
       });
   }
 
-  protected getBaseApiUrl(): string {
-    const config = this.getEnvConfig();
-    return config?.apiUrl ?? "https://api.bentley.com";
-  }
-
-  protected getEnvConfig(): Configuration {
-    const configPath = path.join(this.config.configDir, "config.json");
-
-    let config: Configuration = {
-      apiUrl: "https://api.bentley.com",
-      clientId: "native-QJi5VlgxoujsCRwcGHMUtLGMZ",
-      clientSecret: undefined,
-      issuerUrl: "https://ims.bentley.com/",
-    };
-
-    if (fs.existsSync(configPath)) {
-      const file = fs.readFileSync(configPath, "utf8");
-      config = JSON.parse(file);
-    }
-
-    if (process.env.ITP_SERVICE_CLIENT_ID) {
-      config.clientId = process.env.ITP_SERVICE_CLIENT_ID;
-    }
-
-    if (process.env.ITP_SERVICE_CLIENT_SECRET) {
-      config.clientSecret = process.env.ITP_SERVICE_CLIENT_SECRET;
-    }
-
-    if (process.env.ITP_ISSUER_URL) {
-      config.issuerUrl = process.env.ITP_ISSUER_URL;
-    }
-
-    if (process.env.ITP_API_URL) {
-      config.apiUrl = process.env.ITP_API_URL;
-    }
-
-    return config;
-  }
-
-  // #region Clients & Services
-
   protected async getAccessControlApiClient(): Promise<AccessControlClient> {
     const token = await this.getAccessToken();
-    const url = this.getBaseApiUrl();
-    return new AccessControlClient(url, token);
+    return new AccessControlClient(this._baseApiUrl, token);
   }
 
   protected async getAccessControlMemberClient(): Promise<AccessControlMemberClient> {
     const token = await this.getAccessToken();
-    const url = this.getBaseApiUrl();
 
-    return new AccessControlMemberClient(url, token);
-  }
-
-  protected getContextService(): ContextService {
-    return new ContextService(this.config.cacheDir, this.logger);
-  }
-
-  protected getAuthorizationService(): AuthorizationService {
-    const authorizationClient = new AuthorizationClient(this.getEnvConfig(), this.config);
-
-    return new AuthorizationService(authorizationClient, this.logger);
+    return new AccessControlMemberClient(this._baseApiUrl, token);
   }
 
   protected async getIModelService(): Promise<IModelApiService> {
-    const iModelsClient = this.getIModelClient();
-    const contextService = this.getContextService();
     const callback = await this.getAuthorizationCallback();
 
-    return new IModelApiService(iModelsClient, contextService, callback, this.logger);
-  }
-
-  protected getIModelClient(): IModelsClient {
-    const baseUrl = `${this.getBaseApiUrl()}/imodels`;
-
-    return new IModelsClient({
-      api: {
-        baseUrl,
-      },
-    });
+    return new IModelApiService(this.iModelClient, this.contextService, callback, this._logger);
   }
 
   protected async getChangedElementsApiService(): Promise<ChangedElementsApiService> {
-    const changedElementsApiClient = new ChangedElementsApiClient(await this.getITwinApiClient());
+    const iTwinApiClient = await this.getITwinApiClient();
+    const changedElementsApiClient = new ChangedElementsApiClient(iTwinApiClient);
 
     return new ChangedElementsApiService(changedElementsApiClient);
-  }
-
-  protected getITwinAccessClient(): ITwinsAccessClient {
-    const baseUrl = `${this.getBaseApiUrl()}/itwins`;
-    return new ITwinsAccessClient(baseUrl);
   }
 
   protected async getITwinApiClient(): Promise<ITwinPlatformApiClient> {
     const token = await this.getAccessToken();
 
-    return new ITwinPlatformApiClient(this.getBaseApiUrl(), token);
+    return new ITwinPlatformApiClient(this._baseApiUrl, token);
   }
 
   protected async getStorageApiClient(): Promise<StorageApiClient> {
-    return new StorageApiClient(await this.getITwinApiClient());
+    const iTwinApiClient = await this.getITwinApiClient();
+
+    return new StorageApiClient(iTwinApiClient);
   }
 
   protected async getSynchronizationClient(): Promise<SynchronizationApiClient> {
-    return new SynchronizationApiClient(await this.getITwinApiClient());
+    const iTwinApiClient = await this.getITwinApiClient();
+
+    return new SynchronizationApiClient(iTwinApiClient);
   }
 
   protected async getUserApiService(): Promise<UsersApiService> {
-    const userApiClient = new UsersApiClient(await this.getITwinApiClient());
+    const iTwinApiClient = await this.getITwinApiClient();
+    const userApiClient = new UsersApiClient(iTwinApiClient);
 
-    return new UsersApiService(userApiClient, this.logger);
+    return new UsersApiService(userApiClient, this._logger);
   }
-
-  // #endregion
 
   protected logAndReturnResult<T>(result: T): T {
     if (this.argv.includes("--silent") || this.argv.includes("-s")) {
@@ -234,8 +190,7 @@ export default abstract class BaseCommand extends Command {
     argv?: string[],
   ): Promise<ParserOutput<F, B, A>> {
     if (options?.flags) {
-      const contextService = this.getContextService();
-      const context = contextService.getContext();
+      const context = this.contextService.getContext();
 
       if (options.flags["itwin-id"] && !this.argv.includes("--itwin-id") && !this.argv.includes("-i") && context?.iTwinId) {
         this.argv.push("--itwin-id", context.iTwinId);

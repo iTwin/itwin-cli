@@ -72,7 +72,6 @@ export default class ListNamedVersions extends BaseCommand {
   public async run(): Promise<NamedVersion[]> {
     const { flags } = await this.parse(ListNamedVersions);
 
-    const client = this.getIModelClient();
     const authorization = await this.getAuthorizationCallback();
 
     const orderBy: OrderBy<NamedVersion, NamedVersionOrderByProperty> | undefined = flags["order-by"]
@@ -82,7 +81,7 @@ export default class ListNamedVersions extends BaseCommand {
         }
       : undefined;
 
-    const namedVersionsList = client.namedVersions.getRepresentationList({
+    const namedVersionsList = this.iModelClient.namedVersions.getRepresentationList({
       authorization,
       iModelId: flags["imodel-id"],
       urlParams: {
