@@ -53,6 +53,14 @@ export default abstract class BaseCommand extends Command {
     }),
   };
 
+  protected get logger(): LoggingCallbacks {
+    return {
+      error: (input) => this.error(input),
+      log: (message) => this.log(message),
+      debug: (...args: any[]) => this.debug(args),
+    };
+  }
+
   public static enableJsonFlag = true;
 
   protected async getAccessToken(): Promise<string> {
@@ -74,14 +82,6 @@ export default abstract class BaseCommand extends Command {
         scheme: parts[0],
         token: parts[1],
       });
-  }
-
-  private getLoggingCallbacks(): LoggingCallbacks {
-    return {
-      error: (input) => this.error(input),
-      log: (message) => this.log(message),
-      debug: (...args: any[]) => this.debug(args),
-    };
   }
 
   protected getBaseApiUrl(): string {
@@ -132,20 +132,20 @@ export default abstract class BaseCommand extends Command {
   }
 
   protected async getAccessControlMemberClient(): Promise<AccessControlMemberClient> {
-    const token = this.getAccessToken();
+    const token = await this.getAccessToken();
     const url = this.getBaseApiUrl();
 
-    return new AccessControlMemberClient(url, await token);
+    return new AccessControlMemberClient(url, token);
   }
 
   protected getContextService(): ContextService {
-    return new ContextService(this.config.cacheDir, this.getLoggingCallbacks());
+    return new ContextService(this.config.cacheDir, this.logger);
   }
 
   protected getAuthorizationService(): AuthorizationService {
     const authorizationClient = new AuthorizationClient(this.getEnvConfig(), this.config);
 
-    return new AuthorizationService(authorizationClient, this.getLoggingCallbacks());
+    return new AuthorizationService(authorizationClient, this.logger);
   }
 
   protected async getIModelService(): Promise<IModelApiService> {
@@ -153,7 +153,7 @@ export default abstract class BaseCommand extends Command {
     const contextService = this.getContextService();
     const callback = await this.getAuthorizationCallback();
 
-    return new IModelApiService(iModelsClient, contextService, callback, this.getLoggingCallbacks());
+    return new IModelApiService(iModelsClient, contextService, callback, this.logger);
   }
 
   protected getIModelClient(): IModelsClient {
@@ -194,7 +194,7 @@ export default abstract class BaseCommand extends Command {
   protected async getUserApiService(): Promise<UsersApiService> {
     const userApiClient = new UsersApiClient(await this.getITwinApiClient());
 
-    return new UsersApiService(userApiClient, this.getLoggingCallbacks());
+    return new UsersApiService(userApiClient, this.logger);
   }
 
   // #endregion
