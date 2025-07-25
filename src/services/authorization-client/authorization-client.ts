@@ -9,25 +9,42 @@ import path from "node:path";
 
 import { NodeCliAuthorizationClient } from "@itwin/node-cli-authorization";
 import { ServiceAuthorizationClient } from "@itwin/service-authorization";
-import { Config } from "@oclif/core";
 
 import { Configuration } from "../../extensions/configuration.js";
 import { AuthTokenInfo } from "./auth-token-info.js";
 import { AuthorizationInformation, AuthorizationType } from "./authorization-type.js";
 
 export class AuthorizationClient {
-  private readonly _cliConfiguration: Config;
+  private readonly _cacheDir: string;
   private readonly _environmentConfiguration: Configuration;
 
-  constructor(envConfig: Configuration, cliConfig: Config) {
+  constructor(envConfig: Configuration, cacheDir: string) {
     this._environmentConfiguration = envConfig;
-    this._cliConfiguration = cliConfig;
+    this._cacheDir = cacheDir;
   }
 
   public async getTokenAsync(): Promise<string | undefined> {
     const tokenInfo = this.getExistingAuthTokenInfo();
+
+    if (tokenInfo === undefined) {
+      throw new Error("User is not logged in. Please run 'itp auth login' command to authenticate.");
+    }
+
     if (tokenInfo?.authToken && this.isExpirationDateValid(tokenInfo.expirationDate)) {
       return tokenInfo.authToken;
+    }
+
+    if (tokenInfo?.authenticationType === AuthorizationType.Interactive) {
+      throw new Error("Interactive auth token has expired. Please run 'itp auth login' command to re-authenticate.");
+    }
+
+    if (
+      tokenInfo?.authenticationType === AuthorizationType.Service &&
+      (this._environmentConfiguration.clientId === undefined || this._environmentConfiguration.clientSecret === undefined)
+    ) {
+      throw new Error(
+        "Service auth token has expired and no client credentials are available. Please run 'itp auth login' command with client credentials to re-authenticate. Alternatively, you may save your client credentials to ITP_SERVICE_CLIENT_ID and ITP_SERVICE_CLIENT_SECRET environment variables and re-run this command.",
+      );
     }
 
     const newTokenInfo = await this.login();
@@ -39,11 +56,11 @@ export class AuthorizationClient {
     const existingTokenInfo = this.getExistingAuthTokenInfo();
 
     return {
-      apiUrl: this._environmentConfiguration.apiUrl,
-      authorizationType: existingTokenInfo?.authenticationType ?? AuthorizationType.Interactive,
-      clientId: this._environmentConfiguration.clientId,
+      apiUrl: existingTokenInfo?.apiUrl ?? this._environmentConfiguration.apiUrl,
+      authorizationType: existingTokenInfo?.authenticationType,
+      clientId: existingTokenInfo?.clientId,
       expirationDate: existingTokenInfo?.expirationDate,
-      issuerUrl: this._environmentConfiguration.issuerUrl,
+      issuerUrl: existingTokenInfo?.issuerUrl ?? this._environmentConfiguration.issuerUrl,
     };
   }
 
@@ -62,7 +79,9 @@ export class AuthorizationClient {
       authType = AuthorizationType.Interactive;
     }
 
-    return this.saveAccessToken(usedToken, authType);
+    const apiUrl = this._environmentConfiguration.apiUrl;
+    const issuerUrl = this._environmentConfiguration.issuerUrl;
+    return this.saveAccessToken(usedClientId, usedToken, authType, apiUrl, issuerUrl);
   }
 
   public async logout(): Promise<void> {
@@ -70,26 +89,24 @@ export class AuthorizationClient {
 
     // Login from IMS
     if (existingTokenInfo?.authenticationType === AuthorizationType.Interactive) {
-      const { clientId, issuerUrl } = this._environmentConfiguration;
-
       const client = new NodeCliAuthorizationClient({
-        clientId,
+        clientId: existingTokenInfo.clientId,
         expiryBuffer: 10 * 60,
-        issuerUrl,
+        issuerUrl: existingTokenInfo.issuerUrl,
         redirectUri: "http://localhost:3301/signin-callback",
         scope: "itwin-platform",
-        tokenStorePath: this._cliConfiguration.cacheDir,
+        tokenStorePath: this._cacheDir,
       });
 
       await client.signOut();
     }
 
-    if (!fs.existsSync(this._cliConfiguration.cacheDir)) {
-      fs.mkdirSync(this._cliConfiguration.cacheDir, { recursive: true });
+    if (!fs.existsSync(this._cacheDir)) {
+      fs.mkdirSync(this._cacheDir, { recursive: true });
     }
 
     // Remove token from cache
-    const tokenPath = path.join(this._cliConfiguration.cacheDir, "token.json");
+    const tokenPath = path.join(this._cacheDir, "token.json");
     if (fs.existsSync(tokenPath)) {
       fs.unlinkSync(tokenPath);
     }
@@ -113,7 +130,7 @@ export class AuthorizationClient {
       issuerUrl,
       redirectUri: "http://localhost:3301/signin-callback",
       scope: "itwin-platform",
-      tokenStorePath: this._cliConfiguration.cacheDir,
+      tokenStorePath: this._cacheDir,
     });
 
     await client.signIn();
@@ -121,7 +138,7 @@ export class AuthorizationClient {
   }
 
   private getExistingAuthTokenInfo(): AuthTokenInfo | undefined {
-    const tokenPath = path.join(this._cliConfiguration.cacheDir, "token.json");
+    const tokenPath = path.join(this._cacheDir, "token.json");
 
     if (!fs.existsSync(tokenPath)) {
       return;
@@ -143,10 +160,10 @@ export class AuthorizationClient {
     return expirationDateFixed > currentDate;
   }
 
-  private saveAccessToken(accessToken: string, authenticationType: AuthorizationType): AuthTokenInfo {
+  private saveAccessToken(clientId: string, accessToken: string, authenticationType: AuthorizationType, apiUrl: string, issuerUrl: string): AuthTokenInfo {
     // Ensure the directory exists
-    if (!fs.existsSync(this._cliConfiguration.cacheDir)) {
-      fs.mkdirSync(this._cliConfiguration.cacheDir, { recursive: true });
+    if (!fs.existsSync(this._cacheDir)) {
+      fs.mkdirSync(this._cacheDir, { recursive: true });
     }
 
     const fixedAccessToken = accessToken.startsWith("Bearer ") ? accessToken : `Bearer ${accessToken}`;
@@ -156,12 +173,15 @@ export class AuthorizationClient {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const expiration = new Date(parsedToken.exp! * 1000);
     const tokenInfo: AuthTokenInfo = {
+      apiUrl,
+      issuerUrl,
+      clientId,
       authToken: fixedAccessToken,
       authenticationType,
       expirationDate: expiration,
     };
 
-    const tokenPath = path.join(this._cliConfiguration.cacheDir, "token.json");
+    const tokenPath = path.join(this._cacheDir, "token.json");
     fs.writeFileSync(tokenPath, JSON.stringify(tokenInfo));
 
     return tokenInfo;
