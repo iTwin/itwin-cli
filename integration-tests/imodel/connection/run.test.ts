@@ -7,11 +7,12 @@ import { expect } from "chai";
 
 import { runCommand } from "@oclif/test";
 
+import { AuthorizationType } from "../../../src/services/authorization-client/authorization-type";
 import { ResultResponse } from "../../../src/services/general-models/result-response";
 import { StorageConnection } from "../../../src/services/synchronizationClient/models/storage-connection";
 import { StorageRun } from "../../../src/services/synchronizationClient/models/storage-run";
 import { StorageRunsResponse } from "../../../src/services/synchronizationClient/models/storage-run-response";
-import { createFile, createIModel, createITwin, getRootFolderId, isNativeAuthAccessTokenCached } from "../../utils/helpers";
+import { createFile, createIModel, createITwin, getCurrentAuthType, getRootFolderId } from "../../utils/helpers";
 import runSuiteIfMainModule from "../../utils/run-suite-if-main-module";
 
 const tests = () =>
@@ -31,7 +32,7 @@ const tests = () =>
       const testFile = await createFile(rootFolderId, "ExtonCampus.dgn", "examples/datasets/ExtonCampus.dgn");
       testFileId = testFile.id as string;
 
-      const authenticationType = isNativeAuthAccessTokenCached() ? "User" : "Service";
+      const authenticationType = getCurrentAuthType() === AuthorizationType.Interactive ? "User" : "Service";
       const { result: createdConnection } = await runCommand<StorageConnection>(
         `imodel connection create -m ${testIModelId} -f ${testFileId} --connector-type MSTN -n TestConnection --authentication-type ${authenticationType}`,
       );
