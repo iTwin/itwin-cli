@@ -25,6 +25,11 @@ export class AuthorizationClient {
 
   public async getTokenAsync(): Promise<string | undefined> {
     const tokenInfo = this.getExistingAuthTokenInfo();
+
+    if (tokenInfo === undefined) {
+      throw new Error("User is not logged in. Please run 'itp auth login' command to authenticate.");
+    }
+
     if (tokenInfo?.authToken && this.isExpirationDateValid(tokenInfo.expirationDate)) {
       return tokenInfo.authToken;
     }

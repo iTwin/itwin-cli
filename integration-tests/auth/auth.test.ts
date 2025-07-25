@@ -34,6 +34,14 @@ const tests = () =>
       expect(infoResult!.issuerUrl).to.be.equal("changed-issuer-url");
     });
 
+    it("should ask user to login when there is no token available", async () => {
+      await runCommand<void>("auth logout");
+
+      const { error } = await runCommand<AuthorizationInformation>("user me");
+      expect(error).to.not.be.undefined;
+      expect(error?.message).to.be.equal("User is not logged in. Please run 'itp auth login' command to authenticate.");
+    });
+
     it("should fail with incorrect credentials", async () => {
       const { error: loginError } = await runCommand("auth login --client-id invalid-id --client-secret wrong-secret");
       expect(loginError).to.be.not.undefined;
