@@ -7,8 +7,8 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
-import { AuthenticationType } from "../../../services/synchronizationClient/models/authentication-type.js";
-import { StorageConnection } from "../../../services/synchronizationClient/models/storage-connection.js";
+import { AuthenticationType } from "../../../services/synchronization/models/authentication-type.js";
+import { StorageConnection } from "../../../services/synchronization/models/storage-connection.js";
 
 export default class UpdateStorageConnection extends BaseCommand {
   public static apiReference: ApiReference = {

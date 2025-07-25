@@ -9,9 +9,9 @@ import { runCommand } from "@oclif/test";
 
 import { PopulateResponse } from "../../src/commands/imodel/populate";
 import { ResultResponse } from "../../src/services/general-models/result-response";
-import { ExecutionResult } from "../../src/services/synchronizationClient/models/execution-result";
-import { ExecutionState } from "../../src/services/synchronizationClient/models/execution-state";
-import { StorageRun } from "../../src/services/synchronizationClient/models/storage-run";
+import { ExecutionResult } from "../../src/services/synchronization/models/execution-result";
+import { ExecutionState } from "../../src/services/synchronization/models/execution-state";
+import { StorageRun } from "../../src/services/synchronization/models/storage-run";
 import { createIModel, createITwin } from "../utils/helpers";
 import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
 

@@ -3,9 +3,9 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { ChangedElementsApiClient } from "./changed-elements-client/changed-elements-api-client.js";
-import { Changeset, ChangesetComparison, TrackingResponse } from "./changed-elements-client/tracking.js";
-import { ResultResponse } from "./general-models/result-response.js";
+import { ResultResponse } from "../general-models/result-response.js";
+import { ChangedElementsApiClient } from "./changed-elements-api-client.js";
+import { Changeset, ChangesetComparison, TrackingResponse } from "./tracking.js";
 
 export class ChangedElementsApiService {
   private _client: ChangedElementsApiClient;

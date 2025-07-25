@@ -12,18 +12,18 @@ import { Flags } from "@oclif/core";
 import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
 import { CustomFlags } from "../../extensions/custom-flags.js";
-import { AuthorizationType } from "../../services/authorization-client/authorization-type.js";
-import { FileUpload } from "../../services/storage-client/models/file-upload.js";
-import { FolderTypedType } from "../../services/storage-client/models/folder-typed.js";
-import { ItemsWithFolderLink } from "../../services/storage-client/models/items-with-folder-link.js";
-import { AuthInfo } from "../../services/synchronizationClient/models/connection-auth.js";
-import { ConnectorType } from "../../services/synchronizationClient/models/connector-type.js";
-import { ExecutionResult } from "../../services/synchronizationClient/models/execution-result.js";
-import { ExecutionState } from "../../services/synchronizationClient/models/execution-state.js";
-import { SourceFile } from "../../services/synchronizationClient/models/source-file.js";
-import { StorageConnectionListResponse } from "../../services/synchronizationClient/models/storage-connection-response.js";
-import { StorageConnection } from "../../services/synchronizationClient/models/storage-connection.js";
-import { StorageRun } from "../../services/synchronizationClient/models/storage-run.js";
+import { AuthorizationType } from "../../services/authorization/authorization-type.js";
+import { FileUpload } from "../../services/storage/models/file-upload.js";
+import { FolderTypedType } from "../../services/storage/models/folder-typed.js";
+import { ItemsWithFolderLink } from "../../services/storage/models/items-with-folder-link.js";
+import { AuthInfo } from "../../services/synchronization/models/connection-auth.js";
+import { ConnectorType } from "../../services/synchronization/models/connector-type.js";
+import { ExecutionResult } from "../../services/synchronization/models/execution-result.js";
+import { ExecutionState } from "../../services/synchronization/models/execution-state.js";
+import { SourceFile } from "../../services/synchronization/models/source-file.js";
+import { StorageConnectionListResponse } from "../../services/synchronization/models/storage-connection-response.js";
+import { StorageConnection } from "../../services/synchronization/models/storage-connection.js";
+import { StorageRun } from "../../services/synchronization/models/storage-run.js";
 
 export default class PopulateIModel extends BaseCommand {
   public static apiReference: ApiReference = {

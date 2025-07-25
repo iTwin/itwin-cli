@@ -7,7 +7,7 @@ import { expect } from "chai";
 
 import { runCommand } from "@oclif/test";
 
-import { TrackingResponse } from "../../src/services/changed-elements-client/tracking";
+import { TrackingResponse } from "../../src/services/changed-elements/tracking";
 import { ResultResponse } from "../../src/services/general-models/result-response";
 import { createIModel, createITwin } from "../utils/helpers";
 import runSuiteIfMainModule from "../utils/run-suite-if-main-module";

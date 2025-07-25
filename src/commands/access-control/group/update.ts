@@ -8,7 +8,7 @@ import { Flags } from "@oclif/core";
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { CustomFlags } from "../../../extensions/custom-flags.js";
-import { Group } from "../../../services/access-control-client/models/group.js";
+import { Group } from "../../../services/access-control/models/group.js";
 
 export default class UpdateAccessControlGroup extends BaseCommand {
   public static apiReference: ApiReference = {

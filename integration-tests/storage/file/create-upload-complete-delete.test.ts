@@ -8,8 +8,8 @@ import { expect } from "chai";
 import { runCommand } from "@oclif/test";
 
 import { ResultResponse } from "../../../src/services/general-models/result-response";
-import { FileTyped } from "../../../src/services/storage-client/models/file-typed";
-import { FileUpload } from "../../../src/services/storage-client/models/file-upload";
+import { FileTyped } from "../../../src/services/storage/models/file-typed";
+import { FileUpload } from "../../../src/services/storage/models/file-upload";
 import { createFolder, createITwin, getRootFolderId } from "../../utils/helpers";
 import runSuiteIfMainModule from "../../utils/run-suite-if-main-module";
 

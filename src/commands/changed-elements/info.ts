@@ -6,7 +6,7 @@
 import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
 import { CustomFlags } from "../../extensions/custom-flags.js";
-import { TrackingResponse } from "../../services/changed-elements-client/tracking.js";
+import { TrackingResponse } from "../../services/changed-elements/tracking.js";
 
 export default class ChangedElementsInfo extends BaseCommand {
   public static apiReference: ApiReference = {

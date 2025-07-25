@@ -8,7 +8,7 @@ import fs from "node:fs";
 
 import { runCommand } from "@oclif/test";
 
-import { AuthorizationInformation } from "../../src/services/authorization-client/authorization-type";
+import { AuthorizationInformation } from "../../src/services/authorization/authorization-type";
 import { ITP_API_URL, ITP_ISSUER_URL, ITP_SERVICE_CLIENT_ID, ITP_SERVICE_CLIENT_SECRET } from "../utils/environment";
 import { getTokenPathByOS, serviceLoginToCli } from "../utils/helpers";
 import runSuiteIfMainModule from "../utils/run-suite-if-main-module";

@@ -8,10 +8,10 @@ import { expect } from "chai";
 import { ITwin } from "@itwin/itwins-client";
 import { runCommand } from "@oclif/test";
 
-import { Member, MembersResponse } from "../../../src/services/access-control-client/models/members";
-import { Role } from "../../../src/services/access-control-client/models/role";
+import { Member, MembersResponse } from "../../../src/services/access-control/models/members";
+import { Role } from "../../../src/services/access-control/models/role";
 import { ResultResponse } from "../../../src/services/general-models/result-response.js";
-import { User } from "../../../src/services/users-client/models/user";
+import { User } from "../../../src/services/users/models/user";
 import { ITP_TEST_USER_EXTERNAL } from "../../utils/environment";
 import { fetchEmailsAndGetInvitationLink } from "../../utils/helpers";
 import runSuiteIfMainModule from "../../utils/run-suite-if-main-module";

@@ -3,7 +3,7 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { ITwinPlatformApiClient } from "../iTwin-api-client.js";
+import { ITwinPlatformApiClient } from "../itwins/iTwin-api-client.js";
 import { Group, GroupResponse, GroupsResponse, GroupUpdate } from "./models/group.js";
 import { Permissions } from "./models/permissions.js";
 import { Role, RoleResponse, RolesResponse } from "./models/role.js";

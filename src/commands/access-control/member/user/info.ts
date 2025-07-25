@@ -6,7 +6,7 @@
 import { ApiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
 import { CustomFlags } from "../../../../extensions/custom-flags.js";
-import { Member } from "../../../../services/access-control-client/models/members.js";
+import { Member } from "../../../../services/access-control/models/members.js";
 
 export default class InfoUserMember extends BaseCommand {
   public static apiReference: ApiReference = {

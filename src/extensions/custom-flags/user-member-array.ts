@@ -7,7 +7,7 @@ import zod from "zod";
 
 import { Flags } from "@oclif/core";
 
-import { UserMember } from "../../services/access-control-client/models/members.js";
+import { UserMember } from "../../services/access-control/models/members.js";
 import { validateJson } from "../validation/validate-json.js";
 import zodErrorToMessage from "../validation/zod-error-to-message.js";
 
