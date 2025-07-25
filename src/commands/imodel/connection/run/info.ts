@@ -7,7 +7,7 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
-import { StorageRun } from "../../../../services/synchronizationClient/models/storage-run.js";
+import { StorageRun } from "../../../../services/synchronization/models/storage-run.js";
 
 export default class ConnectionRunInfo extends BaseCommand {
   public static apiReference: ApiReference = {

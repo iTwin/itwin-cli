@@ -3,7 +3,7 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { ITwinPlatformApiClient } from "../iTwin-api-client.js";
+import { ITwinPlatformApiClient } from "../itwins/iTwin-api-client.js";
 import { ConnectionAuth } from "./models/connection-auth.js";
 import { SourceFileInfo, SourceFileResponse, SourceFilesResponse } from "./models/source-file.js";
 import { StorageConnectionCreate } from "./models/storage-connection-create.js";

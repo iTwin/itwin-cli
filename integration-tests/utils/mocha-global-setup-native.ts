@@ -7,7 +7,7 @@ import { expect } from "chai";
 
 import { runCommand } from "@oclif/test";
 
-import { AuthInfo } from "../../src/services/synchronizationClient/models/connection-auth";
+import { AuthInfo } from "../../src/services/synchronization/models/connection-auth";
 import { nativeLoginToCli } from "./helpers";
 
 export async function mochaGlobalSetup(): Promise<void> {

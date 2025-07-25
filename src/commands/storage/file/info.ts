@@ -7,7 +7,7 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
-import { FileTyped } from "../../../services/storage-client/models/file-typed.js";
+import { FileTyped } from "../../../services/storage/models/file-typed.js";
 
 export default class FileInfo extends BaseCommand {
   public static apiReference: ApiReference = {

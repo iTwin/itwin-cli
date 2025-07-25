@@ -8,7 +8,7 @@ import { expect } from "chai";
 import { runCommand } from "@oclif/test";
 
 import { ResultResponse } from "../../../src/services/general-models/result-response";
-import { FileTyped } from "../../../src/services/storage-client/models/file-typed";
+import { FileTyped } from "../../../src/services/storage/models/file-typed";
 import { createFile, createIModel, createITwin, getRootFolderId } from "../../utils/helpers";
 
 const tests = () =>

@@ -8,7 +8,7 @@ import { expect } from "chai";
 import { runCommand } from "@oclif/test";
 
 import { ResultResponse } from "../../../src/services/general-models/result-response";
-import { FolderTyped } from "../../../src/services/storage-client/models/folder-typed";
+import { FolderTyped } from "../../../src/services/storage/models/folder-typed";
 import { createFolder, createITwin, deleteFolder, getRootFolderId } from "../../utils/helpers";
 import runSuiteIfMainModule from "../../utils/run-suite-if-main-module";
 

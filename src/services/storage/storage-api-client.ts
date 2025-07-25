@@ -3,7 +3,7 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { ITwinPlatformApiClient } from "../iTwin-api-client.js";
+import { ITwinPlatformApiClient } from "../itwins/iTwin-api-client.js";
 import { FileResponse, FilesResponse, ItemsResponse } from "./models/file-response.js";
 import { FileUpload } from "./models/file-upload.js";
 import { FolderInfo, FolderResponse, FoldersResponse } from "./models/folder-typed.js";

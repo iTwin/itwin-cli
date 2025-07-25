@@ -3,7 +3,7 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { ITwinPlatformApiClient, Query } from "../iTwin-api-client.js";
+import { ITwinPlatformApiClient, Query } from "../itwins/iTwin-api-client.js";
 import { UserResponse, UsersResponse } from "./models/user.js";
 
 export class UsersApiClient {

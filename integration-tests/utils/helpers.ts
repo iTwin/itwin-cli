@@ -15,13 +15,13 @@ import { ITwin } from "@itwin/itwins-client";
 import { getTestAccessToken, TestBrowserAuthorizationClientConfiguration, TestUserCredentials } from "@itwin/oidc-signin-tool";
 import { runCommand } from "@oclif/test";
 
-import { AuthTokenInfo } from "../../src/services/authorization-client/auth-token-info.js";
-import { AuthorizationType } from "../../src/services/authorization-client/authorization-type.js";
+import { AuthTokenInfo } from "../../src/services/authorization/auth-token-info.js";
+import { AuthorizationType } from "../../src/services/authorization/authorization-type.js";
 import { ResultResponse } from "../../src/services/general-models/result-response.js";
-import { FileTyped } from "../../src/services/storage-client/models/file-typed.js";
-import { FileUpload } from "../../src/services/storage-client/models/file-upload.js";
-import { FolderTyped } from "../../src/services/storage-client/models/folder-typed.js";
-import { ItemsWithFolderLink } from "../../src/services/storage-client/models/items-with-folder-link.js";
+import { FileTyped } from "../../src/services/storage/models/file-typed.js";
+import { FileUpload } from "../../src/services/storage/models/file-upload.js";
+import { FolderTyped } from "../../src/services/storage/models/folder-typed.js";
+import { ItemsWithFolderLink } from "../../src/services/storage/models/items-with-folder-link.js";
 import { ITP_API_URL, ITP_ISSUER_URL, ITP_MAILINATOR_API_KEY, ITP_NATIVE_TEST_CLIENT_ID, ITP_TEST_USER_EMAIL, ITP_TEST_USER_PASSWORD } from "./environment.js";
 
 export async function serviceLoginToCli(): Promise<void> {

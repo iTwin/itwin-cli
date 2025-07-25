@@ -8,7 +8,7 @@ import fs from "node:fs";
 
 import { runCommand } from "@oclif/test";
 
-import { AuthorizationInformation } from "../../src/services/authorization-client/authorization-type";
+import { AuthorizationInformation } from "../../src/services/authorization/authorization-type";
 import { ITP_NATIVE_TEST_CLIENT_ID } from "../utils/environment";
 import { getTokenPathByOS, nativeLoginToCli } from "../utils/helpers";
 import runSuiteIfMainModule from "../utils/run-suite-if-main-module";

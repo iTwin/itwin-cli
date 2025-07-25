@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import BaseCommand from "../../extensions/base-command.js";
-import { AuthorizationInformation } from "../../services/authorization-client/authorization-type.js";
+import { AuthorizationInformation } from "../../services/authorization/authorization-type.js";
 
 export default class Info extends BaseCommand {
   public static args = {};

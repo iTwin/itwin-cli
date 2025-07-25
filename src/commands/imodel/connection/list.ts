@@ -8,7 +8,7 @@ import { Flags } from "@oclif/core";
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { CustomFlags } from "../../../extensions/custom-flags.js";
-import { StorageConnectionListResponse } from "../../../services/synchronizationClient/models/storage-connection-response.js";
+import { StorageConnectionListResponse } from "../../../services/synchronization/models/storage-connection-response.js";
 
 export default class ListConnections extends BaseCommand {
   public static apiReference: ApiReference = {

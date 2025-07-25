@@ -13,20 +13,20 @@ import { Command, Config, Flags } from "@oclif/core";
 import { Input, ParserOutput } from "@oclif/core/interfaces";
 
 import { ArgOutput, FlagOutput } from "../../node_modules/@oclif/core/lib/interfaces/parser.js";
-import { AccessControlClient } from "../services/access-control-client/access-control-client.js";
-import { AccessControlMemberClient } from "../services/access-control-client/access-control-member-client.js";
-import { AuthorizationClient } from "../services/authorization-client/authorization-client.js";
-import { AuthorizationService } from "../services/authorization-service.js";
-import { ChangedElementsApiService } from "../services/changed-elements-api-service.js";
-import { ChangedElementsApiClient } from "../services/changed-elements-client/changed-elements-api-client.js";
+import { AccessControlClient } from "../services/access-control/access-control-client.js";
+import { AccessControlMemberClient } from "../services/access-control/access-control-member-client.js";
+import { AuthorizationClient } from "../services/authorization/authorization-client.js";
+import { AuthorizationService } from "../services/authorization/authorization-service.js";
+import { ChangedElementsApiClient } from "../services/changed-elements/changed-elements-api-client.js";
+import { ChangedElementsApiService } from "../services/changed-elements/changed-elements-api-service.js";
 import { ContextService } from "../services/context-service.js";
 import { LoggingCallbacks } from "../services/general-models/logging-callbacks.js";
-import { IModelApiService } from "../services/iModel-api-service.js";
-import { ITwinPlatformApiClient } from "../services/iTwin-api-client.js";
-import { StorageApiClient } from "../services/storage-client/storage-api-client.js";
-import { SynchronizationApiClient } from "../services/synchronizationClient/synchronization-api-client.js";
-import { UsersApiService } from "../services/users-api-service.js";
-import { UsersApiClient } from "../services/users-client/users-api-client.js";
+import { IModelApiService } from "../services/imodels/iModel-api-service.js";
+import { ITwinPlatformApiClient } from "../services/itwins/iTwin-api-client.js";
+import { StorageApiClient } from "../services/storage/storage-api-client.js";
+import { SynchronizationApiClient } from "../services/synchronization/synchronization-api-client.js";
+import { UsersApiClient } from "../services/users/users-api-client.js";
+import { UsersApiService } from "../services/users/users-api-service.js";
 import { Configuration } from "./configuration.js";
 
 export default abstract class BaseCommand extends Command {
