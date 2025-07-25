@@ -84,12 +84,10 @@ export class AuthorizationClient {
 
     // Login from IMS
     if (existingTokenInfo?.authenticationType === AuthorizationType.Interactive) {
-      const { clientId, issuerUrl } = this._environmentConfiguration;
-
       const client = new NodeCliAuthorizationClient({
-        clientId,
+        clientId: existingTokenInfo.clientId,
         expiryBuffer: 10 * 60,
-        issuerUrl,
+        issuerUrl: existingTokenInfo.issuerUrl,
         redirectUri: "http://localhost:3301/signin-callback",
         scope: "itwin-platform",
         tokenStorePath: this._cacheDir,

@@ -14,12 +14,12 @@ import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
 const tests = () =>
   describe("Authentication Integration Tests", () => {
     it("auth info should get urls from environment when not logged in", async () => {
-      await runCommand<void>("auth logout");
-
       const apiUrl = ITP_API_URL;
       const issuerUrl = ITP_ISSUER_URL;
       process.env.ITP_API_URL = "changed-api-url";
       process.env.ITP_ISSUER_URL = "changed-issuer-url";
+
+      await runCommand<void>("auth logout");
 
       const { result: infoResult } = await runCommand<AuthorizationInformation>("auth info");
 
