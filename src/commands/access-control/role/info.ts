@@ -6,7 +6,7 @@
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { CustomFlags } from "../../../extensions/custom-flags.js";
-import { Role } from "../../../services/access-control-client/models/role.js";
+import { Role } from "../../../services/access-control/models/role.js";
 
 export default class InfoRole extends BaseCommand {
   public static apiReference: ApiReference = {

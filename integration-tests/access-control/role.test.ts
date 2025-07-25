@@ -8,7 +8,7 @@ import { expect } from "chai";
 import { ITwin } from "@itwin/itwins-client";
 import { runCommand } from "@oclif/test";
 
-import { Role } from "../../src/services/access-control-client/models/role";
+import { Role } from "../../src/services/access-control/models/role";
 import { ResultResponse } from "../../src/services/general-models/result-response.js";
 import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
 

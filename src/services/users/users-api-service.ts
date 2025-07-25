@@ -3,9 +3,9 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { LoggingCallbacks } from "./general-models/logging-callbacks.js";
-import { User } from "./users-client/models/user.js";
-import { UsersApiClient } from "./users-client/users-api-client.js";
+import { LoggingCallbacks } from "../general-models/logging-callbacks.js";
+import { User } from "./models/user.js";
+import { UsersApiClient } from "./users-api-client.js";
 
 export class UsersApiService {
   private _client: UsersApiClient;

@@ -6,7 +6,7 @@
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { CustomFlags } from "../../../extensions/custom-flags.js";
-import { Invitation } from "../../../services/access-control-client/models/invitations.js";
+import { Invitation } from "../../../services/access-control/models/invitations.js";
 
 export default class AccessControlMemberInvitations extends BaseCommand {
   public static apiReference: ApiReference = {

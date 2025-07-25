@@ -9,7 +9,7 @@ import { NamedVersion } from "@itwin/imodels-client-management";
 import { runCommand } from "@oclif/test";
 
 import { PopulateResponse } from "../../src/commands/imodel/populate";
-import { Changeset } from "../../src/services/changed-elements-client/tracking";
+import { Changeset } from "../../src/services/changed-elements/tracking";
 import { ResultResponse } from "../../src/services/general-models/result-response";
 import { createIModel, createITwin } from "../utils/helpers";
 import runSuiteIfMainModule from "../utils/run-suite-if-main-module";

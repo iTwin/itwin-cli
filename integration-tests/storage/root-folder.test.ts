@@ -9,9 +9,9 @@ import { ITwin } from "@itwin/itwins-client";
 import { runCommand } from "@oclif/test";
 
 import { ResultResponse } from "../../src/services/general-models/result-response.js";
-import { FileTyped } from "../../src/services/storage-client/models/file-typed.js";
-import { FolderTyped } from "../../src/services/storage-client/models/folder-typed.js";
-import { ItemsWithFolderLink } from "../../src/services/storage-client/models/items-with-folder-link.js";
+import { FileTyped } from "../../src/services/storage/models/file-typed.js";
+import { FolderTyped } from "../../src/services/storage/models/folder-typed.js";
+import { ItemsWithFolderLink } from "../../src/services/storage/models/items-with-folder-link.js";
 import { createFile, createFolder, createITwin, getRootFolderId } from "../utils/helpers.js";
 import runSuiteIfMainModule from "../utils/run-suite-if-main-module.js";
 

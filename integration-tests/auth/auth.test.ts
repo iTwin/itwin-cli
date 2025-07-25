@@ -7,7 +7,7 @@ import { expect } from "chai";
 
 import { runCommand } from "@oclif/test";
 
-import { AuthorizationInformation } from "../../src/services/authorization-client/authorization-type";
+import { AuthorizationInformation } from "../../src/services/authorization/authorization-type";
 import { ITP_API_URL, ITP_ISSUER_URL } from "../utils/environment";
 import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
 

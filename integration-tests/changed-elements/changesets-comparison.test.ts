@@ -10,7 +10,7 @@ import { ITwin } from "@itwin/itwins-client";
 import { runCommand } from "@oclif/test";
 
 import { PopulateResponse } from "../../src/commands/imodel/populate";
-import { Changeset, ChangesetComparison } from "../../src/services/changed-elements-client/tracking";
+import { Changeset, ChangesetComparison } from "../../src/services/changed-elements/tracking";
 import { ResultResponse } from "../../src/services/general-models/result-response";
 import { createFile, createIModel, createITwin, getRootFolderId } from "../utils/helpers";
 import runSuiteIfMainModule from "../utils/run-suite-if-main-module";

@@ -8,9 +8,9 @@ import {
     AuthorizationCallback, Changeset, ChangesetOrderByProperty, Extent, GetIModelListUrlParams, IModel, IModelsClient, OrderByOperator, take, toArray
 } from "@itwin/imodels-client-management";
 
-import { ContextService } from "./context-service.js";
-import { LoggingCallbacks } from "./general-models/logging-callbacks.js";
-import { ResultResponse } from "./general-models/result-response.js";
+import { ContextService } from "../context-service.js";
+import { LoggingCallbacks } from "../general-models/logging-callbacks.js";
+import { ResultResponse } from "../general-models/result-response.js";
 
 export class IModelApiService {
   private _iModelsClient: IModelsClient;

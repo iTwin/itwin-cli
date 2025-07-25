@@ -7,7 +7,7 @@ import { expect } from "chai";
 
 import { runCommand } from "@oclif/test";
 
-import { User } from "../../src/services/users-client/models/user";
+import { User } from "../../src/services/users/models/user";
 import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
 
 const tests = () =>

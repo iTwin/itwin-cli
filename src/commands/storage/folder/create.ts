@@ -7,7 +7,7 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
-import { FolderTyped } from "../../../services/storage-client/models/folder-typed.js";
+import { FolderTyped } from "../../../services/storage/models/folder-typed.js";
 
 export default class CreateFolder extends BaseCommand {
   public static apiReference: ApiReference = {

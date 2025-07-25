@@ -8,11 +8,11 @@ import { Flags } from "@oclif/core";
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { CustomFlags } from "../../../extensions/custom-flags.js";
-import { AuthorizationType } from "../../../services/authorization-client/authorization-type.js";
-import { AuthenticationType } from "../../../services/synchronizationClient/models/authentication-type.js";
-import { ConnectorType } from "../../../services/synchronizationClient/models/connector-type.js";
-import { StorageConnection } from "../../../services/synchronizationClient/models/storage-connection.js";
-import { StorageFileCreate } from "../../../services/synchronizationClient/models/storage-file-create.js";
+import { AuthorizationType } from "../../../services/authorization/authorization-type.js";
+import { AuthenticationType } from "../../../services/synchronization/models/authentication-type.js";
+import { ConnectorType } from "../../../services/synchronization/models/connector-type.js";
+import { StorageConnection } from "../../../services/synchronization/models/storage-connection.js";
+import { StorageFileCreate } from "../../../services/synchronization/models/storage-file-create.js";
 
 export default class CreateConnection extends BaseCommand {
   public static apiReference: ApiReference = {

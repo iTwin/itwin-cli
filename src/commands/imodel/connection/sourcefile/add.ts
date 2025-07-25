@@ -7,8 +7,8 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
-import { ConnectorType } from "../../../../services/synchronizationClient/models/connector-type.js";
-import { SourceFile } from "../../../../services/synchronizationClient/models/source-file.js";
+import { ConnectorType } from "../../../../services/synchronization/models/connector-type.js";
+import { SourceFile } from "../../../../services/synchronization/models/source-file.js";
 
 export default class CreateConnectionSourceFile extends BaseCommand {
   public static apiReference: ApiReference = {

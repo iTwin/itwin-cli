@@ -8,8 +8,8 @@ import { expect } from "chai";
 import { ITwin } from "@itwin/itwins-client";
 import { runCommand } from "@oclif/test";
 
-import { GroupMember } from "../../../src/services/access-control-client/models/group-members.js";
-import { OwnerResponse } from "../../../src/services/access-control-client/models/owner.js";
+import { GroupMember } from "../../../src/services/access-control/models/group-members.js";
+import { OwnerResponse } from "../../../src/services/access-control/models/owner.js";
 import { ResultResponse } from "../../../src/services/general-models/result-response.js";
 import { ITP_TEST_USER_SAMEORG } from "../../utils/environment.js";
 import { nativeLoginToCli } from "../../utils/helpers.js";

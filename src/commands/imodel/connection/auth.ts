@@ -8,7 +8,7 @@ import open from "open";
 
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
-import { AuthInfo } from "../../../services/synchronizationClient/models/connection-auth.js";
+import { AuthInfo } from "../../../services/synchronization/models/connection-auth.js";
 
 export default class ConnectionAuth extends BaseCommand {
   public static apiReference: ApiReference = {

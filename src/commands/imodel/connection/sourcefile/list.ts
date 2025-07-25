@@ -7,7 +7,7 @@ import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
-import { SourceFile } from "../../../../services/synchronizationClient/models/source-file.js";
+import { SourceFile } from "../../../../services/synchronization/models/source-file.js";
 
 export default class ListSourceFiles extends BaseCommand {
   public static apiReference: ApiReference = {
