@@ -12,7 +12,7 @@ import { ResultResponse } from "../../../src/services/general-models/result-resp
 import { StorageConnection } from "../../../src/services/synchronizationClient/models/storage-connection";
 import { StorageRun } from "../../../src/services/synchronizationClient/models/storage-run";
 import { StorageRunsResponse } from "../../../src/services/synchronizationClient/models/storage-run-response";
-import { createFile, createIModel, createITwin, getCurrentAuthType, getRootFolderId } from "../../utils/helpers";
+import { createFile, createIModel, createITwin, getCurrentTokenType, getRootFolderId } from "../../utils/helpers";
 import runSuiteIfMainModule from "../../utils/run-suite-if-main-module";
 
 const tests = () =>
@@ -32,7 +32,9 @@ const tests = () =>
       const testFile = await createFile(rootFolderId, "ExtonCampus.dgn", "examples/datasets/ExtonCampus.dgn");
       testFileId = testFile.id as string;
 
-      const authenticationType = getCurrentAuthType() === AuthorizationType.Interactive ? "User" : "Service";
+      const tokenType = getCurrentTokenType();
+      expect(tokenType).to.not.be.undefined;
+      const authenticationType = tokenType === AuthorizationType.Interactive ? "User" : "Service";
       const { result: createdConnection } = await runCommand<StorageConnection>(
         `imodel connection create -m ${testIModelId} -f ${testFileId} --connector-type MSTN -n TestConnection --authentication-type ${authenticationType}`,
       );

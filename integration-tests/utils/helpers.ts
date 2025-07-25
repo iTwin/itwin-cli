@@ -150,7 +150,7 @@ export async function fetchEmailsAndGetInvitationLink(inbox: string, iTwinName: 
 }
 
 export async function nativeLoginToCli(): Promise<void> {
-  if (getCurrentAuthType() === AuthorizationType.Interactive) return;
+  if (getCurrentTokenType() === AuthorizationType.Interactive) return;
 
   expect(ITP_API_URL, "ITP_API_URL").to.not.be.undefined;
   expect(ITP_ISSUER_URL, "ITP_ISSUER_URL").to.not.be.undefined;
@@ -196,14 +196,15 @@ const getNativeAuthAccessToken = async (): Promise<string> => {
   return accessToken!;
 };
 
-export const getCurrentAuthType = (): AuthorizationType => {
+export const getCurrentTokenType = (): AuthorizationType | undefined => {
   const tokenPath = getTokenPathByOS();
   const tokenExists = fs.existsSync(tokenPath);
-  expect(tokenExists).to.be.true;
 
-  const tokenJson = fs.readFileSync(tokenPath, "utf8");
-  const tokenObj: AuthTokenInfo = JSON.parse(tokenJson);
-  return tokenObj.authenticationType;
+  if (tokenExists) {
+    const tokenJson = fs.readFileSync(tokenPath, "utf8");
+    const tokenObj: AuthTokenInfo = JSON.parse(tokenJson);
+    return tokenObj.authenticationType;
+  }
 };
 
 export const getTokenPathByOS = (): string => {
