@@ -15,12 +15,14 @@ import { ITwin } from "@itwin/itwins-client";
 import { getTestAccessToken, TestBrowserAuthorizationClientConfiguration, TestUserCredentials } from "@itwin/oidc-signin-tool";
 import { runCommand } from "@oclif/test";
 
+import { AuthTokenInfo } from "../../src/services/authorization-client/auth-token-info.js";
+import { AuthorizationType } from "../../src/services/authorization-client/authorization-type.js";
 import { ResultResponse } from "../../src/services/general-models/result-response.js";
 import { FileTyped } from "../../src/services/storage-client/models/file-typed.js";
 import { FileUpload } from "../../src/services/storage-client/models/file-upload.js";
 import { FolderTyped } from "../../src/services/storage-client/models/folder-typed.js";
 import { ItemsWithFolderLink } from "../../src/services/storage-client/models/items-with-folder-link.js";
-import { ITP_ISSUER_URL, ITP_MAILINATOR_API_KEY, ITP_NATIVE_TEST_CLIENT_ID, ITP_TEST_USER_EMAIL, ITP_TEST_USER_PASSWORD } from "./environment.js";
+import { ITP_API_URL, ITP_ISSUER_URL, ITP_MAILINATOR_API_KEY, ITP_NATIVE_TEST_CLIENT_ID, ITP_TEST_USER_EMAIL, ITP_TEST_USER_PASSWORD } from "./environment.js";
 
 export async function serviceLoginToCli(): Promise<void> {
   const result = await runCommand("auth login");
@@ -148,13 +150,19 @@ export async function fetchEmailsAndGetInvitationLink(inbox: string, iTwinName: 
 }
 
 export async function nativeLoginToCli(): Promise<void> {
-  if (isNativeAuthAccessTokenCached()) return;
+  if (getCurrentTokenType() === AuthorizationType.Interactive) return;
 
-  const authTokenObject = {
+  expect(ITP_API_URL, "ITP_API_URL").to.not.be.undefined;
+  expect(ITP_ISSUER_URL, "ITP_ISSUER_URL").to.not.be.undefined;
+  expect(ITP_NATIVE_TEST_CLIENT_ID, "ITP_NATIVE_TEST_CLIENT_ID").to.not.be.undefined;
+
+  const authTokenObject: AuthTokenInfo = {
+    apiUrl: ITP_API_URL!,
+    issuerUrl: ITP_ISSUER_URL!,
+    clientId: ITP_NATIVE_TEST_CLIENT_ID!,
     authToken: await getNativeAuthAccessToken(),
-    authenticationType: "Interactive",
+    authenticationType: AuthorizationType.Interactive,
     expirationDate: new Date(Date.now() + 1000 * 60 * 59),
-    manuallyWritten: true,
   };
 
   fs.writeFileSync(getTokenPathByOS(), JSON.stringify(authTokenObject), "utf8");
@@ -188,19 +196,18 @@ const getNativeAuthAccessToken = async (): Promise<string> => {
   return accessToken!;
 };
 
-export const isNativeAuthAccessTokenCached = (): boolean => {
+export const getCurrentTokenType = (): AuthorizationType | undefined => {
   const tokenPath = getTokenPathByOS();
-  if (fs.existsSync(tokenPath)) {
-    const tokenJson = fs.readFileSync(tokenPath, "utf8");
-    const tokenObj = JSON.parse(tokenJson);
-    if (tokenObj.manuallyWritten !== undefined && new Date(tokenObj.expirationDate).getTime() > Date.now()) return true;
-    fs.rmSync(tokenPath);
-  }
+  const tokenExists = fs.existsSync(tokenPath);
 
-  return false;
+  if (tokenExists) {
+    const tokenJson = fs.readFileSync(tokenPath, "utf8");
+    const tokenObj: AuthTokenInfo = JSON.parse(tokenJson);
+    return tokenObj.authenticationType;
+  }
 };
 
-const getTokenPathByOS = (): string => {
+export const getTokenPathByOS = (): string => {
   switch (os.type()) {
     case "Linux": {
       const cachePath = `${os.homedir()}/.cache/itp`;

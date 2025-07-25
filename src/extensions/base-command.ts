@@ -73,7 +73,7 @@ export default abstract class BaseCommand extends Command {
       debug: (...args: any[]) => this.debug(args),
     } as LoggingCallbacks;
 
-    this._authorizationClient = new AuthorizationClient(this._envConfig, config);
+    this._authorizationClient = new AuthorizationClient(this._envConfig, config.cacheDir);
 
     this.iTwinAccessClient = new ITwinsAccessClient(`${this._baseApiUrl}/itwins`);
     this.iModelClient = new IModelsClient({
@@ -86,12 +86,16 @@ export default abstract class BaseCommand extends Command {
   }
 
   protected async getAccessToken(): Promise<string> {
-    const token = await this._authorizationClient.getTokenAsync();
-    if (!token) {
-      this.error("User token was not found. Make sure you are logged in using `itp auth login`");
-    }
+    try {
+      const token = await this._authorizationClient.getTokenAsync();
+      if (!token) {
+        this.error("User token was not found. Make sure you are logged in using `itp auth login`");
+      }
 
-    return token;
+      return token;
+    } catch (error) {
+      this.error(error as Error);
+    }
   }
 
   protected async getAuthorizationCallback(accessToken?: string): Promise<AuthorizationCallback> {
