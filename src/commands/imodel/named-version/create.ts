@@ -59,7 +59,7 @@ export default class CreateNamedVersion extends BaseCommand {
   public async run(): Promise<NamedVersion> {
     const { flags } = await this.parse(CreateNamedVersion);
 
-    const service = await this.getIModelService();
+    const service = await this.getIModelNamedVersionService();
     const result = await service.createNamedVersion(flags["imodel-id"], flags.name, flags.description, flags["changeset-id"]);
 
     return this.logAndReturnResult(result);

@@ -21,7 +21,9 @@ import { ChangedElementsApiClient } from "../services/changed-elements/changed-e
 import { ChangedElementsApiService } from "../services/changed-elements/changed-elements-api-service.js";
 import { ContextService } from "../services/context-service.js";
 import { LoggingCallbacks } from "../services/general-models/logging-callbacks.js";
-import { IModelApiService } from "../services/imodels/iModel-api-service.js";
+import { IModelChangesetService } from "../services/imodels/iModels-changeset-service.js";
+import { IModelNamedVersionService } from "../services/imodels/iModels-named-version-service.js";
+import { IModelService } from "../services/imodels/iModels-service.js";
 import { ITwinPlatformApiClient } from "../services/itwins/iTwin-api-client.js";
 import { StorageApiClient } from "../services/storage/storage-api-client.js";
 import { SynchronizationApiClient } from "../services/synchronization/synchronization-api-client.js";
@@ -98,17 +100,6 @@ export default abstract class BaseCommand extends Command {
       this.error(error as Error);
     }
   }
-
-  protected async getAuthorizationCallback(accessToken?: string): Promise<AuthorizationCallback> {
-    const parts = (accessToken ?? (await this.getAccessToken())).split(" ");
-
-    return async () =>
-      Promise.resolve<Authorization>({
-        scheme: parts[0],
-        token: parts[1],
-      });
-  }
-
   protected async getAccessControlApiClient(): Promise<AccessControlClient> {
     const token = await this.getAccessToken();
     return new AccessControlClient(this._baseApiUrl, token);
@@ -120,10 +111,32 @@ export default abstract class BaseCommand extends Command {
     return new AccessControlMemberClient(this._baseApiUrl, token);
   }
 
-  protected async getIModelService(): Promise<IModelApiService> {
+  private async getAuthorizationCallback(accessToken?: string): Promise<AuthorizationCallback> {
+    const parts = (accessToken ?? (await this.getAccessToken())).split(" ");
+
+    return async () =>
+      Promise.resolve<Authorization>({
+        scheme: parts[0],
+        token: parts[1],
+      });
+  }
+
+  protected async getIModelService(): Promise<IModelService> {
     const callback = await this.getAuthorizationCallback();
 
-    return new IModelApiService(this.iModelClient, this.contextService, callback, this._logger);
+    return new IModelService(this.iModelClient, this.contextService, callback, this._logger);
+  }
+
+  protected async getIModelChangesetService(): Promise<IModelChangesetService> {
+    const callback = await this.getAuthorizationCallback();
+
+    return new IModelChangesetService(this.iModelClient, callback);
+  }
+
+  protected async getIModelNamedVersionService(): Promise<IModelNamedVersionService> {
+    const callback = await this.getAuthorizationCallback();
+
+    return new IModelNamedVersionService(this.iModelClient, callback);
   }
 
   protected async getChangedElementsApiService(): Promise<ChangedElementsApiService> {
@@ -145,14 +158,9 @@ export default abstract class BaseCommand extends Command {
     return new StorageApiClient(iTwinApiClient);
   }
 
-  protected async getSynchronizationClient(): Promise<SynchronizationApiClient> {
-    const iTwinApiClient = await this.getITwinApiClient();
-
-    return new SynchronizationApiClient(iTwinApiClient);
-  }
-
   protected async getSynchronizationApiService(): Promise<SynchronizationApiService> {
-    const synchronizationApiClient = await this.getSynchronizationClient();
+    const iTwinApiClient = await this.getITwinApiClient();
+    const synchronizationApiClient = new SynchronizationApiClient(iTwinApiClient);
 
     return new SynchronizationApiService(synchronizationApiClient, this.authorizationService, this._logger);
   }

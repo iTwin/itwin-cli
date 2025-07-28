@@ -38,7 +38,7 @@ export default class NamedVersionInfo extends BaseCommand {
   public async run(): Promise<NamedVersion> {
     const { flags } = await this.parse(NamedVersionInfo);
 
-    const service = await this.getIModelService();
+    const service = await this.getIModelNamedVersionService();
     const result = await service.getNamedVersion(flags["imodel-id"], flags["named-version-id"]);
 
     return this.logAndReturnResult(result);

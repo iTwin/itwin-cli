@@ -74,7 +74,7 @@ export default class ListNamedVersions extends BaseCommand {
   public async run(): Promise<NamedVersion[]> {
     const { flags } = await this.parse(ListNamedVersions);
 
-    const service = await this.getIModelService();
+    const service = await this.getIModelNamedVersionService();
     const orderByProperty = flags["order-by"]?.split(" ")[0] as NamedVersionOrderByProperty;
     const orderByOperator = flags["order-by"]?.split(" ")[1] as OrderByOperator;
     const result = await service.getNamedVersions(flags["imodel-id"], flags.name, orderByOperator, orderByProperty, flags.search, flags.skip, flags.top);
