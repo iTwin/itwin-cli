@@ -100,16 +100,6 @@ export default abstract class BaseCommand extends Command {
       this.error(error as Error);
     }
   }
-  protected async getAccessControlApiClient(): Promise<AccessControlClient> {
-    const token = await this.getAccessToken();
-    return new AccessControlClient(this._baseApiUrl, token);
-  }
-
-  protected async getAccessControlMemberClient(): Promise<AccessControlMemberClient> {
-    const token = await this.getAccessToken();
-
-    return new AccessControlMemberClient(this._baseApiUrl, token);
-  }
 
   private async getAuthorizationCallback(accessToken?: string): Promise<AuthorizationCallback> {
     const parts = (accessToken ?? (await this.getAccessToken())).split(" ");
@@ -119,6 +109,17 @@ export default abstract class BaseCommand extends Command {
         scheme: parts[0],
         token: parts[1],
       });
+  }
+
+  protected async getAccessControlApiClient(): Promise<AccessControlClient> {
+    const token = await this.getAccessToken();
+    return new AccessControlClient(this._baseApiUrl, token);
+  }
+
+  protected async getAccessControlMemberClient(): Promise<AccessControlMemberClient> {
+    const token = await this.getAccessToken();
+
+    return new AccessControlMemberClient(this._baseApiUrl, token);
   }
 
   protected async getIModelService(): Promise<IModelService> {
