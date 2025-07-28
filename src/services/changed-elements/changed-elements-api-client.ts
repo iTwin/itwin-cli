@@ -3,7 +3,7 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { ITwinPlatformApiClient } from "../itwins/iTwin-api-client.js";
+import { ITwinPlatformApiClient } from "../iTwin-platform-api-client.js";
 import { ChangesetComparisonResponse, ChangesetsResponse, ChangeTrackingRequest, TrackingResponse } from "./tracking.js";
 
 export class ChangedElementsApiClient {

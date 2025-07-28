@@ -24,7 +24,7 @@ import { LoggingCallbacks } from "../services/general-models/logging-callbacks.j
 import { IModelChangesetService } from "../services/imodels/iModels-changeset-service.js";
 import { IModelNamedVersionService } from "../services/imodels/iModels-named-version-service.js";
 import { IModelService } from "../services/imodels/iModels-service.js";
-import { ITwinPlatformApiClient } from "../services/itwins/iTwin-api-client.js";
+import { ITwinPlatformApiClient } from "../services/iTwin-platform-api-client.js";
 import { StorageApiClient } from "../services/storage/storage-api-client.js";
 import { SynchronizationApiClient } from "../services/synchronization/synchronization-api-client.js";
 import { SynchronizationApiService } from "../services/synchronization/synchronization-api-service.js";
