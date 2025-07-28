@@ -48,13 +48,14 @@ export default class CreateConnectionSourceFile extends BaseCommand {
   public async run(): Promise<SourceFile> {
     const { flags } = await this.parse(CreateConnectionSourceFile);
 
-    const client = await this.getSynchronizationClient();
+    const synchronizationApiService = await this.getSynchronizationApiService();
 
-    const response = await client.addSourceFile(flags["connection-id"], {
-      connectorType: flags["connector-type"] as ConnectorType,
-      storageFileId: flags["storage-file-id"],
-    });
+    const result = await synchronizationApiService.createConnectionSourceFile(
+      flags["connection-id"],
+      flags["connector-type"] as ConnectorType,
+      flags["storage-file-id"],
+    );
 
-    return this.logAndReturnResult(response.sourceFile);
+    return this.logAndReturnResult(result);
   }
 }

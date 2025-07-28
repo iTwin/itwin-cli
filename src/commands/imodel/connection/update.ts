@@ -53,13 +53,10 @@ export default class UpdateStorageConnection extends BaseCommand {
   public async run(): Promise<StorageConnection | undefined> {
     const { flags } = await this.parse(UpdateStorageConnection);
 
-    const client = await this.getSynchronizationClient();
+    const synchronizationApiService = await this.getSynchronizationApiService();
 
-    const response = await client.updateStorageConnection(flags["connection-id"], {
-      authenticationType: flags["authentication-type"] as AuthenticationType,
-      displayName: flags.name,
-    });
+    const result = await synchronizationApiService.updateConnection(flags["connection-id"], flags["authentication-type"] as AuthenticationType, flags.name);
 
-    return this.logAndReturnResult(response.connection);
+    return this.logAndReturnResult(result);
   }
 }

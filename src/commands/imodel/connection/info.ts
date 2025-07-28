@@ -36,10 +36,10 @@ export default class ConnectionInfo extends BaseCommand {
   public async run(): Promise<StorageConnection | undefined> {
     const { flags } = await this.parse(ConnectionInfo);
 
-    const client = await this.getSynchronizationClient();
+    const synchronizationApiService = await this.getSynchronizationApiService();
 
-    const response = await client.getStorageConnection(flags["connection-id"]);
+    const result = await synchronizationApiService.getConnection(flags["connection-id"]);
 
-    return this.logAndReturnResult(response.connection);
+    return this.logAndReturnResult(result);
   }
 }

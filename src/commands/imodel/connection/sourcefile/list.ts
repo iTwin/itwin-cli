@@ -52,9 +52,10 @@ export default class ListSourceFiles extends BaseCommand {
   public async run(): Promise<SourceFile[]> {
     const { flags } = await this.parse(ListSourceFiles);
 
-    const client = await this.getSynchronizationClient();
-    const response = await client.getSourceFiles(flags["connection-id"], flags.top, flags.skip);
+    const synchronizationApiService = await this.getSynchronizationApiService();
 
-    return this.logAndReturnResult(response.sourceFiles);
+    const result = await synchronizationApiService.getConnectionSourceFiles(flags["connection-id"], flags.skip, flags.top);
+
+    return this.logAndReturnResult(result);
   }
 }

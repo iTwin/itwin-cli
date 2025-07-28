@@ -21,10 +21,11 @@ import { ChangedElementsApiClient } from "../services/changed-elements/changed-e
 import { ChangedElementsApiService } from "../services/changed-elements/changed-elements-api-service.js";
 import { ContextService } from "../services/context-service.js";
 import { LoggingCallbacks } from "../services/general-models/logging-callbacks.js";
-import { IModelApiService } from "../services/imodels/iModel-api-service.js";
+import { IModelApiService as IModelService } from "../services/imodels/iModel-api-service.js";
 import { ITwinPlatformApiClient } from "../services/itwins/iTwin-api-client.js";
 import { StorageApiClient } from "../services/storage/storage-api-client.js";
 import { SynchronizationApiClient } from "../services/synchronization/synchronization-api-client.js";
+import { SynchronizationApiService } from "../services/synchronization/synchronization-api-service.js";
 import { UsersApiClient } from "../services/users/users-api-client.js";
 import { UsersApiService } from "../services/users/users-api-service.js";
 import { Configuration } from "./configuration.js";
@@ -119,10 +120,10 @@ export default abstract class BaseCommand extends Command {
     return new AccessControlMemberClient(this._baseApiUrl, token);
   }
 
-  protected async getIModelService(): Promise<IModelApiService> {
+  protected async getIModelService(): Promise<IModelService> {
     const callback = await this.getAuthorizationCallback();
 
-    return new IModelApiService(this.iModelClient, this.contextService, callback, this._logger);
+    return new IModelService(this.iModelClient, this.contextService, callback, this._logger);
   }
 
   protected async getChangedElementsApiService(): Promise<ChangedElementsApiService> {
@@ -148,6 +149,12 @@ export default abstract class BaseCommand extends Command {
     const iTwinApiClient = await this.getITwinApiClient();
 
     return new SynchronizationApiClient(iTwinApiClient);
+  }
+
+  protected async getSynchronizationApiService(): Promise<SynchronizationApiService> {
+    const synchronizationApiClient = await this.getSynchronizationClient();
+
+    return new SynchronizationApiService(synchronizationApiClient, this.authorizationService, this._logger);
   }
 
   protected async getUserApiService(): Promise<UsersApiService> {

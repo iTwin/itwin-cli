@@ -42,10 +42,10 @@ export default class ConnectionSourceFileInfo extends BaseCommand {
   public async run(): Promise<SourceFile> {
     const { flags } = await this.parse(ConnectionSourceFileInfo);
 
-    const client = await this.getSynchronizationClient();
+    const synchronizationApiService = await this.getSynchronizationApiService();
 
-    const response = await client.getSourceFile(flags["connection-id"], flags["source-file-id"]);
+    const result = await synchronizationApiService.getConnectionSourceFile(flags["connection-id"], flags["source-file-id"]);
 
-    return this.logAndReturnResult(response.sourceFile);
+    return this.logAndReturnResult(result);
   }
 }

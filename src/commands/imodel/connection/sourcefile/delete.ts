@@ -42,10 +42,10 @@ export default class ConnectionSourceFileDelete extends BaseCommand {
   public async run(): Promise<ResultResponse> {
     const { flags } = await this.parse(ConnectionSourceFileDelete);
 
-    const client = await this.getSynchronizationClient();
+    const synchronizationApiService = await this.getSynchronizationApiService();
 
-    await client.deleteSourceFile(flags["connection-id"], flags["source-file-id"]);
+    const result = await synchronizationApiService.deleteConnectionSourceFile(flags["connection-id"], flags["source-file-id"]);
 
-    return this.logAndReturnResult({ result: "deleted" });
+    return this.logAndReturnResult(result);
   }
 }

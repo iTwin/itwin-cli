@@ -8,11 +8,9 @@ import { Flags } from "@oclif/core";
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { CustomFlags } from "../../../extensions/custom-flags.js";
-import { AuthorizationType } from "../../../services/authorization/authorization-type.js";
 import { AuthenticationType } from "../../../services/synchronization/models/authentication-type.js";
 import { ConnectorType } from "../../../services/synchronization/models/connector-type.js";
 import { StorageConnection } from "../../../services/synchronization/models/storage-connection.js";
-import { StorageFileCreate } from "../../../services/synchronization/models/storage-file-create.js";
 
 export default class CreateConnection extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -69,38 +67,16 @@ export default class CreateConnection extends BaseCommand {
   public async run(): Promise<StorageConnection | undefined> {
     const { flags } = await this.parse(CreateConnection);
 
-    const client = await this.getSynchronizationClient();
+    const synchronizationApiService = await this.getSynchronizationApiService();
 
-    const sourceFiles: StorageFileCreate[] = [];
+    const result = await synchronizationApiService.createConnection(
+      flags["imodel-id"],
+      flags["file-id"],
+      flags["connector-type"] as ConnectorType[],
+      flags.name,
+      flags["authentication-type"] as AuthenticationType,
+    );
 
-    if (flags["connector-type"].length !== flags["file-id"].length && flags["connector-type"].length !== 1) {
-      this.error(
-        "When multiple connector-type options are provided, their amount must match file-id option amount. Alternatively, you can provide a single connector-type option, which will then be applied to all file-id options.",
-      );
-    }
-
-    const isSingleConnectorTypeProvided = flags["connector-type"].length === 1;
-    for (let i = 0; i < flags["file-id"].length; i++) {
-      const connectorType = isSingleConnectorTypeProvided ? (flags["connector-type"][0] as ConnectorType) : (flags["connector-type"][i] as ConnectorType);
-      sourceFiles.push({
-        connectorType,
-        storageFileId: flags["file-id"][i],
-      });
-    }
-
-    const authInfo = await this.authorizationService.info();
-    let authType = flags["authentication-type"] as AuthenticationType;
-    if (authType === undefined) {
-      authType = authInfo.authorizationType === AuthorizationType.Service ? AuthenticationType.SERVICE : AuthenticationType.USER;
-    }
-
-    const response = await client.createStorageConnection({
-      authenticationType: authType,
-      displayName: flags.name,
-      iModelId: flags["imodel-id"],
-      sourceFiles,
-    });
-
-    return this.logAndReturnResult(response.connection);
+    return this.logAndReturnResult(result);
   }
 }
