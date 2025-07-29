@@ -92,7 +92,7 @@ export default class ListITwins extends BaseCommand {
     }),
     top: Flags.integer({
       description: "Limit the number of items returned.",
-      helpValue: "<integer      >",
+      helpValue: "<integer>",
       required: false,
     }),
     type: Flags.string({
