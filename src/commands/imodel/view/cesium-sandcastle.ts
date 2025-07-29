@@ -137,8 +137,8 @@ export default class CesiumSandcastle extends BaseCommand {
 
     let changesetId = flags["changeset-id"] ?? "";
     if (changesetId === undefined) {
-      const iModelService = await this.getIModelService();
-      const existingChangesets = await iModelService.getChangesets(flags["imodel-id"], OrderByOperator.Descending, undefined, 1);
+      const iModelChangesetService = await this.getIModelChangesetService();
+      const existingChangesets = await iModelChangesetService.getChangesets(flags["imodel-id"], OrderByOperator.Descending, undefined, 1);
       if (existingChangesets.length === 0) {
         this.error(`No changesets found for iModel: ${flags["imodel-id"]}`);
       }

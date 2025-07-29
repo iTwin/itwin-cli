@@ -14,7 +14,8 @@ List all named versions for a specific iModel.
 
 - **`--order-by`**  
   Sort by `changesetIndex` or `createdDateTime`, in `asc` or `desc` order.  
-  **Type:** `string` **Required:** No
+  **Type:** `string` **Required:** No  
+  **Valid Values:** `"changesetIndex desc"`, `"changesetIndex asc"`, `"createdDateTime desc"`, `"createdDateTime asc"`
 
 - **`--search`**  
   Search named versions by name or description.  

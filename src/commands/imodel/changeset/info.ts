@@ -45,7 +45,7 @@ export default class ChangesetInfo extends BaseCommand {
   public async run(): Promise<Changeset | undefined> {
     const { flags } = await this.parse(ChangesetInfo);
 
-    const iModelService = await this.getIModelService();
+    const iModelService = await this.getIModelChangesetService();
     const result = await iModelService.getChangeset(flags["imodel-id"], flags["changeset-id"], flags["changeset-index"]);
 
     return this.logAndReturnResult(result);
