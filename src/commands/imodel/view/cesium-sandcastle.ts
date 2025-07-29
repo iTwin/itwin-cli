@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import open from "open";
+import { deflate } from "pako";
 
 import { OrderByOperator } from "@itwin/imodels-client-management";
 import { Flags } from "@oclif/core";
@@ -11,7 +12,7 @@ import { Flags } from "@oclif/core";
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { CustomFlags } from "../../../extensions/custom-flags.js";
-import { extractTileSetUrl, makeCompressedBase64String } from "../../../services/mesh-export/mesh-utils.js";
+import { extractTileSetUrl } from "../../../services/mesh-export/extract-tile-set-url.js";
 import { ExportInfo } from "../../../services/mesh-export/models/export-info.js";
 
 export default class CesiumSandcastle extends BaseCommand {
@@ -99,4 +100,40 @@ export default class CesiumSandcastle extends BaseCommand {
 
     return this.logAndReturnResult({ url });
   }
+}
+
+export function makeCompressedBase64String(data: string[]): string {
+  let jsonString = JSON.stringify(data);
+  jsonString = jsonString.slice(2, 2 + jsonString.length - 4);
+  let base64String = Buffer.from(deflate(jsonString, { raw: true })).toString("base64");
+  base64String = base64String.replace(/=+$/, ""); // remove padding
+
+  return base64String;
+}
+
+function htmlData(): string {
+  return `
+<style>
+@import url(../templates/bucket.css);
+</style>
+
+<div id="cesiumContainer" class="fullSize"></div>
+`;
+}
+
+function jsData(tilesetUrl: string, terrain?: string): string {
+  let viewerParams = "";
+  if (terrain === "cesiumWorldTerrain") {
+    viewerParams += "terrain: Cesium.Terrain.fromWorldTerrain(),";
+  }
+
+  return `
+const viewer = new Cesium.Viewer("cesiumContainer",{${viewerParams}});
+viewer.scene.globe.show = true;
+viewer.scene.debugShowFramesPerSecond = true;
+const tilesetUrl = '${tilesetUrl}'; 
+const tileset = await Cesium.Cesium3DTileset.fromUrl(tilesetUrl);
+viewer.scene.primitives.add(tileset);
+viewer.zoomTo(tileset);
+`;
 }
