@@ -52,9 +52,10 @@ export default class ConnectionRunsListed extends BaseCommand {
   public async run(): Promise<StorageRunsResponse> {
     const { flags } = await this.parse(ConnectionRunsListed);
 
-    const client = await this.getSynchronizationClient();
-    const response = await client.getStorageConnectionRuns(flags["connection-id"], flags.top, flags.skip);
+    const synchronizationApiService = await this.getSynchronizationApiService();
 
-    return this.logAndReturnResult(response);
+    const result = await synchronizationApiService.getConnectionRuns(flags["connection-id"], flags.skip, flags.top);
+
+    return this.logAndReturnResult(result);
   }
 }

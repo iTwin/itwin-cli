@@ -3,7 +3,7 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { NamedVersion, NamedVersionOrderByProperty, OrderBy, OrderByOperator, take, toArray } from "@itwin/imodels-client-management";
+import { NamedVersion, NamedVersionOrderByProperty, OrderByOperator } from "@itwin/imodels-client-management";
 import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../extensions/api-reference.js";
@@ -51,6 +51,8 @@ export default class ListNamedVersions extends BaseCommand {
       description: "Sort by `changesetIndex` or `createdDateTime`, in `asc` or `desc` order.",
       helpValue: "<string>",
       required: false,
+      options: ["changesetIndex desc", "changesetIndex asc", "createdDateTime desc", "createdDateTime asc"],
+      type: "option",
     }),
     search: Flags.string({
       description: "Search named versions by name or description.",
@@ -72,28 +74,10 @@ export default class ListNamedVersions extends BaseCommand {
   public async run(): Promise<NamedVersion[]> {
     const { flags } = await this.parse(ListNamedVersions);
 
-    const authorization = await this.getAuthorizationCallback();
-
-    const orderBy: OrderBy<NamedVersion, NamedVersionOrderByProperty> | undefined = flags["order-by"]
-      ? {
-          operator: flags["order-by"].split(" ")[1] === "desc" ? OrderByOperator.Descending : OrderByOperator.Ascending,
-          property: flags["order-by"].split(" ")[0] as NamedVersionOrderByProperty,
-        }
-      : undefined;
-
-    const namedVersionsList = this.iModelClient.namedVersions.getRepresentationList({
-      authorization,
-      iModelId: flags["imodel-id"],
-      urlParams: {
-        $orderBy: orderBy,
-        $search: flags.search,
-        $skip: flags.skip,
-        $top: flags.top,
-        name: flags.name,
-      },
-    });
-
-    const result: NamedVersion[] = await (flags.top ? take(namedVersionsList, flags.top) : toArray(namedVersionsList));
+    const service = await this.getIModelNamedVersionService();
+    const orderByProperty = flags["order-by"]?.split(" ")[0] as NamedVersionOrderByProperty;
+    const orderByOperator = flags["order-by"]?.split(" ")[1] as OrderByOperator;
+    const result = await service.getNamedVersions(flags["imodel-id"], flags.name, orderByOperator, orderByProperty, flags.search, flags.skip, flags.top);
 
     return this.logAndReturnResult(result);
   }

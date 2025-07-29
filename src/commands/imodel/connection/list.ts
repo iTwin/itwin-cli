@@ -52,10 +52,10 @@ export default class ListConnections extends BaseCommand {
   public async run(): Promise<StorageConnectionListResponse> {
     const { flags } = await this.parse(ListConnections);
 
-    const client = await this.getSynchronizationClient();
+    const synchronizationApiService = await this.getSynchronizationApiService();
 
-    const response = await client.getStorageConnections(flags["imodel-id"], flags.top, flags.skip);
+    const result = await synchronizationApiService.getConnections(flags["imodel-id"], flags.skip, flags.top);
 
-    return this.logAndReturnResult(response);
+    return this.logAndReturnResult(result);
   }
 }

@@ -8,7 +8,7 @@ import { Command, Flags } from "@oclif/core";
 import { ApiReference } from "../../extensions/api-reference.js";
 import BaseCommand from "../../extensions/base-command.js";
 import { CustomFlags } from "../../extensions/custom-flags.js";
-import { Query } from "../../services/itwins/iTwin-api-client.js";
+import { Query } from "../../services/iTwin-platform-api-client.js";
 
 export default class ApiRequest extends BaseCommand {
   public static apiReference: ApiReference = {

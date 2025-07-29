@@ -122,7 +122,7 @@ export async function getRootFolderId(iTwinId: string): Promise<string> {
  */
 export async function fetchEmailsAndGetInvitationLink(inbox: string, iTwinName: string): Promise<string> {
   await new Promise<void>((resolve) => {
-    setTimeout((_) => resolve(), 45 * 1000);
+    setTimeout((_) => resolve(), 60 * 1000);
   });
 
   expect(ITP_MAILINATOR_API_KEY).to.not.be.undefined;

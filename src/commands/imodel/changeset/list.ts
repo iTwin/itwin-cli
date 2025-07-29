@@ -72,7 +72,7 @@ export default class ListChangesets extends BaseCommand {
   public async run(): Promise<Changeset[]> {
     const { flags } = await this.parse(ListChangesets);
 
-    const iModelService = await this.getIModelService();
+    const iModelService = await this.getIModelChangesetService();
     const result = await iModelService.getChangesets(
       flags["imodel-id"],
       flags["order-by"] as OrderByOperator,

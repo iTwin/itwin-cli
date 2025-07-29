@@ -36,10 +36,10 @@ export default class DeleteConnection extends BaseCommand {
   public async run(): Promise<ResultResponse> {
     const { flags } = await this.parse(DeleteConnection);
 
-    const client = await this.getSynchronizationClient();
+    const synchronizationApiService = await this.getSynchronizationApiService();
 
-    await client.deleteStorageConnection(flags["connection-id"]);
+    const result = await synchronizationApiService.deleteConnection(flags["connection-id"]);
 
-    return this.logAndReturnResult({ result: "deleted" });
+    return this.logAndReturnResult(result);
   }
 }
