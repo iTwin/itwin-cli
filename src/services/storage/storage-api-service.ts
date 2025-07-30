@@ -147,7 +147,7 @@ export class StorageApiService {
   }
 
   private async createFile(folderId: string, fileInfo: ConnectorFileInfo): Promise<string> {
-    this._loggingCallbacks.log(`Initializing creation of a new file: ${fileInfo.fileName}`);
+    this._loggingCallbacks.log(`Creating a new file: '${fileInfo.fileName}'`);
     const newFile = await this.initiateFileCreation(folderId, fileInfo.fileName);
 
     const uploadUrl = newFile._links?.uploadUrl?.href;
@@ -157,7 +157,7 @@ export class StorageApiService {
     }
     const fileId = completeUrl.split("/")[5];
 
-    this._loggingCallbacks.log(`Uploading file content for file: ${fileInfo.fileName}`);
+    this._loggingCallbacks.log(`Uploading file content for file: '${fileInfo.fileName}' with ID: ${fileId}`);
     await this.uploadFile(fileInfo.fullFilePath, uploadUrl);
 
     this._loggingCallbacks.log(`Completing file upload for file: '${fileInfo.fileName}' with ID: ${fileId}`);
@@ -167,7 +167,7 @@ export class StorageApiService {
   }
 
   private async updateFileContent(fileId: string, fileInfo: ConnectorFileInfo): Promise<string> {
-    this._loggingCallbacks.log(`Initializing update for existing file: '${fileInfo.fileName}' with ID: ${fileId}`);
+    this._loggingCallbacks.log(`Updating an existing file: '${fileInfo.fileName}' with ID: ${fileId}`);
     const updateFile = await this.initiateFileContentUpdate(fileId);
 
     const uploadUrl = updateFile._links?.uploadUrl?.href;
@@ -176,7 +176,7 @@ export class StorageApiService {
       this._loggingCallbacks.error("No upload url was provided when creating content update for a file");
     }
 
-    this._loggingCallbacks.log(`Updating file content for file: ${fileInfo.fileName}`);
+    this._loggingCallbacks.log(`Updating file content for file: '${fileInfo.fileName}' with ID: ${fileId}`);
     await this.uploadFile(fileInfo.fullFilePath, uploadUrl);
 
     this._loggingCallbacks.log(`Completing file upload for file: '${fileInfo.fileName}' with ID: ${fileId}`);
