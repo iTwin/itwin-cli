@@ -3,8 +3,19 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-export interface LoggingCallbacks {
-  log: (message?: string) => void;
-  error: (input: Error | string) => never;
-  debug: (...args: any[]) => void;
+import { ConnectorType } from "./connector-type.js";
+
+export interface PopulateResponse {
+  iModelId: string;
+  iTwinId: string;
+  rootFolderId: string;
+  summary: {
+    connectionId: string;
+    files: {
+      connectorType: ConnectorType;
+      fileId: string;
+      fileName: string;
+    }[];
+    runId: string;
+  }[];
 }

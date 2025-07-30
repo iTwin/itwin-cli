@@ -13,6 +13,8 @@ import { ResultResponse } from "../general-models/result-response.js";
 import { AuthenticationType } from "./models/authentication-type.js";
 import { AuthInfo } from "./models/connection-auth.js";
 import { ConnectorType } from "./models/connector-type.js";
+import { ExecutionResult } from "./models/execution-result.js";
+import { ExecutionState } from "./models/execution-state.js";
 import { SourceFile } from "./models/source-file.js";
 import { StorageConnectionListResponse } from "./models/storage-connection-response.js";
 import { StorageConnection } from "./models/storage-connection.js";
@@ -64,8 +66,7 @@ export class SynchronizationApiService {
     });
 
     // Open page where authentication should happen
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    await open(response.authorizationInformation._links.authorizationUrl.href!);
+    await open(response.authorizationInformation._links.authorizationUrl.href);
 
     // Query regularly and check if authentication was successful.
     let index = 0;
@@ -205,5 +206,79 @@ export class SynchronizationApiService {
     });
 
     return response.sourceFile;
+  }
+
+  public async findOrCreateConnection(
+    iModelId: string,
+    files: { connectorType: ConnectorType; fileId: string; fileName: string }[],
+    name: string,
+  ): Promise<string> {
+    const existingConnections = (await this.getConnections(iModelId)).connections;
+
+    this._loggingCallbacks.log(`Checking existing connections for iModel ID: ${iModelId}`);
+    let connection = existingConnections.find((conn) => conn.displayName === name);
+    if (!connection) {
+      const authInfo = await this._authorizationService.info();
+      const authType = authInfo.authorizationType === AuthorizationType.Service ? AuthenticationType.SERVICE : AuthenticationType.USER;
+
+      this._loggingCallbacks.log(`Creating new default connection`);
+      connection = await this.createConnection(iModelId, [files[0].fileId], [files[0].connectorType], name, authType);
+      if (connection?.id === undefined) {
+        this._loggingCallbacks.error("Storage connection id was not present");
+      }
+    }
+
+    await Promise.all(files.map(async (file) => this.addFileToConnectionIfItIsNotPresent(connection.id, file)));
+
+    this._loggingCallbacks.log(`Running connection for connection ID: ${connection.id}`);
+    await this.createConnectionRun(connection.id);
+    return connection.id;
+  }
+
+  private async addFileToConnectionIfItIsNotPresent(
+    connectionId: string,
+    file: { connectorType: ConnectorType; fileId: string; fileName: string },
+  ): Promise<void> {
+    const sourceFiles = await this.getConnectionSourceFiles(connectionId);
+    const fileExist = sourceFiles.find((f) => f.storageFileId === file.fileId);
+    if (!fileExist) {
+      this._loggingCallbacks.log(`Adding file: ${file.fileId} to default connection: ${connectionId}`);
+      await this.createConnectionSourceFile(connectionId, file.connectorType, file.fileId);
+    }
+  }
+
+  public async runSynchronization(connectionId: string, waitForCompletion: boolean): Promise<string> {
+    this._loggingCallbacks.log(`Running synchronization for connection ID: ${connectionId}`);
+    const storageConnection = await this.getConnection(connectionId);
+    if (!storageConnection?._links?.lastRun?.href) {
+      this._loggingCallbacks.error(`No last run link available for storage connection: ${connectionId}`);
+    }
+
+    const runId = storageConnection?._links?.lastRun?.href.split("/")[8];
+    let storageConnectionRun;
+    do {
+      storageConnectionRun = await this.getConnectionRun(connectionId, runId);
+
+      await new Promise((resolve) => {
+        setTimeout(resolve, 10_000);
+      });
+      this._loggingCallbacks.log(`Waiting for synchronization to complete for run ID: ${runId} with state: ${storageConnectionRun?.state}`);
+    } while (waitForCompletion && storageConnectionRun?.state !== ExecutionState.COMPLETED);
+
+    if (!waitForCompletion) {
+      this._loggingCallbacks.log("Synchronization process started. Use the following command to check the status of the synchronization process:");
+      this._loggingCallbacks.log(`itp imodel connection run info --connection-id ${connectionId} --connection-run-id ${runId}`);
+      return runId;
+    }
+
+    if (storageConnectionRun?.result === ExecutionResult.SUCCESS) {
+      this._loggingCallbacks.log("Synchronization process completed successfully.");
+    } else {
+      this._loggingCallbacks.error(
+        `Synchronization run ${runId} resulted in an error. Run 'itp imodel connection run info --connection-id ${connectionId} --connection-run-id ${runId}' for more info.`,
+      );
+    }
+
+    return runId;
   }
 }

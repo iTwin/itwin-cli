@@ -36,9 +36,10 @@ export default class FolderInfo extends BaseCommand {
   public async run(): Promise<FolderTyped> {
     const { flags } = await this.parse(FolderInfo);
 
-    const client = await this.getStorageApiClient();
-    const response = await client.getFolder(flags["folder-id"]);
+    const storageApiService = await this.getStorageApiService();
 
-    return this.logAndReturnResult(response.folder);
+    const result = await storageApiService.getFolder(flags["folder-id"]);
+
+    return this.logAndReturnResult(result);
   }
 }
