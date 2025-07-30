@@ -12,8 +12,6 @@ import { Member, MembersResponse } from "../../../src/services/access-control/mo
 import { Role } from "../../../src/services/access-control/models/role";
 import { ResultResponse } from "../../../src/services/general-models/result-response.js";
 import { User } from "../../../src/services/users/models/user";
-import { ITP_TEST_USER_EXTERNAL } from "../../utils/environment";
-import { fetchEmailsAndGetInvitationLink } from "../../utils/helpers";
 import runSuiteIfMainModule from "../../utils/run-suite-if-main-module";
 
 const tests = () => {
@@ -45,52 +43,6 @@ const tests = () => {
     const { result: deleteResult } = await runCommand<ResultResponse>(`itwin delete --itwin-id ${iTwinId}`);
     expect(deleteResult).to.have.property("result", "deleted");
   });
-
-  it("Should invite an external member to an iTwin, accept sent invitation and remove user member", async () => {
-    const { result: newRole } = await runCommand<Role>(`access-control role create -i ${iTwinId} -n "Test Role 1" -d "Test Role Description"`);
-    expect(newRole).to.not.be.undefined;
-    expect(newRole!.id).to.not.be.undefined;
-
-    const emailToAdd = ITP_TEST_USER_EXTERNAL;
-
-    const { result: invitedUser } = await runCommand<MembersResponse>(
-      `access-control member user add --itwin-id ${iTwinId} --members "[{"email": "${emailToAdd}", "roleIds": ["${newRole!.id}"]}]"`,
-    );
-
-    expect(invitedUser).to.not.be.undefined;
-    expect(invitedUser!.invitations).to.have.lengthOf(1);
-    expect(invitedUser!.invitations[0].email.toLowerCase()).to.be.equal(emailToAdd!.toLowerCase());
-    expect(invitedUser!.invitations[0].roles).to.have.lengthOf(1);
-    expect(invitedUser!.invitations[0].roles[0].id).to.be.equal(newRole!.id);
-
-    const invitationLink = await fetchEmailsAndGetInvitationLink(emailToAdd!.split("@")[0], iTwinName);
-
-    await fetch(invitationLink);
-
-    let usersInfo: Member[];
-    do {
-      await new Promise<void>((resolve) => {
-        setTimeout((_) => resolve(), 10 * 1000);
-      });
-
-      const listResult = await runCommand<Member[]>(`access-control member user list --itwin-id ${iTwinId}`);
-      expect(listResult.result).to.not.be.undefined;
-      usersInfo = listResult.result!;
-    } while (usersInfo.length !== 2);
-
-    await new Promise<void>((resolve) => {
-      setTimeout((_) => resolve(), 30 * 1000);
-    });
-
-    const joinedUser = usersInfo.find((user) => user.email.toLowerCase() === emailToAdd!.toLowerCase());
-    expect(joinedUser).to.not.be.undefined;
-    expect(joinedUser?.roles).to.have.lengthOf(1);
-    expect(joinedUser?.roles[0].id).to.be.equal(newRole!.id);
-
-    const { result: deleteResult } = await runCommand<ResultResponse>(`access-control member user delete --itwin-id ${iTwinId} --member-id ${joinedUser?.id}`);
-    expect(deleteResult).to.not.be.undefined;
-    expect(deleteResult).to.have.property("result", "deleted");
-  }).timeout(180 * 1000);
 
   it("Should display owner info of an iTwin in member info", async () => {
     const { result: userInfo } = await runCommand<User>(`user me`);

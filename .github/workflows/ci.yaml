@@ -96,7 +96,6 @@ jobs:
           ITP_ISSUER_URL: ${{ vars.ITP_ISSUER_URL }}
           ITP_SERVICE_CLIENT_ID: ${{ vars.ITP_SERVICE_CLIENT_ID }}
           ITP_SERVICE_CLIENT_SECRET: ${{ secrets.ITP_SERVICE_CLIENT_SECRET }}
-          ITP_MAILINATOR_API_KEY: ${{ secrets.ITP_MAILINATOR_API_KEY }}
           ITP_TEST_USER_SAMEORG: ${{ vars.ITP_TEST_USER_SAMEORG }}
           ITP_TEST_USER_EXTERNAL: ${{ vars.ITP_TEST_USER_EXTERNAL }}
 
@@ -131,6 +130,30 @@ jobs:
           ITP_NATIVE_TEST_CLIENT_ID: ${{ vars.ITP_NATIVE_TEST_CLIENT_ID }}
           ITP_TEST_USER_EMAIL: ${{ vars.ITP_TEST_USER_EMAIL }}
           ITP_TEST_USER_PASSWORD: ${{ secrets.ITP_TEST_USER_PASSWORD }}
-          ITP_MAILINATOR_API_KEY: ${{ secrets.ITP_MAILINATOR_API_KEY }}
           ITP_TEST_USER_SAMEORG: ${{ vars.ITP_TEST_USER_SAMEORG }}
           ITP_TEST_USER_EXTERNAL: ${{ vars.ITP_TEST_USER_EXTERNAL }}
+  test_mocked:
+    name: Tests (Mocked HTTP traffic)
+    runs-on: ubuntu-latest
+    environment: QA
+    needs: build
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org/
+
+      - name: Install dependencies
+        run: npm ci
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: build
+
+      - name: Test
+        run: npm run test:mocked

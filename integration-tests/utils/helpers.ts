@@ -5,7 +5,6 @@
 
 import { expect } from "chai";
 import * as dotenv from "dotenv";
-import { GetInboxRequest, GetMessageRequest, MailinatorClient } from "mailinator-client";
 import fs from "node:fs";
 import os from "node:os";
 import { inflate } from "pako";
@@ -22,7 +21,7 @@ import { FileTyped } from "../../src/services/storage/models/file-typed.js";
 import { FileUpload } from "../../src/services/storage/models/file-upload.js";
 import { FolderTyped } from "../../src/services/storage/models/folder-typed.js";
 import { ItemsWithFolderLink } from "../../src/services/storage/models/items-with-folder-link.js";
-import { ITP_API_URL, ITP_ISSUER_URL, ITP_MAILINATOR_API_KEY, ITP_NATIVE_TEST_CLIENT_ID, ITP_TEST_USER_EMAIL, ITP_TEST_USER_PASSWORD } from "./environment.js";
+import { ITP_API_URL, ITP_ISSUER_URL, ITP_NATIVE_TEST_CLIENT_ID, ITP_TEST_USER_EMAIL, ITP_TEST_USER_PASSWORD } from "./environment.js";
 
 export async function serviceLoginToCli(): Promise<void> {
   const result = await runCommand("auth login");
@@ -111,42 +110,6 @@ export async function getRootFolderId(iTwinId: string): Promise<string> {
   const rootFolderId = topFolders?._links?.folder?.href?.split("/").pop();
   expect(rootFolderId).to.not.be.undefined;
   return rootFolderId as string;
-}
-
-/**
- * Fetches emails from the specified inbox and then finds and returns the invitation link for iTwinName iTwin.
- * NOTE: This function only works for email addresses, that are accessible using the Mailinator API.
- * @param inbox Inbox to fetch the invitation email from.
- * @param iTwinName Name of the iTwin.
- * @returns Invitation link for joining the iTwin.
- */
-export async function fetchEmailsAndGetInvitationLink(inbox: string, iTwinName: string): Promise<string> {
-  await new Promise<void>((resolve) => {
-    setTimeout((_) => resolve(), 60 * 1000);
-  });
-
-  expect(ITP_MAILINATOR_API_KEY).to.not.be.undefined;
-
-  const client = new MailinatorClient(ITP_MAILINATOR_API_KEY);
-  const inboxResponse = await client.request(new GetInboxRequest("private", inbox, undefined, 10));
-  expect(inboxResponse.result).to.not.be.null;
-
-  for (const message of inboxResponse.result!.msgs) {
-    if (message.subject !== "You have been invited to collaborate") continue;
-
-    const messageResponse = await client.request(new GetMessageRequest("private", message.id));
-    expect(messageResponse.result).to.not.be.null;
-    const messageBody = messageResponse.result!.parts[0].body;
-    if (!messageBody.includes(iTwinName)) continue;
-
-    const invitationTokenRegex = /href=".*?invitationToken.*?"/;
-    const matches = messageBody.match(invitationTokenRegex);
-    expect(matches).to.not.be.null;
-    expect(matches).to.have.lengthOf(1);
-    return matches![0].slice('href="'.length, -1);
-  }
-
-  throw new Error("Email was not found in inbox.");
 }
 
 export async function nativeLoginToCli(): Promise<void> {
