@@ -221,17 +221,14 @@ export class SynchronizationApiService {
       const authInfo = await this._authorizationService.info();
       const authType = authInfo.authorizationType === AuthorizationType.Service ? AuthenticationType.SERVICE : AuthenticationType.USER;
 
-      this._loggingCallbacks.log(`Creating new default connection`);
+      this._loggingCallbacks.log(`Creating a new default connection`);
       connection = await this.createConnection(iModelId, [files[0].fileId], [files[0].connectorType], name, authType);
       if (connection?.id === undefined) {
         this._loggingCallbacks.error("Storage connection id was not present");
       }
     }
-
+    this._loggingCallbacks.log(`Adding files to connection`);
     await Promise.all(files.map(async (file) => this.addFileToConnectionIfItIsNotPresent(connection.id, file)));
-
-    this._loggingCallbacks.log(`Running connection for connection ID: ${connection.id}`);
-    await this.createConnectionRun(connection.id);
     return connection.id;
   }
 
@@ -241,14 +238,18 @@ export class SynchronizationApiService {
   ): Promise<void> {
     const sourceFiles = await this.getConnectionSourceFiles(connectionId);
     const fileExist = sourceFiles.find((f) => f.storageFileId === file.fileId);
-    if (!fileExist) {
-      this._loggingCallbacks.log(`Adding file: ${file.fileId} to default connection: ${connectionId}`);
+    if (fileExist) {
+      this._loggingCallbacks.log(`File ${file.fileId} already belongs to connection: ${connectionId}`);
+    } else {
+      this._loggingCallbacks.log(`Adding file: ${file.fileId} to connection: ${connectionId}`);
       await this.createConnectionSourceFile(connectionId, file.connectorType, file.fileId);
     }
   }
 
   public async runSynchronization(connectionId: string, waitForCompletion: boolean): Promise<string> {
     this._loggingCallbacks.log(`Running synchronization for connection ID: ${connectionId}`);
+    await this.createConnectionRun(connectionId);
+
     const storageConnection = await this.getConnection(connectionId);
     if (!storageConnection?._links?.lastRun?.href) {
       this._loggingCallbacks.error(`No last run link available for storage connection: ${connectionId}`);
