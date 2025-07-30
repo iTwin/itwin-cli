@@ -63,7 +63,7 @@ export default class FileCreate extends BaseCommand {
 
     const storageApiService = await this.getStorageApiService();
 
-    const result = await storageApiService.initiateFileCreation(flags["folder-id"], flags.name, flags.description);
+    const result = await storageApiService.createFile(flags["folder-id"], flags.name, flags.description);
 
     return this.logAndReturnResult(result);
   }

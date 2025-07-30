@@ -25,7 +25,7 @@ export class StorageApiService {
     this._loggingCallbacks = loggingCallbacks;
   }
 
-  public async initiateFileCreation(folderId: string, name: string, description?: string): Promise<FileUpload> {
+  public async createFile(folderId: string, name: string, description?: string): Promise<FileUpload> {
     const result = await this._storageApiClient.createFile(folderId, name, description);
     return result;
   }
@@ -140,15 +140,15 @@ export class StorageApiService {
     if (foundFile?.id) {
       fileId = await this.updateFileContent(foundFile.id, fileInfo);
     } else {
-      fileId = await this.createFile(folderId, fileInfo);
+      fileId = await this.createAndUploadFile(folderId, fileInfo);
     }
 
     return { connectorType: fileInfo.connectorType, fileId, fileName: fileInfo.fileName };
   }
 
-  private async createFile(folderId: string, fileInfo: ConnectorFileInfo): Promise<string> {
+  private async createAndUploadFile(folderId: string, fileInfo: ConnectorFileInfo): Promise<string> {
     this._loggingCallbacks.log(`Creating a new file: '${fileInfo.fileName}'`);
-    const newFile = await this.initiateFileCreation(folderId, fileInfo.fileName);
+    const newFile = await this.createFile(folderId, fileInfo.fileName);
 
     const uploadUrl = newFile._links?.uploadUrl?.href;
     const completeUrl = newFile._links?.completeUrl?.href;
