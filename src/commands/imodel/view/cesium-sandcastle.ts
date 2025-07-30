@@ -102,7 +102,7 @@ export default class CesiumSandcastle extends BaseCommand {
   }
 }
 
-export function makeCompressedBase64String(data: string[]): string {
+function makeCompressedBase64String(data: string[]): string {
   let jsonString = JSON.stringify(data);
   jsonString = jsonString.slice(2, 2 + jsonString.length - 4);
   let base64String = Buffer.from(deflate(jsonString, { raw: true })).toString("base64");
