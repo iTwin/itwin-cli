@@ -1,3 +1,8 @@
+/*---------------------------------------------------------------------------------------------
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
+
 import runSuiteIfMainModule from "../../../integration-tests/utils/run-suite-if-main-module";
 import ownerTests from "./owner/owner.test";
 import userTests from "./user/user.test";
