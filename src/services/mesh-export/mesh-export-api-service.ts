@@ -18,7 +18,7 @@ export class MeshExportApiService {
 
   public async getOrCreateExport(iModelId: string, changesetId: string): Promise<ExportInfo> {
     this._loggingCallbacks.log(`Getting existing exports for iModel: ${iModelId} and changeset: ${changesetId}`);
-    let existingExports = await this._meshExportApiClient.getExports(iModelId);
+    let existingExports = (await this._meshExportApiClient.getExports(iModelId)).exports;
     const existingExport = existingExports.find((exp) => exp.request.exportType === "CESIUM" && exp.request.changesetId === changesetId);
 
     if (existingExport !== undefined) {
@@ -27,11 +27,11 @@ export class MeshExportApiService {
     }
 
     this._loggingCallbacks.log(`Creating new export for iModel: ${iModelId} and changeset: ${changesetId}`);
-    let newExport = await this._meshExportApiClient.createExport(iModelId, changesetId);
+    let newExport = (await this._meshExportApiClient.createExport(iModelId, changesetId)).export;
     while (newExport.status !== "Complete") {
       this._loggingCallbacks.log(`Export status is ${newExport.status}. Waiting for export to complete...`);
 
-      existingExports = await this._meshExportApiClient.getExports(iModelId);
+      existingExports = (await this._meshExportApiClient.getExports(iModelId)).exports;
 
       const foundExport = existingExports.find((exp) => exp.id === newExport.id);
       if (foundExport === undefined) this._loggingCallbacks.error("Export creation has failed");

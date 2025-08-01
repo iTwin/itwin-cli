@@ -4,7 +4,8 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { ITwinPlatformApiClient } from "../itwins/iTwin-api-client.js";
-import { ExportInfo } from "./models/export-info.js";
+import { ExportCreateResponse } from "./models/export-create-response.js";
+import { ExportResponse } from "./models/export-response.js";
 
 export class MeshExportApiClient {
   private _iTwinPlatformApiClient: ITwinPlatformApiClient;
@@ -13,7 +14,7 @@ export class MeshExportApiClient {
     this._iTwinPlatformApiClient = client;
   }
 
-  public async getExports(iModelId: string): Promise<ExportInfo[]> {
+  public async getExports(iModelId: string): Promise<ExportResponse> {
     return this._iTwinPlatformApiClient.sendRequest({
       apiPath: "mesh-export",
       method: "GET",
@@ -30,15 +31,15 @@ export class MeshExportApiClient {
     });
   }
 
-  public async createExport(iModelId: string, changesetId: string): Promise<ExportInfo> {
+  public async createExport(iModelId: string, changesetId: string): Promise<ExportCreateResponse> {
     return this._iTwinPlatformApiClient.sendRequest({
       apiPath: "mesh-export",
       method: "POST",
-      body: JSON.stringify({
+      body: {
         changesetId,
         exportType: "CESIUM",
         iModelId,
-      }),
+      },
     });
   }
 }
