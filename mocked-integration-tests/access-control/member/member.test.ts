@@ -1,0 +1,13 @@
+import runSuiteIfMainModule from "../../../integration-tests/utils/run-suite-if-main-module";
+import ownerTests from "./owner/owner.test";
+import userTests from "./user/user.test";
+
+const tests = () =>
+  describe("member", () => {
+    userTests();
+    ownerTests();
+  });
+
+export default tests;
+
+runSuiteIfMainModule(import.meta, tests);

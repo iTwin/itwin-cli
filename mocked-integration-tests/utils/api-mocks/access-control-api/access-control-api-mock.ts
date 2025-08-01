@@ -3,14 +3,8 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { setupMockEnvironment } from "./environment";
-import { deleteMockToken, writeMockToken } from "./helpers";
+import members from "./access-control-members-cases";
 
-before(async () => {
-  writeMockToken();
-  setupMockEnvironment();
-});
-
-after(async () => {
-  deleteMockToken();
-});
+export class AccessControlApiMock {
+  public static members = members;
+}

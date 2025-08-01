@@ -1,0 +1,175 @@
+/*---------------------------------------------------------------------------------------------
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
+
+import { MemberResponse, MembersListResponse, MembersResponse, UserMember } from "../../../../src/services/access-control/models/members";
+import { OwnerListResponse, OwnerResponse } from "../../../../src/services/access-control/models/owner";
+
+export class AccessControlMembersResponses {
+  public static ownerResponse = {
+    internal: (email: string): OwnerResponse => {
+      return {
+        member: {
+          id: "99cf5e21-735c-4598-99eb-fe3940f96353",
+          email,
+          givenName: "John",
+          surname: "Owner",
+          organization: "Organization Corp.",
+        },
+        invitation: null,
+      };
+    },
+    external: (email: string): OwnerResponse => {
+      return {
+        member: null,
+        invitation: {
+          createdDate: "1111-12-11T09:29:55.011Z" as unknown as Date,
+          expirationDate: "2222-03-22T20:22:22.022Z" as unknown as Date,
+          email,
+          id: "99cf5e21-735c-4598-99eb-fe3940f96353",
+          invitedByEmail: "inviter@example.com",
+          roles: [
+            {
+              id: "4059e871-8397-4929-a569-dd6c42118ce8",
+              description: "Owner role",
+              displayName: "Owner",
+              permissions: ["anything", "everything"],
+            },
+          ],
+          status: "Pending",
+        },
+      };
+    },
+  };
+
+  public static membersResponse = {
+    internal: (members: UserMember[]): MembersResponse => {
+      return {
+        invitations: null,
+        members: members.map((member) => {
+          return {
+            id: crypto.randomUUID(),
+            email: member.email,
+            givenName: "Test",
+            surname: "Testy",
+            organization: "Test organization",
+            roles: member.roleIds.map((roleId) => {
+              return {
+                id: roleId,
+                displayName: "Role name",
+                description: "Role description",
+              };
+            }),
+          };
+        }),
+      };
+    },
+    external: (members: UserMember[]): MembersResponse => {
+      return {
+        invitations: members.map((member) => {
+          return {
+            id: crypto.randomUUID(),
+            email: member.email,
+            invitedByEmail: "inviter@example.com",
+            status: "Pending",
+            createdDate: "1111-12-11T09:29:55.011Z" as unknown as Date,
+            expirationDate: "2222-03-22T20:22:22.022Z" as unknown as Date,
+            roles: member.roleIds.map((roleId) => {
+              return {
+                id: roleId,
+                displayName: "Role name",
+                description: "Role description",
+              };
+            }),
+          };
+        }),
+        members: null,
+      };
+    },
+  };
+
+  public static membersListResponse = (iTwinId: string): MembersListResponse => {
+    return {
+      members: [
+        {
+          id: "25407933-cad2-41a2-acf4-5a074c83046b",
+          email: "Maria.Miller@example.com",
+          givenName: "Maria",
+          surname: "Miller",
+          organization: "Organization Corp.",
+          roles: [
+            {
+              id: "5abbfcef-0eab-472a-b5f5-5c5a43df34b1",
+              displayName: "Read Access",
+              description: "Read Access",
+            },
+          ],
+        },
+      ],
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      _links: {
+        self: {
+          href: `https://api.bentley.com/iTwins/${iTwinId}/member?$skip=0&$top=100`,
+        },
+        prev: {
+          href: `https://api.bentley.com/iTwins/${iTwinId}/member?$skip=0&$top=100`,
+        },
+        next: {
+          href: `https://api.bentley.com/iTwins/${iTwinId}/member?$skip=100&$top=100`,
+        },
+      },
+    };
+  };
+
+  public static memberResponse = (memberId: string, roleIds: string[]): MemberResponse => {
+    return {
+      member: {
+        id: memberId,
+        email: "Thomas.Wilson@example.com",
+        givenName: "Thomas",
+        surname: "Wilson",
+        organization: "Organization Corp.",
+        roles: roleIds.map((roleId) => {
+          return {
+            id: roleId,
+            displayName: "Some role name",
+          };
+        }),
+      },
+    };
+  };
+
+  public static ownerListResponse = (iTwinId: string): OwnerListResponse => {
+    return {
+      members: [
+        {
+          id: "99cf5e21-735c-4598-99eb-fe3940f96353",
+          email: "John.Owner@example.com",
+          givenName: "John",
+          surname: "Owner",
+          organization: "Organization Corp.",
+        },
+        {
+          id: "25407933-cad2-41a2-acf4-5a074c83046b",
+          email: "Maria.Owner@example.com",
+          givenName: "Maria",
+          surname: "Owner",
+          organization: "Organization Corp.",
+        },
+      ],
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      _links: {
+        self: {
+          href: `https://api.bentley.com/iTwins/${iTwinId}/members/owners?$skip=0&$top=100`,
+        },
+        prev: {
+          href: `https://api.bentley.com/iTwins/${iTwinId}/members/owners?$skip=0&$top=100`,
+        },
+        next: {
+          href: `https://api.bentley.com/iTwins/${iTwinId}/members/owners?$skip=100&$top=100`,
+        },
+      },
+    };
+  };
+}
