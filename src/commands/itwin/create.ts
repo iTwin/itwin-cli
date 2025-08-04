@@ -101,8 +101,6 @@ export default class CreateITwin extends BaseCommand {
   public async run(): Promise<ITwin> {
     const { flags } = await this.parse(CreateITwin);
 
-    const service = await this.getITwinsApiService();
-
     const iTwin: ITwin = {
       class: flags.class as ITwinClass,
       dataCenterLocation: flags["data-center-location"],
@@ -116,6 +114,8 @@ export default class CreateITwin extends BaseCommand {
       subClass: flags["sub-class"] as ITwinSubClass,
       type: flags.type,
     };
+
+    const service = await this.getITwinsApiService();
 
     const creatediTwin = await service.createiTwin(iTwin);
 

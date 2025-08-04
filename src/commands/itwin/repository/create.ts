@@ -59,13 +59,13 @@ export default class CreateRepository extends BaseCommand {
   public async run(): Promise<Repository> {
     const { flags } = await this.parse(CreateRepository);
 
-    const service = await this.getITwinsApiService();
-
     const repository: Repository = {
       class: flags.class as RepositoryClass,
       subClass: flags["sub-class"] as RepositorySubClass,
       uri: flags.uri,
     };
+
+    const service = await this.getITwinsApiService();
 
     const result = await service.createRepository(flags["itwin-id"], repository);
 

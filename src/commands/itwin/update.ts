@@ -75,8 +75,6 @@ export default class UpdateCommand extends BaseCommand {
   public async run(): Promise<ITwin> {
     const { flags } = await this.parse(UpdateCommand);
 
-    const service = await this.getITwinsApiService();
-
     const iTwinUpdate: ITwin = {
       displayName: flags.name,
       geographicLocation: flags["geographic-location"],
@@ -86,6 +84,8 @@ export default class UpdateCommand extends BaseCommand {
       status: flags.status,
       type: flags.type,
     };
+
+    const service = await this.getITwinsApiService();
 
     const result = await service.updateiTwin(flags["itwin-id"], iTwinUpdate);
 

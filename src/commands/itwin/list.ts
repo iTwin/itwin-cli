@@ -105,8 +105,6 @@ export default class ListITwins extends BaseCommand {
   public async run(): Promise<ITwin[]> {
     const { flags } = await this.parse(ListITwins);
 
-    const service = await this.getITwinsApiService();
-
     const queryArgs: ITwinsQueryArg = {
       displayName: flags.name,
       iTwinAccountId: flags["itwin-account-id"],
@@ -122,6 +120,8 @@ export default class ListITwins extends BaseCommand {
       top: flags.top,
       type: flags.type,
     };
+
+    const service = await this.getITwinsApiService();
 
     const result = await service.getiTwins(queryArgs);
 
