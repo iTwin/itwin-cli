@@ -61,10 +61,10 @@ export default class FileCreate extends BaseCommand {
   public async run(): Promise<FileUpload> {
     const { flags } = await this.parse(FileCreate);
 
-    const client = await this.getStorageApiClient();
+    const storageApiService = await this.getStorageApiService();
 
-    const response = await client.createFile(flags["folder-id"], flags.name, flags.description);
+    const result = await storageApiService.createFile(flags["folder-id"], flags.name, flags.description);
 
-    return this.logAndReturnResult(response);
+    return this.logAndReturnResult(result);
   }
 }

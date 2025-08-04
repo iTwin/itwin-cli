@@ -46,9 +46,10 @@ export default class FileUpdateComplete extends BaseCommand {
   public async run(): Promise<FileTyped | undefined> {
     const { flags } = await this.parse(FileUpdateComplete);
 
-    const client = await this.getStorageApiClient();
-    const response = await client.completeFileUpload(flags["file-id"]);
+    const storageApiService = await this.getStorageApiService();
 
-    return this.logAndReturnResult(response.file);
+    const result = await storageApiService.completeFileUpload(flags["file-id"]);
+
+    return this.logAndReturnResult(result);
   }
 }

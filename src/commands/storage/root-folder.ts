@@ -44,10 +44,10 @@ export default class GetRootFolder extends BaseCommand {
   public async run(): Promise<ItemsWithFolderLink> {
     const { flags } = await this.parse(GetRootFolder);
 
-    const client = await this.getStorageApiClient();
+    const storageApiService = await this.getStorageApiService();
 
-    const response = await client.getTopLevelFoldersAndFiles(flags["itwin-id"], flags.top, flags.skip);
+    const result = await storageApiService.getTopLevelFoldersAndFiles(flags["itwin-id"], flags.skip, flags.top);
 
-    return this.logAndReturnResult(response);
+    return this.logAndReturnResult(result);
   }
 }

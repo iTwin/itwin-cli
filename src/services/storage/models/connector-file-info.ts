@@ -3,8 +3,10 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-export interface LoggingCallbacks {
-  log: (message?: string) => void;
-  error: (input: Error | string) => never;
-  debug: (...args: any[]) => void;
+import { ConnectorType } from "../../synchronization/models/connector-type.js";
+
+export interface ConnectorFileInfo {
+  connectorType: ConnectorType;
+  fileName: string;
+  fullFilePath: string;
 }

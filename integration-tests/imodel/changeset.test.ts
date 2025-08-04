@@ -9,8 +9,8 @@ import { Changeset, IModel } from "@itwin/imodels-client-management";
 import { ITwin } from "@itwin/itwins-client";
 import { runCommand } from "@oclif/test";
 
-import { PopulateResponse } from "../../src/commands/imodel/populate";
 import { ResultResponse } from "../../src/services/general-models/result-response";
+import { PopulateResponse } from "../../src/services/synchronization/models/populate-response";
 import { createIModel, createITwin } from "../utils/helpers";
 import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
 

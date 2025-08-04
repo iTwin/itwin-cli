@@ -3,8 +3,6 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import fs from "node:fs";
-
 import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../../extensions/api-reference.js";
@@ -58,27 +56,10 @@ export default class FileUpload extends BaseCommand {
   public async run(): Promise<ResultResponse> {
     const { flags } = await this.parse(FileUpload);
 
-    const client = await this.getStorageApiClient();
+    const storageApiService = await this.getStorageApiService();
 
-    const fileBuffer = fs.readFileSync(flags["file-path"]);
-    const fileArrayBuffer = this.toArrayBuffer(fileBuffer);
+    const result = await storageApiService.uploadFile(flags["file-path"], flags["upload-url"]);
 
-    const response = await client.uploadFile(flags["upload-url"], fileArrayBuffer);
-    if (response.status < 200 || response.status >= 300) {
-      this.error(`Encountered a problem when placing information to blob storage: ${response.statusText}`);
-    }
-
-    const returnObject = { result: "uploaded" };
-    return this.logAndReturnResult(returnObject);
-  }
-
-  private toArrayBuffer(buffer: Buffer): ArrayBuffer {
-    const arrayBuffer = new ArrayBuffer(buffer.length);
-    const view = new Uint8Array(arrayBuffer);
-    for (const [i, element] of buffer.entries()) {
-      view[i] = element;
-    }
-
-    return arrayBuffer;
+    return this.logAndReturnResult(result);
   }
 }

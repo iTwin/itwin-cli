@@ -36,9 +36,10 @@ export default class DeleteFolder extends BaseCommand {
   public async run(): Promise<ResultResponse> {
     const { flags } = await this.parse(DeleteFolder);
 
-    const client = await this.getStorageApiClient();
-    await client.deleteFolder(flags["folder-id"]);
+    const storageApiService = await this.getStorageApiService();
 
-    return this.logAndReturnResult({ result: "deleted" });
+    const result = await storageApiService.deleteFolder(flags["folder-id"]);
+
+    return this.logAndReturnResult(result);
   }
 }
