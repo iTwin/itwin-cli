@@ -9,7 +9,7 @@ import { MemberResponse, MembersListResponse, MembersResponse, UserMember } from
 import { OwnerListResponse, OwnerResponse } from "../../../../src/services/access-control/models/owner";
 import { ErrorResponse } from "../../../../src/services/general-models/error-response";
 import { ITP_API_URL } from "../../environment";
-import { ApiErrorResponses } from "./access-control-errors";
+import { AccessControlErrors } from "./access-control-errors";
 import { AccessControlMembersResponses } from "./access-control-members-responses";
 
 const membersCases = {
@@ -25,12 +25,12 @@ const membersCases = {
       return response;
     },
     iTwinNotFound: (iTwinId: string, email: string): ErrorResponse => {
-      const response = ApiErrorResponses.iTwinNotFound;
+      const response = AccessControlErrors.iTwinNotFound;
       nock(ITP_API_URL).post(`/accesscontrol/itwins/${iTwinId}/members/owners`, { email }).reply(404, response);
       return response;
     },
     ownerAlreadyExists: (iTwinId: string, email: string): ErrorResponse => {
-      const response = ApiErrorResponses.ownerAlreadyExists;
+      const response = AccessControlErrors.ownerAlreadyExists;
       nock(ITP_API_URL).post(`/accesscontrol/itwins/${iTwinId}/members/owners`, { email }).reply(409, response);
       return response;
     },
@@ -42,7 +42,7 @@ const membersCases = {
       return response;
     },
     iTwinNotFound: (iTwinId: string): ErrorResponse => {
-      const response = ApiErrorResponses.iTwinNotFound;
+      const response = AccessControlErrors.iTwinNotFound;
       nock(ITP_API_URL).get(`/accesscontrol/itwins/${iTwinId}/members/owners`).reply(404, response);
       return response;
     },
@@ -52,12 +52,12 @@ const membersCases = {
       nock(ITP_API_URL).delete(`/accesscontrol/itwins/${iTwinId}/members/owners/${memberId}`).reply(204);
     },
     iTwinNotFound: (iTwinId: string, memberId: string): ErrorResponse => {
-      const response = ApiErrorResponses.iTwinNotFound;
+      const response = AccessControlErrors.iTwinNotFound;
       nock(ITP_API_URL).delete(`/accesscontrol/itwins/${iTwinId}/members/owners/${memberId}`).reply(404, response);
       return response;
     },
     memberNotFound: (iTwinId: string, memberId: string): ErrorResponse => {
-      const response = ApiErrorResponses.teamMemberNotFound;
+      const response = AccessControlErrors.teamMemberNotFound;
       nock(ITP_API_URL).delete(`/accesscontrol/itwins/${iTwinId}/members/owners/${memberId}`).reply(404, response);
       return response;
     },
@@ -79,14 +79,14 @@ const membersCases = {
       return response;
     },
     iTwinNotFound: (iTwinId: string, userMembers: UserMember[]): ErrorResponse => {
-      const response = ApiErrorResponses.iTwinNotFound;
+      const response = AccessControlErrors.iTwinNotFound;
       nock(ITP_API_URL)
         .post(`/accesscontrol/itwins/${iTwinId}/members/users`, JSON.stringify({ members: userMembers }))
         .reply(404, response);
       return response;
     },
     roleNotFound: (iTwinId: string, userMembers: UserMember[]): ErrorResponse => {
-      const response = ApiErrorResponses.roleNotFound;
+      const response = AccessControlErrors.roleNotFound;
       nock(ITP_API_URL)
         .post(`/accesscontrol/itwins/${iTwinId}/members/users`, JSON.stringify({ members: userMembers }))
         .reply(404, response);
@@ -100,12 +100,12 @@ const membersCases = {
       return response;
     },
     iTwinNotFound: (iTwinId: string, memberId: string): ErrorResponse => {
-      const response = ApiErrorResponses.iTwinNotFound;
+      const response = AccessControlErrors.iTwinNotFound;
       nock(ITP_API_URL).get(`/accesscontrol/itwins/${iTwinId}/members/users/${memberId}`).reply(404, response);
       return response;
     },
     teamMemberNotFound: (iTwinId: string, memberId: string): ErrorResponse => {
-      const response = ApiErrorResponses.teamMemberNotFound;
+      const response = AccessControlErrors.teamMemberNotFound;
       nock(ITP_API_URL).get(`/accesscontrol/itwins/${iTwinId}/members/users/${memberId}`).reply(404, response);
       return response;
     },
@@ -117,7 +117,7 @@ const membersCases = {
       return response;
     },
     iTwinNotFound: (iTwinId: string): ErrorResponse => {
-      const response = ApiErrorResponses.iTwinNotFound;
+      const response = AccessControlErrors.iTwinNotFound;
       nock(ITP_API_URL).get(`/accesscontrol/itwins/${iTwinId}/members/users`).reply(404, response);
       return response;
     },
@@ -129,17 +129,17 @@ const membersCases = {
       return response;
     },
     iTwinNotFound: (iTwinId: string, memberId: string, roleIds: string[]): ErrorResponse => {
-      const response = ApiErrorResponses.iTwinNotFound;
+      const response = AccessControlErrors.iTwinNotFound;
       nock(ITP_API_URL).patch(`/accesscontrol/itwins/${iTwinId}/members/users/${memberId}`, { roleIds }).reply(404, response);
       return response;
     },
     teamMemberFound: (iTwinId: string, memberId: string, roleIds: string[]): ErrorResponse => {
-      const response = ApiErrorResponses.teamMemberNotFound;
+      const response = AccessControlErrors.teamMemberNotFound;
       nock(ITP_API_URL).patch(`/accesscontrol/itwins/${iTwinId}/members/users/${memberId}`, { roleIds }).reply(404, response);
       return response;
     },
     roleNotFound: (iTwinId: string, memberId: string, roleIds: string[]): ErrorResponse => {
-      const response = ApiErrorResponses.roleNotFound;
+      const response = AccessControlErrors.roleNotFound;
       nock(ITP_API_URL).patch(`/accesscontrol/itwins/${iTwinId}/members/users/${memberId}`, { roleIds }).reply(404, response);
       return response;
     },
@@ -149,12 +149,12 @@ const membersCases = {
       nock(ITP_API_URL).delete(`/accesscontrol/itwins/${iTwinId}/members/users/${memberId}`).reply(204);
     },
     iTwinNotFound: (iTwinId: string, memberId: string): ErrorResponse => {
-      const response = ApiErrorResponses.iTwinNotFound;
+      const response = AccessControlErrors.iTwinNotFound;
       nock(ITP_API_URL).delete(`/accesscontrol/itwins/${iTwinId}/members/users/${memberId}`).reply(404, response);
       return response;
     },
     memberNotFound: (iTwinId: string, memberId: string): ErrorResponse => {
-      const response = ApiErrorResponses.teamMemberNotFound;
+      const response = AccessControlErrors.teamMemberNotFound;
       nock(ITP_API_URL).delete(`/accesscontrol/itwins/${iTwinId}/members/users/${memberId}`).reply(404, response);
       return response;
     },

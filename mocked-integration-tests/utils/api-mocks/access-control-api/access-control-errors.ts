@@ -5,7 +5,7 @@
 
 import { ErrorResponse } from "../../../../src/services/general-models/error-response";
 
-export class ApiErrorResponses {
+export class AccessControlErrors {
   public static iTwinNotFound: ErrorResponse = {
     error: {
       code: "ItwinNotFound",
