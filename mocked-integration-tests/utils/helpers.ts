@@ -12,8 +12,8 @@ import { ITP_API_URL, ITP_ISSUER_URL } from "./mock-environment";
 
 export function writeMockToken(): void {
   const authTokenObject: AuthTokenInfo = {
-    apiUrl: ITP_API_URL!,
-    issuerUrl: ITP_ISSUER_URL!,
+    apiUrl: ITP_API_URL,
+    issuerUrl: ITP_ISSUER_URL,
     clientId: "mock-client",
     authToken: "Bearer mock-token",
     authenticationType: AuthorizationType.Service,
