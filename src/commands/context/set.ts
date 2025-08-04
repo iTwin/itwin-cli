@@ -47,11 +47,11 @@ export default class SetContext extends BaseCommand {
   public async run(): Promise<UserContext> {
     const { flags } = await this.parseWithoutContext(SetContext);
 
-    const iModelApiService = await this.getIModelService();
-    const iTwinsApiService = await this.getITwinsApiService();
-
     const iModelId = flags["imodel-id"];
     let iTwinId = flags["itwin-id"];
+
+    const iModelApiService = await this.getIModelService();
+    const iTwinsApiService = await this.getITwinsApiService();
 
     // If iModelId is provided, check if it exists and verify that it belongs to the specified iTwinId
     if (iModelId) {
