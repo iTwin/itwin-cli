@@ -38,9 +38,10 @@ export default class UpdateContent extends BaseCommand {
   public async run(): Promise<FileUpload> {
     const { flags } = await this.parse(UpdateContent);
 
-    const storageApiClient = await this.getStorageApiClient();
-    const response = await storageApiClient.updateFileContent(flags["file-id"]);
+    const storageApiService = await this.getStorageApiService();
 
-    return this.logAndReturnResult(response);
+    const result = await storageApiService.initiateFileContentUpdate(flags["file-id"]);
+
+    return this.logAndReturnResult(result);
   }
 }

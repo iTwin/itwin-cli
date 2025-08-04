@@ -36,9 +36,9 @@ export default class FileInfo extends BaseCommand {
   public async run(): Promise<FileTyped | undefined> {
     const { flags } = await this.parse(FileInfo);
 
-    const client = await this.getStorageApiClient();
-    const result = await client.getFile(flags["file-id"]);
+    const storageApiService = await this.getStorageApiService();
+    const result = await storageApiService.getFile(flags["file-id"]);
 
-    return this.logAndReturnResult(result.file);
+    return this.logAndReturnResult(result);
   }
 }

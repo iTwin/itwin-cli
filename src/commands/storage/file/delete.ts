@@ -36,10 +36,10 @@ export default class DeleteFile extends BaseCommand {
   public async run(): Promise<ResultResponse> {
     const { flags } = await this.parse(DeleteFile);
 
-    const client = await this.getStorageApiClient();
+    const storageApiService = await this.getStorageApiService();
 
-    await client.deleteFile(flags["file-id"]);
+    const result = await storageApiService.deleteFile(flags["file-id"]);
 
-    return this.logAndReturnResult({ result: "deleted" });
+    return this.logAndReturnResult(result);
   }
 }

@@ -26,6 +26,7 @@ import { IModelNamedVersionService } from "../services/imodels/iModels-named-ver
 import { IModelService } from "../services/imodels/iModels-service.js";
 import { ITwinPlatformApiClient } from "../services/iTwin-platform-api-client.js";
 import { StorageApiClient } from "../services/storage/storage-api-client.js";
+import { StorageApiService } from "../services/storage/storage-api-service.js";
 import { SynchronizationApiClient } from "../services/synchronization/synchronization-api-client.js";
 import { SynchronizationApiService } from "../services/synchronization/synchronization-api-service.js";
 import { UsersApiClient } from "../services/users/users-api-client.js";
@@ -33,6 +34,9 @@ import { UsersApiService } from "../services/users/users-api-service.js";
 import { Configuration } from "./configuration.js";
 
 export default abstract class BaseCommand extends Command {
+  // Is necessary for --json flag to function even though it's not referenced anywhere
+  public static enableJsonFlag = true;
+
   public static baseFlags = {
     json: Flags.boolean({
       char: "j",
@@ -153,10 +157,11 @@ export default abstract class BaseCommand extends Command {
     return new ITwinPlatformApiClient(this._baseApiUrl, token);
   }
 
-  protected async getStorageApiClient(): Promise<StorageApiClient> {
+  protected async getStorageApiService(): Promise<StorageApiService> {
     const iTwinApiClient = await this.getITwinApiClient();
+    const storageApiClient = new StorageApiClient(iTwinApiClient);
 
-    return new StorageApiClient(iTwinApiClient);
+    return new StorageApiService(storageApiClient, this._logger);
   }
 
   protected async getSynchronizationApiService(): Promise<SynchronizationApiService> {

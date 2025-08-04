@@ -7,10 +7,10 @@ import { expect } from "chai";
 
 import { runCommand } from "@oclif/test";
 
-import { PopulateResponse } from "../../src/commands/imodel/populate";
 import { ResultResponse } from "../../src/services/general-models/result-response";
 import { ExecutionResult } from "../../src/services/synchronization/models/execution-result";
 import { ExecutionState } from "../../src/services/synchronization/models/execution-state";
+import { PopulateResponse } from "../../src/services/synchronization/models/populate-response";
 import { StorageRun } from "../../src/services/synchronization/models/storage-run";
 import { createIModel, createITwin } from "../utils/helpers";
 import runSuiteIfMainModule from "../utils/run-suite-if-main-module";

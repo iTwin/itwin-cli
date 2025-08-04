@@ -50,12 +50,10 @@ export default class UpdateFolder extends BaseCommand {
   public async run(): Promise<FolderTyped> {
     const { flags } = await this.parse(UpdateFolder);
 
-    const client = await this.getStorageApiClient();
-    const response = await client.updateFolder(flags["folder-id"], {
-      description: flags.description,
-      displayName: flags.name,
-    });
+    const storageApiService = await this.getStorageApiService();
 
-    return this.logAndReturnResult(response.folder);
+    const result = await storageApiService.updateFolderMetadata(flags["folder-id"], flags.name, flags.description);
+
+    return this.logAndReturnResult(result);
   }
 }

@@ -50,12 +50,10 @@ export default class CreateFolder extends BaseCommand {
   public async run(): Promise<FolderTyped> {
     const { flags } = await this.parse(CreateFolder);
 
-    const client = await this.getStorageApiClient();
-    const response = await client.createFolder(flags["parent-folder-id"], {
-      description: flags.description,
-      displayName: flags.name,
-    });
+    const storageApiService = await this.getStorageApiService();
 
-    return this.logAndReturnResult(response.folder);
+    const result = await storageApiService.createFolder(flags["parent-folder-id"], flags.name, flags.description);
+
+    return this.logAndReturnResult(result);
   }
 }

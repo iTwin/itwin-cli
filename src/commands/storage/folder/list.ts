@@ -50,14 +50,10 @@ export default class ListFolders extends BaseCommand {
   public async run(): Promise<FileTyped[] | FolderTyped[]> {
     const { flags } = await this.parse(ListFolders);
 
-    const client = await this.getStorageApiClient();
+    const storageApiService = await this.getStorageApiService();
 
-    if (flags["include-files"]) {
-      const result = await client.getFilesAndFolders(flags["folder-id"]);
-      return this.logAndReturnResult(result.items);
-    }
+    const result = await storageApiService.getFolders(flags["folder-id"], flags["include-files"]);
 
-    const response = await client.getFolders(flags["folder-id"]);
-    return this.logAndReturnResult(response.folders);
+    return this.logAndReturnResult(result);
   }
 }
