@@ -3,8 +3,8 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { setupMockEnvironment } from "./environment";
 import { deleteMockToken, writeMockToken } from "./helpers";
+import { setupMockEnvironment } from "./mock-environment";
 
 before(async () => {
   writeMockToken();
