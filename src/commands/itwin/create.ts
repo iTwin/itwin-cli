@@ -101,6 +101,8 @@ export default class CreateITwin extends BaseCommand {
   public async run(): Promise<ITwin | undefined> {
     const { flags } = await this.parse(CreateITwin);
 
+    const service = await this.getITwinsApiService();
+
     const iTwin: ITwin = {
       class: flags.class as ITwinClass,
       dataCenterLocation: flags["data-center-location"],
@@ -115,21 +117,16 @@ export default class CreateITwin extends BaseCommand {
       type: flags.type,
     };
 
-    const accessToken = await this.getAccessToken();
-
-    const creatediTwin = await this.iTwinAccessClient.createiTwin(accessToken, iTwin);
-    if (creatediTwin.error) {
-      this.error(JSON.stringify(creatediTwin.error, null, 2));
-    }
+    const creatediTwin = await service.createiTwin(iTwin);
 
     if (flags.save) {
-      if (creatediTwin.data?.id === undefined) {
+      if (creatediTwin?.id === undefined) {
         this.log("iTwin Id not found in response. Cannot save to context.");
       } else {
-        await this.contextService.setContext(creatediTwin.data.id);
+        await this.contextService.setContext(creatediTwin.id);
       }
     }
 
-    return this.logAndReturnResult(creatediTwin.data);
+    return this.logAndReturnResult(creatediTwin);
   }
 }

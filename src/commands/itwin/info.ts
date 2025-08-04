@@ -33,14 +33,10 @@ export default class ITwinInfo extends BaseCommand {
   public async run(): Promise<ITwin | undefined> {
     const { flags } = await this.parse(ITwinInfo);
 
-    const accessToken = await this.getAccessToken();
+    const service = await this.getITwinsApiService();
 
-    const response = await this.iTwinAccessClient.getAsync(accessToken, flags["itwin-id"], "representation");
+    const result = await service.getiTwin(flags["itwin-id"]);
 
-    if (response.error) {
-      this.error(JSON.stringify(response.error, null, 2));
-    }
-
-    return this.logAndReturnResult(response.data);
+    return this.logAndReturnResult(result);
   }
 }
