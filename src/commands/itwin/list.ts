@@ -102,7 +102,7 @@ export default class ListITwins extends BaseCommand {
     }),
   };
 
-  public async run(): Promise<ITwin[] | undefined> {
+  public async run(): Promise<ITwin[]> {
     const { flags } = await this.parse(ListITwins);
 
     const service = await this.getITwinsApiService();

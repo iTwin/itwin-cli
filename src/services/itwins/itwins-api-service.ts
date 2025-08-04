@@ -20,10 +20,14 @@ export class ITwinsApiService {
     this._loggingCallbacks = loggingCallbacks;
   }
 
-  public async createiTwin(iTwin: ITwin): Promise<ITwin | undefined> {
+  public async createiTwin(iTwin: ITwin): Promise<ITwin> {
     const creatediTwin = await this._iTwinsAccessClient.createiTwin(this._accessToken, iTwin);
     if (creatediTwin.error) {
       this._loggingCallbacks.error(JSON.stringify(creatediTwin.error, null, 2));
+    }
+
+    if (creatediTwin.data === undefined) {
+      this._loggingCallbacks.error("iTwin not found in response.");
     }
 
     return creatediTwin.data;
@@ -38,37 +42,49 @@ export class ITwinsApiService {
     return { result: "deleted" };
   }
 
-  public async getiTwin(iTwinId: string): Promise<ITwin | undefined> {
+  public async getiTwin(iTwinId: string): Promise<ITwin> {
     const response = await this._iTwinsAccessClient.getAsync(this._accessToken, iTwinId, "representation");
 
     if (response.error) {
       this._loggingCallbacks.error(JSON.stringify(response.error, null, 2));
     }
 
+    if (response.data === undefined) {
+      this._loggingCallbacks.error("iTwin not found in response.");
+    }
+
     return response.data;
   }
 
-  public async getiTwins(queryArgs: ITwinsQueryArg): Promise<ITwin[] | undefined> {
+  public async getiTwins(queryArgs: ITwinsQueryArg): Promise<ITwin[]> {
     const response = await this._iTwinsAccessClient.queryAsync(this._accessToken, undefined, queryArgs);
 
     if (response.error) {
       this._loggingCallbacks.error(JSON.stringify(response.error, null, 2));
     }
 
+    if (response.data === undefined) {
+      this._loggingCallbacks.error("iTwins not found in response.");
+    }
+
     return response.data;
   }
 
-  public async updateiTwin(iTwinId: string, iTwin: ITwin): Promise<ITwin | undefined> {
+  public async updateiTwin(iTwinId: string, iTwin: ITwin): Promise<ITwin> {
     const response = await this._iTwinsAccessClient.updateiTwin(this._accessToken, iTwinId, iTwin);
 
     if (response.error) {
       this._loggingCallbacks.error(JSON.stringify(response.error, null, 2));
     }
 
+    if (response.data === undefined) {
+      this._loggingCallbacks.error("iTwin not found in response.");
+    }
+
     return response.data;
   }
 
-  public async createRepository(iTwinId: string, repository: Repository): Promise<Repository | undefined> {
+  public async createRepository(iTwinId: string, repository: Repository): Promise<Repository> {
     if (repository.subClass !== undefined) {
       const error = checkIfRepositoryClassMatchSubclass(repository.class, repository.subClass);
       if (error !== "") {
@@ -80,6 +96,10 @@ export class ITwinsApiService {
 
     if (response.error) {
       this._loggingCallbacks.error(JSON.stringify(response.error, null, 2));
+    }
+
+    if (response.data === undefined) {
+      this._loggingCallbacks.error("iTwin repository not found in response.");
     }
 
     return response.data;
@@ -94,7 +114,7 @@ export class ITwinsApiService {
     return { result: "deleted" };
   }
 
-  public async getRepositories(iTwinId: string, queryArgs: RepositoriesQueryArg): Promise<Repository[] | undefined> {
+  public async getRepositories(iTwinId: string, queryArgs: RepositoriesQueryArg): Promise<Repository[]> {
     if (queryArgs.class !== undefined && queryArgs.subClass !== undefined) {
       const error = checkIfRepositoryClassMatchSubclass(queryArgs.class, queryArgs.subClass);
       if (error !== "") {
@@ -106,6 +126,10 @@ export class ITwinsApiService {
 
     if (response.error) {
       this._loggingCallbacks.error(JSON.stringify(response.error, null, 2));
+    }
+
+    if (response.data === undefined) {
+      this._loggingCallbacks.error("iTwin repositories not found in response.");
     }
 
     return response.data;

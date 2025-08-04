@@ -47,13 +47,14 @@ export default class SetContext extends BaseCommand {
   public async run(): Promise<UserContext> {
     const { flags } = await this.parseWithoutContext(SetContext);
 
+    const iModelApiService = await this.getIModelService();
+    const iTwinsApiService = await this.getITwinsApiService();
+
     const iModelId = flags["imodel-id"];
     let iTwinId = flags["itwin-id"];
 
-    // If iModelId is provided, check if it exists
-    // and verify that it belongs to the specified iTwinId
+    // If iModelId is provided, check if it exists and verify that it belongs to the specified iTwinId
     if (iModelId) {
-      const iModelApiService = await this.getIModelService();
       const iModel = await iModelApiService.getIModel(iModelId);
       if (iTwinId && iModel.iTwinId !== flags["itwin-id"]) {
         this.error(`The iModel ID ${iModelId} does not belong to the specified iTwin ID ${iTwinId}.`);
@@ -63,7 +64,7 @@ export default class SetContext extends BaseCommand {
     }
     // If iTwinId is provided, check if it exists
     else if (iTwinId) {
-      await this.runCommand<ITwin>("itwin:info", ["--itwin-id", iTwinId]);
+      await iTwinsApiService.getiTwin(iTwinId);
     }
 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

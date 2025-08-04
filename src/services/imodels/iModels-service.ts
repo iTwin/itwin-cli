@@ -5,19 +5,16 @@
 
 import { AuthorizationCallback, Extent, GetIModelListUrlParams, IModel, IModelsClient, take, toArray } from "@itwin/imodels-client-management";
 
-import { ContextService } from "../context-service.js";
 import { LoggingCallbacks } from "../general-models/logging-callbacks.js";
 import { ResultResponse } from "../general-models/result-response.js";
 
 export class IModelService {
   private _iModelsClient: IModelsClient;
-  private _contextService: ContextService;
   private _authorizationCallback: AuthorizationCallback;
   private _loggingCallbacks: LoggingCallbacks;
 
-  constructor(iModelsClient: IModelsClient, contextService: ContextService, authorizationCallback: AuthorizationCallback, loggingCallbacks: LoggingCallbacks) {
+  constructor(iModelsClient: IModelsClient, authorizationCallback: AuthorizationCallback, loggingCallbacks: LoggingCallbacks) {
     this._iModelsClient = iModelsClient;
-    this._contextService = contextService;
     this._authorizationCallback = authorizationCallback;
     this._loggingCallbacks = loggingCallbacks;
   }
@@ -32,10 +29,6 @@ export class IModelService {
         name,
       },
     });
-
-    if (save) {
-      await this._contextService.setContext(iModel.iTwinId, iModel.id);
-    }
 
     return iModel;
   }

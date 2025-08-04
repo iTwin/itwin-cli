@@ -52,7 +52,7 @@ export default class ListRepositories extends BaseCommand {
     }),
   };
 
-  public async run(): Promise<Repository[] | undefined> {
+  public async run(): Promise<Repository[]> {
     const { flags } = await this.parse(ListRepositories);
 
     const service = await this.getITwinsApiService();

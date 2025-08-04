@@ -30,7 +30,7 @@ export default class ITwinInfo extends BaseCommand {
     }),
   };
 
-  public async run(): Promise<ITwin | undefined> {
+  public async run(): Promise<ITwin> {
     const { flags } = await this.parse(ITwinInfo);
 
     const service = await this.getITwinsApiService();

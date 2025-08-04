@@ -138,7 +138,7 @@ export default abstract class BaseCommand extends Command {
   protected async getIModelService(): Promise<IModelService> {
     const callback = await this.getAuthorizationCallback();
 
-    return new IModelService(this.iModelClient, this.contextService, callback, this._logger);
+    return new IModelService(this.iModelClient, callback, this._logger);
   }
 
   protected async getIModelChangesetService(): Promise<IModelChangesetService> {

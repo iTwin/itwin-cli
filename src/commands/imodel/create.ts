@@ -99,6 +99,8 @@ export default class CreateIModel extends BaseCommand {
   public async run(): Promise<IModel> {
     const { flags } = await this.parse(CreateIModel);
 
+    const iModelService = await this.getIModelService();
+
     if (
       flags["ne-latitude"] !== undefined &&
       flags["ne-longitude"] !== undefined &&
@@ -117,8 +119,11 @@ export default class CreateIModel extends BaseCommand {
       };
     }
 
-    const service = await this.getIModelService();
-    const result = await service.createIModel(flags["itwin-id"], flags.name, flags.save, flags.description, flags.extent);
+    const result = await iModelService.createIModel(flags["itwin-id"], flags.name, flags.save, flags.description, flags.extent);
+
+    if (flags.save) {
+      await this.contextService.setContext(result.iTwinId, result.id);
+    }
 
     return this.logAndReturnResult(result);
   }
