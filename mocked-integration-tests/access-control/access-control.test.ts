@@ -7,7 +7,7 @@ import runSuiteIfMainModule from "../../integration-tests/utils/run-suite-if-mai
 import memberTests from "./member/member.test";
 
 const tests = () =>
-  describe("Access Control command tests", () => {
+  describe("access-control", () => {
     memberTests();
   });
 

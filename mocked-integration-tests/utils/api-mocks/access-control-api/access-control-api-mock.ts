@@ -3,8 +3,8 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import members from "./access-control-members-cases";
+import membersCases from "./access-control-members-cases";
 
 export class AccessControlApiMock {
-  public static members = members;
+  public static members = membersCases;
 }

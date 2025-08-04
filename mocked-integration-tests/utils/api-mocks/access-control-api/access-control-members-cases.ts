@@ -8,7 +8,7 @@ import nock from "nock";
 import { MemberResponse, MembersListResponse, MembersResponse, UserMember } from "../../../../src/services/access-control/models/members";
 import { OwnerListResponse, OwnerResponse } from "../../../../src/services/access-control/models/owner";
 import { ErrorResponse } from "../../../../src/services/general-models/error-response";
-import { ITP_API_URL } from "../../environment";
+import { ITP_API_URL } from "../../mock-environment";
 import { AccessControlErrors } from "./access-control-errors";
 import { AccessControlMembersResponses } from "./access-control-members-responses";
 

@@ -5,6 +5,6 @@
 
 import accessControlTests from "../access-control/access-control.test";
 
-describe("Mocked HTTP traffic tests", () => {
+describe("Mocked integration tests", () => {
   accessControlTests();
 });

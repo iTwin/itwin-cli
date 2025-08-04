@@ -4,29 +4,11 @@
  *--------------------------------------------------------------------------------------------*/
 
 import fs from "node:fs";
-import os from "node:os";
 
+import { getTokenPathByOS } from "../../integration-tests/utils/helpers";
 import { AuthTokenInfo } from "../../src/services/authorization/auth-token-info";
 import { AuthorizationType } from "../../src/services/authorization/authorization-type";
-import { ITP_API_URL, ITP_ISSUER_URL } from "./environment";
-
-const getTokenPathByOS = (): string => {
-  switch (os.type()) {
-    case "Linux": {
-      const cachePath = `${os.homedir()}/.cache/itp`;
-      if (!fs.existsSync(cachePath)) fs.mkdirSync(cachePath, { recursive: true });
-      return `${cachePath}/token.json`;
-    }
-
-    case "Windows_NT": {
-      return `${process.env.LOCALAPPDATA}/itp/token.json`;
-    }
-
-    default: {
-      throw new Error("Unknown OS");
-    }
-  }
-};
+import { ITP_API_URL, ITP_ISSUER_URL } from "./mock-environment";
 
 export function writeMockToken(): void {
   const authTokenObject: AuthTokenInfo = {
