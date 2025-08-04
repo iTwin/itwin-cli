@@ -18,7 +18,8 @@ export class MeshExportApiService {
 
   public async getOrCreateExport(iModelId: string, changesetId: string): Promise<ExportInfo> {
     this._loggingCallbacks.log(`Getting existing exports for iModel: ${iModelId} and changeset: ${changesetId}`);
-    let existingExports = (await this._meshExportApiClient.getExports(iModelId)).exports;
+    const existingExportsResponse = await this._meshExportApiClient.getExports(iModelId);
+    let existingExports = existingExportsResponse.exports;
     const existingExport = existingExports.find((exp) => exp.request.exportType === "CESIUM" && exp.request.changesetId === changesetId);
 
     if (existingExport !== undefined) {
@@ -27,7 +28,8 @@ export class MeshExportApiService {
     }
 
     this._loggingCallbacks.log(`Creating new export for iModel: ${iModelId} and changeset: ${changesetId}`);
-    let newExport = (await this._meshExportApiClient.createExport(iModelId, changesetId)).export;
+    const newExportResponse = await this._meshExportApiClient.createExport(iModelId, changesetId);
+    let newExport = newExportResponse.export;
     while (newExport.status !== "Complete") {
       this._loggingCallbacks.log(`Export status is ${newExport.status}. Waiting for export to complete...`);
 

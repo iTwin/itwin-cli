@@ -153,10 +153,10 @@ export default abstract class BaseCommand extends Command {
     return new ChangedElementsApiService(changedElementsApiClient);
   }
 
-  protected async getITwinApiClient(): Promise<ITwinPlatformApiClient> {
+  protected async getITwinApiClient(apiVersionHeader?: string): Promise<ITwinPlatformApiClient> {
     const token = await this.getAccessToken();
 
-    return new ITwinPlatformApiClient(this._baseApiUrl, token);
+    return new ITwinPlatformApiClient(this._baseApiUrl, token, apiVersionHeader);
   }
 
   protected async getStorageApiService(): Promise<StorageApiService> {
@@ -181,7 +181,7 @@ export default abstract class BaseCommand extends Command {
   }
 
   protected async getMeshExportApiService(): Promise<MeshExportApiService> {
-    const iTwinApiClient = await this.getITwinApiClient();
+    const iTwinApiClient = await this.getITwinApiClient("application/vnd.bentley.itwin-platform.v1+json");
     const meshExportApiClient = new MeshExportApiClient(iTwinApiClient);
 
     return new MeshExportApiService(meshExportApiClient, this._logger);
