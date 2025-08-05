@@ -12,7 +12,8 @@ import { Flags } from "@oclif/core";
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { CustomFlags } from "../../../extensions/custom-flags.js";
-import { Link, Links } from "../../../services/general-models/links.js";
+import { extractTileSetUrl } from "../../../services/mesh-export/extract-tile-set-url.js";
+import { ExportInfo } from "../../../services/mesh-export/models/export-info.js";
 
 export default class CesiumSandcastle extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -44,12 +45,12 @@ export default class CesiumSandcastle extends BaseCommand {
 
   public static flags = {
     "changeset-id": Flags.string({
-      description: "Changeset id to be viewed in Cesium Sandcastle. If not provided, the latest changeset will be used.",
+      description: "Id of the changeset to be viewed in Cesium Sandcastle. If not provided, the latest changeset will be used.",
       helpValue: "<string>",
       required: false,
     }),
     "imodel-id": CustomFlags.iModelIDFlag({
-      description: "iModel id to be viewed in Cesium Sandcastle.",
+      description: "Id of the iModel to be viewed in Cesium Sandcastle.",
     }),
     open: Flags.boolean({
       description: "Open the URL in the browser.",
@@ -64,76 +65,10 @@ export default class CesiumSandcastle extends BaseCommand {
     }),
   };
 
-  private async createExport(iModelId: string, changesetId: string): Promise<ExportInfo> {
-    const args = [
-      "--method",
-      "POST",
-      "--path",
-      "mesh-export",
-      "--version-header",
-      "application/vnd.bentley.itwin-platform.v1+json",
-      "--body",
-      JSON.stringify({
-        changesetId,
-        exportType: "CESIUM",
-        iModelId,
-      }),
-    ];
-
-    const created = await this.runCommand<ExportCreateResponse>("api", args);
-    return created.export;
-  }
-
-  private async getExports(iModelId: string): Promise<ExportInfo[]> {
-    const exportArgs = [
-      "--method",
-      "GET",
-      "--path",
-      "mesh-export/",
-      "--version-header",
-      "application/vnd.bentley.itwin-platform.v1+json",
-      "--query",
-      `iModelId: ${iModelId}`,
-      "--header",
-      "Prefer: return=representation",
-    ];
-    const response = await this.runCommand<ExportResponse>("api", exportArgs);
-    return response.exports;
-  }
-
-  private async getOrCreateExport(iModelId: string, changesetId: string): Promise<ExportInfo> {
-    this.log(`Getting existing exports for iModel: ${iModelId} and changeset: ${changesetId}`);
-    let existingExports = await this.getExports(iModelId);
-    const existingExport = existingExports.find((exp) => exp.request.exportType === "CESIUM" && exp.request.changesetId === changesetId);
-
-    if (existingExport !== undefined) {
-      this.log(`Found existing export with id: ${existingExport.id}`);
-      return existingExport;
-    }
-
-    this.log(`Creating new export for iModel: ${iModelId} and changeset: ${changesetId}`);
-    let newExport = await this.createExport(iModelId, changesetId);
-    while (newExport.status !== "Complete") {
-      this.log(`Export status is ${newExport.status}. Waiting for export to complete...`);
-
-      existingExports = await this.getExports(iModelId);
-
-      const foundExport = existingExports.find((exp) => exp.id === newExport.id);
-      if (foundExport === undefined) this.error("Export creation has failed");
-
-      newExport = foundExport;
-
-      await new Promise((resolve) => {
-        setTimeout(resolve, 5000);
-      });
-    }
-
-    this.log(`Export completed successfully`);
-    return newExport;
-  }
-
   public async run(): Promise<{ url: string }> {
     const { flags } = await this.parse(CesiumSandcastle);
+
+    const meshExportApiService = await this.getMeshExportApiService();
 
     let changesetId = flags["changeset-id"] ?? "";
     if (changesetId === undefined) {
@@ -146,7 +81,7 @@ export default class CesiumSandcastle extends BaseCommand {
       changesetId = existingChangesets[0].id;
     }
 
-    const exportInfo: ExportInfo = await this.getOrCreateExport(flags["imodel-id"], changesetId);
+    const exportInfo: ExportInfo = await meshExportApiService.getOrCreateExport(flags["imodel-id"], changesetId);
 
     this.log(`Extracting tileset URL from export info`);
     const tilesetUrl: string = extractTileSetUrl(exportInfo);
@@ -165,44 +100,6 @@ export default class CesiumSandcastle extends BaseCommand {
 
     return this.logAndReturnResult({ url });
   }
-}
-
-interface ExportResponse {
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  _links: Links;
-  exports: ExportInfo[];
-}
-
-interface ExportCreateResponse {
-  export: ExportInfo;
-}
-
-interface ExportInfo {
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  _links: {
-    mesh: Link;
-  };
-  displayName: string;
-  error?: string;
-  id: string;
-  lastModified: Date;
-  request: ExportRequest;
-  status: "Complete" | "InProgress" | "Invalid" | "NotStarted";
-}
-
-interface ExportRequest {
-  changesetId: string;
-  exportType: "3DFT" | "3DTiles" | "CESIUM" | "IMODEL";
-  iModelId: string;
-}
-
-function extractTileSetUrl(exportInfo: ExportInfo): string {
-  if (exportInfo._links.mesh.href === undefined) {
-    throw new Error(`No tileset url found for export info id: ${exportInfo.id}`);
-  }
-
-  const urlParts = exportInfo._links.mesh.href.split("?");
-  return `${urlParts[0]}/tileset.json?${urlParts[1]}`;
 }
 
 function makeCompressedBase64String(data: string[]): string {

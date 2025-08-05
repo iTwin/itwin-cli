@@ -44,7 +44,7 @@ List all iTwins the calling user is a member of.
 
 - **`--top`**  
   Limit the number of items returned.  
-  **Type:** `integer      ` **Required:** No
+  **Type:** `integer` **Required:** No
 
 - **`--type`**  
   Filter by the iTwin's Type.  
