@@ -25,6 +25,8 @@ import { IModelChangesetService } from "../services/imodels/iModels-changeset-se
 import { IModelNamedVersionService } from "../services/imodels/iModels-named-version-service.js";
 import { IModelService } from "../services/imodels/iModels-service.js";
 import { ITwinPlatformApiClient } from "../services/iTwin-platform-api-client.js";
+import { MeshExportApiClient } from "../services/mesh-export/mesh-export-api-client.js";
+import { MeshExportApiService } from "../services/mesh-export/mesh-export-api-service.js";
 import { StorageApiClient } from "../services/storage/storage-api-client.js";
 import { StorageApiService } from "../services/storage/storage-api-service.js";
 import { SynchronizationApiClient } from "../services/synchronization/synchronization-api-client.js";
@@ -151,10 +153,10 @@ export default abstract class BaseCommand extends Command {
     return new ChangedElementsApiService(changedElementsApiClient);
   }
 
-  protected async getITwinApiClient(): Promise<ITwinPlatformApiClient> {
+  protected async getITwinApiClient(apiVersionHeader?: string): Promise<ITwinPlatformApiClient> {
     const token = await this.getAccessToken();
 
-    return new ITwinPlatformApiClient(this._baseApiUrl, token);
+    return new ITwinPlatformApiClient(this._baseApiUrl, token, apiVersionHeader);
   }
 
   protected async getStorageApiService(): Promise<StorageApiService> {
@@ -176,6 +178,13 @@ export default abstract class BaseCommand extends Command {
     const userApiClient = new UsersApiClient(iTwinApiClient);
 
     return new UsersApiService(userApiClient, this._logger);
+  }
+
+  protected async getMeshExportApiService(): Promise<MeshExportApiService> {
+    const iTwinApiClient = await this.getITwinApiClient("application/vnd.bentley.itwin-platform.v1+json");
+    const meshExportApiClient = new MeshExportApiClient(iTwinApiClient);
+
+    return new MeshExportApiService(meshExportApiClient, this._logger);
   }
 
   protected logAndReturnResult<T>(result: T): T {
