@@ -21,7 +21,7 @@ Groups and their roles can be provided to this command in multiple ways:
   **Type:** `string` **Required:** No
 
 - **`--role-ids`**  
-  Specify a list of role IDs to be assigned to all of 'group-id' groups. Provided in CSV format without whitespaces.  
+  Specify a list of role IDs to be assigned to all of 'group-id' groups. Provided in CSV format without whitespaces (see Example 2).  
   **Type:** `string` **Required:** No
 
 ## Examples
