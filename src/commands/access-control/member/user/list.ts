@@ -6,7 +6,7 @@
 import { ApiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
 import { CustomFlags } from "../../../../extensions/custom-flags.js";
-import { Member } from "../../../../services/access-control/models/members.js";
+import { UserMember } from "../../../../services/access-control/models/user-member.js";
 
 export default class ListUserMembers extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -29,13 +29,13 @@ export default class ListUserMembers extends BaseCommand {
     }),
   };
 
-  public async run(): Promise<Member[]> {
+  public async run(): Promise<UserMember[]> {
     const { flags } = await this.parse(ListUserMembers);
 
-    const client = await this.getAccessControlMemberClient();
+    const service = await this.getAccessControlMemberService();
 
-    const result = await client.getUserMembers(flags["itwin-id"]);
+    const result = await service.getUserMembers(flags["itwin-id"]);
 
-    return this.logAndReturnResult(result.members);
+    return this.logAndReturnResult(result);
   }
 }

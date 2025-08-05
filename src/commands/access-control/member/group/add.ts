@@ -6,7 +6,7 @@
 import { ApiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
 import { CustomFlags } from "../../../../extensions/custom-flags.js";
-import { GroupMember, GroupMemberInfo } from "../../../../services/access-control/models/group.js";
+import { GroupMemberInfo, GroupMemberRoles } from "../../../../services/access-control/models/group-member.js";
 
 export default class AddGroupMembers extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -52,7 +52,7 @@ export default class AddGroupMembers extends BaseCommand {
     }),
     "role-ids": CustomFlags.uuidCsv({
       dependsOn: ["group-id"],
-      description: `Specify a list of role IDs to be assigned to all of 'group-id' groups. Provided in CSV format without whitespaces.`,
+      description: `Specify a list of role IDs to be assigned to all of 'group-id' groups. Provided in CSV format without whitespaces (see Example 2).`,
       helpValue: "<string>",
       required: false,
     }),
@@ -61,35 +61,20 @@ export default class AddGroupMembers extends BaseCommand {
   public async run(): Promise<GroupMemberInfo[]> {
     const { flags } = await this.parse(AddGroupMembers);
 
-    const client = await this.getAccessControlMemberClient();
+    const service = await this.getAccessControlMemberService();
 
-    const members = this.getGroupMembers(flags["group-id"], flags["role-ids"], flags.groups);
+    const groupMembers =
+      flags.groups ??
+      flags["group-id"]?.map((groupId) => {
+        return {
+          groupId,
+          roleIds: flags["role-ids"]?.split(","),
+        } as GroupMemberRoles;
+      });
 
-    let roleAssignmentCount = 0;
-    for (const member of members) roleAssignmentCount += member.roleIds.length;
-
-    if (roleAssignmentCount > 50) {
-      this.error("A maximum of 50 role assignments can be performed.");
-    }
-
-    const response = await client.addGroupMember(flags["itwin-id"], {
-      members,
-    });
-
-    return this.logAndReturnResult(response.members);
-  }
-
-  private getGroupMembers(groupIds?: string[], roleIds?: string, groups?: GroupMember[]): GroupMember[] {
-    if (groups !== undefined) return groups;
-
-    groups = [];
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    for (const groupId of groupIds!) {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const currentRoleIds = roleIds!.split(",");
-      groups.push({ groupId, roleIds: currentRoleIds });
-    }
+    const result = await service.addGroupMember(flags["itwin-id"], groupMembers!);
 
-    return groups;
+    return this.logAndReturnResult(result);
   }
 }

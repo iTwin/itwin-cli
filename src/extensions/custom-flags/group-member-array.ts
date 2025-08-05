@@ -7,16 +7,16 @@ import zod from "zod";
 
 import { Flags } from "@oclif/core";
 
-import { GroupMember } from "../../services/access-control/models/group.js";
+import { GroupMemberRoles } from "../../services/access-control/models/group.js";
 import { validateJson } from "../validation/validate-json.js";
 import zodErrorToMessage from "../validation/zod-error-to-message.js";
 
-export default Flags.custom<GroupMember[]>({
+export default Flags.custom<GroupMemberRoles[]>({
   // eslint-disable-next-line @typescript-eslint/promise-function-async
-  parse: (input) => Promise.resolve(validateJson<GroupMember[]>(input, validationFunction)),
+  parse: (input) => Promise.resolve(validateJson<GroupMemberRoles[]>(input, validationFunction)),
 });
 
-const validationFunction = (input: GroupMember[]): string => {
+const validationFunction = (input: GroupMemberRoles[]): string => {
   const result = zod.array(groupMemberSchema).safeParse(input);
   if (result.error === undefined) return "";
 
@@ -26,4 +26,4 @@ const validationFunction = (input: GroupMember[]): string => {
 const groupMemberSchema = zod.object({
   groupId: zod.string().uuid(),
   roleIds: zod.array(zod.string().uuid()),
-}) satisfies zod.ZodType<GroupMember>;
+}) satisfies zod.ZodType<GroupMemberRoles>;
