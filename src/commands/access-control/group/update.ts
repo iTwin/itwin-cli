@@ -8,7 +8,7 @@ import { Flags } from "@oclif/core";
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { CustomFlags } from "../../../extensions/custom-flags.js";
-import { Group } from "../../../services/access-control/models/group.js";
+import { Group, GroupUpdate } from "../../../services/access-control/models/group.js";
 
 export default class UpdateAccessControlGroup extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -64,23 +64,17 @@ export default class UpdateAccessControlGroup extends BaseCommand {
   public async run(): Promise<Group> {
     const { flags } = await this.parse(UpdateAccessControlGroup);
 
-    if (flags["ims-group"] !== undefined && flags["ims-group"].length > 50) {
-      this.error("A maximum of 50 ims groups can be provided.");
-    }
-
-    if (flags.member !== undefined && flags.member.length > 50) {
-      this.error("A maximum of 50 members can be provided.");
-    }
-
-    const client = await this.getAccessControlApiClient();
-
-    const response = await client.updateGroup(flags["itwin-id"], flags["group-id"], {
+    const groupUpdate: GroupUpdate = {
       description: flags.description,
       imsGroups: flags["ims-group"],
       members: flags.member,
       name: flags.name,
-    });
+    };
 
-    return this.logAndReturnResult(response.group);
+    const service = await this.getAccessControlService();
+
+    const result = await service.updateGroup(flags["itwin-id"], flags["group-id"], groupUpdate);
+
+    return this.logAndReturnResult(result);
   }
 }

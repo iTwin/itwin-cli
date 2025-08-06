@@ -37,10 +37,10 @@ export default class InfoRole extends BaseCommand {
   public async run(): Promise<Role> {
     const { flags } = await this.parse(InfoRole);
 
-    const client = await this.getAccessControlApiClient();
+    const service = await this.getAccessControlService();
 
-    const response = await client.getiTwinRole(flags["itwin-id"], flags["role-id"]);
+    const result = await service.getiTwinRole(flags["itwin-id"], flags["role-id"]);
 
-    return this.logAndReturnResult(response.role);
+    return this.logAndReturnResult(result);
   }
 }

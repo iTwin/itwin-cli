@@ -38,10 +38,10 @@ export default class AccessControlGroupInfo extends BaseCommand {
   public async run(): Promise<Group> {
     const { flags } = await this.parse(AccessControlGroupInfo);
 
-    const client = await this.getAccessControlApiClient();
+    const service = await this.getAccessControlService();
 
-    const response = await client.getGroup(flags["itwin-id"], flags["group-id"]);
+    const result = await service.getGroup(flags["itwin-id"], flags["group-id"]);
 
-    return this.logAndReturnResult(response.group);
+    return this.logAndReturnResult(result);
   }
 }

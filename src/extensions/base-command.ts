@@ -16,6 +16,7 @@ import { ArgOutput, FlagOutput } from "../../node_modules/@oclif/core/lib/interf
 import { AccessControlClient } from "../services/access-control/access-control-client.js";
 import { AccessControlMemberClient } from "../services/access-control/access-control-member-client.js";
 import { AccessControlMemberService } from "../services/access-control/access-control-member-service.js";
+import { AccessControlService } from "../services/access-control/access-control-service.js";
 import { AuthorizationClient } from "../services/authorization/authorization-client.js";
 import { AuthorizationService } from "../services/authorization/authorization-service.js";
 import { ChangedElementsApiClient } from "../services/changed-elements/changed-elements-api-client.js";
@@ -118,9 +119,11 @@ export default abstract class BaseCommand extends Command {
       });
   }
 
-  protected async getAccessControlApiClient(): Promise<AccessControlClient> {
+  protected async getAccessControlService(): Promise<AccessControlService> {
     const token = await this.getAccessToken();
-    return new AccessControlClient(this._baseApiUrl, token);
+    const accessControlClient = new AccessControlClient(this._baseApiUrl, token);
+
+    return new AccessControlService(accessControlClient, this._logger);
   }
 
   protected async getAccessControlMemberService(): Promise<AccessControlMemberService> {
