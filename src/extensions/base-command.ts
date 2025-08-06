@@ -15,7 +15,7 @@ import { Input, ParserOutput } from "@oclif/core/interfaces";
 import { ArgOutput, FlagOutput } from "../../node_modules/@oclif/core/lib/interfaces/parser.js";
 import { AccessControlClient } from "../services/access-control/access-control-client.js";
 import { AccessControlMemberClient } from "../services/access-control/access-control-member-client.js";
-import { AccessControlMemberService } from "../services/access-control/access-control-service.js";
+import { AccessControlMemberService } from "../services/access-control/access-control-member-service.js";
 import { AuthorizationClient } from "../services/authorization/authorization-client.js";
 import { AuthorizationService } from "../services/authorization/authorization-service.js";
 import { ChangedElementsApiClient } from "../services/changed-elements/changed-elements-api-client.js";
