@@ -130,12 +130,6 @@ export default abstract class BaseCommand extends Command {
     return new AccessControlMemberService(accessControlMemberClient, this._logger);
   }
 
-  protected async getAccessControlMemberClient(): Promise<AccessControlMemberClient> {
-    const token = await this.getAccessToken();
-
-    return new AccessControlMemberClient(this._baseApiUrl, token);
-  }
-
   protected async getIModelService(): Promise<IModelService> {
     const callback = await this.getAuthorizationCallback();
 
