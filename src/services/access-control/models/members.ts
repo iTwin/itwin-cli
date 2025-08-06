@@ -26,8 +26,8 @@ export interface Member {
 }
 
 export interface MembersResponse {
-  invitations: Invitation[];
-  members: Member[];
+  invitations: Invitation[] | null;
+  members: Member[] | null;
 }
 
 export interface MembersListResponse {

@@ -3,18 +3,16 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import * as dotenv from "dotenv";
+import runSuiteIfMainModule from "../../../integration-tests/utils/run-suite-if-main-module";
+import ownerTests from "./owner/owner.test";
+import userTests from "./user/user.test";
 
-dotenv.config({ path: ".env" });
+const tests = () =>
+  describe("member", () => {
+    userTests();
+    ownerTests();
+  });
 
-export const {
-  ITP_API_URL,
-  ITP_ISSUER_URL,
-  ITP_NATIVE_TEST_CLIENT_ID,
-  ITP_SERVICE_CLIENT_ID,
-  ITP_SERVICE_CLIENT_SECRET,
-  ITP_TEST_USER_EMAIL,
-  ITP_TEST_USER_EXTERNAL,
-  ITP_TEST_USER_PASSWORD,
-  ITP_TEST_USER_SAMEORG,
-} = process.env;
+export default tests;
+
+runSuiteIfMainModule(import.meta, tests);

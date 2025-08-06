@@ -32,7 +32,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ["integration-tests/**/*"],
+    files: ["integration-tests/**/*", "mocked-integration-tests/**/*"],
     rules: {
       "@typescript-eslint/no-non-null-assertion": "off",
     },

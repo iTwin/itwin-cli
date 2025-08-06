@@ -85,5 +85,24 @@
             "console": "integratedTerminal",
             "internalConsoleOptions": "neverOpen"
         },
+        {
+            "name": "Debug Active Test (Mocked tests)",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/mocha",
+            "args": [
+                "--forbid-only",
+                "--timeout",
+                "999999",
+                "${file}",
+                "--file",
+                "mocked-integration-tests/utils/mocha-global.ts"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        },
     ]
 }

@@ -3,18 +3,10 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import * as dotenv from "dotenv";
+export const ITP_API_URL = "https://mock-api.bentley.com";
+export const ITP_ISSUER_URL = "https://mock-ims.bentley.com";
 
-dotenv.config({ path: ".env" });
-
-export const {
-  ITP_API_URL,
-  ITP_ISSUER_URL,
-  ITP_NATIVE_TEST_CLIENT_ID,
-  ITP_SERVICE_CLIENT_ID,
-  ITP_SERVICE_CLIENT_SECRET,
-  ITP_TEST_USER_EMAIL,
-  ITP_TEST_USER_EXTERNAL,
-  ITP_TEST_USER_PASSWORD,
-  ITP_TEST_USER_SAMEORG,
-} = process.env;
+export const setupMockEnvironment = (): void => {
+  process.env.ITP_API_URL = ITP_API_URL;
+  process.env.ITP_ISSUER_URL = ITP_ISSUER_URL;
+};

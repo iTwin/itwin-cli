@@ -1,5 +1,5 @@
 {
   "extends": "./tsconfig.json",
-  "include": ["./src/**/*", "./integration-tests/**/*", "./bin/*", "./eslint.config.js", "./pipelines/scripts/**/*.js"],
+  "include": ["./src/**/*", "./integration-tests/**/*", "./mocked-integration-tests/**/*", "./bin/*", "./eslint.config.js", "./pipelines/scripts/**/*.js"],
   "exclude": ["dist", "tmp"],
 }
