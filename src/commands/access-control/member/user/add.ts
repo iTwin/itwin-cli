@@ -44,7 +44,7 @@ export default class AddUserMembers extends BaseCommand {
     "itwin-id": CustomFlags.iTwinIDFlag({
       description: "The ID of the iTwin to which the users will be added.",
     }),
-    members: CustomFlags.userMembers({
+    members: CustomFlags.userMemberRoles({
       description:
         "A list of members to add, each with an email and a list of role IDs. A maximum of 50 role assignments can be performed. Provided in serialized JSON format.",
       exactlyOne: ["members", "email"],

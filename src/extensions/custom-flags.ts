@@ -8,9 +8,9 @@ import { CustomOptions, OptionFlag } from "@oclif/core/interfaces";
 import email from "./custom-flags/email.js";
 import extent from "./custom-flags/extent.js";
 import float from "./custom-flags/float.js";
-import groupMembers from "./custom-flags/group-member-array.js";
+import groupMemberRoles from "./custom-flags/group-member-roles.js";
 import noSchemaJson from "./custom-flags/no-schema-json.js";
-import userMembers from "./custom-flags/user-member-array.js";
+import userMemberRoles from "./custom-flags/user-member-roles.js";
 import uuid from "./custom-flags/uuid.js";
 import uuidCsv from "./custom-flags/uuidCsv.js";
 
@@ -19,7 +19,7 @@ export const CustomFlags = {
   email,
   extent,
   float,
-  groupMembers,
+  groupMemberRoles,
   iModelIDFlag: (config: CustomFlagConfig): OptionFlag<string, CustomOptions> =>
     uuid({
       char: "m",
@@ -37,7 +37,7 @@ export const CustomFlags = {
       required: true,
     }),
   noSchemaJson,
-  userMembers,
+  userMemberRoles,
   uuid,
   uuidCsv,
 };

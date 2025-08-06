@@ -39,7 +39,7 @@ export default class AddGroupMembers extends BaseCommand {
       multiple: true,
       required: false,
     }),
-    groups: CustomFlags.groupMembers({
+    groups: CustomFlags.groupMemberRoles({
       description:
         "A list of groups to add, each with a groupId and roleIds. A maximum of 50 role assignments can be performed. Provided in serialized JSON format.",
       exactlyOne: ["groups", "group-id"],
