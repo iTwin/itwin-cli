@@ -3,18 +3,14 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import * as dotenv from "dotenv";
+import { deleteMockToken, writeMockToken } from "./helpers";
+import { setupMockEnvironment } from "./mock-environment";
 
-dotenv.config({ path: ".env" });
+before(async () => {
+  writeMockToken();
+  setupMockEnvironment();
+});
 
-export const {
-  ITP_API_URL,
-  ITP_ISSUER_URL,
-  ITP_NATIVE_TEST_CLIENT_ID,
-  ITP_SERVICE_CLIENT_ID,
-  ITP_SERVICE_CLIENT_SECRET,
-  ITP_TEST_USER_EMAIL,
-  ITP_TEST_USER_EXTERNAL,
-  ITP_TEST_USER_PASSWORD,
-  ITP_TEST_USER_SAMEORG,
-} = process.env;
+after(async () => {
+  deleteMockToken();
+});

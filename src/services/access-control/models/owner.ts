@@ -8,8 +8,8 @@ import { GroupMember } from "./group-members.js";
 import { Invitation } from "./invitations.js";
 
 export interface OwnerResponse {
-  invitation: Invitation;
-  member: GroupMember;
+  invitation: Invitation | null;
+  member: GroupMember | null;
 }
 
 export interface OwnerListResponse {

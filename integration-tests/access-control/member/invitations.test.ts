@@ -34,8 +34,8 @@ const tests = () => {
     const { result: owner } = await runCommand<OwnerResponse>(`access-control member owner add --itwin-id ${iTwinId} --email ${emailToAdd}`);
     expect(owner).to.not.be.undefined;
     expect(owner!.member).is.null;
-    expect(owner!.invitation).to.not.be.undefined;
-    expect(owner!.invitation.email.toLowerCase()).to.equal(emailToAdd!.toLowerCase());
+    expect(owner!.invitation).to.not.be.null;
+    expect(owner!.invitation!.email.toLowerCase()).to.equal(emailToAdd!.toLowerCase());
 
     const { result: invitationResults } = await runCommand<Invitation[]>(`access-control member invitations --itwin-id ${iTwinId}`);
     expect(invitationResults).to.not.be.undefined;

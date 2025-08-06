@@ -51,8 +51,6 @@ ITP_NATIVE_TEST_CLIENT_ID=
 # Email and password of a test user. (Belonging to an organization is needed by some of the tests)
 ITP_TEST_USER_EMAIL=
 ITP_TEST_USER_PASSWORD=
-# Your mailinator API key.
-ITP_MAILINATOR_API_KEY=
 # Mailinator email address, that belongs to the same organization as ITP_TEST_USER_EMAIL
 ITP_TEST_USER_SAMEORG=
 # Mailinator email address, that does not belong to the same organization as ITP_TEST_USER_EMAIL
