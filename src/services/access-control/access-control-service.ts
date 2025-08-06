@@ -1,3 +1,8 @@
+/*---------------------------------------------------------------------------------------------
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
+
 import { LoggingCallbacks } from "../general-models/logging-callbacks.js";
 import { ResultResponse } from "../general-models/result-response.js";
 import { AccessControlClient } from "./access-control-client.js";
