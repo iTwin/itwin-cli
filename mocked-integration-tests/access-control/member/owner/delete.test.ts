@@ -7,9 +7,9 @@ import { expect } from "chai";
 
 import { runCommand } from "@oclif/test";
 
-import runSuiteIfMainModule from "../../../../integration-tests/utils/run-suite-if-main-module.js";
-import { ResultResponse } from "../../../../src/services/general-models/result-response.js";
-import { AccessControlApiMock } from "../../../utils/api-mocks/access-control-api/access-control-api-mock.js";
+import runSuiteIfMainModule from "../../../../integration-tests/utils/run-suite-if-main-module";
+import { ResultResponse } from "../../../../src/services/general-models/result-response";
+import { AccessControlApiMock } from "../../../utils/api-mocks/access-control-api/access-control-api-mock";
 
 const tests = () =>
   describe("delete", () => {

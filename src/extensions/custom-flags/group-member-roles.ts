@@ -7,23 +7,23 @@ import zod from "zod";
 
 import { Flags } from "@oclif/core";
 
-import { UserMember } from "../../services/access-control/models/members.js";
+import { GroupMemberRoles } from "../../services/access-control/models/group-member.js";
 import { validateJson } from "../validation/validate-json.js";
 import zodErrorToMessage from "../validation/zod-error-to-message.js";
 
-export default Flags.custom<UserMember[]>({
+export default Flags.custom<GroupMemberRoles[]>({
   // eslint-disable-next-line @typescript-eslint/promise-function-async
-  parse: (input) => Promise.resolve(validateJson<UserMember[]>(input, validationFunction)),
+  parse: (input) => Promise.resolve(validateJson<GroupMemberRoles[]>(input, validationFunction)),
 });
 
-const validationFunction = (input: UserMember[]): string => {
-  const result = zod.array(userMemberSchema).safeParse(input);
+const validationFunction = (input: GroupMemberRoles[]): string => {
+  const result = zod.array(groupMemberSchema).safeParse(input);
   if (result.error === undefined) return "";
 
   return zodErrorToMessage(result.error);
 };
 
-const userMemberSchema = zod.object({
-  email: zod.string().email(),
+const groupMemberSchema = zod.object({
+  groupId: zod.string().uuid(),
   roleIds: zod.array(zod.string().uuid()),
-}) satisfies zod.ZodType<UserMember>;
+}) satisfies zod.ZodType<GroupMemberRoles>;

@@ -3,12 +3,15 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { MemberResponse, MembersListResponse, MembersResponse, UserMember } from "../../../../src/services/access-control/models/members";
-import { OwnerListResponse, OwnerResponse } from "../../../../src/services/access-control/models/owner";
+import { OwnerMemberListResponse, OwnerMemberResponse } from "../../../../src/services/access-control/models/owner-member";
+// prettier-ignore
+import {
+    AddedUserMembersResponse, UserMemberListResponse, UserMemberResponse, UserMemberRoles
+} from "../../../../src/services/access-control/models/user-member";
 
 export class AccessControlMembersResponses {
-  public static ownerResponse = {
-    internal: (email: string): OwnerResponse => {
+  public static ownerMemberResponse = {
+    internal: (email: string): OwnerMemberResponse => {
       return {
         member: {
           id: "99cf5e21-735c-4598-99eb-fe3940f96353",
@@ -20,7 +23,7 @@ export class AccessControlMembersResponses {
         invitation: null,
       };
     },
-    external: (email: string): OwnerResponse => {
+    external: (email: string): OwnerMemberResponse => {
       return {
         member: null,
         invitation: {
@@ -43,8 +46,8 @@ export class AccessControlMembersResponses {
     },
   };
 
-  public static membersResponse = {
-    internal: (members: UserMember[]): MembersResponse => {
+  public static addedUserMembersResponse = {
+    internal: (members: UserMemberRoles[]): AddedUserMembersResponse => {
       return {
         invitations: null,
         members: members.map((member) => {
@@ -65,7 +68,7 @@ export class AccessControlMembersResponses {
         }),
       };
     },
-    external: (members: UserMember[]): MembersResponse => {
+    external: (members: UserMemberRoles[]): AddedUserMembersResponse => {
       return {
         invitations: members.map((member) => {
           return {
@@ -89,7 +92,7 @@ export class AccessControlMembersResponses {
     },
   };
 
-  public static membersListResponse = (iTwinId: string): MembersListResponse => {
+  public static userMemberListResponse = (iTwinId: string): UserMemberListResponse => {
     return {
       members: [
         {
@@ -122,7 +125,7 @@ export class AccessControlMembersResponses {
     };
   };
 
-  public static memberResponse = (memberId: string, roleIds: string[]): MemberResponse => {
+  public static userMemberResponse = (memberId: string, roleIds: string[]): UserMemberResponse => {
     return {
       member: {
         id: memberId,
@@ -140,7 +143,7 @@ export class AccessControlMembersResponses {
     };
   };
 
-  public static ownerListResponse = (iTwinId: string): OwnerListResponse => {
+  public static ownerMemberListResponse = (iTwinId: string): OwnerMemberListResponse => {
     return {
       members: [
         {

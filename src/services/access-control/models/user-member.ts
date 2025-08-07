@@ -7,16 +7,16 @@ import { Links } from "../../general-models/links.js";
 import { Invitation } from "./invitations.js";
 import { Role } from "./role.js";
 
-export interface ListOfMembers {
-  members: UserMember[];
+export interface UserMembersRequest {
+  members: UserMemberRoles[];
 }
 
-export interface UserMember {
+export interface UserMemberRoles {
   email: string;
   roleIds: string[];
 }
 
-export interface Member {
+export interface UserMember {
   email: string;
   givenName: string;
   id: string;
@@ -25,17 +25,17 @@ export interface Member {
   surname: string;
 }
 
-export interface MembersResponse {
+export interface AddedUserMembersResponse {
   invitations: Invitation[] | null;
-  members: Member[] | null;
+  members: UserMember[] | null;
 }
 
-export interface MembersListResponse {
+export interface UserMemberListResponse {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   _links: Links;
-  members: Member[];
+  members: UserMember[];
 }
 
-export interface MemberResponse {
-  member: Member;
+export interface UserMemberResponse {
+  member: UserMember;
 }

@@ -6,7 +6,7 @@
 import { ApiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
 import { CustomFlags } from "../../../../extensions/custom-flags.js";
-import { OwnerResponse } from "../../../../services/access-control/models/owner.js";
+import { OwnerMemberResponse } from "../../../../services/access-control/models/owner-member.js";
 
 export default class AddOwner extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -35,13 +35,13 @@ export default class AddOwner extends BaseCommand {
     }),
   };
 
-  public async run(): Promise<OwnerResponse> {
+  public async run(): Promise<OwnerMemberResponse> {
     const { flags } = await this.parse(AddOwner);
 
-    const client = await this.getAccessControlMemberClient();
+    const service = await this.getAccessControlMemberService();
 
-    const response = await client.addOwner(flags["itwin-id"], flags.email);
+    const result = await service.addOwnerMember(flags["itwin-id"], flags.email);
 
-    return this.logAndReturnResult(response);
+    return this.logAndReturnResult(result);
   }
 }

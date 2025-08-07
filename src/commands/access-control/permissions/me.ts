@@ -31,10 +31,10 @@ export default class MyPermissions extends BaseCommand {
   public async run(): Promise<string[]> {
     const { flags } = await this.parse(MyPermissions);
 
-    const client = await this.getAccessControlApiClient();
+    const service = await this.getAccessControlService();
 
-    const response = await client.getAlliTwinPermissions(flags["itwin-id"]);
+    const result = await service.getAlliTwinPermissions(flags["itwin-id"]);
 
-    return this.logAndReturnResult(response.permissions);
+    return this.logAndReturnResult(result);
   }
 }
