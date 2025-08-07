@@ -55,13 +55,15 @@ export function checkAndGetFilesWithConnectors(files: string[], connectorTypes: 
       throw new Error(`File at: '${file}' does not exist`);
     }
 
+    const fileName = path.basename(file);
+
     let connector;
     if (connectorTypes && connectorTypes.length === 1) {
       connector = ConnectorType[connectorTypes[0] as keyof typeof ConnectorType];
     } else if (connectorTypes && connectorTypes.length === files.length) {
       connector = ConnectorType[connectorTypes[index] as keyof typeof ConnectorType];
     } else if (!connectorTypes) {
-      const splitedFile = file.split(".");
+      const splitedFile = fileName.split(".");
 
       if (splitedFile.length === 1) {
         throw new Error(`${file} has no extension`);
@@ -80,7 +82,7 @@ export function checkAndGetFilesWithConnectors(files: string[], connectorTypes: 
 
     resultArray.push({
       connectorType: connector,
-      fileName: path.basename(file),
+      fileName,
       fullFilePath: file,
     });
   }
