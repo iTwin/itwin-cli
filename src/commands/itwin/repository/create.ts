@@ -9,7 +9,6 @@ import { Flags } from "@oclif/core";
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { CustomFlags } from "../../../extensions/custom-flags.js";
-import { checkIfRepositoryClassMatchSubclass } from "../../../extensions/validation/itwin-repository-classes.js";
 
 export default class CreateRepository extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -57,28 +56,19 @@ export default class CreateRepository extends BaseCommand {
     }),
   };
 
-  public async run(): Promise<Repository | undefined> {
+  public async run(): Promise<Repository> {
     const { flags } = await this.parse(CreateRepository);
 
-    if (flags["sub-class"] !== undefined) {
-      const error = checkIfRepositoryClassMatchSubclass(flags.class, flags["sub-class"]);
-      if (error !== "") {
-        this.error(error);
-      }
-    }
-
-    const accessToken = await this.getAccessToken();
-
-    const response = await this.iTwinAccessClient.createRepository(accessToken, flags["itwin-id"], {
+    const repository: Repository = {
       class: flags.class as RepositoryClass,
       subClass: flags["sub-class"] as RepositorySubClass,
       uri: flags.uri,
-    });
+    };
 
-    if (response.error) {
-      this.error(JSON.stringify(response.error, null, 2));
-    }
+    const service = await this.getITwinsApiService();
 
-    return this.logAndReturnResult(response.data);
+    const result = await service.createRepository(flags["itwin-id"], repository);
+
+    return this.logAndReturnResult(result);
   }
 }

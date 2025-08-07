@@ -27,6 +27,7 @@ import { IModelChangesetService } from "../services/imodels/iModels-changeset-se
 import { IModelNamedVersionService } from "../services/imodels/iModels-named-version-service.js";
 import { IModelService } from "../services/imodels/iModels-service.js";
 import { ITwinPlatformApiClient } from "../services/iTwin-platform-api-client.js";
+import { ITwinsApiService } from "../services/itwins/itwins-api-service.js";
 import { MeshExportApiClient } from "../services/mesh-export/mesh-export-api-client.js";
 import { MeshExportApiService } from "../services/mesh-export/mesh-export-api-service.js";
 import { StorageApiClient } from "../services/storage/storage-api-client.js";
@@ -133,10 +134,16 @@ export default abstract class BaseCommand extends Command {
     return new AccessControlMemberService(accessControlMemberClient, this._logger);
   }
 
+  protected async getITwinsApiService(): Promise<ITwinsApiService> {
+    const token = await this.getAccessToken();
+
+    return new ITwinsApiService(token, this.iTwinAccessClient, this._logger);
+  }
+
   protected async getIModelService(): Promise<IModelService> {
     const callback = await this.getAuthorizationCallback();
 
-    return new IModelService(this.iModelClient, this.contextService, callback, this._logger);
+    return new IModelService(this.iModelClient, callback, this._logger);
   }
 
   protected async getIModelChangesetService(): Promise<IModelChangesetService> {
@@ -152,41 +159,41 @@ export default abstract class BaseCommand extends Command {
   }
 
   protected async getChangedElementsApiService(): Promise<ChangedElementsApiService> {
-    const iTwinApiClient = await this.getITwinApiClient();
+    const iTwinApiClient = await this.getITwinPlatformApiClient();
     const changedElementsApiClient = new ChangedElementsApiClient(iTwinApiClient);
 
     return new ChangedElementsApiService(changedElementsApiClient);
   }
 
-  protected async getITwinApiClient(apiVersionHeader?: string): Promise<ITwinPlatformApiClient> {
+  protected async getITwinPlatformApiClient(apiVersionHeader?: string): Promise<ITwinPlatformApiClient> {
     const token = await this.getAccessToken();
 
     return new ITwinPlatformApiClient(this._baseApiUrl, token, apiVersionHeader);
   }
 
   protected async getStorageApiService(): Promise<StorageApiService> {
-    const iTwinApiClient = await this.getITwinApiClient();
+    const iTwinApiClient = await this.getITwinPlatformApiClient();
     const storageApiClient = new StorageApiClient(iTwinApiClient);
 
     return new StorageApiService(storageApiClient, this._logger);
   }
 
   protected async getSynchronizationApiService(): Promise<SynchronizationApiService> {
-    const iTwinApiClient = await this.getITwinApiClient();
+    const iTwinApiClient = await this.getITwinPlatformApiClient();
     const synchronizationApiClient = new SynchronizationApiClient(iTwinApiClient);
 
     return new SynchronizationApiService(synchronizationApiClient, this.authorizationService, this._logger);
   }
 
   protected async getUserApiService(): Promise<UsersApiService> {
-    const iTwinApiClient = await this.getITwinApiClient();
+    const iTwinApiClient = await this.getITwinPlatformApiClient();
     const userApiClient = new UsersApiClient(iTwinApiClient);
 
     return new UsersApiService(userApiClient, this._logger);
   }
 
   protected async getMeshExportApiService(): Promise<MeshExportApiService> {
-    const iTwinApiClient = await this.getITwinApiClient("application/vnd.bentley.itwin-platform.v1+json");
+    const iTwinApiClient = await this.getITwinPlatformApiClient("application/vnd.bentley.itwin-platform.v1+json");
     const meshExportApiClient = new MeshExportApiClient(iTwinApiClient);
 
     return new MeshExportApiService(meshExportApiClient, this._logger);

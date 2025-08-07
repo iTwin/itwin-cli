@@ -9,7 +9,6 @@ import { Flags } from "@oclif/core";
 import { ApiReference } from "../../../extensions/api-reference.js";
 import BaseCommand from "../../../extensions/base-command.js";
 import { CustomFlags } from "../../../extensions/custom-flags.js";
-import { checkIfRepositoryClassMatchSubclass } from "../../../extensions/validation/itwin-repository-classes.js";
 
 export default class ListRepositories extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -53,27 +52,13 @@ export default class ListRepositories extends BaseCommand {
     }),
   };
 
-  public async run(): Promise<Repository[] | undefined> {
+  public async run(): Promise<Repository[]> {
     const { flags } = await this.parse(ListRepositories);
 
-    if (flags.class !== undefined && flags["sub-class"] !== undefined) {
-      const error = checkIfRepositoryClassMatchSubclass(flags.class, flags["sub-class"]);
-      if (error !== "") {
-        this.error(error);
-      }
-    }
+    const service = await this.getITwinsApiService();
 
-    const accessToken = await this.getAccessToken();
+    const result = await service.getRepositories(flags["itwin-id"], { class: flags.class, subClass: flags["sub-class"] });
 
-    const response = await this.iTwinAccessClient.queryRepositoriesAsync(accessToken, flags["itwin-id"], {
-      class: flags.class,
-      subClass: flags["sub-class"],
-    });
-
-    if (response.error) {
-      this.error(JSON.stringify(response.error, null, 2));
-    }
-
-    return this.logAndReturnResult(response.data);
+    return this.logAndReturnResult(result);
   }
 }

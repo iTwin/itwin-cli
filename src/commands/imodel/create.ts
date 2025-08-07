@@ -117,8 +117,13 @@ export default class CreateIModel extends BaseCommand {
       };
     }
 
-    const service = await this.getIModelService();
-    const result = await service.createIModel(flags["itwin-id"], flags.name, flags.save, flags.description, flags.extent);
+    const iModelService = await this.getIModelService();
+
+    const result = await iModelService.createIModel(flags["itwin-id"], flags.name, flags.save, flags.description, flags.extent);
+
+    if (flags.save) {
+      await this.contextService.setContext(result.iTwinId, result.id);
+    }
 
     return this.logAndReturnResult(result);
   }

@@ -3,7 +3,7 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { ITwin, ITwinSubClass } from "@itwin/itwins-client";
+import { ITwin, ITwinsQueryArg, ITwinSubClass } from "@itwin/itwins-client";
 import { Flags } from "@oclif/core";
 
 import { ApiReference } from "../../extensions/api-reference.js";
@@ -102,12 +102,10 @@ export default class ListITwins extends BaseCommand {
     }),
   };
 
-  public async run(): Promise<ITwin[] | undefined> {
+  public async run(): Promise<ITwin[]> {
     const { flags } = await this.parse(ListITwins);
 
-    const accessToken = await this.getAccessToken();
-
-    const response = await this.iTwinAccessClient.queryAsync(accessToken, undefined, {
+    const queryArgs: ITwinsQueryArg = {
       displayName: flags.name,
       iTwinAccountId: flags["itwin-account-id"],
       includeInactive: flags["include-inactive"],
@@ -121,12 +119,12 @@ export default class ListITwins extends BaseCommand {
       subClass: flags["sub-class"] as ITwinSubClass,
       top: flags.top,
       type: flags.type,
-    });
+    };
 
-    if (response.error) {
-      this.error(JSON.stringify(response.error, null, 2));
-    }
+    const service = await this.getITwinsApiService();
 
-    return this.logAndReturnResult(response.data);
+    const result = await service.getiTwins(queryArgs);
+
+    return this.logAndReturnResult(result);
   }
 }
