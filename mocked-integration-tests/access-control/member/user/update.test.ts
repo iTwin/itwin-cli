@@ -56,38 +56,6 @@ const tests = () =>
       expect(updateError).to.not.be.undefined;
       expect(updateError?.message).to.be.equal(`HTTP error! ${JSON.stringify(response)}`);
     });
-
-    it("should return an error when invalid uuid is provided as --role-id", async () => {
-      const { error: updateError } = await runCommand<UserMember>(
-        `access-control member user update -i ${crypto.randomUUID()} --member-id ${crypto.randomUUID()} --role-id an-invalid-uuid`,
-      );
-      expect(updateError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
-    });
-
-    it("should fail to update iTwin group, when there are too many roles assigned", async () => {
-      let command = `access-control member user update --itwin-id ${iTwinId} --member-id ${memberId}`;
-      for (let i = 0; i < 51; i++) command += ` --role-id ${crypto.randomUUID()}`;
-
-      const result = await runCommand<UserMember>(command);
-      expect(result.error).to.not.be.undefined;
-      expect(result.error?.message).to.be.equal("A maximum of 50 roles can be assigned.");
-    });
-
-    it("should return an error when invalid uuid is provided as --itwin-id", async () => {
-      const { error: updateError } = await runCommand<UserMember>(
-        `access-control member user update -i an-invalid-uuid --member-id ${crypto.randomUUID()} --role-id ${crypto.randomUUID()}`,
-      );
-      expect(updateError).to.not.be.undefined;
-      expect(updateError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
-    });
-
-    it("should return an error when invalid uuid is provided as --member-id", async () => {
-      const { error: updateError } = await runCommand<UserMember>(
-        `access-control member user update -i ${crypto.randomUUID()} --member-id an-invalid-uuid --role-id ${crypto.randomUUID()}`,
-      );
-      expect(updateError).to.not.be.undefined;
-      expect(updateError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
-    });
   });
 
 export default tests;

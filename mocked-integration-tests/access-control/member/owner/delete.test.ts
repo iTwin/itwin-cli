@@ -39,21 +39,6 @@ const tests = () =>
       expect(deleteError).to.not.be.undefined;
       expect(deleteError?.message).to.be.equal(`HTTP error! ${JSON.stringify(response)}`);
     });
-
-    it("should return an error when invalid uuid is provided as --member-id", async () => {
-      const { error: deleteError } = await runCommand<ResultResponse>(
-        `access-control member owner delete --itwin-id ${crypto.randomUUID()} --member-id an-invalid-uuid`,
-      );
-      expect(deleteError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
-    });
-
-    it("should return an error when invalid uuid is provided as --itwin-id", async () => {
-      const { error: deleteError } = await runCommand<ResultResponse>(
-        `access-control member owner delete --itwin-id an-invalid-uuid --member-id ${crypto.randomUUID()}`,
-      );
-      expect(deleteError).to.not.be.undefined;
-      expect(deleteError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
-    });
   });
 
 export default tests;

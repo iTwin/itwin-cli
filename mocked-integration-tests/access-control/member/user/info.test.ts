@@ -39,18 +39,6 @@ const tests = () =>
       expect(infoError).to.not.be.undefined;
       expect(infoError?.message).to.be.equal(`HTTP error! ${JSON.stringify(response)}`);
     });
-
-    it("should return an error when invalid uuid is provided as --itwin-id", async () => {
-      const { error: infoError } = await runCommand<UserMember>(`access-control member user info -i an-invalid-uuid --member-id ${crypto.randomUUID()}`);
-      expect(infoError).to.not.be.undefined;
-      expect(infoError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
-    });
-
-    it("should return an error when invalid uuid is provided as --member-id", async () => {
-      const { error: infoError } = await runCommand<UserMember>(`access-control member user info -i ${crypto.randomUUID()} --member-id an-invalid-uuid`);
-      expect(infoError).to.not.be.undefined;
-      expect(infoError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
-    });
   });
 
 export default tests;

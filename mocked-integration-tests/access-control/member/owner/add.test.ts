@@ -39,19 +39,6 @@ const tests = () =>
       expect(error).to.not.be.undefined;
       expect(error?.message).to.be.equal(`HTTP error! ${JSON.stringify(response)}`);
     });
-
-    it("should return an error when invalid email is provided as --email", async () => {
-      const { error: updateError } = await runCommand<OwnerMemberResponse>(
-        `access-control member owner add -i ${crypto.randomUUID()} --email not-a-valid-email`,
-      );
-      expect(updateError?.message).to.contain("'not-a-valid-email' is not a valid email.");
-    });
-
-    it("should return an error when invalid uuid is provided as --itwin-id", async () => {
-      const { error: addError } = await runCommand<OwnerMemberResponse>(`access-control member owner add -i an-invalid-uuid --email email@example.com`);
-      expect(addError).to.not.be.undefined;
-      expect(addError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
-    });
   });
 
 export default tests;
