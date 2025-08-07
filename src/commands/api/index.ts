@@ -107,7 +107,7 @@ export default class ApiRequest extends BaseCommand {
         return { key, value };
       }) || undefined;
 
-    const client = await this.getITwinApiClient();
+    const client = await this.getITwinPlatformApiClient();
 
     const requestOptions = {
       apiPath: flags.path,
