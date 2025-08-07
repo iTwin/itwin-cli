@@ -6,7 +6,7 @@
 import { ApiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
 import { CustomFlags } from "../../../../extensions/custom-flags.js";
-import { MembersResponse, UserMember } from "../../../../services/access-control/models/members.js";
+import { AddedUserMembersResponse, UserMemberRoles } from "../../../../services/access-control/models/user-member.js";
 
 export default class AddUserMembers extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -44,7 +44,7 @@ export default class AddUserMembers extends BaseCommand {
     "itwin-id": CustomFlags.iTwinIDFlag({
       description: "The ID of the iTwin to which the users will be added.",
     }),
-    members: CustomFlags.userMembers({
+    members: CustomFlags.userMemberRoles({
       description:
         "A list of members to add, each with an email and a list of role IDs. A maximum of 50 role assignments can be performed. Provided in serialized JSON format.",
       exactlyOne: ["members", "email"],
@@ -62,28 +62,19 @@ export default class AddUserMembers extends BaseCommand {
     }),
   };
 
-  public async run(): Promise<MembersResponse> {
+  public async run(): Promise<AddedUserMembersResponse> {
     const { flags } = await this.parse(AddUserMembers);
-
-    const client = await this.getAccessControlMemberClient();
 
     const members = this.getUserMembers(flags.members, flags.email, flags["role-ids"]);
 
-    let roleAssignmentCount = 0;
-    for (const member of members) roleAssignmentCount += member.roleIds.length;
+    const service = await this.getAccessControlMemberService();
 
-    if (roleAssignmentCount > 50) {
-      this.error("A maximum of 50 role assignments can be performed.");
-    }
+    const result = await service.addUserMember(flags["itwin-id"], members);
 
-    const response = await client.addUserMembers(flags["itwin-id"], {
-      members,
-    });
-
-    return this.logAndReturnResult(response);
+    return this.logAndReturnResult(result);
   }
 
-  private getUserMembers(members?: UserMember[], emails?: string[], roleIds?: string[]): UserMember[] {
+  private getUserMembers(members?: UserMemberRoles[], emails?: string[], roleIds?: string[]): UserMemberRoles[] {
     if (members !== undefined) return members;
 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

@@ -24,10 +24,10 @@ export default class ListAllPermissions extends BaseCommand {
   public async run(): Promise<string[]> {
     await this.parse(ListAllPermissions);
 
-    const client = await this.getAccessControlApiClient();
+    const service = await this.getAccessControlService();
 
-    const response = await client.getAllAvailableiTwinPermissions();
+    const result = await service.getAllAvailableiTwinPermissions();
 
-    return this.logAndReturnResult(response.permissions);
+    return this.logAndReturnResult(result);
   }
 }

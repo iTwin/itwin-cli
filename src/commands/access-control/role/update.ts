@@ -61,14 +61,16 @@ export default class UpdateRole extends BaseCommand {
   public async run(): Promise<Role> {
     const { flags } = await this.parse(UpdateRole);
 
-    const client = await this.getAccessControlApiClient();
-
-    const response = await client.updateiTwinRole(flags["itwin-id"], flags["role-id"], {
+    const roleUpdate: Role = {
       description: flags.description,
       displayName: flags.name,
       permissions: flags.permission,
-    });
+    };
 
-    return this.logAndReturnResult(response.role);
+    const service = await this.getAccessControlService();
+
+    const result = await service.updateiTwinRole(flags["itwin-id"], flags["role-id"], roleUpdate);
+
+    return this.logAndReturnResult(result);
   }
 }

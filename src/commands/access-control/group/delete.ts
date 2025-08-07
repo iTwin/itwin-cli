@@ -38,10 +38,10 @@ export default class DeleteAccessControlGroup extends BaseCommand {
   public async run(): Promise<ResultResponse> {
     const { flags } = await this.parse(DeleteAccessControlGroup);
 
-    const client = await this.getAccessControlApiClient();
+    const service = await this.getAccessControlService();
 
-    await client.deleteGroup(flags["itwin-id"], flags["group-id"]);
+    const result = await service.deleteGroup(flags["itwin-id"], flags["group-id"]);
 
-    return this.logAndReturnResult({ result: "deleted" });
+    return this.logAndReturnResult(result);
   }
 }

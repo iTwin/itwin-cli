@@ -32,10 +32,10 @@ export default class AccessControlMemberInvitations extends BaseCommand {
   public async run(): Promise<Invitation[]> {
     const { flags } = await this.parse(AccessControlMemberInvitations);
 
-    const client = await this.getAccessControlMemberClient();
+    const service = await this.getAccessControlMemberService();
 
-    const response = await client.getMemberInvitations(flags["itwin-id"]);
+    const result = await service.getMemberInvitations(flags["itwin-id"]);
 
-    return this.logAndReturnResult(response.invitations);
+    return this.logAndReturnResult(result);
   }
 }

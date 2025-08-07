@@ -6,7 +6,7 @@
 import { ApiReference } from "../../../../extensions/api-reference.js";
 import BaseCommand from "../../../../extensions/base-command.js";
 import { CustomFlags } from "../../../../extensions/custom-flags.js";
-import { Member } from "../../../../services/access-control/models/members.js";
+import { UserMember } from "../../../../services/access-control/models/user-member.js";
 
 export default class UpdateUserMember extends BaseCommand {
   public static apiReference: ApiReference = {
@@ -40,17 +40,13 @@ export default class UpdateUserMember extends BaseCommand {
     }),
   };
 
-  public async run(): Promise<Member> {
+  public async run(): Promise<UserMember> {
     const { flags } = await this.parse(UpdateUserMember);
 
-    if (flags["role-id"] !== undefined && flags["role-id"].length > 50) {
-      this.error("A maximum of 50 roles can be assigned.");
-    }
+    const service = await this.getAccessControlMemberService();
 
-    const client = await this.getAccessControlMemberClient();
+    const result = await service.updateUserMember(flags["itwin-id"], flags["member-id"], flags["role-id"]);
 
-    const response = await client.updateUserMember(flags["itwin-id"], flags["member-id"], flags["role-id"]);
-
-    return this.logAndReturnResult(response.member);
+    return this.logAndReturnResult(result);
   }
 }

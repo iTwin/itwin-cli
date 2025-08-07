@@ -37,10 +37,10 @@ export default class DeleteUserMember extends BaseCommand {
   public async run(): Promise<ResultResponse> {
     const { flags } = await this.parse(DeleteUserMember);
 
-    const client = await this.getAccessControlMemberClient();
+    const service = await this.getAccessControlMemberService();
 
-    await client.deleteUserMember(flags["itwin-id"], flags["member-id"]);
+    const result = await service.deleteUserMember(flags["itwin-id"], flags["member-id"]);
 
-    return this.logAndReturnResult({ result: "deleted" });
+    return this.logAndReturnResult(result);
   }
 }

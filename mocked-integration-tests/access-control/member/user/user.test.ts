@@ -3,12 +3,12 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import runSuiteIfMainModule from "../../../../integration-tests/utils/run-suite-if-main-module.js";
-import addTests from "./add.test.js";
-import deleteTests from "./delete.test.js";
-import infoTests from "./info.test.js";
-import listTests from "./list.test.js";
-import updateTests from "./update.test.js";
+import runSuiteIfMainModule from "../../../../integration-tests/utils/run-suite-if-main-module";
+import addTests from "./add.test";
+import deleteTests from "./delete.test";
+import infoTests from "./info.test";
+import listTests from "./list.test";
+import updateTests from "./update.test";
 
 const tests = () =>
   describe("user", () => {

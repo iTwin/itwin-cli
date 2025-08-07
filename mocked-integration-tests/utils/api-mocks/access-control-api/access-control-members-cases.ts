@@ -5,8 +5,11 @@
 
 import nock from "nock";
 
-import { MemberResponse, MembersListResponse, MembersResponse, UserMember } from "../../../../src/services/access-control/models/members";
-import { OwnerListResponse, OwnerResponse } from "../../../../src/services/access-control/models/owner";
+import { OwnerMemberListResponse, OwnerMemberResponse } from "../../../../src/services/access-control/models/owner-member";
+// prettier-ignore
+import {
+    AddedUserMembersResponse, UserMemberListResponse, UserMemberResponse, UserMemberRoles
+} from "../../../../src/services/access-control/models/user-member";
 import { ErrorResponse } from "../../../../src/services/general-models/error-response";
 import { ITP_API_URL } from "../../mock-environment";
 import { AccessControlErrors } from "./access-control-errors";
@@ -14,13 +17,13 @@ import { AccessControlMembersResponses } from "./access-control-members-response
 
 const membersCases = {
   addiTwinOwnerMember: {
-    successInternal: (iTwinId: string, email: string): OwnerResponse => {
-      const response = AccessControlMembersResponses.ownerResponse.internal(email);
+    successInternal: (iTwinId: string, email: string): OwnerMemberResponse => {
+      const response = AccessControlMembersResponses.ownerMemberResponse.internal(email);
       nock(ITP_API_URL).post(`/accesscontrol/itwins/${iTwinId}/members/owners`, { email }).reply(201, response);
       return response;
     },
-    successExternal: (iTwinId: string, email: string): OwnerResponse => {
-      const response = AccessControlMembersResponses.ownerResponse.external(email);
+    successExternal: (iTwinId: string, email: string): OwnerMemberResponse => {
+      const response = AccessControlMembersResponses.ownerMemberResponse.external(email);
       nock(ITP_API_URL).post(`/accesscontrol/itwins/${iTwinId}/members/owners`, { email }).reply(201, response);
       return response;
     },
@@ -36,8 +39,8 @@ const membersCases = {
     },
   },
   getiTwinOwnerMembers: {
-    success: (iTwinId: string): OwnerListResponse => {
-      const response = AccessControlMembersResponses.ownerListResponse(iTwinId);
+    success: (iTwinId: string): OwnerMemberListResponse => {
+      const response = AccessControlMembersResponses.ownerMemberListResponse(iTwinId);
       nock(ITP_API_URL).get(`/accesscontrol/itwins/${iTwinId}/members/owners`).reply(201, response);
       return response;
     },
@@ -64,28 +67,28 @@ const membersCases = {
   },
 
   addiTwinUserMembers: {
-    successInternal: (iTwinId: string, userMembers: UserMember[]): MembersResponse => {
-      const response = AccessControlMembersResponses.membersResponse.internal(userMembers);
+    successInternal: (iTwinId: string, userMembers: UserMemberRoles[]): AddedUserMembersResponse => {
+      const response = AccessControlMembersResponses.addedUserMembersResponse.internal(userMembers);
       nock(ITP_API_URL)
         .post(`/accesscontrol/itwins/${iTwinId}/members/users`, JSON.stringify({ members: userMembers }))
         .reply(201, response);
       return response;
     },
-    successExternal: (iTwinId: string, userMembers: UserMember[]): MembersResponse => {
-      const response = AccessControlMembersResponses.membersResponse.external(userMembers);
+    successExternal: (iTwinId: string, userMembers: UserMemberRoles[]): AddedUserMembersResponse => {
+      const response = AccessControlMembersResponses.addedUserMembersResponse.external(userMembers);
       nock(ITP_API_URL)
         .post(`/accesscontrol/itwins/${iTwinId}/members/users`, JSON.stringify({ members: userMembers }))
         .reply(201, response);
       return response;
     },
-    iTwinNotFound: (iTwinId: string, userMembers: UserMember[]): ErrorResponse => {
+    iTwinNotFound: (iTwinId: string, userMembers: UserMemberRoles[]): ErrorResponse => {
       const response = AccessControlErrors.iTwinNotFound;
       nock(ITP_API_URL)
         .post(`/accesscontrol/itwins/${iTwinId}/members/users`, JSON.stringify({ members: userMembers }))
         .reply(404, response);
       return response;
     },
-    roleNotFound: (iTwinId: string, userMembers: UserMember[]): ErrorResponse => {
+    roleNotFound: (iTwinId: string, userMembers: UserMemberRoles[]): ErrorResponse => {
       const response = AccessControlErrors.roleNotFound;
       nock(ITP_API_URL)
         .post(`/accesscontrol/itwins/${iTwinId}/members/users`, JSON.stringify({ members: userMembers }))
@@ -94,8 +97,8 @@ const membersCases = {
     },
   },
   getiTwinUserMember: {
-    success: (iTwinId: string, memberId: string): MemberResponse => {
-      const response = AccessControlMembersResponses.memberResponse(memberId, [crypto.randomUUID()]);
+    success: (iTwinId: string, memberId: string): UserMemberResponse => {
+      const response = AccessControlMembersResponses.userMemberResponse(memberId, [crypto.randomUUID()]);
       nock(ITP_API_URL).get(`/accesscontrol/itwins/${iTwinId}/members/users/${memberId}`).reply(200, response);
       return response;
     },
@@ -111,8 +114,8 @@ const membersCases = {
     },
   },
   getiTwinUserMembers: {
-    success: (iTwinId: string): MembersListResponse => {
-      const response = AccessControlMembersResponses.membersListResponse(iTwinId);
+    success: (iTwinId: string): UserMemberListResponse => {
+      const response = AccessControlMembersResponses.userMemberListResponse(iTwinId);
       nock(ITP_API_URL).get(`/accesscontrol/itwins/${iTwinId}/members/users`).reply(200, response);
       return response;
     },
@@ -123,8 +126,8 @@ const membersCases = {
     },
   },
   updateiTwinUserMember: {
-    success: (iTwinId: string, memberId: string, roleIds: string[]): MemberResponse => {
-      const response = AccessControlMembersResponses.memberResponse(memberId, roleIds);
+    success: (iTwinId: string, memberId: string, roleIds: string[]): UserMemberResponse => {
+      const response = AccessControlMembersResponses.userMemberResponse(memberId, roleIds);
       nock(ITP_API_URL).patch(`/accesscontrol/itwins/${iTwinId}/members/users/${memberId}`, { roleIds }).reply(200, response);
       return response;
     },

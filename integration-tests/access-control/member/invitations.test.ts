@@ -9,7 +9,7 @@ import { ITwin } from "@itwin/itwins-client";
 import { runCommand } from "@oclif/test";
 
 import { Invitation } from "../../../src/services/access-control/models/invitations";
-import { OwnerResponse } from "../../../src/services/access-control/models/owner";
+import { OwnerMemberResponse } from "../../../src/services/access-control/models/owner-member";
 import { ResultResponse } from "../../../src/services/general-models/result-response.js";
 import { ITP_TEST_USER_EXTERNAL } from "../../utils/environment";
 import runSuiteIfMainModule from "../../utils/run-suite-if-main-module";
@@ -31,7 +31,7 @@ const tests = () => {
 
   it("Should get pending invitations", async () => {
     const emailToAdd = ITP_TEST_USER_EXTERNAL;
-    const { result: owner } = await runCommand<OwnerResponse>(`access-control member owner add --itwin-id ${iTwinId} --email ${emailToAdd}`);
+    const { result: owner } = await runCommand<OwnerMemberResponse>(`access-control member owner add --itwin-id ${iTwinId} --email ${emailToAdd}`);
     expect(owner).to.not.be.undefined;
     expect(owner!.member).is.null;
     expect(owner!.invitation).to.not.be.null;

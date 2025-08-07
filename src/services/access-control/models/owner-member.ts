@@ -4,16 +4,23 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Links } from "../../general-models/links.js";
-import { GroupMember } from "./group-members.js";
 import { Invitation } from "./invitations.js";
 
-export interface OwnerResponse {
+export interface OwnerMemberResponse {
   invitation: Invitation | null;
-  member: GroupMember | null;
+  member: OwnerMember | null;
 }
 
-export interface OwnerListResponse {
+export interface OwnerMemberListResponse {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   _links: Links;
-  members: GroupMember[];
+  members: OwnerMember[];
+}
+
+export interface OwnerMember {
+  email: string;
+  givenName: string;
+  id: string;
+  organization: string;
+  surname: string;
 }

@@ -32,10 +32,10 @@ export default class ListRoles extends BaseCommand {
   public async run(): Promise<Role[]> {
     const { flags } = await this.parse(ListRoles);
 
-    const client = await this.getAccessControlApiClient();
+    const service = await this.getAccessControlService();
 
-    const response = await client.getiTwinRoles(flags["itwin-id"]);
+    const result = await service.getiTwinRoles(flags["itwin-id"]);
 
-    return this.logAndReturnResult(response.roles);
+    return this.logAndReturnResult(result);
   }
 }

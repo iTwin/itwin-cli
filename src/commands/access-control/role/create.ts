@@ -46,13 +46,10 @@ export default class CreateRole extends BaseCommand {
   public async run(): Promise<Role> {
     const { flags } = await this.parse(CreateRole);
 
-    const client = await this.getAccessControlApiClient();
+    const service = await this.getAccessControlService();
 
-    const response = await client.createiTwinRole(flags["itwin-id"], {
-      description: flags.description,
-      displayName: flags.name,
-    });
+    const result = await service.createiTwinRole(flags["itwin-id"], flags.name, flags.description);
 
-    return this.logAndReturnResult(response.role);
+    return this.logAndReturnResult(result);
   }
 }

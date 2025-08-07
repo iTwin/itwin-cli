@@ -37,10 +37,10 @@ export default class DeleteRole extends BaseCommand {
   public async run(): Promise<ResultResponse> {
     const { flags } = await this.parse(DeleteRole);
 
-    const client = await this.getAccessControlApiClient();
+    const service = await this.getAccessControlService();
 
-    await client.deleteiTwinRole(flags["itwin-id"], flags["role-id"]);
+    const result = await service.deleteiTwinRole(flags["itwin-id"], flags["role-id"]);
 
-    return this.logAndReturnResult({ result: "deleted" });
+    return this.logAndReturnResult(result);
   }
 }
