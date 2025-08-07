@@ -19,7 +19,7 @@ const tests = () =>
   describe("populate", () => {
     const failingTestFilePath1 = "integration-tests/test.zip";
     const testFilePath1 = "examples/datasets/ExtonCampus.dgn";
-    const testFilePath2 = "examples/datasets/HouseModel.dgn";
+    const testFilePath2 = "./examples/datasets/HouseModel.dgn";
 
     let testIModelId: string;
     let testITwinId: string;
