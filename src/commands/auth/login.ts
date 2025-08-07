@@ -6,6 +6,7 @@
 import { Flags } from "@oclif/core";
 
 import BaseCommand from "../../extensions/base-command.js";
+import { AuthorizationType } from "../../services/authorization/authorization-type.js";
 
 export default class Login extends BaseCommand {
   public static customDocs = true;
@@ -43,6 +44,23 @@ export default class Login extends BaseCommand {
   public async run(): Promise<void> {
     const { flags } = await this.parse(Login);
 
+    const currentAuthorizationInfo = await this.authorizationService.info();
+
     await this.authorizationService.login(flags["client-id"], flags["client-secret"]);
+
+    const newAuthorizationInfo = await this.authorizationService.info();
+    // If the same service client is utilized, do not clear context
+    if (
+      currentAuthorizationInfo.authorizationType === AuthorizationType.Service &&
+      newAuthorizationInfo.authorizationType === AuthorizationType.Service &&
+      currentAuthorizationInfo.issuerUrl === newAuthorizationInfo.issuerUrl &&
+      currentAuthorizationInfo.apiUrl === newAuthorizationInfo.apiUrl &&
+      currentAuthorizationInfo.clientId === newAuthorizationInfo.clientId
+    ) {
+      return;
+    }
+
+    // Otherwise clear the context
+    await this.contextService.clearContext();
   }
 }
