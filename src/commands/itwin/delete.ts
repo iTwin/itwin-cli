@@ -37,7 +37,7 @@ export default class DeleteITwin extends BaseCommand {
     const result = await service.deleteITwin(flags["itwin-id"]);
 
     const context = this.contextService.getContext();
-    if (context !== undefined && context.iModelId === flags["itwin-id"]) {
+    if (context !== undefined && context.iTwinId === flags["itwin-id"]) {
       await this.contextService.clearContext();
     }
 

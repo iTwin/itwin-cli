@@ -9,12 +9,35 @@ import fs from "node:fs";
 import { runCommand } from "@oclif/test";
 
 import { AuthorizationInformation } from "../../src/services/authorization/authorization-type";
+import { ResultResponse } from "../../src/services/general-models/result-response";
+import { UserContext } from "../../src/services/general-models/user-context";
 import { ITP_API_URL, ITP_ISSUER_URL, ITP_SERVICE_CLIENT_ID, ITP_SERVICE_CLIENT_SECRET } from "../utils/environment";
-import { getTokenPathByOS, serviceLoginToCli } from "../utils/helpers";
+import { createIModel, createITwin, getTokenPathByOS, serviceLoginToCli } from "../utils/helpers";
 import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
 
 const tests = () =>
   describe("Authentication Integration Tests (Service Client)", () => {
+    const testIModelName = `cli-imodel-integration-test-${new Date().toISOString()}`;
+    let testIModelId: string;
+    let testITwinId: string;
+
+    before(async () => {
+      const testITwin = await createITwin(`cli-itwin-integration-test-${new Date().toISOString()}`, "Thing", "Asset");
+      testITwinId = testITwin.id as string;
+      const testIModel = await createIModel(testIModelName, testITwinId);
+      testIModelId = testIModel.id;
+    });
+
+    after(async () => {
+      await serviceLoginToCli();
+
+      const { result: imodelDeleteResult } = await runCommand<ResultResponse>(`imodel delete --imodel-id ${testIModelId}`);
+      const { result: itwinDeleteResult } = await runCommand<ResultResponse>(`itwin delete --itwin-id ${testITwinId}`);
+
+      expect(imodelDeleteResult).to.have.property("result", "deleted");
+      expect(itwinDeleteResult).to.have.property("result", "deleted");
+    });
+
     it("auth info get full auth info from token when logged in", async () => {
       await serviceLoginToCli();
 
@@ -63,8 +86,20 @@ const tests = () =>
       process.env.ITP_SERVICE_CLIENT_SECRET = serviceClientSecret;
     });
 
-    after(async () => {
+    it("should preserve context when user logs into the same service account", async () => {
       await serviceLoginToCli();
+
+      const { result: contextBefore } = await runCommand<UserContext>(`context set -i ${testITwinId} -m ${testIModelId}`);
+      expect(contextBefore).to.not.be.undefined;
+      expect(contextBefore?.iTwinId).to.be.equal(testITwinId);
+      expect(contextBefore?.iModelId).to.be.equal(testIModelId);
+
+      await serviceLoginToCli();
+
+      const { result: contextAfter } = await runCommand<UserContext>(`context info`);
+      expect(contextAfter).to.not.be.undefined;
+      expect(contextAfter?.iTwinId).to.be.equal(testITwinId);
+      expect(contextAfter?.iModelId).to.be.equal(testIModelId);
     });
   });
 
