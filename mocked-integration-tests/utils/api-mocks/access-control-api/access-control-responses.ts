@@ -1,3 +1,8 @@
+/*---------------------------------------------------------------------------------------------
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
+
 import { GroupMember, GroupResponse, GroupsResponse } from "../../../../src/services/access-control/models/group.js";
 import { RoleResponse, RolesResponse } from "../../../../src/services/access-control/models/role.js";
 
