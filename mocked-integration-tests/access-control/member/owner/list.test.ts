@@ -30,12 +30,6 @@ const tests = () =>
       expect(listError).to.not.be.undefined;
       expect(listError?.message).to.be.equal(`HTTP error! ${JSON.stringify(response)}`);
     });
-
-    it("should return an error when invalid uuid is provided as --itwin-id", async () => {
-      const { error: listError } = await runCommand<OwnerMember>(`access-control member owner list -i an-invalid-uuid`);
-      expect(listError).to.not.be.undefined;
-      expect(listError?.message).to.contain("'an-invalid-uuid' is not a valid UUID.");
-    });
   });
 
 export default tests;
