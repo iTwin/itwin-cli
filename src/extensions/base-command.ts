@@ -40,7 +40,7 @@ import { Configuration } from "./configuration.js";
 
 export default abstract class BaseCommand extends Command {
   // Is necessary for --json flag to function even though it's not referenced anywhere
-  public static enableJsonFlag = true;
+  public static override enableJsonFlag = true;
 
   public static baseFlags = {
     json: Flags.boolean({
