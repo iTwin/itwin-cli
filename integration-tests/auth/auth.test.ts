@@ -28,7 +28,6 @@ const tests = () =>
     });
 
     after(async () => {
-      await runCommand("auth logout");
       await runCommand("auth login");
 
       const { result: imodelDeleteResult } = await runCommand<ResultResponse>(`imodel delete --imodel-id ${testIModelId}`);
