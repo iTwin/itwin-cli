@@ -11,7 +11,7 @@ import runSuiteIfMainModule from "../../integration-tests/utils/run-suite-if-mai
 import { AccessControlApiMock } from "../utils/api-mocks/access-control-api/access-control-api-mock.js";
 
 const tests = () =>
-  describe("Access Control Permissions Tests", () => {
+  describe("permissions", () => {
     const iTwinId = crypto.randomUUID();
     const permissions = ["read", "write", "execute"];
 

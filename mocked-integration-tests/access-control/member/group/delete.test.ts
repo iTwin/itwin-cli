@@ -14,28 +14,28 @@ import { AccessControlApiMock } from "../../../utils/api-mocks/access-control-ap
 const tests = () =>
   describe("delete", () => {
     const iTwinId = crypto.randomUUID();
-    const memberId = crypto.randomUUID();
+    const groupId = crypto.randomUUID();
 
-    it("should remove user member from iTwin", async () => {
-      AccessControlApiMock.members.removeiTwinUserMember.success(iTwinId, memberId);
+    it("should remove group member from iTwin", async () => {
+      AccessControlApiMock.members.removeiTwinGroupMember.success(iTwinId, groupId);
 
-      const { result: deleteResult } = await runCommand<ResultResponse>(`access-control member user delete --itwin-id ${iTwinId} --member-id ${memberId}`);
+      const { result: deleteResult } = await runCommand<ResultResponse>(`access-control member group delete --itwin-id ${iTwinId} --group-id ${groupId}`);
       expect(deleteResult).to.not.be.undefined;
       expect(deleteResult).to.have.property("result", "deleted");
     });
 
-    it("should return an error when user member is not found", async () => {
-      const response = AccessControlApiMock.members.removeiTwinUserMember.memberNotFound(iTwinId, memberId);
+    it("should return an error when group member is not found", async () => {
+      const response = AccessControlApiMock.members.removeiTwinGroupMember.teamMemberNotFound(iTwinId, groupId);
 
-      const { error: deleteError } = await runCommand<ResultResponse>(`access-control member user delete --itwin-id ${iTwinId} --member-id ${memberId}`);
+      const { error: deleteError } = await runCommand<ResultResponse>(`access-control member group delete --itwin-id ${iTwinId} --group-id ${groupId}`);
       expect(deleteError).to.not.be.undefined;
       expect(deleteError?.message).to.be.equal(`HTTP error! ${JSON.stringify(response)}`);
     });
 
     it("should return an error when iTwin is not found", async () => {
-      const response = AccessControlApiMock.members.removeiTwinUserMember.iTwinNotFound(iTwinId, memberId);
+      const response = AccessControlApiMock.members.removeiTwinGroupMember.iTwinNotFound(iTwinId, groupId);
 
-      const { error: deleteError } = await runCommand<ResultResponse>(`access-control member user delete --itwin-id ${iTwinId} --member-id ${memberId}`);
+      const { error: deleteError } = await runCommand<ResultResponse>(`access-control member group delete --itwin-id ${iTwinId} --group-id ${groupId}`);
       expect(deleteError).to.not.be.undefined;
       expect(deleteError?.message).to.be.equal(`HTTP error! ${JSON.stringify(response)}`);
     });

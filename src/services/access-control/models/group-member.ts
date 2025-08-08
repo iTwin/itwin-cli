@@ -19,6 +19,10 @@ export interface GroupMembersResponse {
   members: GroupMemberInfo[];
 }
 
+export interface AddedGroupMembersResponse {
+  members: GroupMemberInfo[];
+}
+
 export interface GroupMemberResponse {
   member: GroupMemberInfo;
 }
