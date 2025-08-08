@@ -4,7 +4,6 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { expect } from "chai";
-import nock from "nock";
 
 import { runCommand } from "@oclif/test";
 
@@ -30,12 +29,7 @@ const tests = () =>
 
     after(async () => {
       await runCommand("auth logout");
-
-      nock.enableNetConnect();
-      nock.recorder.rec();
-
       await runCommand("auth login");
-      nock.restore();
 
       const { result: imodelDeleteResult } = await runCommand<ResultResponse>(`imodel delete --imodel-id ${testIModelId}`);
       const { result: itwinDeleteResult } = await runCommand<ResultResponse>(`itwin delete --itwin-id ${testITwinId}`);
