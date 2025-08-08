@@ -35,6 +35,12 @@ export default class DeleteIModel extends BaseCommand {
     const iModelApiService = await this.getIModelService();
     const result = await iModelApiService.deleteIModel(flags["imodel-id"]);
 
+    const context = this.contextService.getContext();
+    if (context !== undefined && context.iModelId === flags["imodel-id"]) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      await this.contextService.setContext(context.iTwinId!, undefined);
+    }
+
     return this.logAndReturnResult(result);
   }
 }
