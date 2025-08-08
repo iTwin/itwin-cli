@@ -63,17 +63,17 @@ export function checkAndGetFilesWithConnectors(files: string[], connectorTypes: 
     } else if (connectorTypes && connectorTypes.length === files.length) {
       connector = ConnectorType[connectorTypes[index] as keyof typeof ConnectorType];
     } else if (!connectorTypes) {
-      const splitedFile = fileName.split(".");
+      const splitFile = fileName.split(".");
 
-      if (splitedFile.length === 1) {
+      if (splitFile.length === 1) {
         throw new Error(`${file} has no extension`);
       }
 
-      if (splitedFile.length >= 3) {
-        connector = getConnectorTypeFromFileExtension(`${splitedFile.at(-2)}.${splitedFile.at(-1)}`);
+      if (splitFile.length >= 3) {
+        connector = getConnectorTypeFromFileExtension(`${splitFile.at(-2)}.${splitFile.at(-1)}`);
       }
 
-      connector ??= getConnectorTypeFromFileExtension(`${splitedFile.at(-1)}`);
+      connector ??= getConnectorTypeFromFileExtension(`${splitFile.at(-1)}`);
     }
 
     if (!connector) {
