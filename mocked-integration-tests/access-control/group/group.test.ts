@@ -3,16 +3,20 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import runSuiteIfMainModule from "../../integration-tests/utils/run-suite-if-main-module";
-import groupTests from "./group/group.test";
-import memberTests from "./member/member.test";
-import permissionsTests from "./permissions.test";
+import runSuiteIfMainModule from "../../../integration-tests/utils/run-suite-if-main-module";
+import addTests from "./add.test";
+import deleteTests from "./delete.test";
+import infoTests from "./info.test";
+import listTests from "./list.test";
+import updateTests from "./update.test";
 
 const tests = () =>
-  describe("access-control", () => {
-    groupTests();
-    memberTests();
-    permissionsTests();
+  describe("group", () => {
+    addTests();
+    deleteTests();
+    infoTests();
+    listTests();
+    updateTests();
   });
 
 export default tests;

@@ -35,4 +35,27 @@ export class AccessControlErrors {
       target: "members[0].roleIds[0]",
     },
   };
+
+  public static groupNotFound: ErrorResponse = {
+    error: {
+      code: "GroupNotFound",
+      message: "Requested group is not available.",
+    },
+  };
+
+  public static imsGroupNotFound: ErrorResponse = {
+    error: {
+      code: "ImsGroupNotFound",
+      message: "Requested IMS group is not available.",
+      target: "imsGroups[0]",
+    },
+  };
+
+  public static permissionNotFound: ErrorResponse = {
+    error: {
+      code: "PermissionNotFound",
+      message: "Requested permission is not available.",
+      target: "permissions[0]",
+    },
+  };
 }
