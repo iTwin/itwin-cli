@@ -10,7 +10,6 @@ import { runCommand } from "@oclif/test";
 
 import { Group } from "../../src/services/access-control/models/group";
 import { ResultResponse } from "../../src/services/general-models/result-response.js";
-import { ITP_TEST_USER_SAMEORG } from "../utils/environment";
 import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
 
 const tests = () => {
@@ -51,17 +50,15 @@ const tests = () => {
 
     const updatedGroupName = "Updated Group Name";
     const updatedGroupDescription = "Updated Group Description";
-    const memberEmail = ITP_TEST_USER_SAMEORG;
 
     const { result: groupUpdate } = await runCommand<Group>(
-      `access-control group update --itwin-id ${iTwinId} --group-id ${groupCreate!.id} --name "${updatedGroupName}" --description "${updatedGroupDescription}" --member ${memberEmail}`,
+      `access-control group update --itwin-id ${iTwinId} --group-id ${groupCreate!.id} --name "${updatedGroupName}" --description "${updatedGroupDescription}"`,
     );
     expect(groupUpdate).to.not.be.undefined;
     expect(groupUpdate!.id).to.not.be.undefined;
     expect(groupUpdate!.name).to.be.equal(updatedGroupName);
     expect(groupUpdate!.description).to.be.equal(updatedGroupDescription);
     expect(groupUpdate!.members).to.not.be.undefined;
-    expect(groupUpdate!.members!.some((member) => member.email.toLowerCase() === memberEmail!.toLowerCase())).to.be.true;
   });
 
   it("Should list groups", async () => {

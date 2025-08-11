@@ -5,6 +5,12 @@
 
 import nock from "nock";
 
+import {
+  AddedGroupMembersResponse,
+  GroupMemberResponse,
+  GroupMemberRoles,
+  GroupMembersResponse,
+} from "../../../../src/services/access-control/models/group-member";
 import { OwnerMemberListResponse, OwnerMemberResponse } from "../../../../src/services/access-control/models/owner-member";
 // prettier-ignore
 import {
@@ -159,6 +165,103 @@ const membersCases = {
     memberNotFound: (iTwinId: string, memberId: string): ErrorResponse => {
       const response = AccessControlErrors.teamMemberNotFound;
       nock(ITP_API_URL).delete(`/accesscontrol/itwins/${iTwinId}/members/users/${memberId}`).reply(404, response);
+      return response;
+    },
+  },
+
+  addiTwinGroupMembers: {
+    success: (iTwinId: string, groupMembers: GroupMemberRoles[]): AddedGroupMembersResponse => {
+      const response = AccessControlMembersResponses.addedGroupMembersResponse(groupMembers);
+      nock(ITP_API_URL)
+        .post(`/accesscontrol/itwins/${iTwinId}/members/groups`, JSON.stringify({ members: groupMembers }))
+        .reply(201, response);
+      return response;
+    },
+    iTwinNotFound: (iTwinId: string, groupMembers: GroupMemberRoles[]): ErrorResponse => {
+      const response = AccessControlErrors.iTwinNotFound;
+      nock(ITP_API_URL)
+        .post(`/accesscontrol/itwins/${iTwinId}/members/groups`, JSON.stringify({ members: groupMembers }))
+        .reply(404, response);
+      return response;
+    },
+    roleNotFound: (iTwinId: string, groupMembers: GroupMemberRoles[]): ErrorResponse => {
+      const response = AccessControlErrors.roleNotFound;
+      nock(ITP_API_URL)
+        .post(`/accesscontrol/itwins/${iTwinId}/members/groups`, JSON.stringify({ members: groupMembers }))
+        .reply(404, response);
+      return response;
+    },
+    teamMemberNotFound: (iTwinId: string, groupMembers: GroupMemberRoles[]): ErrorResponse => {
+      const response = AccessControlErrors.teamMemberNotFound;
+      nock(ITP_API_URL)
+        .post(`/accesscontrol/itwins/${iTwinId}/members/groups`, JSON.stringify({ members: groupMembers }))
+        .reply(404, response);
+      return response;
+    },
+  },
+  getiTwinGroupMember: {
+    success: (iTwinId: string, groupId: string): GroupMemberResponse => {
+      const response = AccessControlMembersResponses.groupMemberResponse(groupId, [crypto.randomUUID()]);
+      nock(ITP_API_URL).get(`/accesscontrol/itwins/${iTwinId}/members/groups/${groupId}`).reply(200, response);
+      return response;
+    },
+    iTwinNotFound: (iTwinId: string, groupId: string): ErrorResponse => {
+      const response = AccessControlErrors.iTwinNotFound;
+      nock(ITP_API_URL).get(`/accesscontrol/itwins/${iTwinId}/members/groups/${groupId}`).reply(404, response);
+      return response;
+    },
+    teamMemberNotFound: (iTwinId: string, groupId: string): ErrorResponse => {
+      const response = AccessControlErrors.teamMemberNotFound;
+      nock(ITP_API_URL).get(`/accesscontrol/itwins/${iTwinId}/members/groups/${groupId}`).reply(404, response);
+      return response;
+    },
+  },
+  getiTwinGroupMembers: {
+    success: (iTwinId: string): GroupMembersResponse => {
+      const response = AccessControlMembersResponses.groupMembersResponse([crypto.randomUUID(), crypto.randomUUID(), crypto.randomUUID()]);
+      nock(ITP_API_URL).get(`/accesscontrol/itwins/${iTwinId}/members/groups`).reply(200, response);
+      return response;
+    },
+    iTwinNotFound: (iTwinId: string): ErrorResponse => {
+      const response = AccessControlErrors.iTwinNotFound;
+      nock(ITP_API_URL).get(`/accesscontrol/itwins/${iTwinId}/members/groups`).reply(404, response);
+      return response;
+    },
+  },
+  updateiTwinGroupMember: {
+    success: (iTwinId: string, groupId: string, roleIds: string[]): GroupMemberResponse => {
+      const response = AccessControlMembersResponses.groupMemberResponse(groupId, roleIds);
+      nock(ITP_API_URL).patch(`/accesscontrol/itwins/${iTwinId}/members/groups/${groupId}`, { roleIds }).reply(200, response);
+      return response;
+    },
+    iTwinNotFound: (iTwinId: string, groupId: string, roleIds: string[]): ErrorResponse => {
+      const response = AccessControlErrors.iTwinNotFound;
+      nock(ITP_API_URL).patch(`/accesscontrol/itwins/${iTwinId}/members/groups/${groupId}`, { roleIds }).reply(404, response);
+      return response;
+    },
+    teamMemberFound: (iTwinId: string, groupId: string, roleIds: string[]): ErrorResponse => {
+      const response = AccessControlErrors.teamMemberNotFound;
+      nock(ITP_API_URL).patch(`/accesscontrol/itwins/${iTwinId}/members/groups/${groupId}`, { roleIds }).reply(404, response);
+      return response;
+    },
+    roleNotFound: (iTwinId: string, groupId: string, roleIds: string[]): ErrorResponse => {
+      const response = AccessControlErrors.roleNotFound;
+      nock(ITP_API_URL).patch(`/accesscontrol/itwins/${iTwinId}/members/groups/${groupId}`, { roleIds }).reply(404, response);
+      return response;
+    },
+  },
+  removeiTwinGroupMember: {
+    success: (iTwinId: string, groupId: string): void => {
+      nock(ITP_API_URL).delete(`/accesscontrol/itwins/${iTwinId}/members/groups/${groupId}`).reply(204);
+    },
+    iTwinNotFound: (iTwinId: string, groupId: string): ErrorResponse => {
+      const response = AccessControlErrors.iTwinNotFound;
+      nock(ITP_API_URL).delete(`/accesscontrol/itwins/${iTwinId}/members/groups/${groupId}`).reply(404, response);
+      return response;
+    },
+    teamMemberNotFound: (iTwinId: string, groupId: string): ErrorResponse => {
+      const response = AccessControlErrors.teamMemberNotFound;
+      nock(ITP_API_URL).delete(`/accesscontrol/itwins/${iTwinId}/members/groups/${groupId}`).reply(404, response);
       return response;
     },
   },
