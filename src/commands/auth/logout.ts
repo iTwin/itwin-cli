@@ -19,5 +19,6 @@ export default class Logout extends BaseCommand {
 
   public async run(): Promise<void> {
     await this.authorizationService.logout();
+    await this.contextService.clearContext();
   }
 }

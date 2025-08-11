@@ -3,14 +3,14 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import accessControlTests from "../access-control/access-control.test";
-import authTests from "../auth/auth.test";
-import iModelTests from "../imodel/imodel.test";
-import iTwinTests from "../itwin/itwin.test";
+import runSuiteIfMainModule from "../../integration-tests/utils/run-suite-if-main-module.js";
+import deleteTests from "./delete.test.js";
 
-describe("Mocked integration tests", () => {
-  accessControlTests();
-  authTests();
-  iModelTests();
-  iTwinTests();
-});
+const tests = () =>
+  describe("imodel", () => {
+    deleteTests();
+  });
+
+export default tests;
+
+runSuiteIfMainModule(import.meta, tests);

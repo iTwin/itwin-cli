@@ -33,6 +33,8 @@ const tests = () =>
       const { error } = await runCommand<AuthorizationInformation>("user me");
       expect(error).to.not.be.undefined;
       expect(error?.message).to.be.equal("Interactive auth token has expired. Please run 'itp auth login' command to re-authenticate.");
+
+      await runCommand("auth logout");
     });
 
     after(async () => {

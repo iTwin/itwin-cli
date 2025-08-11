@@ -9,6 +9,7 @@ import { IModel } from "@itwin/imodels-client-management";
 import { runCommand } from "@oclif/test";
 
 import { ResultResponse } from "../../src/services/general-models/result-response";
+import { UserContext } from "../../src/services/general-models/user-context";
 import { createIModel, createITwin, deleteIModel } from "../utils/helpers";
 import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
 
@@ -76,6 +77,54 @@ const tests = () =>
       expect(createdIModel!.name).to.be.equal(iModelName);
       expect(createdIModel!.description).to.be.equal(testIModelDescription);
       expect(createdIModel!.extent).to.be.deep.equal(extent);
+    });
+
+    it("Should remove imodel from context when it is deleted", async () => {
+      const iModelName = `${testIModelName}-context-test1`;
+      const { result: createdIModel } = await runCommand<IModel>(`imodel create --itwin-id ${testITwinId} --name "${iModelName}" --save`);
+      expect(createdIModel).to.not.be.undefined;
+
+      await runCommand<UserContext>(`context set -m ${createdIModel!.id}`);
+
+      const { result: contextBefore } = await runCommand<UserContext>(`context info`);
+      expect(contextBefore).to.not.be.undefined;
+      expect(contextBefore?.iTwinId).to.be.equal(testITwinId);
+      expect(contextBefore?.iModelId).to.be.equal(createdIModel?.id);
+
+      const { result: deleteResult } = await runCommand<ResultResponse>(`imodel delete -m ${createdIModel?.id}`);
+      expect(deleteResult).to.not.be.undefined;
+      expect(deleteResult).to.have.property("result", "deleted");
+
+      const { result: contextAfter } = await runCommand<UserContext>(`context info`);
+      expect(contextAfter).to.not.be.undefined;
+      expect(contextAfter?.iTwinId).to.be.equal(testITwinId);
+      expect(contextAfter?.iModelId).to.be.undefined;
+    });
+
+    it("Should not remove imodel from context when a different iModel is deleted", async () => {
+      const iModelName1 = `${testIModelName}-context-test1`;
+      const { result: createdIModel1 } = await runCommand<IModel>(`imodel create --itwin-id ${testITwinId} --name "${iModelName1}" --save`);
+      expect(createdIModel1).to.not.be.undefined;
+
+      const iModelName2 = `${testIModelName}-context-test2`;
+      const { result: createdIModel2 } = await runCommand<IModel>(`imodel create --itwin-id ${testITwinId} --name "${iModelName2}" --save`);
+      expect(createdIModel2).to.not.be.undefined;
+
+      await runCommand<UserContext>(`context set -m ${createdIModel1!.id}`);
+
+      const { result: contextBefore } = await runCommand<UserContext>(`context info`);
+      expect(contextBefore).to.not.be.undefined;
+      expect(contextBefore?.iTwinId).to.be.equal(testITwinId);
+      expect(contextBefore?.iModelId).to.be.equal(createdIModel1?.id);
+
+      const { result: deleteResult } = await runCommand<ResultResponse>(`imodel delete -m ${createdIModel2?.id}`);
+      expect(deleteResult).to.not.be.undefined;
+      expect(deleteResult).to.have.property("result", "deleted");
+
+      const { result: contextAfter } = await runCommand<UserContext>(`context info`);
+      expect(contextAfter).to.not.be.undefined;
+      expect(contextAfter?.iTwinId).to.be.equal(testITwinId);
+      expect(contextAfter?.iModelId).to.be.equal(createdIModel1?.id);
     });
 
     it("should return an error if user provides extent in both ways", async () => {
