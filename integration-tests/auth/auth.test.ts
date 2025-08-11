@@ -16,8 +16,8 @@ import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
 
 const tests = () =>
   describe("Authentication Integration Tests", () => {
-    const authType = getCurrentTokenType();
     const testIModelName = `cli-imodel-integration-test-${new Date().toISOString()}`;
+    let authType: AuthorizationType;
     let testIModelId: string;
     let testITwinId: string;
 
@@ -26,6 +26,8 @@ const tests = () =>
       testITwinId = testITwin.id as string;
       const testIModel = await createIModel(testIModelName, testITwinId);
       testIModelId = testIModel.id;
+
+      authType = getCurrentTokenType() as AuthorizationType;
     });
 
     after(async () => {
