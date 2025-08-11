@@ -7,15 +7,16 @@ import { expect } from "chai";
 
 import { runCommand } from "@oclif/test";
 
-import { AuthorizationInformation } from "../../src/services/authorization/authorization-type";
+import { AuthorizationInformation, AuthorizationType } from "../../src/services/authorization/authorization-type";
 import { ResultResponse } from "../../src/services/general-models/result-response";
 import { UserContext } from "../../src/services/general-models/user-context.js";
 import { ITP_API_URL, ITP_ISSUER_URL } from "../utils/environment";
-import { createIModel, createITwin } from "../utils/helpers";
+import { createIModel, createITwin, getCurrentTokenType, nativeLoginToCli, serviceLoginToCli } from "../utils/helpers";
 import runSuiteIfMainModule from "../utils/run-suite-if-main-module";
 
 const tests = () =>
   describe("Authentication Integration Tests", () => {
+    const authType = getCurrentTokenType();
     const testIModelName = `cli-imodel-integration-test-${new Date().toISOString()}`;
     let testIModelId: string;
     let testITwinId: string;
@@ -28,7 +29,11 @@ const tests = () =>
     });
 
     after(async () => {
-      await runCommand("auth login");
+      if (authType === AuthorizationType.Service) {
+        await serviceLoginToCli();
+      } else {
+        await nativeLoginToCli();
+      }
 
       const { result: imodelDeleteResult } = await runCommand<ResultResponse>(`imodel delete --imodel-id ${testIModelId}`);
       const { result: itwinDeleteResult } = await runCommand<ResultResponse>(`itwin delete --itwin-id ${testITwinId}`);
@@ -79,7 +84,11 @@ const tests = () =>
     });
 
     it("should clear context when user logs out", async () => {
-      await runCommand("auth login");
+      if (authType === AuthorizationType.Service) {
+        await serviceLoginToCli();
+      } else {
+        await nativeLoginToCli();
+      }
 
       const { result: contextBefore } = await runCommand<UserContext>(`context set -i ${testITwinId} -m ${testIModelId}`);
       expect(contextBefore).to.not.be.undefined;
