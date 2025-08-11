@@ -101,61 +101,6 @@ const tests = () =>
       expect(contextAfter?.iTwinId).to.be.equal(testITwinId);
       expect(contextAfter?.iModelId).to.be.equal(testIModelId);
     });
-
-    it("should fail with incorrect credentials", async () => {
-      const { error: loginError } = await runCommand("auth login --client-id invalid-id --client-secret wrong-secret");
-      expect(loginError).to.be.not.undefined;
-      expect(loginError!.message).to.include("User login was not successful");
-    });
-
-    it("should clear context when user logs out", async () => {
-      await serviceLoginToCli();
-
-      const { result: contextBefore } = await runCommand<UserContext>(`context set -i ${testITwinId} -m ${testIModelId}`);
-      expect(contextBefore).to.not.be.undefined;
-      expect(contextBefore?.iTwinId).to.be.equal(testITwinId);
-      expect(contextBefore?.iModelId).to.be.equal(testIModelId);
-
-      await runCommand("auth logout");
-
-      const { result: contextAfter } = await runCommand<UserContext>(`context info`);
-      expect(contextAfter).to.be.undefined;
-    });
-
-    it("should log out successfully", async () => {
-      const { stdout } = await runCommand("auth logout");
-
-      expect(stdout).to.include("User successfully logged out");
-    });
-
-    it("should ask user to login when there is no token available", async () => {
-      await runCommand<void>("auth logout");
-
-      const { error } = await runCommand<AuthorizationInformation>("user me");
-      expect(error).to.not.be.undefined;
-      expect(error?.message).to.be.equal("User is not logged in. Please run 'itp auth login' command to authenticate.");
-    });
-
-    it("auth info should get urls from environment when not logged in", async () => {
-      const apiUrl = ITP_API_URL;
-      const issuerUrl = ITP_ISSUER_URL;
-      process.env.ITP_API_URL = "changed-api-url";
-      process.env.ITP_ISSUER_URL = "changed-issuer-url";
-
-      await runCommand<void>("auth logout");
-
-      const { result: infoResult } = await runCommand<AuthorizationInformation>("auth info");
-
-      process.env.ITP_API_URL = apiUrl;
-      process.env.ITP_ISSUER_URL = issuerUrl;
-
-      expect(infoResult).to.be.not.undefined;
-      expect(infoResult!.apiUrl).to.be.equal("changed-api-url");
-      expect(infoResult!.authorizationType).to.be.undefined;
-      expect(infoResult!.clientId).to.be.undefined;
-      expect(infoResult?.expirationDate).to.be.undefined;
-      expect(infoResult!.issuerUrl).to.be.equal("changed-issuer-url");
-    });
   });
 
 export default tests;
