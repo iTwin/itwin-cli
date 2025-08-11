@@ -66,7 +66,7 @@ const tests = () =>
 
       await runCommand("auth logout");
 
-      const { result: contextAfter } = await runCommand<UserContext>(`context set -i ${testITwinId} -m ${testIModelId}`);
+      const { result: contextAfter } = await runCommand<UserContext>(`context info`);
       expect(contextAfter).to.be.undefined;
     });
 
