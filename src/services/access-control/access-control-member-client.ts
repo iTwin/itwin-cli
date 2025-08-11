@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { ITwinPlatformApiClient, Query } from "../iTwin-platform-api-client.js";
-import { GroupMemberResponse, GroupMembersRequest, GroupMembersResponse } from "./models/group-member.js";
+import { AddedGroupMembersResponse, GroupMemberResponse, GroupMembersRequest, GroupMembersResponse } from "./models/group-member.js";
 import { InvitationsResponse } from "./models/invitations.js";
 import { OwnerMemberListResponse, OwnerMemberResponse } from "./models/owner-member.js";
 import { AddedUserMembersResponse, UserMemberListResponse, UserMemberResponse, UserMembersRequest } from "./models/user-member.js";
@@ -17,7 +17,7 @@ export class AccessControlMemberClient {
     this._iTwinPlatformApiClient = new ITwinPlatformApiClient(apiUrl, accessToken, this._apiVersionHeader);
   }
 
-  public async addGroupMember(iTwinId: string, groups: GroupMembersRequest): Promise<GroupMembersResponse> {
+  public async addGroupMember(iTwinId: string, groups: GroupMembersRequest): Promise<AddedGroupMembersResponse> {
     return this._iTwinPlatformApiClient.sendRequest({
       apiPath: `accesscontrol/itwins/${iTwinId}/members/groups`,
       body: groups,

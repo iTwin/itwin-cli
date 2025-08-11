@@ -3,6 +3,12 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
+import {
+  AddedGroupMembersResponse,
+  GroupMemberResponse,
+  GroupMemberRoles,
+  GroupMembersResponse,
+} from "../../../../src/services/access-control/models/group-member";
 import { OwnerMemberListResponse, OwnerMemberResponse } from "../../../../src/services/access-control/models/owner-member";
 // prettier-ignore
 import {
@@ -171,6 +177,78 @@ export class AccessControlMembersResponses {
         },
         next: {
           href: `https://api.bentley.com/iTwins/${iTwinId}/members/owners?$skip=100&$top=100`,
+        },
+      },
+    };
+  };
+
+  public static groupMemberResponse = (groupId: string, roleIds: string[]): GroupMemberResponse => {
+    return {
+      member: {
+        id: groupId,
+        groupName: "Sample Group",
+        groupDescription: "This is a sample group",
+        roles: roleIds.map((roleId) => {
+          return {
+            id: roleId,
+            displayName: "Role Name",
+            description: "Role Description",
+          };
+        }),
+      },
+    };
+  };
+
+  public static addedGroupMembersResponse = (groupMembers: GroupMemberRoles[]): AddedGroupMembersResponse => {
+    return {
+      members: groupMembers.map((groupMember) => {
+        return {
+          id: groupMember.groupId,
+          groupName: "Sample Group",
+          groupDescription: "This is a sample group",
+          roles: groupMember.roleIds.map((roleId) => {
+            return {
+              id: roleId,
+              displayName: "Role Name",
+              description: "Role Description",
+            };
+          }),
+        };
+      }),
+    };
+  };
+
+  public static groupMembersResponse = (groupIds: string[]): GroupMembersResponse => {
+    return {
+      members: groupIds.map((groupId) => {
+        return {
+          id: groupId,
+          groupName: "Sample Group",
+          groupDescription: "This is a sample group",
+          roles: [
+            {
+              id: "5abbfcef-0eab-472a-b5f5-5c5a43df34b1",
+              displayName: "Read Access",
+              description: "Read Access",
+            },
+            {
+              id: "6abbfcea-0eab-472a-b5f5-5c5a43df34b4",
+              displayName: "Write Access",
+              description: "Write Access",
+            },
+          ],
+        };
+      }),
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      _links: {
+        self: {
+          href: "https://api.bentley.com/iTwins/806b19d5-c037-48a4-aa98-e297c81453f1/member/groups?$skip=0&$top=100",
+        },
+        prev: {
+          href: "https://api.bentley.com/iTwins/806b19d5-c037-48a4-aa98-e297c81453f1/member/groups?$skip=0&$top=100",
+        },
+        next: {
+          href: "https://api.bentley.com/iTwins/806b19d5-c037-48a4-aa98-e297c81453f1/member/groups?$skip=100&$top=100",
         },
       },
     };

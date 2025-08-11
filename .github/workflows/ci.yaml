@@ -96,8 +96,6 @@ jobs:
           ITP_ISSUER_URL: ${{ vars.ITP_ISSUER_URL }}
           ITP_SERVICE_CLIENT_ID: ${{ vars.ITP_SERVICE_CLIENT_ID }}
           ITP_SERVICE_CLIENT_SECRET: ${{ secrets.ITP_SERVICE_CLIENT_SECRET }}
-          ITP_TEST_USER_SAMEORG: ${{ vars.ITP_TEST_USER_SAMEORG }}
-          ITP_TEST_USER_EXTERNAL: ${{ vars.ITP_TEST_USER_EXTERNAL }}
 
   test_native:
     name: Tests (Native Client)
@@ -130,8 +128,6 @@ jobs:
           ITP_NATIVE_TEST_CLIENT_ID: ${{ vars.ITP_NATIVE_TEST_CLIENT_ID }}
           ITP_TEST_USER_EMAIL: ${{ vars.ITP_TEST_USER_EMAIL }}
           ITP_TEST_USER_PASSWORD: ${{ secrets.ITP_TEST_USER_PASSWORD }}
-          ITP_TEST_USER_SAMEORG: ${{ vars.ITP_TEST_USER_SAMEORG }}
-          ITP_TEST_USER_EXTERNAL: ${{ vars.ITP_TEST_USER_EXTERNAL }}
   test_mocked:
     name: Tests (Mocked HTTP traffic)
     runs-on: ubuntu-latest

@@ -11,7 +11,6 @@ import { runCommand } from "@oclif/test";
 import { Invitation } from "../../../src/services/access-control/models/invitations";
 import { OwnerMemberResponse } from "../../../src/services/access-control/models/owner-member";
 import { ResultResponse } from "../../../src/services/general-models/result-response.js";
-import { ITP_TEST_USER_EXTERNAL } from "../../utils/environment";
 import runSuiteIfMainModule from "../../utils/run-suite-if-main-module";
 
 const tests = () => {
@@ -30,17 +29,17 @@ const tests = () => {
   });
 
   it("Should get pending invitations", async () => {
-    const emailToAdd = ITP_TEST_USER_EXTERNAL;
+    const emailToAdd = "email@example.com";
     const { result: owner } = await runCommand<OwnerMemberResponse>(`access-control member owner add --itwin-id ${iTwinId} --email ${emailToAdd}`);
     expect(owner).to.not.be.undefined;
     expect(owner!.member).is.null;
     expect(owner!.invitation).to.not.be.null;
-    expect(owner!.invitation!.email.toLowerCase()).to.equal(emailToAdd!.toLowerCase());
+    expect(owner!.invitation!.email.toLowerCase()).to.equal(emailToAdd.toLowerCase());
 
     const { result: invitationResults } = await runCommand<Invitation[]>(`access-control member invitations --itwin-id ${iTwinId}`);
     expect(invitationResults).to.not.be.undefined;
     expect(invitationResults!.length).to.be.greaterThanOrEqual(1);
-    expect(invitationResults!.some((invitation) => invitation.email.toLowerCase() === emailToAdd!.toLowerCase())).to.be.true;
+    expect(invitationResults!.some((invitation) => invitation.email.toLowerCase() === emailToAdd.toLowerCase())).to.be.true;
   });
 };
 
