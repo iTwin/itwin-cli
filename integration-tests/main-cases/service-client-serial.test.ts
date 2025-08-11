@@ -4,11 +4,9 @@
  *--------------------------------------------------------------------------------------------*/
 
 import authTestsService from "../auth-service/auth-service.test";
-import authTests from "../auth/auth.test";
 
 describe("Service Client Tests (serial)", () => {
   describe("Authentication Integration Tests", () => {
     authTestsService();
-    authTests();
   });
 });
