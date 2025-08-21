@@ -1,6 +1,6 @@
 # Quickstart
 
-The iTwin CLI allows you to interact with the iTwin Platform efficiently. This guide walks you through the essential first steps: **creating an iTwin, setting up an iModel, and populating it with design data.**
+The iTwin Platform CLI allows you to interact with the iTwin Platform efficiently. This guide walks you through the essential first steps: **creating an iTwin, setting up an iModel, and populating it with design data.**
 
 > 💡 New to iTwins? Check out our [iTwin 101 guide](itwin101.md) for an introduction to the platform.
 
@@ -30,7 +30,7 @@ itp itwin create --class Thing --sub-class Asset --name "My First iTwin" --save
 
 An iModel stores design data and tracks changes over time. We'll create one within our iTwin, and once again use the `--save` flag to store its ID for future commands.
 
-> Need a design file? Feel free to use the examples provided in the [iTwin CLI repository](https://github.com/iTwin/itwin-cli/tree/main/examples/datasets).
+> Need a design file? Feel free to use the examples provided in the [iTwin Platform CLI repository](https://github.com/iTwin/itwin-cli/tree/main/examples/datasets).
 
 ```bash
 itp imodel create --name "My First iModel" --save

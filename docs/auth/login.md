@@ -1,6 +1,6 @@
 # itp auth login
 
-Authenticate iTwin CLI with Bentley. This command initiates the login process and obtains the required access tokens. The CLI supports the following authentication workflows:
+Authenticate iTwin Platform CLI with Bentley. This command initiates the login process and obtains the required access tokens. The CLI supports the following authentication workflows:
 
 1. **Native** — interactive user login  
 2. **Service** — client credentials for automation/server

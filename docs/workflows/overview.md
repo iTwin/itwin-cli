@@ -1,6 +1,6 @@
 # Workflows
 
-Ready to put the iTwin CLI to work? These guides show you how to handle common tasks like project setup, team management, and automation.
+Ready to put the iTwin Platform CLI to work? These guides show you how to handle common tasks like project setup, team management, and automation.
 
 > 💡 The following are a few of the many possibilities.
 

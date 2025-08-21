@@ -1,12 +1,12 @@
-# Welcome to iTwin CLI
+# Welcome to iTwin Platform CLI
 
-This guide will help you get started with the [iTwin CLI](https://github.com/iTwin/itwin-cli) — a command-line tool designed to streamline interactions with the iTwin Platform, manage iTwins and iModels, and automate your digital twin workflows.
+This guide will help you get started with the [iTwin Platform CLI](https://github.com/iTwin/itwin-cli) — a command-line tool designed to streamline interactions with the iTwin Platform, manage iTwins and iModels, and automate your digital twin workflows.
 
 > 💡 New to iTwins? Check out our [iTwin 101 guide](itwin101.md) for an introduction to the platform.
 
-## What is the iTwin CLI?
+## What is the iTwin Platform CLI?
 
-The iTwin CLI enables users to:
+The iTwin Platform CLI enables users to:
 
 - Interact with the iTwin Platform through simple commands
 - Create and manage iTwins and iModels for your digital twin projects
@@ -20,10 +20,10 @@ Whether you're a first-time user or an experienced developer, this CLI provides 
 
 ## Installation
 
-Getting started with the iTwin CLI is quick and easy. Here's how to install it on your system:
+Getting started with the iTwin Platform CLI is quick and easy. Here's how to install it on your system:
 
 1. **Download the Installer**  
-   Head over to the [iTwin CLI Releases](https://github.com/iTwin/itwin-cli/releases/latest) page and grab the latest version for your operating system.
+   Head over to the [iTwin Platform CLI Releases](https://github.com/iTwin/itwin-cli/releases/latest) page and grab the latest version for your operating system.
 
 2. **Run the Installer**  
    The installation process varies depending on your system:
@@ -47,7 +47,7 @@ Getting started with the iTwin CLI is quick and easy. Here's how to install it o
 
 ## Authentication
 
-Before you can use the iTwin CLI, you'll need to log in. This authenticates your session and allows you to securely interact with the iTwin Platform.
+Before you can use the iTwin Platform CLI, you'll need to log in. This authenticates your session and allows you to securely interact with the iTwin Platform.
 
 To log in, simply run:
 ```bash
