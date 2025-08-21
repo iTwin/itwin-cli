@@ -10,7 +10,7 @@ Start-Process $filepath $arguments -NoNewWindow -Wait
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
 
 $version = & itp --version
-if ($version -like "itp-cli/* win32-x64 node-v20.16.0") {
+if ($version -like "itp/* win32-x64 node-v20.16.0") {
     Write-Output "Version check passed: $version"
 } else {
     Write-Error "Unexpected version: $version"
