@@ -1,19 +1,21 @@
 {
-  "name": "itp",
+  "name": "itp-cli",
   "description": "Work seamlessly with the iTwin Platform",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Bentley systems, Incorporated",
   "bin": {
     "itp": "./bin/run.js"
   },
   "bugs": "https://github.com/iTwin/itwin-cli/issues",
   "dependencies": {
+    "@itwin/core-bentley": "^5.1.2",
+    "@itwin/core-common": "^5.1.2",
     "@itwin/imodels-client-management": "^6.0.1",
     "@itwin/itwins-client": "^1.6.1",
-    "@itwin/node-cli-authorization": "^2.0.3",
-    "@itwin/object-storage-core": "^2.2.5",
-    "@itwin/service-authorization": "^1.2.2",
-    "@oclif/core": "^4.2.10",
+    "@itwin/node-cli-authorization": "^3.0.1",
+    "@itwin/object-storage-core": "^3.0.2",
+    "@itwin/service-authorization": "^2.0.0",
+    "@oclif/core": "^4.5.2",
     "@oclif/plugin-help": "^6",
     "@oclif/plugin-plugins": "^5",
     "@opentelemetry/api": "^1.9.0",
@@ -28,7 +30,7 @@
   "devDependencies": {
     "@eslint/js": "^9.28.0",
     "@itwin/eslint-plugin": "^5.2.1",
-    "@itwin/oidc-signin-tool": "^4.4.1",
+    "@itwin/oidc-signin-tool": "^5.0.1",
     "@oclif/test": "^4",
     "@types/chai": "^4",
     "@types/mocha": "^10",
@@ -45,7 +47,7 @@
     "prettier": "3.5.3",
     "shx": "^0.3.3",
     "ts-node": "^10",
-    "typescript": "^5",
+    "typescript": "~5.6.2",
     "typescript-eslint": "^8.33.1"
   },
   "engines": {

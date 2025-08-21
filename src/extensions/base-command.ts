@@ -222,7 +222,7 @@ export default abstract class BaseCommand extends Command {
       this.log(table.render());
     } else {
       const table = new Table();
-      table.addRows([data]);
+      table.addRows([data as any]);
 
       for (const column of table.table.columns) column.alignment = "left";
       this.log(table.render());
