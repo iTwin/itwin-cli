@@ -1,12 +1,12 @@
-# Contributing to iTwin Platform CLI
+# Contributing to iTwin CLI
 
-Welcome, and thank you for your interest in contributing to the **iTwin Platform CLI**! 🚀  
+Welcome, and thank you for your interest in contributing to the **iTwin CLI**! 🚀  
 There are many ways to contribute, from reporting bugs and suggesting improvements to submitting pull requests.
 
 ---
 
 ## **Providing Feedback & Reporting Issues**
-Your feedback is essential to improving the iTwin Platform CLI. If you've found a bug or have a feature request, please report it.
+Your feedback is essential to improving the iTwin CLI. If you've found a bug or have a feature request, please report it.
 
 ### **1. Check for Existing Issues**
 Before creating a new issue, search the [open issues](https://github.com/iTwin/itwin-cli/issues) to see if it has already been reported. If you find a similar issue:
@@ -95,7 +95,7 @@ git push origin [your-username]/your-feature-name
 ```
 
 ### **6. Submit a Pull Request**
-- Go to the [iTwin Platform CLI GitHub Repository](https://github.com/itwin/itwin-cli).
+- Go to the [iTwin CLI GitHub Repository](https://github.com/itwin/itwin-cli).
 - Click **New Pull Request**.
 - Select your branch and submit your changes for review.
 
@@ -118,4 +118,4 @@ A [Contributor License Agreement](https://gist.github.com/imodeljs-admin/9a07184
 - 🛠 **Report Issues or Feature Requests**: [GitHub Issues](https://github.com/itwin/itwin-cli/issues)  
 - 📚 **Learn More About iTwins**: [developer.bentley.com](https://developer.bentley.com)
 
-Thank you for helping improve the iTwin Platform CLI! 🚀
+Thank you for helping improve the iTwin CLI! 🚀
