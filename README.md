@@ -1,6 +1,6 @@
-# iTwin Platform CLI
+# iTwin CLI
 
-The **iTwin Platform CLI** is a command-line tool for interacting with the [iTwin Platform](https://developer.bentley.com). It enables automation of common workflows such as managing iTwins and iModels, synchronizing design data, handling storage, and controlling user access.
+The **iTwin CLI** is a command-line tool for interacting with the [iTwin Platform](https://developer.bentley.com). It enables automation of common workflows such as managing iTwins and iModels, synchronizing design data, handling storage, and controlling user access.
 
 🚀 **Why use the iTwin CLI?**
 - Automate creation of iTwins and iModels, updates and management.
@@ -45,5 +45,4 @@ Interested in improving the iTwin CLI? We welcome contributions! See our **[Cont
 - 🛠 **Report Issues or Feature Requests**: [GitHub Issues](https://github.com/itwin/itwin-cli/issues)
 - 📚 **iTwin Platform Documentation**: [developer.bentley.com](https://developer.bentley.com)
 
-🚀 **Start automating with the iTwin CLI—because efficiency shouldn’t be optional.**
-
+🚀 **Start automating with the iTwin CLI — because efficiency shouldn’t be optional.**

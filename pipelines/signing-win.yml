@@ -32,7 +32,7 @@ jobs:
     inputs:
       command: 'custom'
       custom: 'tool'
-      arguments: 'install --global SignToolClient --add-source https://pkgs.dev.azure.com/bentleycs/_packaging/Packages/nuget/v3/index.json'
+      arguments: 'install --global SignToolClient --add-source $(PackageSourceUrl)'
   - ${{ each cpuVersion in parameters.cpuVersions }}:
     - task: PowerShell@2
       displayName: 'Sign exe file for cpu (${{ cpuVersion }})'
@@ -42,7 +42,7 @@ jobs:
           $v = "${{ parameters['package_version'] }}"
           $newFileName = "itp-v$v-${{ parameters.installer_prefix }}-${{ cpuVersion }}-win.exe"
           Write-Host "Signing file: $newFileName"
-          signtoolclient sign --service-url https://signingservice.bentley.com --BsiToken $(SigningServiceToken) "$(Pipeline.Workspace)/win-installer/$newFileName"
+          signtoolclient sign --service-url $(SigningServiceUrl) --BsiToken $(SigningServiceToken) "$(Pipeline.Workspace)/win-installer/$newFileName"
   - task: PublishPipelineArtifact@1
     inputs:
       targetPath: '$(Pipeline.Workspace)/win-installer'

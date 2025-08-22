@@ -40,9 +40,8 @@ cd itwin-cli
 ### **Setup Test Environment**
 - Create .env file in the project root and put the following environment variables into it:
 ```sh
-# API and IMS URLs. The example has URLs for the QA environment, but it can be changed to DEV or PROD (no prefix).
-ITP_ISSUER_URL=https://qa-ims.bentley.com
-ITP_API_URL=https://qa-api.bentley.com
+ITP_ISSUER_URL=https://ims.bentley.com
+ITP_API_URL=https://api.bentley.com
 # Your service client, created in the same environment as the provided API and IMS URLs.
 ITP_SERVICE_CLIENT_ID=
 ITP_SERVICE_CLIENT_SECRET=
