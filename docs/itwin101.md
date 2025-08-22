@@ -10,7 +10,7 @@ This shift is driven by the rise of **digital twins**: living models that combin
 
 Following Bentley’s acquisition of **Cesium**, high-performance 3D geo-spatial visualization is now a built-in part of the iTwin ecosystem. **Cesium** is an open platform for streaming large-scale 3D data, and its developer sandbox, **Sandcastle**, makes it easy to prototype and interact with infrastructure in a global context.
 
-The **iTwin Platform CLI** ties it all together — letting you manage iTwins, bring design data into the cloud, and visualize your models in Cesium Sandcastle — all from the command line.
+The **iTwin CLI** ties it all together — letting you manage iTwins, bring design data into the cloud, and visualize your models in Cesium Sandcastle — all from the command line.
 
 ---
 
@@ -63,9 +63,9 @@ Need to connect to a custom database, web API, or document store? The iTwin is d
 
 ---
 
-### ⚙️ The Role of the iTwin Platform CLI
+### ⚙️ The Role of the iTwin CLI
 
-The **iTwin Platform CLI** is a command-line tool that lets developers and technical users interact with the iTwin Platform through simple text commands. It simplifies many common tasks:
+The **iTwin CLI** is a command-line tool that lets developers and technical users interact with the iTwin Platform through simple text commands. It simplifies many common tasks:
 
 - ✍️ Create and manage iTwins
 - 🛡️ Set up access control and user roles
@@ -98,7 +98,7 @@ This not only supports tracking and review but also enables advanced visualizati
 
 iTwins contain a dedicated storage repository where design files and project documents can be centrally managed. This storage acts as a staging area for incoming files before they are synchronized into an iModel.
 
-The iTwin Platform CLI supports using this shared storage to:
+The iTwin CLI supports using this shared storage to:
 
 - 📤 Upload and organize design files
 - 🔄 Sync them into the iModel
@@ -110,7 +110,7 @@ Files uploaded into iTwin storage can be selectively synchronized using **connec
 
 ### 🌐 Geospatial Visualization with Cesium
 
-One of the most exciting features of the iTwin Platform CLI is its integration with **Cesium Sandcastle**, CesiumJS's interactive 3D globe environment.
+One of the most exciting features of the iTwin CLI is its integration with **Cesium Sandcastle**, CesiumJS's interactive 3D globe environment.
 
 > Push your iTwin to Sandcastle and instantly visualize infrastructure assets in a real-world geospatial context.
 
@@ -125,9 +125,9 @@ Design data becomes globally interactive. Combined with reality meshes and IoT d
 
 ### ✨ Wrapping Up
 
-The iTwin Platform CLI makes it easy to build, manage, and explore digital twins using the iTwin Platform. For anyone interested in geospatial technology and digital twin workflows, it opens a new path to work with infrastructure data at scale, integrate diverse data sources, and publish them to a geospatially rich, interactive viewer.
+The iTwin CLI makes it easy to build, manage, and explore digital twins using the iTwin Platform. For anyone interested in geospatial technology and digital twin workflows, it opens a new path to work with infrastructure data at scale, integrate diverse data sources, and publish them to a geospatially rich, interactive viewer.
 
-Whether you’re just exploring or already building, the iTwin Platform CLI is your entry point into the next-generation platform for the infrastructure digital twin.
+Whether you’re just exploring or already building, the iTwin CLI is your entry point into the next-generation platform for the infrastructure digital twin.
 
 ---
 

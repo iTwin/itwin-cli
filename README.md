@@ -1,14 +1,14 @@
-# iTwin Platform CLI
+# iTwin CLI
 
-The **iTwin Platform CLI** is a command-line tool for interacting with the [iTwin Platform](https://developer.bentley.com). It enables automation of common workflows such as managing iTwins and iModels, synchronizing design data, handling storage, and controlling user access.
+The **iTwin CLI** is a command-line tool for interacting with the [iTwin Platform](https://developer.bentley.com). It enables automation of common workflows such as managing iTwins and iModels, synchronizing design data, handling storage, and controlling user access.
 
-🚀 **Why use the iTwin Platform CLI?**
+🚀 **Why use the iTwin CLI?**
 - Automate creation of iTwins and iModels, updates and management.
 - Streamline design data synchronization and versioning.
 - Manage users, roles, and permissions efficiently.
 - Automate workflows with scripts, scheduled tasks, and data pipelines.
 
-For a step-by-step guide on getting started with an iTwin, see the **[Quickstart](https://itwin.github.io/itwin-cli/#/quickstart)**. For a complete list of commands and usage examples, visit the **[iTwin Platform CLI Manual](https://itwin.github.io/itwin-cli)**.
+For a step-by-step guide on getting started with an iTwin, see the **[Quickstart](https://itwin.github.io/itwin-cli/#/quickstart)**. For a complete list of commands and usage examples, visit the **[iTwin CLI Manual](https://itwin.github.io/itwin-cli)**.
 
 ## **Getting Started**
 
@@ -37,7 +37,7 @@ itp autocomplete
 ---
 
 ## **Contributing**
-Interested in improving the iTwin Platform CLI? We welcome contributions! See our **[Contribution Guide](./CONTRIBUTING.md)** for setup instructions, development workflow, and contribution guidelines.
+Interested in improving the iTwin CLI? We welcome contributions! See our **[Contribution Guide](./CONTRIBUTING.md)** for setup instructions, development workflow, and contribution guidelines.
 
 ---
 
@@ -45,4 +45,4 @@ Interested in improving the iTwin Platform CLI? We welcome contributions! See ou
 - 🛠 **Report Issues or Feature Requests**: [GitHub Issues](https://github.com/itwin/itwin-cli/issues)
 - 📚 **iTwin Platform Documentation**: [developer.bentley.com](https://developer.bentley.com)
 
-🚀 **Start automating with the iTwin Platform CLI — because efficiency shouldn’t be optional.**
+🚀 **Start automating with the iTwin CLI — because efficiency shouldn’t be optional.**

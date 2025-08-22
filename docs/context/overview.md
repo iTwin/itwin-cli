@@ -1,6 +1,6 @@
 # itp context
 
-Work with iTwin Platform CLI context.
+Work with iTwin CLI context.
 
 ## Available Commands
 
