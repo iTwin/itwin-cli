@@ -93,7 +93,7 @@ export class ITwinPlatformApiClient {
       const contentType = response.headers.get("content-type");
       if (!contentType || !contentType.includes("application/json")) {
         const errorText = await response.text();
-        throw new Error(`HTTP error occured (${response.status}).\n${errorText}`);
+        throw new Error(`HTTP error occurred (${response.status}).\n${errorText}`);
       }
 
       const errorResponseData = await response.json();
@@ -102,7 +102,7 @@ export class ITwinPlatformApiClient {
         const directErrorString = JSON.stringify(errorResponseData.error, Object.getOwnPropertyNames(errorResponseData.error), 2);
         throw new Error(directErrorString);
       } else {
-        throw new Error(`HTTP error occured (${response.status}).\n${JSON.stringify(errorResponseData, null, 2)}`);
+        throw new Error(`HTTP error occurred (${response.status}).\n${JSON.stringify(errorResponseData, null, 2)}`);
       }
     }
 
