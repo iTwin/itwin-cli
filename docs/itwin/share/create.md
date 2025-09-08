@@ -26,4 +26,4 @@ itp itwin share create --itwin-id ad0ba809-9241-48ad-9eb0-c8038c1a1d51 --contrac
 
 ## API Reference
 
-[Create iTwin Share](https://https://developer.bentley.com/apis/access-control-v2/operations/create-itwin-share/)
+[Create iTwin Share](https://developer.bentley.com/apis/access-control-v2/operations/create-itwin-share/)

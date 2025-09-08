@@ -1,6 +1,6 @@
 # itp itwin share list
 
-Retrieves a list of available user roles that are defined for a specified iTwin.
+Retrieves a list of available iTwin shares that are currently active for a specified iTwin.
 
 ## Options
 
