@@ -12,7 +12,7 @@ import { ItwinShare } from "../../../services/access-control/models/itwin-share.
 
 export default class CreateItwinShare extends BaseCommand {
   public static apiReference: ApiReference = {
-    link: "https://https://developer.bentley.com/apis/access-control-v2/operations/create-itwin-share/",
+    link: "https://developer.bentley.com/apis/access-control-v2/operations/create-itwin-share/",
     name: "Create iTwin Share",
   };
 
