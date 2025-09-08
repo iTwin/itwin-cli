@@ -28,7 +28,7 @@ const tests = () =>
 
       const { error: deleteError } = await runCommand<ResultResponse>(`access-control group delete --itwin-id ${iTwinId} --group-id ${groupId}`);
       expect(deleteError).to.not.be.undefined;
-      expect(deleteError?.message).to.be.equal(`HTTP error! ${JSON.stringify(response)}`);
+      expect(deleteError?.message).to.be.equal(JSON.stringify(response.error, null, 2));
     });
 
     it("should return an error when group is not found", async () => {
@@ -36,7 +36,7 @@ const tests = () =>
 
       const { error: deleteError } = await runCommand<ResultResponse>(`access-control group delete --itwin-id ${iTwinId} --group-id ${groupId}`);
       expect(deleteError).to.not.be.undefined;
-      expect(deleteError?.message).to.be.equal(`HTTP error! ${JSON.stringify(response)}`);
+      expect(deleteError?.message).to.be.equal(JSON.stringify(response.error, null, 2));
     });
   });
 

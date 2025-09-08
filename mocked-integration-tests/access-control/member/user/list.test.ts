@@ -28,7 +28,7 @@ const tests = () =>
 
       const { error: listError } = await runCommand<UserMember[]>(`access-control member user list --itwin-id ${iTwinId}`);
       expect(listError).to.not.be.undefined;
-      expect(listError?.message).to.be.equal(`HTTP error! ${JSON.stringify(response)}`);
+      expect(listError?.message).to.be.equal(JSON.stringify(response.error, null, 2));
     });
   });
 

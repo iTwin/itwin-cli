@@ -37,7 +37,7 @@ const tests = () =>
 
       const { error } = await runCommand<OwnerMemberResponse>(`access-control member owner add --itwin-id ${iTwinId} --email ${emailToAdd}`);
       expect(error).to.not.be.undefined;
-      expect(error?.message).to.be.equal(`HTTP error! ${JSON.stringify(response)}`);
+      expect(error?.message).to.be.equal(JSON.stringify(response.error, null, 2));
     });
   });
 

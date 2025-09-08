@@ -29,7 +29,7 @@ const tests = () =>
 
       const { error: infoError } = await runCommand<UserMember>(`access-control member user info --itwin-id ${iTwinId} --member-id ${memberId}`);
       expect(infoError).to.not.be.undefined;
-      expect(infoError?.message).to.be.equal(`HTTP error! ${JSON.stringify(response)}`);
+      expect(infoError?.message).to.be.equal(JSON.stringify(response.error, null, 2));
     });
 
     it("should return an error when provided user member is not found", async () => {
@@ -37,7 +37,7 @@ const tests = () =>
 
       const { error: infoError } = await runCommand<UserMember>(`access-control member user info --itwin-id ${iTwinId} --member-id ${memberId}`);
       expect(infoError).to.not.be.undefined;
-      expect(infoError?.message).to.be.equal(`HTTP error! ${JSON.stringify(response)}`);
+      expect(infoError?.message).to.be.equal(JSON.stringify(response.error, null, 2));
     });
   });
 

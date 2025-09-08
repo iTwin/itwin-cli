@@ -38,7 +38,7 @@ const tests = () =>
         `access-control role create --itwin-id ${iTwinId} --name "${roleName}" --description "${roleDescription}"`,
       );
       expect(createError).to.not.be.undefined;
-      expect(createError?.message).to.be.equal(`HTTP error! ${JSON.stringify(response)}`);
+      expect(createError?.message).to.be.equal(JSON.stringify(response.error, null, 2));
     });
   });
 

@@ -29,7 +29,7 @@ const tests = () =>
 
       const { error: createError } = await runCommand<Group>(`access-control group list --itwin-id ${iTwinId}`);
       expect(createError).to.not.be.undefined;
-      expect(createError?.message).to.be.equal(`HTTP error! ${JSON.stringify(response)}`);
+      expect(createError?.message).to.be.equal(JSON.stringify(response.error, null, 2));
     });
   });
 

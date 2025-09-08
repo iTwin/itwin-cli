@@ -34,7 +34,7 @@ const tests = () =>
         `access-control member group update -i ${iTwinId} --group-id ${memberId} --role-id ${roleIds[0]} --role-id ${roleIds[1]} --role-id ${roleIds[2]}`,
       );
       expect(updateError).to.not.be.undefined;
-      expect(updateError?.message).to.be.equal(`HTTP error! ${JSON.stringify(response)}`);
+      expect(updateError?.message).to.be.equal(JSON.stringify(response.error, null, 2));
     });
 
     it("should return an error if provided member is not found", async () => {
@@ -44,7 +44,7 @@ const tests = () =>
         `access-control member group update -i ${iTwinId} --group-id ${memberId} --role-id ${roleIds[0]} --role-id ${roleIds[1]} --role-id ${roleIds[2]}`,
       );
       expect(updateError).to.not.be.undefined;
-      expect(updateError?.message).to.be.equal(`HTTP error! ${JSON.stringify(response)}`);
+      expect(updateError?.message).to.be.equal(JSON.stringify(response.error, null, 2));
     });
 
     it("should return an error if provided role is not found", async () => {
@@ -54,7 +54,7 @@ const tests = () =>
         `access-control member group update -i ${iTwinId} --group-id ${memberId} --role-id ${roleIds[0]} --role-id ${roleIds[1]} --role-id ${roleIds[2]}`,
       );
       expect(updateError).to.not.be.undefined;
-      expect(updateError?.message).to.be.equal(`HTTP error! ${JSON.stringify(response)}`);
+      expect(updateError?.message).to.be.equal(JSON.stringify(response.error, null, 2));
     });
   });
 
