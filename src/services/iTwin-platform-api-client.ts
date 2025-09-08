@@ -90,13 +90,19 @@ export class ITwinPlatformApiClient {
     const response = await fetch(`${this._iTwinPlatformApiBasePath}/${apiPath}${queryString}`, fetchOptions);
 
     if (!response.ok) {
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        const errorText = await response.text();
+        throw new Error(`HTTP error occured (${response.status}).\n${errorText}`);
+      }
+
       const errorResponseData = await response.json();
-      try {
-        const typedError = errorResponseData as ErrorResponse;
-        const stringifiedError = JSON.stringify(typedError.error, Object.getOwnPropertyNames(typedError.error));
-        throw new Error(`HTTP error! status: ${response.status}. Response data: ${stringifiedError}`);
-      } catch {
-        throw new Error(`HTTP error! ${JSON.stringify(errorResponseData)}`);
+      // Check if errorResponseData is directly of type Error
+      if (errorResponseData && typeof errorResponseData === "object" && "error" in errorResponseData) {
+        const directErrorString = JSON.stringify(errorResponseData.error, Object.getOwnPropertyNames(errorResponseData.error), 2);
+        throw new Error(directErrorString);
+      } else {
+        throw new Error(`HTTP error occured (${response.status}).\n${JSON.stringify(errorResponseData, null, 2)}`);
       }
     }
 
@@ -107,20 +113,4 @@ export class ITwinPlatformApiClient {
     const responseData = await response.json();
     return responseData as T;
   }
-}
-
-interface ErrorResponse {
-  error: Error;
-}
-
-interface Error {
-  code: string;
-  details: ErrorDetails[];
-  message: string;
-}
-
-interface ErrorDetails {
-  code: string;
-  message: string;
-  target: string;
 }

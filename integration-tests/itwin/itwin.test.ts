@@ -9,6 +9,7 @@ import deleteTests from "./delete.test";
 import infoTests from "./info.test";
 import listTests from "./list.test";
 import repositoryTests from "./repository.test";
+import shareTests from "./share.test";
 import updateTests from "./update.test";
 
 const tests = () =>
@@ -19,6 +20,7 @@ const tests = () =>
     updateTests();
     deleteTests();
     repositoryTests();
+    shareTests();
   });
 
 export default tests;

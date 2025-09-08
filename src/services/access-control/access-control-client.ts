@@ -5,6 +5,7 @@
 
 import { ITwinPlatformApiClient } from "../iTwin-platform-api-client.js";
 import { Group, GroupResponse, GroupsResponse, GroupUpdate } from "./models/group.js";
+import { ItwinShareCreate, ItwinShareResponse, ItwinSharesResponse } from "./models/itwin-share.js";
 import { Permissions } from "./models/permissions.js";
 import { Role, RoleResponse, RolesResponse } from "./models/role.js";
 
@@ -32,6 +33,14 @@ export class AccessControlClient {
     });
   }
 
+  public async createiTwinShare(iTwinId: string, share?: ItwinShareCreate): Promise<ItwinShareResponse> {
+    return this._iTwinPlatformApiClient.sendRequest({
+      apiPath: `accesscontrol/itwins/${iTwinId}/shares`,
+      body: share,
+      method: "POST",
+    });
+  }
+
   public async deleteGroup(iTwinId: string, groupId: string): Promise<void> {
     await this._iTwinPlatformApiClient.sendRequestNoResponse({
       apiPath: `accesscontrol/itwins/${iTwinId}/groups/${groupId}`,
@@ -42,6 +51,13 @@ export class AccessControlClient {
   public async deleteiTwinRole(iTwinId: string, roleId: string): Promise<void> {
     await this._iTwinPlatformApiClient.sendRequestNoResponse({
       apiPath: `accesscontrol/itwins/${iTwinId}/roles/${roleId}`,
+      method: "DELETE",
+    });
+  }
+
+  public async deleteiTwinShare(iTwinId: string, shareId: string): Promise<void> {
+    await this._iTwinPlatformApiClient.sendRequestNoResponse({
+      apiPath: `accesscontrol/itwins/${iTwinId}/shares/${shareId}`,
       method: "DELETE",
     });
   }
@@ -84,6 +100,20 @@ export class AccessControlClient {
   public async getiTwinRoles(iTwinId: string): Promise<RolesResponse> {
     return this._iTwinPlatformApiClient.sendRequest({
       apiPath: `accesscontrol/itwins/${iTwinId}/roles`,
+      method: "GET",
+    });
+  }
+
+  public async getiTwinShare(iTwinId: string, shareId: string): Promise<ItwinShareResponse> {
+    return this._iTwinPlatformApiClient.sendRequest({
+      apiPath: `accesscontrol/itwins/${iTwinId}/shares/${shareId}`,
+      method: "GET",
+    });
+  }
+
+  public async getiTwinShares(iTwinId: string): Promise<ItwinSharesResponse> {
+    return this._iTwinPlatformApiClient.sendRequest({
+      apiPath: `accesscontrol/itwins/${iTwinId}/shares`,
       method: "GET",
     });
   }

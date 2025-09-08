@@ -7,6 +7,7 @@ import { LoggingCallbacks } from "../general-models/logging-callbacks.js";
 import { ResultResponse } from "../general-models/result-response.js";
 import { AccessControlClient } from "./access-control-client.js";
 import { Group, GroupUpdate } from "./models/group.js";
+import { ItwinShare, ItwinShareCreate } from "./models/itwin-share.js";
 import { Role } from "./models/role.js";
 
 export class AccessControlService {
@@ -102,5 +103,29 @@ export class AccessControlService {
     const response = await this._accessControlClient.updateiTwinRole(iTwinId, roleId, roleUpdate);
 
     return response.role;
+  }
+
+  public async createiTwinShare(iTwinId: string, shareCreate?: ItwinShareCreate): Promise<ItwinShare> {
+    const response = await this._accessControlClient.createiTwinShare(iTwinId, shareCreate);
+
+    return response.share;
+  }
+
+  public async deleteiTwinShare(iTwinId: string, shareId: string): Promise<ResultResponse> {
+    await this._accessControlClient.deleteiTwinShare(iTwinId, shareId);
+
+    return { result: "revoked" };
+  }
+
+  public async getiTwinShare(iTwinId: string, shareId: string): Promise<ItwinShare> {
+    const response = await this._accessControlClient.getiTwinShare(iTwinId, shareId);
+
+    return response.share;
+  }
+
+  public async getiTwinShares(iTwinId: string): Promise<ItwinShare[]> {
+    const response = await this._accessControlClient.getiTwinShares(iTwinId);
+
+    return response.shares;
   }
 }
