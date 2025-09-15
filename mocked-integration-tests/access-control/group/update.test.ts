@@ -45,7 +45,7 @@ const tests = () =>
         `access-control group update --itwin-id ${iTwinId} --group-id ${groupId} --name "${groupName}" --description "${groupDescription}" --member ${members[0].email} --ims-group "${imsGroups[0]}"`,
       );
       expect(createError).to.not.be.undefined;
-      expect(createError?.message).to.be.equal(`HTTP error! ${JSON.stringify(response)}`);
+      expect(createError?.message).to.be.equal(JSON.stringify(response.error, null, 2));
     });
   });
 

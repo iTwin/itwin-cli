@@ -29,7 +29,7 @@ const tests = () =>
 
       const { error: infoError } = await runCommand<Group>(`access-control role list --itwin-id ${iTwinId}`);
       expect(infoError).to.not.be.undefined;
-      expect(infoError?.message).to.be.equal(`HTTP error! ${JSON.stringify(response)}`);
+      expect(infoError?.message).to.be.equal(JSON.stringify(response.error, null, 2));
     });
   });
 

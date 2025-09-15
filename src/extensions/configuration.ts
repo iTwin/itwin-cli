@@ -25,12 +25,13 @@ export class Configuration {
       this.issuerUrl = configJson.issuerUrl;
     }
 
-    if (process.env.ITP_SERVICE_CLIENT_ID) {
+    if (process.env.ITP_SERVICE_CLIENT_ID && process.env.ITP_SERVICE_CLIENT_SECRET) {
       this.clientId = process.env.ITP_SERVICE_CLIENT_ID;
-    }
-
-    if (process.env.ITP_SERVICE_CLIENT_SECRET) {
       this.clientSecret = process.env.ITP_SERVICE_CLIENT_SECRET;
+    } else {
+      if (process.env.ITP_NATIVE_CLIENT_ID) {
+        this.clientId = process.env.ITP_NATIVE_CLIENT_ID;
+      }
     }
 
     if (process.env.ITP_ISSUER_URL) {

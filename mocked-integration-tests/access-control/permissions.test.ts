@@ -28,7 +28,7 @@ const tests = () =>
 
       const { error } = await runCommand<string[]>(`access-control permissions me --itwin-id ${iTwinId}`);
       expect(error).to.not.be.undefined;
-      expect(error?.message).to.be.equal(`HTTP error! ${JSON.stringify(response)}`);
+      expect(error?.message).to.be.equal(JSON.stringify(response.error, null, 2));
     });
 
     it("should list all permissions", async () => {

@@ -36,7 +36,7 @@ const tests = () =>
         `access-control role update --itwin-id ${iTwinId} --role-id ${roleId} --name "${roleName}" --description "${roleDescription}" --permission ${permissions[0]} --permission ${permissions[1]} --permission ${permissions[2]}`,
       );
       expect(infoError).to.not.be.undefined;
-      expect(infoError?.message).to.be.equal(`HTTP error! ${JSON.stringify(response)}`);
+      expect(infoError?.message).to.be.equal(JSON.stringify(response.error, null, 2));
     });
 
     it("should return an error when role is not found", async () => {
@@ -46,7 +46,7 @@ const tests = () =>
         `access-control role update --itwin-id ${iTwinId} --role-id ${roleId} --name "${roleName}" --description "${roleDescription}" --permission ${permissions[0]} --permission ${permissions[1]} --permission ${permissions[2]}`,
       );
       expect(infoError).to.not.be.undefined;
-      expect(infoError?.message).to.be.equal(`HTTP error! ${JSON.stringify(response)}`);
+      expect(infoError?.message).to.be.equal(JSON.stringify(response.error, null, 2));
     });
 
     it("should return an error when permission is not found", async () => {
@@ -56,7 +56,7 @@ const tests = () =>
         `access-control role update --itwin-id ${iTwinId} --role-id ${roleId} --name "${roleName}" --description "${roleDescription}" --permission ${permissions[0]} --permission ${permissions[1]} --permission ${permissions[2]}`,
       );
       expect(infoError).to.not.be.undefined;
-      expect(infoError?.message).to.be.equal(`HTTP error! ${JSON.stringify(response)}`);
+      expect(infoError?.message).to.be.equal(JSON.stringify(response.error, null, 2));
     });
   });
 

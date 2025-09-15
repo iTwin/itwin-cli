@@ -55,7 +55,7 @@ const tests = () =>
       );
 
       expect(createError).to.not.be.undefined;
-      expect(createError?.message).to.be.equal(`HTTP error! ${JSON.stringify(response)}`);
+      expect(createError?.message).to.be.equal(JSON.stringify(response.error, null, 2));
     });
 
     it("should return an error when provided iTwin is not found", async () => {
@@ -72,7 +72,7 @@ const tests = () =>
       );
 
       expect(createError).to.not.be.undefined;
-      expect(createError?.message).to.be.equal(`HTTP error! ${JSON.stringify(response)}`);
+      expect(createError?.message).to.be.equal(JSON.stringify(response.error, null, 2));
     });
 
     it("should return an error when provided group is not found", async () => {
@@ -89,7 +89,7 @@ const tests = () =>
       );
 
       expect(createError).to.not.be.undefined;
-      expect(createError?.message).to.be.equal(`HTTP error! ${JSON.stringify(response)}`);
+      expect(createError?.message).to.be.equal(JSON.stringify(response.error, null, 2));
     });
   });
 
