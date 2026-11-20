@@ -25,6 +25,10 @@ Authenticate iTwin CLI with Bentley. This command initiates the login process an
   Secret associated with a service-type client. Only required for service workflow.  
   **Type:** `string` &nbsp;&nbsp;**Required:** No
 
+- **`--env`**  
+  iTwin Platform environment to log in to. Overrides the `ITP_ISSUER_URL` and `ITP_API_URL` environment variables. Subsequent commands use the environment of the current login.  
+  **Type:** `string` &nbsp;&nbsp;**Required:** No &nbsp;&nbsp;**Valid Values:** `"prod"`, `"qa"`
+
 ## Examples
 
 ```bash
@@ -36,9 +40,19 @@ itp auth login --client-id native-a1254s86d4a5s4d
 
 # Service login using client credentials (headless)
 itp auth login --client-id service-a1254s86d4a5s4d --client-secret a456a7s89da46s5f4a6f16a5sdf3as2d1f65a4sdf13
+
+# Native login to the QA environment
+itp auth login --env qa
 ```
 
 ## Notes
+
+**Environments**:
+
+- Without `--env`, the CLI logs in to production, unless the `ITP_ISSUER_URL` and `ITP_API_URL` environment variables point elsewhere.
+- `--env qa` logs in to `https://qa-ims.bentley.com` and uses `https://qa-api.bentley.com` with the CLI's QA native client.
+- A client provided with `--client-id` or the `ITP_NATIVE_CLIENT_ID`, `ITP_SERVICE_CLIENT_ID` and `ITP_SERVICE_CLIENT_SECRET` environment variables must be registered in the selected environment.
+- All other commands call the API of the environment used for the current login, so there is no need to repeat `--env` or set `ITP_API_URL`.
 
 **Custom native clients**:
 

@@ -182,6 +182,12 @@ export const getTokenPathByOS = (): string => {
       return `${process.env.LOCALAPPDATA}/itp/token.json`;
     }
 
+    case "Darwin": {
+      const cachePath = `${os.homedir()}/Library/Caches/itp`;
+      if (!fs.existsSync(cachePath)) fs.mkdirSync(cachePath, { recursive: true });
+      return `${cachePath}/token.json`;
+    }
+
     default: {
       throw new Error("Unknown OS");
     }

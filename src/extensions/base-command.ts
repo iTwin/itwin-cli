@@ -36,7 +36,7 @@ import { SynchronizationApiClient } from "../services/synchronization/synchroniz
 import { SynchronizationApiService } from "../services/synchronization/synchronization-api-service.js";
 import { UsersApiClient } from "../services/users/users-api-client.js";
 import { UsersApiService } from "../services/users/users-api-service.js";
-import { Configuration } from "./configuration.js";
+import { Configuration, environments } from "./configuration.js";
 
 export default abstract class BaseCommand extends Command {
   // Is necessary for --json flag to function even though it's not referenced anywhere
@@ -78,14 +78,14 @@ export default abstract class BaseCommand extends Command {
     super(argv, config);
 
     this._envConfig = new Configuration(config.configDir);
-    this._baseApiUrl = this._envConfig?.apiUrl ?? "https://api.bentley.com";
+    this._authorizationClient = new AuthorizationClient(this._envConfig, config.cacheDir);
+    // Tokens are only valid for the environment they were issued by, so prefer the API URL saved at login.
+    this._baseApiUrl = this._authorizationClient.info().apiUrl ?? environments.prod.apiUrl;
     this._logger = {
       error: (input) => this.error(input),
       log: (message) => this.log(message),
       debug: (...args: any[]) => this.debug(args),
     } as LoggingCallbacks;
-
-    this._authorizationClient = new AuthorizationClient(this._envConfig, config.cacheDir);
 
     this.iTwinAccessClient = new ITwinsAccessClient(`${this._baseApiUrl}/itwins`);
     this.iModelClient = new IModelsClient({

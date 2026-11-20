@@ -6,6 +6,7 @@
 import { Flags } from "@oclif/core";
 
 import BaseCommand from "../../extensions/base-command.js";
+import { Environment, environments } from "../../extensions/configuration.js";
 import { AuthorizationType } from "../../services/authorization/authorization-type.js";
 
 export default class Login extends BaseCommand {
@@ -26,6 +27,10 @@ export default class Login extends BaseCommand {
       command: `<%= config.bin %> <%= command.id %> --client-id service-a1254s86d4a5s4d --client-secret a456a7s89da46s5f4a6f16a5sdf3as2d1f65a4sdf13`,
       description: "Example 3:",
     },
+    {
+      command: `<%= config.bin %> <%= command.id %> --env qa`,
+      description: "Example 4:",
+    },
   ];
 
   public static flags = {
@@ -39,6 +44,13 @@ export default class Login extends BaseCommand {
       helpValue: "<string>",
       required: false,
     }),
+    env: Flags.string({
+      description:
+        "iTwin Platform environment to log in to. Overrides the ITP_ISSUER_URL and ITP_API_URL environment variables. Subsequent commands use the environment of the current login.",
+      helpValue: "<string>",
+      options: Object.keys(environments),
+      required: false,
+    }),
   };
 
   public async run(): Promise<void> {
@@ -46,7 +58,7 @@ export default class Login extends BaseCommand {
 
     const currentAuthorizationInfo = await this.authorizationService.info();
 
-    await this.authorizationService.login(flags["client-id"], flags["client-secret"]);
+    await this.authorizationService.login(flags["client-id"], flags["client-secret"], flags.env as Environment | undefined);
 
     const newAuthorizationInfo = await this.authorizationService.info();
     // If the same service client is utilized, do not clear context

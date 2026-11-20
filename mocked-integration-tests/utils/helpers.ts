@@ -10,7 +10,7 @@ import { AuthTokenInfo } from "../../src/services/authorization/auth-token-info"
 import { AuthorizationType } from "../../src/services/authorization/authorization-type";
 import { ITP_API_URL, ITP_ISSUER_URL } from "./mock-environment";
 
-export function writeMockToken(clientId: string, authenticationType: AuthorizationType): void {
+export function writeMockToken(clientId: string, authenticationType: AuthorizationType, overrides?: Partial<AuthTokenInfo>): void {
   const authTokenObject: AuthTokenInfo = {
     apiUrl: ITP_API_URL,
     issuerUrl: ITP_ISSUER_URL,
@@ -18,6 +18,7 @@ export function writeMockToken(clientId: string, authenticationType: Authorizati
     authToken: "Bearer mock-token",
     authenticationType,
     expirationDate: new Date(Date.now() + 1000 * 60 * 59),
+    ...overrides,
   };
 
   fs.writeFileSync(getTokenPathByOS(), JSON.stringify(authTokenObject), "utf8");

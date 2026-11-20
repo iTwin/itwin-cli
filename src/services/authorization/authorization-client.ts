@@ -10,7 +10,7 @@ import path from "node:path";
 import { NodeCliAuthorizationClient } from "@itwin/node-cli-authorization";
 import { ServiceAuthorizationClient } from "@itwin/service-authorization";
 
-import { Configuration } from "../../extensions/configuration.js";
+import { Configuration, Environment } from "../../extensions/configuration.js";
 import { AuthTokenInfo } from "./auth-token-info.js";
 import { AuthorizationInformation, AuthorizationType } from "./authorization-type.js";
 
@@ -47,7 +47,12 @@ export class AuthorizationClient {
       );
     }
 
-    const newTokenInfo = await this.login();
+    const newTokenInfo = await this.loginToEnvironment(
+      this._environmentConfiguration.clientId,
+      this._environmentConfiguration.clientSecret,
+      tokenInfo.issuerUrl ?? this._environmentConfiguration.issuerUrl,
+      tokenInfo.apiUrl ?? this._environmentConfiguration.apiUrl,
+    );
 
     return newTokenInfo.authToken;
   }
@@ -64,24 +69,30 @@ export class AuthorizationClient {
     };
   }
 
-  public async login(clientId?: string, clientSecret?: string): Promise<AuthTokenInfo> {
+  public async login(clientId?: string, clientSecret?: string, environment?: Environment): Promise<AuthTokenInfo> {
+    const configuration = environment ? this._environmentConfiguration.forEnvironment(environment) : this._environmentConfiguration;
+
+    return this.loginToEnvironment(
+      clientId ?? configuration.clientId,
+      clientSecret ?? configuration.clientSecret,
+      configuration.issuerUrl,
+      configuration.apiUrl,
+    );
+  }
+
+  private async loginToEnvironment(clientId: string, clientSecret: string | undefined, issuerUrl: string, apiUrl: string): Promise<AuthTokenInfo> {
     let authType: AuthorizationType;
     let usedToken: string;
 
-    const usedClientId = clientId ?? this._environmentConfiguration.clientId;
-    const usedClientSecret = clientSecret ?? this._environmentConfiguration.clientSecret;
-
-    if (usedClientId && usedClientSecret) {
-      usedToken = await this.getAccessTokenFromService(usedClientId, usedClientSecret, this._environmentConfiguration.issuerUrl);
+    if (clientId && clientSecret) {
+      usedToken = await this.getAccessTokenFromService(clientId, clientSecret, issuerUrl);
       authType = AuthorizationType.Service;
     } else {
-      usedToken = await this.getAccessTokenFromWebsiteLogin(usedClientId, this._environmentConfiguration.issuerUrl);
+      usedToken = await this.getAccessTokenFromWebsiteLogin(clientId, issuerUrl);
       authType = AuthorizationType.Interactive;
     }
 
-    const apiUrl = this._environmentConfiguration.apiUrl;
-    const issuerUrl = this._environmentConfiguration.issuerUrl;
-    return this.saveAccessToken(usedClientId, usedToken, authType, apiUrl, issuerUrl);
+    return this.saveAccessToken(clientId, usedToken, authType, apiUrl, issuerUrl);
   }
 
   public async logout(): Promise<void> {

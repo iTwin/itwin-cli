@@ -3,6 +3,7 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
+import { Environment } from "../../extensions/configuration.js";
 import { LoggingCallbacks } from "../general-models/logging-callbacks.js";
 import { AuthorizationClient } from "./authorization-client.js";
 import { AuthorizationInformation } from "./authorization-type.js";
@@ -20,9 +21,9 @@ export class AuthorizationService {
     return this._client.info();
   }
 
-  public async login(clientId?: string, clientSecret?: string): Promise<void> {
+  public async login(clientId?: string, clientSecret?: string, environment?: Environment): Promise<void> {
     try {
-      const authInfo = await this._client.login(clientId, clientSecret);
+      const authInfo = await this._client.login(clientId, clientSecret, environment);
 
       if (!authInfo.authToken) {
         this._callbacks.error("User login was not successful");
