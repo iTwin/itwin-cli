@@ -171,6 +171,12 @@ export const getCurrentTokenType = (): AuthorizationType | undefined => {
 };
 
 export const getTokenPathByOS = (): string => {
+  // oclif uses ITP_CACHE_DIR as the cache directory on every OS when it is set.
+  if (process.env.ITP_CACHE_DIR) {
+    if (!fs.existsSync(process.env.ITP_CACHE_DIR)) fs.mkdirSync(process.env.ITP_CACHE_DIR, { recursive: true });
+    return `${process.env.ITP_CACHE_DIR}/token.json`;
+  }
+
   switch (os.type()) {
     case "Linux": {
       const cachePath = `${os.homedir()}/.cache/itp`;

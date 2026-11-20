@@ -5,13 +5,14 @@
 
 import { AuthorizationType } from "../../src/services/authorization/authorization-type";
 import { deleteMockToken, writeMockToken } from "./helpers";
-import { setupMockEnvironment } from "./mock-environment";
+import { cleanupMockEnvironment, setupMockEnvironment } from "./mock-environment";
 
 before(async () => {
-  writeMockToken("mock-client", AuthorizationType.Service);
   setupMockEnvironment();
+  writeMockToken("mock-client", AuthorizationType.Service);
 });
 
 after(async () => {
   deleteMockToken();
+  cleanupMockEnvironment();
 });

@@ -30,7 +30,7 @@ Make direct HTTP requests to any iTwin Platform API endpoint. Useful for custom 
   **Type:** `string` **Required:** No **Multiple:** Yes
 
 - **`--version-header`**  
-  API version header for versioned endpoints.  
+  API version header for versioned endpoints. Either the full Accept header value or just the version number (e.g. '2' or 'v2' for 'application/vnd.bentley.itwin-platform.v2+json').  
   **Type:** `string` **Required:** No
 
 ## Examples
@@ -50,6 +50,9 @@ itp api --method POST --path itwins/exports --body '{"outputFormat": "JsonGZip"}
 
 # Example 5: Sending a post request (Windows PowerShell)
 itp api --method POST --path users/getbyidlist --body "[\`"b644de17-f07e-4b43-8c33-ad2b1bacee3b\`"]"
+
+# Example 6: Sending a request to a specific API version
+itp api --method GET --path accesscontrol/itwins/ad0ba809-9241-48ad-9eb0-c8038c1a1d51/roles --version-header 2
 ```
 
 ## APIs Docs Reference

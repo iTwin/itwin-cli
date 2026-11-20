@@ -42,6 +42,10 @@ export default class ApiRequest extends BaseCommand {
       command: 'itp api --method POST --path users/getbyidlist --body "[\\`\"b644de17-f07e-4b43-8c33-ad2b1bacee3b\\`\"]"',
       description: "Example 5: Sending a post request (Windows PowerShell)",
     },
+    {
+      command: "itp api --method GET --path accesscontrol/itwins/ad0ba809-9241-48ad-9eb0-c8038c1a1d51/roles --version-header 2",
+      description: "Example 6: Sending a request to a specific API version",
+    },
   ];
 
   public static flags = {
@@ -75,7 +79,8 @@ export default class ApiRequest extends BaseCommand {
       multiple: true,
     }),
     "version-header": Flags.string({
-      description: "API version header for versioned endpoints.",
+      description:
+        "API version header for versioned endpoints. Either the full Accept header value or just the version number (e.g. '2' or 'v2' for 'application/vnd.bentley.itwin-platform.v2+json').",
       helpValue: "<string>",
     }),
   };
@@ -111,7 +116,7 @@ export default class ApiRequest extends BaseCommand {
 
     const requestOptions = {
       apiPath: flags.path,
-      apiVersionHeader: flags["version-header"],
+      apiVersionHeader: expandVersionHeader(flags["version-header"]),
       body: flags.body,
       headers: mappedHeaders,
       method: flags.method as "DELETE" | "GET" | "PATCH" | "POST" | "PUT",
@@ -126,4 +131,9 @@ export default class ApiRequest extends BaseCommand {
     const response = await client.sendRequest<unknown>(requestOptions);
     return this.logAndReturnResult(response);
   }
+}
+
+function expandVersionHeader(versionHeader: string | undefined): string | undefined {
+  const version = versionHeader?.match(/^v?(\d+)$/i)?.[1];
+  return version ? `application/vnd.bentley.itwin-platform.v${version}+json` : versionHeader;
 }
